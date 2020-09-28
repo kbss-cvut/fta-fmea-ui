@@ -1,5 +1,7 @@
 "use strict";
 
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 const path = require("path");
 
 module.exports = {
@@ -26,11 +28,18 @@ module.exports = {
                 loader: "ts-loader"
             },
             {
-                test:/\.(s*)css$/,
-                use:['style-loader','css-loader', 'sass-loader']
+                test: /\.(s*)css$/,
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: ['css-loader', 'sass-loader'],
+                })
             }
         ]
     },
+
+    plugins: [
+        new ExtractTextPlugin({filename: 'app.bundle.css'}),
+    ],
 
     // File extensions to support resolving
     resolve: {
