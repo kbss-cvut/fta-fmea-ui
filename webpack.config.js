@@ -2,8 +2,6 @@
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const path = require("path");
-
 module.exports = {
     // Set debugging source maps to be "inline" for
     // simplicity and ease of use
@@ -17,7 +15,8 @@ module.exports = {
     // Where to compile the bundle
     // By default the output directory is `dist`
     output: {
-        filename: "bundle.js"
+        path: __dirname + '/public',
+        filename: "build/bundle.js"
     },
 
     // Supported file loaders
@@ -38,7 +37,9 @@ module.exports = {
     },
 
     plugins: [
-        new ExtractTextPlugin({filename: 'app.bundle.css'}),
+        new ExtractTextPlugin({
+            filename: 'build/app.bundle.css',
+        }),
     ],
 
     // File extensions to support resolving

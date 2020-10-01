@@ -1,18 +1,16 @@
 {
   "compilerOptions": {
-    // No module system, concatenated file
     "module": "none",
-
-    // Set React as the JSX factory
     "jsx": "react",
-
-    // Target ES6 for more modern browsers
     "target": "es6",
 
-    // Include typings from built-in lib declarations
-    "lib": ["es2015", "dom", "dom.iterable"],
+    // Paths mapping and aliasing
+//    "baseUrl": "./",
+//    "paths": {
+//      "@components/*": ["./src/components/*"],
+//      "@styles/*": ["./src/styles/*"]
+//    },
 
-    // Include module source maps for debugging
-    "sourceMap": true
+    "lib": ["es2017", "dom", "dom.iterable"]
   }
 }
