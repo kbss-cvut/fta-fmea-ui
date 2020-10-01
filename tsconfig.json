@@ -5,11 +5,11 @@
     "target": "es6",
 
     // Paths mapping and aliasing
-//    "baseUrl": "./",
-//    "paths": {
-//      "@components/*": ["./src/components/*"],
-//      "@styles/*": ["./src/styles/*"]
-//    },
+    "baseUrl": "./",
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@styles/*": ["./src/styles/*"]
+    },
 
     "lib": ["es2017", "dom", "dom.iterable"]
   }

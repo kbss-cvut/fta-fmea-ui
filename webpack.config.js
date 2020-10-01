@@ -1,6 +1,7 @@
 "use strict";
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
     // Set debugging source maps to be "inline" for
@@ -44,6 +45,7 @@ module.exports = {
 
     // File extensions to support resolving
     resolve: {
-        extensions: [".ts", ".tsx", ".js"]
+        extensions: [".ts", ".tsx", ".js"],
+        plugins: [new TsconfigPathsPlugin({})]
     }
 };

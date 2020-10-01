@@ -1,9 +1,9 @@
 import * as React from "react";
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
-import './styles/App.scss';
-import Home from "./components/Home";
-import Login from "./components/Login"
+import '@styles/App.scss';
+import Home from "@components/Home";
+import Login from "@components/Login"
 
 const App = () => {
     return (
