@@ -3,14 +3,25 @@
     "module": "none",
     "jsx": "react",
     "target": "es6",
-
+    "moduleResolution": "node",
     // Paths mapping and aliasing
     "baseUrl": "./",
     "paths": {
-      "@components/*": ["./src/components/*"],
-      "@styles/*": ["./src/styles/*"]
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@styles/*": [
+        "./src/styles/*"
+      ]
     },
-
-    "lib": ["es2017", "dom", "dom.iterable"]
-  }
+    "lib": [
+      "es2017",
+      "dom",
+      "dom.iterable"
+    ]
+  },
+  "include": [
+    "src/*.ts",
+    "src/*.tsx"
+  ]
 }
