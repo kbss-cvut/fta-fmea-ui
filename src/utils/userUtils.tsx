@@ -1,4 +1,4 @@
-import {User} from "@models/UserContextProps";
+import {User} from "@models/userModel";
 
 const _userKey = "loggedUser"
 
@@ -20,6 +20,7 @@ export const getLoggedUser = (): User => {
     if (item === undefined) {
         return {
             username: undefined,
+            token: undefined,
             authenticated: false
         }
     }

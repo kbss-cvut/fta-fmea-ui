@@ -2,6 +2,7 @@
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
     // Set debugging source maps to be "inline" for
@@ -47,6 +48,7 @@ module.exports = {
         new ExtractTextPlugin({
             filename: 'build/app.bundle.css',
         }),
+        new Dotenv()
     ],
 
     // File extensions to support resolving

@@ -4,8 +4,13 @@ import {Face} from '@material-ui/icons'
 import {FormEvent, useContext, useState} from "react";
 import UserContext from "../../contexts/UserContext";
 import useStyles from "@components/login/Login.styles";
+import userService from "@services/userService";
+
+// TODO Register component
 
 const Login = () => {
+    console.log(process.env.BASE_API_URL)
+
     const classes = useStyles();
 
     const {setUser} = useContext(UserContext);
@@ -13,12 +18,22 @@ const Login = () => {
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
 
-    const handleSubmit = (e: FormEvent, setUser: Function) => {
+    const handleSubmit = async (e: FormEvent, setUser: Function) => {
         e.preventDefault();
 
-        // TODO call service, handle result...
-        setUser({
+        // TODO progress bar
+        // TODO pass setUser function to service?
+        const loginResponse = await userService.login({
             username: username,
+            password: password
+        })
+
+        // TODO handle errors?
+        console.log(`loginResponse - ${JSON.stringify(loginResponse)}`)
+
+        setUser({
+            username: loginResponse.username,
+            token: loginResponse.token,
             authenticated: true
         })
     }

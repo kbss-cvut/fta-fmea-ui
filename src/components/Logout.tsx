@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useContext, useEffect} from "react";
 import UserContext from "@contexts/UserContext";
-import {User} from "@models/UserContextProps";
+import {User} from "@models/userModel";
 
 const Logout = () => {
     const {setUser} = useContext(UserContext);

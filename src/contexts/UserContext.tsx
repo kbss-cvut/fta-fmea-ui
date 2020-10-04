@@ -1,5 +1,5 @@
 import * as React from "react";
-import {UserContextProps} from "@models/UserContextProps";
+import {UserContextProps} from "@models/userModel";
 import {setLoggedUser} from "@utils/userUtils";
 
 const UserContext = React.createContext<Partial<UserContextProps>>({

@@ -7,7 +7,7 @@ import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
 import UserContext from "@contexts/UserContext";
 import {useState} from "react";
-import {User} from "@models/UserContextProps";
+import {User} from "@models/userModel";
 import {getLoggedUser, setLoggedUser} from "@utils/userUtils";
 
 const AppRoutes = () => {
