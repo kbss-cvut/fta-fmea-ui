@@ -17,7 +17,13 @@ module.exports = {
     // By default the output directory is `dist`
     output: {
         path: __dirname + '/public',
-        filename: "build/bundle.js"
+        filename: "build/bundle.js",
+        publicPath: "/"
+    },
+
+    devServer: {
+        historyApiFallback: true,
+        publicPath: "/"
     },
 
     // Supported file loaders
