@@ -11,12 +11,12 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(2),
             margin: theme.spacing(2)
         },
+        textField: {
+            marginLeft: theme.spacing(1),
+            marginRight: theme.spacing(1)
+        },
         alert: {
             marginTop: theme.spacing(2)
-        },
-        link: {
-            textDecoration: 'none',
-            color: theme.palette.primary.light
         }
     }),
 );

@@ -14,6 +14,13 @@ interface UserLoginResponse {
     token: string,
 }
 
+interface UserRegisterRequest extends UserLoginRequest {
+}
+
+interface UserRegisterResponse {
+    uri: string
+}
+
 interface UserContextProps {
     user: User,
     setUser: Function
@@ -24,5 +31,7 @@ export {
     User,
     UserLoginRequest,
     UserLoginResponse,
+    UserRegisterRequest,
+    UserRegisterResponse,
     UserContextProps
 };
