@@ -19,6 +19,7 @@ export const getLoggedUser = (): User => {
 
     if (item === undefined) {
         return {
+            iri: undefined,
             username: undefined,
             token: undefined,
             authenticated: false
@@ -27,3 +28,9 @@ export const getLoggedUser = (): User => {
 
     return JSON.parse(item)
 }
+
+// export const authHeaders = () => {
+//     return {
+//         Authorization: `Bearer ${getLoggedUser().token}`
+//     }
+// }

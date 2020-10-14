@@ -4,7 +4,7 @@ import {Face} from '@material-ui/icons'
 import {FormEvent, useContext, useState} from "react";
 import UserContext from "../../contexts/UserContext";
 import useStyles from "@components/login/Login.styles";
-import userService from "@services/userService";
+import * as userService from "@services/userService";
 import {Alert} from "@material-ui/lab";
 import {Link} from "react-router-dom";
 

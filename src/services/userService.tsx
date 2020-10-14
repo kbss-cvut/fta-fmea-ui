@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {UserLoginRequest, UserLoginResponse, UserRegisterRequest, UserRegisterResponse} from "@models/userModel";
 
-const register = async (loginRequest: UserRegisterRequest): Promise<UserRegisterResponse> => {
+export const register = async (loginRequest: UserRegisterRequest): Promise<UserRegisterResponse> => {
     try {
         const response = await axios.post<UserRegisterResponse>(
             `${process.env.BASE_API_URL}/auth/register`,
@@ -15,7 +15,7 @@ const register = async (loginRequest: UserRegisterRequest): Promise<UserRegister
     }
 }
 
-const login = async (loginRequest: UserLoginRequest): Promise<UserLoginResponse> => {
+export const login = async (loginRequest: UserLoginRequest): Promise<UserLoginResponse> => {
     try {
         const response = await axios.post<UserLoginResponse>(
             `${process.env.BASE_API_URL}/auth/signin`,
@@ -28,12 +28,5 @@ const login = async (loginRequest: UserLoginRequest): Promise<UserLoginResponse>
         return undefined;
     }
 }
-
-const userService = {
-    register,
-    login
-}
-
-export default userService;
 
 // TODO handle retry for expired tokens

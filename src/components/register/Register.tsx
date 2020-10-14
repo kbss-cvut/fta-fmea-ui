@@ -3,7 +3,7 @@ import {Alert} from "@material-ui/lab";
 import * as React from "react";
 import useStyles from "./Register.styles";
 import {FormEvent, useState} from "react";
-import userService from "../../services/userService";
+import * as userService from "../../services/userService";
 import {useHistory, withRouter} from "react-router-dom";
 
 const Register = () => {

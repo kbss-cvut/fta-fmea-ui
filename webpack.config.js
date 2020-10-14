@@ -3,6 +3,7 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const path = require('path')
 
 module.exports = {
     // Set debugging source maps to be "inline" for
@@ -54,6 +55,9 @@ module.exports = {
     // File extensions to support resolving
     resolve: {
         extensions: [".ts", ".tsx", ".js"],
-        plugins: [new TsconfigPathsPlugin({})]
+        plugins: [new TsconfigPathsPlugin({})],
+        alias: {
+            'jsonld': path.resolve('./node_modules/jsonld/dist/jsonld.js'),
+        }
     }
 };
