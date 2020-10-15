@@ -31,8 +31,6 @@
     "@types/react-router-dom": "^5.1.5",
     "dotenv-webpack": "^3.0.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
-    "node-sass": "^4.14.1",
-    "sass-loader": "^10.0.2",
     "ts-loader": "^8.0.4",
     "tsconfig-paths-webpack-plugin": "^3.3.0",
     "webpack": "^4.44.2",
