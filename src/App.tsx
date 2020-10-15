@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import '@styles/App.scss';
-
 import {MuiThemeProvider} from "@material-ui/core";
 import AppRoutes from "@components/routes/AppRoutes";
 import createCustomMuiTheme from "@styles/App.styles";

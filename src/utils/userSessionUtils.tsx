@@ -29,8 +29,8 @@ export const getLoggedUser = (): User => {
     return JSON.parse(item)
 }
 
-// export const authHeaders = () => {
-//     return {
-//         Authorization: `Bearer ${getLoggedUser().token}`
-//     }
-// }
+export const authHeaders = () => {
+    return {
+        Authorization: `Bearer ${getLoggedUser().token}`
+    }
+}

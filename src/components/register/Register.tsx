@@ -10,9 +10,9 @@ const Register = () => {
     const classes = useStyles();
     const history = useHistory();
 
-    const [username, setUsername] = useState();
-    const [password, setPassword] = useState();
-    const [passwordConfirm, setPasswordConfirm] = useState();
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [passwordConfirm, setPasswordConfirm] = useState("");
     const [alertMessage, setAlertMessage] = useState("Incorrect Data");
     const [alertVisible, showAlert] = useState(false);
 
