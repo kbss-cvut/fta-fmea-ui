@@ -1,15 +1,16 @@
 import VocabularyUtils from "@utils/VocabularyUtils";
-import {User} from "@models/userModel";
+import {User, CONTEXT as USER_CONTEXT} from "@models/userModel";
 
-// TODO provide user context as well to parse 'authoredBy'?
-
-export const CONTEXT = {
+const ctx = {
     "iri": "@id",
     "name": VocabularyUtils.PREFIX + "hasName",
     "authoredBy": VocabularyUtils.PREFIX + "authoredBy",
-    "creationDate": VocabularyUtils.PREFIX + "creationDate",
+    "creationDate": VocabularyUtils.PREFIX + "hasCreationDate",
+    "functions": VocabularyUtils.PREFIX + "hasFunction",
     "types": "@type"
 };
+
+export const CONTEXT = Object.assign({}, USER_CONTEXT, ctx);
 
 export interface Component {
     iri: string,

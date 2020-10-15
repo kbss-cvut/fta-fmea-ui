@@ -36,24 +36,3 @@ export interface UserContextProps {
     user: User,
     setUser: Function
 }
-
-// TODO use JSON-LD etc.
-// export default class User implements UserData {
-//     public readonly iri: string;
-//     public readonly username: string;
-//     public readonly types: string[];
-//     protected readonly password?: string;
-//     protected readonly originalPassword?: string;
-//
-//     constructor(data: UserData | UserDataWithPassword) {
-//         this.iri = data.iri;
-//         this.firstName = data.firstName;
-//         this.lastName = data.lastName;
-//         this.username = data.username;
-//         this.types = Utils.sanitizeArray(data.types);
-//     }
-//
-//     public toJsonLd(): UserData {
-//         return Object.assign({}, this, {"@context": CONTEXT});
-//     }
-// }

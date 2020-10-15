@@ -1,6 +1,6 @@
 import Login from "../login/Login";
 import Dashboard from "../Dashboard";
-import {Redirect, Route, BrowserRouter as Router, Switch} from "react-router-dom";
+import {Redirect, Route, Router, Switch} from "react-router-dom";
 import * as React from "react";
 import Logout from "../Logout";
 import PublicRoute from "./PublicRoute";
@@ -10,6 +10,9 @@ import {useState} from "react";
 import {User} from "@models/userModel";
 import {getLoggedUser, setLoggedUser} from "@utils/userSessionUtils";
 import Register from "@components/register/Register";
+import {createBrowserHistory} from "history";
+
+export const appHistory = createBrowserHistory()
 
 const AppRoutes = () => {
     const [currentUser, setCurrentUser] = useState<User>(getLoggedUser());
@@ -20,7 +23,7 @@ const AppRoutes = () => {
 
     return (
         <UserContext.Provider value={{user: currentUser, setUser: updateLoggedUser}}>
-            <Router>
+            <Router history={appHistory}>
                 <Switch>
                     <PublicRoute restricted={true} component={Register} path="/register" exact/>
                     <PublicRoute restricted={true} component={Login} path="/login" exact/>
