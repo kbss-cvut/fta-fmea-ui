@@ -1,6 +1,15 @@
 import * as React from "react";
-import {Button, Paper, TextField, Grid, Container, Typography} from "@material-ui/core";
-import {Face} from '@material-ui/icons'
+import {
+    Button,
+    TextField,
+    Grid,
+    Container,
+    Typography,
+    CssBaseline,
+    Avatar
+} from "@material-ui/core";
+import {Link as MaterialLink} from '@material-ui/core';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {FormEvent, useContext, useState} from "react";
 import UserContext from "../../contexts/UserContext";
 import useStyles from "@components/login/Login.styles";
@@ -38,40 +47,63 @@ const Login = () => {
     }
 
     return (
-        <Container className={classes.root}>
-            <Paper className={classes.paper}>
-                <Typography variant="h4">Login</Typography>
-                <form onSubmit={(e) => handleSubmit(e, setUser)}>
-                    <Grid container justify="center">
+        <Container component="main" maxWidth="xs">
+            <CssBaseline/>
+            <div className={classes.paper}>
+                <Avatar className={classes.avatar}>
+                    <LockOutlinedIcon/>
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                    Sign in
+                </Typography>
+                <form className={classes.form} onSubmit={(e) => handleSubmit(e, setUser)} noValidate>
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="username"
+                        label="Username"
+                        name="username"
+                        autoFocus
+                        onChange={e => setUsername(e.target.value)}
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        type="password"
+                        id="password"
+                        onChange={e => setPassword(e.target.value)}
+                        autoComplete="current-password"
+                    />
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                    >
+                        Sign In
+                    </Button>
+                    <Grid container>
+                        {
+                            credentialsInvalid &&
+                            <Grid item xs>
+                                <Alert className={classes.alert} severity="error">Invalid Credentials</Alert>
+                            </Grid>
+                        }
                         <Grid item>
-                            <Face/>
+                            <MaterialLink href="#" variant="body2">
+                                <Link to="/register" className={classes.link}>Don't have an account? Sign Up</Link>
+                            </MaterialLink>
                         </Grid>
                     </Grid>
-                    <Grid container spacing={8}>
-                        <Grid item md={true} sm={true} xs={true}>
-                            <TextField id="username" label="Username" type="text"
-                                       onChange={e => setUsername(e.target.value)} fullWidth autoFocus
-                                       required/>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={8}>
-                        <Grid item md={true} sm={true} xs={true}>
-                            <TextField id="password" label="Password" type="password"
-                                       onChange={e => setPassword(e.target.value)} fullWidth required/>
-                        </Grid>
-                    </Grid>
-                    <Grid container justify="center" style={{marginTop: '10px'}}>
-                        <Button type="submit" variant="outlined" color="primary"
-                                style={{textTransform: "none"}}>Login</Button>
-                    </Grid>
-                    {
-                        credentialsInvalid &&
-                        <Alert className={classes.alert} severity="error">Invalid Credentials</Alert>
-                    }
                 </form>
-
-                <Link to="/register" className={classes.link}>Not registered yet?</Link>
-            </Paper>
+            </div>
         </Container>
     );
 }

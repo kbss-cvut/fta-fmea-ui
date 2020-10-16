@@ -1,10 +1,20 @@
-import {Button, Container, Grid, Paper, TextField, Typography} from "@material-ui/core";
+import {
+    Avatar,
+    Button,
+    Container,
+    CssBaseline,
+    Grid,
+    Link as MaterialLink,
+    TextField,
+    Typography
+} from "@material-ui/core";
 import {Alert} from "@material-ui/lab";
 import * as React from "react";
 import useStyles from "./Register.styles";
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {FormEvent, useState} from "react";
 import * as userService from "../../services/userService";
-import {useHistory, withRouter} from "react-router-dom";
+import {Link, useHistory, withRouter} from "react-router-dom";
 
 const Register = () => {
     const classes = useStyles();
@@ -41,38 +51,76 @@ const Register = () => {
     };
 
     return (
-        <Container className={classes.root}>
-            <Paper className={classes.paper}>
-                <Typography variant="h4">Register</Typography>
-                <form onSubmit={(e) => handleSubmit(e)}>
-                    <Grid container spacing={8}>
-                        <Grid item md={true} sm={true} xs={true}>
-                            <TextField id="username" label="Username" type="text"
-                                       onChange={e => setUsername(e.target.value)} fullWidth autoFocus required/>
+        <Container component="main" maxWidth="xs">
+            <CssBaseline/>
+            <div className={classes.paper}>
+                <Avatar className={classes.avatar}>
+                    <LockOutlinedIcon/>
+                </Avatar>
+                <Typography component="h1" variant="h5">
+                    Sign up
+                </Typography>
+                <form className={classes.form} noValidate onSubmit={(e) => handleSubmit(e)}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="username"
+                                label="Username"
+                                name="username"
+                                onChange={e => setUsername(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                name="password"
+                                label="Password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                                onChange={e => setPassword(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                name="passwordConfirmation"
+                                label="Confirm Password"
+                                type="password"
+                                id="passwordConfirmation"
+                                autoComplete="current-password"
+                                onChange={e => setPasswordConfirm(e.target.value)}
+                            />
                         </Grid>
                     </Grid>
-                    <Grid container spacing={8}>
-                        <Grid item md={true} sm={true} xs={true}>
-                            <TextField id="password" label="Password" type="password"
-                                       onChange={e => setPassword(e.target.value)} fullWidth required/>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}>
+                        Sign Up
+                    </Button>
+                    <Grid container justify="flex-end">
+                        <Grid item>
+                            <MaterialLink href="#" variant="body2">
+                                <Link to="/login" className={classes.link}>Already have an account? Sign in</Link>
+                            </MaterialLink>
                         </Grid>
-                    </Grid>
-                    <Grid container spacing={8}>
-                        <Grid item md={true} sm={true} xs={true}>
-                            <TextField id="passwordConfirm" label="Confirm Password" type="password"
-                                       onChange={e => setPasswordConfirm(e.target.value)} fullWidth required/>
-                        </Grid>
-                    </Grid>
-                    <Grid container justify="center" style={{marginTop: '10px'}}>
-                        <Button type="submit" variant="outlined" color="primary"
-                                style={{textTransform: "none"}}>Register</Button>
                     </Grid>
                     {
                         alertVisible &&
                         <Alert className={classes.alert} severity="error">{alertMessage}</Alert>
                     }
                 </form>
-            </Paper>
+            </div>
         </Container>
     );
 }
