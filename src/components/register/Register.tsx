@@ -3,8 +3,7 @@ import {
     Button,
     Container,
     CssBaseline,
-    Grid,
-    Link as MaterialLink,
+    Grid, Link as MaterialLink,
     TextField,
     Typography
 } from "@material-ui/core";
@@ -14,7 +13,7 @@ import useStyles from "./Register.styles";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {FormEvent, useState} from "react";
 import * as userService from "../../services/userService";
-import {Link, useHistory, withRouter} from "react-router-dom";
+import {Link as RouterLink, Link, useHistory, withRouter} from "react-router-dom";
 
 const Register = () => {
     const classes = useStyles();
@@ -49,6 +48,8 @@ const Register = () => {
             history.push("/login");
         }
     };
+
+    // TODO validate inputs - empty values can be submitted now
 
     return (
         <Container component="main" maxWidth="xs">
@@ -110,8 +111,8 @@ const Register = () => {
                     </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
-                            <MaterialLink href="#" variant="body2">
-                                <Link to="/login" className={classes.link}>Already have an account? Sign in</Link>
+                            <MaterialLink variant="body2" component={RouterLink} to={"/login"}>
+                                Already have an account? Sign in
                             </MaterialLink>
                         </Grid>
                     </Grid>

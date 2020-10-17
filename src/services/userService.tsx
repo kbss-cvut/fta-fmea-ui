@@ -1,11 +1,27 @@
-import {UserLoginRequest, UserLoginResponse, UserRegisterRequest, UserRegisterResponse} from "@models/userModel";
+import {
+    CONTEXT,
+    UserLoginRequest,
+    UserLoginResponse,
+    UserRegisterRequest,
+    UserRegisterResponse
+} from "@models/userModel";
 import axiosClient from "@services/utils/axiosUtils";
+import VocabularyUtils from "@utils/VocabularyUtils";
+import {JSONLD} from "@utils/constants";
+
 
 export const register = async (loginRequest: UserRegisterRequest): Promise<UserRegisterResponse> => {
     try {
+        const jsonldRequest = Object.assign(
+            {"@type": [VocabularyUtils.USER]}, loginRequest, {"@context": CONTEXT}
+        )
+
         const response = await axiosClient.post<UserRegisterResponse>(
             '/auth/register',
-            loginRequest
+            jsonldRequest,
+            {
+                headers: {'Content-type': JSONLD}
+            }
         )
 
         return response.data

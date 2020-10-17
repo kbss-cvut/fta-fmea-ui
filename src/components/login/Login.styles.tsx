@@ -23,10 +23,6 @@ const useStyles = makeStyles((theme: Theme) =>
         alert: {
             marginTop: theme.spacing(2)
         },
-        link: {
-            textDecoration: 'none',
-            color: theme.palette.primary.light
-        }
     }),
 );
 

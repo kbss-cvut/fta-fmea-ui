@@ -15,7 +15,7 @@ import UserContext from "../../contexts/UserContext";
 import useStyles from "@components/login/Login.styles";
 import * as userService from "@services/userService";
 import {Alert} from "@material-ui/lab";
-import {Link} from "react-router-dom";
+import {Link as RouterLink} from "react-router-dom";
 
 const Login = () => {
     const classes = useStyles();
@@ -97,8 +97,8 @@ const Login = () => {
                             </Grid>
                         }
                         <Grid item>
-                            <MaterialLink href="#" variant="body2">
-                                <Link to="/register" className={classes.link}>Don't have an account? Sign Up</Link>
+                            <MaterialLink variant="body2" component={RouterLink} to={"/register"}>
+                                Don't have an account? Sign Up
                             </MaterialLink>
                         </Grid>
                     </Grid>

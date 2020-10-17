@@ -11,8 +11,7 @@ export interface User {
     iri: string,
     username: string,
     token: string,
-    authenticated: boolean,
-    types?: string[]
+    authenticated: boolean
 }
 
 export interface UserLoginRequest {
