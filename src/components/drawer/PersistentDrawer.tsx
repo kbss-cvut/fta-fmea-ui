@@ -13,6 +13,7 @@ import useStyles from "@components/drawer/PersistentDrawer.styles";
 import EditorAppBar from "@components/editor/EditorAppBar";
 import {withRouter} from "react-router-dom";
 import DrawerComponentMenuList from "@components/drawer/DrawerComponentMenuList";
+import {Typography} from "@material-ui/core";
 
 const PersistentDrawer = () => {
     const classes = useStyles();
@@ -39,6 +40,9 @@ const PersistentDrawer = () => {
                 classes={{paper: classes.drawerPaper,}}
             >
                 <div className={classes.drawerHeader}>
+                    <Typography className={classes.drawerHeaderTitle} variant="h6" gutterBottom>
+                        Components
+                    </Typography>
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
                     </IconButton>

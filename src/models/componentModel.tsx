@@ -12,9 +12,12 @@ const ctx = {
 
 export const CONTEXT = Object.assign({}, USER_CONTEXT, ctx);
 
-export interface Component {
-    iri: string,
+export interface CreateComponent {
     name: string,
+}
+
+export interface Component extends CreateComponent{
+    iri: string,
     authoredBy: User,
     creationDate: Date,
     types?: string[]
