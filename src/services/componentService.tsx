@@ -1,6 +1,6 @@
 import {Component, CONTEXT, CreateComponent} from "@models/componentModel";
 import JsonLdUtils from "../utils/JsonLdUtils";
-import {authHeaders} from "@utils/userSessionUtils";
+import {authHeaders} from "@services/utils/authUtils";
 import axiosClient from "@services/utils/axiosUtils";
 import VocabularyUtils from "@utils/VocabularyUtils";
 

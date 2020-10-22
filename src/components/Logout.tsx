@@ -1,13 +1,13 @@
 import * as React from "react";
-import {useContext, useEffect} from "react";
-import UserContext from "@contexts/UserContext";
+import {useEffect} from "react";
 import {User} from "@models/userModel";
+import {useLoggedUser} from "@hooks/useLoggedUser";
 
 const Logout = () => {
-    const {setUser} = useContext(UserContext);
+    const [_, setLoggedUser]= useLoggedUser();
 
     useEffect(() => {
-        setUser({
+        setLoggedUser({
             authenticated: false
         } as User)
     }, []);

@@ -8,9 +8,9 @@ export const CONTEXT = {
 };
 
 export interface User {
-    iri: string,
-    username: string,
-    token: string,
+    iri?: string,
+    username?: string,
+    token?: string,
     authenticated: boolean
 }
 
@@ -29,9 +29,4 @@ export interface UserRegisterRequest extends UserLoginRequest {
 
 export interface UserRegisterResponse {
     uri: string
-}
-
-export interface UserContextProps {
-    user: User,
-    setUser: Function
 }

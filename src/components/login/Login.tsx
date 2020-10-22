@@ -11,19 +11,19 @@ import {
 import {Link as MaterialLink} from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {FormEvent, useContext, useState} from "react";
-import UserContext from "../../contexts/UserContext";
 import useStyles from "@components/login/Login.styles";
 import * as userService from "@services/userService";
 import {Alert} from "@material-ui/lab";
 import {Link as RouterLink} from "react-router-dom";
+import {useLoggedUser} from "@hooks/useLoggedUser";
 
 const Login = () => {
     const classes = useStyles();
 
-    const {setUser} = useContext(UserContext);
+    const [_, setLoggedUser]= useLoggedUser();
 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [username, setUsername] = useState<string>();
+    const [password, setPassword] = useState<string>();
     const [credentialsInvalid, setCredentialsInvalid] = useState(false);
 
     const handleSubmit = async (e: FormEvent, setUser: Function) => {
@@ -56,7 +56,7 @@ const Login = () => {
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
-                <form className={classes.form} onSubmit={(e) => handleSubmit(e, setUser)} noValidate>
+                <form className={classes.form} onSubmit={(e) => handleSubmit(e, setLoggedUser)} noValidate>
                     <TextField
                         variant="outlined"
                         margin="normal"

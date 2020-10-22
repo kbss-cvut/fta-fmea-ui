@@ -5,24 +5,17 @@ import * as React from "react";
 import Logout from "../Logout";
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
-import UserContext from "@contexts/UserContext";
 import {useState} from "react";
 import {User} from "@models/userModel";
-import {getLoggedUser, setLoggedUser} from "@utils/userSessionUtils";
 import Register from "@components/register/Register";
 import {createBrowserHistory} from "history";
+import {LoggedUserProvider} from "@hooks/useLoggedUser";
 
 export const appHistory = createBrowserHistory()
 
 const AppRoutes = () => {
-    const [currentUser, setCurrentUser] = useState<User>(getLoggedUser());
-    const updateLoggedUser = (user: User) => {
-        setLoggedUser(user)
-        setCurrentUser(user)
-    }
-
     return (
-        <UserContext.Provider value={{user: currentUser, setUser: updateLoggedUser}}>
+        <LoggedUserProvider>
             <Router history={appHistory}>
                 <Switch>
                     <PublicRoute restricted={true} component={Register} path="/register" exact/>
@@ -33,7 +26,7 @@ const AppRoutes = () => {
                     <Route path="*" render={() => <Redirect to="/dashboard"/>}/>
                 </Switch>
             </Router>
-        </UserContext.Provider>
+        </LoggedUserProvider>
     );
 };
 
