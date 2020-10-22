@@ -3,7 +3,6 @@ import JsonLdUtils from "../utils/JsonLdUtils";
 import {authHeaders} from "@utils/userSessionUtils";
 import axiosClient from "@services/utils/axiosUtils";
 import VocabularyUtils from "@utils/VocabularyUtils";
-import {RESPONSE_HEADERS} from "@utils/constants";
 
 export const findAll = async (): Promise<Component[]> => {
     try {

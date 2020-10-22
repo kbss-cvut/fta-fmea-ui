@@ -10,24 +10,22 @@ import {
     TextField
 } from "@material-ui/core";
 import * as componentService from "@services/componentService"
+import {useComponents} from "@hooks/useComponents";
 
-const CreateComponentDialog = ({handleComponentCreated, dialogOpen, handleCloseDialog}) => {
-    const [processing, setProcessing] = useState(false)
+const CreateComponentDialog = ({open, handleCloseDialog}) => {
     const [name, setName] = useState<string>()
+    const [_, addComponent] = useComponents()
 
     const handleCreate = async () => {
-        // TODO validate name
-        setProcessing(true)
+        // TODO validation
 
-        const newComponent = await componentService.create({name: name});
-
-        setProcessing(false)
-        handleComponentCreated(newComponent)
+        addComponent({name: name})
+        handleCloseDialog()
     }
 
     return (
         <div>
-            <Dialog open={dialogOpen} onClose={handleCloseDialog} aria-labelledby="form-dialog-title" maxWidth="md"
+            <Dialog open={open} onClose={handleCloseDialog} aria-labelledby="form-dialog-title" maxWidth="md"
                     fullWidth={true}>
                 <DialogTitle id="form-dialog-title">Create Component</DialogTitle>
                 <DialogContent>
@@ -38,7 +36,7 @@ const CreateComponentDialog = ({handleComponentCreated, dialogOpen, handleCloseD
                     <Button onClick={handleCloseDialog} color="secondary">
                         Cancel
                     </Button>
-                    <Button onClick={handleCreate} color="primary" disabled={processing}>
+                    <Button onClick={handleCreate} color="primary">
                         Create
                     </Button>
                 </DialogActions>
