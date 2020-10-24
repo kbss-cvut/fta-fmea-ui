@@ -1,24 +1,18 @@
 import VocabularyUtils from "@utils/VocabularyUtils";
-import {User, CONTEXT as USER_CONTEXT} from "@models/userModel";
+import {AuthoredModel, CONTEXT as AUTHORED_CONTEXT} from "@models/authoredModel";
+import {Function, CONTEXT as FUNCTION_CONTEXT} from "@models/functionModel";
 
 const ctx = {
-    "iri": "@id",
     "name": VocabularyUtils.PREFIX + "hasName",
-    "authoredBy": VocabularyUtils.PREFIX + "authoredBy",
-    "creationDate": VocabularyUtils.PREFIX + "hasCreationDate",
     "functions": VocabularyUtils.PREFIX + "hasFunction",
-    "types": "@type"
 };
 
-export const CONTEXT = Object.assign({}, USER_CONTEXT, ctx);
+export const CONTEXT = Object.assign({}, ctx, AUTHORED_CONTEXT, FUNCTION_CONTEXT);
 
 export interface CreateComponent {
     name: string,
 }
 
-export interface Component extends CreateComponent{
-    iri: string,
-    authoredBy: User,
-    creationDate: Date,
-    types?: string[]
+export interface Component extends CreateComponent, AuthoredModel {
+    functions?: Function[]
 }

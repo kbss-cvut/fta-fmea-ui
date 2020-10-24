@@ -1,19 +1,20 @@
 import VocabularyUtils from "@utils/VocabularyUtils";
+import {AbstractModel, CONTEXT as ABSTRACT_CONTEXT} from "@models/abstractModel";
 
-export const CONTEXT = {
-    "iri": "@id",
+const ctx = {
     "username": VocabularyUtils.PREFIX + "hasUsername",
     "password": VocabularyUtils.PREFIX + "hasPassword",
-    "types": "@type"
 };
 
-export interface User {
-    iri?: string,
+export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT);
+
+export interface User extends AbstractModel{
     username?: string,
     token?: string,
     authenticated: boolean
 }
 
+// TODO tune types
 export interface UserLoginRequest {
     username: string,
     password: string,
