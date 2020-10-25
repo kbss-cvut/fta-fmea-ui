@@ -1,23 +1,25 @@
 import * as React from "react";
 
-import {Button, IconButton, TextField} from "@material-ui/core";
+import {IconButton, TextField} from "@material-ui/core";
 import useStyles from "./FailureModePickerDialog.styles";
 import {Autocomplete} from "@material-ui/lab";
 import {useComponents} from "@hooks/useComponents";
-import {useState} from "react";
 import AddIcon from "@material-ui/icons/Add";
 import {Component} from "@models/componentModel";
+import {Controller, useForm} from "react-hook-form";
+import {schema} from "@components/dialog/failureMode/content/FunctionPickerDialog.schema";
 
 const ComponentPickerDialog = ({setSelectedComponent}) => {
     const classes = useStyles()
 
     const [components, addComponent] = useComponents()
-    const [name, setName] = useState<string>('');
+    const {register, handleSubmit, errors, reset, control} = useForm({
+        resolver: schema
+    });
 
-    const _handleCreateComponent = () => {
-        // TODO validation
-        addComponent({name: name})
-        setName('')
+    const _handleCreateComponent = (values: any) => {
+        addComponent({name: values.name})
+        reset(values)
     }
 
     return (
@@ -31,10 +33,11 @@ const ComponentPickerDialog = ({setSelectedComponent}) => {
             />
 
             <div className={classes.addButtonDiv}>
-                <TextField autoFocus margin="dense" id="name" label="Component Name" type="text"
-                           onChange={(e) => setName(e.target.value)} value={name}/>
+                <Controller as={TextField} autoFocus margin="dense" id="name" label="Component Name"
+                            type="text" fullWidth name="name" control={control} defaultValue=""
+                            inputRef={register} error={!!errors.name} helperText={errors.name?.message}/>
                 <IconButton className={classes.addButton} color="primary" component="span"
-                            onClick={_handleCreateComponent}>
+                            onClick={handleSubmit(_handleCreateComponent)}>
                     <AddIcon/>
                 </IconButton>
             </div>

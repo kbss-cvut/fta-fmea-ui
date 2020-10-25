@@ -26,7 +26,7 @@ const FailureModeDialog = ({open, handleCloseDialog}) => {
     return (
         <div>
             <Dialog open={open} onClose={handleCloseDialog} aria-labelledby="form-dialog-title" maxWidth="md"
-                    fullWidth={true}>
+                    fullWidth>
                 <DialogTitle id="form-dialog-title">Create Failure Mode</DialogTitle>
                 <DialogContent>
                     <div className={classes.contentDiv}>
@@ -38,8 +38,8 @@ const FailureModeDialog = ({open, handleCloseDialog}) => {
                     </div>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCloseDialog} color="primary">
-                        Done
+                    <Button onClick={handleCloseDialog} color="secondary">
+                        Cancel
                     </Button>
                 </DialogActions>
             </Dialog>

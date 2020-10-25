@@ -7,35 +7,35 @@ import {CreateFailureMode} from "@models/failureModeModel";
 import {CreateTreeNode, TreeNodeType} from "@models/treeNodeModel";
 import {EventType, FaultEvent} from "@models/eventModel";
 import VocabularyUtils from "@utils/VocabularyUtils";
-import {useState} from "react";
 import {RiskPriorityNumber} from "@models/rpnModel";
+import {useForm} from 'react-hook-form';
+import {schema} from "@components/dialog/failureMode/content/FailureModeCreateDialog.schema";
 
 const FailureModeCreateDialog = ({selectedFunction, functionSelected}) => {
     const classes = useStyles()
     const [_, addFailureMode] = useFailureModes()
 
-    const [name, setName] = useState<string>()
-    const [description, setDescription] = useState<string>()
-    const [probability, setProbability] = useState<number>()
-    const [severity, setSeverity] = useState<number>()
-    const [detection, setDetection] = useState<number>()
+    const {register, handleSubmit, errors} = useForm({
+        resolver: schema
+    });
 
-    const handleCreateFailureMode = () => {
+    const handleCreateFailureMode = (values: any) => {
+        console.log(`handleCreateFailureMode- ${JSON.stringify(values)}`)
         const failureMode = {
             rpn: {
-                probability: probability,
-                severity: severity,
-                detection: detection,
+                probability: values.probability,
+                severity: values.severity,
+                detection: values.detection,
                 "@type": [VocabularyUtils.RPN]
             } as RiskPriorityNumber,
             manifestingNode: {
                 nodeType: TreeNodeType.EVENT,
                 event: {
                     eventType: EventType.BASIC,
-                    name: name,
-                    description: description,
+                    name: values.name,
+                    description: values.description,
                     "@type": [VocabularyUtils.FAULT_EVENT],
-                    probability: probability,
+                    probability: values.probability,
                 } as FaultEvent,
                 "@type": [VocabularyUtils.TREE_NODE],
             } as CreateTreeNode
@@ -45,19 +45,22 @@ const FailureModeCreateDialog = ({selectedFunction, functionSelected}) => {
 
     return (
         <div className={classes.divForm}>
-            <TextField disabled={!functionSelected} autoFocus margin="dense" label="Name" type="text" fullWidth
-                       onChange={(e) => setName(e.target.value)}/>
-            <TextField disabled={!functionSelected} margin="dense" label="Description" type="text" fullWidth
-                       onChange={(e) => setDescription(e.target.value)}/>
+            <TextField disabled={!functionSelected} autoFocus margin="dense" label="Name" name="name" type="text"
+                       fullWidth inputRef={register} error={!!errors.name} helperText={errors.name?.message}/>
+            <TextField disabled={!functionSelected} margin="dense" label="Description" type="text" name="description"
+                       fullWidth inputRef={register} error={!!errors.description} helperText={errors.description?.message}/>
             <Box className={classes.rpnBox}>
-                <TextField disabled={!functionSelected} label="Probability" type="number"
-                           onChange={(e) => setProbability(parseFloat(e.target.value))}/>
-                <TextField disabled={!functionSelected} label="Severity" type="number"
-                           onChange={(e) => setSeverity(parseFloat(e.target.value))}/>
-                <TextField disabled={!functionSelected} label="Detection" type="number"
-                           onChange={(e) => setDetection(parseFloat(e.target.value))}/>
+                <TextField disabled={!functionSelected} label="Probability" type="number" name="probability"
+                           InputProps={{inputProps: {min: 0, max: 1, step: 0.01}}}
+                           inputRef={register} error={!!errors.probability} helperText={errors.probability?.message}/>
+                <TextField disabled={!functionSelected} label="Severity" type="number" name="severity"
+                           InputProps={{inputProps: {min: 0, max: 10, step: 1}}}
+                           inputRef={register} error={!!errors.severity} helperText={errors.probability?.severity}/>
+                <TextField disabled={!functionSelected} label="Detection" type="number" name="detection"
+                           InputProps={{inputProps: {min: 0, max: 10, step: 1}}}
+                           inputRef={register} error={!!errors.detection} helperText={errors.probability?.detection}/>
             </Box>
-            <Button color="primary" fullWidth onClick={handleCreateFailureMode}>
+            <Button color="primary" fullWidth onClick={handleSubmit(handleCreateFailureMode)}>
                 Create Failure Mode
             </Button>
         </div>

@@ -11,36 +11,32 @@ import {Alert} from "@material-ui/lab";
 import * as React from "react";
 import useStyles from "./Register.styles";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import {FormEvent, useState} from "react";
+import {useState} from "react";
 import * as userService from "../../services/userService";
-import {Link as RouterLink, Link, useHistory, withRouter} from "react-router-dom";
+import {Link as RouterLink, useHistory, withRouter} from "react-router-dom";
+import {useForm} from 'react-hook-form';
+import {schema} from "@components/register/Register.schema";
 
 const Register = () => {
     const classes = useStyles();
     const history = useHistory();
 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [passwordConfirm, setPasswordConfirm] = useState("");
     const [alertMessage, setAlertMessage] = useState("Incorrect Data");
     const [alertVisible, showAlert] = useState(false);
 
-    const handleSubmit = async (e: FormEvent) => {
-        e.preventDefault();
+    const {register, handleSubmit, errors} = useForm({
+        resolver: schema
+    });
 
-        if (password !== passwordConfirm) {
-            setAlertMessage("Passwords do not match!")
-            showAlert(true);
-            return;
-        }
-
+    const onSubmit = async (values: any) => {
+        console.log(values)
         const registerResponse = await userService.register({
-            username: username,
-            password: password
+            username: values.username,
+            password: values.password
         });
 
         if (!registerResponse) {
-            setAlertMessage("Registration Failed, try again!")
+            setAlertMessage("Registration failed, try again!")
             showAlert(true);
             return;
         } else {
@@ -48,8 +44,6 @@ const Register = () => {
             history.push("/login");
         }
     };
-
-    // TODO validate inputs - empty values can be submitted now
 
     return (
         <Container component="main" maxWidth="xs">
@@ -61,43 +55,46 @@ const Register = () => {
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>
-                <form className={classes.form} noValidate onSubmit={(e) => handleSubmit(e)}>
+                <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
+                                inputRef={register}
+                                error={!!errors.username}
+                                helperText={errors.username?.message}
                                 variant="outlined"
-                                required
                                 fullWidth
                                 id="username"
                                 label="Username"
                                 name="username"
-                                onChange={e => setUsername(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
+                                inputRef={register}
+                                error={!!errors.password}
+                                helperText={errors.password?.message}
                                 variant="outlined"
-                                required
                                 fullWidth
                                 name="password"
                                 label="Password"
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
-                                onChange={e => setPassword(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
+                                inputRef={register}
+                                error={!!errors.passwordConfirmation}
+                                helperText={errors.passwordConfirmation?.message}
                                 variant="outlined"
-                                required
                                 fullWidth
                                 name="passwordConfirmation"
                                 label="Confirm Password"
                                 type="password"
                                 id="passwordConfirmation"
                                 autoComplete="current-password"
-                                onChange={e => setPasswordConfirm(e.target.value)}
                             />
                         </Grid>
                     </Grid>

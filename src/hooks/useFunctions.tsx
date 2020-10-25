@@ -28,7 +28,6 @@ export const FunctionsProvider = ({children, componentUri}: FunctionProviderProp
     }
 
     useEffect(() => {
-        console.log(`FunctionsProvider - ${componentUri} - fetchFunctions`)
         const fetchFunctions = async () => {
             if(componentUri) {
                 const functions = await componentService.functions(componentUri);
