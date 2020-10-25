@@ -10,7 +10,7 @@ const ctx = {
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT);
 
 export interface RiskPriorityNumber extends AbstractModel {
-    probability: number,
-    severity: number,
-    detection: number
+    probability?: number,
+    severity?: number,
+    detection?: number
 }

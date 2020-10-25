@@ -8,6 +8,7 @@ const ctx = {
     "probability": VocabularyUtils.PREFIX + "hasProbability",
     "takenAction": VocabularyUtils.PREFIX + "isPreventedBy",
     "gateType": VocabularyUtils.PREFIX + "hasGateType",
+    "eventType": VocabularyUtils.PREFIX + "hasFaultEventType",
 };
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT);

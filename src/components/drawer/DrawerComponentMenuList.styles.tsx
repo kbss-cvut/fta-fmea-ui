@@ -10,9 +10,6 @@ const useStyles = makeStyles((theme: Theme) =>
         componentButton: {
             margin: theme.spacing(2, 2, 0)
         },
-        treeItem: {
-            margin: theme.spacing(1, 0)
-        }
     })
 );
 

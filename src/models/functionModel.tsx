@@ -9,7 +9,10 @@ const ctx = {
 
 export const CONTEXT = Object.assign({}, ABSTRACT_CONTEXT, FAILURE_MODE_CONTEXT, ctx);
 
-export interface Function extends AbstractModel {
+export interface CreateFunction extends AbstractModel {
     name: string,
+}
+
+export interface Function extends CreateFunction {
     failureModes: FailureMode[],
 }

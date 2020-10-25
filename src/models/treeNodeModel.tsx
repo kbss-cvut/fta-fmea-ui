@@ -1,6 +1,6 @@
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {AbstractModel, CONTEXT as ABSTRACT_CONTEXT} from "@models/abstractModel";
-import {Event, CONTEXT as EVENT_CONTEXT} from "@models/eventModel";
+import {Event, Gate, CONTEXT as EVENT_CONTEXT} from "@models/eventModel";
 
 const ctx = {
     "parent": VocabularyUtils.PREFIX + "hasParent",
@@ -16,9 +16,12 @@ export enum TreeNodeType {
     GATE = "GATE",
 }
 
-export interface TreeNode extends AbstractModel {
-    parent: TreeNode,
-    children: TreeNode[],
+export interface CreateTreeNode extends AbstractModel {
     nodeType: TreeNodeType,
     event: Event
+}
+
+export interface TreeNode<T extends Event> extends CreateTreeNode {
+    children: TreeNode<T>[],
+    nodeType: TreeNodeType,
 }

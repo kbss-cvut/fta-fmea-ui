@@ -14,7 +14,7 @@ import EditorAppBar from "@components/editor/EditorAppBar";
 import {withRouter} from "react-router-dom";
 import DrawerComponentMenuList from "@components/drawer/DrawerComponentMenuList";
 import {Typography} from "@material-ui/core";
-import {ComponentsProvider} from "@hooks/useComponents";
+import {FailureModesProvider} from "@hooks/useFailureModes";
 
 const PersistentDrawer = () => {
     const classes = useStyles();
@@ -42,16 +42,16 @@ const PersistentDrawer = () => {
             >
                 <div className={classes.drawerHeader}>
                     <Typography className={classes.drawerHeaderTitle} variant="h6" gutterBottom>
-                        Components
+                        Failure Modes
                     </Typography>
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
                     </IconButton>
                 </div>
                 <Divider/>
-                <ComponentsProvider>
+                <FailureModesProvider>
                     <DrawerComponentMenuList/>
-                </ComponentsProvider>
+                </FailureModesProvider>
             </Drawer>
             <main className={clsx(classes.content, {[classes.contentShift]: open,})}>
                 <DrawerContent/>

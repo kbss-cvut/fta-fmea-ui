@@ -1,11 +1,12 @@
 import * as React from "react";
 import {createContext, useContext, useEffect, useState} from "react";
 
-import {FailureMode} from "@models/failureModeModel";
+import {CreateFailureMode, FailureMode} from "@models/failureModeModel";
 import * as failureModeService from "@services/failureModeService"
+import * as functionService from "@services/functionService"
 
 
-type failureModeContextType = [FailureMode[], (failureMode: FailureMode) => void];
+type failureModeContextType = [FailureMode[], (functionIri: string, failureMode: CreateFailureMode) => void];
 
 export const failureModesContext = createContext<failureModeContextType>(null!);
 
@@ -21,15 +22,14 @@ type FailureModesProviderProps = {
 export const FailureModesProvider = ({children}: FailureModesProviderProps) => {
     const [_failureModes, _setFailureModes] = useState<FailureMode[]>([]);
 
-    const addFailureMode = async (failureMode: FailureMode) => {
-        const newFailureMode = await failureModeService.create(failureMode)
+    const addFailureMode = async (functionIri: string, failureMode: CreateFailureMode) => {
+        const newFailureMode = await functionService.addFailureMode(functionIri, failureMode)
         _setFailureModes([..._failureModes, newFailureMode])
     }
 
     useEffect(() => {
         const fetchFailureModes = async () => {
-            const failureModes = await failureModeService.findAll();
-            _setFailureModes(failureModes)
+            _setFailureModes(await failureModeService.findAll())
         }
 
         fetchFailureModes()
