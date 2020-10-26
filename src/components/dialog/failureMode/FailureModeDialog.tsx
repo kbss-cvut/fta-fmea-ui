@@ -14,7 +14,6 @@ import {Function} from "@models/functionModel";
 import {FunctionsProvider} from "@hooks/useFunctions";
 import {DialogTitle} from "@components/dialog/custom/DialogTitle";
 import {DialogContent} from "@components/dialog/custom/DialogContent";
-import {DialogActions} from "@components/dialog/custom/DialogActions";
 
 const FailureModeDialog = ({open, handleCloseDialog}) => {
     const classes = useStyles()
@@ -31,16 +30,14 @@ const FailureModeDialog = ({open, handleCloseDialog}) => {
                     <div className={classes.contentDiv}>
                         <ComponentPickerDialog setSelectedComponent={setSelectedComponent}/>
                         <FunctionsProvider componentUri={selectedComponent ? selectedComponent.iri : undefined}>
-                            <FunctionPickerDialog setSelectedFunction={setSelectedFunction} componentSelected={!!selectedComponent}/>
+                            <FunctionPickerDialog setSelectedFunction={setSelectedFunction}
+                                                  componentSelected={!!selectedComponent}/>
                         </FunctionsProvider>
-                        <FailureModeCreateDialog selectedFunction={selectedFunction} functionSelected={!!selectedFunction}/>
+                        <FailureModeCreateDialog selectedFunction={selectedFunction}
+                                                 functionSelected={!!selectedFunction}
+                                                 handleClose={handleCloseDialog}/>
                     </div>
                 </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleCloseDialog} color="secondary">
-                        Cancel
-                    </Button>
-                </DialogActions>
             </Dialog>
         </div>
     );

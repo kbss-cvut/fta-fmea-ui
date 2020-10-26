@@ -12,6 +12,11 @@ const useStyles = makeStyles((theme: Theme) =>
         addButton: {
             alignSelf: 'flex-end'
         },
+        createButtonDiv: {
+            display: 'flex',
+            justifyContent: 'flex-end',
+            padding: theme.spacing(2, 0, 0)
+        },
         rpnBox: {
             display: 'flex',
             gap: '1em'

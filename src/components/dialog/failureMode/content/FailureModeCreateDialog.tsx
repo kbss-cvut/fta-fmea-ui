@@ -1,17 +1,16 @@
 import * as React from "react";
 
 import {Box, Button, TextField} from "@material-ui/core";
-import useStyles from "./FailureModePickerDialog.styles";
 import {useFailureModes} from "@hooks/useFailureModes";
 import {CreateFailureMode} from "@models/failureModeModel";
 import {CreateTreeNode, TreeNodeType} from "@models/treeNodeModel";
 import {EventType, FaultEvent} from "@models/eventModel";
 import VocabularyUtils from "@utils/VocabularyUtils";
-import {RiskPriorityNumber} from "@models/rpnModel";
 import {useForm} from 'react-hook-form';
 import {schema} from "@components/dialog/failureMode/content/FailureModeCreateDialog.schema";
+import useStyles from "@components/dialog/failureMode/content/FailureModeDialogComponent.styles";
 
-const FailureModeCreateDialog = ({selectedFunction, functionSelected}) => {
+const FailureModeCreateDialog = ({selectedFunction, functionSelected, handleClose}) => {
     const classes = useStyles()
     const [_, addFailureMode] = useFailureModes()
 
@@ -20,7 +19,6 @@ const FailureModeCreateDialog = ({selectedFunction, functionSelected}) => {
     });
 
     const handleCreateFailureMode = (values: any) => {
-        console.log(`handleCreateFailureMode- ${JSON.stringify(values)}`)
         const failureMode = {
             manifestingNode: {
                 nodeType: TreeNodeType.EVENT,
@@ -39,7 +37,9 @@ const FailureModeCreateDialog = ({selectedFunction, functionSelected}) => {
                 "@type": [VocabularyUtils.TREE_NODE],
             } as CreateTreeNode
         } as CreateFailureMode
+
         addFailureMode(selectedFunction.iri, failureMode)
+        handleClose()
     }
 
     return (
@@ -59,9 +59,11 @@ const FailureModeCreateDialog = ({selectedFunction, functionSelected}) => {
                            InputProps={{inputProps: {min: 0, max: 10, step: 1}}}
                            inputRef={register} error={!!errors.detection} helperText={errors.probability?.detection}/>
             </Box>
-            <Button color="primary" fullWidth onClick={handleSubmit(handleCreateFailureMode)}>
-                Create Failure Mode
-            </Button>
+            <div className={classes.createButtonDiv}>
+                <Button color="primary" onClick={handleSubmit(handleCreateFailureMode)}>
+                    Create Failure Mode
+                </Button>
+            </div>
         </div>
     );
 }

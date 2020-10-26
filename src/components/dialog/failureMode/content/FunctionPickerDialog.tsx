@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import {Box, IconButton, TextField} from "@material-ui/core";
-import useStyles from "./FailureModePickerDialog.styles";
+import useStyles from "./FailureModeDialogComponent.styles";
 import {useFunctions} from "@hooks/useFunctions";
 import {Autocomplete} from "@material-ui/lab";
 import {Function} from "@models/functionModel";
