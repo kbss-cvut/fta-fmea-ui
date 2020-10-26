@@ -19,11 +19,11 @@ axiosClient.interceptors.response.use(
 
 export const axiosSource = axios.CancelToken.source();
 
-const cancellingInterceptor = config => {
-    config.cancelToken = axiosSource.token;
-    return config;
-};
-
-axiosClient.interceptors.request.use(cancellingInterceptor)
+axios.interceptors.request.use((request) => {
+    request.cancelToken = axiosSource.token
+    return request;
+}, (error) => {
+    return Promise.reject(error);
+});
 
 export default axiosClient;

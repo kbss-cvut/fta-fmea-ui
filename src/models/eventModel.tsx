@@ -1,17 +1,18 @@
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {AbstractModel, CONTEXT as ABSTRACT_CONTEXT} from "@models/abstractModel";
 import {TakenAction} from "@models/takenActionModel";
+import {CONTEXT as RPN_CONTEXT, RiskPriorityNumber} from "@models/rpnModel";
 
 const ctx = {
     "name": VocabularyUtils.PREFIX + "hasName",
     "description": VocabularyUtils.PREFIX + "hasDescription",
-    "probability": VocabularyUtils.PREFIX + "hasProbability",
     "takenAction": VocabularyUtils.PREFIX + "isPreventedBy",
     "gateType": VocabularyUtils.PREFIX + "hasGateType",
     "eventType": VocabularyUtils.PREFIX + "hasFaultEventType",
+    "rpn": VocabularyUtils.PREFIX + "hasRPN",
 };
 
-export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT);
+export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, RPN_CONTEXT);
 
 export interface Event extends AbstractModel {
 }
@@ -28,7 +29,7 @@ export interface FaultEvent extends Event {
     eventType: EventType,
     name: string,
     description?: string,
-    probability?: number,
+    rpn: RiskPriorityNumber,
     takenAction?: TakenAction
 }
 

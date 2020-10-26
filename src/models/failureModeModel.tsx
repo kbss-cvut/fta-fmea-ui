@@ -7,21 +7,18 @@ import {FaultEvent} from "@models/eventModel";
 import {AbstractModel} from "@models/abstractModel";
 
 const ctx = {
-    "rpn": VocabularyUtils.PREFIX + "hasRPN",
     "manifestingNode": VocabularyUtils.PREFIX + "isManifestedBy",
     "mitigation": VocabularyUtils.PREFIX + "isMitigatedBy",
 };
 
-export const CONTEXT = Object.assign({}, ctx, AUTHORED_CONTEXT, RPN_CONTEXT, TREE_NODE_CONTEXT, MITIGATION_CONTEXT);
+export const CONTEXT = Object.assign({}, ctx, AUTHORED_CONTEXT, TREE_NODE_CONTEXT, MITIGATION_CONTEXT);
 
 export interface CreateFailureMode extends AbstractModel {
-    rpn: RiskPriorityNumber,
     manifestingNode: CreateTreeNode,
     mitigation?: Mitigation[]
 }
 
 export interface FailureMode extends AuthoredModel {
-    rpn: RiskPriorityNumber,
     manifestingNode: TreeNode<FaultEvent>,
     mitigation?: Mitigation[]
 }

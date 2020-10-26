@@ -22,20 +22,19 @@ const FailureModeCreateDialog = ({selectedFunction, functionSelected}) => {
     const handleCreateFailureMode = (values: any) => {
         console.log(`handleCreateFailureMode- ${JSON.stringify(values)}`)
         const failureMode = {
-            rpn: {
-                probability: values.probability,
-                severity: values.severity,
-                detection: values.detection,
-                "@type": [VocabularyUtils.RPN]
-            } as RiskPriorityNumber,
             manifestingNode: {
                 nodeType: TreeNodeType.EVENT,
                 event: {
                     eventType: EventType.BASIC,
                     name: values.name,
                     description: values.description,
+                    rpn: {
+                        probability: values.probability,
+                        severity: values.severity,
+                        detection: values.detection,
+                        "@type": [VocabularyUtils.RPN]
+                    },
                     "@type": [VocabularyUtils.FAULT_EVENT],
-                    probability: values.probability,
                 } as FaultEvent,
                 "@type": [VocabularyUtils.TREE_NODE],
             } as CreateTreeNode
