@@ -4,10 +4,6 @@ import {useState} from "react";
 import {
     Button,
     Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    TextField
 } from "@material-ui/core";
 import useStyles from "./FailureModeDialog.styles";
 import ComponentPickerDialog from "@components/dialog/failureMode/content/ComponentPickerDialog";
@@ -16,6 +12,9 @@ import FailureModeCreateDialog from "@components/dialog/failureMode/content/Fail
 import {Component} from "@models/componentModel";
 import {Function} from "@models/functionModel";
 import {FunctionsProvider} from "@hooks/useFunctions";
+import {DialogTitle} from "@components/dialog/custom/DialogTitle";
+import {DialogContent} from "@components/dialog/custom/DialogContent";
+import {DialogActions} from "@components/dialog/custom/DialogActions";
 
 const FailureModeDialog = ({open, handleCloseDialog}) => {
     const classes = useStyles()
@@ -27,8 +26,8 @@ const FailureModeDialog = ({open, handleCloseDialog}) => {
         <div>
             <Dialog open={open} onClose={handleCloseDialog} aria-labelledby="form-dialog-title" maxWidth="md"
                     fullWidth>
-                <DialogTitle id="form-dialog-title">Create Failure Mode</DialogTitle>
-                <DialogContent>
+                <DialogTitle id="form-dialog-title" onClose={handleCloseDialog}>Create Failure Mode</DialogTitle>
+                <DialogContent dividers>
                     <div className={classes.contentDiv}>
                         <ComponentPickerDialog setSelectedComponent={setSelectedComponent}/>
                         <FunctionsProvider componentUri={selectedComponent ? selectedComponent.iri : undefined}>
