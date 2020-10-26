@@ -10,13 +10,15 @@ import {AccountCircle} from "@material-ui/icons";
 import {Menu, MenuItem} from "@material-ui/core";
 import {FormEvent} from "react";
 import {useHistory} from "react-router-dom";
+import {useDrawerOpen} from "@hooks/useDrawerOpen";
 
-const EditorAppBar = ({handleDrawerOpen, drawerOpen}) => {
+const EditorAppBar = () => {
     const classes = useStyles();
     const history = useHistory();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const isMenuOpen = Boolean(anchorEl);
+    const [open, setOpen] = useDrawerOpen();
 
     const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -53,14 +55,14 @@ const EditorAppBar = ({handleDrawerOpen, drawerOpen}) => {
         <div>
             <AppBar
                 position="fixed"
-                className={clsx(classes.appBar, {[classes.appBarShift]: drawerOpen,})}>
+                className={clsx(classes.appBar, {[classes.appBarShift]: open,})}>
                 <Toolbar>
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
-                        onClick={handleDrawerOpen}
+                        onClick={() => setOpen(true)}
                         edge="start"
-                        className={clsx(classes.menuButton, drawerOpen && classes.hide)}
+                        className={clsx(classes.menuButton, open && classes.hide)}
                     >
                         <MenuIcon/>
                     </IconButton>

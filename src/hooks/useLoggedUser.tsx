@@ -1,6 +1,8 @@
 import * as React from "react";
 import {createContext, useContext, useState} from "react";
 import {User} from "@models/userModel";
+import {STORAGE_KEYS} from "@utils/constants";
+import {ChildrenProps} from "@utils/hookUtils";
 
 type userContextType = [User, (user: User) => void];
 
@@ -11,9 +13,8 @@ export const useLoggedUser = () => {
     return [loggedUser, setLoggedUser] as const;
 }
 
-const _userKey = "loggedUser"
 export const getLoggedUser = (): User => {
-    const item = localStorage.getItem(_userKey);
+    const item = localStorage.getItem(STORAGE_KEYS.USER);
 
     if (!item) {
         return {
@@ -24,18 +25,14 @@ export const getLoggedUser = (): User => {
     return JSON.parse(item)
 }
 
-type LoggedUserProviderProps = {
-    children: React.ReactNode;
-};
-
-export const LoggedUserProvider = ({children}: LoggedUserProviderProps) => {
+export const LoggedUserProvider = ({children}: ChildrenProps) => {
     const [_user, _setLoggedUser] = useState<User>(getLoggedUser());
 
     const setLoggedUser = async (user: User) => {
-        localStorage.removeItem(_userKey)
+        localStorage.removeItem(STORAGE_KEYS.USER)
 
         if (user.authenticated) {
-            localStorage.setItem(_userKey, JSON.stringify(user))
+            localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user))
         }
         _setLoggedUser(user)
     }

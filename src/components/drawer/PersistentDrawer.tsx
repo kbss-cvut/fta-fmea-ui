@@ -8,31 +8,24 @@ import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import DrawerContent from "./DrawerContent";
-import {useState} from "react";
 import useStyles from "@components/drawer/PersistentDrawer.styles";
 import EditorAppBar from "@components/editor/EditorAppBar";
 import {withRouter} from "react-router-dom";
 import DrawerComponentMenuList from "@components/drawer/DrawerComponentMenuList";
 import {Typography} from "@material-ui/core";
 import {FailureModesProvider} from "@hooks/useFailureModes";
+import {useDrawerOpen} from "@hooks/useDrawerOpen";
 
 const PersistentDrawer = () => {
     const classes = useStyles();
     const theme = useTheme();
-    const [open, setOpen] = useState(true);
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
+    const [open, setOpen] = useDrawerOpen();
 
     return (
         <div className={classes.root}>
             <CssBaseline/>
-            <EditorAppBar handleDrawerOpen={handleDrawerOpen} drawerOpen={open}/>
+            <EditorAppBar/>
             <Drawer
                 className={classes.drawer}
                 variant="persistent"
@@ -44,7 +37,7 @@ const PersistentDrawer = () => {
                     <Typography className={classes.drawerHeaderTitle} variant="h6" gutterBottom>
                         Failure Modes
                     </Typography>
-                    <IconButton onClick={handleDrawerClose}>
+                    <IconButton onClick={() => setOpen(false)}>
                         {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
                     </IconButton>
                 </div>

@@ -23,22 +23,24 @@ const Register = () => {
 
     const [alertMessage, setAlertMessage] = useState("Incorrect Data");
     const [alertVisible, showAlert] = useState(false);
+    const [registering, setRegistering] = useState(false)
 
     const {register, handleSubmit, errors} = useForm({
         resolver: schema
     });
 
     const onSubmit = async (values: any) => {
-        console.log(values)
+        setRegistering(true)
+
         const registerResponse = await userService.register({
             username: values.username,
             password: values.password
         });
 
         if (!registerResponse) {
+            setRegistering(false)
             setAlertMessage("Registration failed, try again!")
             showAlert(true);
-            return;
         } else {
             console.log(`${JSON.stringify(registerResponse)}`)
             history.push("/login");
@@ -99,6 +101,7 @@ const Register = () => {
                         </Grid>
                     </Grid>
                     <Button
+                        disabled={registering}
                         type="submit"
                         fullWidth
                         variant="contained"

@@ -42,6 +42,7 @@ const Login = () => {
 
         if (!loginResponse) {
             setLoginFailed(true)
+            setLoggingIn(false)
         } else {
             setLoggedUser({
                 username: loginResponse.username,

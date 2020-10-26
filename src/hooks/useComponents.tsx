@@ -4,6 +4,7 @@ import {createContext, useContext, useEffect, useState} from "react";
 import {Component, CreateComponent} from "@models/componentModel";
 import * as componentService from "@services/componentService"
 import {axiosSource} from "@services/utils/axiosUtils";
+import {ChildrenProps} from "@utils/hookUtils";
 
 
 type componentContextType = [Component[], (component: CreateComponent) => void];
@@ -15,11 +16,7 @@ export const useComponents = () => {
     return [components, addComponent] as const;
 }
 
-type ComponentsProviderProps = {
-    children: React.ReactNode;
-};
-
-export const ComponentsProvider = ({children}: ComponentsProviderProps) => {
+export const ComponentsProvider = ({children}: ChildrenProps) => {
     const [_components, _setComponents] = useState<Component[]>([]);
 
     const addComponent = async (component: CreateComponent) => {
