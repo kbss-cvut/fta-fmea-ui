@@ -17,4 +17,13 @@ axiosClient.interceptors.response.use(
     }
 );
 
+export const axiosSource = axios.CancelToken.source();
+
+const cancellingInterceptor = config => {
+    config.cancelToken = axiosSource.token;
+    return config;
+};
+
+axiosClient.interceptors.request.use(cancellingInterceptor)
+
 export default axiosClient;

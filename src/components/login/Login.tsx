@@ -16,29 +16,34 @@ import * as userService from "@services/userService";
 import {Alert} from "@material-ui/lab";
 import {Link as RouterLink} from "react-router-dom";
 import {useLoggedUser} from "@hooks/useLoggedUser";
+import {useForm} from "react-hook-form";
+import {schema} from "@components/login/Login.schema";
 
 const Login = () => {
     const classes = useStyles();
 
-    const [_, setLoggedUser]= useLoggedUser();
+    const [_, setLoggedUser] = useLoggedUser();
 
-    const [username, setUsername] = useState<string>();
-    const [password, setPassword] = useState<string>();
-    const [credentialsInvalid, setCredentialsInvalid] = useState(false);
+    const {register, handleSubmit, errors} = useForm({
+        resolver: schema
+    });
 
-    const handleSubmit = async (e: FormEvent, setUser: Function) => {
-        e.preventDefault();
+    const [loginFailed, setLoginFailed] = useState(false)
+    const [loggingIn, setLoggingIn] = useState(false)
 
-        // TODO progress bar
+    const onSubmit = async (values: any) => {
+        setLoggingIn(true)
+        setLoginFailed(false)
+
         const loginResponse = await userService.login({
-            username: username,
-            password: password
+            username: values.username,
+            password: values.password
         })
 
         if (!loginResponse) {
-            setCredentialsInvalid(true);
+            setLoginFailed(true)
         } else {
-            setUser({
+            setLoggedUser({
                 username: loginResponse.username,
                 token: loginResponse.token,
                 authenticated: true
@@ -56,8 +61,11 @@ const Login = () => {
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
-                <form className={classes.form} onSubmit={(e) => handleSubmit(e, setLoggedUser)} noValidate>
+                <form className={classes.form} onSubmit={handleSubmit(onSubmit)} noValidate>
                     <TextField
+                        inputRef={register}
+                        error={!!errors.username}
+                        helperText={errors.username?.message}
                         variant="outlined"
                         margin="normal"
                         required
@@ -66,9 +74,11 @@ const Login = () => {
                         label="Username"
                         name="username"
                         autoFocus
-                        onChange={e => setUsername(e.target.value)}
                     />
                     <TextField
+                        inputRef={register}
+                        error={!!errors.password}
+                        helperText={errors.password?.message}
                         variant="outlined"
                         margin="normal"
                         required
@@ -77,10 +87,10 @@ const Login = () => {
                         label="Password"
                         type="password"
                         id="password"
-                        onChange={e => setPassword(e.target.value)}
                         autoComplete="current-password"
                     />
                     <Button
+                        disabled={loggingIn}
                         type="submit"
                         fullWidth
                         variant="contained"
@@ -90,18 +100,16 @@ const Login = () => {
                         Sign In
                     </Button>
                     <Grid container>
-                        {
-                            credentialsInvalid &&
-                            <Grid item xs>
-                                <Alert className={classes.alert} severity="error">Invalid Credentials</Alert>
-                            </Grid>
-                        }
                         <Grid item>
                             <MaterialLink variant="body2" component={RouterLink} to={"/register"}>
                                 Don't have an account? Sign Up
                             </MaterialLink>
                         </Grid>
                     </Grid>
+                    {
+                        loginFailed &&
+                        <Alert className={classes.alert} severity="error">Login failed, please try again.</Alert>
+                    }
                 </form>
             </div>
         </Container>

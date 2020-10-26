@@ -3,6 +3,7 @@ import {createContext, useContext, useEffect, useState} from "react";
 
 import {Component, CreateComponent} from "@models/componentModel";
 import * as componentService from "@services/componentService"
+import {axiosSource} from "@services/utils/axiosUtils";
 
 
 type componentContextType = [Component[], (component: CreateComponent) => void];
@@ -29,10 +30,12 @@ export const ComponentsProvider = ({children}: ComponentsProviderProps) => {
     useEffect(() => {
         const fetchComponents = async () => {
             const components = await componentService.findAll();
+            console.log(components)
             _setComponents(components)
         }
 
         fetchComponents()
+        return () => {axiosSource.cancel("ComponentsProvider - unmounting")}
     }, []);
 
     return (

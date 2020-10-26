@@ -3,6 +3,7 @@ import {createContext, useContext, useEffect, useState} from "react";
 
 import {CreateFunction, Function} from "@models/functionModel";
 import * as componentService from "@services/componentService"
+import {axiosSource} from "@services/utils/axiosUtils";
 
 
 type functionContextType = [Function[], (f: CreateFunction) => void];
@@ -31,11 +32,14 @@ export const FunctionsProvider = ({children, componentUri}: FunctionProviderProp
         const fetchFunctions = async () => {
             if(componentUri) {
                 const functions = await componentService.functions(componentUri);
+                console.log(functions)
                 _setFunction(functions)
             }
         }
 
         fetchFunctions()
+
+        return () => {axiosSource.cancel("FunctionsProvider - unmounting")}
     }, [componentUri]);
 
     return (
