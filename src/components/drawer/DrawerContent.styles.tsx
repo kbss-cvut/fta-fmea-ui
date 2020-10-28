@@ -2,8 +2,6 @@ import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 
 
 const useStyles = makeStyles((theme: Theme) => {
-        const w = window.innerWidth
-
         return createStyles({
             drawerHeader: {
                 display: 'flex',
@@ -13,9 +11,6 @@ const useStyles = makeStyles((theme: Theme) => {
                 ...theme.mixins.toolbar,
                 justifyContent: 'flex-end',
             },
-            stage: {
-                width: `calc(${w}px - ${theme.appDrawer.width}px)`
-            }
         })
     }
 );

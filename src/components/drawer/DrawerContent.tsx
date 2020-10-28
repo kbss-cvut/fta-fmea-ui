@@ -3,31 +3,43 @@ import useStyles from "@components/drawer/DrawerContent.styles";
 import {Layer, Rect, Stage} from "react-konva";
 import {useState} from "react";
 import Konva from "konva";
+import KonvaEventObject = Konva.KonvaEventObject;
+
+interface RectType {
+    x: number,
+    y: number
+}
 
 const DrawerContent = () => {
     const classes = useStyles();
 
-    const [color, setColor] = useState("blue");
+    const [rects, setRects] = useState<RectType[]>([]);
 
-    const handleClick = () => {
-        setColor(Konva.Util.getRandomColor())
+    const w = 50, h = 50
+    const color = "blue"
+
+    const handleClick = (e: KonvaEventObject<MouseEvent>) => {
+        console.log(`${e.evt.x}, ${e.evt.y}`)
+        setRects([...rects, {x: e.evt.x - 240, y: e.evt.y}])
     };
 
     return (
         <div>
             <div className={classes.drawerHeader}/>
-            {/*TODO customize height, width*/}
-            <Stage width={window.innerWidth} height={window.innerHeight}>
+            <Stage width={window.innerWidth} height={window.innerHeight} onClick={(e) => handleClick(e)}>
                 <Layer>
-                    <Rect
-                        x={20}
-                        y={20}
-                        width={50}
-                        height={50}
-                        draggable
-                        fill={color}
-                        onClick={handleClick}
-                    />
+                    {
+                        rects.map((value: RectType) => (
+                            <Rect
+                                x={value.x}
+                                y={value.y}
+                                width={w}
+                                height={h}
+                                draggable
+                                fill={color}
+                            />
+                        ))
+                    }
                 </Layer>
             </Stage>
         </div>
