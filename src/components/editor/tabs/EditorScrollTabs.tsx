@@ -58,7 +58,7 @@ const a11yProps = (index: any) => {
     };
 }
 
-const ScrollableTabsButtonAuto = () => {
+const EditorScrollTabs = () => {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
@@ -102,4 +102,4 @@ const ScrollableTabsButtonAuto = () => {
     );
 }
 
-export default ScrollableTabsButtonAuto;
+export default EditorScrollTabs;

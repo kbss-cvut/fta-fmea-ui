@@ -3,7 +3,7 @@ import KonvaEventObject = Konva.KonvaEventObject;
 import {useState} from "react";
 import {Layer, Rect, Stage} from "react-konva";
 import * as React from "react";
-import ScrollableTabsButtonAuto from "@components/editor/tabs/EditorScrollTabs";
+import EditorScrollTabs from "@components/editor/tabs/EditorScrollTabs";
 
 
 interface RectType {
@@ -24,7 +24,7 @@ const Editor = () => {
 
     return (
         <React.Fragment>
-            <ScrollableTabsButtonAuto/>
+            <EditorScrollTabs/>
             <Stage width={window.innerWidth} height={window.innerHeight} onClick={(e) => handleClick(e)}>
                 <Layer>
                     {
