@@ -1,12 +1,15 @@
 import * as React from "react";
 import PersistentDrawer from "@components/drawer/PersistentDrawer";
 import {DrawerOpenProvider} from "@hooks/useDrawerOpen";
+import {OpenTabsProvider} from "@hooks/useOpenTabs";
 
 const Dashboard = () => {
     return (
-        <DrawerOpenProvider>
-            <PersistentDrawer/>
-        </DrawerOpenProvider>
+        <OpenTabsProvider>
+            <DrawerOpenProvider>
+                <PersistentDrawer/>
+            </DrawerOpenProvider>
+        </OpenTabsProvider>
     );
 }
 

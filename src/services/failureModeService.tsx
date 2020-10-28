@@ -4,6 +4,7 @@ import axiosClient from "@services/utils/axiosUtils";
 import {FailureMode, CONTEXT, CreateFailureMode, CONTEXT as FAILURE_MODE_CONTEXT} from "@models/failureModeModel";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import VocabularyUtils from "@utils/VocabularyUtils";
+import {FaultEvent} from "@models/eventModel";
 
 export const findAll = async (): Promise<FailureMode[]> => {
     try {
@@ -40,4 +41,8 @@ export const create = async (failureMode: CreateFailureMode): Promise<FailureMod
         console.log('Failure Mode Service - Failed to call /create')
         return undefined; // TODO throw error?
     }
+}
+
+export const extractEvent = (failureMode: FailureMode): FaultEvent => {
+    return failureMode.manifestingNode.event as FaultEvent
 }

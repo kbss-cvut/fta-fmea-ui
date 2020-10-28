@@ -5,16 +5,19 @@ import {useState} from "react";
 import {Button, List, ListItem, ListItemText} from "@material-ui/core";
 import useStyles from "./DrawerComponentMenuList.styles";
 import FailureModeDialog from "../../dialog/failureMode/FailureModeDialog";
-import {useFailureModeEvents} from "../../../hooks/useFailureModeEvents";
-import {FaultEvent} from "../../../models/eventModel";
-import {FailureModesProvider} from "../../../hooks/useFailureModes";
-import {ComponentsProvider} from "../../../hooks/useComponents";
+import {FaultEvent} from "@models/eventModel";
+import {ComponentsProvider} from "@hooks/useComponents";
+import {useFailureModes} from "@hooks/useFailureModes";
+import * as failureModeService from "@services/failureModeService"
+import {FailureMode} from "@models/failureModeModel";
+import {useOpenTabs} from "@hooks/useOpenTabs";
 
 const DrawerComponentMenuList = () => {
-    const classes = useStyles();
+    const classes = useStyles()
 
-    const [createFailureModeDialogOpen, isCreateFailureModeDialogOpen] = useState(false);
-    const failureModesEvents = useFailureModeEvents();
+    const [createFailureModeDialogOpen, isCreateFailureModeDialogOpen] = useState(false)
+    const [failureModes] = useFailureModes()
+    const [_, openTab] = useOpenTabs()
 
     const closeDialog = () => {
         isCreateFailureModeDialogOpen(false)
@@ -24,11 +27,13 @@ const DrawerComponentMenuList = () => {
         <div className={classes.menu}>
             <List>
                 {
-                    failureModesEvents.map((value: FaultEvent) => (
-                        <ListItem button key={value.iri}>
-                            <ListItemText primary={value.name}/>
-                        </ListItem>
-                    ))
+                    failureModes.map(value => {
+                        let event = failureModeService.extractEvent(value)
+                        return (
+                            <ListItem button key={event.iri} onClick={() => openTab(value)}>
+                                <ListItemText primary={event.name}/>
+                            </ListItem>)
+                    })
                 }
             </List>
             <Button className={classes.componentButton} variant="contained" color="primary" startIcon={<AddIcon/>}
