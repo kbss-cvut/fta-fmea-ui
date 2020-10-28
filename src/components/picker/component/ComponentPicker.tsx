@@ -1,15 +1,15 @@
 import * as React from "react";
 
 import {IconButton, TextField} from "@material-ui/core";
-import useStyles from "./FailureModeDialogComponent.styles";
 import {Autocomplete} from "@material-ui/lab";
 import {useComponents} from "@hooks/useComponents";
 import AddIcon from "@material-ui/icons/Add";
 import {Component} from "@models/componentModel";
 import {Controller, useForm} from "react-hook-form";
-import {schema} from "@components/dialog/failureMode/content/FunctionPickerDialog.schema";
+import {schema} from "@components/picker/component/ComponentPicker.schema";
+import useStyles from "@components/picker/component/ComponentPicker.styles";
 
-const ComponentPickerDialog = ({setSelectedComponent}) => {
+const ComponentPicker = ({setSelectedComponent}) => {
     const classes = useStyles()
 
     const [components, addComponent] = useComponents()
@@ -23,8 +23,9 @@ const ComponentPickerDialog = ({setSelectedComponent}) => {
     }
 
     return (
-        <div className={classes.divForm}>
+        <React.Fragment>
             <Autocomplete
+                fullWidth
                 options={components}
                 getOptionLabel={(option) => option.name}
                 onChange={(event, value: Component) => setSelectedComponent(value)}
@@ -41,8 +42,8 @@ const ComponentPickerDialog = ({setSelectedComponent}) => {
                     <AddIcon/>
                 </IconButton>
             </div>
-        </div>
+        </React.Fragment>
     );
 }
 
-export default ComponentPickerDialog;
+export default ComponentPicker;

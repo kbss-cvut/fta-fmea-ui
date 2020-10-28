@@ -1,15 +1,15 @@
 import * as React from "react";
 
 import {Box, IconButton, TextField} from "@material-ui/core";
-import useStyles from "./FailureModeDialogComponent.styles";
 import {useFunctions} from "@hooks/useFunctions";
 import {Autocomplete} from "@material-ui/lab";
 import {Function} from "@models/functionModel";
 import AddIcon from "@material-ui/icons/Add";
 import {Controller, useForm} from "react-hook-form";
-import {schema} from "@components/dialog/failureMode/content/FunctionPickerDialog.schema";
+import {schema} from "./FunctionPicker.schema";
+import useStyles from "@components/picker/function/FunctionPicker.styles";
 
-const FunctionPickerDialog = ({setSelectedFunction, componentSelected}) => {
+const FunctionPicker = ({setSelectedFunction}) => {
     const classes = useStyles()
 
     const [functions, addFunction] = useFunctions()
@@ -19,14 +19,12 @@ const FunctionPickerDialog = ({setSelectedFunction, componentSelected}) => {
 
     const _handleCreateFunction = (values: any) => {
         addFunction({name: values.name})
-        // TODO clear name - setName('')
         reset(values)
     }
 
     return (
-        <div className={classes.divForm}>
+        <React.Fragment>
             <Autocomplete
-                disabled={!componentSelected}
                 options={functions}
                 getOptionLabel={(option) => option.name}
                 onChange={(event, value: Function) => setSelectedFunction(value)}
@@ -35,7 +33,7 @@ const FunctionPickerDialog = ({setSelectedFunction, componentSelected}) => {
             />
 
             <Box className={classes.addButtonDiv}>
-                <Controller as={TextField} disabled={!componentSelected} autoFocus margin="dense" id="name" label="Function Name"
+                <Controller as={TextField} autoFocus margin="dense" id="name" label="Function Name"
                             type="text" fullWidth name="name" control={control} defaultValue=""
                             inputRef={register} error={!!errors.name} helperText={errors.name?.message}/>
                 <IconButton className={classes.addButton} color="primary" component="span"
@@ -43,8 +41,8 @@ const FunctionPickerDialog = ({setSelectedFunction, componentSelected}) => {
                     <AddIcon/>
                 </IconButton>
             </Box>
-        </div>
+        </React.Fragment>
     );
 }
 
-export default FunctionPickerDialog;
+export default FunctionPicker;

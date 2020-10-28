@@ -3,12 +3,11 @@ import {createContext, useContext, useEffect, useState} from "react";
 
 import {CreateFailureMode, FailureMode} from "@models/failureModeModel";
 import * as failureModeService from "@services/failureModeService"
-import * as functionService from "@services/functionService"
 import {axiosSource} from "@services/utils/axiosUtils";
 import {ChildrenProps} from "@utils/hookUtils";
 
 
-type failureModeContextType = [FailureMode[], (functionIri: string, failureMode: CreateFailureMode) => void];
+type failureModeContextType = [FailureMode[], (failureMode: CreateFailureMode) => void];
 
 export const failureModesContext = createContext<failureModeContextType>(null!);
 
@@ -20,8 +19,8 @@ export const useFailureModes = () => {
 export const FailureModesProvider = ({children}: ChildrenProps) => {
     const [_failureModes, _setFailureModes] = useState<FailureMode[]>([]);
 
-    const addFailureMode = async (functionIri: string, failureMode: CreateFailureMode) => {
-        const newFailureMode = await functionService.addFailureMode(functionIri, failureMode)
+    const addFailureMode = async (failureMode: CreateFailureMode) => {
+        const newFailureMode = await failureModeService.create(failureMode)
         _setFailureModes([..._failureModes, newFailureMode])
     }
 
