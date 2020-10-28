@@ -7,11 +7,11 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import DrawerContent from "./DrawerContent";
+import DrawerContent from "./content/DrawerContent";
 import useStyles from "@components/drawer/PersistentDrawer.styles";
-import EditorAppBar from "@components/editor/EditorAppBar";
+import AppBar from "@components/appBar/AppBar";
 import {withRouter} from "react-router-dom";
-import DrawerComponentMenuList from "@components/drawer/DrawerComponentMenuList";
+import DrawerComponentMenuList from "@components/drawer/menu/DrawerComponentMenuList";
 import {Typography} from "@material-ui/core";
 import {FailureModesProvider} from "@hooks/useFailureModes";
 import {useDrawerOpen} from "@hooks/useDrawerOpen";
@@ -25,7 +25,7 @@ const PersistentDrawer = () => {
     return (
         <div className={classes.root}>
             <CssBaseline/>
-            <EditorAppBar/>
+            <AppBar/>
             <Drawer
                 className={classes.drawer}
                 variant="persistent"

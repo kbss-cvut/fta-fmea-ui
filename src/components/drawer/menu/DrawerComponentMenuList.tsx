@@ -3,12 +3,12 @@ import * as React from "react";
 import AddIcon from '@material-ui/icons/Add';
 import {useState} from "react";
 import {Button, List, ListItem, ListItemText} from "@material-ui/core";
-import useStyles from "@components/drawer/DrawerComponentMenuList.styles";
-import FailureModeDialog from "@components/dialog/failureMode/FailureModeDialog";
-import {useFailureModeEvents} from "@hooks/useFailureModeEvents";
-import {FaultEvent} from "@models/eventModel";
-import {FailureModesProvider} from "@hooks/useFailureModes";
-import {ComponentsProvider} from "@hooks/useComponents";
+import useStyles from "./DrawerComponentMenuList.styles";
+import FailureModeDialog from "../../dialog/failureMode/FailureModeDialog";
+import {useFailureModeEvents} from "../../../hooks/useFailureModeEvents";
+import {FaultEvent} from "../../../models/eventModel";
+import {FailureModesProvider} from "../../../hooks/useFailureModes";
+import {ComponentsProvider} from "../../../hooks/useComponents";
 
 const DrawerComponentMenuList = () => {
     const classes = useStyles();

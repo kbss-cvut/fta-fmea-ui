@@ -1,5 +1,5 @@
 import * as React from "react";
-import useStyles from "@components/drawer/DrawerContent.styles";
+import useStyles from "./DrawerContent.styles";
 import {Layer, Rect, Stage} from "react-konva";
 import {useState} from "react";
 import Konva from "konva";
@@ -20,7 +20,7 @@ const DrawerContent = () => {
 
     const handleClick = (e: KonvaEventObject<MouseEvent>) => {
         console.log(`${e.evt.x}, ${e.evt.y}`)
-        setRects([...rects, {x: e.evt.x - 240, y: e.evt.y}])
+        setRects([...rects, {x: e.evt.x - 240, y: e.evt.y - 64}]) // TODO solve offsets
     };
 
     return (

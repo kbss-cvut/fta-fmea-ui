@@ -3,16 +3,15 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Typography from "@material-ui/core/Typography";
-import AppBar from "@material-ui/core/AppBar";
 import * as React from "react";
-import useStyles from "./EditorAppBar.styles";
+import useStyles from "./AppBar.styles";
 import {AccountCircle} from "@material-ui/icons";
-import {Menu, MenuItem} from "@material-ui/core";
+import {Menu, MenuItem, AppBar as MaterialAppBar} from "@material-ui/core";
 import {FormEvent} from "react";
 import {useHistory} from "react-router-dom";
 import {useDrawerOpen} from "@hooks/useDrawerOpen";
 
-const EditorAppBar = () => {
+const AppBar = () => {
     const classes = useStyles();
     const history = useHistory();
 
@@ -53,7 +52,7 @@ const EditorAppBar = () => {
 
     return (
         <div>
-            <AppBar
+            <MaterialAppBar
                 position="fixed"
                 className={clsx(classes.appBar, {[classes.appBarShift]: open,})}>
                 <Toolbar>
@@ -77,10 +76,10 @@ const EditorAppBar = () => {
                         <AccountCircle/>
                     </IconButton>
                 </Toolbar>
-            </AppBar>
+            </MaterialAppBar>
             {renderMenu}
         </div>
     );
 }
 
-export default EditorAppBar;
+export default AppBar;
