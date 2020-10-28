@@ -1,7 +1,6 @@
 import * as React from "react";
 import useStyles from "./DrawerContent.styles";
 import Editor from "@components/editor/Editor";
-import CenteredTabs from "@components/editor/tabs/EditorScrollTabs";
 
 
 const DrawerContent = () => {

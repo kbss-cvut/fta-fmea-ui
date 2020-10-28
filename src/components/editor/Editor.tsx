@@ -1,9 +1,10 @@
 import Konva from "konva";
 import KonvaEventObject = Konva.KonvaEventObject;
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {Layer, Rect, Stage} from "react-konva";
 import * as React from "react";
 import EditorScrollTabs from "@components/editor/tabs/EditorScrollTabs";
+import useStyles from "@components/editor/Editor.styles";
 
 
 interface RectType {
@@ -12,7 +13,18 @@ interface RectType {
 }
 
 const Editor = () => {
+    const classes = useStyles()
     const [rects, setRects] = useState<RectType[]>([]);
+
+    const containerRef = useRef(null)
+    const [stageWidth, setStageWidth] = useState(0)
+    const [stageHeight, setStageHeight] = useState(0)
+
+    useEffect(() => {
+        setStageWidth(containerRef.current.clientWidth)
+        setStageHeight(containerRef.current.clientHeight)
+        console.log(stageHeight)
+    }, []);
 
     const w = 50, h = 50
     const color = "blue"
@@ -23,25 +35,27 @@ const Editor = () => {
     };
 
     return (
-        <React.Fragment>
+        <div className={classes.konvaContainer} ref={containerRef}>
             <EditorScrollTabs/>
-            <Stage width={window.innerWidth} height={window.innerHeight} onClick={(e) => handleClick(e)}>
-                <Layer>
-                    {
-                        rects.map((value: RectType) => (
-                            <Rect
-                                x={value.x}
-                                y={value.y}
-                                width={w}
-                                height={h}
-                                draggable
-                                fill={color}
-                            />
-                        ))
-                    }
-                </Layer>
-            </Stage>
-        </React.Fragment>
+            {
+                (stageWidth !== 0) && <Stage width={stageWidth} height={stageHeight} onClick={(e) => handleClick(e)}>
+                    <Layer>
+                        {
+                            rects.map((value: RectType) => (
+                                <Rect
+                                    x={value.x}
+                                    y={value.y}
+                                    width={w}
+                                    height={h}
+                                    draggable
+                                    fill={color}
+                                />
+                            ))
+                        }
+                    </Layer>
+                </Stage>
+            }
+        </div>
     );
 }
 
