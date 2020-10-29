@@ -1,6 +1,7 @@
 import * as React from "react";
 import useStyles from "./DrawerContent.styles";
 import Editor from "@components/editor/Editor";
+import EditorScrollTabs from "@components/editor/tabs/EditorScrollTabs";
 
 
 const DrawerContent = () => {
@@ -9,7 +10,7 @@ const DrawerContent = () => {
     return (
         <React.Fragment>
             <div className={classes.drawerHeader}/>
-            <Editor/>
+            <EditorScrollTabs/>
         </React.Fragment>
     );
 }

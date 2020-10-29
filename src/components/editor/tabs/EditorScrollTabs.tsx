@@ -2,37 +2,13 @@ import * as React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import {useStyles} from "@components/editor/tabs/EditorScrollTabs.styles";
 import {useOpenTabs} from "@hooks/useOpenTabs";
 import {FaultEvent} from "@models/eventModel";
+import TabPanel from "@components/editor/tabs/TabPanel";
+import Editor from "@components/editor/Editor";
 
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: any;
-    value: any;
-}
 
-const TabPanel = (props: TabPanelProps) => {
-    const {children, value, index, ...other} = props;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`scrollable-auto-tabpanel-${index}`}
-            aria-labelledby={`scrollable-auto-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box p={3}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
 
 // const CloseableTab = (title) => {
 //     return (
@@ -87,7 +63,7 @@ const EditorScrollTabs = () => {
             {
                 openTabs.map((failureMode, index) =>{
                     let name = (failureMode.manifestingNode.event as FaultEvent).name
-                    return <TabPanel value={currentTab} index={index}>{name}</TabPanel>
+                    return <TabPanel value={currentTab} index={index}><Editor failureMode={failureMode}/></TabPanel>
                 })
             }
         </div>
