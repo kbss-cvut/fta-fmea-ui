@@ -5,12 +5,28 @@ declare module '@material-ui/core/styles/createMuiTheme' {
     interface Theme {
         appDrawer: {
             width: React.CSSProperties['width']
+        },
+        editor?: {
+            shape?: {
+                padding?: number
+                strokeWidth?: number,
+                strokeColor?: React.CSSProperties['color']
+            }
+            fontSize: number
         }
     }
     // allow configuration using `createMuiTheme`
     interface ThemeOptions {
         appDrawer?: {
             width?: React.CSSProperties['width']
+        },
+        editor?: {
+            shape?: {
+                padding?: number,
+                strokeWidth?: number,
+                strokeColor?: React.CSSProperties['color']
+            }
+            fontSize: number
         }
     }
 }

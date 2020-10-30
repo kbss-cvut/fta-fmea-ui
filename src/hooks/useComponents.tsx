@@ -27,7 +27,6 @@ export const ComponentsProvider = ({children}: ChildrenProps) => {
     useEffect(() => {
         const fetchComponents = async () => {
             const components = await componentService.findAll();
-            console.log(components)
             _setComponents(components)
         }
 

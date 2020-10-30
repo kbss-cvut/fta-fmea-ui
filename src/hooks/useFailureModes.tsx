@@ -27,7 +27,6 @@ export const FailureModesProvider = ({children}: ChildrenProps) => {
     useEffect(() => {
         const fetchFailureModes = async () => {
             const failureModes = await failureModeService.findAll();
-            console.log(failureModes)
             _setFailureModes(failureModes)
         }
 
