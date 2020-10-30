@@ -1,7 +1,7 @@
 import * as React from "react";
 import useStyles from "./DrawerContent.styles";
 import Editor from "@components/editor/Editor";
-import EditorScrollTabs from "@components/editor/tabs/EditorScrollTabs";
+import EditorScrollTabs from "@components/editor/tabs/scroll/EditorScrollTabs";
 
 
 const DrawerContent = () => {
