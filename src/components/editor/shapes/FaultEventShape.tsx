@@ -15,12 +15,6 @@ interface ShapePosition {
     y: number
 }
 
-const useWindowSize = () =>  {
-    const [size, setSize] = useState([0, 0]);
-
-    return size;
-}
-
 const FaultEventShape = ({data, position}: FaultEventShapeProps) => {
     const [rectWidth, setRectWidth] = useState<number>(50)
     const [rectHeight, setRectHeight] = useState<number>(50)
@@ -43,7 +37,11 @@ const FaultEventShape = ({data, position}: FaultEventShapeProps) => {
                 height={rectHeight}
                 stroke={appTheme.editor.shape.strokeColor}
                 strokeWidth={appTheme.editor.shape.strokeWidth}
-                onClick={() => console.log(data)}
+                onClick={(e) => {
+                    if(e.evt.button === 2) {
+                        console.log('right click')
+                    }
+                }}
             />
             <Text
                 ref={ref => setTextRef(ref)}

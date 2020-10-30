@@ -4,25 +4,21 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import {useStyles} from "@components/editor/tabs/EditorScrollTabs.styles";
 import {useOpenTabs} from "@hooks/useOpenTabs";
+import {IconButton} from "@material-ui/core";
+import {Close} from "@material-ui/icons";
 import {FaultEvent} from "@models/eventModel";
 import TabPanel from "@components/editor/tabs/TabPanel";
 import Editor from "@components/editor/Editor";
 
 
-
-// const CloseableTab = (title) => {
-//     return (
-//         <Tab component="div" label={
-//             <span>
-//     {title}
-//     <IconButton onClick={() => {
-//     }}>
-//       <Close/>
-//     </IconButton>
-//   </span>
-//         }/>
-//     )
-// }
+const CloseableTab = ({title, a11yProps, onTabClose}) => {
+    return (
+        <Tab
+            component="div"
+            label={<span>{title}<IconButton onClick={() => onTabClose()}><Close/></IconButton></span>}
+            {...a11yProps}
+        />)
+}
 
 const a11yProps = (index: any) => {
     return {
@@ -39,7 +35,7 @@ const EditorScrollTabs = () => {
         setCurrentTab(newValue);
     };
 
-    const [openTabs] = useOpenTabs();
+    const [openTabs, _, closeTab] = useOpenTabs();
 
     return (
         <div className={classes.root}>
@@ -54,15 +50,16 @@ const EditorScrollTabs = () => {
                     aria-label="scrollable auto tabs example"
                 >
                     {
-                        openTabs.map((failureMode, index) =>
-                            <Tab label={(failureMode.manifestingNode.event as FaultEvent).name} {...a11yProps(index)} />
-                        )
+                        openTabs.map((failureMode, index) => {
+                            const tabTitle = (failureMode.manifestingNode.event as FaultEvent).name
+                            return <CloseableTab title={tabTitle} a11yProps={a11yProps(index)}
+                                                 onTabClose={() => closeTab(failureMode)}/>
+                        })
                     }
                 </Tabs>
             </AppBar>
             {
-                openTabs.map((failureMode, index) =>{
-                    let name = (failureMode.manifestingNode.event as FaultEvent).name
+                openTabs.map((failureMode, index) => {
                     return <TabPanel value={currentTab} index={index}><Editor failureMode={failureMode}/></TabPanel>
                 })
             }
