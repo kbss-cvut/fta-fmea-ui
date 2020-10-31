@@ -5,6 +5,8 @@ import {useEffect, useState} from "react";
 import {FaultEvent} from "@models/eventModel";
 import {KonvaEventObject} from "konva/types/Node";
 import {appTheme} from "@styles/App.styles";
+import {Menu, MenuItem} from "@material-ui/core";
+import Portal from "@components/editor/Portal";
 
 interface FaultEventShapeProps {
     data: FailureMode,
@@ -35,7 +37,10 @@ const FaultEventShape = ({data, position}: FaultEventShapeProps) => {
 
     const handleClick = (e: KonvaEventObject<MouseEvent>) => {
         if (e.evt.button === 2) {
-            console.log('right click')
+            setAnchorPos({
+                mouseX: e.evt.clientX,
+                mouseY: e.evt.clientY,
+            })
         }
     }
 
@@ -43,27 +48,53 @@ const FaultEventShape = ({data, position}: FaultEventShapeProps) => {
         console.log('double clicked')
     }
 
+    const initialAnchorPosition = {mouseX: null, mouseY: null,};
+    const [anchorPos, setAnchorPos] = useState<{ mouseX: null | number; mouseY: null | number; }>(initialAnchorPosition)
+
+    const renderMenu = (
+        <Menu
+            keepMounted
+            open={anchorPos.mouseY !== null}
+            onClose={() => setAnchorPos(initialAnchorPosition)}
+            anchorReference="anchorPosition"
+            anchorPosition={
+                anchorPos.mouseY !== null && anchorPos.mouseX !== null ? {
+                    top: anchorPos.mouseY,
+                    left: anchorPos.mouseX
+                } : undefined
+            }
+        >
+            <MenuItem>Edit</MenuItem>
+            <MenuItem>New Gate</MenuItem>
+        </Menu>
+    );
+
     return (
-        <Group onContextMenu={suppressContextMenu}
-               onClick={handleClick}
-               onDblClick={showToolWindow}>
-            <Rect
-                x={position.x}
-                y={position.y}
-                width={rectWidth}
-                height={rectHeight}
-                stroke={appTheme.editor.shape.strokeColor}
-                strokeWidth={appTheme.editor.shape.strokeWidth}
-            />
-            <Text
-                ref={ref => setTextRef(ref)}
-                x={position.x + rectPadding / 2}
-                y={position.y + rectPadding / 2}
-                fontSize={appTheme.editor.fontSize}
-                text={(data.manifestingNode.event as FaultEvent).name}
-                align="center"
-            />
-        </Group>
+        <React.Fragment>
+            <Group onContextMenu={suppressContextMenu}
+                   onClick={handleClick}
+                   onDblClick={showToolWindow}>
+                <Rect
+                    x={position.x}
+                    y={position.y}
+                    width={rectWidth}
+                    height={rectHeight}
+                    stroke={appTheme.editor.shape.strokeColor}
+                    strokeWidth={appTheme.editor.shape.strokeWidth}
+                />
+                <Text
+                    ref={ref => setTextRef(ref)}
+                    x={position.x + rectPadding / 2}
+                    y={position.y + rectPadding / 2}
+                    fontSize={appTheme.editor.fontSize}
+                    text={(data.manifestingNode.event as FaultEvent).name}
+                    align="center"
+                />
+            </Group>
+            <Portal>
+                {renderMenu}
+            </Portal>
+        </React.Fragment>
     )
 }
 
