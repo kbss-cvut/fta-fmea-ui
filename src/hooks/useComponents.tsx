@@ -5,6 +5,7 @@ import {Component, CreateComponent} from "@models/componentModel";
 import * as componentService from "@services/componentService"
 import {axiosSource} from "@services/utils/axiosUtils";
 import {ChildrenProps} from "@utils/hookUtils";
+import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 
 
 type componentContextType = [Component[], (component: CreateComponent) => void];
@@ -18,20 +19,27 @@ export const useComponents = () => {
 
 export const ComponentsProvider = ({children}: ChildrenProps) => {
     const [_components, _setComponents] = useState<Component[]>([]);
+    const [showSnackbar] = useSnackbar()
 
     const addComponent = async (component: CreateComponent) => {
-        const newComponent = await componentService.create(component)
-        _setComponents([..._components, newComponent])
+        componentService.create(component)
+            .then(value => {
+                _setComponents([..._components, value])
+                showSnackbar('Component created', SnackbarType.SUCCESS)
+            }).catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
 
     useEffect(() => {
         const fetchComponents = async () => {
-            const components = await componentService.findAll();
-            _setComponents(components)
+            componentService.findAll()
+                .then(value => _setComponents(value))
+                .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
         }
 
         fetchComponents()
-        return () => {axiosSource.cancel("ComponentsProvider - unmounting")}
+        return () => {
+            axiosSource.cancel("ComponentsProvider - unmounting")
+        }
     }, []);
 
     return (

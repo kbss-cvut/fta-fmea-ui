@@ -15,9 +15,10 @@ import {flatten} from "@utils/arrayUtils";
 
 interface FaultEventShapeProps extends PositionProps {
     data: TreeNode<FaultEvent>,
+    showSnackbar: (string, SnackbarType) => void
 }
 
-const FaultEventShape = ({data, position}: FaultEventShapeProps) => {
+const FaultEventShape = ({data, position, showSnackbar}: FaultEventShapeProps) => {
     const [rectWidth, setRectWidth] = useState<number>(50)
     const [rectHeight, setRectHeight] = useState<number>(50)
 
@@ -102,12 +103,13 @@ const FaultEventShape = ({data, position}: FaultEventShapeProps) => {
                 />
             </Group>
             {flatten([data.children]).map((value, index) => {
-                return <GateShape data={value as TreeNode<Gate>} position={{x: position.x, y: position.y + (50 * (1 + index))}}/> // TODO resolve offset
+                return <GateShape data={value as TreeNode<Gate>}
+                                  position={{x: position.x, y: position.y + (50 * (1 + index))}}/> // TODO resolve offset
             })}
             <Portal>
                 {eventMenu}
                 {gateDialogOpen && <GateDialog treeNodeIri={data.iri} onGateCreated={handleGateCreated}
-                                               onClose={() => setGateDialogOpen(false)}/>}
+                                               onClose={() => setGateDialogOpen(false)} showSnackbar={showSnackbar}/>}
             </Portal>
         </React.Fragment>
     )

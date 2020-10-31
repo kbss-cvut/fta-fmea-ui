@@ -7,7 +7,6 @@ import {
     TextField,
     Typography
 } from "@material-ui/core";
-import {Alert} from "@material-ui/lab";
 import * as React from "react";
 import useStyles from "@components/register/Register.styles";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -16,13 +15,14 @@ import * as userService from "@services/userService";
 import {Link as RouterLink, useHistory, withRouter} from "react-router-dom";
 import {useForm} from 'react-hook-form';
 import {schema} from "@components/register/Register.schema";
+import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 
 const Register = () => {
     const classes = useStyles();
     const history = useHistory();
 
-    const [alertMessage, setAlertMessage] = useState("Incorrect Data");
-    const [alertVisible, showAlert] = useState(false);
+    const [showSnackbar] = useSnackbar()
+
     const [registering, setRegistering] = useState(false)
 
     const {register, handleSubmit, errors} = useForm({
@@ -32,19 +32,16 @@ const Register = () => {
     const onSubmit = async (values: any) => {
         setRegistering(true)
 
-        const registerResponse = await userService.register({
+        userService.register({
             username: values.username,
             password: values.password
-        });
-
-        if (!registerResponse) {
-            setRegistering(false)
-            setAlertMessage("Registration failed, try again!")
-            showAlert(true);
-        } else {
-            console.log(`${JSON.stringify(registerResponse)}`)
+        }).then(value => {
+            console.log(`${JSON.stringify(value)}`)
             history.push("/login");
-        }
+        }).catch(reason => {
+            setRegistering(false)
+            showSnackbar(reason, SnackbarType.ERROR)
+        })
     };
 
     return (
@@ -116,10 +113,6 @@ const Register = () => {
                             </MaterialLink>
                         </Grid>
                     </Grid>
-                    {
-                        alertVisible &&
-                        <Alert className={classes.alert} severity="error">{alertMessage}</Alert>
-                    }
                 </form>
             </div>
         </Container>

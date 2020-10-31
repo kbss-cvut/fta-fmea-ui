@@ -26,6 +26,6 @@ export const insertGate = async (treeNodeIri: string, gate: CreateGate): Promise
         return JsonLdUtils.compactAndResolveReferences<TreeNode<Gate>>(response.data, TREE_NODE_CONTEXT);
     } catch (e) {
         console.log('Event Service - Failed to call /insertGate')
-        return undefined; // TODO throw error?
+        return new Promise((resolve, reject) => reject("Failed to create gate"));
     }
 }

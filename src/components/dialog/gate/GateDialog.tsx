@@ -11,14 +11,17 @@ import {useState} from "react";
 import {DialogActions} from "@components/dialog/custom/DialogActions";
 import useStyles from "@components/dialog/gate/GateDialog.styles";
 import * as eventService from "@services/eventService"
+import {SnackbarType} from "@hooks/useSnackbar";
 
 type GateDialogProps = {
     treeNodeIri: string,
     onGateCreated: (TreeNode) => void,
-    onClose: () => void
+    onClose: () => void,
+    showSnackbar: (string, SnackbarType) => void
 };
+// useSnackbar() cannot be used as shapes are rendered within Portal
 
-const GateDialog = ({treeNodeIri, onGateCreated, onClose}: GateDialogProps) => {
+const GateDialog = ({treeNodeIri, onGateCreated, onClose, showSnackbar}: GateDialogProps) => {
     const classes = useStyles()
 
     const [processing, setIsProcessing] = useState(false)
@@ -31,11 +34,13 @@ const GateDialog = ({treeNodeIri, onGateCreated, onClose}: GateDialogProps) => {
     const handleCreateGate = async () => {
         setIsProcessing(true)
 
-        const newGate = await eventService.insertGate(treeNodeIri, {gateType: gateType} as CreateGate)
-
-        setIsProcessing(false)
-        onGateCreated(newGate)
-        onClose()
+        eventService.insertGate(treeNodeIri, {gateType: gateType} as CreateGate)
+            .then(value => onGateCreated(value))
+            .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
+            .finally(() => {
+                setIsProcessing(false)
+                onClose()
+            })
     }
 
     return (

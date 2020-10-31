@@ -18,7 +18,7 @@ export const findAll = async (): Promise<Component[]> => {
         return JsonLdUtils.compactAndResolveReferencesAsArray<Component>(response.data, CONTEXT)
     } catch (e) {
         console.log('Component Service - Failed to call /findAll')
-        return [];
+        return new Promise((resolve, reject) => reject("Failed to load components"));
     }
 }
 
@@ -39,7 +39,7 @@ export const create = async (component: CreateComponent): Promise<Component> => 
         return JsonLdUtils.compactAndResolveReferences<Component>(response.data, CONTEXT);
     } catch (e) {
         console.log('Component Service - Failed to call /create')
-        return undefined; // TODO throw error?
+        return new Promise((resolve, reject) => reject("Failed to create component"));
     }
 }
 
@@ -56,7 +56,7 @@ export const functions = async (componentUri: string): Promise<Function[]> => {
         return JsonLdUtils.compactAndResolveReferencesAsArray<Function>(response.data, FUNCTION_CONTEXT)
     } catch (e) {
         console.log('Component Service - Failed to call /functions')
-        return [];
+        return new Promise((resolve, reject) => reject("Failed to load functions"));
     }
 }
 
@@ -78,6 +78,6 @@ export const addFunction = async (componentUri: string, f: CreateFunction): Prom
         return JsonLdUtils.compactAndResolveReferences<Function>(response.data, CONTEXT);
     } catch (e) {
         console.log('Component Service - Failed to call create function')
-        return undefined; // TODO throw error?
+        return new Promise((resolve, reject) => reject("Failed to create function"));
     }
 }

@@ -17,5 +17,6 @@ export const addFailureMode = async (functionIri: string, failureModeIri: string
         )
     } catch (e) {
         console.log('Function Service - Failed to call /addFailureMode')
+        return new Promise((resolve, reject) => reject("Failed to add failure mode"));
     }
 }

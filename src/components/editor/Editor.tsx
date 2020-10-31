@@ -4,6 +4,7 @@ import * as React from "react";
 import useStyles from "@components/editor/Editor.styles";
 import {FailureMode} from "@models/failureModeModel";
 import FaultEventShape from "@components/editor/shapes/FaultEventShape";
+import {useSnackbar} from "@hooks/useSnackbar";
 
 interface EditorPros {
     failureMode: FailureMode
@@ -13,6 +14,7 @@ useStrictMode(true);
 
 const Editor = ({failureMode}: EditorPros) => {
     const classes = useStyles()
+    const [showSnackbar] = useSnackbar();
 
     const containerRef = useRef(null)
     const [stageWidth, setStageWidth] = useState(0)
@@ -29,7 +31,10 @@ const Editor = ({failureMode}: EditorPros) => {
                 (stageWidth !== 0) && <Stage width={stageWidth} height={stageHeight}>
                     <Layer>
                         {/*TODO calculate shape position!*/}
-                        <FaultEventShape data={failureMode.manifestingNode} position={{x: 150, y: 150}}/>
+                        <FaultEventShape
+                            showSnackbar={showSnackbar}
+                            data={failureMode.manifestingNode}
+                            position={{x: 150, y: 150}}/>
                     </Layer>
                 </Stage>
             }

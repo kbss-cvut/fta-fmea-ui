@@ -4,6 +4,7 @@ import {createContext, useContext, useEffect, useState} from "react";
 import {CreateFunction, Function} from "@models/functionModel";
 import * as componentService from "@services/componentService"
 import {axiosSource} from "@services/utils/axiosUtils";
+import {SnackbarType, useSnackbar} from "./useSnackbar";
 
 
 type functionContextType = [Function[], (f: CreateFunction) => void];
@@ -21,25 +22,31 @@ type FunctionProviderProps = {
 };
 
 export const FunctionsProvider = ({children, componentUri}: FunctionProviderProps) => {
-    const [_function, _setFunction] = useState<Function[]>([]);
+    const [_function, _setFunctions] = useState<Function[]>([]);
+    const [showSnackbar] = useSnackbar()
 
     const addFunction = async (f: CreateFunction) => {
-        const newFunction = await componentService.addFunction(componentUri, f);
-        _setFunction([..._function, newFunction])
+        componentService.addFunction(componentUri, f)
+            .then(value => {
+                _setFunctions([..._function, value])
+                showSnackbar('Function created', SnackbarType.SUCCESS)
+            }).catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
 
     useEffect(() => {
         const fetchFunctions = async () => {
-            if(componentUri) {
-                const functions = await componentService.functions(componentUri);
-                console.log(functions)
-                _setFunction(functions)
+            if (componentUri) {
+                componentService.functions(componentUri)
+                    .then(value => _setFunctions(value))
+                    .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
             }
         }
 
         fetchFunctions()
 
-        return () => {axiosSource.cancel("FunctionsProvider - unmounting")}
+        return () => {
+            axiosSource.cancel("FunctionsProvider - unmounting")
+        }
     }, [componentUri]);
 
     return (

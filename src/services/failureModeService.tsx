@@ -17,7 +17,7 @@ export const findAll = async (): Promise<FailureMode[]> => {
         return JsonLdUtils.compactAndResolveReferencesAsArray<FailureMode>(response.data, CONTEXT)
     } catch (e) {
         console.log('Failure Mode Service - Failed to call /findAll')
-        return [];
+        return new Promise((resolve, reject) => reject("Failed to load failure modes"));
     }
 }
 
@@ -38,7 +38,7 @@ export const create = async (failureMode: CreateFailureMode): Promise<FailureMod
         return JsonLdUtils.compactAndResolveReferences<FailureMode>(response.data, FAILURE_MODE_CONTEXT);
     } catch (e) {
         console.log('Failure Mode Service - Failed to call /create')
-        return undefined; // TODO throw error?
+        return new Promise((resolve, reject) => reject("Failed to create failure mode"));
     }
 }
 

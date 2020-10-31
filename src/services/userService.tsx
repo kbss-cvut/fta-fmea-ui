@@ -27,7 +27,7 @@ export const register = async (loginRequest: UserRegisterRequest): Promise<UserR
         return response.data
     } catch (e) {
         console.log('Failed to call /register')
-        return undefined;
+        return new Promise((resolve, reject) => reject("Registration failed"));
     }
 }
 
@@ -41,6 +41,6 @@ export const login = async (loginRequest: UserLoginRequest): Promise<UserLoginRe
         return response.data
     } catch (e) {
         console.log('Failed to call /login')
-        return undefined;
+        return new Promise((resolve, reject) => reject("Login failed"));
     }
 }

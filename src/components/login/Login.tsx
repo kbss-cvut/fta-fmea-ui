@@ -18,38 +18,36 @@ import {Link as RouterLink} from "react-router-dom";
 import {useLoggedUser} from "@hooks/useLoggedUser";
 import {useForm} from "react-hook-form";
 import {schema} from "@components/login/Login.schema";
+import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 
 const Login = () => {
     const classes = useStyles();
 
     const [_, setLoggedUser] = useLoggedUser();
+    const [showSnackbar] = useSnackbar()
 
     const {register, handleSubmit, errors} = useForm({
         resolver: schema
     });
 
-    const [loginFailed, setLoginFailed] = useState(false)
     const [loggingIn, setLoggingIn] = useState(false)
 
     const onSubmit = async (values: any) => {
         setLoggingIn(true)
-        setLoginFailed(false)
 
-        const loginResponse = await userService.login({
+        userService.login({
             username: values.username,
             password: values.password
-        })
-
-        if (!loginResponse) {
-            setLoginFailed(true)
-            setLoggingIn(false)
-        } else {
+        }).then(loginResponse => {
             setLoggedUser({
                 username: loginResponse.username,
                 token: loginResponse.token,
                 authenticated: true
             })
-        }
+        }).catch(reason => {
+            setLoggingIn(false)
+            showSnackbar(reason, SnackbarType.ERROR)
+        })
     }
 
     return (
@@ -107,10 +105,6 @@ const Login = () => {
                             </MaterialLink>
                         </Grid>
                     </Grid>
-                    {
-                        loginFailed &&
-                        <Alert className={classes.alert} severity="error">Login failed, please try again.</Alert>
-                    }
                 </form>
             </div>
         </Container>
