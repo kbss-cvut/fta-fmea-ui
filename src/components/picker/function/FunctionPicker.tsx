@@ -6,7 +6,7 @@ import {Autocomplete} from "@material-ui/lab";
 import {Function} from "@models/functionModel";
 import AddIcon from "@material-ui/icons/Add";
 import {Controller, useForm} from "react-hook-form";
-import {schema} from "./FunctionPicker.schema";
+import {schema} from "@components/picker/function/FunctionPicker.schema";
 import useStyles from "@components/picker/function/FunctionPicker.styles";
 
 const FunctionPicker = ({setSelectedFunction}) => {

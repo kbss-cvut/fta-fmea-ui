@@ -1,12 +1,10 @@
-import Login from "../login/Login";
-import Dashboard from "../Dashboard";
-import {Redirect, Route, Router, Switch} from "react-router-dom";
 import * as React from "react";
-import Logout from "../Logout";
-import PublicRoute from "./PublicRoute";
-import PrivateRoute from "./PrivateRoute";
-import {useState} from "react";
-import {User} from "@models/userModel";
+import Login from "@components/login/Login";
+import Dashboard from "@components/Dashboard";
+import {Redirect, Route, Router, Switch} from "react-router-dom";
+import Logout from "@components/Logout";
+import PublicRoute from "@components/routes/PublicRoute";
+import PrivateRoute from "@components/routes/PrivateRoute";
 import Register from "@components/register/Register";
 import {createBrowserHistory} from "history";
 import {LoggedUserProvider} from "@hooks/useLoggedUser";

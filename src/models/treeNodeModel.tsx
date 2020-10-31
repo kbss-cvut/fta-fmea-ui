@@ -1,6 +1,6 @@
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {AbstractModel, CONTEXT as ABSTRACT_CONTEXT} from "@models/abstractModel";
-import {Event, Gate, CONTEXT as EVENT_CONTEXT} from "@models/eventModel";
+import {Event, CONTEXT as EVENT_CONTEXT} from "@models/eventModel";
 
 const ctx = {
     "parent": VocabularyUtils.PREFIX + "hasParent",

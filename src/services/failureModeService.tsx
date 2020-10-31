@@ -1,8 +1,7 @@
-import JsonLdUtils from "../utils/JsonLdUtils";
+import JsonLdUtils from "@utils/JsonLdUtils";
 import {authHeaders} from "@services/utils/authUtils";
 import axiosClient from "@services/utils/axiosUtils";
 import {FailureMode, CONTEXT, CreateFailureMode, CONTEXT as FAILURE_MODE_CONTEXT} from "@models/failureModeModel";
-import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {FaultEvent} from "@models/eventModel";
 

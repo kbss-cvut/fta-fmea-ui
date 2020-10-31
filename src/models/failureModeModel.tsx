@@ -1,5 +1,4 @@
 import VocabularyUtils from "@utils/VocabularyUtils";
-import {RiskPriorityNumber, CONTEXT as RPN_CONTEXT} from "@models/rpnModel";
 import {TreeNode, CONTEXT as TREE_NODE_CONTEXT, CreateTreeNode} from "@models/treeNodeModel";
 import {Mitigation, CONTEXT as MITIGATION_CONTEXT} from "@models/mitigationModel";
 import {AuthoredModel, CONTEXT as AUTHORED_CONTEXT} from "@models/authoredModel";

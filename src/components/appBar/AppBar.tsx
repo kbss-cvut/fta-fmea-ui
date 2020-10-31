@@ -4,7 +4,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Typography from "@material-ui/core/Typography";
 import * as React from "react";
-import useStyles from "./AppBar.styles";
+import useStyles from "@components/appBar/AppBar.styles";
 import {AccountCircle} from "@material-ui/icons";
 import {Menu, MenuItem, AppBar as MaterialAppBar} from "@material-ui/core";
 import {FormEvent} from "react";

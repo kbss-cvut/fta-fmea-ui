@@ -9,10 +9,10 @@ import {
 } from "@material-ui/core";
 import {Alert} from "@material-ui/lab";
 import * as React from "react";
-import useStyles from "./Register.styles";
+import useStyles from "@components/register/Register.styles";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {useState} from "react";
-import * as userService from "../../services/userService";
+import * as userService from "@services/userService";
 import {Link as RouterLink, useHistory, withRouter} from "react-router-dom";
 import {useForm} from 'react-hook-form';
 import {schema} from "@components/register/Register.schema";

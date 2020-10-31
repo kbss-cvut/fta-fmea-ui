@@ -1,6 +1,6 @@
 import {Component, CONTEXT, CreateComponent} from "@models/componentModel";
 import {Function, CONTEXT as FUNCTION_CONTEXT, CreateFunction} from "@models/functionModel";
-import JsonLdUtils from "../utils/JsonLdUtils";
+import JsonLdUtils from "@utils/JsonLdUtils";
 import {authHeaders} from "@services/utils/authUtils";
 import axiosClient from "@services/utils/axiosUtils";
 import VocabularyUtils from "@utils/VocabularyUtils";

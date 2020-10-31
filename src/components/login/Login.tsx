@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import {Link as MaterialLink} from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import {FormEvent, useContext, useState} from "react";
+import {useState} from "react";
 import useStyles from "@components/login/Login.styles";
 import * as userService from "@services/userService";
 import {Alert} from "@material-ui/lab";

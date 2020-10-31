@@ -1,9 +1,6 @@
-import Konva from "konva";
-import KonvaEventObject = Konva.KonvaEventObject;
 import {useEffect, useRef, useState} from "react";
-import {Layer, Rect, Stage} from "react-konva";
+import {Layer, Stage} from "react-konva";
 import * as React from "react";
-import EditorScrollTabs from "@components/editor/tabs/scroll/EditorScrollTabs";
 import useStyles from "@components/editor/Editor.styles";
 import {FailureMode} from "@models/failureModeModel";
 import FaultEventShape from "@components/editor/shapes/FaultEventShape";

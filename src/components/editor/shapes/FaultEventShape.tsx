@@ -1,9 +1,10 @@
-import {Rect, Text} from "react-konva";
+import {Group, Rect, Text} from "react-konva";
 import * as React from "react";
 import {FailureMode} from "@models/failureModeModel";
 import {useEffect, useState} from "react";
 import {FaultEvent} from "@models/eventModel";
-import {appTheme} from "../../../App";
+import {KonvaEventObject} from "konva/types/Node";
+import {appTheme} from "@styles/App.styles";
 
 interface FaultEventShapeProps {
     data: FailureMode,
@@ -28,8 +29,24 @@ const FaultEventShape = ({data, position}: FaultEventShapeProps) => {
         }
     })
 
+    const suppressContextMenu = (e: KonvaEventObject<PointerEvent>) => {
+        e.evt.preventDefault()
+    }
+
+    const handleClick = (e: KonvaEventObject<MouseEvent>) => {
+        if (e.evt.button === 2) {
+            console.log('right click')
+        }
+    }
+
+    const showToolWindow = (e: KonvaEventObject<MouseEvent>) => {
+        console.log('double clicked')
+    }
+
     return (
-        <React.Fragment>
+        <Group onContextMenu={suppressContextMenu}
+               onClick={handleClick}
+               onDblClick={showToolWindow}>
             <Rect
                 x={position.x}
                 y={position.y}
@@ -37,11 +54,6 @@ const FaultEventShape = ({data, position}: FaultEventShapeProps) => {
                 height={rectHeight}
                 stroke={appTheme.editor.shape.strokeColor}
                 strokeWidth={appTheme.editor.shape.strokeWidth}
-                onClick={(e) => {
-                    if(e.evt.button === 2) {
-                        console.log('right click')
-                    }
-                }}
             />
             <Text
                 ref={ref => setTextRef(ref)}
@@ -51,8 +63,7 @@ const FaultEventShape = ({data, position}: FaultEventShapeProps) => {
                 text={(data.manifestingNode.event as FaultEvent).name}
                 align="center"
             />
-        </React.Fragment>
-
+        </Group>
     )
 }
 

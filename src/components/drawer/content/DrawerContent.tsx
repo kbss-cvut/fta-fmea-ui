@@ -1,6 +1,5 @@
 import * as React from "react";
-import useStyles from "./DrawerContent.styles";
-import Editor from "@components/editor/Editor";
+import useStyles from "@components/drawer/content/DrawerContent.styles";
 import EditorScrollTabs from "@components/editor/tabs/scroll/EditorScrollTabs";
 
 

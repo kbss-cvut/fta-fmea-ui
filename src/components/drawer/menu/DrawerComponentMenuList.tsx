@@ -3,13 +3,11 @@ import * as React from "react";
 import AddIcon from '@material-ui/icons/Add';
 import {useState} from "react";
 import {Button, List, ListItem, ListItemText} from "@material-ui/core";
-import useStyles from "./DrawerComponentMenuList.styles";
-import FailureModeDialog from "../../dialog/failureMode/FailureModeDialog";
-import {FaultEvent} from "@models/eventModel";
+import useStyles from "@components/drawer/menu/DrawerComponentMenuList.styles";
+import FailureModeDialog from "@components/dialog/failureMode/FailureModeDialog";
 import {ComponentsProvider} from "@hooks/useComponents";
 import {useFailureModes} from "@hooks/useFailureModes";
 import * as failureModeService from "@services/failureModeService"
-import {FailureMode} from "@models/failureModeModel";
 import {useOpenTabs} from "@hooks/useOpenTabs";
 
 const DrawerComponentMenuList = () => {

@@ -1,40 +1,17 @@
-import * as React from "react";
-import {createMuiTheme, ThemeOptions} from "@material-ui/core";
+import {createMuiTheme} from "@material-ui/core";
+import createCustomMuiTheme from "@styles/App.styles.declarations";
 
-declare module '@material-ui/core/styles/createMuiTheme' {
-    interface Theme {
-        appDrawer: {
-            width: React.CSSProperties['width']
+const _defaultTheme = createMuiTheme();
+export const appTheme = createCustomMuiTheme({
+    appDrawer: {
+        width: 240
+    },
+    editor: {
+        shape: {
+            padding: _defaultTheme.spacing(2),
+            strokeWidth: 1,
+            strokeColor: 'black'
         },
-        editor?: {
-            shape?: {
-                padding?: number
-                strokeWidth?: number,
-                strokeColor?: React.CSSProperties['color']
-            }
-            fontSize: number
-        }
+        fontSize: 15
     }
-    // allow configuration using `createMuiTheme`
-    interface ThemeOptions {
-        appDrawer?: {
-            width?: React.CSSProperties['width']
-        },
-        editor?: {
-            shape?: {
-                padding?: number,
-                strokeWidth?: number,
-                strokeColor?: React.CSSProperties['color']
-            }
-            fontSize: number
-        }
-    }
-}
-
-const createCustomMuiTheme = (options: ThemeOptions) => {
-    return createMuiTheme({
-        ...options,
-    })
-}
-
-export default createCustomMuiTheme;
+});

@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useStyles} from "./TabPanel.styles";
+import {useStyles} from "@components/editor/tabs/panel/TabPanel.styles";
 
 interface TabPanelProps {
     children?: React.ReactNode;

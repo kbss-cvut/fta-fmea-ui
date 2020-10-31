@@ -1,11 +1,11 @@
 import * as React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
-import {useStyles} from "./EditorScrollTabs.styles";
+import {useStyles} from "@components/editor/tabs/scroll/EditorScrollTabs.styles";
 import {useOpenTabs} from "@hooks/useOpenTabs";
 import {FaultEvent} from "@models/eventModel";
-import TabPanel from "../panel/TabPanel";
-import Editor from "../../Editor";
+import TabPanel from "@components/editor/tabs/panel/TabPanel";
+import Editor from "@components/editor/Editor";
 import CloseableTab, {a11yProps} from "@components/editor/tabs/CloseableTab";
 
 const EditorScrollTabs = () => {

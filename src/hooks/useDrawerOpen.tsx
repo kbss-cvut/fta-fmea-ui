@@ -1,8 +1,7 @@
 import * as React from "react";
 import {createContext, useContext, useState} from "react";
-import {User} from "@models/userModel";
-import {STORAGE_KEYS} from "../utils/constants";
-import {ChildrenProps} from "../utils/hookUtils";
+import {STORAGE_KEYS} from "@utils/constants";
+import {ChildrenProps} from "@utils/hookUtils";
 
 type drawerOpenContextType = [boolean, (open: boolean) => void];
 
