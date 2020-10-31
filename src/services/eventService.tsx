@@ -5,6 +5,7 @@ import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import VocabularyUtils from "@utils/VocabularyUtils";
 import JsonLdUtils from "@utils/JsonLdUtils";
 import {Gate, CONTEXT as EVENT_CONTEXT, CreateGate} from "@models/eventModel";
+import {CONTEXT as TREE_NODE_CONTEXT} from "@models/treeNodeModel";
 import {TreeNode} from "@models/treeNodeModel";
 
 export const insertGate = async (treeNodeIri: string, gate: CreateGate): Promise<TreeNode<Gate>> => {
@@ -22,7 +23,7 @@ export const insertGate = async (treeNodeIri: string, gate: CreateGate): Promise
             }
         )
 
-        return JsonLdUtils.compactAndResolveReferences<TreeNode<Gate>>(response.data, EVENT_CONTEXT);
+        return JsonLdUtils.compactAndResolveReferences<TreeNode<Gate>>(response.data, TREE_NODE_CONTEXT);
     } catch (e) {
         console.log('Event Service - Failed to call /insertGate')
         return undefined; // TODO throw error?

@@ -10,9 +10,11 @@ import Portal from "@components/editor/Portal";
 import GateDialog from "@components/dialog/gate/GateDialog";
 import {TreeNode} from "@models/treeNodeModel";
 import {PositionProps} from "@utils/shapeUtils";
+import GateShape from "@components/editor/shapes/GateShape";
+import {flatten} from "@utils/arrayUtils";
 
 interface FaultEventShapeProps extends PositionProps {
-    data: FailureMode,
+    data: TreeNode<FaultEvent>,
 }
 
 const FaultEventShape = ({data, position}: FaultEventShapeProps) => {
@@ -73,8 +75,8 @@ const FaultEventShape = ({data, position}: FaultEventShapeProps) => {
 
     const [gateDialogOpen, setGateDialogOpen] = useState(false)
     const handleGateCreated = (gate: TreeNode<Gate>) => {
-        console.log('handleGateCreated')
-        data.manifestingNode.children.push(gate)
+        console.log(`handleGateCreated - ${JSON.stringify(gate)}`)
+        data.children.push(gate)
     }
 
     return (
@@ -95,13 +97,17 @@ const FaultEventShape = ({data, position}: FaultEventShapeProps) => {
                     x={position.x + rectPadding / 2}
                     y={position.y + rectPadding / 2}
                     fontSize={appTheme.editor.fontSize}
-                    text={(data.manifestingNode.event as FaultEvent).name}
+                    text={(data.event as FaultEvent).name}
                     align="center"
                 />
             </Group>
+            {flatten([data.children]).map((value, index) => {
+                return <GateShape data={value as TreeNode<Gate>} position={{x: position.x, y: position.y + (50 * (1 + index))}}/> // TODO resolve offset
+            })}
             <Portal>
                 {eventMenu}
-                {gateDialogOpen && <GateDialog treeNodeIri={data.manifestingNode.iri} onGateCreated={handleGateCreated} onClose={() => setGateDialogOpen(false)}/>}
+                {gateDialogOpen && <GateDialog treeNodeIri={data.iri} onGateCreated={handleGateCreated}
+                                               onClose={() => setGateDialogOpen(false)}/>}
             </Portal>
         </React.Fragment>
     )
