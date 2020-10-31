@@ -10,6 +10,7 @@ import {IconButton} from "@material-ui/core";
 import {Close} from "@material-ui/icons";
 import Tab from "@material-ui/core/Tab";
 import {FailureMode} from "@models/failureModeModel";
+import {extractFragment} from "@services/utils/uriIdentifierUtils";
 
 const a11yProps = (index: any) => {
     return {
@@ -48,6 +49,7 @@ const EditorScrollTabs = () => {
                         openTabs.map((failureMode, index) => {
                             const tabTitle = (failureMode.manifestingNode.event as FaultEvent).name
                             return <Tab
+                                key={`tab-failure-mode-${failureMode.iri}`}
                                 component="div"
                                 label={<span>{tabTitle}<IconButton
                                     onClick={() => handleTabClose(index, failureMode)}><Close/></IconButton></span>}
@@ -58,7 +60,7 @@ const EditorScrollTabs = () => {
             </AppBar>
             {
                 openTabs.map((failureMode, index) => {
-                    return <TabPanel value={currentTab} index={index}><Editor failureMode={failureMode}/></TabPanel>
+                    return <TabPanel key={`tab-panel-${failureMode.iri}`} value={currentTab} index={index}><Editor failureMode={failureMode}/></TabPanel>
                 })
             }
         </div>

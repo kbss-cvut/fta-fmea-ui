@@ -64,8 +64,8 @@ const FaultEventShape = ({data, position, showSnackbar}: FaultEventShapeProps) =
                 } : undefined
             }
         >
-            <MenuItem>Edit</MenuItem>
-            <MenuItem onClick={() => {
+            <MenuItem key="event-menu-edit">Edit</MenuItem>
+            <MenuItem key="event-menu-new-gate" onClick={() => {
                 setAnchorPos(initialAnchorPosition)
                 setGateDialogOpen(true)
             }}>
@@ -104,7 +104,8 @@ const FaultEventShape = ({data, position, showSnackbar}: FaultEventShapeProps) =
             </Group>
             {flatten([data.children]).map((value, index) => {
                 return <GateShape data={value as TreeNode<Gate>}
-                                  position={{x: position.x, y: position.y + (50 * (1 + index))}}/> // TODO resolve offset
+                                  position={{x: position.x, y: position.y + (50 * (1 + index))}} // TODO resolve offset
+                                  key={`event-${data.iri}-gate-${value.iri}`}/>
             })}
             <Portal>
                 {eventMenu}

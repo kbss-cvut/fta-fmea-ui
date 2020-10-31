@@ -25,26 +25,24 @@ const GateShape = ({data, position}: GateShapeProps) => {
 
 
     return (
-        <React.Fragment>
-            <Group>
-                <Rect
-                    x={position.x}
-                    y={position.y}
-                    width={rectWidth}
-                    height={rectHeight}
-                    stroke={appTheme.editor.shape.strokeColor}
-                    strokeWidth={appTheme.editor.shape.strokeWidth}
-                />
-                <Text
-                    ref={ref => setTextRef(ref)}
-                    x={position.x + rectPadding / 2}
-                    y={position.y + rectPadding / 2}
-                    fontSize={appTheme.editor.fontSize}
-                    text={(data.event as Gate).gateType}
-                    align="center"
-                />
-            </Group>
-        </React.Fragment>
+        <Group>
+            <Rect
+                x={position.x}
+                y={position.y}
+                width={rectWidth}
+                height={rectHeight}
+                stroke={appTheme.editor.shape.strokeColor}
+                strokeWidth={appTheme.editor.shape.strokeWidth}
+            />
+            <Text
+                ref={ref => setTextRef(ref)}
+                x={position.x + rectPadding / 2}
+                y={position.y + rectPadding / 2}
+                fontSize={appTheme.editor.fontSize}
+                text={(data.event as Gate).gateType}
+                align="center"
+            />
+        </Group>
     )
 }
 
