@@ -45,3 +45,7 @@ export enum GateType {
 export interface Gate extends Event {
     gateType: GateType,
 }
+
+export interface CreateGate {
+    gateType?: GateType,
+}

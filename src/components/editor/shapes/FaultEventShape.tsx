@@ -2,20 +2,17 @@ import {Group, Rect, Text} from "react-konva";
 import * as React from "react";
 import {FailureMode} from "@models/failureModeModel";
 import {useEffect, useState} from "react";
-import {FaultEvent} from "@models/eventModel";
+import {FaultEvent, Gate} from "@models/eventModel";
 import {KonvaEventObject} from "konva/types/Node";
 import {appTheme} from "@styles/App.styles";
 import {Menu, MenuItem} from "@material-ui/core";
 import Portal from "@components/editor/Portal";
+import GateDialog from "@components/dialog/gate/GateDialog";
+import {TreeNode} from "@models/treeNodeModel";
+import {PositionProps} from "@utils/shapeUtils";
 
-interface FaultEventShapeProps {
+interface FaultEventShapeProps extends PositionProps {
     data: FailureMode,
-    position: ShapePosition
-}
-
-interface ShapePosition {
-    x: number,
-    y: number
 }
 
 const FaultEventShape = ({data, position}: FaultEventShapeProps) => {
@@ -51,7 +48,7 @@ const FaultEventShape = ({data, position}: FaultEventShapeProps) => {
     const initialAnchorPosition = {mouseX: null, mouseY: null,};
     const [anchorPos, setAnchorPos] = useState<{ mouseX: null | number; mouseY: null | number; }>(initialAnchorPosition)
 
-    const renderMenu = (
+    const eventMenu = (
         <Menu
             keepMounted
             open={anchorPos.mouseY !== null}
@@ -65,9 +62,20 @@ const FaultEventShape = ({data, position}: FaultEventShapeProps) => {
             }
         >
             <MenuItem>Edit</MenuItem>
-            <MenuItem>New Gate</MenuItem>
+            <MenuItem onClick={() => {
+                setAnchorPos(initialAnchorPosition)
+                setGateDialogOpen(true)
+            }}>
+                New Gate
+            </MenuItem>
         </Menu>
     );
+
+    const [gateDialogOpen, setGateDialogOpen] = useState(false)
+    const handleGateCreated = (gate: TreeNode<Gate>) => {
+        console.log('handleGateCreated')
+        data.manifestingNode.children.push(gate)
+    }
 
     return (
         <React.Fragment>
@@ -92,7 +100,8 @@ const FaultEventShape = ({data, position}: FaultEventShapeProps) => {
                 />
             </Group>
             <Portal>
-                {renderMenu}
+                {eventMenu}
+                {gateDialogOpen && <GateDialog treeNodeIri={data.manifestingNode.iri} onGateCreated={handleGateCreated} onClose={() => setGateDialogOpen(false)}/>}
             </Portal>
         </React.Fragment>
     )
