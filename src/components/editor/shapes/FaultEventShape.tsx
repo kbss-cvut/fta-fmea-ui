@@ -30,10 +30,6 @@ const FaultEventShape = ({data, position, showSnackbar, parentPosition}: FaultEv
         }
     })
 
-    const suppressContextMenu = (e: KonvaEventObject<PointerEvent>) => {
-        e.evt.preventDefault()
-    }
-
     const handleClick = (e: KonvaEventObject<MouseEvent>) => {
         if (e.evt.button === 2) {
             setAnchorPos({
@@ -41,10 +37,6 @@ const FaultEventShape = ({data, position, showSnackbar, parentPosition}: FaultEv
                 mouseY: e.evt.clientY,
             })
         }
-    }
-
-    const showToolWindow = (e: KonvaEventObject<MouseEvent>) => {
-        console.log('double clicked')
     }
 
     const initialAnchorPosition = {mouseX: null, mouseY: null,};
@@ -75,15 +67,14 @@ const FaultEventShape = ({data, position, showSnackbar, parentPosition}: FaultEv
 
     const [gateDialogOpen, setGateDialogOpen] = useState(false)
     const handleGateCreated = (gate: TreeNode<Gate>) => {
-        console.log(`handleGateCreated - ${JSON.stringify(gate)}`)
+        console.log(`handleGateCreated - ${gate.iri}`)
         data.children.push(gate)
     }
 
     return (
         <React.Fragment>
-            <Group onContextMenu={suppressContextMenu}
-                   onClick={handleClick}
-                   onDblClick={showToolWindow}>
+            <Group onContextMenu={(e) => e.evt.preventDefault()}
+                   onClick={handleClick}>
                 <Rect
                     x={position.x}
                     y={position.y}

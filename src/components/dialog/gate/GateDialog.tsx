@@ -57,7 +57,7 @@ const GateDialog = ({treeNodeIri, onGateCreated, onClose, showSnackbar}: GateDia
                             onChange={handleChange}
                         >
                             {
-                                Object.values(GateType).map(value => <MenuItem value={value}>{value}</MenuItem>)
+                                Object.values(GateType).map(value => <MenuItem key={`option-${value}`} value={value}>{value}</MenuItem>)
                             }
                         </Select>
                     </FormControl>

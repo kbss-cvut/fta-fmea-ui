@@ -6,7 +6,7 @@ export const schema = yupResolver(
     Yup.object().shape({
         name: Yup.string()
             .min(3, 'Must be at least 3 character long')
-            .required('Failure Mode Name is mandatory'),
+            .required('Event is mandatory'),
         description: Yup.string().default(''),
         probability: Yup.number()
             .moreThan(0, 'Probability cannot be lower than 0')
