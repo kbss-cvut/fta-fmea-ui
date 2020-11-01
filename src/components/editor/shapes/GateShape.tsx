@@ -10,6 +10,7 @@ import Portal from "@components/editor/Portal";
 import {Menu, MenuItem} from "@material-ui/core";
 import FaultEventDialog from "@components/dialog/faultEvent/FaultEventDialog";
 import {KonvaEventObject} from "konva/types/Node";
+import ShapeToolWindow from "@components/editor/tools/ShapeToolWindow";
 
 const GateShape = ({data, position, parentPosition, showSnackbar}: EventShapeProps<Gate>) => {
     const [rectWidth, setRectWidth] = useState<number>(50)
@@ -36,6 +37,8 @@ const GateShape = ({data, position, parentPosition, showSnackbar}: EventShapePro
     const initialAnchorPosition = {mouseX: null, mouseY: null,};
     const [anchorPos, setAnchorPos] = useState<{ mouseX: null | number; mouseY: null | number; }>(initialAnchorPosition)
 
+    const [toolWindowOpen, setToolWindowOpen] = useState(false)
+
     const gateMenu = (
         <Menu
             keepMounted
@@ -49,7 +52,7 @@ const GateShape = ({data, position, parentPosition, showSnackbar}: EventShapePro
                 } : undefined
             }
         >
-            <MenuItem key="gate-menu-edit">Edit</MenuItem>
+            <MenuItem key="gate-menu-edit" onClick={() => setToolWindowOpen(true)}>Edit</MenuItem>
             <MenuItem key="gate-menu-new-event" onClick={() => {
                 setAnchorPos(initialAnchorPosition)
                 setEventDialogOpen(true)
@@ -68,7 +71,7 @@ const GateShape = ({data, position, parentPosition, showSnackbar}: EventShapePro
     return (
         <React.Fragment>
             <Group onContextMenu={(e) => e.evt.preventDefault()}
-                   onClick={handleClick}>
+                   onClick={handleClick} onDblClick={() => setToolWindowOpen(true)}>
                 <Rect
                     x={position.x}
                     y={position.y}
@@ -109,6 +112,9 @@ const GateShape = ({data, position, parentPosition, showSnackbar}: EventShapePro
                 {eventDialogOpen && <FaultEventDialog treeNodeIri={data.iri} onEventCreated={handleEventCreated}
                                                       onClose={() => setEventDialogOpen(false)}
                                                       showSnackbar={showSnackbar}/>}
+            </Portal>
+            <Portal node={document.getElementById("editor-window-tool")}>
+                {toolWindowOpen && <ShapeToolWindow data={data}/>}
             </Portal>
         </React.Fragment>
     )

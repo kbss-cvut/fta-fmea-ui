@@ -1,14 +1,21 @@
 import * as React from "react";
-import {FailureMode} from "@models/failureModeModel";
 import useStyles from "./ShapeToolWindow.styles";
-import {Paper} from "@material-ui/core";
+import {Divider, Paper, Typography} from "@material-ui/core";
+import {TreeNode} from "@models/treeNodeModel";
+import {Event} from "@models/eventModel";
 
-const ShapeToolWindow = (failureMode: FailureMode) => {
+interface ShapeToolWindowProps {
+    data: TreeNode<Event>
+}
+
+const ShapeToolWindow = ({data}: ShapeToolWindowProps) => {
     const classes = useStyles()
 
     return (
-        <Paper>
-            {failureMode}
+        <Paper className={classes.paper} elevation={3}>
+            <Typography className={classes.title} variant="h5" gutterBottom>Edit Event</Typography>
+            <Divider/>
+            <p>{JSON.stringify(data)}</p>
         </Paper>
     );
 }

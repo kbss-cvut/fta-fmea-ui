@@ -11,6 +11,7 @@ import {TreeNode} from "@models/treeNodeModel";
 import {EventShapeProps} from "@utils/shapeUtils";
 import GateShape from "@components/editor/shapes/GateShape";
 import {flatten} from "@utils/arrayUtils";
+import ShapeToolWindow from "@components/editor/tools/ShapeToolWindow";
 
 const FaultEventShape = ({data, position, showSnackbar, parentPosition}: EventShapeProps<FaultEvent>) => {
     const [rectWidth, setRectWidth] = useState<number>(50)
@@ -50,7 +51,7 @@ const FaultEventShape = ({data, position, showSnackbar, parentPosition}: EventSh
                 } : undefined
             }
         >
-            <MenuItem key="event-menu-edit">Edit</MenuItem>
+            <MenuItem key="event-menu-edit" onClick={() => setToolWindowOpen(true)}>Edit</MenuItem>
             <MenuItem key="event-menu-new-gate" onClick={() => {
                 setAnchorPos(initialAnchorPosition)
                 setGateDialogOpen(true)
@@ -66,10 +67,12 @@ const FaultEventShape = ({data, position, showSnackbar, parentPosition}: EventSh
         data.children.push(gate)
     }
 
+    const [toolWindowOpen, setToolWindowOpen] = useState(false)
+
     return (
         <React.Fragment>
             <Group onContextMenu={(e) => e.evt.preventDefault()}
-                   onClick={handleClick}>
+                   onClick={handleClick} onDblClick={() => setToolWindowOpen(true)}>
                 <Rect
                     x={position.x}
                     y={position.y}
@@ -112,6 +115,9 @@ const FaultEventShape = ({data, position, showSnackbar, parentPosition}: EventSh
                 {eventMenu}
                 {gateDialogOpen && <GateDialog treeNodeIri={data.iri} onGateCreated={handleGateCreated}
                                                onClose={() => setGateDialogOpen(false)} showSnackbar={showSnackbar}/>}
+            </Portal>
+            <Portal node={document.getElementById("editor-window-tool")}>
+                {toolWindowOpen && <ShapeToolWindow data={data}/>}
             </Portal>
         </React.Fragment>
     )

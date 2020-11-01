@@ -17,15 +17,15 @@ const Editor = ({failureMode}: EditorPros) => {
     const [showSnackbar] = useSnackbar();
 
     const containerRef = useRef(null)
+    const windowToolRef = useRef(null)
     const [stageWidth, setStageWidth] = useState(0)
     const [stageHeight, setStageHeight] = useState(0)
 
     useEffect(() => {
-        setStageWidth(containerRef.current.clientWidth)
+        setStageWidth(containerRef.current.clientWidth - windowToolRef.current.clientWidth)
         setStageHeight(containerRef.current.clientHeight)
     }, []);
 
-    // TODO calculate shape position!
     return (
         <div className={classes.konvaContainer} ref={containerRef}>
             {
@@ -38,6 +38,7 @@ const Editor = ({failureMode}: EditorPros) => {
                     </Layer>
                 </Stage>
             }
+            <div id="editor-window-tool" className={classes.divWindowTool} ref={windowToolRef}/>
         </div>
     );
 }
