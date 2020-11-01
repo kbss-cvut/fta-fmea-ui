@@ -92,12 +92,17 @@ const FaultEventShape = ({data, position, showSnackbar, parentPosition}: FaultEv
                     align="center"
                 />
             </Group>
-            {flatten([data.children]).map((value, index) => {
-                return <GateShape data={value as TreeNode<Gate>}
-                                  position={{x: position.x, y: position.y + (50 * (1 + index))}} // TODO resolve offset
-                                  parentPosition={position}
-                                  key={`gate-${value.iri}`} showSnackbar={showSnackbar}/>
-            })}
+            {
+                flatten([data.children]).map((value, index) => {
+                    return <GateShape data={value as TreeNode<Gate>}
+                                      position={{
+                                          x: position.x,
+                                          y: position.y + (50 * (1 + index))
+                                      }} // TODO resolve offset
+                                      parentPosition={position}
+                                      key={`gate-${value.iri}`} showSnackbar={showSnackbar}/>
+                })
+            }
             {
                 (data.event as FaultEvent).eventType !== EventType.TOP_EVENT && parentPosition &&
                 <Arrow

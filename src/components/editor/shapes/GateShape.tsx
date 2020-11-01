@@ -92,29 +92,30 @@ const GateShape = ({data, position, parentPosition, showSnackbar}: GateShapeProp
                     text={(data.event as Gate).gateType}
                     align="center"
                 />
-                {
-                    data.children.map((value, index) => {
-                        return <FaultEventShape
-                            data={value as TreeNode<FaultEvent>} showSnackbar={showSnackbar}
-                            position={{x: position.x + 50 * (index), y: position.y + 50}} parentPosition={position}
-                            key={`event-${value.iri}`}
-                        />
-                    })
-                }
-                {
-                    <Arrow
-                        key={`connector-line-from-${data.iri}`}
-                        points={[position.x, position.y, parentPosition.x, parentPosition.y]}
-                        stroke={appTheme.editor.shape.strokeColor}
-                        fill={appTheme.editor.shape.strokeColor}
-                        strokeWidth={appTheme.editor.shape.strokeWidth}
-                    />
-                }
             </Group>
+            {
+                data.children.map((value, index) => {
+                    return <FaultEventShape
+                        data={value as TreeNode<FaultEvent>} showSnackbar={showSnackbar}
+                        position={{x: position.x + 100 * (index), y: position.y + 50}} parentPosition={position}
+                        key={`event-${value.iri}`}
+                    />
+                })
+            }
+            {
+                <Arrow
+                    key={`connector-line-from-${data.iri}`}
+                    points={[position.x, position.y, parentPosition.x, parentPosition.y]}
+                    stroke={appTheme.editor.shape.strokeColor}
+                    fill={appTheme.editor.shape.strokeColor}
+                    strokeWidth={appTheme.editor.shape.strokeWidth}
+                />
+            }
             <Portal>
                 {gateMenu}
                 {eventDialogOpen && <FaultEventDialog treeNodeIri={data.iri} onEventCreated={handleEventCreated}
-                                               onClose={() => setEventDialogOpen(false)} showSnackbar={showSnackbar}/>}
+                                                      onClose={() => setEventDialogOpen(false)}
+                                                      showSnackbar={showSnackbar}/>}
             </Portal>
         </React.Fragment>
     )
