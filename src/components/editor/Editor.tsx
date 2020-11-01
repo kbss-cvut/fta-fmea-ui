@@ -25,12 +25,12 @@ const Editor = ({failureMode}: EditorPros) => {
         setStageHeight(containerRef.current.clientHeight)
     }, []);
 
+    // TODO calculate shape position!
     return (
         <div className={classes.konvaContainer} ref={containerRef}>
             {
-                (stageWidth !== 0) && <Stage width={stageWidth} height={stageHeight}>
+                <Stage width={stageWidth} height={stageHeight}>
                     <Layer>
-                        {/*TODO calculate shape position!*/}
                         <FaultEventShape
                             showSnackbar={showSnackbar}
                             data={failureMode.manifestingNode}

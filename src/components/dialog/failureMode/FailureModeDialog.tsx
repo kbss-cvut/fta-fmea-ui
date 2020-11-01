@@ -34,7 +34,7 @@ const FailureModeDialog = ({open, handleCloseDialog}) => {
             manifestingNode: {
                 nodeType: TreeNodeType.EVENT,
                 event: {
-                    eventType: EventType.BASIC,
+                    eventType: EventType.TOP_EVENT,
                     name: values.name,
                     description: values.description,
                     rpn: {

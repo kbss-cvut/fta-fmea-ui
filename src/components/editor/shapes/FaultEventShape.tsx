@@ -1,8 +1,7 @@
-import {Group, Rect, Text} from "react-konva";
+import {Group, Line, Rect, Text} from "react-konva";
 import * as React from "react";
-import {FailureMode} from "@models/failureModeModel";
 import {useEffect, useState} from "react";
-import {FaultEvent, Gate} from "@models/eventModel";
+import {EventType, FaultEvent, Gate} from "@models/eventModel";
 import {KonvaEventObject} from "konva/types/Node";
 import {appTheme} from "@styles/App.styles";
 import {Menu, MenuItem} from "@material-ui/core";
@@ -18,7 +17,7 @@ interface FaultEventShapeProps extends PositionProps {
     showSnackbar: (string, SnackbarType) => void
 }
 
-const FaultEventShape = ({data, position, showSnackbar}: FaultEventShapeProps) => {
+const FaultEventShape = ({data, position, showSnackbar, parentPosition}: FaultEventShapeProps) => {
     const [rectWidth, setRectWidth] = useState<number>(50)
     const [rectHeight, setRectHeight] = useState<number>(50)
 
@@ -105,8 +104,18 @@ const FaultEventShape = ({data, position, showSnackbar}: FaultEventShapeProps) =
             {flatten([data.children]).map((value, index) => {
                 return <GateShape data={value as TreeNode<Gate>}
                                   position={{x: position.x, y: position.y + (50 * (1 + index))}} // TODO resolve offset
-                                  key={`event-${data.iri}-gate-${value.iri}`}/>
+                                  parentPosition={position}
+                                  key={`gate-${value.iri}`} showSnackbar={showSnackbar}/>
             })}
+            {
+                (data.event as FaultEvent).eventType !== EventType.TOP_EVENT && parentPosition &&
+                <Line
+                    key={`connector-line-from-${data.iri}`}
+                    points={[position.x, position.y, parentPosition.x, parentPosition.y]}
+                    stroke={appTheme.editor.shape.strokeColor}
+                    strokeWidth={appTheme.editor.shape.strokeWidth}
+                />
+            }
             <Portal>
                 {eventMenu}
                 {gateDialogOpen && <GateDialog treeNodeIri={data.iri} onGateCreated={handleGateCreated}
