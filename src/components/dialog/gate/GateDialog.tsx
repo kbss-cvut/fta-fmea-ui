@@ -45,7 +45,7 @@ const GateDialog = ({treeNodeIri, onGateCreated, onClose, showSnackbar}: GateDia
 
     return (
         <div>
-            <Dialog open={true} onClose={onClose} aria-labelledby="form-dialog-title" maxWidth="sm">
+            <Dialog open={true} onClose={onClose} aria-labelledby="form-dialog-title" maxWidth={"xs"} fullWidth>
                 <DialogTitle id="form-dialog-title" onClose={onClose}>Create Gate</DialogTitle>
                 <DialogContent dividers>
                     <FormControl className={classes.formControl}>

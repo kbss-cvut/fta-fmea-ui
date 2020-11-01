@@ -59,7 +59,7 @@ const FailureModeDialog = ({open, handleCloseDialog}) => {
                     fullWidth>
                 <DialogTitle id="form-dialog-title" onClose={handleCloseDialog}>Create Failure Mode</DialogTitle>
                 <DialogContent dividers>
-                    <FaultEventCreation useFormMethods={useFormMethods}/>
+                    <FaultEventCreation useFormMethods={useFormMethods} topEventOnly={true}/>
                 </DialogContent>
                 <DialogActions>
                     <Button disabled={processing} color="primary" onClick={handleSubmit(handleCreateFailureMode)}>

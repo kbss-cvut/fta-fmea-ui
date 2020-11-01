@@ -30,8 +30,9 @@ const FaultEventDialog = ({treeNodeIri, onEventCreated, onClose, showSnackbar}: 
     const handleCreateEvent = async (values: any) => {
         setIsProcessing(true)
 
+        console.log(`Creating event with eventType - ${values.eventType}`)
         const requestEvent = {
-            eventType: EventType.BASIC, // TODO let user pick event type
+            eventType: values.eventType,
             name: values.name,
             description: values.description,
             rpn: {
@@ -57,7 +58,7 @@ const FaultEventDialog = ({treeNodeIri, onEventCreated, onClose, showSnackbar}: 
             <Dialog open={true} onClose={onClose} aria-labelledby="form-dialog-title" maxWidth="md" fullWidth>
                 <DialogTitle id="form-dialog-title" onClose={onClose}>Create Event</DialogTitle>
                 <DialogContent dividers>
-                    <FaultEventCreation useFormMethods={useFormMethods}/>
+                    <FaultEventCreation useFormMethods={useFormMethods} topEventOnly={false}/>
                 </DialogContent>
                 <DialogActions>
                     <Button disabled={processing} color="primary" onClick={handleSubmit(handleCreateEvent)}>

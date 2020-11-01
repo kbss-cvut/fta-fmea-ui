@@ -1,15 +1,34 @@
 import * as React from "react";
 
-import {Box, TextField,} from "@material-ui/core";
+import {Box, FormControl, InputLabel, MenuItem, Select, TextField,} from "@material-ui/core";
 import useStyles from "@components/dialog/faultEvent/FaultEventCreation.styles";
+import {Controller} from "react-hook-form";
+import {EventType} from "@models/eventModel";
 
-const FaultEventCreation = ({useFormMethods}) => {
+const FaultEventCreation = ({useFormMethods, topEventOnly}) => {
     const classes = useStyles()
 
-    const {register, errors} = useFormMethods
+    const {register, errors, control} = useFormMethods
 
     return (
         <div className={classes.divForm}>
+            {!topEventOnly && <FormControl className={classes.formControl}>
+                <InputLabel id="event-type-select-label">Type</InputLabel>
+                <Controller
+                    as={
+                        <Select labelId="event-type-select-label"
+                                id="event-type-select">
+                            {
+                                Object.values(EventType).map(value =>
+                                    <MenuItem key={`option-${value}`} value={value}>{value}</MenuItem>)
+                            }
+                        </Select>
+                    }
+                    name="eventType"
+                    control={control}
+                    defaultValue={EventType.BASIC}
+                />
+            </FormControl>}
             <TextField autoFocus margin="dense" label="Name" name="name" type="text"
                        fullWidth inputRef={register} error={!!errors.name}
                        helperText={errors.name?.message}/>

@@ -9,7 +9,11 @@ const useStyles = makeStyles((theme: Theme) =>
         rpnBox: {
             display: 'flex',
             gap: '1em'
-        }
+        },
+        formControl: {
+            minWidth: 120,
+            margin: theme.spacing(1, 0)
+        },
     }),
 );
 

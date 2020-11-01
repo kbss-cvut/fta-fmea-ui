@@ -1,9 +1,9 @@
 import * as React from "react";
 import {FailureMode} from "@models/failureModeModel";
-import useStyles from "@components/editor/tools/FaultEventToolWindow.styles";
+import useStyles from "./ShapeToolWindow.styles";
 import {Paper} from "@material-ui/core";
 
-const FaultEventToolWindow = (failureMode: FailureMode) => {
+const ShapeToolWindow = (failureMode: FailureMode) => {
     const classes = useStyles()
 
     return (
@@ -13,4 +13,4 @@ const FaultEventToolWindow = (failureMode: FailureMode) => {
     );
 }
 
-export default FaultEventToolWindow;
+export default ShapeToolWindow;
