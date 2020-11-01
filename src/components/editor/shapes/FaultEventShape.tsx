@@ -113,6 +113,7 @@ const FaultEventShape = ({data, position, showSnackbar, parentPosition}: FaultEv
                     key={`connector-line-from-${data.iri}`}
                     points={[position.x, position.y, parentPosition.x, parentPosition.y]}
                     stroke={appTheme.editor.shape.strokeColor}
+                    fill={appTheme.editor.shape.strokeColor}
                     strokeWidth={appTheme.editor.shape.strokeWidth}
                 />
             }

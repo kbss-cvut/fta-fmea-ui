@@ -1,5 +1,6 @@
 import * as Yup from "yup";
 import {yupResolver} from '@hookform/resolvers/yup';
+import {yupOptionalNumber} from "@utils/validationUtils";
 
 export const schema = yupResolver(
     Yup.object().shape({
@@ -12,10 +13,14 @@ export const schema = yupResolver(
             .lessThan(1, 'Probability cannot be greater than 1')
             .required('Probability is mandatory'),
         severity: Yup.number()
+            .transform(yupOptionalNumber)
+            .notRequired()
             .moreThan(0, 'Severity cannot be lower than 0')
-            .lessThan(10,  'Severity cannot be greater than 10'),
+            .lessThan(10, 'Severity cannot be greater than 10'),
         detection: Yup.number()
+            .transform(yupOptionalNumber)
+            .notRequired()
             .moreThan(0, 'Detection cannot be lower than 0')
-            .lessThan(10, 'Detection cannot be greater than 10'),
+            .lessThan(10, 'Detection cannot be greater than 10')
     })
 );
