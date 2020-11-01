@@ -1,4 +1,4 @@
-import {Group, Line, Rect, Text} from "react-konva";
+import {Arrow, Group, Line, Rect, Text} from "react-konva";
 import * as React from "react";
 import {useEffect, useState} from "react";
 import {EventType, FaultEvent, Gate} from "@models/eventModel";
@@ -109,7 +109,7 @@ const FaultEventShape = ({data, position, showSnackbar, parentPosition}: FaultEv
             })}
             {
                 (data.event as FaultEvent).eventType !== EventType.TOP_EVENT && parentPosition &&
-                <Line
+                <Arrow
                     key={`connector-line-from-${data.iri}`}
                     points={[position.x, position.y, parentPosition.x, parentPosition.y]}
                     stroke={appTheme.editor.shape.strokeColor}

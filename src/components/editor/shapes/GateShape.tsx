@@ -1,4 +1,4 @@
-import {Group, Line, Rect, Text} from "react-konva";
+import {Arrow, Group, Line, Rect, Text} from "react-konva";
 import * as React from "react";
 import {useEffect, useState} from "react";
 import {EventType, FaultEvent, Gate} from "@models/eventModel";
@@ -55,7 +55,7 @@ const GateShape = ({data, position, parentPosition, showSnackbar}: GateShapeProp
                 })
             }
             {
-                <Line
+                <Arrow
                     key={`connector-line-from-${data.iri}`}
                     points={[position.x, position.y, parentPosition.x, parentPosition.y]}
                     stroke={appTheme.editor.shape.strokeColor}
