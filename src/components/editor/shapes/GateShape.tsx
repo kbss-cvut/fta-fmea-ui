@@ -10,7 +10,7 @@ import Portal from "@components/editor/Portal";
 import {Menu, MenuItem} from "@material-ui/core";
 import FaultEventDialog from "@components/dialog/faultEvent/FaultEventDialog";
 import {KonvaEventObject} from "konva/types/Node";
-import ShapeToolWindow from "@components/editor/tools/ShapeToolWindow";
+import ShapeToolPane from "@components/editor/tools/ShapeToolPane";
 
 const GateShape = ({data, position, parentPosition, showSnackbar}: EventShapeProps<Gate>) => {
     const [rectWidth, setRectWidth] = useState<number>(50)
@@ -114,7 +114,7 @@ const GateShape = ({data, position, parentPosition, showSnackbar}: EventShapePro
                                                       showSnackbar={showSnackbar}/>}
             </Portal>
             <Portal node={document.getElementById("editor-window-tool")}>
-                {toolWindowOpen && <ShapeToolWindow data={data}/>}
+                {toolWindowOpen && <ShapeToolPane data={data}/>}
             </Portal>
         </React.Fragment>
     )

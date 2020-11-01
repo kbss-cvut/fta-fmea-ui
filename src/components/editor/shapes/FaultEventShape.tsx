@@ -11,7 +11,7 @@ import {TreeNode} from "@models/treeNodeModel";
 import {EventShapeProps} from "@utils/shapeUtils";
 import GateShape from "@components/editor/shapes/GateShape";
 import {flatten} from "@utils/arrayUtils";
-import ShapeToolWindow from "@components/editor/tools/ShapeToolWindow";
+import ShapeToolPane from "@components/editor/tools/ShapeToolPane";
 
 const FaultEventShape = ({data, position, showSnackbar, parentPosition}: EventShapeProps<FaultEvent>) => {
     const [rectWidth, setRectWidth] = useState<number>(50)
@@ -117,7 +117,7 @@ const FaultEventShape = ({data, position, showSnackbar, parentPosition}: EventSh
                                                onClose={() => setGateDialogOpen(false)} showSnackbar={showSnackbar}/>}
             </Portal>
             <Portal node={document.getElementById("editor-window-tool")}>
-                {toolWindowOpen && <ShapeToolWindow data={data}/>}
+                {toolWindowOpen && <ShapeToolPane data={data}/>}
             </Portal>
         </React.Fragment>
     )

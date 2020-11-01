@@ -11,7 +11,7 @@ const GateCreation = ({useFormMethods}) => {
     const {control} = useFormMethods
 
     return (
-        <FormControl className={classes.formControl}>
+        <FormControl className={classes.formControl} fullWidth>
             <InputLabel id="gate-type-select-label">Type</InputLabel>
             <Controller
                 as={
