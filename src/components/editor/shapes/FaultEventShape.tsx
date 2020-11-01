@@ -1,5 +1,5 @@
-import {Arrow, Group, Line, Rect, Text} from "react-konva";
 import * as React from "react";
+import {Arrow, Group, Rect, Text} from "react-konva";
 import {useEffect, useState} from "react";
 import {EventType, FaultEvent, Gate} from "@models/eventModel";
 import {KonvaEventObject} from "konva/types/Node";
@@ -8,16 +8,11 @@ import {Menu, MenuItem} from "@material-ui/core";
 import Portal from "@components/editor/Portal";
 import GateDialog from "@components/dialog/gate/GateDialog";
 import {TreeNode} from "@models/treeNodeModel";
-import {PositionProps} from "@utils/shapeUtils";
+import {EventShapeProps} from "@utils/shapeUtils";
 import GateShape from "@components/editor/shapes/GateShape";
 import {flatten} from "@utils/arrayUtils";
 
-interface FaultEventShapeProps extends PositionProps {
-    data: TreeNode<FaultEvent>,
-    showSnackbar: (string, SnackbarType) => void
-}
-
-const FaultEventShape = ({data, position, showSnackbar, parentPosition}: FaultEventShapeProps) => {
+const FaultEventShape = ({data, position, showSnackbar, parentPosition}: EventShapeProps<FaultEvent>) => {
     const [rectWidth, setRectWidth] = useState<number>(50)
     const [rectHeight, setRectHeight] = useState<number>(50)
 
