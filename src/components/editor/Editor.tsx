@@ -5,12 +5,12 @@ import useStyles from "@components/editor/Editor.styles";
 import {FailureMode} from "@models/failureModeModel";
 import FaultEventShape from "@components/editor/shapes/FaultEventShape";
 import {useSnackbar} from "@hooks/useSnackbar";
+import * as joint from 'jointjs';
+import JointEventShape from "@components/editor/shapes/JointEventShape";
 
 interface EditorPros {
     failureMode: FailureMode
 }
-
-useStrictMode(true);
 
 const Editor = ({failureMode}: EditorPros) => {
     const classes = useStyles()
@@ -18,27 +18,38 @@ const Editor = ({failureMode}: EditorPros) => {
 
     const containerRef = useRef(null)
     const windowToolRef = useRef(null)
-    const [stageWidth, setStageWidth] = useState(0)
-    const [stageHeight, setStageHeight] = useState(0)
+
+    const [container, setContainer] = useState<any>(undefined)
 
     useEffect(() => {
-        setStageWidth(containerRef.current.clientWidth - windowToolRef.current.clientWidth)
-        setStageHeight(containerRef.current.clientHeight)
+        const graph = new joint.dia.Graph;
+        const paper = new joint.dia.Paper({
+            // @ts-ignore
+            el: document.getElementById("jointjs-container"),
+            model: graph,
+            width: containerRef.current.clientWidth - windowToolRef.current.clientWidth,
+            height: containerRef.current.clientHeight,
+            gridSize: 10,
+            drawGrid: true,
+        })
+
+        setContainer(graph)
     }, []);
 
     return (
-        <div className={classes.konvaContainer} ref={containerRef}>
-            {
-                <Stage width={stageWidth} height={stageHeight}>
-                    <Layer>
-                        <FaultEventShape
-                            showSnackbar={showSnackbar}
-                            data={failureMode.manifestingNode}
-                            position={{x: 150, y: 150}}/>
-                    </Layer>
-                </Stage>
-            }
+        <div id="jointjs-container" className={classes.konvaContainer} ref={containerRef}>
+            {/*{*/}
+            {/*    <Stage width={stageWidth} height={stageHeight}>*/}
+            {/*        <Layer>*/}
+            {/*            <FaultEventShape*/}
+            {/*                showSnackbar={showSnackbar}*/}
+            {/*                data={failureMode.manifestingNode}*/}
+            {/*                position={{x: 150, y: 150}}/>*/}
+            {/*        </Layer>*/}
+            {/*    </Stage>*/}
+            {/*}*/}
             <div id="editor-window-tool" className={classes.divWindowTool} ref={windowToolRef}/>
+            {container && <JointEventShape graph={container} treeNode={failureMode.manifestingNode} />}
         </div>
     );
 }
