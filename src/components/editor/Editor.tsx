@@ -53,6 +53,7 @@ const Editor = ({failureMode}: EditorPros) => {
         joint.layout.DirectedGraph.layout(container, {
             dagre: dagre,
             graphlib: graphlib,
+            rankDir: 'BT',
             setLinkVertices: false,
         });
     }

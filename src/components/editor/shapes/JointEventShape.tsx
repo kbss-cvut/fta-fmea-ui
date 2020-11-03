@@ -6,23 +6,27 @@ import JointGateShape from "@components/editor/shapes/JointGateShape";
 import {flatten} from "@utils/arrayUtils";
 import {JointEventShapeProps} from "@components/editor/shapes/EventShapeProps";
 import JointConnectorShape from "@components/editor/shapes/JointConnectorShape";
-
+import {_computeDimensions} from "@utils/jointUtils";
 
 const JointEventShape = ({addSelf, treeNode, parentShape}: JointEventShapeProps) => {
     const [currentRect, setCurrentRect] = useState<any>(undefined)
 
     useEffect(() => {
+        const label = (treeNode.event as FaultEvent).name;
+        const [width, height, textSize] = _computeDimensions(label);
+
         const rect = new joint.shapes.standard.Rectangle()
-        rect.position(100, 30)
-        rect.resize(100, 40)
+        rect.resize(width, height)
         rect.attr({
+            size: {width: width, height: height},
             body: {
                 fill: 'blue'
             },
             label: {
-                text: (treeNode.event as FaultEvent).name,
-                fill: 'white'
+                text: label,
+                fill: 'white',
             },
+            text: {'font-size': textSize},
         })
         addSelf(rect)
         // @ts-ignore
@@ -35,7 +39,7 @@ const JointEventShape = ({addSelf, treeNode, parentShape}: JointEventShapeProps)
         <div>{
             flatten([treeNode.children])
                 .map(value => {
-                    return <React.Fragment>
+                    return <React.Fragment key={`fragment-${value.iri}`}>
                         {currentRect &&
                         <JointGateShape addSelf={addSelf} treeNode={value} key={value.iri} parentShape={currentRect}/>}
                         {
