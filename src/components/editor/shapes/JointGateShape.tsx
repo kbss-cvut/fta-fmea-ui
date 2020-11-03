@@ -8,7 +8,7 @@ import {JointEventShapeProps} from "@components/editor/shapes/EventShapeProps";
 import JointConnectorShape from "@components/editor/shapes/JointConnectorShape";
 
 
-const JointGateShape = ({graph, treeNode, parentShape}: JointEventShapeProps) => {
+const JointGateShape = ({addSelf, treeNode, parentShape}: JointEventShapeProps) => {
     const [currentRect, setCurrentRect] = useState<any>(undefined)
 
     useEffect(() => {
@@ -24,7 +24,7 @@ const JointGateShape = ({graph, treeNode, parentShape}: JointEventShapeProps) =>
                 fill: 'black'
             },
         })
-        graph.addCell(rect)
+        addSelf(rect)
         // @ts-ignore
         rect.set('custom/data', treeNode)
 
@@ -37,10 +37,10 @@ const JointGateShape = ({graph, treeNode, parentShape}: JointEventShapeProps) =>
                 .map(value => {
                     return <React.Fragment>
                         {currentRect &&
-                        <JointEventShape graph={graph} treeNode={value} key={value.iri} parentShape={currentRect}/>}
+                        <JointEventShape addSelf={addSelf} treeNode={value} key={value.iri} parentShape={currentRect}/>}
                         {
                             currentRect && parentShape &&
-                            <JointConnectorShape graph={graph} key={`connector-${currentRect.key}-${parentShape.key}`}
+                            <JointConnectorShape addSelf={addSelf} key={`connector-${currentRect.key}-${parentShape.key}`}
                                                  source={currentRect} target={parentShape}/>
                         }
                     </React.Fragment>

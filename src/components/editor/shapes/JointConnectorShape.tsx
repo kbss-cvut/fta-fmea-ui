@@ -4,12 +4,12 @@ import * as joint from 'jointjs';
 import {JointConnectorShapeProps} from "@components/editor/shapes/EventShapeProps";
 
 
-const JointConnectorShape = ({graph, source, target}: JointConnectorShapeProps) => {
+const JointConnectorShape = ({addSelf, source, target}: JointConnectorShapeProps) => {
     useEffect(() => {
         const link = new joint.shapes.standard.Link();
         link.source(source);
         link.target(target);
-        link.addTo(graph);
+        addSelf(link)
     }, []);
 
     return <div/>;

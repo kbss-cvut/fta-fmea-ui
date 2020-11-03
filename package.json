@@ -9,6 +9,8 @@
     "@material-ui/lab": "^4.0.0-alpha.56",
     "axios": "^0.20.0",
     "backbone": "^1.4.0",
+    "dagre": "^0.8.5",
+    "graphlib": "^2.1.8",
     "history": "4.10.1",
     "jointjs": "^3.2.0",
     "jquery": "^3.5.1",

@@ -2,7 +2,7 @@ import {TreeNode} from "@models/treeNodeModel";
 import {Event} from "@models/eventModel";
 
 interface JointProps {
-    graph: any,
+    addSelf: (any) => void,
 }
 
 export interface JointEventShapeProps extends JointProps {
