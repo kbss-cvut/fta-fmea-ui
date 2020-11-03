@@ -25,6 +25,8 @@ const JointEventShape = ({graph, treeNode, parentShape}: JointEventShapeProps) =
             },
         })
         rect.addTo(graph)
+        // @ts-ignore
+        rect.set('custom/data', treeNode)
 
         setCurrentRect(rect)
     }, []);

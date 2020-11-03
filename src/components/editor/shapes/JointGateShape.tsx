@@ -25,6 +25,8 @@ const JointGateShape = ({graph, treeNode, parentShape}: JointEventShapeProps) =>
             },
         })
         graph.addCell(rect)
+        // @ts-ignore
+        rect.set('custom/data', treeNode)
 
         setCurrentRect(rect)
     }, []);
