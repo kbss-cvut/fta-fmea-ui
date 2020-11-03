@@ -1,17 +1,16 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
 import * as joint from 'jointjs';
-import {TreeNode} from "@models/treeNodeModel";
-import {Event, FaultEvent, Gate, GateType} from "@models/eventModel";
+import {FaultEvent} from "@models/eventModel";
 import JointGateShape from "@components/editor/shapes/JointGateShape";
 import {flatten} from "@utils/arrayUtils";
+import {JointEventShapeProps} from "@components/editor/shapes/EventShapeProps";
+import JointConnectorShape from "@components/editor/shapes/JointConnectorShape";
 
-interface JointEventShapeProps {
-    graph: any,
-    treeNode: TreeNode<Event>
-}
 
-const JointEventShape = ({graph, treeNode}: JointEventShapeProps) => {
+const JointEventShape = ({graph, treeNode, parentShape}: JointEventShapeProps) => {
+    const [currentRect, setCurrentRect] = useState<any>(undefined)
+
     useEffect(() => {
         const rect = new joint.shapes.standard.Rectangle()
         rect.position(100, 30)
@@ -26,12 +25,24 @@ const JointEventShape = ({graph, treeNode}: JointEventShapeProps) => {
             },
         })
         rect.addTo(graph)
+
+        setCurrentRect(rect)
     }, []);
 
     return (
         <div>{
             flatten([treeNode.children])
-                .map(value => <JointGateShape graph={graph} treeNode={value} key={value.iri}/>)
+                .map(value => {
+                    return <React.Fragment>
+                        {currentRect &&
+                        <JointGateShape graph={graph} treeNode={value} key={value.iri} parentShape={currentRect}/>}
+                        {
+                            currentRect && parentShape &&
+                            <JointConnectorShape graph={graph} key={`connector-${currentRect.key}-${parentShape.key}`}
+                                                 source={currentRect} target={parentShape}/>
+                        }
+                    </React.Fragment>
+                })
         }</div>
     )
 }
