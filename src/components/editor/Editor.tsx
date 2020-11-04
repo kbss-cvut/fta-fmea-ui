@@ -7,6 +7,13 @@ import JointEventShape from "@components/editor/shapes/JointEventShape";
 import * as joint from 'jointjs';
 import * as dagre from 'dagre';
 import * as graphlib from 'graphlib';
+import Portal from "@components/editor/Portal";
+import {Menu, MenuItem} from "@material-ui/core";
+import {FaultEvent, Event, GateType, Gate} from "@models/eventModel";
+import {TreeNode} from "@models/treeNodeModel";
+import * as _ from 'lodash';
+import {findNodeByIri} from "@utils/treeUtils";
+import {useLocalContext} from "@hooks/useLocalContext";
 
 interface EditorPros {
     failureMode: FailureMode
@@ -19,7 +26,9 @@ const Editor = ({failureMode}: EditorPros) => {
     const containerRef = useRef(null)
     const windowToolRef = useRef(null)
 
-    const [container, setContainer] = useState<any>(undefined)
+    const [container, setContainer] = useState<joint.dia.Graph>()
+    const [rootNode, setRootNode] = useState<TreeNode<Event>>(failureMode.manifestingNode)
+    const localContext = useLocalContext({rootNode})
 
     useEffect(() => {
         const graph = new joint.dia.Graph;
@@ -33,16 +42,27 @@ const Editor = ({failureMode}: EditorPros) => {
             drawGrid: true,
         })
 
-        // // @ts-ignore
-        // paper.on('cell:pointerdown',
-        //     function (cellView, evt, x, y) {
-        //         joint.layout.DirectedGraph.layout(graph, {
-        //             dagre: dagre,
-        //             graphlib: graphlib,
-        //             setLinkVertices: false,
-        //         })
-        //     }
-        // );
+        // @ts-ignore
+        paper.on('element:contextmenu', (elementView) => {
+                // @ts-ignore
+                const rootNodeClone = _.cloneDeep(localContext.current.rootNode);
+
+                const elementIri = elementView.model.get('custom/data').iri;
+                const node = findNodeByIri(elementIri, rootNodeClone);
+
+                // TODO testing event manipulation
+                (node.event as FaultEvent).name = 'CHanged Name!!!';
+                (node.event as Gate).gateType = GateType.PRIORITY_AND;
+
+                setRootNode(rootNodeClone)
+
+                // TODO show menu
+                // setAnchorPos({
+                //     mouseX: evt.pageX,
+                //     mouseY: evt.pageY,
+                // })
+            }
+        );
 
         setContainer(graph)
     }, []);
@@ -58,20 +78,38 @@ const Editor = ({failureMode}: EditorPros) => {
         });
     }
 
+    // TODO refactor
+    const initialAnchorPosition = {mouseX: null, mouseY: null,};
+    const [anchorPos, setAnchorPos] = useState<{ mouseX: null | number; mouseY: null | number; }>(initialAnchorPosition)
+
+    const eventMenu = (
+        <Menu
+            keepMounted
+            open={anchorPos.mouseY !== null}
+            onClose={() => setAnchorPos(initialAnchorPosition)}
+            anchorReference="anchorPosition"
+            anchorPosition={
+                anchorPos.mouseY !== null && anchorPos.mouseX !== null ? {
+                    top: anchorPos.mouseY,
+                    left: anchorPos.mouseX
+                } : undefined
+            }
+        >
+            <MenuItem key="event-menu-edit">Edit</MenuItem>
+            <MenuItem key="event-menu-new-gate">
+                New Gate
+            </MenuItem>
+        </Menu>
+    );
+
     return (
         <div id="jointjs-container" className={classes.konvaContainer} ref={containerRef}>
-            {/*{*/}
-            {/*    <Stage width={stageWidth} height={stageHeight}>*/}
-            {/*        <Layer>*/}
-            {/*            <FaultEventShape*/}
-            {/*                showSnackbar={showSnackbar}*/}
-            {/*                data={failureMode.manifestingNode}*/}
-            {/*                position={{x: 150, y: 150}}/>*/}
-            {/*        </Layer>*/}
-            {/*    </Stage>*/}
-            {/*}*/}
             <div id="editor-window-tool" className={classes.divWindowTool} ref={windowToolRef}/>
-            {container && <JointEventShape addSelf={addSelf} treeNode={failureMode.manifestingNode}/>}
+            {container && <JointEventShape addSelf={addSelf} treeRoot={rootNode} treeNode={rootNode}/>}
+
+            <Portal>
+                {eventMenu}
+            </Portal>
         </div>
     );
 }

@@ -1,7 +1,9 @@
 import * as _ from 'lodash';
 
-export const _computeDimensions = (label: string): number[] => {
-    var maxLineLength = _.max(label.split('\n'), function(l) { return l.length; }).length;
+export const computeDimensions = (label: string): number[] => {
+    const maxLineLength = _.max(label.split('\n'), function (l) {
+        return l.length;
+    }).length;
 
 // Compute width/height of the rectangle based on the number
 // of lines in the label and the letter size. 0.6 * letterSize is

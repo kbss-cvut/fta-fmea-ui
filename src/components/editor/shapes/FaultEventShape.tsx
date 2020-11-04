@@ -10,8 +10,8 @@ import GateDialog from "@components/dialog/gate/GateDialog";
 import {TreeNode} from "@models/treeNodeModel";
 import {EventShapeProps} from "@utils/shapeUtils";
 import GateShape from "@components/editor/shapes/GateShape";
-import {flatten} from "@utils/arrayUtils";
 import ShapeToolPane from "@components/editor/tools/ShapeToolPane";
+import * as _ from 'lodash';
 
 const FaultEventShape = ({data, position, showSnackbar, parentPosition}: EventShapeProps<FaultEvent>) => {
     const [rectWidth, setRectWidth] = useState<number>(50)
@@ -91,7 +91,7 @@ const FaultEventShape = ({data, position, showSnackbar, parentPosition}: EventSh
                 />
             </Group>
             {
-                flatten([data.children]).map((value, index) => {
+                _.flatten([data.children]).map((value, index) => {
                     return <GateShape data={value as TreeNode<Gate>}
                                       position={{
                                           x: position.x,

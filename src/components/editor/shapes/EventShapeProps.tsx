@@ -6,6 +6,7 @@ interface JointProps {
 }
 
 export interface JointEventShapeProps extends JointProps {
+    treeRoot: TreeNode<Event>,
     treeNode: TreeNode<Event>,
     parentShape?: any
 }
