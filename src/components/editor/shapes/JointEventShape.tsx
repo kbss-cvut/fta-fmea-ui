@@ -8,7 +8,7 @@ import JointConnectorShape from "@components/editor/shapes/JointConnectorShape";
 import {computeDimensions} from "@utils/jointUtils";
 import * as _ from "lodash";
 
-const JointEventShape = ({addSelf, treeRoot, treeNode, parentShape}: JointEventShapeProps) => {
+const JointEventShape = ({addSelf, treeNode, parentShape}: JointEventShapeProps) => {
     const [currentRect, setCurrentRect] = useState<any>(undefined)
 
     useEffect(() => {
@@ -38,7 +38,7 @@ const JointEventShape = ({addSelf, treeRoot, treeNode, parentShape}: JointEventS
             // @ts-ignore
             currentRect.set('custom/data', treeNode)
         }
-    }, [treeNode, treeRoot, currentRect])
+    }, [treeNode, currentRect])
 
     return (
         <div>{
@@ -46,7 +46,7 @@ const JointEventShape = ({addSelf, treeRoot, treeNode, parentShape}: JointEventS
                 .map(value => {
                     return <React.Fragment key={`fragment-${value.iri}`}>
                         {currentRect &&
-                        <JointGateShape addSelf={addSelf} treeRoot={treeRoot} treeNode={value} key={value.iri} parentShape={currentRect}/>}
+                        <JointGateShape addSelf={addSelf} treeNode={value} key={value.iri} parentShape={currentRect}/>}
                         {
                             currentRect && parentShape &&
                             <JointConnectorShape addSelf={addSelf}

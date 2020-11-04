@@ -105,7 +105,7 @@ const Editor = ({failureMode}: EditorPros) => {
     return (
         <div id="jointjs-container" className={classes.konvaContainer} ref={containerRef}>
             <div id="editor-window-tool" className={classes.divWindowTool} ref={windowToolRef}/>
-            {container && <JointEventShape addSelf={addSelf} treeRoot={rootNode} treeNode={rootNode}/>}
+            {container && <JointEventShape addSelf={addSelf} treeNode={rootNode}/>}
 
             <Portal>
                 {eventMenu}

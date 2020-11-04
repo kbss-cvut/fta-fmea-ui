@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import * as React from "react";
 import * as joint from 'jointjs';
-import {FaultEvent, Gate} from "@models/eventModel";
+import {Gate} from "@models/eventModel";
 import JointEventShape from "@components/editor/shapes/JointEventShape";
 import {JointEventShapeProps} from "@components/editor/shapes/EventShapeProps";
 import JointConnectorShape from "@components/editor/shapes/JointConnectorShape";
@@ -9,7 +9,7 @@ import {computeDimensions} from "@utils/jointUtils";
 import * as _ from "lodash";
 
 
-const JointGateShape = ({addSelf, treeRoot, treeNode, parentShape}: JointEventShapeProps) => {
+const JointGateShape = ({addSelf, treeNode, parentShape}: JointEventShapeProps) => {
     const [currentRect, setCurrentRect] = useState<any>(undefined)
 
     useEffect(() => {
@@ -39,7 +39,7 @@ const JointGateShape = ({addSelf, treeRoot, treeNode, parentShape}: JointEventSh
             // @ts-ignore
             currentRect.set('custom/data', treeNode)
         }
-    }, [treeNode, treeRoot, currentRect])
+    }, [treeNode, currentRect])
 
     return (
         <div>{
@@ -47,7 +47,7 @@ const JointGateShape = ({addSelf, treeRoot, treeNode, parentShape}: JointEventSh
                 .map(value => {
                     return <React.Fragment key={`fragment-${value.iri}`}>
                         {currentRect &&
-                        <JointEventShape addSelf={addSelf} treeRoot={treeRoot} treeNode={value} key={value.iri} parentShape={currentRect}/>}
+                        <JointEventShape addSelf={addSelf} treeNode={value} key={value.iri} parentShape={currentRect}/>}
                         {
                             currentRect && parentShape &&
                             <JointConnectorShape addSelf={addSelf}
