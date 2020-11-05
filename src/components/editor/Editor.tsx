@@ -16,10 +16,11 @@ import {findNodeByIri} from "@utils/treeUtils";
 import {useLocalContext} from "@hooks/useLocalContext";
 
 interface EditorPros {
-    failureMode: FailureMode
+    failureMode: FailureMode,
+    exportImage: (string) => void
 }
 
-const Editor = ({failureMode}: EditorPros) => {
+const Editor = ({failureMode, exportImage}: EditorPros) => {
     const classes = useStyles()
     const [showSnackbar] = useSnackbar();
 
@@ -63,6 +64,15 @@ const Editor = ({failureMode}: EditorPros) => {
                 // })
             }
         );
+
+        // @ts-ignore
+        paper.on('element:pointerdblclick', () => {
+            const svgPaper = document.querySelector('#jointjs-container > svg');
+            const svgData = new XMLSerializer().serializeToString(svgPaper);
+            console.log(svgData)
+            const encodedData = btoa(unescape(encodeURIComponent(svgData)));
+            exportImage(encodedData)
+        });
 
         setContainer(graph)
     }, []);

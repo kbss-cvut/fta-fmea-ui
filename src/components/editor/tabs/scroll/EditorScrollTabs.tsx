@@ -11,6 +11,8 @@ import {Close} from "@material-ui/icons";
 import Tab from "@material-ui/core/Tab";
 import {FailureMode} from "@models/failureModeModel";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
+import {useState} from "react";
+import PngExporter from "@components/editor/tools/PngExporter";
 
 const a11yProps = (index: any) => {
     return {
@@ -32,6 +34,8 @@ const EditorScrollTabs = () => {
         setCurrentTab(index - 1)
         closeTab(failureMode)
     }
+
+    const [dataToExport, setDataToExport] = useState<string>();
 
     return (
         <div className={classes.root}>
@@ -60,7 +64,12 @@ const EditorScrollTabs = () => {
             </AppBar>
             {
                 openTabs.map((failureMode, index) => {
-                    return <TabPanel key={`tab-panel-${failureMode.iri}`} value={currentTab} index={index}><Editor failureMode={failureMode}/></TabPanel>
+                    return (
+                        <TabPanel key={`tab-panel-${failureMode.iri}`} value={currentTab} index={index}>
+                            <Editor failureMode={failureMode}
+                                    exportImage={(encodedData) => setDataToExport(encodedData)}/>
+                            {<PngExporter open={Boolean(dataToExport)} dataToExport={dataToExport} onClose={() => setDataToExport(null)}/>}
+                        </TabPanel>)
                 })
             }
         </div>
