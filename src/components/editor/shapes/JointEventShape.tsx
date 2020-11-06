@@ -36,7 +36,7 @@ const JointEventShape = ({addSelf, treeNode, parentShape}: JointEventShapeProps)
             })
 
             // @ts-ignore
-            currentRect.set('custom/data', treeNode)
+            currentRect.set('custom/nodeIri', treeNode.iri)
         }
     }, [treeNode, currentRect])
 
