@@ -14,7 +14,7 @@ import {PngExportData} from "@components/editor/tools/PngExporter";
 interface Props {
     rootNode: TreeNode<FaultEvent>,
     exportImage: (string) => void,
-    onElementContextMenu: (element: any, evt: any, node: TreeNode<Event>) => void,
+    onElementContextMenu: (element: any, evt: any) => void,
 }
 
 const EditorCanvas = ({rootNode, exportImage, onElementContextMenu}: Props) => {
@@ -24,7 +24,6 @@ const EditorCanvas = ({rootNode, exportImage, onElementContextMenu}: Props) => {
     const windowToolRef = useRef(null)
 
     const [container, setContainer] = useState<joint.dia.Graph>()
-    const localContext = useLocalContext({rootNode})
 
     useEffect(() => {
         const graph = new joint.dia.Graph;
@@ -40,8 +39,7 @@ const EditorCanvas = ({rootNode, exportImage, onElementContextMenu}: Props) => {
 
         // @ts-ignore
         paper.on('element:contextmenu', (elementView, evt) => {
-                const rootNodeClone = _.cloneDeep(localContext.current.rootNode);
-                onElementContextMenu(elementView, evt, rootNodeClone)
+                onElementContextMenu(elementView, evt)
             }
         );
 

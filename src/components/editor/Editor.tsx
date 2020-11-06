@@ -3,10 +3,13 @@ import {FailureMode} from "@models/failureModeModel";
 import {useSnackbar} from "@hooks/useSnackbar";
 import EditorCanvas from "@components/editor/canvas/EditorCanvas";
 import {findNodeByIri} from "@utils/treeUtils";
-import {Event} from "@models/eventModel";
+import {Event, FaultEvent} from "@models/eventModel";
 import {TreeNode} from "@models/treeNodeModel";
 import {useState} from "react";
 import ElementContextMenu, {ElementContextMenuAnchor} from "@components/editor/menu/ElementContextMenu";
+import EventDialog from "@components/dialog/EventDialog";
+import * as _ from "lodash";
+import {useLocalContext} from "@hooks/useLocalContext";
 
 
 interface EditorPros {
@@ -15,24 +18,33 @@ interface EditorPros {
 }
 
 const Editor = ({failureMode, exportImage}: EditorPros) => {
-    const [showSnackbar] = useSnackbar()
-
-    // TODO Example how to update the data:
-    // const elementIri = elementView.model.get('custom/nodeIri');
-    // const node = findNodeByIri(elementIri, rootNodeClone);
-    // (node.event as FaultEvent).name = 'CHanged Name!!!';
-    // setRootNode(rootNodeClone)
-
     // TODO offer image export
+
     const [rootNode, setRootNode] = useState<TreeNode<Event>>(failureMode.manifestingNode)
-    const [selectedEvent, setSelectedEvent] = useState<TreeNode<Event>>(null)
+    const _localContext = useLocalContext({rootNode})
+
+    const [selectedNode, setSelectedNode] = useState<TreeNode<Event>>(null)
 
     const contextMenuDefault = {mouseX: null, mouseY: null,} as ElementContextMenuAnchor;
     const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefault)
-    const handleContextMenu = (elementView, evt, rootNodeClone: TreeNode<Event>) => {
+    const handleContextMenu = (elementView, evt) => {
         const elementIri = elementView.model.get('custom/nodeIri');
-        setSelectedEvent(findNodeByIri(elementIri, rootNodeClone));
+        // @ts-ignore
+        const foundNode = findNodeByIri(elementIri, _localContext.rootNode);
+        setSelectedNode(foundNode);
         setContextMenuAnchor({mouseX: evt.pageX, mouseY: evt.pageY,})
+    }
+
+    const [eventDialogOpen, setEventDialogOpen] = useState(false);
+    const handleEventCreated = (newNode: TreeNode<Event>) => {
+        console.log(`handleEventCreated - ${newNode.iri}`)
+        // @ts-ignore
+        const rootNodeClone = _.cloneDeep(_localContext.rootNode);
+
+        const node = findNodeByIri(selectedNode.iri, rootNodeClone);
+        node.children.push(newNode)
+        setRootNode(rootNodeClone)
+        console.log(rootNodeClone)
     }
 
     return (
@@ -45,10 +57,15 @@ const Editor = ({failureMode, exportImage}: EditorPros) => {
 
             <ElementContextMenu
                 anchorPosition={contextMenuAnchor}
-                eventType={selectedEvent?.nodeType}
-                onEditClick={() => console.log(`onEditClick - ${selectedEvent.iri}`)}
-                onNewEventClick={() => console.log(`onNewEventClick - ${selectedEvent.iri}`)}
+                eventType={selectedNode?.nodeType}
+                onEditClick={() => console.log(`onEditClick - ${selectedNode.iri}`)}
+                onNewEventClick={() => setEventDialogOpen(true)}
                 onClose={() => setContextMenuAnchor(contextMenuDefault)}/>
+
+            <EventDialog open={eventDialogOpen} nodeIri={selectedNode?.iri} nodeType={selectedNode?.nodeType}
+                         onCreated={handleEventCreated}
+                         onClose={() => setEventDialogOpen(false)}/>
+
         </React.Fragment>
     );
 }

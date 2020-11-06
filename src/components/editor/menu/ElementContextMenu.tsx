@@ -30,10 +30,10 @@ const ElementContextMenu = ({anchorPosition, eventType, onClose, onEditClick, on
     let newEventTitle;
     switch(eventType) {
         case TreeNodeType.EVENT:
-            newEventTitle = "New Event"
+            newEventTitle = "New Gate"
             break;
         case TreeNodeType.GATE:
-            newEventTitle = "New Gate"
+            newEventTitle = "New Event"
             break;
     }
 

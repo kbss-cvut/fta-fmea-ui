@@ -1,12 +1,12 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
 import * as joint from 'jointjs';
-import {FaultEvent} from "@models/eventModel";
+import {FaultEvent, Event} from "@models/eventModel";
 import JointGateShape from "@components/editor/shapes/JointGateShape";
-import {JointEventShapeProps} from "@components/editor/shapes/EventShapeProps";
 import JointConnectorShape from "@components/editor/shapes/JointConnectorShape";
 import {computeDimensions} from "@utils/jointUtils";
 import * as _ from "lodash";
+import {JointEventShapeProps} from "@components/editor/shapes/EventShapeProps";
 
 const JointEventShape = ({addSelf, treeNode, parentShape}: JointEventShapeProps) => {
     const [currentRect, setCurrentRect] = useState<any>(undefined)
@@ -41,21 +41,21 @@ const JointEventShape = ({addSelf, treeNode, parentShape}: JointEventShapeProps)
     }, [treeNode, currentRect])
 
     return (
-        <div>{
-            _.flatten([treeNode.children])
-                .map(value => {
-                    return <React.Fragment key={`fragment-${value.iri}`}>
-                        {currentRect &&
-                        <JointGateShape addSelf={addSelf} treeNode={value} key={value.iri} parentShape={currentRect}/>}
-                        {
-                            currentRect && parentShape &&
-                            <JointConnectorShape addSelf={addSelf}
-                                                 key={`connector-${currentRect.key}-${parentShape.key}`}
-                                                 source={currentRect} target={parentShape}/>
-                        }
-                    </React.Fragment>
-                })
-        }</div>
+        <React.Fragment>
+            {
+                currentRect && _.flatten([treeNode.children])
+                    .map(value => {
+                        return <JointGateShape addSelf={addSelf} treeNode={value} key={value.iri}
+                                               parentShape={currentRect}/>
+                    })}
+            {
+                currentRect && parentShape &&
+                <JointConnectorShape addSelf={addSelf}
+                                     key={`connector-${currentRect.id}-${parentShape.id}`}
+                                     source={currentRect} target={parentShape}/>
+
+            }
+        </React.Fragment>
     )
 }
 

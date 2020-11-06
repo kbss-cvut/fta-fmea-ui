@@ -8,21 +8,17 @@ import {CreateGate, EventType, FaultEvent, GateType} from "@models/eventModel";
 import {useState} from "react";
 import {DialogActions} from "@components/dialog/custom/DialogActions";
 import * as eventService from "@services/eventService";
-import {SnackbarType} from "@hooks/useSnackbar";
+import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import FaultEventCreation from "./FaultEventCreation";
 import {useForm} from "react-hook-form";
 import {schema} from "./FaultEventCreation.schema";
 import VocabularyUtils from "../../../utils/VocabularyUtils";
+import {EventDialogProps} from "@components/dialog/EventDialog";
 
-type FaultEventDialogProps = {
-    treeNodeIri: string,
-    onEventCreated: (TreeNode) => void,
-    onClose: () => void,
-    showSnackbar: (string, SnackbarType) => void
-};
-
-const FaultEventDialog = ({treeNodeIri, onEventCreated, onClose, showSnackbar}: FaultEventDialogProps) => {
+const FaultEventDialog = ({open, nodeIri, onCreated, onClose}: EventDialogProps) => {
     const [processing, setIsProcessing] = useState(false)
+
+    const[showSnackbar] = useSnackbar()
 
     const useFormMethods = useForm({resolver: schema});
     const {handleSubmit} = useFormMethods;
@@ -44,8 +40,8 @@ const FaultEventDialog = ({treeNodeIri, onEventCreated, onClose, showSnackbar}: 
             "@type": [VocabularyUtils.FAULT_EVENT],
         } as FaultEvent
 
-        eventService.addEvent(treeNodeIri, requestEvent)
-            .then(value => onEventCreated(value))
+        eventService.addEvent(nodeIri, requestEvent)
+            .then(value => onCreated(value))
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
             .finally(() => {
                 setIsProcessing(false)
@@ -55,7 +51,7 @@ const FaultEventDialog = ({treeNodeIri, onEventCreated, onClose, showSnackbar}: 
 
     return (
         <div>
-            <Dialog open={true} onClose={onClose} aria-labelledby="form-dialog-title" maxWidth="md" fullWidth>
+            <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title" maxWidth="md" fullWidth>
                 <DialogTitle id="form-dialog-title" onClose={onClose}>Create Event</DialogTitle>
                 <DialogContent dividers>
                     <FaultEventCreation useFormMethods={useFormMethods} topEventOnly={false}/>

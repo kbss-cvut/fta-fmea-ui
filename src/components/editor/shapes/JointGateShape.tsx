@@ -3,10 +3,10 @@ import * as React from "react";
 import * as joint from 'jointjs';
 import {Gate} from "@models/eventModel";
 import JointEventShape from "@components/editor/shapes/JointEventShape";
-import {JointEventShapeProps} from "@components/editor/shapes/EventShapeProps";
 import JointConnectorShape from "@components/editor/shapes/JointConnectorShape";
 import {computeDimensions} from "@utils/jointUtils";
 import * as _ from "lodash";
+import {JointEventShapeProps} from "@components/editor/shapes/EventShapeProps";
 
 
 const JointGateShape = ({addSelf, treeNode, parentShape}: JointEventShapeProps) => {
@@ -42,21 +42,14 @@ const JointGateShape = ({addSelf, treeNode, parentShape}: JointEventShapeProps) 
     }, [treeNode, currentRect])
 
     return (
-        <div>{
-            _.flatten([treeNode.children])
-                .map(value => {
-                    return <React.Fragment key={`fragment-${value.iri}`}>
-                        {currentRect &&
-                        <JointEventShape addSelf={addSelf} treeNode={value} key={value.iri} parentShape={currentRect}/>}
-                        {
-                            currentRect && parentShape &&
-                            <JointConnectorShape addSelf={addSelf}
-                                                 key={`connector-${currentRect.key}-${parentShape.key}`}
-                                                 source={currentRect} target={parentShape}/>
-                        }
-                    </React.Fragment>
-                })
-        }</div>);
+        <React.Fragment>
+            {currentRect && _.flatten([treeNode.children])
+                .map(value => <JointEventShape addSelf={addSelf} treeNode={value} key={value.iri}
+                                               parentShape={currentRect}/>)}
+            {currentRect && <JointConnectorShape
+                addSelf={addSelf} key={`connector-${currentRect.id}-${parentShape.id}`}
+                source={currentRect} target={parentShape}/>}
+        </React.Fragment>);
 }
 
 export default JointGateShape;

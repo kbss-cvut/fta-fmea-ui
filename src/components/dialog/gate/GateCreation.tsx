@@ -16,7 +16,7 @@ const GateCreation = ({useFormMethods}) => {
             <Controller
                 as={
                     <Select labelId="gate-type-select-label"
-                            id="gate-type-select">
+                            id="gate-type-select" autoFocus>
                         {
                             Object.values(GateType).map(value =>
                                 <MenuItem key={`option-${value}`} value={value}>{value}</MenuItem>)
