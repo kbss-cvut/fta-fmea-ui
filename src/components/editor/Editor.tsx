@@ -14,6 +14,7 @@ import {TreeNode} from "@models/treeNodeModel";
 import * as _ from 'lodash';
 import {findNodeByIri} from "@utils/treeUtils";
 import {useLocalContext} from "@hooks/useLocalContext";
+import {PngExportData} from "@components/editor/tools/PngExporter";
 
 interface EditorPros {
     failureMode: FailureMode,
@@ -68,10 +69,11 @@ const Editor = ({failureMode, exportImage}: EditorPros) => {
         // @ts-ignore
         paper.on('element:pointerdblclick', () => {
             const svgPaper = document.querySelector('#jointjs-container > svg');
+            // @ts-ignore
+            const {width, height} = svgPaper.getBBox();
             const svgData = new XMLSerializer().serializeToString(svgPaper);
-            console.log(svgData)
             const encodedData = btoa(unescape(encodeURIComponent(svgData)));
-            exportImage(encodedData)
+            exportImage({encodedData: encodedData, width: width, height: height} as PngExportData)
         });
 
         setContainer(graph)
