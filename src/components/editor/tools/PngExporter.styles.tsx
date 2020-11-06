@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme: Theme) =>
             margin: 'auto',
             border: '1px solid #000',
             display: 'block'
-        }
+        },
     }),
 );
 
