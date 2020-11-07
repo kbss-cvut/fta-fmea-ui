@@ -25,9 +25,11 @@ const GateDialog = ({open, nodeIri, onCreated, onClose}: EventDialogProps) => {
 
         eventService.insertGate(nodeIri, {gateType: values.gateType} as CreateGate)
             .then(value => onCreated(value))
-            .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
-            .finally(() => {
+            .catch(reason => {
                 setIsProcessing(false)
+                showSnackbar(reason, SnackbarType.ERROR)
+            })
+            .finally(() => {
                 onClose()
             })
     }

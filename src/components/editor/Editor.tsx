@@ -10,6 +10,7 @@ import ElementContextMenu, {ElementContextMenuAnchor} from "@components/editor/m
 import EventDialog from "@components/dialog/EventDialog";
 import * as _ from "lodash";
 import {useLocalContext} from "@hooks/useLocalContext";
+import {useFailureModes} from "@hooks/useFailureModes";
 
 
 interface Props {
@@ -19,6 +20,7 @@ interface Props {
 
 const Editor = ({failureMode, exportImage}: Props) => {
     // TODO offer image export
+    const [, , locallyUpdateFailureMode] = useFailureModes()
 
     const [rootNode, setRootNode] = useState<TreeNode<Event>>(failureMode.manifestingNode)
     const _localContext = useLocalContext({rootNode})
@@ -43,8 +45,12 @@ const Editor = ({failureMode, exportImage}: Props) => {
 
         const node = findNodeByIri(selectedNode.iri, rootNodeClone);
         node.children.push(newNode)
+
+        // propagate changes locally in the app
+        failureMode.manifestingNode = rootNodeClone
+        locallyUpdateFailureMode(failureMode)
+
         setRootNode(rootNodeClone)
-        console.log(rootNodeClone)
     }
 
     return (

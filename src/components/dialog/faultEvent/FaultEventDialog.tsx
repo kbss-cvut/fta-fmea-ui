@@ -18,7 +18,7 @@ import {EventDialogProps} from "@components/dialog/EventDialog";
 const FaultEventDialog = ({open, nodeIri, onCreated, onClose}: EventDialogProps) => {
     const [processing, setIsProcessing] = useState(false)
 
-    const[showSnackbar] = useSnackbar()
+    const [showSnackbar] = useSnackbar()
 
     const useFormMethods = useForm({resolver: schema});
     const {handleSubmit} = useFormMethods;
@@ -42,11 +42,13 @@ const FaultEventDialog = ({open, nodeIri, onCreated, onClose}: EventDialogProps)
 
         eventService.addEvent(nodeIri, requestEvent)
             .then(value => onCreated(value))
-            .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
-            .finally(() => {
-                setIsProcessing(false)
-                onClose()
-            })
+            .catch(reason => {
+                    setIsProcessing(false)
+                    showSnackbar(reason, SnackbarType.ERROR)
+                }
+            ).finally(() => {
+            onClose()
+        })
     }
 
     return (
