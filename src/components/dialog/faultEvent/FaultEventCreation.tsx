@@ -5,7 +5,12 @@ import useStyles from "@components/dialog/faultEvent/FaultEventCreation.styles";
 import {Controller} from "react-hook-form";
 import {EventType} from "@models/eventModel";
 
-const FaultEventCreation = ({useFormMethods, topEventOnly}) => {
+interface Props {
+    useFormMethods: any,
+    topEventOnly: boolean,
+}
+
+const FaultEventCreation = ({useFormMethods, topEventOnly}: Props) => {
     const classes = useStyles()
 
     const {register, errors, control} = useFormMethods
@@ -48,6 +53,9 @@ const FaultEventCreation = ({useFormMethods, topEventOnly}) => {
                            InputProps={{inputProps: {min: 0, max: 10, step: 1}}}
                            inputRef={register} error={!!errors.detection}
                            helperText={errors.probability?.detection}/>
+                {/*<Controller as={TextField} autoFocus margin="dense" id="name" label="Component Name"*/}
+                {/*            type="text" fullWidth name="name" control={control} defaultValue=""*/}
+                {/*            inputRef={register} error={!!errors.name} helperText={errors.name?.message}/>*/}
             </Box>
         </div>
     );

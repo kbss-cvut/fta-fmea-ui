@@ -5,6 +5,8 @@ export const useStyles = makeStyles((theme: Theme) => {
         return createStyles({
             tabPanelDiv: {
                 height: `calc(100vh - ${2 * appBarHeight}px)`,
+                display: 'flex',
+                flexDirection: 'row',
             },
         })
     }

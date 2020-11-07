@@ -7,18 +7,19 @@ import * as dagre from 'dagre';
 import * as graphlib from 'graphlib';
 import {FaultEvent, Event} from "@models/eventModel";
 import {TreeNode} from "@models/treeNodeModel";
-import * as _ from 'lodash';
 import {useLocalContext} from "@hooks/useLocalContext";
 import {PngExportData} from "@components/editor/tools/PngExporter";
 import {V} from "jointjs";
+import ShapeToolPane from "@components/editor/tools/ShapeToolPane";
 
 interface Props {
     rootNode: TreeNode<FaultEvent>,
+    sidebarSelectedNode: TreeNode<Event>,
     exportImage: (string) => void,
     onElementContextMenu: (element: any, evt: any) => void,
 }
 
-const EditorCanvas = ({rootNode, exportImage, onElementContextMenu}: Props) => {
+const EditorCanvas = ({rootNode, sidebarSelectedNode, exportImage, onElementContextMenu}: Props) => {
     const classes = useStyles()
 
     const containerRef = useRef(null)
@@ -75,7 +76,7 @@ const EditorCanvas = ({rootNode, exportImage, onElementContextMenu}: Props) => {
         // @ts-ignore
         paper.on('blank:pointerdown', (evt, x, y) => {
             const scale = V(paper.viewport).scale();
-            setDragStartPosition({ x: x * scale.sx, y: y * scale.sy})
+            setDragStartPosition({x: x * scale.sx, y: y * scale.sy})
         });
         // @ts-ignore
         paper.on('cell:pointerup blank:pointerup', (cellView, x, y) => setDragStartPosition(null));
@@ -140,10 +141,14 @@ const EditorCanvas = ({rootNode, exportImage, onElementContextMenu}: Props) => {
 
 
     return (
-        <div id="jointjs-container" className={classes.konvaContainer} ref={containerRef}>
-            <div id="editor-window-tool" className={classes.divWindowTool} ref={windowToolRef}/>
-            {container && <JointEventShape addSelf={addSelf} treeNode={rootNode}/>}
-        </div>
+        <React.Fragment>
+            <div id="jointjs-container" className={classes.konvaContainer} ref={containerRef}>
+                {container && <JointEventShape addSelf={addSelf} treeNode={rootNode}/>}
+            </div>
+            <div className={classes.divWindowTool} ref={windowToolRef}>
+                <ShapeToolPane data={sidebarSelectedNode}/>
+            </div>
+        </React.Fragment>
     );
 }
 

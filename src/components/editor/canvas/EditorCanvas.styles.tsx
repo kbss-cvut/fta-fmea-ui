@@ -7,15 +7,14 @@ const useStyles = makeStyles((theme: Theme) => {
                 marginTop: theme.spacing(1),
                 display: 'flex',
                 height: `100%`,
-                width: '100%',
+                flexGrow: 7,
             },
             divWindowTool: {
-                padding: theme.spacing(1, 0, 1, 1),
-                zIndex: 5,
+                padding: theme.spacing(1, 0, 0, 1),
                 height: '100%',
                 alignSelf: 'flex-end',
-                width: theme.appDrawer.width,
                 overflow: 'hidden',
+                flexGrow: 3,
             }
         })
     }

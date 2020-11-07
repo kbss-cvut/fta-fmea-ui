@@ -25,7 +25,8 @@ const Editor = ({failureMode, exportImage}: Props) => {
     const [rootNode, setRootNode] = useState<TreeNode<Event>>(failureMode.manifestingNode)
     const _localContext = useLocalContext({rootNode})
 
-    const [selectedNode, setSelectedNode] = useState<TreeNode<Event>>(null)
+    const [contextMenuSelectedNode, setContextMenuSelectedNode] = useState<TreeNode<Event>>(null)
+    const [sidebarSelectedNode, setSidebarSelectedNode] = useState<TreeNode<Event>>(null)
 
     const contextMenuDefault = {mouseX: null, mouseY: null,} as ElementContextMenuAnchor;
     const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefault)
@@ -33,7 +34,7 @@ const Editor = ({failureMode, exportImage}: Props) => {
         const elementIri = elementView.model.get('custom/nodeIri');
         // @ts-ignore
         const foundNode = findNodeByIri(elementIri, _localContext.rootNode);
-        setSelectedNode(foundNode);
+        setContextMenuSelectedNode(foundNode);
         setContextMenuAnchor({mouseX: evt.pageX, mouseY: evt.pageY,})
     }
 
@@ -43,7 +44,7 @@ const Editor = ({failureMode, exportImage}: Props) => {
         // @ts-ignore
         const rootNodeClone = _.cloneDeep(_localContext.rootNode);
 
-        const node = findNodeByIri(selectedNode.iri, rootNodeClone);
+        const node = findNodeByIri(contextMenuSelectedNode.iri, rootNodeClone);
         node.children.push(newNode)
 
         // propagate changes locally in the app
@@ -58,17 +59,19 @@ const Editor = ({failureMode, exportImage}: Props) => {
             <EditorCanvas
                 rootNode={rootNode}
                 exportImage={exportImage}
+                sidebarSelectedNode={sidebarSelectedNode}
                 onElementContextMenu={handleContextMenu}
             />
 
             <ElementContextMenu
                 anchorPosition={contextMenuAnchor}
-                eventType={selectedNode?.nodeType}
-                onEditClick={() => console.log(`onEditClick - ${selectedNode.iri}`)}
+                eventType={contextMenuSelectedNode?.nodeType}
+                onEditClick={() => setSidebarSelectedNode(contextMenuSelectedNode)}
                 onNewEventClick={() => setEventDialogOpen(true)}
                 onClose={() => setContextMenuAnchor(contextMenuDefault)}/>
 
-            <EventDialog open={eventDialogOpen} nodeIri={selectedNode?.iri} nodeType={selectedNode?.nodeType}
+            <EventDialog open={eventDialogOpen} nodeIri={contextMenuSelectedNode?.iri}
+                         nodeType={contextMenuSelectedNode?.nodeType}
                          onCreated={handleEventCreated}
                          onClose={() => setEventDialogOpen(false)}/>
 
