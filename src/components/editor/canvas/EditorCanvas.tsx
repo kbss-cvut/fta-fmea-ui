@@ -10,6 +10,7 @@ import {TreeNode} from "@models/treeNodeModel";
 import * as _ from 'lodash';
 import {useLocalContext} from "@hooks/useLocalContext";
 import {PngExportData} from "@components/editor/tools/PngExporter";
+import {V} from "jointjs";
 
 interface Props {
     rootNode: TreeNode<FaultEvent>,
@@ -20,18 +21,22 @@ interface Props {
 const EditorCanvas = ({rootNode, exportImage, onElementContextMenu}: Props) => {
     const classes = useStyles()
 
-    const MIN_SCALE = 0.5, MAX_SCALE = 2
-
     const containerRef = useRef(null)
     const windowToolRef = useRef(null)
 
     const [container, setContainer] = useState<joint.dia.Graph>()
 
+    const MIN_SCALE = 0.5, MAX_SCALE = 2;
+
+    const [dragStartPosition, setDragStartPosition] = useState<{ x: number, y: number } | null>(null)
+    const localContext = useLocalContext({dragStartPosition})
+
     useEffect(() => {
         const graph = new joint.dia.Graph;
+        const divContainer = document.getElementById("jointjs-container");
         const paper = new joint.dia.Paper({
             // @ts-ignore
-            el: document.getElementById("jointjs-container"),
+            el: divContainer,
             model: graph,
             width: containerRef.current.clientWidth - windowToolRef.current.clientWidth,
             height: containerRef.current.clientHeight,
@@ -56,6 +61,7 @@ const EditorCanvas = ({rootNode, exportImage, onElementContextMenu}: Props) => {
             exportImage({encodedData: encodedData, width: width, height: height} as PngExportData)
         });
 
+        // Zoom in,out
         // @ts-ignore
         paper.on('cell:mousewheel', (cellView, evt, x, y, delta) => {
             handleCanvasMouseWheel(evt, x, y, delta, paper)
@@ -63,6 +69,22 @@ const EditorCanvas = ({rootNode, exportImage, onElementContextMenu}: Props) => {
         // @ts-ignore
         paper.on('blank:mousewheel', (evt, x, y, delta) => {
             handleCanvasMouseWheel(evt, x, y, delta, paper)
+        })
+
+        // Canvas dragging
+        // @ts-ignore
+        paper.on('blank:pointerdown', (evt, x, y) => {
+            const scale = V(paper.viewport).scale();
+            setDragStartPosition({ x: x * scale.sx, y: y * scale.sy})
+        });
+        // @ts-ignore
+        paper.on('cell:pointerup blank:pointerup', (cellView, x, y) => setDragStartPosition(null));
+        divContainer.addEventListener('mousemove', e => {
+            // @ts-ignore
+            if (localContext.dragStartPosition) {
+                // @ts-ignore
+                paper.translate(e.offsetX - localContext.dragStartPosition.x, e.offsetY - localContext.dragStartPosition.y);
+            }
         })
 
         setContainer(graph)
