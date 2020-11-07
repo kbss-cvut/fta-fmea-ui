@@ -20,6 +20,8 @@ interface Props {
 const EditorCanvas = ({rootNode, exportImage, onElementContextMenu}: Props) => {
     const classes = useStyles()
 
+    const MIN_SCALE = 0.5, MAX_SCALE = 2
+
     const containerRef = useRef(null)
     const windowToolRef = useRef(null)
 
@@ -54,6 +56,15 @@ const EditorCanvas = ({rootNode, exportImage, onElementContextMenu}: Props) => {
             exportImage({encodedData: encodedData, width: width, height: height} as PngExportData)
         });
 
+        // @ts-ignore
+        paper.on('cell:mousewheel', (cellView, evt, x, y, delta) => {
+            handleCanvasMouseWheel(evt, x, y, delta, paper)
+        })
+        // @ts-ignore
+        paper.on('blank:mousewheel', (evt, x, y, delta) => {
+            handleCanvasMouseWheel(evt, x, y, delta, paper)
+        })
+
         setContainer(graph)
     }, []);
 
@@ -70,6 +81,41 @@ const EditorCanvas = ({rootNode, exportImage, onElementContextMenu}: Props) => {
             setLinkVertices: false,
         });
     }
+
+    const handleCanvasMouseWheel = (e, x, y, delta, paper) => {
+        e.preventDefault();
+
+        const oldScale = paper.scale().sx;
+        const newScale = oldScale + delta * .1;
+
+        scaleToPoint(newScale, x, y, paper);
+    };
+
+    const scaleToPoint = (nextScale, x, y, paper) => {
+        if (nextScale >= MIN_SCALE && nextScale <= MAX_SCALE) {
+            const currentScale = paper.scale().sx;
+
+            const beta = currentScale / nextScale;
+
+            const ax = x - (x * beta);
+            const ay = y - (y * beta);
+
+            const translate = paper.translate();
+
+            const nextTx = translate.tx - ax * nextScale;
+            const nextTy = translate.ty - ay * nextScale;
+
+            paper.translate(nextTx, nextTy);
+
+            const ctm = paper.matrix();
+
+            ctm.a = nextScale;
+            ctm.d = nextScale;
+
+            paper.matrix(ctm);
+        }
+    };
+
 
     return (
         <div id="jointjs-container" className={classes.konvaContainer} ref={containerRef}>
