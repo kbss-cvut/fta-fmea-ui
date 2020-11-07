@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme: Theme) =>
                 duration: theme.transitions.duration.leavingScreen,
             }),
             flexGrow: 1,
-            minHeight: '100vh',
             marginLeft: -theme.appDrawer.width,
         },
         contentShift: {
@@ -38,7 +37,6 @@ const useStyles = makeStyles((theme: Theme) =>
                 duration: theme.transitions.duration.enteringScreen,
             }),
             flexGrow: 1,
-            minHeight: '100vh',
             marginLeft: 0,
         },
     }),

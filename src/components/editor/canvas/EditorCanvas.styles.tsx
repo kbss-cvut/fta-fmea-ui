@@ -2,12 +2,11 @@ import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 
 
 const useStyles = makeStyles((theme: Theme) => {
-        const appBarHeight = 64
         return createStyles({
             konvaContainer: {
                 marginTop: theme.spacing(1),
                 display: 'flex',
-                height: `calc(100% - ${2 * appBarHeight}px)`,
+                height: `100%`,
                 width: '100%',
             },
             divWindowTool: {
