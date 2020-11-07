@@ -42,9 +42,7 @@ const PersistentDrawer = () => {
                     </IconButton>
                 </div>
                 <Divider/>
-                <FailureModesProvider>
-                    <DrawerComponentMenuList/>
-                </FailureModesProvider>
+                <DrawerComponentMenuList/>
             </Drawer>
             <main className={clsx(classes.content, {[classes.contentShift]: open,})}>
                 <DrawerContent/>

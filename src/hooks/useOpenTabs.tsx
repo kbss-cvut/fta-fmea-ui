@@ -1,10 +1,16 @@
 import * as React from "react";
-import {createContext, useContext, useState} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 import {FailureMode} from "@models/failureModeModel";
 import {ChildrenProps} from "@utils/hookUtils";
+import {useFailureModes} from "@hooks/useFailureModes";
+import * as _ from "lodash";
 
+interface FailureModeTab {
+    open: boolean,
+    data: FailureMode
+}
 
-type openTabsContextType = [FailureMode[], (failureMode: FailureMode) => void, (failureMode: FailureMode) => void];
+type openTabsContextType = [FailureModeTab[], (failureMode: FailureMode) => void, (failureMode: FailureMode) => void];
 
 export const openTabsContext = createContext<openTabsContextType>(null!);
 
@@ -14,20 +20,36 @@ export const useOpenTabs = () => {
 }
 
 export const OpenTabsProvider = ({children}: ChildrenProps) => {
-    const [_tabs, _setOpenTabs] = useState<FailureMode[]>([]);
+    const [failureModes] = useFailureModes()
 
-    const openTab = (failureMode: FailureMode) => {
-        if (!_tabs.includes(failureMode)) {
-            _setOpenTabs([..._tabs, failureMode])
+    const [_tabs, _setOpenTabs] = useState<FailureModeTab[]>([]);
+    useEffect(() => {
+        const failureModeTabs = failureModes.map(mode => {
+            return {
+                open: false,
+                data: mode
+            }
+        })
+        _setOpenTabs(failureModeTabs);
+    }, [failureModes])
+
+    const openTab = (modeToOpen: FailureMode) => {
+        const index = _.findIndex(_tabs, (o: FailureModeTab) => o.data.iri === modeToOpen.iri);
+
+        if (!_tabs[index].open) {
+            const tabsClone = _.cloneDeep(_tabs)
+            tabsClone[index] = {open: true, data: modeToOpen}
+            _setOpenTabs(tabsClone)
         }
     }
 
-    const closeTab = (failureMode: FailureMode) => {
-        const idx = _tabs.indexOf(failureMode);
-        if (idx > -1) {
-            const tabsCopy = [..._tabs]
-            tabsCopy.splice(idx, 1);
-            _setOpenTabs(tabsCopy)
+    const closeTab = (modeToClose: FailureMode) => {
+        const index = _.findIndex(_tabs, (o: FailureModeTab) => o.data.iri === modeToClose.iri);
+
+        if (_tabs[index].open) {
+            const tabsClone = _.cloneDeep(_tabs)
+            tabsClone[index] = {open: false, data: modeToClose}
+            _setOpenTabs(tabsClone)
         }
     }
 

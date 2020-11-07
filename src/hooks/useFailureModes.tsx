@@ -6,6 +6,7 @@ import * as failureModeService from "@services/failureModeService"
 import {axiosSource} from "@services/utils/axiosUtils";
 import {ChildrenProps} from "@utils/hookUtils";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
+import {OpenTabsProvider} from "@hooks/useOpenTabs";
 
 
 type failureModeContextType = [FailureMode[], (failureMode: CreateFailureMode) => void];
@@ -46,7 +47,9 @@ export const FailureModesProvider = ({children}: ChildrenProps) => {
 
     return (
         <failureModesContext.Provider value={[_failureModes, addFailureMode]}>
-            {children}
+            <OpenTabsProvider>
+                {children}
+            </OpenTabsProvider>
         </failureModesContext.Provider>
     );
 }

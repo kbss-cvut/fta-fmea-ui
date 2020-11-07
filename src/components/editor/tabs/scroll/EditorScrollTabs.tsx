@@ -10,9 +10,9 @@ import {IconButton} from "@material-ui/core";
 import {Close} from "@material-ui/icons";
 import Tab from "@material-ui/core/Tab";
 import {FailureMode} from "@models/failureModeModel";
-import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {useState} from "react";
 import PngExporter, {PngExportData} from "@components/editor/tools/PngExporter";
+import * as _ from "lodash";
 
 const a11yProps = (index: any) => {
     return {
@@ -29,7 +29,8 @@ const EditorScrollTabs = () => {
         setCurrentTab(newValue);
     };
 
-    const [openTabs, _, closeTab] = useOpenTabs();
+    const [tabs, , closeTab] = useOpenTabs();
+    const openTabs = _.filter(tabs, 'open')
     const handleTabClose = (index: number, failureMode: FailureMode) => {
         setCurrentTab(index - 1)
         closeTab(failureMode)
@@ -50,7 +51,8 @@ const EditorScrollTabs = () => {
                     aria-label="scrollable auto tabs example"
                 >
                     {
-                        openTabs.map((failureMode, index) => {
+                        openTabs.map((failureModeTab, index) => {
+                            const failureMode = failureModeTab.data;
                             const tabTitle = (failureMode.manifestingNode.event as FaultEvent).name
                             return <Tab
                                 key={`tab-failure-mode-${failureMode.iri}`}
@@ -63,7 +65,8 @@ const EditorScrollTabs = () => {
                 </Tabs>
             </AppBar>
             {
-                openTabs.map((failureMode, index) => {
+                openTabs.map((failureModeTab, index) => {
+                    const failureMode = failureModeTab.data;
                     return (
                         <TabPanel key={`tab-panel-${failureMode.iri}`} value={currentTab} index={index}>
                             <Editor failureMode={failureMode}

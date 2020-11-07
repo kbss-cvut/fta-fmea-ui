@@ -12,12 +12,12 @@ import * as _ from "lodash";
 import {useLocalContext} from "@hooks/useLocalContext";
 
 
-interface EditorPros {
+interface Props {
     failureMode: FailureMode,
     exportImage: (string) => void
 }
 
-const Editor = ({failureMode, exportImage}: EditorPros) => {
+const Editor = ({failureMode, exportImage}: Props) => {
     // TODO offer image export
 
     const [rootNode, setRootNode] = useState<TreeNode<Event>>(failureMode.manifestingNode)
