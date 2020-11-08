@@ -30,7 +30,7 @@ const EditorScrollTabs = () => {
     };
 
     const [tabs, , closeTab] = useOpenTabs();
-    const openTabs = _.filter(tabs, 'open')
+    const openTabs = _.orderBy(_.filter(tabs, 'open'), ['openTime'], ['asc'])
     const handleTabClose = (index: number, failureMode: FailureMode) => {
         setCurrentTab(index - 1)
         closeTab(failureMode)

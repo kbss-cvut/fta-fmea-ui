@@ -7,7 +7,8 @@ import * as _ from "lodash";
 
 interface FailureModeTab {
     open: boolean,
-    data: FailureMode
+    data: FailureMode,
+    openTime: number
 }
 
 type openTabsContextType = [FailureModeTab[], (failureMode: FailureMode) => void, (failureMode: FailureMode) => void];
@@ -27,7 +28,8 @@ export const OpenTabsProvider = ({children}: ChildrenProps) => {
         const failureModeTabs = failureModes.map(mode => {
             return {
                 open: false,
-                data: mode
+                data: mode,
+                openTime: Date.now()
             }
         })
         _setOpenTabs(failureModeTabs);
@@ -38,7 +40,7 @@ export const OpenTabsProvider = ({children}: ChildrenProps) => {
 
         if (!_tabs[index].open) {
             const tabsClone = _.cloneDeep(_tabs)
-            tabsClone[index] = {open: true, data: modeToOpen}
+            tabsClone[index] = {open: true, data: modeToOpen, openTime: Date.now()}
             _setOpenTabs(tabsClone)
         }
     }
