@@ -15,7 +15,6 @@ interface Props {
 
 const ShapeToolPane = ({data}: Props) => {
     const classes = useStyles()
-    const [processing, setProcessing] = useState(false)
 
     let editorPane;
     let updateFunction;
@@ -25,14 +24,13 @@ const ShapeToolPane = ({data}: Props) => {
         case TreeNodeType.EVENT:
             const eventToUpdate = (data.event) as FaultEvent
 
-            defaultValues  = {
+            defaultValues = {
                 eventType: eventToUpdate.eventType,
                 name: eventToUpdate.name,
                 description: eventToUpdate.description,
-                // TODO RPN is not fetched from server?!!!
-                // probability: eventToUpdate.rpn.probability,
-                // severity: eventToUpdate.rpn.severity,
-                // detection: eventToUpdate.rpn.detection,
+                probability: eventToUpdate.rpn.probability,
+                severity: eventToUpdate.rpn.severity,
+                detection: eventToUpdate.rpn.detection,
             }
 
             useFormMethods = useForm({
@@ -40,9 +38,7 @@ const ShapeToolPane = ({data}: Props) => {
             });
 
             updateFunction = async (values: any) => {
-                setProcessing(true)
                 console.log(`Updating event... ${JSON.stringify(values)}`)
-                setProcessing(false)
             }
 
             editorPane = <FaultEventCreation useFormMethods={useFormMethods}
@@ -57,9 +53,7 @@ const ShapeToolPane = ({data}: Props) => {
             useFormMethods = useForm({});
 
             updateFunction = async (values: any) => {
-                setProcessing(true)
                 console.log(`Updating gate... ${JSON.stringify(values)}`)
-                setProcessing(false)
             }
 
             editorPane = <GateCreation useFormMethods={useFormMethods}/>
@@ -72,7 +66,8 @@ const ShapeToolPane = ({data}: Props) => {
     }
 
     const eventSelected = Boolean(data)
-    const {handleSubmit, reset} = useFormMethods;
+    const {handleSubmit, reset, formState} = useFormMethods;
+    const {isSubmitting, isDirty} = formState;
 
     useEffect(() => {
         reset(defaultValues)
@@ -83,10 +78,12 @@ const ShapeToolPane = ({data}: Props) => {
             <Typography className={classes.title} variant="h5" gutterBottom>Edit Event</Typography>
             <Divider/>
             {editorPane}
-            <Button disabled={processing || !eventSelected} color="primary"
+            {isDirty &&
+            <Button disabled={isSubmitting || !eventSelected} color="primary"
                     onClick={handleSubmit(updateFunction)}>
-                Update & Save
+                Save
             </Button>
+            }
         </Paper>
     );
 }
