@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as _ from "lodash";
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import {useStyles} from "@components/editor/tabs/scroll/EditorScrollTabs.styles";
@@ -10,9 +11,8 @@ import {IconButton} from "@material-ui/core";
 import {Close} from "@material-ui/icons";
 import Tab from "@material-ui/core/Tab";
 import {FailureMode} from "@models/failureModeModel";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import PngExporter, {PngExportData} from "@components/editor/tools/PngExporter";
-import * as _ from "lodash";
 import {CurrentFailureModeProvider} from "@hooks/useCurrentFailureMode";
 
 const a11yProps = (index: any) => {
@@ -26,14 +26,31 @@ const EditorScrollTabs = () => {
     const classes = useStyles();
     const [currentTab, setCurrentTab] = React.useState(0);
 
+    const [tabs, , closeTab, currentTabIri] = useOpenTabs();
+    const openTabs = _.orderBy(_.filter(tabs, 'open'), ['openTime'], ['asc'])
+
+    useEffect(() => {
+        const index = _.findIndex(openTabs, (o) => o.data.iri === currentTabIri);
+        if (index > -1) {
+            setCurrentTab(index)
+        } else {
+            setCurrentTab(0)
+        }
+    }, [currentTabIri])
+
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-        setCurrentTab(newValue);
+        setCurrentTab(newValue)
     };
 
-    const [tabs, , closeTab] = useOpenTabs();
-    const openTabs = _.orderBy(_.filter(tabs, 'open'), ['openTime'], ['asc'])
-    const handleTabClose = (index: number, failureMode: FailureMode) => {
-        setCurrentTab(index - 1)
+
+    const handleTabClose = (e, index: number, failureMode: FailureMode) => {
+        e.stopPropagation()
+
+        if(index > 0) {
+            setCurrentTab(index - 1)
+        } else {
+            setCurrentTab(0)
+        }
         closeTab(failureMode)
     }
 
@@ -49,7 +66,7 @@ const EditorScrollTabs = () => {
                     textColor="primary"
                     variant="scrollable"
                     scrollButtons="auto"
-                    aria-label="scrollable auto tabs example"
+                    aria-label="scrollable auto tabs"
                 >
                     {
                         openTabs.map((failureModeTab, index) => {
@@ -59,7 +76,7 @@ const EditorScrollTabs = () => {
                                 key={`tab-failure-mode-${failureMode.iri}`}
                                 component="div"
                                 label={<span>{tabTitle}<IconButton
-                                    onClick={() => handleTabClose(index, failureMode)}><Close/></IconButton></span>}
+                                    onClick={(e) => handleTabClose(e, index, failureMode)}><Close/></IconButton></span>}
                                 {...a11yProps(index)}/>
                         })
                     }

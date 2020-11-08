@@ -11,19 +11,25 @@ interface FailureModeTab {
     openTime: number
 }
 
-type openTabsContextType = [FailureModeTab[], (failureMode: FailureMode) => void, (failureMode: FailureMode) => void];
+type openTabsContextType = [
+    FailureModeTab[],
+    (failureMode: FailureMode) => void,
+    (failureMode: FailureMode) => void,
+    string,
+];
 
 export const openTabsContext = createContext<openTabsContextType>(null!);
 
 export const useOpenTabs = () => {
-    const [tabs, openTab, closeTab] = useContext(openTabsContext);
-    return [tabs, openTab, closeTab] as const;
+    const [tabs, openTab, closeTab, currentTabIri] = useContext(openTabsContext);
+    return [tabs, openTab, closeTab, currentTabIri] as const;
 }
 
 export const OpenTabsProvider = ({children}: ChildrenProps) => {
     const [failureModes] = useFailureModes()
 
     const [_tabs, _setOpenTabs] = useState<FailureModeTab[]>([]);
+    const [currentTabIri, setCurrentTabIri] = useState<string | null>(null);
     useEffect(() => {
         const failureModeTabs = failureModes.map(mode => {
             return {
@@ -42,6 +48,7 @@ export const OpenTabsProvider = ({children}: ChildrenProps) => {
             const tabsClone = _.cloneDeep(_tabs)
             tabsClone[index] = {open: true, data: modeToOpen, openTime: Date.now()}
             _setOpenTabs(tabsClone)
+            setCurrentTabIri(modeToOpen.iri)
         }
     }
 
@@ -52,12 +59,13 @@ export const OpenTabsProvider = ({children}: ChildrenProps) => {
             const tabsClone = _.cloneDeep(_tabs)
             tabsClone[index] = {open: false, data: modeToClose}
             _setOpenTabs(tabsClone)
+            setCurrentTabIri(null)
         }
     }
 
 
     return (
-        <openTabsContext.Provider value={[_tabs, openTab, closeTab]}>
+        <openTabsContext.Provider value={[_tabs, openTab, closeTab, currentTabIri]}>
             {children}
         </openTabsContext.Provider>
     );
