@@ -17,9 +17,10 @@ interface Props {
     sidebarSelectedNode: TreeNode<Event>,
     exportImage: (string) => void,
     onElementContextMenu: (element: any, evt: any) => void,
+    onNodeUpdated: (node: TreeNode<Event>) => void,
 }
 
-const EditorCanvas = ({rootNode, sidebarSelectedNode, exportImage, onElementContextMenu}: Props) => {
+const EditorCanvas = ({rootNode, sidebarSelectedNode, exportImage, onElementContextMenu, onNodeUpdated}: Props) => {
     const classes = useStyles()
 
     const containerRef = useRef(null)
@@ -146,7 +147,7 @@ const EditorCanvas = ({rootNode, sidebarSelectedNode, exportImage, onElementCont
                 {container && rootNode && <JointEventShape addSelf={addSelf} treeNode={rootNode}/>}
             </div>
             <div className={classes.divWindowTool} ref={windowToolRef}>
-                <ShapeToolPane data={sidebarSelectedNode}/>
+                <ShapeToolPane data={sidebarSelectedNode} onNodeUpdated={onNodeUpdated}/>
             </div>
         </React.Fragment>
     );

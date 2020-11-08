@@ -4,7 +4,7 @@ import {extractFragment} from "@services/utils/uriIdentifierUtils";
 
 import VocabularyUtils from "@utils/VocabularyUtils";
 import JsonLdUtils from "@utils/JsonLdUtils";
-import {Gate, CONTEXT as EVENT_CONTEXT, CreateGate, FaultEvent} from "@models/eventModel";
+import {Gate, CONTEXT as EVENT_CONTEXT, CreateGate, FaultEvent, Event} from "@models/eventModel";
 import {CONTEXT as TREE_NODE_CONTEXT} from "@models/treeNodeModel";
 import {TreeNode} from "@models/treeNodeModel";
 
@@ -49,5 +49,23 @@ export const addEvent = async (treeNodeIri: string, event: FaultEvent): Promise<
     } catch (e) {
         console.log('Event Service - Failed to call /addEvent')
         return new Promise((resolve, reject) => reject("Failed to create event"));
+    }
+}
+
+export const updateNode = async (node: TreeNode<Event>): Promise<void> => {
+    try {
+        const updateRequest = Object.assign({}, node, {"@context": TREE_NODE_CONTEXT})
+
+        await axiosClient.put(
+            '/events',
+            updateRequest,
+            {
+                headers: authHeaders()
+            }
+        )
+        return new Promise((resolve) => resolve());
+    } catch (e) {
+        console.log('Failure Mode Service - Failed to call /update')
+        return new Promise((resolve, reject) => reject("Failed to update tree node"));
     }
 }

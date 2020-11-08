@@ -36,7 +36,6 @@ const Register = () => {
             username: values.username,
             password: values.password
         }).then(value => {
-            console.log(`${JSON.stringify(value)}`)
             history.push("/login");
         }).catch(reason => {
             setRegistering(false)

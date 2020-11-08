@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
-import * as _ from "lodash";
+import {cloneDeep, concat, flatten} from "lodash";
 import EditorCanvas from "@components/editor/canvas/EditorCanvas";
 import {findNodeByIri} from "@utils/treeUtils";
 import {Event} from "@models/eventModel";
@@ -9,7 +9,8 @@ import ElementContextMenu, {ElementContextMenuAnchor} from "@components/editor/m
 import EventDialog from "@components/dialog/EventDialog";
 import {useLocalContext} from "@hooks/useLocalContext";
 import {useCurrentFailureMode} from "@hooks/useCurrentFailureMode";
-
+import * as eventService from "@services/eventService";
+import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 
 interface Props {
     exportImage: (string) => void
@@ -17,6 +18,7 @@ interface Props {
 
 const Editor = ({exportImage}: Props) => {
     // TODO offer image export
+    const [showSnackbar] = useSnackbar()
 
     const [failureMode, updateFailureMode] = useCurrentFailureMode()
     const [rootNode, setRootNode] = useState<TreeNode<Event>>()
@@ -44,16 +46,24 @@ const Editor = ({exportImage}: Props) => {
     const [eventDialogOpen, setEventDialogOpen] = useState(false);
     const handleEventCreated = (newNode: TreeNode<Event>) => {
         // @ts-ignore
-        const rootNodeClone = _.cloneDeep(_localContext.rootNode);
+        const rootNodeClone = cloneDeep(_localContext.rootNode);
 
         const node = findNodeByIri(contextMenuSelectedNode.iri, rootNodeClone);
-        node.children = _.concat(_.flatten([node.children]), newNode)
+        node.children = concat(flatten([node.children]), newNode)
 
         // propagate changes locally in the app
         failureMode.manifestingNode = rootNodeClone
         updateFailureMode(failureMode)
-
         setRootNode(rootNodeClone)
+    }
+
+    const handleNodeUpdate = (nodeToUpdate: TreeNode<Event>) => {
+        console.log(`handleNodeUpdate- ${JSON.stringify(nodeToUpdate)}`)
+        eventService.updateNode(nodeToUpdate)
+            .then(value => {
+               // TODO ...
+            })
+            .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
 
     return (
@@ -61,6 +71,7 @@ const Editor = ({exportImage}: Props) => {
             <EditorCanvas
                 rootNode={rootNode}
                 exportImage={exportImage}
+                onNodeUpdated={handleNodeUpdate}
                 sidebarSelectedNode={sidebarSelectedNode}
                 onElementContextMenu={handleContextMenu}
             />

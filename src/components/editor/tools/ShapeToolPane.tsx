@@ -8,12 +8,14 @@ import FaultEventCreation from "@components/dialog/faultEvent/FaultEventCreation
 import {useForm} from "react-hook-form";
 import GateCreation from "@components/dialog/gate/GateCreation";
 import {schema as eventSchema} from "@components/dialog/faultEvent/FaultEventCreation.schema";
+import {merge, cloneDeep} from "lodash";
 
 interface Props {
-    data?: TreeNode<Event>
+    data?: TreeNode<Event>,
+    onNodeUpdated: (node: TreeNode<Event>) => void,
 }
 
-const ShapeToolPane = ({data}: Props) => {
+const ShapeToolPane = ({data, onNodeUpdated}: Props) => {
     const classes = useStyles()
 
     let editorPane;
@@ -39,6 +41,21 @@ const ShapeToolPane = ({data}: Props) => {
 
             updateFunction = async (values: any) => {
                 console.log(`Updating event... ${JSON.stringify(values)}`)
+
+                const dataClone = cloneDeep(data)
+                const updatedFaultEvent = {
+                    eventType: values.eventType,
+                    name: values.name,
+                    description: values.description,
+                    rpn: {
+                        probability: values.probability,
+                        severity: values.severity,
+                        detection: values.detection,
+                    },
+                }
+                dataClone.event = merge(dataClone.event, updatedFaultEvent)
+
+                onNodeUpdated(dataClone)
             }
 
             editorPane = <FaultEventCreation useFormMethods={useFormMethods}
@@ -54,6 +71,16 @@ const ShapeToolPane = ({data}: Props) => {
 
             updateFunction = async (values: any) => {
                 console.log(`Updating gate... ${JSON.stringify(values)}`)
+
+                const dataClone = cloneDeep(data)
+                console.log('dataClone:')
+                console.log(data)
+                const updatedGate = {gateType: values.gateType}
+                dataClone.event = merge(dataClone.event, updatedGate)
+
+                console.log(dataClone)
+
+                onNodeUpdated(dataClone)
             }
 
             editorPane = <GateCreation useFormMethods={useFormMethods}/>
