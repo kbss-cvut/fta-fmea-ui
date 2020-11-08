@@ -13,6 +13,7 @@ import {FailureMode} from "@models/failureModeModel";
 import {useState} from "react";
 import PngExporter, {PngExportData} from "@components/editor/tools/PngExporter";
 import * as _ from "lodash";
+import {CurrentFailureModeProvider} from "@hooks/useCurrentFailureMode";
 
 const a11yProps = (index: any) => {
     return {
@@ -69,9 +70,11 @@ const EditorScrollTabs = () => {
                     const failureMode = failureModeTab.data;
                     return (
                         <TabPanel key={`tab-panel-${failureMode.iri}`} value={currentTab} index={index}>
-                            <Editor failureMode={failureMode}
-                                    exportImage={(encodedData) => setExportData(encodedData)}/>
-                            {exportData && <PngExporter open={Boolean(exportData)} exportData={exportData} onClose={() => setExportData(null)}/>}
+                            <CurrentFailureModeProvider failureModeIri={failureMode.iri}>
+                                <Editor exportImage={(encodedData) => setExportData(encodedData)}/>
+                            </CurrentFailureModeProvider>
+                            {exportData && <PngExporter open={Boolean(exportData)} exportData={exportData}
+                                                        onClose={() => setExportData(null)}/>}
                         </TabPanel>)
                 })
             }

@@ -1,29 +1,32 @@
 import * as React from "react";
-import {FailureMode} from "@models/failureModeModel";
-import {useSnackbar} from "@hooks/useSnackbar";
+import {useEffect, useState} from "react";
+import * as _ from "lodash";
 import EditorCanvas from "@components/editor/canvas/EditorCanvas";
 import {findNodeByIri} from "@utils/treeUtils";
-import {Event, FaultEvent} from "@models/eventModel";
+import {Event} from "@models/eventModel";
 import {TreeNode} from "@models/treeNodeModel";
-import {useState} from "react";
 import ElementContextMenu, {ElementContextMenuAnchor} from "@components/editor/menu/ElementContextMenu";
 import EventDialog from "@components/dialog/EventDialog";
-import * as _ from "lodash";
 import {useLocalContext} from "@hooks/useLocalContext";
-import {useFailureModes} from "@hooks/useFailureModes";
+import {useCurrentFailureMode} from "@hooks/useCurrentFailureMode";
 
 
 interface Props {
-    failureMode: FailureMode,
     exportImage: (string) => void
 }
 
-const Editor = ({failureMode, exportImage}: Props) => {
+const Editor = ({exportImage}: Props) => {
     // TODO offer image export
-    const [, , locallyUpdateFailureMode] = useFailureModes()
 
-    const [rootNode, setRootNode] = useState<TreeNode<Event>>(failureMode.manifestingNode)
+    const [failureMode, updateFailureMode] = useCurrentFailureMode()
+    const [rootNode, setRootNode] = useState<TreeNode<Event>>()
     const _localContext = useLocalContext({rootNode})
+
+    useEffect(() => {
+        if (failureMode) {
+            setRootNode(failureMode.manifestingNode)
+        }
+    }, [failureMode])
 
     const [contextMenuSelectedNode, setContextMenuSelectedNode] = useState<TreeNode<Event>>(null)
     const [sidebarSelectedNode, setSidebarSelectedNode] = useState<TreeNode<Event>>(null)
@@ -40,16 +43,15 @@ const Editor = ({failureMode, exportImage}: Props) => {
 
     const [eventDialogOpen, setEventDialogOpen] = useState(false);
     const handleEventCreated = (newNode: TreeNode<Event>) => {
-        console.log(`handleEventCreated - ${newNode.iri}`)
         // @ts-ignore
         const rootNodeClone = _.cloneDeep(_localContext.rootNode);
 
         const node = findNodeByIri(contextMenuSelectedNode.iri, rootNodeClone);
-        node.children.push(newNode)
+        node.children = _.concat(_.flatten([node.children]), newNode)
 
         // propagate changes locally in the app
         failureMode.manifestingNode = rootNodeClone
-        locallyUpdateFailureMode(failureMode)
+        updateFailureMode(failureMode)
 
         setRootNode(rootNodeClone)
     }

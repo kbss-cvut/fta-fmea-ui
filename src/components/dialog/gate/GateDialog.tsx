@@ -13,25 +13,19 @@ import {useForm} from "react-hook-form";
 import {EventDialogProps} from "@components/dialog/EventDialog";
 
 const GateDialog = ({open, nodeIri, onCreated, onClose}: EventDialogProps) => {
-    const [processing, setIsProcessing] = useState(false)
-
-    const[showSnackbar] = useSnackbar()
+    const [showSnackbar] = useSnackbar()
 
     const useFormMethods = useForm();
-    const {handleSubmit} = useFormMethods;
+    const {handleSubmit, formState} = useFormMethods;
+    const {isSubmitting} = formState;
 
     const handleCreateGate = async (values: any) => {
-        setIsProcessing(true)
-
         eventService.insertGate(nodeIri, {gateType: values.gateType} as CreateGate)
-            .then(value => onCreated(value))
-            .catch(reason => {
-                setIsProcessing(false)
-                showSnackbar(reason, SnackbarType.ERROR)
-            })
-            .finally(() => {
+            .then(value => {
                 onClose()
+                onCreated(value)
             })
+            .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
 
     return (
@@ -42,7 +36,7 @@ const GateDialog = ({open, nodeIri, onCreated, onClose}: EventDialogProps) => {
                     <GateCreation useFormMethods={useFormMethods}/>
                 </DialogContent>
                 <DialogActions>
-                    <Button disabled={processing} color="primary" onClick={handleSubmit(handleCreateGate)}>
+                    <Button disabled={isSubmitting} color="primary" onClick={handleSubmit(handleCreateGate)}>
                         Create Gate
                     </Button>
                 </DialogActions>

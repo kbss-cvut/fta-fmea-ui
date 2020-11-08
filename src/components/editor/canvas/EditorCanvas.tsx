@@ -143,7 +143,7 @@ const EditorCanvas = ({rootNode, sidebarSelectedNode, exportImage, onElementCont
     return (
         <React.Fragment>
             <div id="jointjs-container" className={classes.konvaContainer} ref={containerRef}>
-                {container && <JointEventShape addSelf={addSelf} treeNode={rootNode}/>}
+                {container && rootNode && <JointEventShape addSelf={addSelf} treeNode={rootNode}/>}
             </div>
             <div className={classes.divWindowTool} ref={windowToolRef}>
                 <ShapeToolPane data={sidebarSelectedNode}/>

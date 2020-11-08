@@ -7,19 +7,17 @@ import {axiosSource} from "@services/utils/axiosUtils";
 import {ChildrenProps} from "@utils/hookUtils";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import {OpenTabsProvider} from "@hooks/useOpenTabs";
-import * as _ from "lodash";
 
 type failureModeContextType = [
     FailureMode[],
     (failureMode: CreateFailureMode) => void,
-    (failureMode: FailureMode) => void
 ];
 
 export const failureModesContext = createContext<failureModeContextType>(null!);
 
 export const useFailureModes = () => {
-    const [failureModes, addFailureMode, updateModeLocally] = useContext(failureModesContext);
-    return [failureModes, addFailureMode, updateModeLocally] as const;
+    const [failureModes, addFailureMode] = useContext(failureModesContext);
+    return [failureModes, addFailureMode] as const;
 }
 
 export const FailureModesProvider = ({children}: ChildrenProps) => {
@@ -44,21 +42,11 @@ export const FailureModesProvider = ({children}: ChildrenProps) => {
 
         fetchFailureModes()
 
-        return () => {
-            axiosSource.cancel("FailureModesProvider - unmounting")
-        }
+        return () => axiosSource.cancel("FailureModesProvider - unmounting")
     }, []);
 
-    const updateModeLocally = (modeToUpdate: FailureMode) => {
-        const index = _.findIndex(_failureModes, (o: FailureMode) => o.iri === modeToUpdate.iri);
-
-        const failureModesClone = _.cloneDeep(_failureModes)
-        failureModesClone[index] = modeToUpdate
-        _setFailureModes(failureModesClone)
-    }
-
     return (
-        <failureModesContext.Provider value={[_failureModes, addFailureMode, updateModeLocally]}>
+        <failureModesContext.Provider value={[_failureModes, addFailureMode]}>
             <OpenTabsProvider>
                 {children}
             </OpenTabsProvider>

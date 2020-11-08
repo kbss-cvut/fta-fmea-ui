@@ -16,16 +16,13 @@ import VocabularyUtils from "../../../utils/VocabularyUtils";
 import {EventDialogProps} from "@components/dialog/EventDialog";
 
 const FaultEventDialog = ({open, nodeIri, onCreated, onClose}: EventDialogProps) => {
-    const [processing, setIsProcessing] = useState(false)
-
     const [showSnackbar] = useSnackbar()
 
     const useFormMethods = useForm({resolver: schema});
-    const {handleSubmit} = useFormMethods;
+    const {handleSubmit, formState} = useFormMethods;
+    const {isSubmitting} = formState
 
     const handleCreateEvent = async (values: any) => {
-        setIsProcessing(true)
-
         console.log(`Creating event with eventType - ${values.eventType}`)
         const requestEvent = {
             eventType: values.eventType,
@@ -41,14 +38,11 @@ const FaultEventDialog = ({open, nodeIri, onCreated, onClose}: EventDialogProps)
         } as FaultEvent
 
         eventService.addEvent(nodeIri, requestEvent)
-            .then(value => onCreated(value))
-            .catch(reason => {
-                    setIsProcessing(false)
-                    showSnackbar(reason, SnackbarType.ERROR)
-                }
-            ).finally(() => {
-            onClose()
-        })
+            .then(value => {
+                onClose()
+                onCreated(value)
+            })
+            .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
 
     return (
@@ -59,7 +53,7 @@ const FaultEventDialog = ({open, nodeIri, onCreated, onClose}: EventDialogProps)
                     <FaultEventCreation useFormMethods={useFormMethods} topEventOnly={false}/>
                 </DialogContent>
                 <DialogActions>
-                    <Button disabled={processing} color="primary" onClick={handleSubmit(handleCreateEvent)}>
+                    <Button disabled={isSubmitting} color="primary" onClick={handleSubmit(handleCreateEvent)}>
                         Create Event
                     </Button>
                 </DialogActions>

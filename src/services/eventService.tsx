@@ -45,7 +45,7 @@ export const addEvent = async (treeNodeIri: string, event: FaultEvent): Promise<
             }
         )
 
-        return JsonLdUtils.compactAndResolveReferences<TreeNode<Gate>>(response.data, TREE_NODE_CONTEXT);
+        return JsonLdUtils.compactAndResolveReferences<TreeNode<FaultEvent>>(response.data, TREE_NODE_CONTEXT);
     } catch (e) {
         console.log('Event Service - Failed to call /addEvent')
         return new Promise((resolve, reject) => reject("Failed to create event"));
