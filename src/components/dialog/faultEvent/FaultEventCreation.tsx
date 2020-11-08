@@ -13,7 +13,7 @@ interface Props {
 const FaultEventCreation = ({useFormMethods, topEventOnly}: Props) => {
     const classes = useStyles()
 
-    const {register, errors, control} = useFormMethods
+    const {errors, register, control} = useFormMethods
 
     return (
         <div className={classes.divForm}>
@@ -48,14 +48,11 @@ const FaultEventCreation = ({useFormMethods, topEventOnly}: Props) => {
                 <TextField label="Severity" type="number" name="severity"
                            InputProps={{inputProps: {min: 0, max: 10, step: 1}}}
                            inputRef={register} error={!!errors.severity}
-                           helperText={errors.probability?.severity}/>
+                           helperText={errors?.severity?.message}/>
                 <TextField label="Detection" type="number" name="detection"
                            InputProps={{inputProps: {min: 0, max: 10, step: 1}}}
                            inputRef={register} error={!!errors.detection}
-                           helperText={errors.probability?.detection}/>
-                {/*<Controller as={TextField} autoFocus margin="dense" id="name" label="Component Name"*/}
-                {/*            type="text" fullWidth name="name" control={control} defaultValue=""*/}
-                {/*            inputRef={register} error={!!errors.name} helperText={errors.name?.message}/>*/}
+                           helperText={errors?.detection?.message}/>
             </Box>
         </div>
     );

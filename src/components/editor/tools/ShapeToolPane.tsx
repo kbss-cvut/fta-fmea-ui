@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import useStyles from "./ShapeToolPane.styles";
 import {Button, Divider, Paper, Typography} from "@material-ui/core";
 import {TreeNode, TreeNodeType} from "@models/treeNodeModel";
@@ -8,34 +8,35 @@ import FaultEventCreation from "@components/dialog/faultEvent/FaultEventCreation
 import {useForm} from "react-hook-form";
 import GateCreation from "@components/dialog/gate/GateCreation";
 import {schema as eventSchema} from "@components/dialog/faultEvent/FaultEventCreation.schema";
-import {RiskPriorityNumber} from "@models/rpnModel";
-import {TakenAction} from "@models/takenActionModel";
 
-interface ShapeToolWindowProps {
-    data: TreeNode<Event>
+interface Props {
+    data?: TreeNode<Event>
 }
 
-const ShapeToolPane = ({data}: ShapeToolWindowProps) => {
+const ShapeToolPane = ({data}: Props) => {
     const classes = useStyles()
     const [processing, setProcessing] = useState(false)
 
     let editorPane;
-    let useFormMethods;
     let updateFunction;
-    switch (data.nodeType) {
+    let useFormMethods;
+    let defaultValues;
+    switch (data?.nodeType) {
         case TreeNodeType.EVENT:
             const eventToUpdate = (data.event) as FaultEvent
+
+            defaultValues  = {
+                eventType: eventToUpdate.eventType,
+                name: eventToUpdate.name,
+                description: eventToUpdate.description,
+                // TODO RPN is not fetched from server?!!!
+                // probability: eventToUpdate.rpn.probability,
+                // severity: eventToUpdate.rpn.severity,
+                // detection: eventToUpdate.rpn.detection,
+            }
+
             useFormMethods = useForm({
                 resolver: eventSchema,
-                defaultValues: {
-                    eventType: eventToUpdate.eventType,
-                    name: eventToUpdate.name,
-                    description: eventToUpdate.description,
-                    // TODO RPN is not fetched from server!!!
-                    // probability: eventToUpdate.rpn.probability,
-                    // severity: eventToUpdate.rpn.severity,
-                    // detection: eventToUpdate.rpn.detection,
-                } as Record<string, any>
             });
 
             updateFunction = async (values: any) => {
@@ -49,9 +50,11 @@ const ShapeToolPane = ({data}: ShapeToolWindowProps) => {
             break;
         case TreeNodeType.GATE:
             const gateToUpdate = (data.event) as Gate
-            useFormMethods = useForm({
-                defaultValues: gateToUpdate
-            });
+
+            defaultValues = {
+                gateType: gateToUpdate.gateType
+            }
+            useFormMethods = useForm({});
 
             updateFunction = async (values: any) => {
                 setProcessing(true)
@@ -61,16 +64,29 @@ const ShapeToolPane = ({data}: ShapeToolWindowProps) => {
 
             editorPane = <GateCreation useFormMethods={useFormMethods}/>
             break;
+        default:
+            defaultValues = {}
+            useFormMethods = useForm({});
+            editorPane = <Typography variant="body1">No Event selected</Typography>
+            break;
     }
 
-    const {handleSubmit} = useFormMethods;
+    const eventSelected = Boolean(data)
+    const {handleSubmit, reset} = useFormMethods;
+
+    useEffect(() => {
+        reset(defaultValues)
+    }, [data])
 
     return (
         <Paper className={classes.paper} elevation={3}>
             <Typography className={classes.title} variant="h5" gutterBottom>Edit Event</Typography>
             <Divider/>
             {editorPane}
-            <Button disabled={processing} color="primary" onClick={handleSubmit(updateFunction)}>Update & Save</Button>
+            <Button disabled={processing || !eventSelected} color="primary"
+                    onClick={handleSubmit(updateFunction)}>
+                Update & Save
+            </Button>
         </Paper>
     );
 }
