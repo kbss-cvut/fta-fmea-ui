@@ -34,7 +34,7 @@ const FaultEventCreation = ({useFormMethods, topEventOnly}: Props) => {
                     defaultValue={EventType.BASIC}
                 />
             </FormControl>}
-            <TextField autoFocus margin="dense" label="Name" name="name" type="text"
+            <TextField margin="dense" label="Name" name="name" type="text"
                        fullWidth inputRef={register} error={!!errors.name}
                        helperText={errors.name?.message}/>
             <TextField margin="dense" label="Description" type="text" name="description"

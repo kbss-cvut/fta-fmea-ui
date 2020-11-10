@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Button, Dialog,} from "@material-ui/core";
+import {Button, Dialog, TextField,} from "@material-ui/core";
 import {DialogTitle} from "@components/dialog/custom/DialogTitle";
 import {DialogContent} from "@components/dialog/custom/DialogContent";
 import {useForm} from "react-hook-form";
@@ -25,7 +25,7 @@ const FaultTreeDialog = ({open, handleCloseDialog}) => {
         setIsProcessing(true)
 
         const failureMode = {
-            name: `FaultTree - ${Date.now()}`, // TODO FaultTree name!
+            name: values.faultTreeName,
             manifestingNode: {
                 nodeType: TreeNodeType.EVENT,
                 event: {
@@ -56,7 +56,10 @@ const FaultTreeDialog = ({open, handleCloseDialog}) => {
                     fullWidth>
                 <DialogTitle id="form-dialog-title" onClose={handleCloseDialog}>Create Fault Tree</DialogTitle>
                 <DialogContent dividers>
-                    {/*TODO add FaultTree name field*/}
+                    <TextField autoFocus margin="dense" label="Fault Tree Name" name="faultTreeName" type="text"
+                               fullWidth inputRef={useFormMethods.register}
+                               error={!!useFormMethods.errors.faultTreeName}
+                               helperText={useFormMethods.errors.faultTreeName?.message}/>
                     <FaultEventCreation useFormMethods={useFormMethods} topEventOnly={true}/>
                 </DialogContent>
                 <DialogActions>
