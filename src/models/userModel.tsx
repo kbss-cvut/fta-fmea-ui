@@ -14,7 +14,6 @@ export interface User extends AbstractModel{
     authenticated: boolean
 }
 
-// TODO tune types
 export interface UserLoginRequest {
     username: string,
     password: string,

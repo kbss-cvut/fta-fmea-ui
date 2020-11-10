@@ -8,9 +8,9 @@ import {TreeNode} from "@models/treeNodeModel";
 import ElementContextMenu, {ElementContextMenuAnchor} from "@components/editor/menu/ElementContextMenu";
 import EventDialog from "@components/dialog/EventDialog";
 import {useLocalContext} from "@hooks/useLocalContext";
-import {useCurrentFailureMode} from "@hooks/useCurrentFailureMode";
 import * as eventService from "@services/eventService";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
+import {useCurrentFaultTree} from "@hooks/useCurrentFaultTree";
 
 interface Props {
     exportImage: (string) => void
@@ -20,15 +20,15 @@ const Editor = ({exportImage}: Props) => {
     // TODO offer image export
     const [showSnackbar] = useSnackbar()
 
-    const [failureMode, updateFailureMode] = useCurrentFailureMode()
+    const [faultTree, updateFaultTree] = useCurrentFaultTree()
     const [rootNode, setRootNode] = useState<TreeNode<Event>>()
     const _localContext = useLocalContext({rootNode})
 
     useEffect(() => {
-        if (failureMode) {
-            setRootNode(failureMode.manifestingNode)
+        if (faultTree) {
+            setRootNode(faultTree.manifestingNode)
         }
-    }, [failureMode])
+    }, [faultTree])
 
     const [contextMenuSelectedNode, setContextMenuSelectedNode] = useState<TreeNode<Event>>(null)
     const [sidebarSelectedNode, setSidebarSelectedNode] = useState<TreeNode<Event>>(null)
@@ -52,8 +52,8 @@ const Editor = ({exportImage}: Props) => {
         node.children = concat(flatten([node.children]), newNode)
 
         // propagate changes locally in the app
-        failureMode.manifestingNode = rootNodeClone
-        updateFailureMode(failureMode)
+        faultTree.manifestingNode = rootNodeClone
+        updateFaultTree(faultTree)
         setRootNode(rootNodeClone)
     }
 

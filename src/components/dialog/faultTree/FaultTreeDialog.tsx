@@ -1,34 +1,31 @@
 import * as React from "react";
 
-import {
-    Box, Button,
-    Dialog, TextField,
-} from "@material-ui/core";
-import useStyles from "@components/dialog/faultEvent/FaultEventCreation.styles";
+import {Button, Dialog,} from "@material-ui/core";
 import {DialogTitle} from "@components/dialog/custom/DialogTitle";
 import {DialogContent} from "@components/dialog/custom/DialogContent";
-import {useFailureModes} from "@hooks/useFailureModes";
 import {useForm} from "react-hook-form";
 import {schema} from "@components/dialog/faultEvent/FaultEventCreation.schema";
 import {CreateTreeNode, TreeNodeType} from "@models/treeNodeModel";
 import {EventType, FaultEvent} from "@models/eventModel";
 import VocabularyUtils from "@utils/VocabularyUtils";
-import {CreateFailureMode} from "@models/failureModeModel";
 import {useState} from "react";
 import {DialogActions} from "@components/dialog/custom/DialogActions";
 import FaultEventCreation from "@components/dialog/faultEvent/FaultEventCreation";
+import {useFaultTrees} from "@hooks/useFaultTrees";
+import {FaultTree} from "@models/faultTreeModel";
 
-const FailureModeDialog = ({open, handleCloseDialog}) => {
-    const [_, addFailureMode] = useFailureModes()
+const FaultTreeDialog = ({open, handleCloseDialog}) => {
+    const [, addFaultTree] = useFaultTrees()
     const [processing, setIsProcessing] = useState(false)
 
     const useFormMethods = useForm({resolver: schema});
     const {handleSubmit} = useFormMethods;
 
-    const handleCreateFailureMode = async (values: any) => {
+    const handleCreateFaultTree = async (values: any) => {
         setIsProcessing(true)
 
         const failureMode = {
+            name: `FaultTree - ${Date.now()}`, // TODO FaultTree name!
             manifestingNode: {
                 nodeType: TreeNodeType.EVENT,
                 event: {
@@ -45,9 +42,9 @@ const FailureModeDialog = ({open, handleCloseDialog}) => {
                 } as FaultEvent,
                 "@type": [VocabularyUtils.TREE_NODE],
             } as CreateTreeNode
-        } as CreateFailureMode
+        } as FaultTree
 
-        await addFailureMode(failureMode)
+        await addFaultTree(failureMode)
 
         setIsProcessing(false)
         handleCloseDialog()
@@ -57,13 +54,14 @@ const FailureModeDialog = ({open, handleCloseDialog}) => {
         <div>
             <Dialog open={open} onClose={handleCloseDialog} aria-labelledby="form-dialog-title" maxWidth="md"
                     fullWidth>
-                <DialogTitle id="form-dialog-title" onClose={handleCloseDialog}>Create Failure Mode</DialogTitle>
+                <DialogTitle id="form-dialog-title" onClose={handleCloseDialog}>Create Fault Tree</DialogTitle>
                 <DialogContent dividers>
+                    {/*TODO add FaultTree name field*/}
                     <FaultEventCreation useFormMethods={useFormMethods} topEventOnly={true}/>
                 </DialogContent>
                 <DialogActions>
-                    <Button disabled={processing} color="primary" onClick={handleSubmit(handleCreateFailureMode)}>
-                        Create Failure Mode
+                    <Button disabled={processing} color="primary" onClick={handleSubmit(handleCreateFaultTree)}>
+                        Create Fault Tree
                     </Button>
                 </DialogActions>
             </Dialog>
@@ -71,4 +69,4 @@ const FailureModeDialog = ({open, handleCloseDialog}) => {
     );
 }
 
-export default FailureModeDialog;
+export default FaultTreeDialog;

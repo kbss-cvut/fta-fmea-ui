@@ -10,10 +10,10 @@ import Editor from "@components/editor/Editor";
 import {IconButton} from "@material-ui/core";
 import {Close} from "@material-ui/icons";
 import Tab from "@material-ui/core/Tab";
-import {FailureMode} from "@models/failureModeModel";
 import {useEffect, useState} from "react";
 import PngExporter, {PngExportData} from "@components/editor/tools/PngExporter";
-import {CurrentFailureModeProvider} from "@hooks/useCurrentFailureMode";
+import {CurrentFaultTreeProvider} from "@hooks/useCurrentFaultTree";
+import {FaultTree} from "@models/faultTreeModel";
 
 const a11yProps = (index: any) => {
     return {
@@ -43,7 +43,7 @@ const EditorScrollTabs = () => {
     };
 
 
-    const handleTabClose = (e, index: number, failureMode: FailureMode) => {
+    const handleTabClose = (e, index: number, failureMode: FaultTree) => {
         e.stopPropagation()
 
         if(index > 0) {
@@ -69,27 +69,27 @@ const EditorScrollTabs = () => {
                     aria-label="scrollable auto tabs"
                 >
                     {
-                        openTabs.map((failureModeTab, index) => {
-                            const failureMode = failureModeTab.data;
-                            const tabTitle = (failureMode.manifestingNode.event as FaultEvent).name
+                        openTabs.map((faultTreeTab, index) => {
+                            const faultTree = faultTreeTab.data;
+                            const tabTitle = (faultTree.manifestingNode.event as FaultEvent).name
                             return <Tab
-                                key={`tab-failure-mode-${failureMode.iri}`}
+                                key={`tab-failure-mode-${faultTree.iri}`}
                                 component="div"
                                 label={<span>{tabTitle}<IconButton
-                                    onClick={(e) => handleTabClose(e, index, failureMode)}><Close/></IconButton></span>}
+                                    onClick={(e) => handleTabClose(e, index, faultTree)}><Close/></IconButton></span>}
                                 {...a11yProps(index)}/>
                         })
                     }
                 </Tabs>
             </AppBar>
             {
-                openTabs.map((failureModeTab, index) => {
-                    const failureMode = failureModeTab.data;
+                openTabs.map((faultTreeTab, index) => {
+                    const faultTree = faultTreeTab.data;
                     return (
-                        <TabPanel key={`tab-panel-${failureMode.iri}`} value={currentTab} index={index}>
-                            <CurrentFailureModeProvider failureModeIri={failureMode.iri}>
+                        <TabPanel key={`tab-panel-${faultTree.iri}`} value={currentTab} index={index}>
+                            <CurrentFaultTreeProvider faultTreeIri={faultTree.iri}>
                                 <Editor exportImage={(encodedData) => setExportData(encodedData)}/>
-                            </CurrentFailureModeProvider>
+                            </CurrentFaultTreeProvider>
                             {exportData && <PngExporter open={Boolean(exportData)} exportData={exportData}
                                                         onClose={() => setExportData(null)}/>}
                         </TabPanel>)

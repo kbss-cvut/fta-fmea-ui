@@ -1,20 +1,20 @@
 import * as React from "react";
 import {createContext, useContext, useEffect, useState} from "react";
-import {FailureMode} from "@models/failureModeModel";
+import {FaultTree} from "@models/faultTreeModel";
 import {ChildrenProps} from "@utils/hookUtils";
-import {useFailureModes} from "@hooks/useFailureModes";
+import {useFaultTrees} from "@hooks/useFaultTrees";
 import * as _ from "lodash";
 
-interface FailureModeTab {
+interface FaultTreeTab {
     open: boolean,
-    data: FailureMode,
+    data: FaultTree,
     openTime: number
 }
 
 type openTabsContextType = [
-    FailureModeTab[],
-    (failureMode: FailureMode) => void,
-    (failureMode: FailureMode) => void,
+    FaultTreeTab[],
+    (faultTree: FaultTree) => void,
+    (faultTree: FaultTree) => void,
     string,
 ];
 
@@ -26,38 +26,38 @@ export const useOpenTabs = () => {
 }
 
 export const OpenTabsProvider = ({children}: ChildrenProps) => {
-    const [failureModes] = useFailureModes()
+    const [faultTrees] = useFaultTrees()
 
-    const [_tabs, _setOpenTabs] = useState<FailureModeTab[]>([]);
+    const [_tabs, _setOpenTabs] = useState<FaultTreeTab[]>([]);
     const [currentTabIri, setCurrentTabIri] = useState<string | null>(null);
     useEffect(() => {
-        const failureModeTabs = failureModes.map(mode => {
+        const faultTreesTabs = faultTrees.map(mode => {
             return {
                 open: false,
                 data: mode,
                 openTime: Date.now()
             }
         })
-        _setOpenTabs(failureModeTabs);
-    }, [failureModes])
+        _setOpenTabs(faultTreesTabs);
+    }, [faultTrees])
 
-    const openTab = (modeToOpen: FailureMode) => {
-        const index = _.findIndex(_tabs, (o: FailureModeTab) => o.data.iri === modeToOpen.iri);
+    const openTab = (treeToOpen: FaultTree) => {
+        const index = _.findIndex(_tabs, (o: FaultTreeTab) => o.data.iri === treeToOpen.iri);
 
         if (!_tabs[index].open) {
             const tabsClone = _.cloneDeep(_tabs)
-            tabsClone[index] = {open: true, data: modeToOpen, openTime: Date.now()}
+            tabsClone[index] = {open: true, data: treeToOpen, openTime: Date.now()}
             _setOpenTabs(tabsClone)
-            setCurrentTabIri(modeToOpen.iri)
+            setCurrentTabIri(treeToOpen.iri)
         }
     }
 
-    const closeTab = (modeToClose: FailureMode) => {
-        const index = _.findIndex(_tabs, (o: FailureModeTab) => o.data.iri === modeToClose.iri);
+    const closeTab = (treeToClose: FaultTree) => {
+        const index = _.findIndex(_tabs, (o: FaultTreeTab) => o.data.iri === treeToClose.iri);
 
         if (_tabs[index].open) {
             const tabsClone = _.cloneDeep(_tabs)
-            tabsClone[index] = {open: false, data: modeToClose}
+            tabsClone[index] = {open: false, data: treeToClose}
             _setOpenTabs(tabsClone)
             setCurrentTabIri(null)
         }

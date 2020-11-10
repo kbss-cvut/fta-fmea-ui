@@ -13,7 +13,6 @@ import AppBar from "@components/appBar/AppBar";
 import {withRouter} from "react-router-dom";
 import DrawerComponentMenuList from "@components/drawer/menu/DrawerComponentMenuList";
 import {Typography} from "@material-ui/core";
-import {FailureModesProvider} from "@hooks/useFailureModes";
 import {useDrawerOpen} from "@hooks/useDrawerOpen";
 
 const PersistentDrawer = () => {
@@ -35,7 +34,7 @@ const PersistentDrawer = () => {
             >
                 <div className={classes.drawerHeader}>
                     <Typography className={classes.drawerHeaderTitle} variant="h6" gutterBottom>
-                        Failure Modes
+                        Fault Trees
                     </Typography>
                     <IconButton onClick={() => setOpen(false)}>
                         {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}

@@ -1,6 +1,5 @@
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {AbstractModel, CONTEXT as ABSTRACT_CONTEXT} from "@models/abstractModel";
-import {TakenAction} from "@models/takenActionModel";
 import {CONTEXT as RPN_CONTEXT, RiskPriorityNumber} from "@models/rpnModel";
 
 const ctx = {
@@ -31,7 +30,6 @@ export interface FaultEvent extends Event {
     name: string,
     description?: string,
     rpn: RiskPriorityNumber,
-    takenAction?: TakenAction
 }
 
 export enum GateType {
