@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {cloneDeep, concat, flatten} from "lodash";
+import {cloneDeep, concat, flatten, assign} from "lodash";
 import EditorCanvas from "@components/editor/canvas/EditorCanvas";
 import {findNodeByIri} from "@utils/treeUtils";
 import {Event} from "@models/eventModel";
@@ -58,10 +58,19 @@ const Editor = ({exportImage}: Props) => {
     }
 
     const handleNodeUpdate = (nodeToUpdate: TreeNode<Event>) => {
-        console.log(`handleNodeUpdate- ${JSON.stringify(nodeToUpdate)}`)
+        console.log(`handleNodeUpdate - ${nodeToUpdate.iri}`)
         eventService.updateNode(nodeToUpdate)
             .then(value => {
-               // TODO ...
+                // @ts-ignore
+                const rootNodeClone = cloneDeep(_localContext.rootNode);
+
+                const foundNode = findNodeByIri(nodeToUpdate.iri, rootNodeClone);
+                assign(foundNode, nodeToUpdate)
+
+                // propagate changes locally in the app
+                faultTree.manifestingNode = rootNodeClone
+                updateFaultTree(faultTree)
+                setRootNode(rootNodeClone)
             })
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }

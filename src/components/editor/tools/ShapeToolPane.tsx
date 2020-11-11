@@ -1,6 +1,7 @@
 import * as React from "react";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import useStyles from "./ShapeToolPane.styles";
+import {merge, cloneDeep} from "lodash";
 import {Button, Divider, Paper, Typography} from "@material-ui/core";
 import {TreeNode, TreeNodeType} from "@models/treeNodeModel";
 import {Event, EventType, FaultEvent, Gate} from "@models/eventModel";
@@ -8,7 +9,6 @@ import FaultEventCreation from "@components/dialog/faultEvent/FaultEventCreation
 import {useForm} from "react-hook-form";
 import GateCreation from "@components/dialog/gate/GateCreation";
 import {schema as eventSchema} from "@components/dialog/faultEvent/FaultEventCreation.schema";
-import {merge, cloneDeep} from "lodash";
 
 interface Props {
     data?: TreeNode<Event>,
@@ -40,8 +40,6 @@ const ShapeToolPane = ({data, onNodeUpdated}: Props) => {
             });
 
             updateFunction = async (values: any) => {
-                console.log(`Updating event... ${JSON.stringify(values)}`)
-
                 const dataClone = cloneDeep(data)
                 const updatedFaultEvent = {
                     eventType: values.eventType,
@@ -70,15 +68,9 @@ const ShapeToolPane = ({data, onNodeUpdated}: Props) => {
             useFormMethods = useForm({});
 
             updateFunction = async (values: any) => {
-                console.log(`Updating gate... ${JSON.stringify(values)}`)
-
                 const dataClone = cloneDeep(data)
-                console.log('dataClone:')
-                console.log(data)
                 const updatedGate = {gateType: values.gateType}
                 dataClone.event = merge(dataClone.event, updatedGate)
-
-                console.log(dataClone)
 
                 onNodeUpdated(dataClone)
             }
