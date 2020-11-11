@@ -14,11 +14,12 @@ import {useForm} from "react-hook-form";
 import {schema} from "./FaultEventCreation.schema";
 import VocabularyUtils from "../../../utils/VocabularyUtils";
 import {EventDialogProps} from "@components/dialog/EventDialog";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const FaultEventDialog = ({open, nodeIri, onCreated, onClose}: EventDialogProps) => {
     const [showSnackbar] = useSnackbar()
 
-    const useFormMethods = useForm({resolver: schema});
+    const useFormMethods = useForm({resolver: yupResolver(schema)});
     const {handleSubmit, formState} = useFormMethods;
     const {isSubmitting} = formState
 

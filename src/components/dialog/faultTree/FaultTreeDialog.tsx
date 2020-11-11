@@ -4,7 +4,7 @@ import {Button, Dialog, TextField,} from "@material-ui/core";
 import {DialogTitle} from "@components/dialog/custom/DialogTitle";
 import {DialogContent} from "@components/dialog/custom/DialogContent";
 import {useForm} from "react-hook-form";
-import {schema} from "@components/dialog/faultEvent/FaultEventCreation.schema";
+import {schema} from "@components/dialog/faultTree/FaultTreeDialog.schema";
 import {CreateTreeNode, TreeNodeType} from "@models/treeNodeModel";
 import {EventType, FaultEvent} from "@models/eventModel";
 import VocabularyUtils from "@utils/VocabularyUtils";
@@ -13,12 +13,13 @@ import {DialogActions} from "@components/dialog/custom/DialogActions";
 import FaultEventCreation from "@components/dialog/faultEvent/FaultEventCreation";
 import {useFaultTrees} from "@hooks/useFaultTrees";
 import {FaultTree} from "@models/faultTreeModel";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const FaultTreeDialog = ({open, handleCloseDialog}) => {
     const [, addFaultTree] = useFaultTrees()
     const [processing, setIsProcessing] = useState(false)
 
-    const useFormMethods = useForm({resolver: schema});
+    const useFormMethods = useForm({resolver: yupResolver(schema)});
     const {handleSubmit} = useFormMethods;
 
     const handleCreateFaultTree = async (values: any) => {

@@ -1,7 +1,6 @@
 import * as Yup from "yup";
-import {yupResolver} from '@hookform/resolvers/yup';
 
-export const schema = yupResolver(
+export const schema =
     Yup.object().shape({
         username: Yup.string()
             .min(3, 'Must be at least 3 character long')
@@ -12,5 +11,4 @@ export const schema = yupResolver(
         passwordConfirmation: Yup.string()
             .oneOf([Yup.ref('password')], 'Passwords must match')
             .required('Required')
-    })
-);
+    });

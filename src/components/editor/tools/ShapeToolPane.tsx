@@ -9,6 +9,7 @@ import FaultEventCreation from "@components/dialog/faultEvent/FaultEventCreation
 import {useForm} from "react-hook-form";
 import GateCreation from "@components/dialog/gate/GateCreation";
 import {schema as eventSchema} from "@components/dialog/faultEvent/FaultEventCreation.schema";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 interface Props {
     data?: TreeNode<Event>,
@@ -36,7 +37,7 @@ const ShapeToolPane = ({data, onNodeUpdated}: Props) => {
             }
 
             useFormMethods = useForm({
-                resolver: eventSchema,
+                resolver: yupResolver(eventSchema),
             });
 
             updateFunction = async (values: any) => {
@@ -65,7 +66,7 @@ const ShapeToolPane = ({data, onNodeUpdated}: Props) => {
             defaultValues = {
                 gateType: gateToUpdate.gateType
             }
-            useFormMethods = useForm({});
+            useFormMethods = useForm();
 
             updateFunction = async (values: any) => {
                 const dataClone = cloneDeep(data)
@@ -79,7 +80,7 @@ const ShapeToolPane = ({data, onNodeUpdated}: Props) => {
             break;
         default:
             defaultValues = {}
-            useFormMethods = useForm({});
+            useFormMethods = useForm();
             editorPane = <Typography variant="body1">No Event selected</Typography>
             break;
     }

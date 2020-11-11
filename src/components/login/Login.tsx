@@ -19,6 +19,7 @@ import {useLoggedUser} from "@hooks/useLoggedUser";
 import {useForm} from "react-hook-form";
 import {schema} from "@components/login/Login.schema";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const Login = () => {
     const classes = useStyles();
@@ -27,7 +28,7 @@ const Login = () => {
     const [showSnackbar] = useSnackbar()
 
     const {register, handleSubmit, errors} = useForm({
-        resolver: schema
+        resolver: yupResolver(schema)
     });
 
     const [loggingIn, setLoggingIn] = useState(false)

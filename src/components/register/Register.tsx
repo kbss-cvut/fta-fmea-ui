@@ -16,6 +16,7 @@ import {Link as RouterLink, useHistory, withRouter} from "react-router-dom";
 import {useForm} from 'react-hook-form';
 import {schema} from "@components/register/Register.schema";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const Register = () => {
     const classes = useStyles();
@@ -26,7 +27,7 @@ const Register = () => {
     const [registering, setRegistering] = useState(false)
 
     const {register, handleSubmit, errors} = useForm({
-        resolver: schema
+        resolver: yupResolver(schema)
     });
 
     const onSubmit = async (values: any) => {

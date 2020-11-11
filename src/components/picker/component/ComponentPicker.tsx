@@ -8,13 +8,14 @@ import {Component} from "@models/componentModel";
 import {Controller, useForm} from "react-hook-form";
 import {schema} from "@components/picker/component/ComponentPicker.schema";
 import useStyles from "@components/picker/component/ComponentPicker.styles";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const ComponentPicker = ({setSelectedComponent}) => {
     const classes = useStyles()
 
     const [components, addComponent] = useComponents()
     const {register, handleSubmit, errors, reset, control} = useForm({
-        resolver: schema
+        resolver: yupResolver(schema)
     });
 
     const _handleCreateComponent = (values: any) => {

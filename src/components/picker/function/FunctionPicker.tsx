@@ -8,13 +8,14 @@ import AddIcon from "@material-ui/icons/Add";
 import {Controller, useForm} from "react-hook-form";
 import {schema} from "@components/picker/function/FunctionPicker.schema";
 import useStyles from "@components/picker/function/FunctionPicker.styles";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const FunctionPicker = ({setSelectedFunction}) => {
     const classes = useStyles()
 
     const [functions, addFunction] = useFunctions()
     const {register, handleSubmit, errors, reset, control} = useForm({
-        resolver: schema
+        resolver: yupResolver(schema)
     });
 
     const _handleCreateFunction = (values: any) => {
