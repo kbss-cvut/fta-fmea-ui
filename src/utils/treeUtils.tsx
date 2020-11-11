@@ -3,25 +3,39 @@ import {Event} from "@models/eventModel";
 import {flatten} from "lodash";
 
 export const findNodeByIri = (iri: string, root: TreeNode<Event>): TreeNode<Event> => {
-    const [node,] = findNodeByIriWithParent(iri, root);
-    return node;
-}
-
-export const findNodeByIriWithParent = (iri: string, root: TreeNode<Event>): TreeNode<Event>[] => {
     if (root.iri === iri) {
-        return [root, undefined];
+        return root;
     }
 
     if (root.children) {
         const childrenArr = flatten([root.children])
         let result = undefined;
-        let parent = undefined;
         for (let i = 0; result === undefined && i < childrenArr.length; i++) {
-            parent = childrenArr[i];
-            result = findNodeByIri(iri, parent);
+            result = findNodeByIri(iri, childrenArr[i]);
         }
-        return [result, parent];
+        return result;
     }
 
-    return [undefined, undefined];
+    return undefined;
+}
+
+export const findNodeParentByIri = (childIri: string, root: TreeNode<Event>): TreeNode<Event> => {
+    if (childIri === root.iri) {
+        return undefined;
+    }
+
+    if (root.children) {
+        const childrenArr = flatten([root.children])
+        let parent = undefined;
+        for (let i = 0; parent === undefined && i < childrenArr.length; i++) {
+            if(childIri === childrenArr[i].iri) {
+                parent = root;
+                break;
+            }
+            parent = findNodeParentByIri(childIri, childrenArr[i]);
+        }
+        return parent;
+    }
+
+    return undefined;
 }

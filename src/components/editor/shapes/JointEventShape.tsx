@@ -15,6 +15,8 @@ const JointEventShape = ({addSelf, treeNode, parentShape}: JointEventShapeProps)
         const rect = new joint.shapes.standard.Rectangle()
         addSelf(rect)
         setCurrentRect(rect)
+
+        return () => rect.remove();
     }, []);
 
     useEffect(() => {

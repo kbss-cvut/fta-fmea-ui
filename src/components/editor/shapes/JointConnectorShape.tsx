@@ -10,6 +10,8 @@ const JointConnectorShape = ({addSelf, source, target}: JointConnectorShapeProps
         link.source(source);
         link.target(target);
         addSelf(link)
+
+        return () => link.remove();
     }, []);
 
     return <div/>;
