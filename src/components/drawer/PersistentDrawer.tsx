@@ -14,6 +14,7 @@ import {withRouter} from "react-router-dom";
 import DrawerComponentMenuList from "@components/drawer/menu/DrawerComponentMenuList";
 import {Typography} from "@material-ui/core";
 import {useDrawerOpen} from "@hooks/useDrawerOpen";
+import {FaultEventsProvider} from "@hooks/useFaultEvents";
 
 const PersistentDrawer = () => {
     const classes = useStyles();
@@ -22,31 +23,33 @@ const PersistentDrawer = () => {
     const [open, setOpen] = useDrawerOpen();
 
     return (
-        <div className={classes.root}>
-            <CssBaseline/>
-            <AppBar/>
-            <Drawer
-                className={classes.drawer}
-                variant="persistent"
-                anchor="left"
-                open={open}
-                classes={{paper: classes.drawerPaper,}}
-            >
-                <div className={classes.drawerHeader}>
-                    <Typography className={classes.drawerHeaderTitle} variant="h6" gutterBottom>
-                        Fault Trees
-                    </Typography>
-                    <IconButton onClick={() => setOpen(false)}>
-                        {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
-                    </IconButton>
-                </div>
-                <Divider/>
-                <DrawerComponentMenuList/>
-            </Drawer>
-            <main className={clsx(classes.content, {[classes.contentShift]: open,})}>
-                <DrawerContent/>
-            </main>
-        </div>
+        <FaultEventsProvider>
+            <div className={classes.root}>
+                <CssBaseline/>
+                <AppBar/>
+                <Drawer
+                    className={classes.drawer}
+                    variant="persistent"
+                    anchor="left"
+                    open={open}
+                    classes={{paper: classes.drawerPaper,}}
+                >
+                    <div className={classes.drawerHeader}>
+                        <Typography className={classes.drawerHeaderTitle} variant="h6" gutterBottom>
+                            Fault Trees
+                        </Typography>
+                        <IconButton onClick={() => setOpen(false)}>
+                            {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
+                        </IconButton>
+                    </div>
+                    <Divider/>
+                    <DrawerComponentMenuList/>
+                </Drawer>
+                <main className={clsx(classes.content, {[classes.contentShift]: open,})}>
+                    <DrawerContent/>
+                </main>
+            </div>
+        </FaultEventsProvider>
     );
 }
 

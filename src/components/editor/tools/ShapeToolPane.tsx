@@ -57,7 +57,7 @@ const ShapeToolPane = ({data, onNodeUpdated}: Props) => {
                 onNodeUpdated(dataClone)
             }
 
-            editorPane = <FaultEventCreation useFormMethods={useFormMethods}
+            editorPane = <FaultEventCreation useFormMethods={useFormMethods} eventReusing={false}
                                              topEventOnly={eventToUpdate.eventType === EventType.TOP_EVENT}/>
             break;
         case TreeNodeType.GATE:

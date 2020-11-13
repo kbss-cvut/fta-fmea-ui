@@ -1,11 +1,11 @@
 import * as React from "react";
 
 import {Button, Dialog} from "@material-ui/core";
-import {DialogTitle} from "@components/dialog/custom/DialogTitle";
-import {DialogContent} from "@components/dialog/custom/DialogContent";
+import {DialogTitle} from "@components/materialui/dialog/DialogTitle";
+import {DialogContent} from "@components/materialui/dialog/DialogContent";
 import {CreateGate} from "@models/eventModel";
 import {useState} from "react";
-import {DialogActions} from "@components/dialog/custom/DialogActions";
+import {DialogActions} from "@components/materialui/dialog/DialogActions";
 import * as eventService from "@services/eventService"
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import GateCreation from "@components/dialog/gate/GateCreation";

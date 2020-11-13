@@ -1,22 +1,61 @@
 import * as React from "react";
 
-import {Box, FormControl, InputLabel, MenuItem, Select, TextField,} from "@material-ui/core";
+import {Box, Divider, FormControl, InputLabel, MenuItem, Select, TextField, Typography,} from "@material-ui/core";
 import useStyles from "@components/dialog/faultEvent/FaultEventCreation.styles";
 import {Controller} from "react-hook-form";
-import {EventType} from "@models/eventModel";
+import {EventType, FaultEvent} from "@models/eventModel";
+import {useFaultEvents} from "@hooks/useFaultEvents";
+import ControlledAutocomplete from "@components/materialui/ControlledAutocomplete";
+import {useEffect, useState} from "react";
+import DividerWithText from "@components/materialui/DividerWithText";
 
 interface Props {
     useFormMethods: any,
     topEventOnly: boolean,
+    eventReusing: boolean
 }
 
-const FaultEventCreation = ({useFormMethods, topEventOnly}: Props) => {
+const FaultEventCreation = ({useFormMethods, topEventOnly, eventReusing}: Props) => {
     const classes = useStyles()
 
-    const {errors, register, control} = useFormMethods
+    const {errors, control, setValue, reset} = useFormMethods
+
+    const faultEvents = useFaultEvents()
+    const [selectedEvent, setSelectedEvent] = useState<FaultEvent | null>(null)
+    const existingEventSelected = Boolean(selectedEvent)
+
+    useEffect(() => {
+        if (selectedEvent) {
+            setValue('name', selectedEvent.name)
+            setValue('description', selectedEvent.description)
+            setValue('probability', selectedEvent.rpn?.probability)
+            setValue('severity', selectedEvent.rpn?.severity)
+            setValue('detection', selectedEvent.rpn?.detection)
+            if (!topEventOnly) {
+                setValue('eventType', selectedEvent.eventType)
+            }
+        } else {
+            reset()
+        }
+    }, [selectedEvent])
 
     return (
         <div className={classes.divForm}>
+            <Typography variant={"subtitle1"} gutterBottom>Top Event</Typography>
+            {eventReusing &&
+            <React.Fragment>
+                <ControlledAutocomplete
+                    control={control}
+                    name="existingEvent"
+                    options={faultEvents}
+                    onChangeCallback={(data: any) => setSelectedEvent(data)}
+                    getOptionLabel={(option) => option.name}
+                    renderInput={(params) => <TextField {...params} label="Event" variant="outlined"/>}
+                    defaultValue={null}
+                />
+                <DividerWithText>New Event</DividerWithText>
+            </React.Fragment>}
+
             {!topEventOnly && <FormControl className={classes.formControl}>
                 <InputLabel id="event-type-select-label">Type</InputLabel>
                 <Controller
@@ -32,27 +71,38 @@ const FaultEventCreation = ({useFormMethods, topEventOnly}: Props) => {
                     name="eventType"
                     control={control}
                     defaultValue={EventType.BASIC}
+                    disabled={existingEventSelected}
                 />
             </FormControl>}
-            <TextField margin="dense" label="Event Name" name="name" type="text"
-                       fullWidth inputRef={register} error={!!errors.name}
-                       helperText={errors.name?.message}/>
-            <TextField margin="dense" label="Description" type="text" name="description"
-                       fullWidth inputRef={register} error={!!errors.description}
-                       helperText={errors.description?.message}/>
+
+            <Controller as={TextField} control={control} margin="dense"
+                        label="Event Name" name="name" type="text" fullWidth
+                        error={!!errors.name} helperText={errors.name?.message}
+                        defaultValue="" disabled={existingEventSelected}
+            />
+            <Controller as={TextField} control={control} margin="dense"
+                        label="Description" type="text" name="description" fullWidth
+                        error={!!errors.description} helperText={errors.description?.message}
+                        defaultValue="" disabled={existingEventSelected}/>
             <Box className={classes.rpnBox}>
-                <TextField label="Probability" type="number" name="probability"
-                           InputProps={{inputProps: {min: 0, max: 1, step: 0.01}}}
-                           inputRef={register} error={!!errors.probability}
-                           helperText={errors.probability?.message}/>
-                <TextField label="Severity" type="number" name="severity"
-                           InputProps={{inputProps: {min: 0, max: 10, step: 1}}}
-                           inputRef={register} error={!!errors.severity}
-                           helperText={errors?.severity?.message}/>
-                <TextField label="Detection" type="number" name="detection"
-                           InputProps={{inputProps: {min: 0, max: 10, step: 1}}}
-                           inputRef={register} error={!!errors.detection}
-                           helperText={errors?.detection?.message}/>
+                <Controller as={TextField} control={control} label="Probability" type="number" name="probability"
+                            InputProps={{inputProps: {min: 0, max: 1, step: 0.01}}}
+                            error={!!errors.probability} helperText={errors.probability?.message}
+                            className={classes.rpnBoxItem}
+                            disabled={existingEventSelected} defaultValue=""
+                />
+                <Controller as={TextField} control={control} label="Severity" type="number" name="severity"
+                            InputProps={{inputProps: {min: 0, max: 10, step: 1}}}
+                            error={!!errors.severity} helperText={errors?.severity?.message}
+                            className={classes.rpnBoxItem}
+                            disabled={existingEventSelected} defaultValue=""
+                />
+                <Controller as={TextField} control={control} label="Detection" type="number" name="detection"
+                            InputProps={{inputProps: {min: 0, max: 10, step: 1}}}
+                            error={!!errors.detection} helperText={errors?.detection?.message}
+                            className={classes.rpnBoxItem}
+                            disabled={existingEventSelected} defaultValue=""
+                />
             </Box>
         </div>
     );

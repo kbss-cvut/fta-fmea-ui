@@ -71,11 +71,10 @@ const EditorScrollTabs = () => {
                     {
                         openTabs.map((faultTreeTab, index) => {
                             const faultTree = faultTreeTab.data;
-                            const tabTitle = (faultTree.manifestingNode.event as FaultEvent).name
                             return <Tab
                                 key={`tab-failure-mode-${faultTree.iri}`}
                                 component="div"
-                                label={<span>{tabTitle}<IconButton
+                                label={<span>{faultTree.name}<IconButton
                                     onClick={(e) => handleTabClose(e, index, faultTree)}><Close/></IconButton></span>}
                                 {...a11yProps(index)}/>
                         })

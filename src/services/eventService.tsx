@@ -8,6 +8,22 @@ import {Gate, CONTEXT as EVENT_CONTEXT, CreateGate, FaultEvent, Event} from "@mo
 import {CONTEXT as TREE_NODE_CONTEXT} from "@models/treeNodeModel";
 import {TreeNode} from "@models/treeNodeModel";
 
+export const findFaultEvents = async (): Promise<FaultEvent[]> => {
+    try {
+        const response = await axiosClient.get(
+            `/events/faultEvents`,
+            {
+                headers: authHeaders()
+            }
+        )
+
+        return JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(response.data, EVENT_CONTEXT);
+    } catch (e) {
+        console.log('Event Service - Failed to call /findFaultEvents')
+        return new Promise((resolve, reject) => reject("Failed to find fault events"));
+    }
+}
+
 export const insertGate = async (treeNodeIri: string, gate: CreateGate): Promise<TreeNode<Gate>> => {
     try {
         const fragment = extractFragment(treeNodeIri);
@@ -33,9 +49,13 @@ export const insertGate = async (treeNodeIri: string, gate: CreateGate): Promise
 export const addEvent = async (treeNodeIri: string, event: FaultEvent): Promise<TreeNode<FaultEvent>> => {
     try {
         const fragment = extractFragment(treeNodeIri);
-        const createRequest = Object.assign(
-            {"@type": [VocabularyUtils.FAULT_EVENT]}, event, {"@context": EVENT_CONTEXT}
-        )
+        let createRequest;
+        if (event.iri) {
+            console.log('addEvent - using existing event')
+            createRequest = Object.assign({}, event, {"@context": EVENT_CONTEXT})
+        } else {
+            createRequest = Object.assign({"@type": [VocabularyUtils.FAULT_EVENT]}, event, {"@context": EVENT_CONTEXT})
+        }
 
         const response = await axiosClient.post(
             `/events/${fragment}/inputEvents`,
