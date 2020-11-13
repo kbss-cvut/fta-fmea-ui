@@ -41,7 +41,7 @@ const FaultEventCreation = ({useFormMethods, topEventOnly, eventReusing}: Props)
 
     return (
         <div className={classes.divForm}>
-            <Typography variant={"subtitle1"} gutterBottom>Top Event</Typography>
+            <Typography variant={"subtitle1"} gutterBottom>Event:</Typography>
             {eventReusing &&
             <React.Fragment>
                 <ControlledAutocomplete
