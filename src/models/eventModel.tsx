@@ -35,5 +35,4 @@ export enum GateType {
     XOR = "XOR",
     PRIORITY_AND = "PRIORITY_AND",
     INHIBIT = "INHIBIT",
-    K_N = "K_N"
 }

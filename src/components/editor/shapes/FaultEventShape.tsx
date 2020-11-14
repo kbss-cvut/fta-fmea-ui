@@ -12,25 +12,21 @@ const FaultEventShape = ({addSelf, treeNode, parentShape}: JointEventShapeProps)
     useEffect(() => {
         const eventShape = createShape(treeNode);
         addSelf(eventShape)
+
+        const faultEvent = treeNode.event;
+        if (faultEvent.eventType == EventType.INTERMEDIATE) {
+            // @ts-ignore
+            eventShape.gate(faultEvent.gateType.toLowerCase())
+        }
+
+        eventShape.attr(['label', 'text'], faultEvent.name);
+        // @ts-ignore
+        eventShape.set('custom/nodeIri', treeNode.iri)
+
         setCurrentShape(eventShape)
 
         return () => eventShape.remove();
-    }, []);
-
-    useEffect(() => {
-        if (currentShape) {
-            const faultEvent = treeNode.event;
-            if (faultEvent.eventType == EventType.INTERMEDIATE) {
-                currentShape.gate(faultEvent.gateType.toLowerCase())
-            }
-
-            // TODO remove gate on event type change?
-
-            currentShape.attr(['label', 'text'], faultEvent.name);
-            // @ts-ignore
-            currentShape.set('custom/nodeIri', treeNode.iri)
-        }
-    }, [treeNode, currentShape])
+    }, [treeNode]);
 
     return (
         <React.Fragment>

@@ -33,6 +33,7 @@ const ShapeToolPane = ({data, onNodeUpdated}: Props) => {
             probability: eventToUpdate.rpn.probability,
             severity: eventToUpdate.rpn.severity,
             detection: eventToUpdate.rpn.detection,
+            gateType: eventToUpdate.gateType
         }
 
         useFormMethods = useForm({
@@ -50,14 +51,14 @@ const ShapeToolPane = ({data, onNodeUpdated}: Props) => {
                     severity: values.severity,
                     detection: values.detection,
                 },
+                gateType: values.gateType,
             }
             dataClone.event = merge(dataClone.event, updatedFaultEvent)
 
             onNodeUpdated(dataClone)
         }
 
-        editorPane = <FaultEventCreation useFormMethods={useFormMethods}
-                                         eventReusing={false} allowTypePicker={true}/>
+        editorPane = <FaultEventCreation useFormMethods={useFormMethods} eventReusing={false}/>
     } else {
         defaultValues = {}
         useFormMethods = useForm();

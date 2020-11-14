@@ -6,8 +6,8 @@ import {DialogContent} from "@components/materialui/dialog/DialogContent";
 import {useForm} from "react-hook-form";
 import {schema} from "@components/dialog/faultTree/FaultTreeDialog.schema";
 import {CreateTreeNode} from "@models/treeNodeModel";
-import {EventType, FaultEvent} from "@models/eventModel";
 import VocabularyUtils from "@utils/VocabularyUtils";
+import {eventFromHookFormValues} from "@services/faultEventService";
 import {useState} from "react";
 import {DialogActions} from "@components/materialui/dialog/DialogActions";
 import FaultEventCreation from "@components/dialog/faultEvent/FaultEventCreation";
@@ -25,26 +25,7 @@ const FaultTreeDialog = ({open, handleCloseDialog}) => {
     const handleCreateFaultTree = async (values: any) => {
         setIsProcessing(true)
 
-        // TODO externalize to service/function?
-        let rootEvent;
-        if(values.existingEvent) {
-            rootEvent = values.existingEvent;
-            console.log(`Using existing event -${rootEvent.iri}`);
-        } else {
-            rootEvent = {
-                eventType: EventType.INTERMEDIATE,
-                name: values.name,
-                description: values.description,
-                rpn: {
-                    probability: values.probability,
-                    severity: values.severity,
-                    detection: values.detection,
-                    "@type": [VocabularyUtils.RPN]
-                },
-                gateType: values.gateType,
-                "@type": [VocabularyUtils.FAULT_EVENT],
-            } as FaultEvent
-        }
+        const rootEvent = eventFromHookFormValues(values);
 
         const faultTree = {
             name: values.faultTreeName,
@@ -70,7 +51,7 @@ const FaultTreeDialog = ({open, handleCloseDialog}) => {
                                fullWidth inputRef={useFormMethods.register}
                                error={!!useFormMethods.errors.faultTreeName}
                                helperText={useFormMethods.errors.faultTreeName?.message}/>
-                    <FaultEventCreation useFormMethods={useFormMethods} allowTypePicker={false} eventReusing={true}/>
+                    <FaultEventCreation useFormMethods={useFormMethods} eventReusing={true}/>
                 </DialogContent>
                 <DialogActions>
                     <Button disabled={processing} color="primary" onClick={handleSubmit(handleCreateFaultTree)}>

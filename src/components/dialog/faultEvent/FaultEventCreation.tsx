@@ -11,11 +11,10 @@ import DividerWithText from "@components/materialui/DividerWithText";
 
 interface Props {
     useFormMethods: any,
-    allowTypePicker: boolean,
     eventReusing: boolean
 }
 
-const FaultEventCreation = ({useFormMethods, allowTypePicker, eventReusing}: Props) => {
+const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
     const classes = useStyles()
 
     const {errors, control, setValue, reset} = useFormMethods
@@ -31,9 +30,7 @@ const FaultEventCreation = ({useFormMethods, allowTypePicker, eventReusing}: Pro
             setValue('probability', selectedEvent.rpn?.probability)
             setValue('severity', selectedEvent.rpn?.severity)
             setValue('detection', selectedEvent.rpn?.detection)
-            if (allowTypePicker) {
-                setValue('eventType', selectedEvent.eventType)
-            }
+            setValue('eventType', selectedEvent.eventType)
         } else {
             reset()
         }
@@ -56,7 +53,7 @@ const FaultEventCreation = ({useFormMethods, allowTypePicker, eventReusing}: Pro
                 <DividerWithText>New Event</DividerWithText>
             </React.Fragment>}
 
-            {allowTypePicker && <FormControl className={classes.formControl}>
+            <FormControl className={classes.formControl}>
                 <InputLabel id="event-type-select-label">Type</InputLabel>
                 <Controller
                     as={
@@ -73,7 +70,7 @@ const FaultEventCreation = ({useFormMethods, allowTypePicker, eventReusing}: Pro
                     defaultValue={EventType.INTERMEDIATE}
                     disabled={existingEventSelected}
                 />
-            </FormControl>}
+            </FormControl>
 
             <Controller as={TextField} control={control} margin="dense"
                         label="Event Name" name="name" type="text" fullWidth
@@ -104,7 +101,6 @@ const FaultEventCreation = ({useFormMethods, allowTypePicker, eventReusing}: Pro
                             disabled={existingEventSelected} defaultValue=""
                 />
             </Box>
-
 
 
             <Controller
