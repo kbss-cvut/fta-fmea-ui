@@ -1,18 +1,16 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {cloneDeep, concat, flatten, assign, filter, update} from "lodash";
+import {cloneDeep, concat, flatten, assign, filter} from "lodash";
 import EditorCanvas from "@components/editor/canvas/EditorCanvas";
 import {findNodeByIri, findNodeParentByIri} from "@utils/treeUtils";
-import {Event} from "@models/eventModel";
 import {TreeNode} from "@models/treeNodeModel";
 import ElementContextMenu, {ElementContextMenuAnchor} from "@components/editor/menu/ElementContextMenu";
-import EventDialog from "@components/dialog/EventDialog";
 import {useLocalContext} from "@hooks/useLocalContext";
-import * as eventService from "@services/eventService";
 import * as treeNodeService from "@services/treeNodeService";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import {useCurrentFaultTree} from "@hooks/useCurrentFaultTree";
 import {useConfirmDialog} from "@hooks/useConfirmDialog";
+import FaultEventDialog from "@components/dialog/faultEvent/FaultEventDialog";
 
 interface Props {
     exportImage: (string) => void
@@ -24,7 +22,7 @@ const Editor = ({exportImage}: Props) => {
     const [requestConfirmation] = useConfirmDialog()
 
     const [faultTree, updateFaultTree] = useCurrentFaultTree()
-    const [rootNode, setRootNode] = useState<TreeNode<Event>>()
+    const [rootNode, setRootNode] = useState<TreeNode>()
     const _localContext = useLocalContext({rootNode})
 
     useEffect(() => {
@@ -33,8 +31,8 @@ const Editor = ({exportImage}: Props) => {
         }
     }, [faultTree])
 
-    const [contextMenuSelectedNode, setContextMenuSelectedNode] = useState<TreeNode<Event>>(null)
-    const [sidebarSelectedNode, setSidebarSelectedNode] = useState<TreeNode<Event>>(null)
+    const [contextMenuSelectedNode, setContextMenuSelectedNode] = useState<TreeNode>(null)
+    const [sidebarSelectedNode, setSidebarSelectedNode] = useState<TreeNode>(null)
 
     const contextMenuDefault = {mouseX: null, mouseY: null,} as ElementContextMenuAnchor;
     const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefault)
@@ -47,7 +45,7 @@ const Editor = ({exportImage}: Props) => {
     }
 
     const [eventDialogOpen, setEventDialogOpen] = useState(false);
-    const handleEventCreated = (newNode: TreeNode<Event>) => {
+    const handleEventCreated = (newNode: TreeNode) => {
         // @ts-ignore
         const rootNodeClone = cloneDeep(_localContext.rootNode);
 
@@ -60,9 +58,9 @@ const Editor = ({exportImage}: Props) => {
         setRootNode(rootNodeClone)
     }
 
-    const handleNodeUpdate = (nodeToUpdate: TreeNode<Event>) => {
+    const handleNodeUpdate = (nodeToUpdate: TreeNode) => {
         console.log(`handleNodeUpdate - ${nodeToUpdate.iri}`)
-        eventService.updateNode(nodeToUpdate)
+        treeNodeService.updateNode(nodeToUpdate)
             .then(value => {
                 // @ts-ignore
                 const rootNodeClone = cloneDeep(_localContext.rootNode);
@@ -78,7 +76,7 @@ const Editor = ({exportImage}: Props) => {
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
 
-    const handleNodeDelete = (nodeToDelete: TreeNode<Event>) => {
+    const handleNodeDelete = (nodeToDelete: TreeNode) => {
         const deleteNode = () => {
             treeNodeService.remove(nodeToDelete.iri)
                 .then(value => {
@@ -120,17 +118,15 @@ const Editor = ({exportImage}: Props) => {
 
             <ElementContextMenu
                 anchorPosition={contextMenuAnchor}
-                eventType={contextMenuSelectedNode?.nodeType}
                 onEditClick={() => setSidebarSelectedNode(contextMenuSelectedNode)}
                 onNewEventClick={() => setEventDialogOpen(true)}
                 onEventDelete={() => handleNodeDelete(contextMenuSelectedNode)}
                 onClose={() => setContextMenuAnchor(contextMenuDefault)}/>
 
-            <EventDialog open={eventDialogOpen} nodeIri={contextMenuSelectedNode?.iri}
-                         nodeType={contextMenuSelectedNode?.nodeType}
-                         onCreated={handleEventCreated}
-                         onClose={() => setEventDialogOpen(false)}/>
 
+            <FaultEventDialog open={eventDialogOpen} nodeIri={contextMenuSelectedNode?.iri}
+                              onCreated={handleEventCreated}
+                              onClose={() => setEventDialogOpen(false)}/>
         </React.Fragment>
     );
 }

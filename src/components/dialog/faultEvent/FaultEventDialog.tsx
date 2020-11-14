@@ -1,22 +1,27 @@
 import * as React from "react";
 
-import {Button, Dialog, FormControl, InputLabel, MenuItem, Select,} from "@material-ui/core";
-import useStyles from "@components/dialog/faultEvent/FaultEventCreation.styles";
+import {Button, Dialog,} from "@material-ui/core";
 import {DialogTitle} from "@components/materialui/dialog/DialogTitle";
 import {DialogContent} from "@components/materialui/dialog/DialogContent";
-import {CreateGate, EventType, FaultEvent, GateType} from "@models/eventModel";
-import {useState} from "react";
+import {FaultEvent} from "@models/eventModel";
 import {DialogActions} from "@components/materialui/dialog/DialogActions";
-import * as eventService from "@services/eventService";
+import * as treeNodeService from "@services/treeNodeService";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import FaultEventCreation from "./FaultEventCreation";
 import {useForm} from "react-hook-form";
 import {schema} from "./FaultEventCreation.schema";
-import VocabularyUtils from "../../../utils/VocabularyUtils";
-import {EventDialogProps} from "@components/dialog/EventDialog";
+import VocabularyUtils from "@utils/VocabularyUtils";
 import {yupResolver} from "@hookform/resolvers/yup";
+import {TreeNode} from "@models/treeNodeModel";
 
-const FaultEventDialog = ({open, nodeIri, onCreated, onClose}: EventDialogProps) => {
+interface Props {
+    open: boolean,
+    nodeIri: string,
+    onCreated: (newNode: TreeNode) => void,
+    onClose: () => void,
+}
+
+const FaultEventDialog = ({open, nodeIri, onCreated, onClose}: Props) => {
     const [showSnackbar] = useSnackbar()
 
     const useFormMethods = useForm({resolver: yupResolver(schema)});
@@ -40,11 +45,12 @@ const FaultEventDialog = ({open, nodeIri, onCreated, onClose}: EventDialogProps)
                     detection: values.detection,
                     "@type": [VocabularyUtils.RPN]
                 },
+                gateType: values.gateType,
                 "@type": [VocabularyUtils.FAULT_EVENT],
             } as FaultEvent
         }
 
-        eventService.addEvent(nodeIri, requestEvent)
+        treeNodeService.addEvent(nodeIri, requestEvent)
             .then(value => {
                 onClose()
                 onCreated(value)

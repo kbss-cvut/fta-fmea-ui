@@ -3,17 +3,16 @@ import {useEffect} from "react";
 import useStyles from "./ShapeToolPane.styles";
 import {merge, cloneDeep} from "lodash";
 import {Button, Divider, Paper, Typography} from "@material-ui/core";
-import {TreeNode, TreeNodeType} from "@models/treeNodeModel";
-import {Event, FaultEvent, Gate} from "@models/eventModel";
+import {TreeNode} from "@models/treeNodeModel";
+import {FaultEvent} from "@models/eventModel";
 import FaultEventCreation from "@components/dialog/faultEvent/FaultEventCreation";
 import {useForm} from "react-hook-form";
-import GateCreation from "@components/dialog/gate/GateCreation";
 import {schema as eventSchema} from "@components/dialog/faultEvent/FaultEventCreation.schema";
 import {yupResolver} from "@hookform/resolvers/yup";
 
 interface Props {
-    data?: TreeNode<Event>,
-    onNodeUpdated: (node: TreeNode<Event>) => void,
+    data?: TreeNode,
+    onNodeUpdated: (node: TreeNode) => void,
 }
 
 const ShapeToolPane = ({data, onNodeUpdated}: Props) => {
@@ -23,66 +22,46 @@ const ShapeToolPane = ({data, onNodeUpdated}: Props) => {
     let updateFunction;
     let useFormMethods;
     let defaultValues;
-    switch (data?.nodeType) {
-        case TreeNodeType.EVENT:
-            const eventToUpdate = (data.event) as FaultEvent
 
-            defaultValues = {
-                eventType: eventToUpdate.eventType,
-                name: eventToUpdate.name,
-                description: eventToUpdate.description,
-                probability: eventToUpdate.rpn.probability,
-                severity: eventToUpdate.rpn.severity,
-                detection: eventToUpdate.rpn.detection,
+    if (data) {
+        const eventToUpdate = (data.event) as FaultEvent
+
+        defaultValues = {
+            eventType: eventToUpdate.eventType,
+            name: eventToUpdate.name,
+            description: eventToUpdate.description,
+            probability: eventToUpdate.rpn.probability,
+            severity: eventToUpdate.rpn.severity,
+            detection: eventToUpdate.rpn.detection,
+        }
+
+        useFormMethods = useForm({
+            resolver: yupResolver(eventSchema),
+        });
+
+        updateFunction = async (values: any) => {
+            const dataClone = cloneDeep(data)
+            const updatedFaultEvent = {
+                eventType: values.eventType,
+                name: values.name,
+                description: values.description,
+                rpn: {
+                    probability: values.probability,
+                    severity: values.severity,
+                    detection: values.detection,
+                },
             }
+            dataClone.event = merge(dataClone.event, updatedFaultEvent)
 
-            useFormMethods = useForm({
-                resolver: yupResolver(eventSchema),
-            });
+            onNodeUpdated(dataClone)
+        }
 
-            updateFunction = async (values: any) => {
-                const dataClone = cloneDeep(data)
-                const updatedFaultEvent = {
-                    eventType: values.eventType,
-                    name: values.name,
-                    description: values.description,
-                    rpn: {
-                        probability: values.probability,
-                        severity: values.severity,
-                        detection: values.detection,
-                    },
-                }
-                dataClone.event = merge(dataClone.event, updatedFaultEvent)
-
-                onNodeUpdated(dataClone)
-            }
-
-            editorPane = <FaultEventCreation useFormMethods={useFormMethods}
-                                             eventReusing={false} allowTypePicker={true}/>
-            break;
-        case TreeNodeType.GATE:
-            const gateToUpdate = (data.event) as Gate
-
-            defaultValues = {
-                gateType: gateToUpdate.gateType
-            }
-            useFormMethods = useForm();
-
-            updateFunction = async (values: any) => {
-                const dataClone = cloneDeep(data)
-                const updatedGate = {gateType: values.gateType}
-                dataClone.event = merge(dataClone.event, updatedGate)
-
-                onNodeUpdated(dataClone)
-            }
-
-            editorPane = <GateCreation useFormMethods={useFormMethods}/>
-            break;
-        default:
-            defaultValues = {}
-            useFormMethods = useForm();
-            editorPane = <Typography variant="body1">No Event selected</Typography>
-            break;
+        editorPane = <FaultEventCreation useFormMethods={useFormMethods}
+                                         eventReusing={false} allowTypePicker={true}/>
+    } else {
+        defaultValues = {}
+        useFormMethods = useForm();
+        editorPane = <Typography variant="body1">No Event selected</Typography>
     }
 
     const eventSelected = Boolean(data)

@@ -5,7 +5,6 @@ import JointEventShape from "@components/editor/shapes/JointEventShape";
 import * as joint from 'jointjs';
 import * as dagre from 'dagre';
 import * as graphlib from 'graphlib';
-import {FaultEvent, Event} from "@models/eventModel";
 import {TreeNode} from "@models/treeNodeModel";
 import {useLocalContext} from "@hooks/useLocalContext";
 import {PngExportData} from "@components/editor/tools/PngExporter";
@@ -13,11 +12,11 @@ import {V} from "jointjs";
 import ShapeToolPane from "@components/editor/tools/ShapeToolPane";
 
 interface Props {
-    rootNode: TreeNode<FaultEvent>,
-    sidebarSelectedNode: TreeNode<Event>,
+    rootNode: TreeNode,
+    sidebarSelectedNode: TreeNode,
     exportImage: (string) => void,
     onElementContextMenu: (element: any, evt: any) => void,
-    onNodeUpdated: (node: TreeNode<Event>) => void,
+    onNodeUpdated: (node: TreeNode) => void,
 }
 
 const EditorCanvas = ({rootNode, sidebarSelectedNode, exportImage, onElementContextMenu, onNodeUpdated}: Props) => {
@@ -44,6 +43,10 @@ const EditorCanvas = ({rootNode, sidebarSelectedNode, exportImage, onElementCont
             height: containerRef.current.clientHeight,
             gridSize: 10,
             drawGrid: true,
+            defaultConnectionPoint: { name: 'boundary', args: { extrapolate: true }},
+            defaultConnector: { name: 'rounded' },
+            defaultRouter: { name: 'orthogonal' },
+            sorting: joint.dia.Paper.sorting.APPROX
         })
 
         // @ts-ignore
@@ -94,15 +97,33 @@ const EditorCanvas = ({rootNode, sidebarSelectedNode, exportImage, onElementCont
 
     const addSelf = (shape: any) => {
         shape.addTo(container)
-        autoLayout()
+        layout(container)
     }
 
-    const autoLayout = () => {
-        joint.layout.DirectedGraph.layout(container, {
+    const layout = (graph) => {
+        const autoLayoutElements = [];
+        const manualLayoutElements = [];
+        graph.getElements().forEach((el)  => {
+            if (el.get('type') === 'fta.ConditioningEvent') {
+                manualLayoutElements.push(el);
+            } else {
+                autoLayoutElements.push(el);
+            }
+        });
+        // Automatic Layout
+        joint.layout.DirectedGraph.layout(graph.getSubgraph(autoLayoutElements), {
             dagre: dagre,
             graphlib: graphlib,
-            rankDir: 'BT',
-            setLinkVertices: false,
+            setVertices: true,
+            marginX: 20,
+            marginY: 20
+        });
+        // Manual Layout
+        manualLayoutElements.forEach((el) => {
+            const neighbor = graph.getNeighbors(el, {inbound: true})[0];
+            if (!neighbor) return;
+            const neighborPosition = neighbor.getBBox().bottomRight();
+            el.position(neighborPosition.x + 20, neighborPosition.y - el.size().height / 2 - 20);
         });
     }
 

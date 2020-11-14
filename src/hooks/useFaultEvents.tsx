@@ -4,7 +4,7 @@ import {createContext, useContext, useEffect, useState} from "react";
 import {FaultEvent} from "@models/eventModel";
 import {axiosSource} from "@services/utils/axiosUtils";
 import {ChildrenProps} from "@utils/hookUtils";
-import * as eventService from "@services/eventService";
+import * as faultEventService from "@services/faultEventService";
 import {SnackbarType, useSnackbar} from "./useSnackbar";
 
 
@@ -22,7 +22,7 @@ export const FaultEventsProvider = ({children}: ChildrenProps) => {
 
     useEffect(() => {
         const fetchFaultEvents = async () => {
-            eventService.findFaultEvents()
+            faultEventService.findFaultEvents()
                 .then(value => _setFaultEvents(value))
                 .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
         }

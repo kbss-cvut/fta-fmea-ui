@@ -1,12 +1,11 @@
 import {TreeNode} from "@models/treeNodeModel";
-import {Event} from "@models/eventModel";
 
 interface JointProps {
     addSelf: (any) => void,
 }
 
 export interface JointEventShapeProps extends JointProps {
-    treeNode: TreeNode<Event>,
+    treeNode: TreeNode,
     parentShape?: any
 }
 

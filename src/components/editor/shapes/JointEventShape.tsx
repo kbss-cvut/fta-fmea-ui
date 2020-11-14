@@ -1,60 +1,49 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
-import * as joint from 'jointjs';
-import {FaultEvent, Event} from "@models/eventModel";
-import JointGateShape from "@components/editor/shapes/JointGateShape";
+import {EventType} from "@models/eventModel";
 import JointConnectorShape from "@components/editor/shapes/JointConnectorShape";
-import {computeDimensions} from "@utils/jointUtils";
 import * as _ from "lodash";
 import {JointEventShapeProps} from "@components/editor/shapes/EventShapeProps";
+import {createShape} from "@services/jointService";
 
 const JointEventShape = ({addSelf, treeNode, parentShape}: JointEventShapeProps) => {
-    const [currentRect, setCurrentRect] = useState<any>(undefined)
+    const [currentShape, setCurrentShape] = useState<any>(undefined)
 
     useEffect(() => {
-        const rect = new joint.shapes.standard.Rectangle()
-        addSelf(rect)
-        setCurrentRect(rect)
+        const eventShape = createShape(treeNode);
+        addSelf(eventShape)
+        setCurrentShape(eventShape)
 
-        return () => rect.remove();
+        return () => eventShape.remove();
     }, []);
 
     useEffect(() => {
-        if (currentRect) {
-            const label = (treeNode.event as FaultEvent).name;
-            const [width, height, textSize] = computeDimensions(label);
+        if (currentShape) {
+            const faultEvent = treeNode.event;
+            if (faultEvent.eventType == EventType.INTERMEDIATE) {
+                currentShape.gate(faultEvent.gateType.toLowerCase())
+            }
 
-            currentRect.resize(width, height)
-            currentRect.attr({
-                size: {width: width, height: height},
-                body: {
-                    fill: 'blue'
-                },
-                label: {
-                    text: label,
-                    fill: 'white',
-                },
-                text: {'font-size': textSize},
-            })
+            // TODO remove gate on event type change?
 
+            currentShape.attr(['label', 'text'], faultEvent.name);
             // @ts-ignore
-            currentRect.set('custom/nodeIri', treeNode.iri)
+            currentShape.set('custom/nodeIri', treeNode.iri)
         }
-    }, [treeNode, currentRect])
+    }, [treeNode, currentShape])
 
     return (
         <React.Fragment>
             {
-                currentRect && _.flatten([treeNode.children])
-                    .map(value => {
-                        return <JointGateShape addSelf={addSelf} treeNode={value} key={value.iri}
-                                               parentShape={currentRect}/>
-                    })}
+                currentShape && _.flatten([treeNode.children])
+                    .map(value => <JointEventShape addSelf={addSelf} treeNode={value}
+                                                   key={value.iri} parentShape={currentShape}/>
+                    )}
             {
-                currentRect && parentShape &&
+                currentShape && parentShape &&
                 <JointConnectorShape addSelf={addSelf}
-                                     key={`connector-${currentRect.id}-${parentShape.id}`}
-                                     source={currentRect} target={parentShape}/>
+                                     key={`connector-${currentShape.id}-${parentShape.id}`}
+                                     source={parentShape} target={currentShape}/>
 
             }
         </React.Fragment>

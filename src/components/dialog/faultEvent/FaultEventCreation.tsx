@@ -3,7 +3,7 @@ import * as React from "react";
 import {Box, Divider, FormControl, InputLabel, MenuItem, Select, TextField, Typography,} from "@material-ui/core";
 import useStyles from "@components/dialog/faultEvent/FaultEventCreation.styles";
 import {Controller} from "react-hook-form";
-import {EventType, FaultEvent} from "@models/eventModel";
+import {EventType, FaultEvent, GateType} from "@models/eventModel";
 import {useFaultEvents} from "@hooks/useFaultEvents";
 import ControlledAutocomplete from "@components/materialui/ControlledAutocomplete";
 import {useEffect, useState} from "react";
@@ -70,7 +70,7 @@ const FaultEventCreation = ({useFormMethods, allowTypePicker, eventReusing}: Pro
                     }
                     name="eventType"
                     control={control}
-                    defaultValue={EventType.BASIC}
+                    defaultValue={EventType.INTERMEDIATE}
                     disabled={existingEventSelected}
                 />
             </FormControl>}
@@ -104,6 +104,23 @@ const FaultEventCreation = ({useFormMethods, allowTypePicker, eventReusing}: Pro
                             disabled={existingEventSelected} defaultValue=""
                 />
             </Box>
+
+
+
+            <Controller
+                as={
+                    <Select labelId="gate-type-select-label"
+                            id="gate-type-select" autoFocus>
+                        {
+                            Object.values(GateType).map(value =>
+                                <MenuItem key={`option-${value}`} value={value}>{value}</MenuItem>)
+                        }
+                    </Select>
+                }
+                name="gateType"
+                control={control}
+                defaultValue={GateType.OR}
+            />
         </div>
     );
 }

@@ -13,9 +13,6 @@ const ctx = {
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, RPN_CONTEXT);
 
-export interface Event extends AbstractModel {
-}
-
 export enum EventType {
     BASIC = "BASIC",
     EXTERNAL = "EXTERNAL",
@@ -24,11 +21,12 @@ export enum EventType {
     INTERMEDIATE = "INTERMEDIATE"
 }
 
-export interface FaultEvent extends Event {
+export interface FaultEvent extends AbstractModel {
     eventType: EventType,
     name: string,
     description?: string,
     rpn: RiskPriorityNumber,
+    gateType: GateType
 }
 
 export enum GateType {
@@ -38,12 +36,4 @@ export enum GateType {
     PRIORITY_AND = "PRIORITY_AND",
     INHIBIT = "INHIBIT",
     K_N = "K_N"
-}
-
-export interface Gate extends Event {
-    gateType: GateType,
-}
-
-export interface CreateGate {
-    gateType?: GateType,
 }

@@ -1,6 +1,5 @@
 import {Menu, MenuItem} from "@material-ui/core";
 import * as React from "react";
-import {TreeNodeType} from "@models/treeNodeModel";
 
 export interface ElementContextMenuAnchor {
     mouseX: null | number,
@@ -9,14 +8,13 @@ export interface ElementContextMenuAnchor {
 
 interface Props {
     anchorPosition: ElementContextMenuAnchor,
-    eventType: TreeNodeType,
     onEditClick: () => void,
     onNewEventClick: () => void,
     onEventDelete: () => void,
     onClose: () => void,
 }
 
-const ElementContextMenu = ({anchorPosition, eventType, onClose, onEditClick, onNewEventClick, onEventDelete}: Props) => {
+const ElementContextMenu = ({anchorPosition, onClose, onEditClick, onNewEventClick, onEventDelete}: Props) => {
 
     const handleEditClick = () => {
         onClose()
@@ -33,17 +31,6 @@ const ElementContextMenu = ({anchorPosition, eventType, onClose, onEditClick, on
         onEventDelete()
     }
 
-
-    let newEventTitle;
-    switch(eventType) {
-        case TreeNodeType.EVENT:
-            newEventTitle = "New Gate"
-            break;
-        case TreeNodeType.GATE:
-            newEventTitle = "New Event"
-            break;
-    }
-
     return (
         <Menu
             keepMounted
@@ -58,7 +45,7 @@ const ElementContextMenu = ({anchorPosition, eventType, onClose, onEditClick, on
             }
         >
             <MenuItem key="event-menu-edit" onClick={handleEditClick}>Edit</MenuItem>
-            <MenuItem key="event-menu-new-gate" onClick={handleNewEventClick}>{newEventTitle}</MenuItem>
+            <MenuItem key="event-menu-new-event" onClick={handleNewEventClick}>New Event</MenuItem>
             <MenuItem key="event-menu-delete" onClick={handleDeleteClick}>Delete</MenuItem>
         </Menu>
     );

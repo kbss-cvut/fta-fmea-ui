@@ -5,7 +5,7 @@ import {DialogTitle} from "@components/materialui/dialog/DialogTitle";
 import {DialogContent} from "@components/materialui/dialog/DialogContent";
 import {useForm} from "react-hook-form";
 import {schema} from "@components/dialog/faultTree/FaultTreeDialog.schema";
-import {CreateTreeNode, TreeNodeType} from "@models/treeNodeModel";
+import {CreateTreeNode} from "@models/treeNodeModel";
 import {EventType, FaultEvent} from "@models/eventModel";
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {useState} from "react";
@@ -41,20 +41,20 @@ const FaultTreeDialog = ({open, handleCloseDialog}) => {
                     detection: values.detection,
                     "@type": [VocabularyUtils.RPN]
                 },
+                gateType: values.gateType,
                 "@type": [VocabularyUtils.FAULT_EVENT],
             } as FaultEvent
         }
 
-        const failureMode = {
+        const faultTree = {
             name: values.faultTreeName,
             manifestingNode: {
-                nodeType: TreeNodeType.EVENT,
                 event: rootEvent,
                 "@type": [VocabularyUtils.TREE_NODE],
             } as CreateTreeNode
         } as FaultTree
 
-        await addFaultTree(failureMode)
+        await addFaultTree(faultTree)
 
         setIsProcessing(false)
         handleCloseDialog()
