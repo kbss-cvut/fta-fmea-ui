@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from "react";
 import * as React from "react";
 import useStyles from "@components/editor/canvas/EditorCanvas.styles";
-import JointEventShape from "@components/editor/shapes/JointEventShape";
+import FaultEventShape from "@components/editor/shapes/FaultEventShape";
 import * as joint from 'jointjs';
 import * as dagre from 'dagre';
 import * as graphlib from 'graphlib';
@@ -165,7 +165,7 @@ const EditorCanvas = ({rootNode, sidebarSelectedNode, exportImage, onElementCont
     return (
         <React.Fragment>
             <div id="jointjs-container" className={classes.konvaContainer} ref={containerRef}>
-                {container && rootNode && <JointEventShape addSelf={addSelf} treeNode={rootNode}/>}
+                {container && rootNode && <FaultEventShape addSelf={addSelf} treeNode={rootNode}/>}
             </div>
             <div className={classes.divWindowTool} ref={windowToolRef}>
                 <ShapeToolPane data={sidebarSelectedNode} onNodeUpdated={onNodeUpdated}/>

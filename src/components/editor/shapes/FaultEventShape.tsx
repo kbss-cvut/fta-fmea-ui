@@ -1,12 +1,12 @@
 import * as React from "react";
+import * as _ from "lodash";
 import {useEffect, useState} from "react";
 import {EventType} from "@models/eventModel";
-import JointConnectorShape from "@components/editor/shapes/JointConnectorShape";
-import * as _ from "lodash";
+import ConnectorShape from "@components/editor/shapes/ConnectorShape";
 import {JointEventShapeProps} from "@components/editor/shapes/EventShapeProps";
 import {createShape} from "@services/jointService";
 
-const JointEventShape = ({addSelf, treeNode, parentShape}: JointEventShapeProps) => {
+const FaultEventShape = ({addSelf, treeNode, parentShape}: JointEventShapeProps) => {
     const [currentShape, setCurrentShape] = useState<any>(undefined)
 
     useEffect(() => {
@@ -36,18 +36,18 @@ const JointEventShape = ({addSelf, treeNode, parentShape}: JointEventShapeProps)
         <React.Fragment>
             {
                 currentShape && _.flatten([treeNode.children])
-                    .map(value => <JointEventShape addSelf={addSelf} treeNode={value}
+                    .map(value => <FaultEventShape addSelf={addSelf} treeNode={value}
                                                    key={value.iri} parentShape={currentShape}/>
                     )}
             {
                 currentShape && parentShape &&
-                <JointConnectorShape addSelf={addSelf}
-                                     key={`connector-${currentShape.id}-${parentShape.id}`}
-                                     source={parentShape} target={currentShape}/>
+                <ConnectorShape addSelf={addSelf}
+                                key={`connector-${currentShape.id}-${parentShape.id}`}
+                                source={parentShape} target={currentShape}/>
 
             }
         </React.Fragment>
     )
 }
 
-export default JointEventShape;
+export default FaultEventShape;

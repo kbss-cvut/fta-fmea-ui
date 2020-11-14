@@ -1,11 +1,10 @@
 import * as React from "react";
 import {useEffect} from "react";
-import * as joint from 'jointjs';
 import {JointConnectorShapeProps} from "@components/editor/shapes/EventShapeProps";
-import {Link} from "@components/editor/shapes/joint/shapesDefinitions";
+import {Link} from "@components/editor/shapes/shapesDefinitions";
 
 
-const JointConnectorShape = ({addSelf, source, target}: JointConnectorShapeProps) => {
+const ConnectorShape = ({addSelf, source, target}: JointConnectorShapeProps) => {
     useEffect(() => {
         // @ts-ignore
         const link = Link.create(source, target);
@@ -17,5 +16,5 @@ const JointConnectorShape = ({addSelf, source, target}: JointConnectorShapeProps
     return <div/>;
 }
 
-export default JointConnectorShape;
+export default ConnectorShape;
 

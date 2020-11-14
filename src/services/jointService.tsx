@@ -6,7 +6,7 @@ import {
     ExternalEvent,
     IntermediateEvent,
     UndevelopedEvent
-} from "@components/editor/shapes/joint/shapesDefinitions";
+} from "@components/editor/shapes/shapesDefinitions";
 
 export const createShape = (node: TreeNode) => {
     switch (node.event.eventType) {
