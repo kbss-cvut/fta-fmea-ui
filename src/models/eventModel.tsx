@@ -17,7 +17,6 @@ export interface Event extends AbstractModel {
 }
 
 export enum EventType {
-    TOP_EVENT = "TOP_EVENT",
     BASIC = "BASIC",
     EXTERNAL = "EXTERNAL",
     UNDEVELOPED = "UNDEVELOPED",

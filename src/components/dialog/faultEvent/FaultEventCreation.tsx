@@ -11,11 +11,11 @@ import DividerWithText from "@components/materialui/DividerWithText";
 
 interface Props {
     useFormMethods: any,
-    topEventOnly: boolean,
+    allowTypePicker: boolean,
     eventReusing: boolean
 }
 
-const FaultEventCreation = ({useFormMethods, topEventOnly, eventReusing}: Props) => {
+const FaultEventCreation = ({useFormMethods, allowTypePicker, eventReusing}: Props) => {
     const classes = useStyles()
 
     const {errors, control, setValue, reset} = useFormMethods
@@ -31,7 +31,7 @@ const FaultEventCreation = ({useFormMethods, topEventOnly, eventReusing}: Props)
             setValue('probability', selectedEvent.rpn?.probability)
             setValue('severity', selectedEvent.rpn?.severity)
             setValue('detection', selectedEvent.rpn?.detection)
-            if (!topEventOnly) {
+            if (allowTypePicker) {
                 setValue('eventType', selectedEvent.eventType)
             }
         } else {
@@ -56,7 +56,7 @@ const FaultEventCreation = ({useFormMethods, topEventOnly, eventReusing}: Props)
                 <DividerWithText>New Event</DividerWithText>
             </React.Fragment>}
 
-            {!topEventOnly && <FormControl className={classes.formControl}>
+            {allowTypePicker && <FormControl className={classes.formControl}>
                 <InputLabel id="event-type-select-label">Type</InputLabel>
                 <Controller
                     as={

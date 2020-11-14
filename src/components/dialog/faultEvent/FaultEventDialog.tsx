@@ -57,7 +57,7 @@ const FaultEventDialog = ({open, nodeIri, onCreated, onClose}: EventDialogProps)
             <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title" maxWidth="md" fullWidth>
                 <DialogTitle id="form-dialog-title" onClose={onClose}>Create Event</DialogTitle>
                 <DialogContent dividers>
-                    <FaultEventCreation useFormMethods={useFormMethods} topEventOnly={false} eventReusing={true}/>
+                    <FaultEventCreation useFormMethods={useFormMethods} allowTypePicker={true} eventReusing={true}/>
                 </DialogContent>
                 <DialogActions>
                     <Button disabled={isSubmitting} color="primary" onClick={handleSubmit(handleCreateEvent)}>

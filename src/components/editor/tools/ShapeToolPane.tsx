@@ -4,12 +4,12 @@ import useStyles from "./ShapeToolPane.styles";
 import {merge, cloneDeep} from "lodash";
 import {Button, Divider, Paper, Typography} from "@material-ui/core";
 import {TreeNode, TreeNodeType} from "@models/treeNodeModel";
-import {Event, EventType, FaultEvent, Gate} from "@models/eventModel";
+import {Event, FaultEvent, Gate} from "@models/eventModel";
 import FaultEventCreation from "@components/dialog/faultEvent/FaultEventCreation";
 import {useForm} from "react-hook-form";
 import GateCreation from "@components/dialog/gate/GateCreation";
 import {schema as eventSchema} from "@components/dialog/faultEvent/FaultEventCreation.schema";
-import { yupResolver } from "@hookform/resolvers/yup";
+import {yupResolver} from "@hookform/resolvers/yup";
 
 interface Props {
     data?: TreeNode<Event>,
@@ -57,8 +57,8 @@ const ShapeToolPane = ({data, onNodeUpdated}: Props) => {
                 onNodeUpdated(dataClone)
             }
 
-            editorPane = <FaultEventCreation useFormMethods={useFormMethods} eventReusing={false}
-                                             topEventOnly={eventToUpdate.eventType === EventType.TOP_EVENT}/>
+            editorPane = <FaultEventCreation useFormMethods={useFormMethods}
+                                             eventReusing={false} allowTypePicker={true}/>
             break;
         case TreeNodeType.GATE:
             const gateToUpdate = (data.event) as Gate

@@ -32,7 +32,7 @@ const FaultTreeDialog = ({open, handleCloseDialog}) => {
             console.log(`Using existing event -${rootEvent.iri}`);
         } else {
             rootEvent = {
-                eventType: EventType.TOP_EVENT,
+                eventType: EventType.INTERMEDIATE,
                 name: values.name,
                 description: values.description,
                 rpn: {
@@ -70,7 +70,7 @@ const FaultTreeDialog = ({open, handleCloseDialog}) => {
                                fullWidth inputRef={useFormMethods.register}
                                error={!!useFormMethods.errors.faultTreeName}
                                helperText={useFormMethods.errors.faultTreeName?.message}/>
-                    <FaultEventCreation useFormMethods={useFormMethods} topEventOnly={true} eventReusing={true}/>
+                    <FaultEventCreation useFormMethods={useFormMethods} allowTypePicker={false} eventReusing={true}/>
                 </DialogContent>
                 <DialogActions>
                     <Button disabled={processing} color="primary" onClick={handleSubmit(handleCreateFaultTree)}>
