@@ -10,6 +10,5 @@ export default {
     FAILURE_MODE: _NS_FTA_FMEA + "FailureMode",
     TREE_NODE: _NS_FTA_FMEA + "TreeNode",
     RPN: _NS_FTA_FMEA + "RiskPriorityNumber",
-    GATE: _NS_FTA_FMEA + "Gate",
     FAULT_TREE: _NS_FTA_FMEA + "FaultTree"
 }

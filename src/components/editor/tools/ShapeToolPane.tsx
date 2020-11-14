@@ -9,6 +9,8 @@ import FaultEventCreation from "@components/dialog/faultEvent/FaultEventCreation
 import {useForm} from "react-hook-form";
 import {schema as eventSchema} from "@components/dialog/faultEvent/FaultEventCreation.schema";
 import {yupResolver} from "@hookform/resolvers/yup";
+import {eventFromHookFormValues} from "@services/faultEventService";
+import {deepOmit} from "@utils/lodashUtils";
 
 interface Props {
     data?: TreeNode,
@@ -42,17 +44,8 @@ const ShapeToolPane = ({data, onNodeUpdated}: Props) => {
 
         updateFunction = async (values: any) => {
             const dataClone = cloneDeep(data)
-            const updatedFaultEvent = {
-                eventType: values.eventType,
-                name: values.name,
-                description: values.description,
-                rpn: {
-                    probability: values.probability,
-                    severity: values.severity,
-                    detection: values.detection,
-                },
-                gateType: values.gateType,
-            }
+
+            const updatedFaultEvent = deepOmit(eventFromHookFormValues(values), '@type')
             dataClone.event = merge(dataClone.event, updatedFaultEvent)
 
             onNodeUpdated(dataClone)

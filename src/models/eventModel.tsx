@@ -26,7 +26,7 @@ export interface FaultEvent extends AbstractModel {
     name: string,
     description?: string,
     rpn: RiskPriorityNumber,
-    gateType: GateType
+    gateType?: GateType
 }
 
 export enum GateType {

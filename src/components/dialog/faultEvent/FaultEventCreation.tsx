@@ -116,6 +116,7 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
                 name="gateType"
                 control={control}
                 defaultValue={GateType.OR}
+                disabled={existingEventSelected}
             />
         </div>
     );

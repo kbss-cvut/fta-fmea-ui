@@ -117,6 +117,7 @@ const Editor = ({exportImage}: Props) => {
             />
 
             <ElementContextMenu
+                eventType={contextMenuSelectedNode?.event?.eventType}
                 anchorPosition={contextMenuAnchor}
                 onEditClick={() => setSidebarSelectedNode(contextMenuSelectedNode)}
                 onNewEventClick={() => setEventDialogOpen(true)}

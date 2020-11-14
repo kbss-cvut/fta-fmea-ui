@@ -2,7 +2,7 @@ import axiosClient from "@services/utils/axiosUtils";
 import {authHeaders} from "@services/utils/authUtils";
 
 import JsonLdUtils from "@utils/JsonLdUtils";
-import {CONTEXT as EVENT_CONTEXT, FaultEvent} from "@models/eventModel";
+import {CONTEXT as EVENT_CONTEXT, EventType, FaultEvent} from "@models/eventModel";
 import VocabularyUtils from "@utils/VocabularyUtils";
 
 export const findFaultEvents = async (): Promise<FaultEvent[]> => {
@@ -21,13 +21,12 @@ export const findFaultEvents = async (): Promise<FaultEvent[]> => {
     }
 }
 
-export const eventFromHookFormValues = (values: any) : FaultEvent => {
-    let rootEvent;
-    if(values.existingEvent) {
-        console.log(`Using existing event -${rootEvent.iri}`);
+export const eventFromHookFormValues = (values: any): FaultEvent => {
+    if (values.existingEvent) {
+        console.log(`Using existing event -${values.existingEvent.iri}`);
         return values.existingEvent;
     } else {
-        return {
+        const faultEvent = {
             eventType: values.eventType,
             name: values.name,
             description: values.description,
@@ -37,8 +36,13 @@ export const eventFromHookFormValues = (values: any) : FaultEvent => {
                 detection: values.detection,
                 "@type": [VocabularyUtils.RPN]
             },
-            gateType: values.gateType,
             "@type": [VocabularyUtils.FAULT_EVENT],
         } as FaultEvent
+
+        if (values.eventType === EventType.INTERMEDIATE) {
+            faultEvent.gateType = values.gateType
+        }
+
+        return faultEvent;
     }
 }

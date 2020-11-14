@@ -1,5 +1,6 @@
 import {Menu, MenuItem} from "@material-ui/core";
 import * as React from "react";
+import {EventType} from "@models/eventModel";
 
 export interface ElementContextMenuAnchor {
     mouseX: null | number,
@@ -7,6 +8,7 @@ export interface ElementContextMenuAnchor {
 }
 
 interface Props {
+    eventType: EventType,
     anchorPosition: ElementContextMenuAnchor,
     onEditClick: () => void,
     onNewEventClick: () => void,
@@ -14,7 +16,7 @@ interface Props {
     onClose: () => void,
 }
 
-const ElementContextMenu = ({anchorPosition, onClose, onEditClick, onNewEventClick, onEventDelete}: Props) => {
+const ElementContextMenu = ({eventType, anchorPosition, onClose, onEditClick, onNewEventClick, onEventDelete}: Props) => {
 
     const handleEditClick = () => {
         onClose()
@@ -45,7 +47,8 @@ const ElementContextMenu = ({anchorPosition, onClose, onEditClick, onNewEventCli
             }
         >
             <MenuItem key="event-menu-edit" onClick={handleEditClick}>Edit</MenuItem>
-            <MenuItem key="event-menu-new-event" onClick={handleNewEventClick}>New Event</MenuItem>
+            {eventType === EventType.INTERMEDIATE &&
+            <MenuItem key="event-menu-new-event" onClick={handleNewEventClick}>New Event</MenuItem>}
             <MenuItem key="event-menu-delete" onClick={handleDeleteClick}>Delete</MenuItem>
         </Menu>
     );
