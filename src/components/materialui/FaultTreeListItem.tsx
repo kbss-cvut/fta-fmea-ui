@@ -8,6 +8,7 @@ import FaultTreeItemContextMenu from "@components/editor/menu/FaultTreeItemConte
 import {FaultTree} from "@models/faultTreeModel";
 import {useConfirmDialog} from "@hooks/useConfirmDialog";
 import {useFaultTrees} from "@hooks/useFaultTrees";
+import FaultTreeEditDialog from "@components/dialog/faultTree/FaultTreeEditDialog";
 
 interface Props {
     faultTree: FaultTree,
@@ -24,7 +25,7 @@ const FaultTreeListItem = ({faultTree, onClick}: Props) => {
     }
 
     const [showConfirmDialog] = useConfirmDialog();
-    const [, , removeTree] = useFaultTrees();
+    const [, , , removeTree] = useFaultTrees();
 
     const handleDelete = (treeToDelete: FaultTree) => {
         showConfirmDialog({
@@ -35,6 +36,8 @@ const FaultTreeListItem = ({faultTree, onClick}: Props) => {
             },
         })
     }
+
+    const [editDialogOpen, setEditDialogOpen] = useState(false)
 
     return (
         <React.Fragment>
@@ -49,9 +52,13 @@ const FaultTreeListItem = ({faultTree, onClick}: Props) => {
 
             <FaultTreeItemContextMenu
                 anchorPosition={contextMenuAnchor}
-                onEditClick={() => console.log('onEditClick')}
+                onEditClick={() => setEditDialogOpen(true)}
                 onDelete={() => handleDelete(contextMenuSelectedTree)}
                 onClose={() => setContextMenuAnchor(contextMenuDefaultAnchor)}/>
+
+            <FaultTreeEditDialog open={editDialogOpen}
+                                 handleCloseDialog={() => setEditDialogOpen(false)}
+                                 faultTree={faultTree}/>
         </React.Fragment>
     );
 }

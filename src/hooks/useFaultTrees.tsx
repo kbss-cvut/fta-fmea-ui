@@ -7,19 +7,20 @@ import {axiosSource} from "@services/utils/axiosUtils";
 import {ChildrenProps} from "@utils/hookUtils";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import {OpenTabsProvider} from "./useOpenTabs";
-import {filter} from "lodash";
+import {filter, findIndex} from "lodash";
 
 type faultTreeContextType = [
     FaultTree[],
     (faultTree: FaultTree) => void,
-    (faultTree: FaultTree) => void,
+    (faultTreeToDelete: FaultTree) => void,
+    (faultTreeToUpdate: FaultTree) => void,
 ];
 
 export const faultTreesContext = createContext<faultTreeContextType>(null!);
 
 export const useFaultTrees = () => {
-    const [faultTrees, addFaultTree, removeTree] = useContext(faultTreesContext);
-    return [faultTrees, addFaultTree, removeTree] as const;
+    const [faultTrees, addFaultTree, updateTree, removeTree] = useContext(faultTreesContext);
+    return [faultTrees, addFaultTree, updateTree, removeTree] as const;
 }
 
 export const FaultTreesProvider = ({children}: ChildrenProps) => {
@@ -47,18 +48,33 @@ export const FaultTreesProvider = ({children}: ChildrenProps) => {
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
 
+    const updateTree = async (treeToUpdate: FaultTree) => {
+        faultTreeService.update(treeToUpdate)
+            .then(value => {
+                showSnackbar('Fault Tree updated', SnackbarType.SUCCESS)
+
+                const index = findIndex(_faultTrees, el => el.iri === treeToUpdate.iri);
+                _faultTrees.splice(index, 1, treeToUpdate);
+
+                // TODO cloning necessary?
+                console.log('_setFaultTrees after update')
+                _setFaultTrees(_faultTrees)
+            })
+            .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
+    }
+
     const removeTree = async(treeToRemove: FaultTree) => {
         faultTreeService.remove(treeToRemove.iri)
             .then(value => {
+                showSnackbar('Fault Tree removed', SnackbarType.SUCCESS)
                 const updatedTrees = filter(_faultTrees, (el) => el.iri !== treeToRemove.iri)
-                console.log(`updatedTrees - ${JSON.stringify(updatedTrees)}`)
                 _setFaultTrees(updatedTrees)
             })
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
 
     return (
-        <faultTreesContext.Provider value={[_faultTrees, addFaultTree, removeTree]}>
+        <faultTreesContext.Provider value={[_faultTrees, addFaultTree, updateTree, removeTree]}>
             <OpenTabsProvider>
                 {children}
             </OpenTabsProvider>

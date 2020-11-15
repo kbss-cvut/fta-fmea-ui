@@ -14,12 +14,13 @@ import FaultEventCreation from "@components/dialog/faultEvent/FaultEventCreation
 import {useFaultTrees} from "@hooks/useFaultTrees";
 import {FaultTree} from "@models/faultTreeModel";
 import {yupResolver} from "@hookform/resolvers/yup";
+import {schema as eventSchema} from "@components/dialog/faultEvent/FaultEventCreation.schema";
 
 const FaultTreeDialog = ({open, handleCloseDialog}) => {
     const [, addFaultTree] = useFaultTrees()
     const [processing, setIsProcessing] = useState(false)
 
-    const useFormMethods = useForm({resolver: yupResolver(schema)});
+    const useFormMethods = useForm({resolver: yupResolver(schema.concat(eventSchema))});
     const {handleSubmit} = useFormMethods;
 
     const handleCreateFaultTree = async (values: any) => {
