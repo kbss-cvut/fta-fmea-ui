@@ -1,13 +1,15 @@
 import * as React from "react";
 
 import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
 import {useState} from "react";
-import {Button, List, ListItem, ListItemText} from "@material-ui/core";
+import {Button, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, TextField} from "@material-ui/core";
 import useStyles from "@components/drawer/menu/DrawerComponentMenuList.styles";
 import {ComponentsProvider} from "@hooks/useComponents";
 import {useFaultTrees} from "@hooks/useFaultTrees";
 import {useOpenTabs} from "@hooks/useOpenTabs";
 import FaultTreeDialog from "@components/dialog/faultTree/FaultTreeDialog";
+import FaultTreeListItem from "@components/materialui/FaultTreeListItem";
 
 const DrawerComponentMenuList = () => {
     const classes = useStyles()
@@ -24,12 +26,9 @@ const DrawerComponentMenuList = () => {
         <div className={classes.menu}>
             <List>
                 {
-                    faultTrees.map(value => {
-                        return (
-                            <ListItem button key={value.iri} onClick={() => openTab(value)}>
-                                <ListItemText primary={value.name}/>
-                            </ListItem>)
-                    })
+                    faultTrees.map(value =>
+                        <FaultTreeListItem key={value.iri} value={value.name} onClick={() => openTab(value)}/>
+                    )
                 }
             </List>
             <Button className={classes.componentButton} variant="contained" color="primary" startIcon={<AddIcon/>}
