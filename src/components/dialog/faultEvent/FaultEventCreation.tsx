@@ -104,7 +104,7 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
                 />
             </Box>
 
-            {eventTypeWatch === EventType.INTERMEDIATE &&
+            {(eventTypeWatch === EventType.INTERMEDIATE || !eventTypeWatch) &&
             <FormControl className={classes.formControl}>
                 <InputLabel id="gate-type-select-label">Gate Type</InputLabel>
                 <Controller

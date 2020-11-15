@@ -46,7 +46,6 @@ const EditorCanvas = ({rootNode, sidebarSelectedNode, exportImage, onElementCont
             defaultConnectionPoint: { name: 'boundary', args: { extrapolate: true }},
             defaultConnector: { name: 'rounded' },
             defaultRouter: { name: 'orthogonal' },
-            sorting: joint.dia.Paper.sorting.APPROX
         })
 
         // @ts-ignore

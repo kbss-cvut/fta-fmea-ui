@@ -22,11 +22,12 @@ export const findFaultEvents = async (): Promise<FaultEvent[]> => {
 }
 
 export const eventFromHookFormValues = (values: any): FaultEvent => {
+    let faultEvent
     if (values.existingEvent) {
         console.log(`Using existing event -${values.existingEvent.iri}`);
-        return values.existingEvent;
+        faultEvent = values.existingEvent;
     } else {
-        const faultEvent = {
+        faultEvent = {
             eventType: values.eventType,
             name: values.name,
             description: values.description,
@@ -39,10 +40,12 @@ export const eventFromHookFormValues = (values: any): FaultEvent => {
             "@type": [VocabularyUtils.FAULT_EVENT],
         } as FaultEvent
 
-        if (values.eventType === EventType.INTERMEDIATE) {
+        if (faultEvent.eventType === EventType.INTERMEDIATE) {
             faultEvent.gateType = values.gateType
+        } else {
+            faultEvent.gateType = undefined; // TODO remove key
         }
-
-        return faultEvent;
     }
+
+    return faultEvent;
 }

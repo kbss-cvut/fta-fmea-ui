@@ -4,7 +4,10 @@ import {cloneDeep, concat, flatten, assign, filter} from "lodash";
 import EditorCanvas from "@components/editor/canvas/EditorCanvas";
 import {findNodeByIri, findNodeParentByIri} from "@utils/treeUtils";
 import {TreeNode} from "@models/treeNodeModel";
-import ElementContextMenu, {ElementContextMenuAnchor} from "@components/editor/menu/ElementContextMenu";
+import ElementContextMenu, {
+    contextMenuDefaultAnchor,
+    ElementContextMenuAnchor
+} from "@components/editor/menu/ElementContextMenu";
 import {useLocalContext} from "@hooks/useLocalContext";
 import * as treeNodeService from "@services/treeNodeService";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
@@ -34,8 +37,7 @@ const Editor = ({exportImage}: Props) => {
     const [contextMenuSelectedNode, setContextMenuSelectedNode] = useState<TreeNode>(null)
     const [sidebarSelectedNode, setSidebarSelectedNode] = useState<TreeNode>(null)
 
-    const contextMenuDefault = {mouseX: null, mouseY: null,} as ElementContextMenuAnchor;
-    const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefault)
+    const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefaultAnchor)
     const handleContextMenu = (elementView, evt) => {
         const elementIri = elementView.model.get('custom/nodeIri');
         // @ts-ignore
@@ -122,7 +124,7 @@ const Editor = ({exportImage}: Props) => {
                 onEditClick={() => setSidebarSelectedNode(contextMenuSelectedNode)}
                 onNewEventClick={() => setEventDialogOpen(true)}
                 onEventDelete={() => handleNodeDelete(contextMenuSelectedNode)}
-                onClose={() => setContextMenuAnchor(contextMenuDefault)}/>
+                onClose={() => setContextMenuAnchor(contextMenuDefaultAnchor)}/>
 
 
             <FaultEventDialog open={eventDialogOpen} nodeIri={contextMenuSelectedNode?.iri}

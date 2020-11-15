@@ -1,91 +1,58 @@
 import * as React from "react";
-import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
-import SaveIcon from '@material-ui/icons/Save';
-import {useEffect, useRef, useState} from "react";
-import {ListItem, ListItemSecondaryAction, ListItemText, makeStyles} from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
-
-const useStyles = makeStyles(theme => ({
-    disabledInput: {
-        color: theme.palette.text.primary,
-    },
-}));
+import {useState} from "react";
+import {ListItem, ListItemSecondaryAction, ListItemText} from "@material-ui/core";
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@components/editor/menu/ElementContextMenu";
+import FaultTreeItemContextMenu from "@components/editor/menu/FaultTreeItemContextMenu";
+import {FaultTree} from "@models/faultTreeModel";
+import {useConfirmDialog} from "@hooks/useConfirmDialog";
+import {useFaultTrees} from "@hooks/useFaultTrees";
 
 interface Props {
-    value: string,
+    faultTree: FaultTree,
     onClick: (any) => void,
 }
 
-const FaultTreeListItem = ({value, onClick}: Props) => {
-    const classes = useStyles();
+const FaultTreeListItem = ({faultTree, onClick}: Props) => {
+    const [contextMenuSelectedTree, setContextMenuSelectedTree] = useState<FaultTree>(null)
+    const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefaultAnchor)
 
-    const originalValue = value;
-
-    const textFieldRef = useRef()
-
-    const [editMode, setEditMode] = useState(false);
-    const [fieldDirty, setFieldDirty] = useState(false);
-    const [textFieldValue, setTextFieldValue] = useState(value);
-
-    const handleChange = (e) => {
-        setFieldDirty(true);
-        setTextFieldValue(e.target.value);
-    };
-
-    const handleClick = () => {
-        if (!editMode) {
-            setEditMode(true);
-        } else {
-            setEditMode(false);
-            // TODO propagate updates -> submit!
-        }
-    };
-
-    const handleBlur = (e) => {
-        e.preventDefault();
-        if (textFieldValue === originalValue) {
-            setFieldDirty(false);
-            setEditMode(false);
-        }
+    const handleContextMenu = (evt) => {
+        setContextMenuSelectedTree(faultTree);
+        setContextMenuAnchor({mouseX: evt.pageX, mouseY: evt.pageY,})
     }
 
-    useEffect(() => {
-        if (editMode) {
-            // @ts-ignore
-            textFieldRef.current.focus();
-        }
-    }, [editMode])
+    const [showConfirmDialog] = useConfirmDialog();
+    const [, , removeTree] = useFaultTrees();
 
-    let icon;
-    if (!editMode) {
-        icon = <IconButton edge="end" aria-label="edit" onClick={handleClick}>
-            <EditIcon/>
-        </IconButton>
-    } else if (editMode && fieldDirty) {
-        icon = <IconButton edge="end" aria-label="edit" onClick={handleClick}>
-            <SaveIcon/>
-        </IconButton>
+    const handleDelete = (treeToDelete: FaultTree) => {
+        showConfirmDialog({
+            title: 'Delete Fault Tree',
+            explanation: 'Deleting fault tree will delete the whole tree structure. Events will remain. Proceed to delete the tree?',
+            onConfirm: () => {
+                removeTree(treeToDelete);
+            },
+        })
     }
 
     return (
-        <ListItem button onClick={onClick}>
-            <ListItemText>
-                <TextField defaultValue={textFieldValue}
-                           onChange={handleChange}
-                           onBlur={handleBlur}
-                           disabled={!editMode}
-                           InputProps={{
-                               disableUnderline: true,
-                               classes: {disabled: classes.disabledInput}
-                           }}
-                           inputRef={textFieldRef}
-                />
-            </ListItemText>
-            <ListItemSecondaryAction>
-                {icon}
-            </ListItemSecondaryAction>
-        </ListItem>
+        <React.Fragment>
+            <ListItem button onClick={onClick}>
+                <ListItemText primary={faultTree.name}/>
+                <ListItemSecondaryAction>
+                    <IconButton edge="end" onClick={handleContextMenu}>
+                        <MoreVertIcon/>
+                    </IconButton>
+                </ListItemSecondaryAction>
+            </ListItem>
+
+            <FaultTreeItemContextMenu
+                anchorPosition={contextMenuAnchor}
+                onEditClick={() => console.log('onEditClick')}
+                onDelete={() => handleDelete(contextMenuSelectedTree)}
+                onClose={() => setContextMenuAnchor(contextMenuDefaultAnchor)}/>
+        </React.Fragment>
     );
 }
 

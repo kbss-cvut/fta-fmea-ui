@@ -76,3 +76,20 @@ export const update = async (faultTree: FaultTree): Promise<void> => {
         return new Promise((resolve, reject) => reject("Failed to update fault tree"));
     }
 }
+
+export const remove = async (faultTreeIri: string): Promise<void> => {
+    try {
+        const fragment = extractFragment(faultTreeIri);
+
+        await axiosClient.delete(
+            `/faultTrees/${fragment}`,
+            {
+                headers: authHeaders()
+            }
+        )
+        return new Promise((resolve) => resolve());
+    } catch (e) {
+        console.log('Fault Tree Service - Failed to call /remove')
+        return new Promise((resolve, reject) => reject("Failed to remove fault tree"));
+    }
+}
