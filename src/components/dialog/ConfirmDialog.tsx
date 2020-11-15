@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import {DialogTitle} from "@components/materialui/dialog/DialogTitle";
+import {DialogContent} from "@components/materialui/dialog/DialogContent";
+import {DialogActions} from "@components/materialui/dialog/DialogActions";
 
 interface Props {
     title: string,
@@ -20,23 +20,17 @@ const ConfirmDialog = ({title, explanation, open, onClose, onConfirm}: Props) =>
             onClose={onClose}
             aria-labelledby="confirm-dialog"
         >
-            <DialogTitle id="confirm-dialog">{title}</DialogTitle>
+            <DialogTitle id="confirm-dialog" onClose={onClose}>{title}</DialogTitle>
             <DialogContent>{explanation}</DialogContent>
             <DialogActions>
-                <Button
-                    variant="contained"
-                    onClick={onClose}
-                    color="secondary">
-                    No
+                <Button color="primary" onClick={onClose}>
+                    Cancel
                 </Button>
-                <Button
-                    variant="contained"
-                    onClick={() => {
-                        onClose();
-                        onConfirm();
-                    }}
-                    color="default">
-                    Yes
+                <Button color="primary" onClick={() => {
+                    onClose();
+                    onConfirm();
+                }}>
+                    Confirm
                 </Button>
             </DialogActions>
         </Dialog>
