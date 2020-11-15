@@ -17,11 +17,13 @@ interface Props {
 const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
     const classes = useStyles()
 
-    const {errors, control, setValue, reset} = useFormMethods
+    const {errors, control, setValue, reset, watch} = useFormMethods
 
     const faultEvents = useFaultEvents()
     const [selectedEvent, setSelectedEvent] = useState<FaultEvent | null>(null)
     const existingEventSelected = Boolean(selectedEvent)
+
+    const eventTypeWatch = watch('eventType')
 
     useEffect(() => {
         if (selectedEvent) {
@@ -31,6 +33,7 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
             setValue('severity', selectedEvent.rpn?.severity)
             setValue('detection', selectedEvent.rpn?.detection)
             setValue('eventType', selectedEvent.eventType)
+            setValue('gateType', selectedEvent.gateType)
         } else {
             reset()
         }
@@ -57,8 +60,7 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
                 <InputLabel id="event-type-select-label">Type</InputLabel>
                 <Controller
                     as={
-                        <Select labelId="event-type-select-label"
-                                id="event-type-select">
+                        <Select labelId="event-type-select-label" id="event-type-select">
                             {
                                 Object.values(EventType).map(value =>
                                     <MenuItem key={`option-${value}`} value={value}>{value}</MenuItem>)
@@ -102,22 +104,23 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
                 />
             </Box>
 
-
-            <Controller
-                as={
-                    <Select labelId="gate-type-select-label"
-                            id="gate-type-select" autoFocus>
-                        {
-                            Object.values(GateType).map(value =>
-                                <MenuItem key={`option-${value}`} value={value}>{value}</MenuItem>)
-                        }
-                    </Select>
-                }
-                name="gateType"
-                control={control}
-                defaultValue={GateType.OR}
-                disabled={existingEventSelected}
-            />
+            {eventTypeWatch === EventType.INTERMEDIATE &&
+            <FormControl className={classes.formControl}>
+                <InputLabel id="gate-type-select-label">Gate Type</InputLabel>
+                <Controller
+                    as={
+                        <Select labelId="gate-type-select-label" id="gate-type-select">
+                            {
+                                Object.values(GateType).map(value =>
+                                    <MenuItem key={`option-${value}`} value={value}>{value}</MenuItem>)
+                            }
+                        </Select>
+                    }
+                    name="gateType"
+                    control={control}
+                    defaultValue={GateType.OR}
+                    disabled={existingEventSelected}/>
+            </FormControl>}
         </div>
     );
 }

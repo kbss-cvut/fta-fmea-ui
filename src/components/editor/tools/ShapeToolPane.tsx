@@ -26,7 +26,7 @@ const ShapeToolPane = ({data, onNodeUpdated}: Props) => {
     let defaultValues;
 
     if (data) {
-        const eventToUpdate = (data.event) as FaultEvent
+        const eventToUpdate = data.event
 
         defaultValues = {
             eventType: eventToUpdate.eventType,
