@@ -2,7 +2,7 @@ import axiosClient from "@services/utils/axiosUtils";
 import {authHeaders} from "@services/utils/authUtils";
 
 import JsonLdUtils from "@utils/JsonLdUtils";
-import {CONTEXT as EVENT_CONTEXT, EventType, FaultEvent} from "@models/eventModel";
+import {CONTEXT as EVENT_CONTEXT, EventType, FaultEvent, GateType} from "@models/eventModel";
 import VocabularyUtils from "@utils/VocabularyUtils";
 
 export const findFaultEvents = async (): Promise<FaultEvent[]> => {
@@ -40,11 +40,7 @@ export const eventFromHookFormValues = (values: any): FaultEvent => {
             "@type": [VocabularyUtils.FAULT_EVENT],
         } as FaultEvent
 
-        if (faultEvent.eventType === EventType.INTERMEDIATE) {
-            faultEvent.gateType = values.gateType
-        } else {
-            faultEvent.gateType = undefined; // TODO remove key
-        }
+        faultEvent.gateType = (faultEvent.eventType === EventType.INTERMEDIATE) ? values.gateType : GateType.UNUSED;
     }
 
     return faultEvent;
