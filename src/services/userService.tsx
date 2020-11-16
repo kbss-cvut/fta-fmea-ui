@@ -1,4 +1,5 @@
 import {
+    ChangePasswordRequest,
     CONTEXT,
     UserLoginRequest,
     UserLoginResponse,
@@ -8,6 +9,7 @@ import {
 import axiosClient from "@services/utils/axiosUtils";
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {JSONLD} from "@utils/constants";
+import {authHeaders} from "@services/utils/authUtils";
 
 
 export const register = async (loginRequest: UserRegisterRequest): Promise<UserRegisterResponse> => {
@@ -42,5 +44,22 @@ export const login = async (loginRequest: UserLoginRequest): Promise<UserLoginRe
     } catch (e) {
         console.log('Failed to call /login')
         return new Promise((resolve, reject) => reject("Login failed"));
+    }
+}
+
+export const changePassword = async (changePasswordRequest: ChangePasswordRequest): Promise<void> => {
+    try {
+        await axiosClient.put<UserLoginResponse>(
+            '/auth/current',
+            changePasswordRequest,
+            {
+                headers: authHeaders()
+            }
+        )
+
+        new Promise(resolve => resolve());
+    } catch (e) {
+        console.log('Failed to call /current')
+        return new Promise((resolve, reject) => reject("Password change failed."));
     }
 }

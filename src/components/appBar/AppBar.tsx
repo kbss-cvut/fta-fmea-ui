@@ -7,9 +7,11 @@ import * as React from "react";
 import useStyles from "@components/appBar/AppBar.styles";
 import {AccountCircle} from "@material-ui/icons";
 import {Menu, MenuItem, AppBar as MaterialAppBar} from "@material-ui/core";
-import {FormEvent} from "react";
+import {FormEvent, useState} from "react";
 import {useHistory} from "react-router-dom";
 import {useDrawerOpen} from "@hooks/useDrawerOpen";
+import ChangePasswordDialog from "@components/dialog/password/ChangePasswordDialog";
+import {getLoggedUser} from "@hooks/useLoggedUser";
 
 const AppBar = () => {
     const classes = useStyles();
@@ -27,7 +29,10 @@ const AppBar = () => {
         setAnchorEl(null);
     };
 
-    const handleUserProfileOpen = ()=> {}
+    const handleChangePasswordDialogOpen = () => {
+        handleMenuClose();
+        setChangePasswordDialogOpen(true);
+    }
 
     const handleLogout = (e: FormEvent) => {
         e.preventDefault();
@@ -45,10 +50,12 @@ const AppBar = () => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleUserProfileOpen}>Profile</MenuItem>
+            <MenuItem onClick={handleChangePasswordDialogOpen}>Change Password</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
     );
+
+    const [changePasswordDialogOpen, setChangePasswordDialogOpen] = useState(false);
 
     return (
         <div>
@@ -78,6 +85,10 @@ const AppBar = () => {
                 </Toolbar>
             </MaterialAppBar>
             {renderMenu}
+
+            <ChangePasswordDialog open={changePasswordDialogOpen}
+                                  handleCloseDialog={() => setChangePasswordDialogOpen(false)}
+                                  user={getLoggedUser()}/>
         </div>
     );
 }

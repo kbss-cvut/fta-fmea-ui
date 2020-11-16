@@ -8,10 +8,18 @@ const ctx = {
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT);
 
-export interface User extends AbstractModel{
+export interface User extends AbstractModel {
+    iri?: string,
     username?: string,
     token?: string,
     authenticated: boolean
+}
+
+export interface ChangePasswordRequest {
+    uri: string,
+    username: string,
+    password: string,
+    newPassword: string
 }
 
 export interface UserLoginRequest {
@@ -20,6 +28,7 @@ export interface UserLoginRequest {
 }
 
 export interface UserLoginResponse {
+    uri: string,
     username: string,
     token: string,
 }

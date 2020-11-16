@@ -13,7 +13,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {useState} from "react";
 import useStyles from "@components/login/Login.styles";
 import * as userService from "@services/userService";
-import {Alert} from "@material-ui/lab";
 import {Link as RouterLink} from "react-router-dom";
 import {useLoggedUser} from "@hooks/useLoggedUser";
 import {useForm} from "react-hook-form";
@@ -41,6 +40,7 @@ const Login = () => {
             password: values.password
         }).then(loginResponse => {
             setLoggedUser({
+                iri: loginResponse.uri,
                 username: loginResponse.username,
                 token: loginResponse.token,
                 authenticated: true
