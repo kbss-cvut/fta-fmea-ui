@@ -4,8 +4,9 @@ import {FaultTree} from "@models/faultTreeModel";
 import {ChildrenProps} from "@utils/hookUtils";
 import {useFaultTrees} from "@hooks/useFaultTrees";
 import * as _ from "lodash";
+import {STORAGE_KEYS} from "@utils/constants";
 
-interface FaultTreeTab {
+export interface FaultTreeTab {
     open: boolean,
     data: FaultTree,
     openTime: number
@@ -25,15 +26,30 @@ export const useOpenTabs = () => {
     return [tabs, openTab, closeTab, currentTabIri] as const;
 }
 
+const saveLastOpenTabs = (tabs: FaultTreeTab[]) => {
+    const lastOpenIris = tabs.filter(t => t.open).map(t => t.data.iri)
+    saveLastOpenTabsIris(lastOpenIris)
+}
+
+export const saveLastOpenTabsIris = (lastOpenIris: string[]) => {
+    localStorage.setItem(STORAGE_KEYS.LAST_OPEN_TABS, JSON.stringify(lastOpenIris));
+}
+
+export const getLastOpenTabsIris = (): string[] => JSON.parse(localStorage.getItem(STORAGE_KEYS.LAST_OPEN_TABS));
+
+
 export const OpenTabsProvider = ({children}: ChildrenProps) => {
     const [faultTrees] = useFaultTrees()
 
     const [_tabs, _setOpenTabs] = useState<FaultTreeTab[]>([]);
     const [currentTabIri, setCurrentTabIri] = useState<string | null>(null);
     useEffect(() => {
+        const lastTabsMap = new Map<string, boolean>();
+        getLastOpenTabsIris().forEach(tabTri => lastTabsMap.set(tabTri, true))
+
         const faultTreesTabs = faultTrees.map(mode => {
             return {
-                open: false,
+                open: lastTabsMap.has(mode.iri),
                 data: mode,
                 openTime: Date.now()
             }
@@ -49,6 +65,7 @@ export const OpenTabsProvider = ({children}: ChildrenProps) => {
             tabsClone[index] = {open: true, data: treeToOpen, openTime: Date.now()}
             _setOpenTabs(tabsClone)
             setCurrentTabIri(treeToOpen.iri)
+            saveLastOpenTabs(tabsClone)
         }
     }
 
@@ -60,6 +77,7 @@ export const OpenTabsProvider = ({children}: ChildrenProps) => {
             tabsClone[index] = {open: false, data: treeToClose}
             _setOpenTabs(tabsClone)
             setCurrentTabIri(null)
+            saveLastOpenTabs(tabsClone)
         }
     }
 

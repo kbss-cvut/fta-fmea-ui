@@ -6,7 +6,7 @@ import * as faultTreeService from "@services/faultTreeService"
 import {axiosSource} from "@services/utils/axiosUtils";
 import {ChildrenProps} from "@utils/hookUtils";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
-import {OpenTabsProvider} from "./useOpenTabs";
+import {getLastOpenTabsIris, OpenTabsProvider, saveLastOpenTabsIris} from "./useOpenTabs";
 import {filter, findIndex} from "lodash";
 
 type faultTreeContextType = [
@@ -43,6 +43,12 @@ export const FaultTreesProvider = ({children}: ChildrenProps) => {
         faultTreeService.create(faultTree)
             .then(value => {
                 showSnackbar('Fault Tree created', SnackbarType.SUCCESS)
+
+                // add to open tabs
+                const openTabIris = getLastOpenTabsIris()
+                openTabIris.push(value.iri)
+                saveLastOpenTabsIris(openTabIris)
+
                 _setFaultTrees([..._faultTrees, value])
             })
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
