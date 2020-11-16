@@ -23,9 +23,23 @@ const Event = joint.dia.Element.define('fta.Event', {
             fill: '#333333',
             textAnchor: 'middle',
             textVerticalAnchor: 'middle'
+        },
+        probabilityLabel: {
+            fontSize: 16,
+            fontFamily: 'sans-serif',
+            fill: '#333333',
+            textAnchor: 'middle',
+            textVerticalAnchor: 'middle',
+            refX: '25%',
+            refY: '110%',
         }
     }
-});
+}, {
+    markup: [{
+        tagName: 'text',
+        selector: 'probabilityLabel'
+    }]
+},);
 
 export const IntermediateEvent = Event.define('fta.IntermediateEvent', {
     size: {
@@ -43,7 +57,6 @@ export const IntermediateEvent = Event.define('fta.IntermediateEvent', {
             fill: '#3c4260'
         },
         gate: {
-            event: 'element:gate:contextmenu',
             gateType: 'or',
             stroke: '#7c68fc',
             fill: '#7c68fc',
@@ -72,6 +85,9 @@ export const IntermediateEvent = Event.define('fta.IntermediateEvent', {
     }, {
         tagName: 'text',
         selector: 'label'
+    }, {
+        tagName: 'text',
+        selector: 'probabilityLabel'
     }],
     gateTypes: {
         or: 'M -20 0 C -20 -15 -10 -30 0 -30 C 10 -30 20 -15 20 0 C 10 -6 -10 -6 -20 0',
@@ -121,6 +137,9 @@ export const ExternalEvent = Event.define('fta.ExternalEvent', {
     }, {
         tagName: 'text',
         selector: 'label'
+    }, {
+        tagName: 'text',
+        selector: 'probabilityLabel'
     }]
 });
 
@@ -146,6 +165,9 @@ export const UndevelopedEvent = Event.define('fta.UndevelopedEvent', {
     }, {
         tagName: 'text',
         selector: 'label'
+    }, {
+        tagName: 'text',
+        selector: 'probabilityLabel'
     }]
 });
 
@@ -174,6 +196,9 @@ export const BasicEvent = Event.define('fta.BasicEvent', {
     }, {
         tagName: 'text',
         selector: 'label'
+    }, {
+        tagName: 'text',
+        selector: 'probabilityLabel'
     }]
 });
 
@@ -204,6 +229,9 @@ export const ConditioningEvent = Event.define('fta.ConditioningEvent', {
     }, {
         tagName: 'text',
         selector: 'label'
+    }, {
+        tagName: 'text',
+        selector: 'probabilityLabel'
     }]
 });
 
