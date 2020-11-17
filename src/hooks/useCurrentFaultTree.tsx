@@ -28,7 +28,7 @@ export const CurrentFaultTreeProvider = ({faultTreeIri, children}: Props) => {
         faultTreeService.update(faultTree)
             .then(value => {
                 showSnackbar('Fault Tree updated', SnackbarType.SUCCESS)
-                _setFaultTree(faultTree)
+                _setFaultTree(value)
             })
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }

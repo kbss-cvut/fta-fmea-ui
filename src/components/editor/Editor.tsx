@@ -73,7 +73,6 @@ const Editor = ({exportImage}: Props) => {
                 // propagate changes locally in the app
                 faultTree.manifestingNode = rootNodeClone
                 updateFaultTree(faultTree)
-                setRootNode(rootNodeClone)
             })
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
@@ -96,7 +95,6 @@ const Editor = ({exportImage}: Props) => {
                     // propagate changes locally in the app
                     faultTree.manifestingNode = rootNodeClone
                     updateFaultTree(faultTree)
-                    setRootNode(rootNodeClone)
                 })
                 .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
         }

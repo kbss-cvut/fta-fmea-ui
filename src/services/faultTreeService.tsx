@@ -59,18 +59,19 @@ export const create = async (faultTree: FaultTree): Promise<FaultTree> => {
     }
 }
 
-export const update = async (faultTree: FaultTree): Promise<void> => {
+export const update = async (faultTree: FaultTree): Promise<FaultTree> => {
     try {
         const updateRequest = Object.assign({}, faultTree, {"@context": CONTEXT})
 
-        await axiosClient.put(
+        const response = await axiosClient.put(
             '/faultTrees',
             updateRequest,
             {
                 headers: authHeaders()
             }
         )
-        return new Promise((resolve) => resolve());
+
+        return JsonLdUtils.compactAndResolveReferences<FaultTree>(response.data, CONTEXT);
     } catch (e) {
         console.log('Fault Tree Service - Failed to call /update')
         return new Promise((resolve, reject) => reject("Failed to update fault tree"));
