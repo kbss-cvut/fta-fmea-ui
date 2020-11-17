@@ -15,5 +15,6 @@ export interface CreateTreeNode extends AbstractModel {
 }
 
 export interface TreeNode extends CreateTreeNode {
+    parent?: string,
     children: TreeNode[],
 }
