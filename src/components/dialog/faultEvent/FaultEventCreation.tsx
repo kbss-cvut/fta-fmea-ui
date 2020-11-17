@@ -29,7 +29,8 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
         if (selectedEvent) {
             setValue('name', selectedEvent.name)
             setValue('description', selectedEvent.description)
-            setValue('probability', selectedEvent.rpn?.probability)
+            setValue('probability', selectedEvent.probability)
+            setValue('occurrence', selectedEvent.rpn?.occurrence)
             setValue('severity', selectedEvent.rpn?.severity)
             setValue('detection', selectedEvent.rpn?.detection)
             setValue('eventType', selectedEvent.eventType)
@@ -83,10 +84,18 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
                         label="Description" type="text" name="description" fullWidth
                         error={!!errors.description} helperText={errors.description?.message}
                         defaultValue="" disabled={existingEventSelected}/>
+
+            <Controller as={TextField} control={control} label="Probability" type="number" name="probability"
+                        InputProps={{inputProps: {min: 0, max: 1, step: 0.01}}}
+                        error={!!errors.probability} helperText={errors.probability?.message}
+                        className={classes.probability}
+                        disabled={existingEventSelected} defaultValue=""
+            />
+
             <Box className={classes.rpnBox}>
-                <Controller as={TextField} control={control} label="Probability" type="number" name="probability"
-                            InputProps={{inputProps: {min: 0, max: 1, step: 0.01}}}
-                            error={!!errors.probability} helperText={errors.probability?.message}
+                <Controller as={TextField} control={control} label="Occurrence" type="number" name="occurrence"
+                            InputProps={{inputProps: {min: 0, max: 10, step: 1}}}
+                            error={!!errors.occurrence} helperText={errors.occurrence?.message}
                             className={classes.rpnBoxItem}
                             disabled={existingEventSelected} defaultValue=""
                 />

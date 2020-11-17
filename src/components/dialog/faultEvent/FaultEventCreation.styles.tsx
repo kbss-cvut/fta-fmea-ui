@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme: Theme) =>
             minWidth: 120,
             margin: theme.spacing(1, 0)
         },
+        probability: {
+            minWidth: 120,
+        }
     }),
 );
 

@@ -28,8 +28,9 @@ const ShapeToolPane = ({data, onNodeUpdated}: Props) => {
             eventType: eventToUpdate.eventType,
             name: eventToUpdate.name,
             description: eventToUpdate.description,
-            probability: eventToUpdate.rpn.probability,
+            probability: eventToUpdate.probability,
             severity: eventToUpdate.rpn.severity,
+            occurrence: eventToUpdate.rpn.occurrence,
             detection: eventToUpdate.rpn.detection,
             gateType: eventToUpdate.gateType
         }

@@ -15,6 +15,11 @@ export const schema = Yup.object().shape({
         .notRequired()
         .min(0, 'Severity cannot be lower than 0')
         .max(10, 'Severity cannot be greater than 10'),
+    occurrence: Yup.number()
+        .transform(yupOptionalNumber)
+        .notRequired()
+        .min(0, 'Occurrence cannot be lower than 0')
+        .max(10, 'Occurrence cannot be greater than 10'),
     detection: Yup.number()
         .transform(yupOptionalNumber)
         .notRequired()

@@ -10,6 +10,7 @@ const ctx = {
     "gateType": VocabularyUtils.PREFIX + "hasGateType",
     "eventType": VocabularyUtils.PREFIX + "hasFaultEventType",
     "rpn": VocabularyUtils.PREFIX + "hasRPN",
+    "probability": VocabularyUtils.PREFIX + "hasProbability",
 };
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, RPN_CONTEXT);
@@ -27,7 +28,8 @@ export interface FaultEvent extends AbstractModel {
     name: string,
     description?: string,
     rpn: RiskPriorityNumber,
-    gateType?: GateType
+    gateType?: GateType,
+    probability?: number,
 }
 
 export enum GateType {

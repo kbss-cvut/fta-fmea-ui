@@ -20,7 +20,7 @@ const FaultEventShape = ({addSelf, treeNode, parentShape}: JointEventShapeProps)
         }
 
         eventShape.attr(['label', 'text'], faultEvent.name);
-        eventShape.attr(['probabilityLabel', 'text'], faultEvent.rpn?.probability);
+        eventShape.attr(['probabilityLabel', 'text'], faultEvent.probability);
         // @ts-ignore
         eventShape.set('custom/nodeIri', treeNode.iri)
 
