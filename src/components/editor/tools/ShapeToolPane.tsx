@@ -1,10 +1,8 @@
 import * as React from "react";
 import {useEffect} from "react";
-import useStyles from "./ShapeToolPane.styles";
 import {merge, cloneDeep} from "lodash";
-import {Button, Divider, Paper, Typography} from "@material-ui/core";
+import {Button, Typography} from "@material-ui/core";
 import {TreeNode} from "@models/treeNodeModel";
-import {FaultEvent} from "@models/eventModel";
 import FaultEventCreation from "@components/dialog/faultEvent/FaultEventCreation";
 import {useForm} from "react-hook-form";
 import {schema as eventSchema} from "@components/dialog/faultEvent/FaultEventCreation.schema";
@@ -18,8 +16,6 @@ interface Props {
 }
 
 const ShapeToolPane = ({data, onNodeUpdated}: Props) => {
-    const classes = useStyles()
-
     let editorPane;
     let updateFunction;
     let useFormMethods;
@@ -55,7 +51,7 @@ const ShapeToolPane = ({data, onNodeUpdated}: Props) => {
     } else {
         defaultValues = {}
         useFormMethods = useForm();
-        editorPane = <Typography variant="body1">No Event selected</Typography>
+        editorPane = <Typography variant="subtitle1" align='center'>No Event selected</Typography>
     }
 
     const eventSelected = Boolean(data)
@@ -67,9 +63,7 @@ const ShapeToolPane = ({data, onNodeUpdated}: Props) => {
     }, [data])
 
     return (
-        <Paper className={classes.paper} elevation={3}>
-            <Typography className={classes.title} variant="h5" gutterBottom>Edit Event</Typography>
-            <Divider/>
+        <React.Fragment>
             {editorPane}
             {isDirty &&
             <Button disabled={isSubmitting || !eventSelected} color="primary"
@@ -77,7 +71,7 @@ const ShapeToolPane = ({data, onNodeUpdated}: Props) => {
                 Save
             </Button>
             }
-        </Paper>
+        </React.Fragment>
     );
 }
 

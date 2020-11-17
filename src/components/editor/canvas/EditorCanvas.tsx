@@ -9,7 +9,7 @@ import {TreeNode} from "@models/treeNodeModel";
 import {useLocalContext} from "@hooks/useLocalContext";
 import {PngExportData} from "@components/editor/tools/PngExporter";
 import {V} from "jointjs";
-import ShapeToolPane from "@components/editor/tools/ShapeToolPane";
+import SidebarMenu from "@components/editor/tools/SidebarMenu";
 
 interface Props {
     rootNode: TreeNode,
@@ -43,9 +43,10 @@ const EditorCanvas = ({rootNode, sidebarSelectedNode, exportImage, onElementCont
             height: containerRef.current.clientHeight,
             gridSize: 10,
             drawGrid: true,
-            defaultConnectionPoint: { name: 'boundary', args: { extrapolate: true }},
-            defaultConnector: { name: 'rounded' },
-            defaultRouter: { name: 'orthogonal' },
+            //async: true,
+            defaultConnectionPoint: {name: 'boundary', args: {extrapolate: true}},
+            defaultConnector: {name: 'rounded'},
+            defaultRouter: {name: 'orthogonal'},
         })
 
         // @ts-ignore
@@ -53,17 +54,6 @@ const EditorCanvas = ({rootNode, sidebarSelectedNode, exportImage, onElementCont
                 onElementContextMenu(elementView, evt)
             }
         );
-
-        // TODO create button for export
-        // @ts-ignore
-        paper.on('element:pointerdblclick', () => {
-            const svgPaper = document.querySelector('#jointjs-container > svg');
-            // @ts-ignore
-            const {width, height} = svgPaper.getBBox();
-            const svgData = new XMLSerializer().serializeToString(svgPaper);
-            const encodedData = btoa(unescape(encodeURIComponent(svgData)));
-            exportImage({encodedData: encodedData, width: width, height: height} as PngExportData)
-        });
 
         // Zoom in,out
         // @ts-ignore
@@ -82,7 +72,7 @@ const EditorCanvas = ({rootNode, sidebarSelectedNode, exportImage, onElementCont
             setDragStartPosition({x: x * scale.sx, y: y * scale.sy})
         });
         // @ts-ignore
-        paper.on('cell:pointerup blank:pointerup', (cellView, x, y) => setDragStartPosition(null));
+        paper.on('cell:pointerup blank:pointerup', () => setDragStartPosition(null));
         divContainer.addEventListener('mousemove', e => {
             // @ts-ignore
             if (localContext.dragStartPosition) {
@@ -102,7 +92,7 @@ const EditorCanvas = ({rootNode, sidebarSelectedNode, exportImage, onElementCont
     const layout = (graph) => {
         const autoLayoutElements = [];
         const manualLayoutElements = [];
-        graph.getElements().forEach((el)  => {
+        graph.getElements().forEach((el) => {
             if (el.get('type') === 'fta.ConditioningEvent') {
                 manualLayoutElements.push(el);
             } else {
@@ -160,6 +150,14 @@ const EditorCanvas = ({rootNode, sidebarSelectedNode, exportImage, onElementCont
         }
     };
 
+    const handleDiagramExport = () => {
+        const svgPaper = document.querySelector('#jointjs-container > svg');
+        // @ts-ignore
+        const {width, height} = svgPaper.getBBox(); // TODO calculate events position boundaries and set dimensions
+        const svgData = new XMLSerializer().serializeToString(svgPaper);
+        const encodedData = btoa(unescape(encodeURIComponent(svgData)));
+        exportImage({encodedData: encodedData, width: width, height: height} as PngExportData)
+    }
 
     return (
         <React.Fragment>
@@ -167,7 +165,11 @@ const EditorCanvas = ({rootNode, sidebarSelectedNode, exportImage, onElementCont
                 {container && rootNode && <FaultEventShape addSelf={addSelf} treeNode={rootNode}/>}
             </div>
             <div className={classes.divWindowTool} ref={windowToolRef}>
-                <ShapeToolPane data={sidebarSelectedNode} onNodeUpdated={onNodeUpdated}/>
+                <SidebarMenu
+                    onRestoreLayout={() => layout(container)}
+                    onExportDiagram={handleDiagramExport}
+                    shapeToolData={sidebarSelectedNode}
+                    onNodeUpdated={onNodeUpdated}/>
             </div>
         </React.Fragment>
     );
