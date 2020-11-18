@@ -27,6 +27,7 @@ const EditorCanvas = ({rootNode, sidebarSelectedNode, exportImage, onElementCont
     const windowToolRef = useRef(null)
 
     const [container, setContainer] = useState<joint.dia.Graph>()
+    const [canvasDimensions, setCanvasDimensions] = useState([0,0]);
 
     const MIN_SCALE = 0.5, MAX_SCALE = 2;
 
@@ -34,14 +35,18 @@ const EditorCanvas = ({rootNode, sidebarSelectedNode, exportImage, onElementCont
     const localContext = useLocalContext({dragStartPosition})
 
     useEffect(() => {
+        const canvasWidth = containerRef.current.clientWidth;
+        const canvasHeight = containerRef.current.clientHeight;
+        setCanvasDimensions([canvasWidth, canvasHeight]);
+
         const graph = new joint.dia.Graph;
         const divContainer = document.getElementById("jointjs-container");
         const paper = new joint.dia.Paper({
             // @ts-ignore
             el: divContainer,
             model: graph,
-            width: containerRef.current.clientWidth - windowToolRef.current.clientWidth,
-            height: containerRef.current.clientHeight,
+            width: canvasWidth,
+            height: canvasHeight,
             gridSize: 10,
             drawGrid: true,
             //async: true,
@@ -158,8 +163,7 @@ const EditorCanvas = ({rootNode, sidebarSelectedNode, exportImage, onElementCont
 
     const handleDiagramExport = () => {
         const svgPaper = document.querySelector('#jointjs-container > svg');
-        // @ts-ignore
-        const {width, height} = svgPaper.getBBox(); // TODO calculate events position boundaries and set dimensions
+        const [width, height] = canvasDimensions;
         const svgData = new XMLSerializer().serializeToString(svgPaper);
         const encodedData = btoa(unescape(encodeURIComponent(svgData)));
         exportImage({encodedData: encodedData, width: width, height: height} as PngExportData)
