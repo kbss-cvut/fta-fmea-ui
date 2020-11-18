@@ -41,4 +41,12 @@ export enum GateType {
     UNUSED = "UNUSED",
 }
 
-export const gateTypeValues = (): GateType[] => filter(Object.values(GateType), (o) => o !== GateType.UNUSED)
+// returns true as first argument of array if option should be enabled in select
+export const gateTypeValues = (): [boolean, GateType][] =>
+    Object.values(GateType).map(value => {
+        if (value === GateType.UNUSED) {
+            return [false, GateType.UNUSED]
+        } else {
+            return [true, value]
+        }
+    })

@@ -89,7 +89,8 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
                         InputProps={{inputProps: {min: 0, max: 1, step: 0.01}}}
                         error={!!errors.probability} helperText={errors.probability?.message}
                         className={classes.probability}
-                        disabled={existingEventSelected} defaultValue=""
+                        disabled={existingEventSelected || eventTypeWatch === EventType.INTERMEDIATE}
+                        defaultValue=""
             />
 
             <Box className={classes.rpnBox}>
@@ -118,10 +119,12 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
                 <InputLabel id="gate-type-select-label">Gate Type</InputLabel>
                 <Controller
                     as={
-                        <Select labelId="gate-type-select-label" id="gate-type-select">
+                        <Select labelId="gate-type-select-label" id="gate-type-select" error={!!errors.gateType}>
                             {
-                                gateTypeValues().map(value =>
-                                    <MenuItem key={`option-${value}`} value={value}>{value}</MenuItem>)
+                                gateTypeValues().map(value =>{
+                                    const [enabled, optionValue] = value
+                                    return <MenuItem key={`option-${value}`} value={optionValue} disabled={!enabled}>{value}</MenuItem>
+                                })
                             }
                         </Select>
                     }
