@@ -10,6 +10,7 @@ import {useLocalContext} from "@hooks/useLocalContext";
 import {PngExportData} from "@components/editor/tools/PngExporter";
 import {V} from "jointjs";
 import SidebarMenu from "@components/editor/tools/SidebarMenu";
+import {FTABoundary} from "@components/editor/shapes/shapesDefinitions";
 
 interface Props {
     rootNode: TreeNode,
@@ -50,29 +51,34 @@ const EditorCanvas = ({rootNode, sidebarSelectedNode, exportImage, onElementCont
         })
 
         // @ts-ignore
-        paper.on('element:contextmenu', (elementView, evt) => {
+        paper.on({
+            'element:contextmenu': (elementView, evt) => {
                 onElementContextMenu(elementView, evt)
-            }
-        );
-
-        // Zoom in,out
-        // @ts-ignore
-        paper.on('cell:mousewheel', (cellView, evt, x, y, delta) => {
-            handleCanvasMouseWheel(evt, x, y, delta, paper)
+            },
+            // Zoom in,out
+            'cell:mousewheel': (cellView, evt, x, y, delta) => {
+                handleCanvasMouseWheel(evt, x, y, delta, paper)
+            },
+            'blank:mousewheel': (evt, x, y, delta) => {
+                handleCanvasMouseWheel(evt, x, y, delta, paper)
+            },
+            // Canvas dragging
+            'blank:pointerdown': (evt, x, y) => {
+                const scale = V(paper.viewport).scale();
+                setDragStartPosition({x: x * scale.sx, y: y * scale.sy})
+            },
+            'cell:pointerup blank:pointerup': () => setDragStartPosition(null),
+            'element:mouseenter': (elementView) => {
+                const tools = new joint.dia.ToolsView({
+                    tools: [FTABoundary.factory()]
+                });
+                elementView.addTools(tools);
+            },
+            'element:mouseleave': function(elementView) {
+                elementView.removeTools();
+            },
         })
-        // @ts-ignore
-        paper.on('blank:mousewheel', (evt, x, y, delta) => {
-            handleCanvasMouseWheel(evt, x, y, delta, paper)
-        })
 
-        // Canvas dragging
-        // @ts-ignore
-        paper.on('blank:pointerdown', (evt, x, y) => {
-            const scale = V(paper.viewport).scale();
-            setDragStartPosition({x: x * scale.sx, y: y * scale.sy})
-        });
-        // @ts-ignore
-        paper.on('cell:pointerup blank:pointerup', () => setDragStartPosition(null));
         divContainer.addEventListener('mousemove', e => {
             // @ts-ignore
             if (localContext.dragStartPosition) {

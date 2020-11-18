@@ -269,3 +269,21 @@ export const Link = joint.dia.Link.define('fta.Link', {
     }
 });
 
+
+let boundary = null;
+// @ts-ignore
+export const FTABoundary = joint.elementTools.Boundary.extend({
+    attributes: {
+        'fill': 'none',
+        'pointer-events': 'none',
+        'stroke-width': 2,
+        'stroke': ' #31d0c6',
+        'rx': 5,
+        'ry': 5
+    }
+}, {
+    factory: function() {
+        if (!boundary) boundary = new FTABoundary();
+        return boundary;
+    }
+});
