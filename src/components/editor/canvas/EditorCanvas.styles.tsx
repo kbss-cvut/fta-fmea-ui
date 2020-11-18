@@ -14,6 +14,8 @@ const useStyles = makeStyles((theme: Theme) => {
                 height: '100%',
                 overflow: 'hidden',
                 flexGrow: 3,
+                maxWidth: '30%',
+                minWidth: '30%',
             }
         })
     }
