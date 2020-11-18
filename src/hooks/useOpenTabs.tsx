@@ -35,7 +35,14 @@ export const saveLastOpenTabsIris = (lastOpenIris: string[]) => {
     localStorage.setItem(STORAGE_KEYS.LAST_OPEN_TABS, JSON.stringify(lastOpenIris));
 }
 
-export const getLastOpenTabsIris = (): string[] => JSON.parse(localStorage.getItem(STORAGE_KEYS.LAST_OPEN_TABS));
+export const getLastOpenTabsIris = (): string[] => {
+    const items = localStorage.getItem(STORAGE_KEYS.LAST_OPEN_TABS)
+    if(items) {
+        return JSON.parse(items);
+    } else {
+        return [];
+    }
+}
 
 
 export const OpenTabsProvider = ({children}: ChildrenProps) => {

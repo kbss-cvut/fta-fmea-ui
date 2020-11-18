@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme: Theme) => {
             divWindowTool: {
                 padding: theme.spacing(1, 0, 0, 1),
                 height: '100%',
-                alignSelf: 'flex-end',
                 overflow: 'hidden',
                 flexGrow: 3,
             }
