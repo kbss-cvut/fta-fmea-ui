@@ -1,8 +1,10 @@
 import * as React from "react";
 import useStyles from "./SidebarMenu.styles";
-import {Button, Divider, Paper, Typography} from "@material-ui/core";
+import {Divider, IconButton, Paper, Typography} from "@material-ui/core";
 import {TreeNode} from "@models/treeNodeModel";
 import ShapeToolPane from "./ShapeToolPane";
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import AccountTreeIcon from '@material-ui/icons/AccountTree';
 
 interface Props {
     onRestoreLayout: () => void,
@@ -17,9 +19,13 @@ const SidebarMenu = ({onRestoreLayout, onExportDiagram, shapeToolData, onNodeUpd
     return (
         <Paper className={classes.paper} elevation={3}>
             <Typography variant="h5" gutterBottom>Diagram Options</Typography>
-            <div className={classes.diagramOptions}>
-                <Button color="primary" onClick={onRestoreLayout}>Restore Layout</Button>
-                <Button color="primary" onClick={onExportDiagram}>Export Diagram</Button>
+            <div>
+                <IconButton color="primary" onClick={onRestoreLayout} aria-label="restore layout">
+                    <AccountTreeIcon/>
+                </IconButton>
+                <IconButton color="primary" onClick={onExportDiagram} aria-label="save">
+                    <SaveAltIcon />
+                </IconButton>
             </div>
             <Divider/>
 

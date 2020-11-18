@@ -9,8 +9,13 @@ import {Controller, useForm} from "react-hook-form";
 import {schema} from "@components/picker/component/ComponentPicker.schema";
 import useStyles from "@components/picker/component/ComponentPicker.styles";
 import { yupResolver } from "@hookform/resolvers/yup";
+import DividerWithText from "@components/materialui/DividerWithText";
 
-const ComponentPicker = ({setSelectedComponent}) => {
+interface Props {
+    setSelectedComponent: (Component) => void,
+}
+
+const ComponentPicker = ({setSelectedComponent}: Props) => {
     const classes = useStyles()
 
     const [components, addComponent] = useComponents()
@@ -33,6 +38,8 @@ const ComponentPicker = ({setSelectedComponent}) => {
                 renderInput={(params) => <TextField {...params} label="Select Component" variant="outlined"/>}
                 clearOnBlur={true}
             />
+
+            <DividerWithText>Create new Component</DividerWithText>
 
             <div className={classes.addButtonDiv}>
                 <Controller as={TextField} autoFocus margin="dense" id="name" label="Component Name"

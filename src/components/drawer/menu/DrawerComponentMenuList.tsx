@@ -35,9 +35,7 @@ const DrawerComponentMenuList = () => {
                 New Fault Tree
             </Button>
 
-            <ComponentsProvider>
-                <FaultTreeDialog open={createFaultTreeDialogOpen} handleCloseDialog={closeDialog}/>
-            </ComponentsProvider>
+            <FaultTreeDialog open={createFaultTreeDialogOpen} handleCloseDialog={closeDialog}/>
         </div>
     );
 }

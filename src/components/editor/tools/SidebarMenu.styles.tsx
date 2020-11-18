@@ -7,10 +7,6 @@ const useStyles = makeStyles((theme: Theme) =>
             height: '100%',
             padding: theme.spacing(1)
         },
-        diagramOptions: {
-            display: 'flex',
-            flexDirection: 'column'
-        }
     }),
 );
 
