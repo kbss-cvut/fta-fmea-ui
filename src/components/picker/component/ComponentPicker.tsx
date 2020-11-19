@@ -8,14 +8,15 @@ import {Component} from "@models/componentModel";
 import {Controller, useForm} from "react-hook-form";
 import {schema} from "@components/picker/component/ComponentPicker.schema";
 import useStyles from "@components/picker/component/ComponentPicker.styles";
-import { yupResolver } from "@hookform/resolvers/yup";
+import {yupResolver} from "@hookform/resolvers/yup";
 import DividerWithText from "@components/materialui/DividerWithText";
 
 interface Props {
-    setSelectedComponent: (Component) => void,
+    selectedComponent: Component | null,
+    onComponentSelected: (Component) => void,
 }
 
-const ComponentPicker = ({setSelectedComponent}: Props) => {
+const ComponentPicker = ({selectedComponent, onComponentSelected}: Props) => {
     const classes = useStyles()
 
     const [components, addComponent] = useComponents()
@@ -28,15 +29,17 @@ const ComponentPicker = ({setSelectedComponent}: Props) => {
         reset(values)
     }
 
+    // TODO ControlledAutocomplete
     return (
         <React.Fragment>
             <Autocomplete
                 fullWidth
                 options={components}
                 getOptionLabel={(option) => option.name}
-                onChange={(event, value: Component) => setSelectedComponent(value)}
+                onChange={(event, value: Component) => onComponentSelected(value)}
                 renderInput={(params) => <TextField {...params} label="Select Component" variant="outlined"/>}
                 clearOnBlur={true}
+                defaultValue={selectedComponent}
             />
 
             <DividerWithText>Create new Component</DividerWithText>

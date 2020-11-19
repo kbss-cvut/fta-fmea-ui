@@ -9,8 +9,14 @@ import {Controller, useForm} from "react-hook-form";
 import {schema} from "@components/picker/function/FunctionPicker.schema";
 import useStyles from "@components/picker/function/FunctionPicker.styles";
 import { yupResolver } from "@hookform/resolvers/yup";
+import {useEffect} from "react";
 
-const FunctionPicker = ({setSelectedFunction}) => {
+interface Props {
+    selectedFunction: Function | null,
+    onFunctionSelected: (Function) => void,
+}
+
+const FunctionPicker = ({selectedFunction, onFunctionSelected}: Props) => {
     const classes = useStyles()
 
     const [functions, addFunction] = useFunctions()
@@ -23,14 +29,16 @@ const FunctionPicker = ({setSelectedFunction}) => {
         reset(values)
     }
 
+    // TODO ControlledAutocomplete
     return (
         <React.Fragment>
             <Autocomplete
                 options={functions}
                 getOptionLabel={(option) => option.name}
-                onChange={(event, value: Function) => setSelectedFunction(value)}
+                onChange={(event, value: Function) => onFunctionSelected(value)}
                 renderInput={(params) => <TextField {...params} label="Select Function" variant="outlined"/>}
                 clearOnBlur={true}
+                defaultValue={selectedFunction}
             />
 
             <Box className={classes.addButtonDiv}>

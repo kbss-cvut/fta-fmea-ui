@@ -66,3 +66,20 @@ export const addEvent = async (treeNodeIri: string, event: FaultEvent): Promise<
         return new Promise((resolve, reject) => reject("Failed to create event"));
     }
 }
+
+export const eventPathToRoot = async (treeNodeIri: string) : Promise<FaultEvent[]> => {
+    try {
+        const fragment = extractFragment(treeNodeIri);
+
+        const response = await axiosClient.get(
+            `/treeNodes/${fragment}/eventPathToRoot`,
+            {
+                headers: authHeaders()
+            }
+        )
+        return JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(response.data, EVENT_CONTEXT);
+    } catch (e) {
+        console.log('Tree Node Service - Failed to call /eventPathToRoot')
+        return new Promise((resolve, reject) => reject("Failed to resolve event paths"));
+    }
+}
