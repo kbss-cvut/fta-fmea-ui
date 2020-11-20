@@ -5,7 +5,6 @@ import {DialogTitle} from "@components/materialui/dialog/DialogTitle";
 import {DialogContent} from "@components/materialui/dialog/DialogContent";
 import {useForm} from "react-hook-form";
 import {schema} from "@components/dialog/faultTree/FaultTreeDialog.schema";
-import {CreateTreeNode} from "@models/treeNodeModel";
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {eventFromHookFormValues} from "@services/faultEventService";
 import {useState} from "react";
@@ -15,6 +14,7 @@ import {useFaultTrees} from "@hooks/useFaultTrees";
 import {FaultTree} from "@models/faultTreeModel";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {schema as eventSchema} from "@components/dialog/faultEvent/FaultEventCreation.schema";
+import {FaultEventsProvider} from "@hooks/useFaultEvents";
 
 const FaultTreeDialog = ({open, handleCloseDialog}) => {
     const [, addFaultTree] = useFaultTrees()
@@ -30,10 +30,7 @@ const FaultTreeDialog = ({open, handleCloseDialog}) => {
 
         const faultTree = {
             name: values.faultTreeName,
-            manifestingNode: {
-                event: rootEvent,
-                "@type": [VocabularyUtils.TREE_NODE],
-            } as CreateTreeNode
+            manifestingEvent: rootEvent
         } as FaultTree
 
         await addFaultTree(faultTree)
@@ -52,7 +49,9 @@ const FaultTreeDialog = ({open, handleCloseDialog}) => {
                                fullWidth inputRef={useFormMethods.register}
                                error={!!useFormMethods.errors.faultTreeName}
                                helperText={useFormMethods.errors.faultTreeName?.message}/>
-                    <FaultEventCreation useFormMethods={useFormMethods} eventReusing={true}/>
+                    <FaultEventsProvider>
+                        <FaultEventCreation useFormMethods={useFormMethods} eventReusing={true}/>
+                    </FaultEventsProvider>
                 </DialogContent>
                 <DialogActions>
                     <Button disabled={processing} color="primary" onClick={handleSubmit(handleCreateFaultTree)}>

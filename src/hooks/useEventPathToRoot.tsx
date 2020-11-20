@@ -3,7 +3,7 @@ import {createContext, useContext, useEffect, useState} from "react";
 
 import {FaultEvent} from "@models/eventModel";
 import {axiosSource} from "@services/utils/axiosUtils";
-import * as treeNodeService from "@services/treeNodeService";
+import * as faultEventService from "@services/faultEventService";
 
 
 export const faultEventPathContext = createContext<FaultEvent[]>([]);
@@ -13,24 +13,24 @@ export const useEventPathToRoot = () => {
 }
 
 interface Props {
-    leafNodeIri: string,
+    leafEventIri: string,
     children: React.ReactNode,
 }
 
-export const EventPathToRootProvider = ({children, leafNodeIri}: Props) => {
+export const EventPathToRootProvider = ({children, leafEventIri}: Props) => {
     const [_eventPath, _setEventPath] = useState<FaultEvent[]>([]);
 
     useEffect(() => {
         const resolveEventPath = async () => {
-            treeNodeService
-                .eventPathToRoot(leafNodeIri)
+            faultEventService
+                .eventPathToRoot(leafEventIri)
                 .then(value => _setEventPath(value))
                 .catch(reason => console.log(`Failed to resolve event path - ${reason}`))
         }
 
         resolveEventPath()
         return () => axiosSource.cancel("EventPathToRootProvider - unmounting")
-    }, [leafNodeIri]);
+    }, [leafEventIri]);
 
     return (
         <faultEventPathContext.Provider value={_eventPath}>

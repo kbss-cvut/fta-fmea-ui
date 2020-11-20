@@ -13,12 +13,13 @@ import {FunctionsProvider} from "@hooks/useFunctions";
 import useStyles from "@components/dialog/failureMode/FailureModeStepper.styles";
 import FailureModeStepperConfirmation from "@components/dialog/failureMode/FailureModeStepperConfirmation";
 import FailureModeCreationStep from "@components/dialog/failureMode/FailureModeCreationStep";
-import {FailureMode} from "@models/failureModeModel";
+import {CreateFailureMode, FailureMode} from "@models/failureModeModel";
 import {FaultEvent} from "@models/eventModel";
 import {useEventPathToRoot} from "@hooks/useEventPathToRoot";
 import {findIndex} from "lodash";
 import * as componentService from "@services/componentService";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
+import {toEventsWithChildReferences} from "@services/faultEventService";
 
 const stepTitles = ["Component", "Influenced Function", "Effects", "Confirmation"];
 
@@ -56,8 +57,6 @@ const FailureModeStepper = ({onClose}: Props) => {
         const selectedEvents = eventPath.filter(value => findIndex(events, (e) => e === value.name) > -1)
         setEffects(selectedEvents)
     }
-
-    // TODO validation between steps
 
     const handleSteps = (step) => {
         switch (step) {
@@ -142,9 +141,9 @@ const FailureModeStepper = ({onClose}: Props) => {
     const handleCreateFailureMode = () => {
         const createFailureMode = {
             name: selectedFailureMode.name,
-            effects: effects,
+            effects: toEventsWithChildReferences(effects),
             influencedFunction: selectedFunction
-        } as FailureMode
+        } as CreateFailureMode
 
         componentService.addFailureMode(selectedComponent.iri, createFailureMode)
             .then(r => {

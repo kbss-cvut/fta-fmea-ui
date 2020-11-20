@@ -8,7 +8,6 @@ export default {
     FUNCTION: _NS_FTA_FMEA + "Function",
     FAULT_EVENT: _NS_FTA_FMEA + "FaultEvent",
     FAILURE_MODE: _NS_FTA_FMEA + "FailureMode",
-    TREE_NODE: _NS_FTA_FMEA + "TreeNode",
     RPN: _NS_FTA_FMEA + "RiskPriorityNumber",
     FAULT_TREE: _NS_FTA_FMEA + "FaultTree"
 }

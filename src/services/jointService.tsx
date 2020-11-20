@@ -1,5 +1,4 @@
-import {TreeNode} from "@models/treeNodeModel";
-import {EventType} from "@models/eventModel";
+import {EventType, FaultEvent} from "@models/eventModel";
 import {
     BasicEvent,
     ConditioningEvent,
@@ -8,8 +7,8 @@ import {
     UndevelopedEvent
 } from "@components/editor/shapes/shapesDefinitions";
 
-export const createShape = (node: TreeNode) => {
-    switch (node.event.eventType) {
+export const createShape = (faultEvent: FaultEvent) => {
+    switch (faultEvent.eventType) {
         case EventType.BASIC:
             return new BasicEvent();
         case EventType.CONDITIONING:

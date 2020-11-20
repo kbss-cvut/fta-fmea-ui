@@ -1,7 +1,6 @@
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {AbstractModel, CONTEXT as ABSTRACT_CONTEXT} from "@models/abstractModel";
 import {CONTEXT as RPN_CONTEXT, RiskPriorityNumber} from "@models/rpnModel";
-import {filter} from "lodash";
 
 const ctx = {
     "name": VocabularyUtils.PREFIX + "hasName",
@@ -11,6 +10,8 @@ const ctx = {
     "eventType": VocabularyUtils.PREFIX + "hasFaultEventType",
     "rpn": VocabularyUtils.PREFIX + "hasRPN",
     "probability": VocabularyUtils.PREFIX + "hasProbability",
+    "parent": VocabularyUtils.PREFIX + "hasParent",
+    "children": VocabularyUtils.PREFIX + "hasChildren",
 };
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, RPN_CONTEXT);
@@ -30,6 +31,8 @@ export interface FaultEvent extends AbstractModel {
     rpn: RiskPriorityNumber,
     gateType?: GateType,
     probability?: number,
+    parent?: string,
+    children?: FaultEvent[],
 }
 
 export enum GateType {

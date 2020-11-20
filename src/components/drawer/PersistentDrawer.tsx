@@ -23,33 +23,31 @@ const PersistentDrawer = () => {
     const [open, setOpen] = useDrawerOpen();
 
     return (
-        <FaultEventsProvider>
-            <div className={classes.root}>
-                <CssBaseline/>
-                <AppBar/>
-                <Drawer
-                    className={classes.drawer}
-                    variant="persistent"
-                    anchor="left"
-                    open={open}
-                    classes={{paper: classes.drawerPaper,}}
-                >
-                    <div className={classes.drawerHeader}>
-                        <Typography className={classes.drawerHeaderTitle} variant="h6" gutterBottom>
-                            Fault Trees
-                        </Typography>
-                        <IconButton onClick={() => setOpen(false)}>
-                            {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
-                        </IconButton>
-                    </div>
-                    <Divider/>
-                    <DrawerComponentMenuList/>
-                </Drawer>
-                <main className={clsx(classes.content, {[classes.contentShift]: open,})}>
-                    <DrawerContent/>
-                </main>
-            </div>
-        </FaultEventsProvider>
+        <div className={classes.root}>
+            <CssBaseline/>
+            <AppBar/>
+            <Drawer
+                className={classes.drawer}
+                variant="persistent"
+                anchor="left"
+                open={open}
+                classes={{paper: classes.drawerPaper,}}
+            >
+                <div className={classes.drawerHeader}>
+                    <Typography className={classes.drawerHeaderTitle} variant="h6" gutterBottom>
+                        Fault Trees
+                    </Typography>
+                    <IconButton onClick={() => setOpen(false)}>
+                        {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
+                    </IconButton>
+                </div>
+                <Divider/>
+                <DrawerComponentMenuList/>
+            </Drawer>
+            <main className={clsx(classes.content, {[classes.contentShift]: open,})}>
+                <DrawerContent/>
+            </main>
+        </div>
     );
 }
 

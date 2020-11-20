@@ -5,22 +5,22 @@ import FaultEventShape from "@components/editor/shapes/FaultEventShape";
 import * as joint from 'jointjs';
 import * as dagre from 'dagre';
 import * as graphlib from 'graphlib';
-import {TreeNode} from "@models/treeNodeModel";
 import {useLocalContext} from "@hooks/useLocalContext";
 import {PngExportData} from "@components/editor/tools/PngExporter";
 import {V} from "jointjs";
 import SidebarMenu from "@components/editor/tools/SidebarMenu";
 import {FTABoundary} from "@components/editor/shapes/shapesDefinitions";
+import {FaultEvent} from "@models/eventModel";
 
 interface Props {
-    rootNode: TreeNode,
-    sidebarSelectedNode: TreeNode,
+    rootEvent: FaultEvent,
+    sidebarSelectedEvent: FaultEvent,
     exportImage: (string) => void,
     onElementContextMenu: (element: any, evt: any) => void,
-    onNodeUpdated: (node: TreeNode) => void,
+    onEventUpdated: (faultEvent: FaultEvent) => void,
 }
 
-const EditorCanvas = ({rootNode, sidebarSelectedNode, exportImage, onElementContextMenu, onNodeUpdated}: Props) => {
+const EditorCanvas = ({rootEvent, sidebarSelectedEvent, exportImage, onElementContextMenu, onEventUpdated}: Props) => {
     const classes = useStyles()
 
     const containerRef = useRef(null)
@@ -172,14 +172,14 @@ const EditorCanvas = ({rootNode, sidebarSelectedNode, exportImage, onElementCont
     return (
         <React.Fragment>
             <div id="jointjs-container" className={classes.konvaContainer} ref={containerRef}>
-                {container && rootNode && <FaultEventShape addSelf={addSelf} treeNode={rootNode}/>}
+                {container && rootEvent && <FaultEventShape addSelf={addSelf} treeEvent={rootEvent}/>}
             </div>
             <div className={classes.divWindowTool} ref={windowToolRef}>
                 <SidebarMenu
                     onRestoreLayout={() => layout(container)}
                     onExportDiagram={handleDiagramExport}
-                    shapeToolData={sidebarSelectedNode}
-                    onNodeUpdated={onNodeUpdated}/>
+                    shapeToolData={sidebarSelectedEvent}
+                    onEventUpdated={onEventUpdated}/>
             </div>
         </React.Fragment>
     );

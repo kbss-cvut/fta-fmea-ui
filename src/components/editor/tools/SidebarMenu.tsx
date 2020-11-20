@@ -1,22 +1,21 @@
 import * as React from "react";
 import useStyles from "./SidebarMenu.styles";
 import {Button, Divider, IconButton, Paper, Typography} from "@material-ui/core";
-import {TreeNode} from "@models/treeNodeModel";
 import ShapeToolPane from "./ShapeToolPane";
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import AccountTreeIcon from '@material-ui/icons/AccountTree';
 import {useState} from "react";
-import {EventType} from "@models/eventModel";
+import {EventType, FaultEvent} from "@models/eventModel";
 import FailureModeDialog from "@components/dialog/failureMode/FailureModeDialog";
 
 interface Props {
     onRestoreLayout: () => void,
     onExportDiagram: () => void,
-    shapeToolData?: TreeNode,
-    onNodeUpdated: (node: TreeNode) => void,
+    shapeToolData?: FaultEvent,
+    onEventUpdated: (faultEvent: FaultEvent) => void,
 }
 
-const SidebarMenu = ({onRestoreLayout, onExportDiagram, shapeToolData, onNodeUpdated}: Props) => {
+const SidebarMenu = ({onRestoreLayout, onExportDiagram, shapeToolData, onEventUpdated}: Props) => {
     const classes = useStyles()
 
     const [failureModeDialogOpen, setFailureModeDialogOpen] = useState(false);
@@ -35,11 +34,11 @@ const SidebarMenu = ({onRestoreLayout, onExportDiagram, shapeToolData, onNodeUpd
             <Divider/>
 
             <Typography variant="h5" gutterBottom>Edit Event</Typography>
-            <ShapeToolPane data={shapeToolData} onNodeUpdated={onNodeUpdated}/>
+            <ShapeToolPane data={shapeToolData} onEventUpdated={onEventUpdated}/>
             <Divider/>
 
             {
-                shapeToolData && shapeToolData.event.eventType !== EventType.INTERMEDIATE &&
+                shapeToolData && shapeToolData.eventType !== EventType.INTERMEDIATE &&
                 <React.Fragment>
                     <Typography variant="h5" gutterBottom>Failure Modes</Typography>
                     <Button color="primary" onClick={() => setFailureModeDialogOpen(true)}>
@@ -50,7 +49,7 @@ const SidebarMenu = ({onRestoreLayout, onExportDiagram, shapeToolData, onNodeUpd
 
             <FailureModeDialog open={failureModeDialogOpen && Boolean(shapeToolData)}
                                onClose={() => setFailureModeDialogOpen(false)}
-                               leafNodeIri={shapeToolData?.iri}/>
+                               leafEventIri={shapeToolData?.iri}/>
         </Paper>
     );
 }

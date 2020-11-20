@@ -1,7 +1,7 @@
-import {TreeNode} from "@models/treeNodeModel";
 import {flatten} from "lodash";
+import {FaultEvent} from "@models/eventModel";
 
-export const findNodeByIri = (iri: string, root: TreeNode): TreeNode => {
+export const findEventByIri = (iri: string, root: FaultEvent): FaultEvent => {
     if (root.iri === iri) {
         return root;
     }
@@ -10,7 +10,7 @@ export const findNodeByIri = (iri: string, root: TreeNode): TreeNode => {
         const childrenArr = flatten([root.children])
         let result = undefined;
         for (let i = 0; result === undefined && i < childrenArr.length; i++) {
-            result = findNodeByIri(iri, childrenArr[i]);
+            result = findEventByIri(iri, childrenArr[i]);
         }
         return result;
     }
@@ -18,7 +18,7 @@ export const findNodeByIri = (iri: string, root: TreeNode): TreeNode => {
     return undefined;
 }
 
-export const findNodeParentByIri = (childIri: string, root: TreeNode): TreeNode => {
+export const findEventParentByIri = (childIri: string, root: FaultEvent): FaultEvent => {
     if (childIri === root.iri) {
         return undefined;
     }
@@ -31,7 +31,7 @@ export const findNodeParentByIri = (childIri: string, root: TreeNode): TreeNode 
                 parent = root;
                 break;
             }
-            parent = findNodeParentByIri(childIri, childrenArr[i]);
+            parent = findEventParentByIri(childIri, childrenArr[i]);
         }
         return parent;
     }

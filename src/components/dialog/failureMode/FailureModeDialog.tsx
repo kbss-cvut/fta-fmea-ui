@@ -8,15 +8,15 @@ import {EventPathToRootProvider} from "@hooks/useEventPathToRoot";
 interface Props {
     open: boolean,
     onClose: () => void,
-    leafNodeIri: string,
+    leafEventIri: string,
 }
 
-const FailureModeDialog = ({open, onClose, leafNodeIri}: Props) => {
+const FailureModeDialog = ({open, onClose, leafEventIri}: Props) => {
     return (
         <Dialog open={open} onClose={onClose} aria-labelledby="failure-mode-dialog" fullWidth maxWidth="lg">
             <DialogTitle id="failure-mode-dialog" onClose={onClose}>Create Failure Mode</DialogTitle>
             <DialogContent dividers>
-                <EventPathToRootProvider leafNodeIri={leafNodeIri}>
+                <EventPathToRootProvider leafEventIri={leafEventIri}>
                     <FailureModeStepper onClose={onClose}/>
                 </EventPathToRootProvider>
             </DialogContent>

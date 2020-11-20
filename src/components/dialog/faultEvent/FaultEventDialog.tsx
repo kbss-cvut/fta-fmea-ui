@@ -4,23 +4,24 @@ import {Button, Dialog,} from "@material-ui/core";
 import {DialogTitle} from "@components/materialui/dialog/DialogTitle";
 import {DialogContent} from "@components/materialui/dialog/DialogContent";
 import {DialogActions} from "@components/materialui/dialog/DialogActions";
-import * as treeNodeService from "@services/treeNodeService";
+import * as faultEventService from "@services/faultEventService";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import FaultEventCreation from "./FaultEventCreation";
 import {useForm} from "react-hook-form";
 import {schema} from "./FaultEventCreation.schema";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {TreeNode} from "@models/treeNodeModel";
 import {eventFromHookFormValues} from "@services/faultEventService";
+import {FaultEvent} from "@models/eventModel";
+import {FaultEventsProvider} from "@hooks/useFaultEvents";
 
 interface Props {
     open: boolean,
-    nodeIri: string,
-    onCreated: (newNode: TreeNode) => void,
+    eventIri: string,
+    onCreated: (newEvent: FaultEvent) => void,
     onClose: () => void,
 }
 
-const FaultEventDialog = ({open, nodeIri, onCreated, onClose}: Props) => {
+const FaultEventDialog = ({open, eventIri, onCreated, onClose}: Props) => {
     const [showSnackbar] = useSnackbar()
 
     const useFormMethods = useForm({resolver: yupResolver(schema)});
@@ -30,7 +31,7 @@ const FaultEventDialog = ({open, nodeIri, onCreated, onClose}: Props) => {
     const handleCreateEvent = async (values: any) => {
         const requestEvent = eventFromHookFormValues(values);
 
-        treeNodeService.addEvent(nodeIri, requestEvent)
+        faultEventService.addEvent(eventIri, requestEvent)
             .then(value => {
                 onClose()
                 onCreated(value)
@@ -43,7 +44,9 @@ const FaultEventDialog = ({open, nodeIri, onCreated, onClose}: Props) => {
             <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title" maxWidth="md" fullWidth>
                 <DialogTitle id="form-dialog-title" onClose={onClose}>Create Event</DialogTitle>
                 <DialogContent dividers>
-                    <FaultEventCreation useFormMethods={useFormMethods} eventReusing={true}/>
+                    <FaultEventsProvider>
+                        <FaultEventCreation useFormMethods={useFormMethods} eventReusing={true}/>
+                    </FaultEventsProvider>
                 </DialogContent>
                 <DialogActions>
                     <Button disabled={isSubmitting} color="primary" onClick={handleSubmit(handleCreateEvent)}>

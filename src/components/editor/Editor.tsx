@@ -2,130 +2,129 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 import {cloneDeep, concat, flatten, assign, filter} from "lodash";
 import EditorCanvas from "@components/editor/canvas/EditorCanvas";
-import {findNodeByIri, findNodeParentByIri} from "@utils/treeUtils";
-import {TreeNode} from "@models/treeNodeModel";
+import {findEventByIri, findEventParentByIri} from "@utils/treeUtils";
 import ElementContextMenu, {
     contextMenuDefaultAnchor,
     ElementContextMenuAnchor
 } from "@components/editor/menu/ElementContextMenu";
 import {useLocalContext} from "@hooks/useLocalContext";
-import * as treeNodeService from "@services/treeNodeService";
+import * as faultEventService from "@services/faultEventService";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import {useCurrentFaultTree} from "@hooks/useCurrentFaultTree";
 import {useConfirmDialog} from "@hooks/useConfirmDialog";
 import FaultEventDialog from "@components/dialog/faultEvent/FaultEventDialog";
+import {FaultEvent} from "@models/eventModel";
 
 interface Props {
     exportImage: (string) => void
 }
 
 const Editor = ({exportImage}: Props) => {
-    // TODO offer image export
     const [showSnackbar] = useSnackbar()
     const [requestConfirmation] = useConfirmDialog()
 
     const [faultTree, updateFaultTree] = useCurrentFaultTree()
-    const [rootNode, setRootNode] = useState<TreeNode>()
-    const _localContext = useLocalContext({rootNode})
+    const [rootEvent, setRootEvent] = useState<FaultEvent>()
+    const _localContext = useLocalContext({rootEvent})
 
     useEffect(() => {
         if (faultTree) {
-            setRootNode(faultTree.manifestingNode)
+            setRootEvent(faultTree.manifestingEvent)
         }
     }, [faultTree])
 
-    const [contextMenuSelectedNode, setContextMenuSelectedNode] = useState<TreeNode>(null)
-    const [sidebarSelectedNode, setSidebarSelectedNode] = useState<TreeNode>(null)
+    const [contextMenuSelectedEvent, setContextMenuSelectedEvent] = useState<FaultEvent>(null)
+    const [sidebarSelectedEvent, setSidebarSelectedEvent] = useState<FaultEvent>(null)
 
     const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefaultAnchor)
     const handleContextMenu = (elementView, evt) => {
-        const elementIri = elementView.model.get('custom/nodeIri');
+        const elementIri = elementView.model.get('custom/faultEventIri');
         // @ts-ignore
-        const foundNode = findNodeByIri(elementIri, _localContext.rootNode);
-        setContextMenuSelectedNode(foundNode);
+        const foundEvent = findEventByIri(elementIri, _localContext.rootEvent);
+        setContextMenuSelectedEvent(foundEvent);
         setContextMenuAnchor({mouseX: evt.pageX, mouseY: evt.pageY,})
     }
 
     const [eventDialogOpen, setEventDialogOpen] = useState(false);
-    const handleEventCreated = (newNode: TreeNode) => {
+    const handleEventCreated = (newEvent: FaultEvent) => {
         // @ts-ignore
-        const rootNodeClone = cloneDeep(_localContext.rootNode);
+        const rootEventClone = cloneDeep(_localContext.rootEvent);
 
-        const node = findNodeByIri(contextMenuSelectedNode.iri, rootNodeClone);
-        node.children = concat(flatten([node.children]), newNode)
+        const foundEvent = findEventByIri(contextMenuSelectedEvent.iri, rootEventClone);
+        foundEvent.children = concat(flatten([foundEvent.children]), newEvent)
 
         // propagate changes locally in the app
-        faultTree.manifestingNode = rootNodeClone
+        faultTree.manifestingEvent = rootEventClone
         updateFaultTree(faultTree)
-        setRootNode(rootNodeClone)
+        setRootEvent(rootEventClone)
     }
 
-    const handleNodeUpdate = (nodeToUpdate: TreeNode) => {
-        console.log(`handleNodeUpdate - ${nodeToUpdate.iri}`)
-        treeNodeService.updateNode(nodeToUpdate)
+    const handleEventUpdate = (eventToUpdate: FaultEvent) => {
+        console.log(`handleEventUpdate - ${eventToUpdate.iri}`)
+        faultEventService.update(eventToUpdate)
             .then(value => {
                 // @ts-ignore
-                const rootNodeClone = cloneDeep(_localContext.rootNode);
+                const rootEventClone = cloneDeep(_localContext.rootEvent);
 
-                const foundNode = findNodeByIri(nodeToUpdate.iri, rootNodeClone);
-                assign(foundNode, nodeToUpdate)
+                const foundEvent = findEventByIri(eventToUpdate.iri, rootEventClone);
+                assign(foundEvent, eventToUpdate)
 
                 // propagate changes locally in the app
-                faultTree.manifestingNode = rootNodeClone
+                faultTree.manifestingEvent = rootEventClone
                 updateFaultTree(faultTree)
             })
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
 
-    const handleNodeDelete = (nodeToDelete: TreeNode) => {
-        const deleteNode = () => {
-            treeNodeService.remove(nodeToDelete.iri)
+    const handleEventDelete = (eventToDelete: FaultEvent) => {
+        const deleteEvent = () => {
+            faultEventService.remove(eventToDelete.iri)
                 .then(value => {
                     // @ts-ignore
-                    const rootNodeClone = cloneDeep(_localContext.rootNode);
+                    const rootEventClone = cloneDeep(_localContext.rootEvent);
 
-                    if (rootNodeClone.iri === nodeToDelete.iri) {
-                        // TODO how delete root node? Is it allowed?
-                        console.log('Removing top event node')
+                    if (rootEventClone.iri === eventToDelete.iri) {
+                        // TODO how delete root event? Is it allowed?
+                        console.log('Removing top event')
                     } else {
-                        const parent = findNodeParentByIri(nodeToDelete.iri, rootNodeClone);
-                        parent.children = filter(flatten([parent.children]), (o) => o.iri !== nodeToDelete.iri)
+                        const parent = findEventParentByIri(eventToDelete.iri, rootEventClone);
+                        parent.children = filter(flatten([parent.children]), (o) => o.iri !== eventToDelete.iri)
                     }
 
                     // propagate changes locally in the app
-                    faultTree.manifestingNode = rootNodeClone
+                    faultTree.manifestingEvent = rootEventClone
                     updateFaultTree(faultTree)
                 })
                 .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
         }
 
         requestConfirmation({
-            title: 'Delete node',
-            explanation: 'Deleting the node will delete all its subnodes. Are you sure?',
-            onConfirm: deleteNode,
+            title: 'Delete Event',
+            explanation: 'Deleting the event will delete all events in its subtree. Are you sure?',
+            onConfirm: deleteEvent,
         })
     }
 
     return (
         <React.Fragment>
             <EditorCanvas
-                rootNode={rootNode}
+                rootEvent={rootEvent}
                 exportImage={exportImage}
-                onNodeUpdated={handleNodeUpdate}
-                sidebarSelectedNode={sidebarSelectedNode}
+                onEventUpdated={handleEventUpdate}
+                sidebarSelectedEvent={sidebarSelectedEvent}
                 onElementContextMenu={handleContextMenu}
             />
 
             <ElementContextMenu
-                eventType={contextMenuSelectedNode?.event?.eventType}
+                eventType={contextMenuSelectedEvent?.eventType}
                 anchorPosition={contextMenuAnchor}
-                onEditClick={() => setSidebarSelectedNode(contextMenuSelectedNode)}
+                onEditClick={() => setSidebarSelectedEvent(contextMenuSelectedEvent)}
                 onNewEventClick={() => setEventDialogOpen(true)}
-                onEventDelete={() => handleNodeDelete(contextMenuSelectedNode)}
+                onEventDelete={() => handleEventDelete(contextMenuSelectedEvent)}
                 onClose={() => setContextMenuAnchor(contextMenuDefaultAnchor)}/>
 
 
-            <FaultEventDialog open={eventDialogOpen} nodeIri={contextMenuSelectedNode?.iri}
+            <FaultEventDialog open={eventDialogOpen} eventIri={contextMenuSelectedEvent?.iri}
                               onCreated={handleEventCreated}
                               onClose={() => setEventDialogOpen(false)}/>
         </React.Fragment>

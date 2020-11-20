@@ -2,37 +2,35 @@ import * as React from "react";
 import {useEffect} from "react";
 import {merge, cloneDeep} from "lodash";
 import {Button, Typography} from "@material-ui/core";
-import {TreeNode} from "@models/treeNodeModel";
 import FaultEventCreation from "@components/dialog/faultEvent/FaultEventCreation";
 import {useForm} from "react-hook-form";
 import {schema as eventSchema} from "@components/dialog/faultEvent/FaultEventCreation.schema";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {eventFromHookFormValues} from "@services/faultEventService";
 import {deepOmit} from "@utils/lodashUtils";
+import {FaultEvent} from "@models/eventModel";
 
 interface Props {
-    data?: TreeNode,
-    onNodeUpdated: (node: TreeNode) => void,
+    data?: FaultEvent,
+    onEventUpdated: (faultEvent: FaultEvent) => void,
 }
 
-const ShapeToolPane = ({data, onNodeUpdated}: Props) => {
+const ShapeToolPane = ({data, onEventUpdated}: Props) => {
     let editorPane;
     let updateFunction;
     let useFormMethods;
     let defaultValues;
 
     if (data) {
-        const eventToUpdate = data.event
-
         defaultValues = {
-            eventType: eventToUpdate.eventType,
-            name: eventToUpdate.name,
-            description: eventToUpdate.description,
-            probability: eventToUpdate.probability,
-            severity: eventToUpdate.rpn.severity,
-            occurrence: eventToUpdate.rpn.occurrence,
-            detection: eventToUpdate.rpn.detection,
-            gateType: eventToUpdate.gateType
+            eventType: data.eventType,
+            name: data.name,
+            description: data.description,
+            probability: data.probability,
+            severity: data.rpn.severity,
+            occurrence: data.rpn.occurrence,
+            detection: data.rpn.detection,
+            gateType: data.gateType
         }
 
         useFormMethods = useForm({
@@ -40,12 +38,12 @@ const ShapeToolPane = ({data, onNodeUpdated}: Props) => {
         });
 
         updateFunction = async (values: any) => {
-            const dataClone = cloneDeep(data)
+            let dataClone = cloneDeep(data)
 
             const updatedFaultEvent = deepOmit(eventFromHookFormValues(values), '@type')
-            dataClone.event = merge(dataClone.event, updatedFaultEvent)
+            dataClone = merge(dataClone, updatedFaultEvent)
 
-            onNodeUpdated(dataClone)
+            onEventUpdated(dataClone)
         }
 
         editorPane = <FaultEventCreation useFormMethods={useFormMethods} eventReusing={false}/>

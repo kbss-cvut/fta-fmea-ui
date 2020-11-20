@@ -6,37 +6,36 @@ import ConnectorShape from "@components/editor/shapes/ConnectorShape";
 import {JointEventShapeProps} from "@components/editor/shapes/EventShapeProps";
 import {createShape} from "@services/jointService";
 
-const FaultEventShape = ({addSelf, treeNode, parentShape}: JointEventShapeProps) => {
+const FaultEventShape = ({addSelf, treeEvent, parentShape}: JointEventShapeProps) => {
     const [currentShape, setCurrentShape] = useState<any>(undefined)
 
     useEffect(() => {
-        const eventShape = createShape(treeNode);
+        const eventShape = createShape(treeEvent);
         addSelf(eventShape)
 
-        const faultEvent = treeNode.event;
-        if (faultEvent.eventType == EventType.INTERMEDIATE) {
+        if (treeEvent.eventType == EventType.INTERMEDIATE) {
             // @ts-ignore
-            eventShape.gate(faultEvent.gateType.toLowerCase())
+            eventShape.gate(treeEvent.gateType.toLowerCase())
         }
 
-        eventShape.attr(['label', 'text'], faultEvent.name);
-        if(faultEvent.probability) {
-            eventShape.attr(['probabilityLabel', 'text'], faultEvent.probability);
+        eventShape.attr(['label', 'text'], treeEvent.name);
+        if(treeEvent.probability) {
+            eventShape.attr(['probabilityLabel', 'text'], treeEvent.probability);
         }
 
         // @ts-ignore
-        eventShape.set('custom/nodeIri', treeNode.iri)
+        eventShape.set('custom/faultEventIri', treeEvent.iri)
 
         setCurrentShape(eventShape)
 
         return () => eventShape.remove();
-    }, [treeNode]);
+    }, [treeEvent]);
 
     return (
         <React.Fragment>
             {
-                currentShape && _.flatten([treeNode.children])
-                    .map(value => <FaultEventShape addSelf={addSelf} treeNode={value}
+                currentShape && _.flatten([treeEvent.children])
+                    .map(value => <FaultEventShape addSelf={addSelf} treeEvent={value}
                                                    key={value.iri} parentShape={currentShape}/>
                     )}
             {
