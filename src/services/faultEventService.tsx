@@ -84,23 +84,6 @@ export const addEvent = async (faultEventIri: string, event: FaultEvent): Promis
     }
 }
 
-export const eventPathToRoot = async (faultEventIri: string) : Promise<FaultEvent[]> => {
-    try {
-        const fragment = extractFragment(faultEventIri);
-
-        const response = await axiosClient.get(
-            `/faultEvents/${fragment}/eventPathToRoot`,
-            {
-                headers: authHeaders()
-            }
-        )
-        return JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(response.data, EVENT_CONTEXT);
-    } catch (e) {
-        console.log('Event Service - Failed to call /eventPathToRoot')
-        return new Promise((resolve, reject) => reject("Failed to resolve event paths"));
-    }
-}
-
 export const eventFromHookFormValues = (values: any): FaultEvent => {
     let faultEvent
     if (values.existingEvent) {
@@ -127,9 +110,10 @@ export const eventFromHookFormValues = (values: any): FaultEvent => {
     return faultEvent;
 }
 
-export const toEventsWithChildReferences = (events: FaultEvent[]) => {
+// children are cleared to prevent issues with duplicate RPNs and references in invalid order
+export const toEventsWithoutChildren = (events: FaultEvent[]) => {
     return events.map(e => {
-        e.children = flatten([e.children]).map(child => {return {iri: child.iri}})
+        e.children = []
         return e
     })
 }

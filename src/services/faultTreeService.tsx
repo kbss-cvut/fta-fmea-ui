@@ -4,6 +4,7 @@ import axiosClient from "@services/utils/axiosUtils";
 import {FaultTree, CONTEXT} from "@models/faultTreeModel";
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
+import {CONTEXT as EVENT_CONTEXT, FaultEvent} from "@models/eventModel";
 
 export const findAll = async (): Promise<FaultTree[]> => {
     try {
@@ -92,5 +93,23 @@ export const remove = async (faultTreeIri: string): Promise<void> => {
     } catch (e) {
         console.log('Fault Tree Service - Failed to call /remove')
         return new Promise((resolve, reject) => reject("Failed to remove fault tree"));
+    }
+}
+
+export const rootToLeafEventPath = async (treeIri: string, leafEventIri: string) : Promise<FaultEvent[]> => {
+    try {
+        const treeFragment = extractFragment(treeIri);
+        const leafFragment = extractFragment(leafEventIri);
+
+        const response = await axiosClient.get(
+            `/faultTrees/${treeFragment}/rootToLeafEventPath/${leafFragment}`,
+            {
+                headers: authHeaders()
+            }
+        )
+        return JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(response.data, EVENT_CONTEXT);
+    } catch (e) {
+        console.log('Fault Tree Service - Failed to call /rootToLeafEventPath')
+        return new Promise((resolve, reject) => reject("Failed to resolve event paths"));
     }
 }

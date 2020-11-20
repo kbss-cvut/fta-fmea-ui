@@ -10,7 +10,6 @@ const ctx = {
     "eventType": VocabularyUtils.PREFIX + "hasFaultEventType",
     "rpn": VocabularyUtils.PREFIX + "hasRPN",
     "probability": VocabularyUtils.PREFIX + "hasProbability",
-    "parent": VocabularyUtils.PREFIX + "hasParent",
     "children": VocabularyUtils.PREFIX + "hasChildren",
 };
 
@@ -31,7 +30,6 @@ export interface FaultEvent extends AbstractModel {
     rpn: RiskPriorityNumber,
     gateType?: GateType,
     probability?: number,
-    parent?: string,
     children?: FaultEvent[],
 }
 

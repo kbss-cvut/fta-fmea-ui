@@ -3,7 +3,8 @@ import Dialog from '@material-ui/core/Dialog';
 import {DialogTitle} from "@components/materialui/dialog/DialogTitle";
 import {DialogContent} from "@components/materialui/dialog/DialogContent";
 import FailureModeStepper from "./FailureModeStepper";
-import {EventPathToRootProvider} from "@hooks/useEventPathToRoot";
+import {RootToLeafEventPathProvider} from "@hooks/useRootToLeafPath";
+import {useCurrentFaultTree} from "@hooks/useCurrentFaultTree";
 
 interface Props {
     open: boolean,
@@ -12,13 +13,15 @@ interface Props {
 }
 
 const FailureModeDialog = ({open, onClose, leafEventIri}: Props) => {
+    const [faultTree,] = useCurrentFaultTree();
+
     return (
         <Dialog open={open} onClose={onClose} aria-labelledby="failure-mode-dialog" fullWidth maxWidth="lg">
             <DialogTitle id="failure-mode-dialog" onClose={onClose}>Create Failure Mode</DialogTitle>
             <DialogContent dividers>
-                <EventPathToRootProvider leafEventIri={leafEventIri}>
+                <RootToLeafEventPathProvider faultTreeIri={faultTree?.iri} leafEventIri={leafEventIri}>
                     <FailureModeStepper onClose={onClose}/>
-                </EventPathToRootProvider>
+                </RootToLeafEventPathProvider>
             </DialogContent>
         </Dialog>
     );

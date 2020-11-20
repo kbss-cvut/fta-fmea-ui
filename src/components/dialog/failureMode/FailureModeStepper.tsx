@@ -15,11 +15,11 @@ import FailureModeStepperConfirmation from "@components/dialog/failureMode/Failu
 import FailureModeCreationStep from "@components/dialog/failureMode/FailureModeCreationStep";
 import {CreateFailureMode, FailureMode} from "@models/failureModeModel";
 import {FaultEvent} from "@models/eventModel";
-import {useEventPathToRoot} from "@hooks/useEventPathToRoot";
+import {useRootToLeafPath} from "@hooks/useRootToLeafPath";
 import {findIndex} from "lodash";
 import * as componentService from "@services/componentService";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
-import {toEventsWithChildReferences} from "@services/faultEventService";
+import {toEventsWithoutChildren} from "@services/faultEventService";
 
 const stepTitles = ["Component", "Influenced Function", "Effects", "Confirmation"];
 
@@ -31,7 +31,7 @@ const FailureModeStepper = ({onClose}: Props) => {
     const classes = useStyles();
     const [showSnackbar] = useSnackbar();
 
-    const eventPath = useEventPathToRoot()
+    const eventPath = useRootToLeafPath()
     const [eventNamesPath, setEventNamesPath] = useState([]);
 
     useEffect(() => {
@@ -141,7 +141,7 @@ const FailureModeStepper = ({onClose}: Props) => {
     const handleCreateFailureMode = () => {
         const createFailureMode = {
             name: selectedFailureMode.name,
-            effects: toEventsWithChildReferences(effects),
+            effects: toEventsWithoutChildren(effects),
             influencedFunction: selectedFunction
         } as CreateFailureMode
 
