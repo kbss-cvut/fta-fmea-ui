@@ -56,7 +56,7 @@ const DashboardFaultTreeList = () => {
                     const routePath = ROUTES.FTA + extractFragment(tree.iri);
                     return (
                         <GridListTile key={tree.iri} className={classes.gridListTile}>
-                            <Card>
+                            <Card className={classes.card}>
                                 <CardHeader
                                     action={
                                         <IconButton aria-label="settings" onClick={(e) => handleContextMenu(e, tree)}>

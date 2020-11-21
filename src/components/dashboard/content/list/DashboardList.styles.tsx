@@ -9,6 +9,9 @@ const useStyles = makeStyles((theme: Theme) => {
             gridListTile: {
                 height: '100% !important',
             },
+            card: {
+                margin: theme.spacing(1),
+            }
         })
     }
 );
