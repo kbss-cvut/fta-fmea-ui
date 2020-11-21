@@ -6,10 +6,10 @@ import {useComponents} from "@hooks/useComponents";
 import AddIcon from "@material-ui/icons/Add";
 import {Component} from "@models/componentModel";
 import {Controller, useForm} from "react-hook-form";
-import {schema} from "@components/picker/component/ComponentPicker.schema";
-import useStyles from "@components/picker/component/ComponentPicker.styles";
+import {schema} from "./Component.schema";
+import useStyles from "./ComponentPicker.styles";
 import {yupResolver} from "@hookform/resolvers/yup";
-import DividerWithText from "@components/materialui/DividerWithText";
+import DividerWithText from "../../materialui/DividerWithText";
 
 interface Props {
     selectedComponent: Component | null,

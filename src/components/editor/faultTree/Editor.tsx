@@ -2,21 +2,18 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 import {cloneDeep, concat, flatten, assign, filter} from "lodash";
 import EditorCanvas from "./canvas/EditorCanvas";
-import {findEventByIri, findEventParentByIri} from "../../../utils/treeUtils";
-import ElementContextMenu, {
-    contextMenuDefaultAnchor,
-    ElementContextMenuAnchor
-} from "./menu/ElementContextMenu";
-import {useLocalContext} from "../../../hooks/useLocalContext";
+import {findEventByIri, findEventParentByIri} from "@utils/treeUtils";
+import ElementContextMenu from "./menu/ElementContextMenu";
+import {useLocalContext} from "@hooks/useLocalContext";
 import * as faultEventService from "../../../services/faultEventService";
-import {SnackbarType, useSnackbar} from "../../../hooks/useSnackbar";
-import {useCurrentFaultTree} from "../../../hooks/useCurrentFaultTree";
-import {useConfirmDialog} from "../../../hooks/useConfirmDialog";
+import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
+import {useCurrentFaultTree} from "@hooks/useCurrentFaultTree";
+import {useConfirmDialog} from "@hooks/useConfirmDialog";
 import FaultEventDialog from "../../dialog/faultEvent/FaultEventDialog";
-import {FaultEvent} from "../../../models/eventModel";
+import {FaultEvent} from "@models/eventModel";
 import PngExporter, {PngExportData} from "@components/editor/faultTree/tools/PngExporter";
 
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@components/editor/contextMenuUtils";
 
 const Editor = () => {
     const [showSnackbar] = useSnackbar()

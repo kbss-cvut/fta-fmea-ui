@@ -1,32 +1,30 @@
 import {Menu, MenuItem} from "@material-ui/core";
 import * as React from "react";
-import {EventType} from "@models/eventModel";
 import {ElementContextMenuAnchor} from "@components/editor/contextMenuUtils";
 
 interface Props {
-    eventType: EventType,
     anchorPosition: ElementContextMenuAnchor,
     onEditClick: () => void,
-    onNewEventClick: () => void,
-    onEventDelete: () => void,
+    onComponentCreate: () => void,
+    onComponentDelete: () => void,
+    createOnly: boolean,
     onClose: () => void,
 }
 
-const ElementContextMenu = ({eventType, anchorPosition, onClose, onEditClick, onNewEventClick, onEventDelete}: Props) => {
+const ComponentContextMenu = ({anchorPosition, onClose, onEditClick, onComponentDelete, onComponentCreate, createOnly}: Props) => {
+    const handleCreateClick = () => {
+        onClose()
+        onComponentCreate()
+    }
 
     const handleEditClick = () => {
         onClose()
         onEditClick()
     }
 
-    const handleNewEventClick = () => {
-        onClose()
-        onNewEventClick()
-    }
-
     const handleDeleteClick = () => {
         onClose()
-        onEventDelete()
+        onComponentDelete()
     }
 
     return (
@@ -42,12 +40,11 @@ const ElementContextMenu = ({eventType, anchorPosition, onClose, onEditClick, on
                 } : undefined
             }
         >
-            <MenuItem key="event-menu-edit" onClick={handleEditClick}>Edit</MenuItem>
-            {eventType === EventType.INTERMEDIATE &&
-            <MenuItem key="event-menu-new-event" onClick={handleNewEventClick}>New Event</MenuItem>}
-            <MenuItem key="event-menu-delete" onClick={handleDeleteClick}>Delete</MenuItem>
+            <MenuItem key="component-create" onClick={handleCreateClick}>Create</MenuItem>
+            {!createOnly && <MenuItem key="component-edit" onClick={handleEditClick}>Edit</MenuItem>}
+            {!createOnly && <MenuItem key="component-delete" onClick={handleDeleteClick}>Delete</MenuItem>}
         </Menu>
     );
 }
 
-export default ElementContextMenu;
+export default ComponentContextMenu;

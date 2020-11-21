@@ -1,9 +1,7 @@
 import {
-    Button,
     Card,
     CardActions,
     CardHeader,
-    Grid,
     GridList,
     GridListTile,
     IconButton,
@@ -15,13 +13,13 @@ import {useFaultTrees} from "@hooks/useFaultTrees";
 import useStyles from "./DashboardList.styles";
 import {useState} from "react";
 import {FaultTree} from "@models/faultTreeModel";
-import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@components/editor/faultTree/menu/ElementContextMenu";
 import {useConfirmDialog} from "@hooks/useConfirmDialog";
-import FaultTreeItemContextMenu from "@components/editor/faultTree/menu/FaultTreeItemContextMenu";
+import FaultTreeContextMenu from "@components/editor/faultTree/menu/FaultTreeContextMenu";
 import FaultTreeEditDialog from "@components/dialog/faultTree/FaultTreeEditDialog";
 import {Link as RouterLink} from "react-router-dom";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {ROUTES} from "@utils/constants";
+import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@components/editor/contextMenuUtils";
 
 const DashboardFaultTreeList = () => {
     const classes = useStyles();
@@ -76,7 +74,7 @@ const DashboardFaultTreeList = () => {
                 })}
             </GridList>
 
-            <FaultTreeItemContextMenu
+            <FaultTreeContextMenu
                 anchorPosition={contextMenuAnchor}
                 onEditClick={() => setEditDialogOpen(true)}
                 onDelete={() => handleDelete(contextMenuSelectedTree)}

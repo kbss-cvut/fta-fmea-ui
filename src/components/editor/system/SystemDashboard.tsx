@@ -6,7 +6,7 @@ import {CssBaseline} from "@material-ui/core";
 import Toolbar from "@material-ui/core/Toolbar";
 import useStyles from "@components/dashboard/Dashboard.styles";
 import {composeFragment} from "@services/utils/uriIdentifierUtils";
-import Editor from "@components/editor/faultTree/Editor";
+import Editor from "@components/editor/system/Editor";
 import {CurrentSystemProvider} from "@hooks/useCurrentSystem";
 
 const SystemDashboard = () => {
@@ -23,7 +23,7 @@ const SystemDashboard = () => {
                 <Toolbar/>
 
                 <CurrentSystemProvider systemIri={systemIri}>
-
+                    <Editor/>
                 </CurrentSystemProvider>
             </div>
         </DashboardContentProvider>

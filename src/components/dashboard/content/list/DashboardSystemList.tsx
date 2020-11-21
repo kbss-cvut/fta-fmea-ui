@@ -14,17 +14,15 @@ import * as React from "react";
 import {useFaultTrees} from "@hooks/useFaultTrees";
 import useStyles from "./DashboardList.styles";
 import {useState} from "react";
-import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@components/editor/faultTree/menu/ElementContextMenu";
 import {useConfirmDialog} from "@hooks/useConfirmDialog";
-import FaultTreeItemContextMenu from "@components/editor/faultTree/menu/FaultTreeItemContextMenu";
-import FaultTreeEditDialog from "@components/dialog/faultTree/FaultTreeEditDialog";
 import {Link as RouterLink} from "react-router-dom";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {ROUTES} from "@utils/constants";
-import {useSystems} from "../../../../hooks/useSystems";
-import {System} from "../../../../models/systemModel";
-import SystemContextMenu from "@components/editor/faultTree/menu/SystemContextMenu";
+import {useSystems} from "@hooks/useSystems";
+import {System} from "@models/systemModel";
 import SystemEditDialog from "@components/dialog/system/SystemEditDialog";
+import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@components/editor/contextMenuUtils";
+import SystemContextMenu from "@components/editor/system/menu/SystemContextMenu";
 
 const DashboardSystemList = () => {
     const classes = useStyles();

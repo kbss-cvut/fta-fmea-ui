@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
-import ComponentPicker from "@components/picker/component/ComponentPicker";
+import ComponentPicker from "@components/dialog/component/ComponentPicker";
 import {Component} from "@models/componentModel";
 import {Function} from "@models/functionModel";
 import {Button} from "@material-ui/core";

@@ -1,6 +1,6 @@
-import {FaultEvent} from "../../../../models/eventModel";
+import {FaultEvent} from "@models/eventModel";
 
-interface JointProps {
+export interface JointProps {
     addSelf: (any) => void,
 }
 

@@ -4,7 +4,7 @@ import {useState} from "react";
 import {ListItem, ListItemSecondaryAction, ListItemText} from "@material-ui/core";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@components/editor/faultTree/menu/ElementContextMenu";
-import FaultTreeItemContextMenu from "@components/editor/faultTree/menu/FaultTreeItemContextMenu";
+import FaultTreeContextMenu from "../editor/faultTree/menu/FaultTreeContextMenu";
 import {FaultTree} from "@models/faultTreeModel";
 import {useConfirmDialog} from "@hooks/useConfirmDialog";
 import {useFaultTrees} from "@hooks/useFaultTrees";
@@ -50,7 +50,7 @@ const FaultTreeListItem = ({faultTree, onClick}: Props) => {
                 </ListItemSecondaryAction>
             </ListItem>
 
-            <FaultTreeItemContextMenu
+            <FaultTreeContextMenu
                 anchorPosition={contextMenuAnchor}
                 onEditClick={() => setEditDialogOpen(true)}
                 onDelete={() => handleDelete(contextMenuSelectedTree)}

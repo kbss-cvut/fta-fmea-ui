@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Menu, MenuItem} from "@material-ui/core";
-import {ElementContextMenuAnchor} from "./ElementContextMenu";
+import {ElementContextMenuAnchor} from "../../contextMenuUtils";
 
 interface Props {
     anchorPosition: ElementContextMenuAnchor,
@@ -9,7 +9,7 @@ interface Props {
     onClose: () => void,
 }
 
-const FaultTreeItemContextMenu = ({anchorPosition, onClose, onEditClick, onDelete}: Props) => {
+const SystemContextMenu = ({anchorPosition, onClose, onEditClick, onDelete}: Props) => {
 
     const handleEditClick = () => {
         onClose()
@@ -34,10 +34,10 @@ const FaultTreeItemContextMenu = ({anchorPosition, onClose, onEditClick, onDelet
                 } : undefined
             }
         >
-            <MenuItem key="fault-tree-menu-rename" onClick={handleEditClick}>Rename</MenuItem>
-            <MenuItem key="fault-tree-delete" onClick={handleDeleteClick}>Delete</MenuItem>
+            <MenuItem key="system-menu-rename" onClick={handleEditClick}>Rename</MenuItem>
+            <MenuItem key="system-delete" onClick={handleDeleteClick}>Delete</MenuItem>
         </Menu>
     );
 }
 
-export default FaultTreeItemContextMenu;
+export default SystemContextMenu;

@@ -1,10 +1,10 @@
 import * as React from "react";
 import * as _ from "lodash";
 import {useEffect, useState} from "react";
-import {EventType} from "../../../../models/eventModel";
+import {EventType} from "@models/eventModel";
 import ConnectorShape from "./ConnectorShape";
 import {JointEventShapeProps} from "./EventShapeProps";
-import {createShape} from "../../../../services/jointService";
+import {createShape} from "@services/jointService";
 
 const FaultEventShape = ({addSelf, treeEvent, parentShape}: JointEventShapeProps) => {
     const [currentShape, setCurrentShape] = useState<any>(undefined)
