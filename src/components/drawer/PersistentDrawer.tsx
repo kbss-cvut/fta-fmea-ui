@@ -13,31 +13,28 @@ import AppBar from "@components/appBar/AppBar";
 import {withRouter} from "react-router-dom";
 import DrawerComponentMenuList from "@components/drawer/menu/DrawerComponentMenuList";
 import {Typography} from "@material-ui/core";
-import {useDrawerOpen} from "@hooks/useDrawerOpen";
 import {FaultEventsProvider} from "@hooks/useFaultEvents";
 
 const PersistentDrawer = () => {
     const classes = useStyles();
     const theme = useTheme();
 
-    const [open, setOpen] = useDrawerOpen();
-
     return (
         <div className={classes.root}>
             <CssBaseline/>
-            <AppBar/>
+            <AppBar title={"Test"}/>
             <Drawer
                 className={classes.drawer}
                 variant="persistent"
                 anchor="left"
-                open={open}
+
                 classes={{paper: classes.drawerPaper,}}
             >
                 <div className={classes.drawerHeader}>
                     <Typography className={classes.drawerHeaderTitle} variant="h6" gutterBottom>
                         Fault Trees
                     </Typography>
-                    <IconButton onClick={() => setOpen(false)}>
+                    <IconButton >
                         {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
                     </IconButton>
                 </div>

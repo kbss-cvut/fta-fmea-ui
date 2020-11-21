@@ -1,6 +1,6 @@
 import * as React from "react";
 import Login from "@components/login/Login";
-import Dashboard from "@components/Dashboard";
+import Dashboard from "@components/dashboard/Dashboard";
 import {Redirect, Route, Router, Switch} from "react-router-dom";
 import Logout from "@components/Logout";
 import PublicRoute from "@components/routes/PublicRoute";

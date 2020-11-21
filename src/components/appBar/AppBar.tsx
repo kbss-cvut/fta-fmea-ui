@@ -9,18 +9,20 @@ import {AccountCircle} from "@material-ui/icons";
 import {Menu, MenuItem, AppBar as MaterialAppBar} from "@material-ui/core";
 import {FormEvent, useState} from "react";
 import {useHistory} from "react-router-dom";
-import {useDrawerOpen} from "@hooks/useDrawerOpen";
 import ChangePasswordDialog from "@components/dialog/password/ChangePasswordDialog";
 import {getLoggedUser} from "@hooks/useLoggedUser";
 import {ROUTES} from "@utils/constants";
 
-const AppBar = () => {
+interface Props {
+    title: string,
+}
+
+const AppBar = ({title}: Props) => {
     const classes = useStyles();
     const history = useHistory();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const isMenuOpen = Boolean(anchorEl);
-    const [open, setOpen] = useDrawerOpen();
 
     const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -61,19 +63,9 @@ const AppBar = () => {
     return (
         <div>
             <MaterialAppBar
-                position="fixed"
-                className={clsx(classes.appBar, {[classes.appBarShift]: open,})}>
+                position="fixed">
                 <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={() => setOpen(true)}
-                        edge="start"
-                        className={clsx(classes.menuButton, open && classes.hide)}
-                    >
-                        <MenuIcon/>
-                    </IconButton>
-                    <Typography className={classes.title} variant="h6" noWrap>Editor</Typography>
+                    <Typography className={classes.title} variant="h6" noWrap>{title}</Typography>
                     <IconButton
                         edge="end"
                         aria-label="account of current user"

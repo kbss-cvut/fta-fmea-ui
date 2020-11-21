@@ -5,7 +5,7 @@ import {DialogTitle} from "@components/materialui/dialog/DialogTitle";
 import {DialogContent} from "@components/materialui/dialog/DialogContent";
 import {useForm} from "react-hook-form";
 import {schema} from "@components/dialog/faultTree/FaultTreeDialog.schema";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {DialogActions} from "@components/materialui/dialog/DialogActions";
 import {useFaultTrees} from "@hooks/useFaultTrees";
 import {FaultTree} from "@models/faultTreeModel";
@@ -23,9 +23,15 @@ const FaultTreeEditDialog = ({open, handleCloseDialog, faultTree}: Props) => {
 
     const useFormMethods = useForm({
         resolver: yupResolver(schema),
-        defaultValues: {faultTreeName: faultTree.name}
+        defaultValues: {faultTreeName: faultTree?.name}
     });
-    const {handleSubmit} = useFormMethods;
+    const {handleSubmit, reset} = useFormMethods;
+
+    useEffect(() => {
+        reset({
+            faultTreeName: faultTree?.name
+        })
+    }, [faultTree])
 
     const handleCreateFaultTree = async (values: any) => {
         setIsProcessing(true)
