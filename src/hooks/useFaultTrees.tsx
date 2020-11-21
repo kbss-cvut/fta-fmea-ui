@@ -6,7 +6,6 @@ import * as faultTreeService from "@services/faultTreeService"
 import {axiosSource} from "@services/utils/axiosUtils";
 import {ChildrenProps} from "@utils/hookUtils";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
-import {getLastOpenTabsIris, OpenTabsProvider, saveLastOpenTabsIris} from "./useOpenTabs";
 import {filter, findIndex} from "lodash";
 
 type faultTreeContextType = [
@@ -43,12 +42,6 @@ export const FaultTreesProvider = ({children}: ChildrenProps) => {
         faultTreeService.create(faultTree)
             .then(value => {
                 showSnackbar('Fault Tree created', SnackbarType.SUCCESS)
-
-                // add to open tabs
-                const openTabIris = getLastOpenTabsIris()
-                openTabIris.push(value.iri)
-                saveLastOpenTabsIris(openTabIris)
-
                 _setFaultTrees([..._faultTrees, value])
             })
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
@@ -62,14 +55,12 @@ export const FaultTreesProvider = ({children}: ChildrenProps) => {
                 const index = findIndex(_faultTrees, el => el.iri === treeToUpdate.iri);
                 _faultTrees.splice(index, 1, treeToUpdate);
 
-                // TODO cloning necessary?
-                console.log('_setFaultTrees after update')
                 _setFaultTrees(_faultTrees)
             })
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
 
-    const removeTree = async(treeToRemove: FaultTree) => {
+    const removeTree = async (treeToRemove: FaultTree) => {
         faultTreeService.remove(treeToRemove.iri)
             .then(value => {
                 showSnackbar('Fault Tree removed', SnackbarType.SUCCESS)
@@ -81,9 +72,7 @@ export const FaultTreesProvider = ({children}: ChildrenProps) => {
 
     return (
         <faultTreesContext.Provider value={[_faultTrees, addFaultTree, updateTree, removeTree]}>
-            <OpenTabsProvider>
-                {children}
-            </OpenTabsProvider>
+            {children}
         </faultTreesContext.Provider>
     );
 }

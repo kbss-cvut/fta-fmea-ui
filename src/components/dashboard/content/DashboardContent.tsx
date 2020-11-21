@@ -29,12 +29,10 @@ const DashboardContent = () => {
                 <Typography variant="h5">Fault Trees</Typography>
                 <Divider/>
                 <DashboardFaultTreeList/>
-                <Divider/>
 
                 <Typography variant="h5">Failure Modes</Typography>
                 <Divider/>
                 <DashboardFailureModeList/>
-                <Divider/>
             </div>
 
             <SpeedDial
