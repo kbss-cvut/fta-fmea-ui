@@ -1,16 +1,16 @@
 import {useEffect, useRef, useState} from "react";
 import * as React from "react";
-import useStyles from "@components/editor/canvas/EditorCanvas.styles";
-import FaultEventShape from "@components/editor/shapes/FaultEventShape";
+import useStyles from "./EditorCanvas.styles";
+import FaultEventShape from "../shapes/FaultEventShape";
 import * as joint from 'jointjs';
 import * as dagre from 'dagre';
 import * as graphlib from 'graphlib';
-import {useLocalContext} from "@hooks/useLocalContext";
-import {PngExportData} from "@components/editor/tools/PngExporter";
+import {useLocalContext} from "../../../../hooks/useLocalContext";
+import {PngExportData} from "../tools/PngExporter";
 import {V} from "jointjs";
-import SidebarMenu from "@components/editor/tools/SidebarMenu";
-import {FTABoundary} from "@components/editor/shapes/shapesDefinitions";
-import {FaultEvent} from "@models/eventModel";
+import SidebarMenu from "../tools/SidebarMenu";
+import {FTABoundary} from "../shapes/shapesDefinitions";
+import {FaultEvent} from "../../../../models/eventModel";
 
 interface Props {
     rootEvent: FaultEvent,

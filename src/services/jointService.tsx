@@ -5,7 +5,7 @@ import {
     ExternalEvent,
     IntermediateEvent,
     UndevelopedEvent
-} from "@components/editor/shapes/shapesDefinitions";
+} from "@components/editor/faultTree/shapes/shapesDefinitions";
 
 export const createShape = (faultEvent: FaultEvent) => {
     switch (faultEvent.eventType) {

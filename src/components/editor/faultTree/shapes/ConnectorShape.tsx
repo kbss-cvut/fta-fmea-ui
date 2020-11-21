@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useEffect} from "react";
-import {JointConnectorShapeProps} from "@components/editor/shapes/EventShapeProps";
-import {Link} from "@components/editor/shapes/shapesDefinitions";
+import {JointConnectorShapeProps} from "./EventShapeProps";
+import {Link} from "./shapesDefinitions";
 
 
 const ConnectorShape = ({addSelf, source, target}: JointConnectorShapeProps) => {

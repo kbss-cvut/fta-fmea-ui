@@ -30,7 +30,7 @@ const Event = joint.dia.Element.define('fta.Event', {
             fill: '#333333',
             textAnchor: 'middle',
             textVerticalAnchor: 'middle',
-            refX: '25%',
+            refX: '20%',
             refY: '110%',
         }
     }

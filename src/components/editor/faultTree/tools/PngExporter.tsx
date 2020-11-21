@@ -1,10 +1,10 @@
 import * as React from "react";
 import {Button, Dialog, Link} from "@material-ui/core";
-import {DialogTitle} from "@components/materialui/dialog/DialogTitle";
-import {DialogContent} from "@components/materialui/dialog/DialogContent";
-import {DialogActions} from "@components/materialui/dialog/DialogActions";
+import {DialogTitle} from "../../../materialui/dialog/DialogTitle";
+import {DialogContent} from "../../../materialui/dialog/DialogContent";
+import {DialogActions} from "../../../materialui/dialog/DialogActions";
 import {useState} from "react";
-import useStyles from "@components/editor/tools/PngExporter.styles";
+import useStyles from "./PngExporter.styles";
 
 export interface PngExportData {
     encodedData: any,

@@ -1,19 +1,19 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
 import {cloneDeep, concat, flatten, assign, filter} from "lodash";
-import EditorCanvas from "@components/editor/canvas/EditorCanvas";
-import {findEventByIri, findEventParentByIri} from "@utils/treeUtils";
+import EditorCanvas from "./canvas/EditorCanvas";
+import {findEventByIri, findEventParentByIri} from "../../../utils/treeUtils";
 import ElementContextMenu, {
     contextMenuDefaultAnchor,
     ElementContextMenuAnchor
-} from "@components/editor/menu/ElementContextMenu";
-import {useLocalContext} from "@hooks/useLocalContext";
-import * as faultEventService from "@services/faultEventService";
-import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
-import {useCurrentFaultTree} from "@hooks/useCurrentFaultTree";
-import {useConfirmDialog} from "@hooks/useConfirmDialog";
-import FaultEventDialog from "@components/dialog/faultEvent/FaultEventDialog";
-import {FaultEvent} from "@models/eventModel";
+} from "./menu/ElementContextMenu";
+import {useLocalContext} from "../../../hooks/useLocalContext";
+import * as faultEventService from "../../../services/faultEventService";
+import {SnackbarType, useSnackbar} from "../../../hooks/useSnackbar";
+import {useCurrentFaultTree} from "../../../hooks/useCurrentFaultTree";
+import {useConfirmDialog} from "../../../hooks/useConfirmDialog";
+import FaultEventDialog from "../../dialog/faultEvent/FaultEventDialog";
+import {FaultEvent} from "../../../models/eventModel";
 
 interface Props {
     exportImage: (string) => void

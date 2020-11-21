@@ -2,18 +2,18 @@ import * as React from 'react';
 import * as _ from "lodash";
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
-import {useStyles} from "@components/editor/tabs/scroll/EditorScrollTabs.styles";
-import {useOpenTabs} from "@hooks/useOpenTabs";
-import {FaultEvent} from "@models/eventModel";
-import TabPanel from "@components/editor/tabs/panel/TabPanel";
-import Editor from "@components/editor/Editor";
+import {useStyles} from "./EditorScrollTabs.styles";
+import {useOpenTabs} from "../../../../../hooks/useOpenTabs";
+import {FaultEvent} from "../../../../../models/eventModel";
+import TabPanel from "../panel/TabPanel";
+import Editor from "../../Editor";
 import {IconButton} from "@material-ui/core";
 import {Close} from "@material-ui/icons";
 import Tab from "@material-ui/core/Tab";
 import {useEffect, useState} from "react";
-import PngExporter, {PngExportData} from "@components/editor/tools/PngExporter";
-import {CurrentFaultTreeProvider} from "@hooks/useCurrentFaultTree";
-import {FaultTree} from "@models/faultTreeModel";
+import PngExporter, {PngExportData} from "../../tools/PngExporter";
+import {CurrentFaultTreeProvider} from "../../../../../hooks/useCurrentFaultTree";
+import {FaultTree} from "../../../../../models/faultTreeModel";
 
 const a11yProps = (index: any) => {
     return {

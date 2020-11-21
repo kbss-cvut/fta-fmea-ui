@@ -5,8 +5,8 @@ import ShapeToolPane from "./ShapeToolPane";
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import AccountTreeIcon from '@material-ui/icons/AccountTree';
 import {useState} from "react";
-import {EventType, FaultEvent} from "@models/eventModel";
-import FailureModeDialog from "@components/dialog/failureMode/FailureModeDialog";
+import {EventType, FaultEvent} from "../../../../models/eventModel";
+import FailureModeDialog from "../../../dialog/failureMode/FailureModeDialog";
 
 interface Props {
     onRestoreLayout: () => void,

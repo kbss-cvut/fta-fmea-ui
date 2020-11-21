@@ -22,7 +22,10 @@ const AppRoutes = () => {
                     <PrivateRoute path={ROUTES.LOGOUT} component={Logout} exact/>
 
                     <PrivateRoute path={ROUTES.DASHBOARD} component={Dashboard} exact/>
-                    <PrivateRoute path={ROUTES.DASHBOARD} component={Dashboard} exact/>
+
+                    <PrivateRoute path={ROUTES.SYSTEM} component={Dashboard} exact/>
+                    <PrivateRoute path={ROUTES.FTA} component={Dashboard} exact/>
+                    <PrivateRoute path={ROUTES.FMEA} component={Dashboard} exact/>
 
                     <Route path="*" render={() => <Redirect to={ROUTES.DASHBOARD}/>}/>
                 </Switch>

@@ -1,10 +1,10 @@
 import * as React from "react";
 import * as _ from "lodash";
 import {useEffect, useState} from "react";
-import {EventType} from "@models/eventModel";
-import ConnectorShape from "@components/editor/shapes/ConnectorShape";
-import {JointEventShapeProps} from "@components/editor/shapes/EventShapeProps";
-import {createShape} from "@services/jointService";
+import {EventType} from "../../../../models/eventModel";
+import ConnectorShape from "./ConnectorShape";
+import {JointEventShapeProps} from "./EventShapeProps";
+import {createShape} from "../../../../services/jointService";
 
 const FaultEventShape = ({addSelf, treeEvent, parentShape}: JointEventShapeProps) => {
     const [currentShape, setCurrentShape] = useState<any>(undefined)
@@ -20,7 +20,7 @@ const FaultEventShape = ({addSelf, treeEvent, parentShape}: JointEventShapeProps
 
         eventShape.attr(['label', 'text'], treeEvent.name);
         if(treeEvent.probability) {
-            eventShape.attr(['probabilityLabel', 'text'], treeEvent.probability.toExponential());
+            eventShape.attr(['probabilityLabel', 'text'], treeEvent.probability.toExponential(2));
         }
 
         // @ts-ignore
