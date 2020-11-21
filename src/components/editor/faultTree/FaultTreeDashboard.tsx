@@ -19,7 +19,7 @@ const FaultTreeDashboard = () => {
         <DashboardContentProvider>
             <div className={classes.root}>
                 <CssBaseline/>
-                <AppBar title={'Fault Tree'}/>
+                <AppBar title={'Fault Tree'} showBackButton/>
                 <Toolbar/>
 
                 <CurrentFaultTreeProvider faultTreeIri={treeIri}>

@@ -1,7 +1,5 @@
-import clsx from "clsx";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 import Typography from "@material-ui/core/Typography";
 import * as React from "react";
 import useStyles from "@components/appBar/AppBar.styles";
@@ -12,12 +10,14 @@ import {useHistory} from "react-router-dom";
 import ChangePasswordDialog from "@components/dialog/password/ChangePasswordDialog";
 import {getLoggedUser} from "@hooks/useLoggedUser";
 import {ROUTES} from "@utils/constants";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 interface Props {
     title: string,
+    showBackButton?: boolean,
 }
 
-const AppBar = ({title}: Props) => {
+const AppBar = ({title, showBackButton = false}: Props) => {
     const classes = useStyles();
     const history = useHistory();
 
@@ -65,6 +65,13 @@ const AppBar = ({title}: Props) => {
             <MaterialAppBar
                 position="fixed">
                 <Toolbar>
+                    {showBackButton &&
+                    <IconButton edge="start" className={classes.menuButton} color="inherit"
+                                onClick={() => history.goBack()}>
+                        <ArrowBackIcon/>
+                    </IconButton>
+                    }
+
                     <Typography className={classes.title} variant="h6" noWrap>{title}</Typography>
                     <IconButton
                         edge="end"
