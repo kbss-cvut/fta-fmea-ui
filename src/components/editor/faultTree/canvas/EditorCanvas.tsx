@@ -170,7 +170,7 @@ const EditorCanvas = ({rootEvent, sidebarSelectedEvent, exportImage, onElementCo
     }
 
     return (
-        <React.Fragment>
+        <div className={classes.root}>
             <div id="jointjs-container" className={classes.konvaContainer} ref={containerRef}>
                 {container && rootEvent && <FaultEventShape addSelf={addSelf} treeEvent={rootEvent}/>}
             </div>
@@ -181,7 +181,7 @@ const EditorCanvas = ({rootEvent, sidebarSelectedEvent, exportImage, onElementCo
                     shapeToolData={sidebarSelectedEvent}
                     onEventUpdated={onEventUpdated}/>
             </div>
-        </React.Fragment>
+        </div>
     );
 }
 

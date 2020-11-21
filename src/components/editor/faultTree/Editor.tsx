@@ -19,7 +19,6 @@ import PngExporter, {PngExportData} from "@components/editor/faultTree/tools/Png
 import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 
 const Editor = () => {
-
     const [showSnackbar] = useSnackbar()
     const [requestConfirmation] = useConfirmDialog()
 

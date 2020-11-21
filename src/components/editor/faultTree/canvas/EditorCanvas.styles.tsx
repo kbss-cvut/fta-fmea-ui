@@ -3,9 +3,12 @@ import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme: Theme) => {
         return createStyles({
+            root: {
+                flexGrow: 1,
+                display: 'flex',
+            },
             konvaContainer: {
                 marginTop: theme.spacing(1),
-                display: 'flex',
                 height: `100%`,
                 flexGrow: 7,
             },
