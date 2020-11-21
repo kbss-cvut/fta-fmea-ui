@@ -11,7 +11,7 @@ const DashboardFailureModeList = () => {
     return (
         <GridList className={classes.gridList} cols={6}>
             {failureModes.map((fm) => (
-                <GridListTile key={fm.iri}>
+                <GridListTile key={fm.iri} className={classes.gridListTile}>
                     <Card>
                         <CardHeader
                             action={

@@ -55,7 +55,7 @@ const DashboardFaultTreeList = () => {
                 {faultTrees.map((tree) => {
                     const routePath = ROUTES.FTA + extractFragment(tree.iri);
                     return (
-                        <GridListTile key={tree.iri}>
+                        <GridListTile key={tree.iri} className={classes.gridListTile}>
                             <Card>
                                 <CardHeader
                                     action={

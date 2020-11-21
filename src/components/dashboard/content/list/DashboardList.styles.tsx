@@ -6,6 +6,9 @@ const useStyles = makeStyles((theme: Theme) => {
                 padding: theme.spacing(1, 0, ),
                 height: 'auto',
             },
+            gridListTile: {
+                height: '100% !important',
+            },
         })
     }
 );
