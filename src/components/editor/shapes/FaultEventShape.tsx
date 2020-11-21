@@ -20,7 +20,7 @@ const FaultEventShape = ({addSelf, treeEvent, parentShape}: JointEventShapeProps
 
         eventShape.attr(['label', 'text'], treeEvent.name);
         if(treeEvent.probability) {
-            eventShape.attr(['probabilityLabel', 'text'], treeEvent.probability);
+            eventShape.attr(['probabilityLabel', 'text'], treeEvent.probability.toExponential());
         }
 
         // @ts-ignore
