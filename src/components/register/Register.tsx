@@ -17,6 +17,7 @@ import {useForm} from 'react-hook-form';
 import {schema} from "@components/register/Register.schema";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import { yupResolver } from "@hookform/resolvers/yup";
+import {ROUTES} from "@utils/constants";
 
 const Register = () => {
     const classes = useStyles();
@@ -37,7 +38,7 @@ const Register = () => {
             username: values.username,
             password: values.password
         }).then(value => {
-            history.push("/login");
+            history.push(ROUTES.LOGIN);
         }).catch(reason => {
             setRegistering(false)
             showSnackbar(reason, SnackbarType.ERROR)

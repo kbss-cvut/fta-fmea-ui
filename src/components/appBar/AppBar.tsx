@@ -12,6 +12,7 @@ import {useHistory} from "react-router-dom";
 import {useDrawerOpen} from "@hooks/useDrawerOpen";
 import ChangePasswordDialog from "@components/dialog/password/ChangePasswordDialog";
 import {getLoggedUser} from "@hooks/useLoggedUser";
+import {ROUTES} from "@utils/constants";
 
 const AppBar = () => {
     const classes = useStyles();
@@ -36,7 +37,7 @@ const AppBar = () => {
 
     const handleLogout = (e: FormEvent) => {
         e.preventDefault();
-        history.push('/logout')
+        history.push(ROUTES.LOGOUT)
     }
 
     const menuId = 'user-account-menu';

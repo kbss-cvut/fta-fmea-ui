@@ -1,6 +1,7 @@
 import {Redirect, Route} from "react-router-dom";
 import * as React from "react";
 import {useLoggedUser} from "@hooks/useLoggedUser";
+import {ROUTES} from "@utils/constants";
 
 const PrivateRoute = ({component: Component, ...rest}) => {
     const [loggedUser] = useLoggedUser();
@@ -11,7 +12,7 @@ const PrivateRoute = ({component: Component, ...rest}) => {
         <Route {...rest} render={props => (
             loggedUser && loggedUser.authenticated ?
                 <Component {...props} />
-                : <Redirect to="/login"/>
+                : <Redirect to={ROUTES.LOGIN}/>
         )}/>
     );
 };
