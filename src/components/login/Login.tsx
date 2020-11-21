@@ -19,6 +19,7 @@ import {useForm} from "react-hook-form";
 import {schema} from "@components/login/Login.schema";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import { yupResolver } from "@hookform/resolvers/yup";
+import {ROUTES} from "@utils/constants";
 
 const Login = () => {
     const classes = useStyles();
@@ -101,7 +102,7 @@ const Login = () => {
                     </Button>
                     <Grid container>
                         <Grid item>
-                            <MaterialLink variant="body2" component={RouterLink} to={"/register"}>
+                            <MaterialLink variant="body2" component={RouterLink} to={ROUTES.REGISTER}>
                                 Don't have an account? Sign Up
                             </MaterialLink>
                         </Grid>

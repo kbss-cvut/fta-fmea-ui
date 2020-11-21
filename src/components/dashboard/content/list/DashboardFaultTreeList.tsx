@@ -1,4 +1,14 @@
-import {Button, Card, CardActions, CardHeader, Grid, GridList, GridListTile, IconButton} from "@material-ui/core";
+import {
+    Button,
+    Card,
+    CardActions,
+    CardHeader,
+    Grid,
+    GridList,
+    GridListTile,
+    IconButton,
+    Link as MaterialLink
+} from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import * as React from "react";
 import {useFaultTrees} from "@hooks/useFaultTrees";
@@ -9,6 +19,9 @@ import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@components/ed
 import {useConfirmDialog} from "@hooks/useConfirmDialog";
 import FaultTreeItemContextMenu from "@components/editor/faultTree/menu/FaultTreeItemContextMenu";
 import FaultTreeEditDialog from "@components/dialog/faultTree/FaultTreeEditDialog";
+import {Link as RouterLink} from "react-router-dom";
+import {extractFragment} from "@services/utils/uriIdentifierUtils";
+import {ROUTES} from "@utils/constants";
 
 const DashboardFaultTreeList = () => {
     const classes = useStyles();
@@ -39,23 +52,28 @@ const DashboardFaultTreeList = () => {
     return (
         <React.Fragment>
             <GridList className={classes.gridList} cols={6}>
-                {faultTrees.map((tree) => (
-                    <GridListTile key={tree.iri}>
-                        <Card>
-                            <CardHeader
-                                action={
-                                    <IconButton aria-label="settings" onClick={(e) => handleContextMenu(e, tree)}>
-                                        <MoreVertIcon/>
-                                    </IconButton>
-                                }
-                                title={tree.name}
-                            />
-                            <CardActions disableSpacing>
-                                <Button color="primary">Open</Button>
-                            </CardActions>
-                        </Card>
-                    </GridListTile>
-                ))}
+                {faultTrees.map((tree) => {
+                    const routePath = ROUTES.FTA + extractFragment(tree.iri);
+                    return (
+                        <GridListTile key={tree.iri}>
+                            <Card>
+                                <CardHeader
+                                    action={
+                                        <IconButton aria-label="settings" onClick={(e) => handleContextMenu(e, tree)}>
+                                            <MoreVertIcon/>
+                                        </IconButton>
+                                    }
+                                    title={tree.name}
+                                />
+                                <CardActions disableSpacing>
+                                    <MaterialLink variant="button" component={RouterLink} to={routePath}>
+                                        Open
+                                    </MaterialLink>
+                                </CardActions>
+                            </Card>
+                        </GridListTile>
+                    )
+                })}
             </GridList>
 
             <FaultTreeItemContextMenu

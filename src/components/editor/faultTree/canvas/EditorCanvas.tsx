@@ -5,12 +5,12 @@ import FaultEventShape from "../shapes/FaultEventShape";
 import * as joint from 'jointjs';
 import * as dagre from 'dagre';
 import * as graphlib from 'graphlib';
-import {useLocalContext} from "../../../../hooks/useLocalContext";
+import {useLocalContext} from "@hooks/useLocalContext";
 import {PngExportData} from "../tools/PngExporter";
 import {V} from "jointjs";
 import SidebarMenu from "../tools/SidebarMenu";
 import {FTABoundary} from "../shapes/shapesDefinitions";
-import {FaultEvent} from "../../../../models/eventModel";
+import {FaultEvent} from "@models/eventModel";
 
 interface Props {
     rootEvent: FaultEvent,

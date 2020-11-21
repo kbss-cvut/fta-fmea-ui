@@ -8,7 +8,8 @@ import PrivateRoute from "@components/routes/PrivateRoute";
 import Register from "@components/register/Register";
 import {createBrowserHistory} from "history";
 import {LoggedUserProvider} from "@hooks/useLoggedUser";
-import {ROUTES} from "@utils/constants";
+import {ROUTE_PARAMS, ROUTES} from "@utils/constants";
+import FaultTreeDashboard from "@components/editor/faultTree/FaultTreeDashboard";
 
 export const appHistory = createBrowserHistory()
 
@@ -23,9 +24,9 @@ const AppRoutes = () => {
 
                     <PrivateRoute path={ROUTES.DASHBOARD} component={Dashboard} exact/>
 
-                    <PrivateRoute path={ROUTES.SYSTEM} component={Dashboard} exact/>
-                    <PrivateRoute path={ROUTES.FTA} component={Dashboard} exact/>
-                    <PrivateRoute path={ROUTES.FMEA} component={Dashboard} exact/>
+                    <PrivateRoute path={ROUTES.SYSTEM + ROUTE_PARAMS.SYSTEM_FRAGMENT} component={Dashboard} exact/>
+                    <PrivateRoute path={ROUTES.FTA + ROUTE_PARAMS.FTA_FRAGMENT} component={FaultTreeDashboard} exact/>
+                    <PrivateRoute path={ROUTES.FMEA + ROUTE_PARAMS.FMEA_FRAGMENT} component={Dashboard} exact/>
 
                     <Route path="*" render={() => <Redirect to={ROUTES.DASHBOARD}/>}/>
                 </Switch>

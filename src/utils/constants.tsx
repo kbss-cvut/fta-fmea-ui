@@ -13,8 +13,14 @@ export const ROUTES = {
     LOGIN: "/login",
     LOGOUT: "/logout",
 
-    DASHBOARD: "/dashboard",
-    SYSTEM: "/system/:systemFragment",
-    FTA: "/fta/:treeFragment",
-    FMEA: "/fmea/:fmeaFragment",
+    DASHBOARD: "/",
+    SYSTEM: "/system/",
+    FTA: "/fta/",
+    FMEA: "/fmea/",
+}
+
+export const ROUTE_PARAMS = {
+    SYSTEM_FRAGMENT: ":systemFragment",
+    FTA_FRAGMENT: ":treeFragment",
+    FMEA_FRAGMENT: ":fmeaFragment",
 }

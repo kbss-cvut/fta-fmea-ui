@@ -109,7 +109,7 @@ const Register = () => {
                     </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
-                            <MaterialLink variant="body2" component={RouterLink} to={"/login"}>
+                            <MaterialLink variant="body2" component={RouterLink} to={ROUTES.LOGIN}>
                                 Already have an account? Sign in
                             </MaterialLink>
                         </Grid>

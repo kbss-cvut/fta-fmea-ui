@@ -14,12 +14,12 @@ import {useCurrentFaultTree} from "../../../hooks/useCurrentFaultTree";
 import {useConfirmDialog} from "../../../hooks/useConfirmDialog";
 import FaultEventDialog from "../../dialog/faultEvent/FaultEventDialog";
 import {FaultEvent} from "../../../models/eventModel";
+import PngExporter, {PngExportData} from "@components/editor/faultTree/tools/PngExporter";
 
-interface Props {
-    exportImage: (string) => void
-}
+import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
 
-const Editor = ({exportImage}: Props) => {
+const Editor = () => {
+
     const [showSnackbar] = useSnackbar()
     const [requestConfirmation] = useConfirmDialog()
 
@@ -105,11 +105,13 @@ const Editor = ({exportImage}: Props) => {
         })
     }
 
+    const [exportData, setExportData] = useState<PngExportData>();
+
     return (
         <React.Fragment>
             <EditorCanvas
                 rootEvent={rootEvent}
-                exportImage={exportImage}
+                exportImage={(encodedData) => setExportData(encodedData)}
                 onEventUpdated={handleEventUpdate}
                 sidebarSelectedEvent={sidebarSelectedEvent}
                 onElementContextMenu={handleContextMenu}
@@ -127,6 +129,9 @@ const Editor = ({exportImage}: Props) => {
             <FaultEventDialog open={eventDialogOpen} eventIri={contextMenuSelectedEvent?.iri}
                               onCreated={handleEventCreated}
                               onClose={() => setEventDialogOpen(false)}/>
+
+            {exportData && <PngExporter open={Boolean(exportData)} exportData={exportData}
+                                        onClose={() => setExportData(null)}/>}
         </React.Fragment>
     );
 }
