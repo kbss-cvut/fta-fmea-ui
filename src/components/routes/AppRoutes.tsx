@@ -10,6 +10,7 @@ import {createBrowserHistory} from "history";
 import {LoggedUserProvider} from "@hooks/useLoggedUser";
 import {ROUTE_PARAMS, ROUTES} from "@utils/constants";
 import FaultTreeDashboard from "@components/editor/faultTree/FaultTreeDashboard";
+import SystemDashboard from "@components/editor/system/SystemDashboard";
 
 export const appHistory = createBrowserHistory()
 
@@ -24,7 +25,7 @@ const AppRoutes = () => {
 
                     <PrivateRoute path={ROUTES.DASHBOARD} component={Dashboard} exact/>
 
-                    <PrivateRoute path={ROUTES.SYSTEM + ROUTE_PARAMS.SYSTEM_FRAGMENT} component={Dashboard} exact/>
+                    <PrivateRoute path={ROUTES.SYSTEM + ROUTE_PARAMS.SYSTEM_FRAGMENT} component={SystemDashboard} exact/>
                     <PrivateRoute path={ROUTES.FTA + ROUTE_PARAMS.FTA_FRAGMENT} component={FaultTreeDashboard} exact/>
                     <PrivateRoute path={ROUTES.FMEA + ROUTE_PARAMS.FMEA_FRAGMENT} component={Dashboard} exact/>
 
