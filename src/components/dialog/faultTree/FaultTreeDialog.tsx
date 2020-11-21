@@ -5,7 +5,6 @@ import {DialogTitle} from "@components/materialui/dialog/DialogTitle";
 import {DialogContent} from "@components/materialui/dialog/DialogContent";
 import {useForm} from "react-hook-form";
 import {schema} from "@components/dialog/faultTree/FaultTreeDialog.schema";
-import VocabularyUtils from "@utils/VocabularyUtils";
 import {eventFromHookFormValues} from "@services/faultEventService";
 import {useState} from "react";
 import {DialogActions} from "@components/materialui/dialog/DialogActions";
