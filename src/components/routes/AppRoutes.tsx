@@ -17,10 +17,12 @@ const AppRoutes = () => {
         <LoggedUserProvider>
             <Router history={appHistory}>
                 <Switch>
-                    <PublicRoute restricted={true} component={Register} path={ROUTES.REGISTER} exact/>
-                    <PublicRoute restricted={true} component={Login} path={ROUTES.LOGIN} exact/>
-                    <PrivateRoute component={Dashboard} path={ROUTES.DASHBOARD} exact/>
-                    <PrivateRoute component={Logout} path={ROUTES.LOGOUT} exact/>
+                    <PublicRoute path={ROUTES.REGISTER} component={Register} restricted={true} exact/>
+                    <PublicRoute path={ROUTES.LOGIN} component={Login} restricted={true} exact/>
+                    <PrivateRoute path={ROUTES.LOGOUT} component={Logout} exact/>
+
+                    <PrivateRoute path={ROUTES.DASHBOARD} component={Dashboard} exact/>
+                    <PrivateRoute path={ROUTES.DASHBOARD} component={Dashboard} exact/>
 
                     <Route path="*" render={() => <Redirect to={ROUTES.DASHBOARD}/>}/>
                 </Switch>

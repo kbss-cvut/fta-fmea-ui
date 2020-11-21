@@ -11,6 +11,10 @@ export const STORAGE_KEYS = {
 export const ROUTES = {
     REGISTER: "/register",
     LOGIN: "/login",
+    LOGOUT: "/logout",
+
     DASHBOARD: "/dashboard",
-    LOGOUT: "/logout"
+    SYSTEM: "/system/:systemFragment",
+    FTA: "/fta/:treeFragment",
+    FMEA: "/fmea/:fmeaFragment",
 }
