@@ -6,10 +6,6 @@ import {useCurrentFailureMode} from "@hooks/useCurrentFailureMode";
 import {useCurrentFailureModeComponent} from "@hooks/useCurrentFailureModeComponent";
 import {Component} from "@models/componentModel";
 import {DataGrid} from '@material-ui/data-grid';
-import {Paper, Table, TableContainer, TableHead} from "@material-ui/core";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
-import TableBody from "@material-ui/core/TableBody";
 import {flatten} from "lodash";
 
 const FailureModeTable = ({setAppBarName}: DashboardTitleProps) => {
@@ -25,8 +21,17 @@ const FailureModeTable = ({setAppBarName}: DashboardTitleProps) => {
 
     // TODO refactor - one FMEA table for component?
 
+    useEffect(() => {
+        setAppBarName(failureMode?.name)
+    }, [failureMode])
+
+    useEffect(() => {
+        if (component) {
+            transformData(component)
+        }
+    }, [component])
+
     const transformData = (component: Component) => {
-        console.log(component)
         let maxEffectsNumber = 0;
 
         const rows = flatten([component.failureModes]).map(mode => {
@@ -76,17 +81,6 @@ const FailureModeTable = ({setAppBarName}: DashboardTitleProps) => {
         setTableRows(rows);
         setTableColumns(columns);
     }
-
-
-    useEffect(() => {
-        setAppBarName(failureMode?.name)
-    }, [failureMode])
-
-    useEffect(() => {
-        if (component) {
-            transformData(component)
-        }
-    }, [component])
 
     return (<div className={classes.root}>
         <DataGrid rows={tableRows} columns={tableColumns} pageSize={5}/>
