@@ -14,8 +14,9 @@ import {FaultEvent} from "@models/eventModel";
 import PngExporter, {PngExportData} from "@components/editor/export/PngExporter";
 
 import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@utils/contextMenu";
+import {DashboardTitleProps} from "@components/dashboard/DashboardTitleProps";
 
-const Editor = () => {
+const Editor = ({setAppBarName}: DashboardTitleProps) => {
     const [showSnackbar] = useSnackbar()
     const [requestConfirmation] = useConfirmDialog()
 
@@ -25,6 +26,7 @@ const Editor = () => {
 
     useEffect(() => {
         if (faultTree) {
+            setAppBarName(faultTree.name)
             setRootEvent(faultTree.manifestingEvent)
         }
     }, [faultTree])

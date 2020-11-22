@@ -1,13 +1,14 @@
 import * as React from "react";
 import {useParams} from "react-router-dom";
-import AppBar from "@components/appBar/AppBar";
-import DashboardContentProvider from "@hooks/DashboardContentProvider";
+import AppBar from "../appBar/AppBar";
+import DashboardContentProvider from "../../hooks/DashboardContentProvider";
 import {CssBaseline} from "@material-ui/core";
 import Toolbar from "@material-ui/core/Toolbar";
-import useStyles from "@components/dashboard/Dashboard.styles";
+import useStyles from "./Dashboard.styles";
 import {composeFragment} from "@services/utils/uriIdentifierUtils";
-import Editor from "@components/editor/system/Editor";
+import Editor from "../editor/system/Editor";
 import {CurrentSystemProvider} from "@hooks/useCurrentSystem";
+import {useState} from "react";
 
 const SystemDashboard = () => {
     const classes = useStyles();
@@ -15,15 +16,17 @@ const SystemDashboard = () => {
     const {systemFragment} = useParams();
     const systemIri = composeFragment(systemFragment);
 
+    const [appBarTitle, setAppBarTitle] = useState('System')
+
     return (
         <DashboardContentProvider>
             <div className={classes.root}>
                 <CssBaseline/>
-                <AppBar title={'System'} showBackButton/>
+                <AppBar title={appBarTitle} showBackButton/>
                 <Toolbar/>
 
                 <CurrentSystemProvider systemIri={systemIri}>
-                    <Editor/>
+                    <Editor setAppBarName={setAppBarTitle}/>
                 </CurrentSystemProvider>
             </div>
         </DashboardContentProvider>

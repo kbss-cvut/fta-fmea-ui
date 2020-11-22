@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useState} from "react";
-import {cloneDeep, concat, flatten, filter, findIndex} from "lodash";
+import {cloneDeep, concat, flatten, findIndex} from "lodash";
 import {useConfirmDialog} from "@hooks/useConfirmDialog";
 import PngExporter, {PngExportData} from "@components/editor/export/PngExporter";
 
@@ -13,12 +13,14 @@ import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@utils/context
 import ComponentDialog from "@components/dialog/component/ComponentDialog";
 import * as componentService from "@services/componentService";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
+import {DashboardTitleProps} from "@components/dashboard/DashboardTitleProps";
 
-const Editor = () => {
+const Editor = ({setAppBarName}: DashboardTitleProps) => {
     const [requestConfirmation] = useConfirmDialog()
     const [showSnackbar] = useSnackbar();
 
     const [system, updateSystem] = useCurrentSystem()
+    setAppBarName(system?.name);
     const _localContext = useLocalContext({system})
 
     const [contextMenuSelectedComponent, setContextMenuSelectedComponent] = useState<Component>(null)

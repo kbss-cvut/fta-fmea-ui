@@ -9,8 +9,8 @@ import Register from "@components/register/Register";
 import {createBrowserHistory} from "history";
 import {LoggedUserProvider} from "@hooks/useLoggedUser";
 import {ROUTE_PARAMS, ROUTES} from "@utils/constants";
-import FaultTreeDashboard from "@components/editor/faultTree/FaultTreeDashboard";
-import SystemDashboard from "@components/editor/system/SystemDashboard";
+import FaultTreeDashboard from "@components/dashboard/FaultTreeDashboard";
+import SystemDashboard from "@components/dashboard/SystemDashboard";
 
 export const appHistory = createBrowserHistory()
 
