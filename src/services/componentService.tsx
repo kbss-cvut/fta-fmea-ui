@@ -6,6 +6,8 @@ import axiosClient from "@services/utils/axiosUtils";
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {FailureMode, CONTEXT as FAILURE_MODE_CONTEXT} from "@models/failureModeModel";
+import {System} from "@models/systemModel";
+import {flatten, filter} from "lodash";
 
 export const findAll = async (): Promise<Component[]> => {
     try {
@@ -159,4 +161,37 @@ export const unlinkComponent = async (componentUri: string): Promise<void> => {
         console.log('Component Service - Failed to call /unlinkComponent')
         return new Promise((resolve, reject) => reject("Failed to unlink components"));
     }
+}
+
+export const remove = async (componentIri: string): Promise<void> => {
+    try {
+        const fragment = extractFragment(componentIri);
+
+        await axiosClient.delete(
+            `/components/${fragment}`,
+            {
+                headers: authHeaders()
+            }
+        )
+        return new Promise((resolve) => resolve());
+    } catch (e) {
+        console.log('Component Service - Failed to call /remove')
+        return new Promise((resolve, reject) => reject("Failed to remove component"));
+    }
+}
+
+export const removeComponentReferences = (system: System, componentIri: string): System => {
+    console.log(system)
+
+    system.components = filter(flatten([system.components]), (o) => o.iri !== componentIri);
+
+    system.components = flatten([system.components]).map(c => {
+        if(c?.linkedComponent?.iri === componentIri) {
+            c.linkedComponent = undefined;
+        }
+        return c
+    });
+
+    console.log(system)
+    return system;
 }

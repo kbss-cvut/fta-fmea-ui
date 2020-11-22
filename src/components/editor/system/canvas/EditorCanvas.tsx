@@ -91,9 +91,17 @@ const EditorCanvas = ({system, sidebarSelectedComponent, exportImage, onBlankCon
         setContainer(graph)
     }, []);
 
-    const addSelf = (shape: any) => {
+    const [componentShapesMap, setComponentShapesMap] = useState<Map<string, any>>(new Map());
+    const [componentLinksMap, setComponentLinksMap] = useState<Map<string, string>>(new Map());
+
+    const addSelf = (componentIri: string, shape: any) => {
         shape.addTo(container)
         layout(container)
+
+        setComponentShapesMap(prevMap => {
+            prevMap.set(componentIri, shape);
+            return prevMap;
+        })
     }
 
     const layout = (graph) => {
@@ -113,14 +121,50 @@ const EditorCanvas = ({system, sidebarSelectedComponent, exportImage, onBlankCon
         exportImage({encodedData: encodedData, width: width, height: height} as PngExportData)
     }
 
+
+    const addLink = (componentIri: string, linkedComponentIri: string) => {
+        setComponentLinksMap(prevMap => {
+            prevMap.set(componentIri, linkedComponentIri);
+            return prevMap;
+        })
+    }
+
+    const removeSelf = (componentIri: string, shape: any) => {
+        setComponentLinksMap(prevMap => {
+            prevMap.delete(componentIri);
+            return prevMap;
+        })
+        shape.remove();
+    }
+
+    useEffect(() => {
+        drawLinks(componentShapesMap, componentLinksMap)
+    }, [componentShapesMap, componentLinksMap])
+
+    const drawLinks = (componentShapesMap, componentLinksMap) => {
+        console.log(`drawLinks!`)
+        componentLinksMap.forEach((sourceIri, targetIri) => {
+            const sourceShape = componentShapesMap.get(sourceIri)
+            const targetShape = componentShapesMap.get(targetIri)
+            if (sourceShape && targetShape) {
+                const link = new joint.shapes.standard.Link();
+
+                link.source(targetShape);
+                link.target(sourceShape);
+                link.addTo(container);
+            }
+        })
+    }
+
     return (
         <div className={classes.root}>
             <div id="jointjs-system-container" className={classes.konvaContainer} ref={containerRef}>
                 {container && system &&
                 flatten([system.components])
-                    .map(value => <ComponentShape component={value} addSelf={addSelf} key={value.iri}/>)
+                    .map(value => <ComponentShape key={value.iri} component={value}
+                                                  addSelf={addSelf} addLink={addLink} removeSelf={removeSelf}/>)
                 }
-                {/*TODO connector lines*/}
+                {/*{drawLinks(componentShapesMap, componentLinksMap)}*/}
             </div>
             <SidebarMenu className={classes.sidebar}>
                 <DiagramOptions onRestoreLayout={() => layout(container)} onExportDiagram={handleDiagramExport}/>

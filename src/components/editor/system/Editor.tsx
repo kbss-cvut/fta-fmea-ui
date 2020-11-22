@@ -11,9 +11,12 @@ import {useLocalContext} from "@hooks/useLocalContext";
 import ComponentContextMenu from "./menu/component/ComponentContextMenu";
 import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@utils/contextMenu";
 import ComponentDialog from "@components/dialog/component/ComponentDialog";
+import * as componentService from "@services/componentService";
+import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 
 const Editor = () => {
     const [requestConfirmation] = useConfirmDialog()
+    const [showSnackbar] = useSnackbar();
 
     const [system, updateSystem] = useCurrentSystem()
     const _localContext = useLocalContext({system})
@@ -60,11 +63,14 @@ const Editor = () => {
 
     const handleComponentDelete = (componentToDelete: Component) => {
         const deleteComponent = () => {
-            // @ts-ignore
-            const systemClone = cloneDeep(_localContext.system);
+            componentService.remove(componentToDelete.iri)
+                .then(value => {
+                    // @ts-ignore
+                    const systemClone = componentService.removeComponentReferences(cloneDeep(_localContext.system), componentToDelete.iri)
 
-            systemClone.components = filter(flatten([systemClone.components]), (o) => o.iri !== componentToDelete.iri)
-            updateSystem(systemClone);
+                    updateSystem(systemClone);
+                })
+                .catch(reason => showSnackbar(reason, SnackbarType.ERROR));
         }
 
         requestConfirmation({
