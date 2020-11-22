@@ -119,6 +119,8 @@ const EditorCanvas = ({system, sidebarSelectedComponent, exportImage, onBlankCon
                 flatten([system.components])
                     .map(value => <ComponentShape component={value} addSelf={addSelf} key={value.iri}/>)
                 }
+                {/*TODO connector lines*/}
+
             </div>
             <div className={classes.divWindowTool} ref={windowToolRef}>
                 {/*<SidebarMenu*/}

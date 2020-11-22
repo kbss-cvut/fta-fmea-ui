@@ -8,7 +8,7 @@ import * as graphlib from 'graphlib';
 import {useLocalContext} from "@hooks/useLocalContext";
 import {PngExportData} from "../../export/PngExporter";
 import {V} from "jointjs";
-import SidebarMenu from "../tools/SidebarMenu";
+import SidebarMenu from "../menu/SidebarMenu";
 import {FTABoundary} from "../shapes/shapesDefinitions";
 import {FaultEvent} from "@models/eventModel";
 import {handleCanvasMouseWheel} from "@utils/canvasZoom";
