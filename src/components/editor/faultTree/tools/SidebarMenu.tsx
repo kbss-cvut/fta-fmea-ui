@@ -1,11 +1,11 @@
 import * as React from "react";
+import {useState} from "react";
 import useStyles from "./SidebarMenu.styles";
 import {Button, Divider, IconButton, Paper, Typography} from "@material-ui/core";
 import ShapeToolPane from "./ShapeToolPane";
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import AccountTreeIcon from '@material-ui/icons/AccountTree';
-import {useState} from "react";
-import {EventType, FaultEvent} from "../../../../models/eventModel";
+import {EventType, FaultEvent} from "@models/eventModel";
 import FailureModeDialog from "../../../dialog/failureMode/FailureModeDialog";
 
 interface Props {

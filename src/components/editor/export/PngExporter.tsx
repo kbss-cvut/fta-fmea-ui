@@ -1,8 +1,8 @@
 import * as React from "react";
 import {Button, Dialog, Link} from "@material-ui/core";
-import {DialogTitle} from "../../../materialui/dialog/DialogTitle";
-import {DialogContent} from "../../../materialui/dialog/DialogContent";
-import {DialogActions} from "../../../materialui/dialog/DialogActions";
+import {DialogTitle} from "../../materialui/dialog/DialogTitle";
+import {DialogContent} from "../../materialui/dialog/DialogContent";
+import {DialogActions} from "../../materialui/dialog/DialogActions";
 import {useState} from "react";
 import useStyles from "./PngExporter.styles";
 

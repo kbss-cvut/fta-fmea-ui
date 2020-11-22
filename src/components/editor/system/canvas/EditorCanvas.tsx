@@ -8,7 +8,7 @@ import {useLocalContext} from "@hooks/useLocalContext";
 import {V} from "jointjs";
 import {System} from "@models/systemModel";
 import {Component} from "@models/componentModel";
-import {PngExportData} from "../../faultTree/tools/PngExporter";
+import {PngExportData} from "../../export/PngExporter";
 import {flatten} from "lodash";
 import ComponentShape from "@components/editor/system/shapes/ComponentShape";
 import {handleCanvasMouseWheel} from "@utils/canvasZoom";
@@ -49,7 +49,6 @@ const EditorCanvas = ({system, sidebarSelectedComponent, exportImage, onBlankCon
             height: canvasHeight,
             gridSize: 10,
             drawGrid: true,
-            //async: true,
             defaultConnectionPoint: {name: 'boundary', args: {extrapolate: true}},
             defaultConnector: {name: 'rounded'},
             defaultRouter: {name: 'orthogonal'},
@@ -120,7 +119,6 @@ const EditorCanvas = ({system, sidebarSelectedComponent, exportImage, onBlankCon
                 flatten([system.components])
                     .map(value => <ComponentShape component={value} addSelf={addSelf} key={value.iri}/>)
                 }
-                {/*{container && system && <FaultEventShape addSelf={addSelf} treeEvent={rootEvent}/>}*/}
             </div>
             <div className={classes.divWindowTool} ref={windowToolRef}>
                 {/*<SidebarMenu*/}

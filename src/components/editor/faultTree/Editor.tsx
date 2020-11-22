@@ -11,7 +11,7 @@ import {useCurrentFaultTree} from "@hooks/useCurrentFaultTree";
 import {useConfirmDialog} from "@hooks/useConfirmDialog";
 import FaultEventDialog from "../../dialog/faultEvent/FaultEventDialog";
 import {FaultEvent} from "@models/eventModel";
-import PngExporter, {PngExportData} from "@components/editor/faultTree/tools/PngExporter";
+import PngExporter, {PngExportData} from "@components/editor/export/PngExporter";
 
 import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@utils/contextMenu";
 

@@ -6,7 +6,7 @@ import * as joint from 'jointjs';
 import * as dagre from 'dagre';
 import * as graphlib from 'graphlib';
 import {useLocalContext} from "@hooks/useLocalContext";
-import {PngExportData} from "../tools/PngExporter";
+import {PngExportData} from "../../export/PngExporter";
 import {V} from "jointjs";
 import SidebarMenu from "../tools/SidebarMenu";
 import {FTABoundary} from "../shapes/shapesDefinitions";

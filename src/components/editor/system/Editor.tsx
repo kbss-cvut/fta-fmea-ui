@@ -2,7 +2,7 @@ import * as React from "react";
 import {useState} from "react";
 import {cloneDeep, concat, flatten, filter, findIndex} from "lodash";
 import {useConfirmDialog} from "@hooks/useConfirmDialog";
-import PngExporter, {PngExportData} from "@components/editor/faultTree/tools/PngExporter";
+import PngExporter, {PngExportData} from "@components/editor/export/PngExporter";
 
 import {useCurrentSystem} from "@hooks/useCurrentSystem";
 import {Component} from "@models/componentModel";
