@@ -3,7 +3,7 @@ import {createStyles, Theme} from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() =>
     createStyles({
-        functions: {
+        creationBox: {
             display: 'inline-flex',
             width: '100%'
         },

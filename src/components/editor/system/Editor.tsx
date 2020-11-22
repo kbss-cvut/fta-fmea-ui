@@ -8,7 +8,7 @@ import {useCurrentSystem} from "@hooks/useCurrentSystem";
 import {Component} from "@models/componentModel";
 import EditorCanvas from "./canvas/EditorCanvas";
 import {useLocalContext} from "@hooks/useLocalContext";
-import ComponentContextMenu from "./menu/ComponentContextMenu";
+import ComponentContextMenu from "./menu/component/ComponentContextMenu";
 import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@utils/contextMenu";
 import ComponentDialog from "@components/dialog/component/ComponentDialog";
 

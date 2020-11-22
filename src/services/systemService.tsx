@@ -31,7 +31,6 @@ export const find = async (systemIri: string): Promise<System> => {
             }
         )
 
-        console.log(response.data)
         return JsonLdUtils.compactAndResolveReferences<System>(response.data, CONTEXT)
     } catch (e) {
         console.log('System Service - Failed to call /find')

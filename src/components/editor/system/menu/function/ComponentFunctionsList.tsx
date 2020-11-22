@@ -24,11 +24,12 @@ const ComponentFunctionsList = () => {
     const [requestConfirmation] = useConfirmDialog()
 
     const [functions, addFunction, removeFunction] = useFunctions();
-    const {register, handleSubmit, errors, control} = useForm({
+    const {register, handleSubmit, errors, control, reset} = useForm({
         resolver: yupResolver(schema)
     });
     const _handleCreateFunction = (values: any) => {
         addFunction({name: values.name});
+        reset(values)
     }
 
     const handleDeleteFunction = (funcToDelete: Function) => {

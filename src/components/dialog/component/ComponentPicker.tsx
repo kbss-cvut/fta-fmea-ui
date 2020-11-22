@@ -44,7 +44,7 @@ const ComponentPicker = ({selectedComponent, onComponentSelected}: Props) => {
 
             <DividerWithText>Create new Component</DividerWithText>
 
-            <div className={classes.functions}>
+            <div className={classes.creationBox}>
                 <Controller as={TextField} autoFocus margin="dense" id="name" label="Component Name"
                             type="text" fullWidth name="name" control={control} defaultValue=""
                             inputRef={register} error={!!errors.name} helperText={errors.name?.message}/>

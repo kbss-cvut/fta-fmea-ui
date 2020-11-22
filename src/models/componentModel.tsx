@@ -5,7 +5,7 @@ import {FailureMode} from "@models/failureModeModel";
 
 const ctx = {
     "name": VocabularyUtils.PREFIX + "hasName",
-    "functions": VocabularyUtils.PREFIX + "hasFunction",
+    "creationBox": VocabularyUtils.PREFIX + "hasFunction",
     "failureModes": VocabularyUtils.PREFIX + "hasFailureMode",
     "parentComponent": VocabularyUtils.PREFIX + "isPartOf",
 };

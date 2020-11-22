@@ -15,7 +15,7 @@ import {handleCanvasMouseWheel} from "@utils/canvasZoom";
 import DiagramOptions from "@components/editor/menu/DiagramOptions";
 import SidebarMenu from "@components/editor/faultTree/menu/SidebarMenu";
 import {encodeCanvas} from "@utils/canvasExport";
-import ComponentSidebarMenu from "@components/editor/system/menu/ComponentSidebarMenu";
+import ComponentSidebarMenu from "@components/editor/system/menu/component/ComponentSidebarMenu";
 
 interface Props {
     system: System,
@@ -124,7 +124,7 @@ const EditorCanvas = ({system, sidebarSelectedComponent, exportImage, onBlankCon
             </div>
             <SidebarMenu className={classes.sidebar}>
                 <DiagramOptions onRestoreLayout={() => layout(container)} onExportDiagram={handleDiagramExport}/>
-                <ComponentSidebarMenu component={sidebarSelectedComponent}/>
+                <ComponentSidebarMenu component={sidebarSelectedComponent} onComponentUpdated={onComponentUpdated}/>
             </SidebarMenu>
         </div>
     );
