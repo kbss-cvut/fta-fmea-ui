@@ -5,6 +5,9 @@ const useStyles = makeStyles(() => {
             root: {
                 flexGrow: 1,
             },
+            table: {
+                minWidth: '100%',
+            },
         })
     }
 );
