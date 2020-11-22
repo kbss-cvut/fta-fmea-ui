@@ -124,7 +124,11 @@ const EditorCanvas = ({system, sidebarSelectedComponent, exportImage, onBlankCon
             </div>
             <SidebarMenu className={classes.sidebar}>
                 <DiagramOptions onRestoreLayout={() => layout(container)} onExportDiagram={handleDiagramExport}/>
-                <ComponentSidebarMenu component={sidebarSelectedComponent} onComponentUpdated={onComponentUpdated}/>
+                {system && <ComponentSidebarMenu
+                    component={sidebarSelectedComponent}
+                    onComponentUpdated={onComponentUpdated}
+                    systemComponents={system?.components}
+                />}
             </SidebarMenu>
         </div>
     );

@@ -5,16 +5,16 @@ import {FailureMode} from "@models/failureModeModel";
 
 const ctx = {
     "name": VocabularyUtils.PREFIX + "hasName",
-    "creationBox": VocabularyUtils.PREFIX + "hasFunction",
+    "functions": VocabularyUtils.PREFIX + "hasFunction",
     "failureModes": VocabularyUtils.PREFIX + "hasFailureMode",
-    "parentComponent": VocabularyUtils.PREFIX + "isPartOf",
+    "linkedComponent": VocabularyUtils.PREFIX + "isPartOf",
 };
 
 export const CONTEXT = Object.assign({}, ctx, AUTHORED_CONTEXT, FUNCTION_CONTEXT);
 
 export interface CreateComponent {
     name: string,
-    parentComponent?: Component,
+    linkedComponent?: Component,
 }
 
 export interface Component extends CreateComponent, AuthoredModel {

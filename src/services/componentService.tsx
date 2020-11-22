@@ -122,3 +122,41 @@ export const addFailureMode = async (componentUri: string, failureMode: FailureM
         return new Promise((resolve, reject) => reject("Failed to create failure mode"));
     }
 }
+
+export const linkComponent = async (componentUri: string, linkUri: string): Promise<Component> => {
+    try {
+        const fragment = extractFragment(componentUri);
+        const linkFragment = extractFragment(linkUri);
+
+        const response = await axiosClient.post(
+            `/components/${fragment}/linkComponent/${linkFragment}`,
+            null,
+            {
+                headers: authHeaders()
+            }
+        )
+
+        return JsonLdUtils.compactAndResolveReferences<Component>(response.data, CONTEXT);
+    } catch (e) {
+        console.log('Component Service - Failed to call /linkComponent')
+        return new Promise((resolve, reject) => reject("Failed to link components"));
+    }
+}
+
+export const unlinkComponent = async (componentUri: string): Promise<void> => {
+    try {
+        const fragment = extractFragment(componentUri);
+
+        await axiosClient.delete(
+            `/components/${fragment}/linkComponent`,
+            {
+                headers: authHeaders()
+            }
+        )
+
+        return new Promise((resolve) => resolve());
+    } catch (e) {
+        console.log('Component Service - Failed to call /unlinkComponent')
+        return new Promise((resolve, reject) => reject("Failed to unlink components"));
+    }
+}
