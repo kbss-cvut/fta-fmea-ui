@@ -1,6 +1,6 @@
 import * as React from "react";
 import useStyles from "@components/dashboard/content/DashboardContent.styles";
-import {Backdrop, Divider, Typography} from "@material-ui/core";
+import {Divider, Typography} from "@material-ui/core";
 
 import FaultTreeDialog from "@components/dialog/faultTree/FaultTreeDialog";
 import {useState} from "react";

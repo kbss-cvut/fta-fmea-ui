@@ -1,9 +1,7 @@
 import {
-    Button,
     Card,
     CardActions,
     CardHeader,
-    Grid,
     GridList,
     GridListTile,
     IconButton,
@@ -11,7 +9,6 @@ import {
 } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import * as React from "react";
-import {useFaultTrees} from "@hooks/useFaultTrees";
 import useStyles from "./DashboardList.styles";
 import {useState} from "react";
 import {useConfirmDialog} from "@hooks/useConfirmDialog";

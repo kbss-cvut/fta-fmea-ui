@@ -2,7 +2,7 @@ import {Button, Divider, Paper, Typography} from "@material-ui/core";
 import ShapeToolPane from "./ShapeToolPane";
 import {EventType, FaultEvent} from "@models/eventModel";
 import * as React from "react";
-import FailureModeDialog from "../../../dialog/failureMode/FailureModeDialog";
+import FailureModeDialog from "../../../dialog/failureMode/create/FailureModeDialog";
 import {useState} from "react";
 
 interface Props {

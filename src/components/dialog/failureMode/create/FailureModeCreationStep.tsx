@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import {FailureMode} from "@models/failureModeModel";
+import {FailureMode} from "../../../../models/failureModeModel";
 import {Chip, FormControl, Input, InputLabel, MenuItem, Select, TextField} from "@material-ui/core";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {schema} from "@components/dialog/failureMode/FailureModeCreationStep.schema";
+import {schema} from "../FailureMode.schema";
 import {useEffect, useState} from "react";
-import useStyles from "@components/dialog/failureMode/FailureModeCreationStep.styles";
+import useStyles from "./FailureModeCreationStep.styles";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;

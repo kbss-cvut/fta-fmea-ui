@@ -1,10 +1,10 @@
 import * as React from 'react';
 import Dialog from '@material-ui/core/Dialog';
-import {DialogTitle} from "@components/materialui/dialog/DialogTitle";
-import {DialogContent} from "@components/materialui/dialog/DialogContent";
+import {DialogTitle} from "../../../materialui/dialog/DialogTitle";
+import {DialogContent} from "../../../materialui/dialog/DialogContent";
 import FailureModeStepper from "./FailureModeStepper";
-import {RootToLeafEventPathProvider} from "@hooks/useRootToLeafPath";
-import {useCurrentFaultTree} from "@hooks/useCurrentFaultTree";
+import {RootToLeafEventPathProvider} from "../../../../hooks/useRootToLeafPath";
+import {useCurrentFaultTree} from "../../../../hooks/useCurrentFaultTree";
 
 interface Props {
     open: boolean,
