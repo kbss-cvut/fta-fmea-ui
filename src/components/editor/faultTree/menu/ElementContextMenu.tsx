@@ -1,7 +1,7 @@
 import {Menu, MenuItem} from "@material-ui/core";
 import * as React from "react";
 import {EventType} from "@models/eventModel";
-import {ElementContextMenuAnchor} from "@components/editor/contextMenuUtils";
+import {ElementContextMenuAnchor} from "@utils/contextMenu";
 
 interface Props {
     eventType: EventType,

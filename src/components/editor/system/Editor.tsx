@@ -9,7 +9,7 @@ import {Component} from "@models/componentModel";
 import EditorCanvas from "./canvas/EditorCanvas";
 import {useLocalContext} from "@hooks/useLocalContext";
 import ComponentContextMenu from "./menu/ComponentContextMenu";
-import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "../contextMenuUtils";
+import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@utils/contextMenu";
 import ComponentDialog from "@components/dialog/component/ComponentDialog";
 
 const Editor = () => {

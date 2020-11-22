@@ -11,6 +11,7 @@ import {V} from "jointjs";
 import SidebarMenu from "../tools/SidebarMenu";
 import {FTABoundary} from "../shapes/shapesDefinitions";
 import {FaultEvent} from "@models/eventModel";
+import {handleCanvasMouseWheel} from "@utils/canvasZoom";
 
 interface Props {
     rootEvent: FaultEvent,
@@ -28,8 +29,6 @@ const EditorCanvas = ({rootEvent, sidebarSelectedEvent, exportImage, onElementCo
 
     const [container, setContainer] = useState<joint.dia.Graph>()
     const [canvasDimensions, setCanvasDimensions] = useState([0,0]);
-
-    const MIN_SCALE = 0.5, MAX_SCALE = 2;
 
     const [dragStartPosition, setDragStartPosition] = useState<{ x: number, y: number } | null>(null)
     const localContext = useLocalContext({dragStartPosition})
@@ -126,40 +125,6 @@ const EditorCanvas = ({rootEvent, sidebarSelectedEvent, exportImage, onElementCo
             el.position(neighborPosition.x + 20, neighborPosition.y - el.size().height / 2 - 20);
         });
     }
-
-    const handleCanvasMouseWheel = (e, x, y, delta, paper) => {
-        e.preventDefault();
-
-        const oldScale = paper.scale().sx;
-        const newScale = oldScale + delta * .1;
-
-        scaleToPoint(newScale, x, y, paper);
-    };
-
-    const scaleToPoint = (nextScale, x, y, paper) => {
-        if (nextScale >= MIN_SCALE && nextScale <= MAX_SCALE) {
-            const currentScale = paper.scale().sx;
-
-            const beta = currentScale / nextScale;
-
-            const ax = x - (x * beta);
-            const ay = y - (y * beta);
-
-            const translate = paper.translate();
-
-            const nextTx = translate.tx - ax * nextScale;
-            const nextTy = translate.ty - ay * nextScale;
-
-            paper.translate(nextTx, nextTy);
-
-            const ctm = paper.matrix();
-
-            ctm.a = nextScale;
-            ctm.d = nextScale;
-
-            paper.matrix(ctm);
-        }
-    };
 
     const handleDiagramExport = () => {
         const svgPaper = document.querySelector('#jointjs-container > svg');

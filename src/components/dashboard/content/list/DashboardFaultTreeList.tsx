@@ -19,7 +19,7 @@ import FaultTreeEditDialog from "@components/dialog/faultTree/FaultTreeEditDialo
 import {Link as RouterLink} from "react-router-dom";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {ROUTES} from "@utils/constants";
-import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@components/editor/contextMenuUtils";
+import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@utils/contextMenu";
 
 const DashboardFaultTreeList = () => {
     const classes = useStyles();

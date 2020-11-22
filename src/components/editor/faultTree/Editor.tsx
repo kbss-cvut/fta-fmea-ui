@@ -13,7 +13,7 @@ import FaultEventDialog from "../../dialog/faultEvent/FaultEventDialog";
 import {FaultEvent} from "@models/eventModel";
 import PngExporter, {PngExportData} from "@components/editor/faultTree/tools/PngExporter";
 
-import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@components/editor/contextMenuUtils";
+import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@utils/contextMenu";
 
 const Editor = () => {
     const [showSnackbar] = useSnackbar()

@@ -21,7 +21,7 @@ import {ROUTES} from "@utils/constants";
 import {useSystems} from "@hooks/useSystems";
 import {System} from "@models/systemModel";
 import SystemEditDialog from "@components/dialog/system/SystemEditDialog";
-import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@components/editor/contextMenuUtils";
+import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@utils/contextMenu";
 import SystemContextMenu from "@components/editor/system/menu/SystemContextMenu";
 
 const DashboardSystemList = () => {
