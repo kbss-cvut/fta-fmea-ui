@@ -12,6 +12,10 @@ import {PngExportData} from "../../export/PngExporter";
 import {flatten} from "lodash";
 import ComponentShape from "@components/editor/system/shapes/ComponentShape";
 import {handleCanvasMouseWheel} from "@utils/canvasZoom";
+import DiagramOptions from "@components/editor/menu/DiagramOptions";
+import SidebarMenu from "@components/editor/faultTree/menu/SidebarMenu";
+import {encodeCanvas} from "@utils/canvasExport";
+import ComponentSidebarMenu from "@components/editor/system/menu/ComponentSidebarMenu";
 
 interface Props {
     system: System,
@@ -26,7 +30,6 @@ const EditorCanvas = ({system, sidebarSelectedComponent, exportImage, onBlankCon
     const classes = useStyles()
 
     const containerRef = useRef(null)
-    const windowToolRef = useRef(null)
 
     const [container, setContainer] = useState<joint.dia.Graph>()
     const [canvasDimensions, setCanvasDimensions] = useState([0, 0]);
@@ -60,7 +63,6 @@ const EditorCanvas = ({system, sidebarSelectedComponent, exportImage, onBlankCon
                 onBlankContextMenu(evt);
             },
             'element:contextmenu': (elementView, evt) => {
-                console.log('elementContextMenu')
                 onElementContextMenu(elementView, evt)
             },
             // Zoom in,out
@@ -107,8 +109,7 @@ const EditorCanvas = ({system, sidebarSelectedComponent, exportImage, onBlankCon
     const handleDiagramExport = () => {
         const svgPaper = document.querySelector('#jointjs-system-container > svg');
         const [width, height] = canvasDimensions;
-        const svgData = new XMLSerializer().serializeToString(svgPaper);
-        const encodedData = btoa(unescape(encodeURIComponent(svgData)));
+        const encodedData = encodeCanvas(svgPaper)
         exportImage({encodedData: encodedData, width: width, height: height} as PngExportData)
     }
 
@@ -120,15 +121,11 @@ const EditorCanvas = ({system, sidebarSelectedComponent, exportImage, onBlankCon
                     .map(value => <ComponentShape component={value} addSelf={addSelf} key={value.iri}/>)
                 }
                 {/*TODO connector lines*/}
-
             </div>
-            <div className={classes.divWindowTool} ref={windowToolRef}>
-                {/*<SidebarMenu*/}
-                {/*    onRestoreLayout={() => layout(container)}*/}
-                {/*    onExportDiagram={handleDiagramExport}*/}
-                {/*    shapeToolData={sidebarSelectedComponent}*/}
-                {/*    onEventUpdated={onComponentUpdated}/>*/}
-            </div>
+            <SidebarMenu className={classes.sidebar}>
+                <DiagramOptions onRestoreLayout={() => layout(container)} onExportDiagram={handleDiagramExport}/>
+                <ComponentSidebarMenu component={sidebarSelectedComponent}/>
+            </SidebarMenu>
         </div>
     );
 }

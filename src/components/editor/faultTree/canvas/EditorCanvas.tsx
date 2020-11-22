@@ -12,6 +12,9 @@ import SidebarMenu from "../menu/SidebarMenu";
 import {FTABoundary} from "../shapes/shapesDefinitions";
 import {FaultEvent} from "@models/eventModel";
 import {handleCanvasMouseWheel} from "@utils/canvasZoom";
+import FaultEventMenu from "@components/editor/faultTree/menu/FaultEventMenu";
+import DiagramOptions from "@components/editor/menu/DiagramOptions";
+import {encodeCanvas} from "@utils/canvasExport";
 
 interface Props {
     rootEvent: FaultEvent,
@@ -25,10 +28,9 @@ const EditorCanvas = ({rootEvent, sidebarSelectedEvent, exportImage, onElementCo
     const classes = useStyles()
 
     const containerRef = useRef(null)
-    const windowToolRef = useRef(null)
 
     const [container, setContainer] = useState<joint.dia.Graph>()
-    const [canvasDimensions, setCanvasDimensions] = useState([0,0]);
+    const [canvasDimensions, setCanvasDimensions] = useState([0, 0]);
 
     const [dragStartPosition, setDragStartPosition] = useState<{ x: number, y: number } | null>(null)
     const localContext = useLocalContext({dragStartPosition})
@@ -78,7 +80,7 @@ const EditorCanvas = ({rootEvent, sidebarSelectedEvent, exportImage, onElementCo
                 });
                 elementView.addTools(tools);
             },
-            'element:mouseleave': function(elementView) {
+            'element:mouseleave': function (elementView) {
                 elementView.removeTools();
             },
         })
@@ -129,8 +131,7 @@ const EditorCanvas = ({rootEvent, sidebarSelectedEvent, exportImage, onElementCo
     const handleDiagramExport = () => {
         const svgPaper = document.querySelector('#jointjs-container > svg');
         const [width, height] = canvasDimensions;
-        const svgData = new XMLSerializer().serializeToString(svgPaper);
-        const encodedData = btoa(unescape(encodeURIComponent(svgData)));
+        const encodedData = encodeCanvas(svgPaper)
         exportImage({encodedData: encodedData, width: width, height: height} as PngExportData)
     }
 
@@ -139,13 +140,10 @@ const EditorCanvas = ({rootEvent, sidebarSelectedEvent, exportImage, onElementCo
             <div id="jointjs-container" className={classes.konvaContainer} ref={containerRef}>
                 {container && rootEvent && <FaultEventShape addSelf={addSelf} treeEvent={rootEvent}/>}
             </div>
-            <div className={classes.divWindowTool} ref={windowToolRef}>
-                <SidebarMenu
-                    onRestoreLayout={() => layout(container)}
-                    onExportDiagram={handleDiagramExport}
-                    shapeToolData={sidebarSelectedEvent}
-                    onEventUpdated={onEventUpdated}/>
-            </div>
+            <SidebarMenu className={classes.sidebar}>
+                <DiagramOptions onRestoreLayout={() => layout(container)} onExportDiagram={handleDiagramExport}/>
+                <FaultEventMenu shapeToolData={sidebarSelectedEvent} onEventUpdated={onEventUpdated}/>
+            </SidebarMenu>
         </div>
     );
 }

@@ -83,6 +83,24 @@ export const addFunction = async (componentUri: string, f: CreateFunction): Prom
     }
 }
 
+export const removeFunction = async (componentIri: string, functionIri: string) => {
+    try {
+        const componentFragment = extractFragment(componentIri);
+        const functionFragment = extractFragment(functionIri);
+
+        await axiosClient.delete(
+            `/components/${componentFragment}/functions/${functionFragment}`,
+            {
+                headers: authHeaders()
+            }
+        )
+        return new Promise((resolve) => resolve());
+    } catch (e) {
+        console.log('Component Service - Failed to call /removeFunction')
+        return new Promise((resolve, reject) => reject("Failed to remove function"));
+    }
+}
+
 export const addFailureMode = async (componentUri: string, failureMode: FailureMode): Promise<FailureMode> => {
     try {
         const fragment = extractFragment(componentUri);

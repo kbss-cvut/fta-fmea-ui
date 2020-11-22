@@ -5,9 +5,9 @@ const useStyles = makeStyles(() =>
     createStyles({
         functions: {
             display: 'inline-flex',
-            width: '100%'
+            width: '100%',
         },
-        addButton: {
+        button: {
             alignSelf: 'flex-end'
         },
     }),

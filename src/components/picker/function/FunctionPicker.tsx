@@ -9,7 +9,6 @@ import {Controller, useForm} from "react-hook-form";
 import {schema} from "@components/picker/function/FunctionPicker.schema";
 import useStyles from "@components/picker/function/FunctionPicker.styles";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {useEffect} from "react";
 
 interface Props {
     selectedFunction: Function | null,

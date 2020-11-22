@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) => {
                 height: `100%`,
                 flexGrow: 7,
             },
-            divWindowTool: {
+            sidebar: {
                 padding: theme.spacing(1, 0, 0, 1),
                 height: '100%',
                 overflow: 'hidden',
