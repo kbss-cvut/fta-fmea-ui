@@ -1,7 +1,6 @@
 import * as React from "react";
 import {useParams} from "react-router-dom";
 import AppBar from "../appBar/AppBar";
-import DashboardContentProvider from "../../hooks/DashboardContentProvider";
 import {CssBaseline} from "@material-ui/core";
 import Toolbar from "@material-ui/core/Toolbar";
 import useStyles from "./Dashboard.styles";
@@ -19,17 +18,15 @@ const FaultTreeDashboard = () => {
     const [appBarTitle, setAppBarTitle] = useState('Fault Tree')
 
     return (
-        <DashboardContentProvider>
-            <div className={classes.root}>
-                <CssBaseline/>
-                <AppBar title={appBarTitle} showBackButton/>
-                <Toolbar/>
+        <div className={classes.root}>
+            <CssBaseline/>
+            <AppBar title={appBarTitle} showBackButton/>
+            <Toolbar/>
 
-                <CurrentFaultTreeProvider faultTreeIri={treeIri}>
-                    <Editor setAppBarName={setAppBarTitle}/>
-                </CurrentFaultTreeProvider>
-            </div>
-        </DashboardContentProvider>
+            <CurrentFaultTreeProvider faultTreeIri={treeIri}>
+                <Editor setAppBarName={setAppBarTitle}/>
+            </CurrentFaultTreeProvider>
+        </div>
     );
 }
 
