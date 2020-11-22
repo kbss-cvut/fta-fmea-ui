@@ -63,6 +63,8 @@ const Editor = () => {
 
     const handleComponentDelete = (componentToDelete: Component) => {
         const deleteComponent = () => {
+            setSidebarSelectedComponent(null);
+
             componentService.remove(componentToDelete.iri)
                 .then(value => {
                     // @ts-ignore

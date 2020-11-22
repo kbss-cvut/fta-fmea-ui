@@ -181,8 +181,6 @@ export const remove = async (componentIri: string): Promise<void> => {
 }
 
 export const removeComponentReferences = (system: System, componentIri: string): System => {
-    console.log(system)
-
     system.components = filter(flatten([system.components]), (o) => o.iri !== componentIri);
 
     system.components = flatten([system.components]).map(c => {
@@ -191,7 +189,5 @@ export const removeComponentReferences = (system: System, componentIri: string):
         }
         return c
     });
-
-    console.log(system)
     return system;
 }

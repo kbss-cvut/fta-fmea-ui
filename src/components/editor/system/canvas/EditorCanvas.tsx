@@ -9,7 +9,7 @@ import {V} from "jointjs";
 import {System} from "@models/systemModel";
 import {Component} from "@models/componentModel";
 import {PngExportData} from "../../export/PngExporter";
-import {flatten} from "lodash";
+import {flatten, cloneDeep} from "lodash";
 import ComponentShape from "@components/editor/system/shapes/ComponentShape";
 import {handleCanvasMouseWheel} from "@utils/canvasZoom";
 import DiagramOptions from "@components/editor/menu/DiagramOptions";
@@ -99,8 +99,9 @@ const EditorCanvas = ({system, sidebarSelectedComponent, exportImage, onBlankCon
         layout(container)
 
         setComponentShapesMap(prevMap => {
-            prevMap.set(componentIri, shape);
-            return prevMap;
+            const mapClone = cloneDeep(prevMap);
+            mapClone.set(componentIri, shape);
+            return mapClone;
         })
     }
 
@@ -124,15 +125,17 @@ const EditorCanvas = ({system, sidebarSelectedComponent, exportImage, onBlankCon
 
     const addLink = (componentIri: string, linkedComponentIri: string) => {
         setComponentLinksMap(prevMap => {
-            prevMap.set(componentIri, linkedComponentIri);
-            return prevMap;
+            const mapClone = cloneDeep(prevMap);
+            mapClone.set(componentIri, linkedComponentIri);
+            return mapClone;
         })
     }
 
     const removeSelf = (componentIri: string, shape: any) => {
         setComponentLinksMap(prevMap => {
-            prevMap.delete(componentIri);
-            return prevMap;
+            const mapClone = cloneDeep(prevMap);
+            mapClone.delete(componentIri);
+            return mapClone;
         })
         shape.remove();
     }
@@ -142,7 +145,6 @@ const EditorCanvas = ({system, sidebarSelectedComponent, exportImage, onBlankCon
     }, [componentShapesMap, componentLinksMap])
 
     const drawLinks = (componentShapesMap, componentLinksMap) => {
-        console.log(`drawLinks!`)
         componentLinksMap.forEach((sourceIri, targetIri) => {
             const sourceShape = componentShapesMap.get(sourceIri)
             const targetShape = componentShapesMap.get(targetIri)
@@ -164,7 +166,6 @@ const EditorCanvas = ({system, sidebarSelectedComponent, exportImage, onBlankCon
                     .map(value => <ComponentShape key={value.iri} component={value}
                                                   addSelf={addSelf} addLink={addLink} removeSelf={removeSelf}/>)
                 }
-                {/*{drawLinks(componentShapesMap, componentLinksMap)}*/}
             </div>
             <SidebarMenu className={classes.sidebar}>
                 <DiagramOptions onRestoreLayout={() => layout(container)} onExportDiagram={handleDiagramExport}/>
