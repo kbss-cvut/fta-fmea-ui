@@ -76,6 +76,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
 
     const handleEventDelete = (eventToDelete: FaultEvent) => {
         const deleteEvent = () => {
+            setSidebarSelectedEvent(null);
             faultEventService.remove(eventToDelete.iri)
                 .then(value => {
                     // @ts-ignore
