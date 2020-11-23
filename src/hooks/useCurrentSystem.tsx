@@ -6,14 +6,21 @@ import * as systemService from "@services/systemService"
 import {axiosSource} from "@services/utils/axiosUtils";
 import {ChildrenProps} from "@utils/hookUtils";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
+import {Component} from "@models/componentModel";
+import {cloneDeep, flatten, concat, filter, findIndex} from "lodash";
 
-type systemContextType = [System, (systemToUpdate: System) => void];
+type systemContextType = [
+    System,
+    (addComponent: Component) => void,
+    (updateComponent: Component) => void,
+    (removeComponent: Component) => void,
+]
 
 export const systemContext = createContext<systemContextType>(null!);
 
 export const useCurrentSystem = () => {
-    const [system, updateSystem] = useContext(systemContext);
-    return [system, updateSystem] as const;
+    const [system, addComponent, updateComponent, removeComponent] = useContext(systemContext);
+    return [system, addComponent, updateComponent, removeComponent] as const;
 }
 
 interface Props extends ChildrenProps {
@@ -24,11 +31,35 @@ export const CurrentSystemProvider = ({systemIri, children}: Props) => {
     const [_system, _setSystem] = useState<System>();
     const [showSnackbar] = useSnackbar()
 
-    const updateSystem = async (system: System) => {
-        systemService.update(system)
+    const addComponent = async (component: Component) => {
+        systemService
+            .addComponent(systemIri, component.iri)
             .then(value => {
-                showSnackbar('System updated', SnackbarType.SUCCESS)
-                _setSystem(value)
+                const systemClone = cloneDeep(_system);
+                systemClone.components = concat(flatten([systemClone.components]), component);
+                _setSystem(systemClone);
+            })
+            .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
+    }
+
+    const updateComponent = (componentToUpdate: Component) => {
+        const systemClone = cloneDeep(_system);
+        const components = flatten([systemClone.components])
+
+        const index = findIndex(components, el => el.iri === componentToUpdate.iri);
+        components.splice(index, 1, componentToUpdate);
+        systemClone.components = components
+
+        _setSystem(systemClone);
+    }
+
+    const removeComponent = async (component: Component) => {
+        systemService
+            .removeComponent(systemIri, component.iri)
+            .then(value => {
+                const systemClone = cloneDeep(_system);
+                systemClone.components = filter(flatten([systemClone.components]), (el) => el.iri !== component.iri);
+                _setSystem(systemClone);
             })
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
@@ -48,7 +79,7 @@ export const CurrentSystemProvider = ({systemIri, children}: Props) => {
     }, []);
 
     return (
-        <systemContext.Provider value={[_system, updateSystem]}>
+        <systemContext.Provider value={[_system, addComponent, updateComponent, removeComponent]}>
             {children}
         </systemContext.Provider>
     );

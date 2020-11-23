@@ -46,6 +46,27 @@ export const create = async (component: CreateComponent): Promise<Component> => 
     }
 }
 
+export const update = async (component: Component): Promise<Component> => {
+    try {
+        const updateRequest = Object.assign(
+            {}, component, {"@context": CONTEXT}
+        )
+
+        const response = await axiosClient.put(
+            '/components',
+            updateRequest,
+            {
+                headers: authHeaders()
+            }
+        )
+
+        return JsonLdUtils.compactAndResolveReferences<Component>(response.data, CONTEXT);
+    } catch (e) {
+        console.log('Component Service - Failed to call /update')
+        return new Promise((resolve, reject) => reject("Failed to update component"));
+    }
+}
+
 export const functions = async (componentUri: string): Promise<Function[]> => {
     try {
         const fragment = extractFragment(componentUri);

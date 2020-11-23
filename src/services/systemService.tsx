@@ -4,6 +4,7 @@ import axiosClient from "@services/utils/axiosUtils";
 import {System, CONTEXT} from "@models/systemModel";
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
+import {deepOmit} from "@utils/lodashUtils";
 
 export const findAll = async (): Promise<System[]> => {
     try {
@@ -59,9 +60,10 @@ export const create = async (system: System): Promise<System> => {
     }
 }
 
-export const update = async (system: System): Promise<System> => {
+export const rename = async (system: System): Promise<System> => {
     try {
-        const updateRequest = Object.assign({}, system, {"@context": CONTEXT})
+        const systemRename = deepOmit(system, ['components'])
+        const updateRequest = Object.assign({}, systemRename, {"@context": CONTEXT})
 
         const response = await axiosClient.put(
             '/systems',
@@ -92,5 +94,44 @@ export const remove = async (systemIri: string): Promise<void> => {
     } catch (e) {
         console.log('System Service - Failed to call /remove')
         return new Promise((resolve, reject) => reject("Failed to remove system"));
+    }
+}
+
+export const addComponent = async (systemIri: string, componentUri: string): Promise<void> => {
+    try {
+        const systemFragment = extractFragment(systemIri);
+        const componentFragment = extractFragment(componentUri);
+
+        await axiosClient.put(
+            `/systems/${systemFragment}/components/${componentFragment}`,
+            null,
+            {
+                headers: authHeaders()
+            }
+        )
+
+        return new Promise((resolve) => resolve());
+    } catch (e) {
+        console.log('System Service - Failed to call /addComponent')
+        return new Promise((resolve, reject) => reject("Failed to add component"));
+    }
+}
+
+export const removeComponent = async (systemIri: string, componentUri: string): Promise<void> => {
+    try {
+        const systemFragment = extractFragment(systemIri);
+        const componentFragment = extractFragment(componentUri);
+
+        await axiosClient.delete(
+            `/systems/${systemFragment}/components/${componentFragment}`,
+            {
+                headers: authHeaders()
+            }
+        )
+
+        return new Promise((resolve) => resolve());
+    } catch (e) {
+        console.log('System Service - Failed to call /removeComponent')
+        return new Promise((resolve, reject) => reject("Failed to remove component"));
     }
 }

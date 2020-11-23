@@ -48,9 +48,9 @@ export const SystemsProvider = ({children}: ChildrenProps) => {
     }
 
     const updateSystem = async (systemToUpdate: System) => {
-        systemService.update(systemToUpdate)
+        systemService.rename(systemToUpdate)
             .then(value => {
-                showSnackbar('System updated', SnackbarType.SUCCESS)
+                showSnackbar('System renamed', SnackbarType.SUCCESS)
 
                 const index = findIndex(_systems, el => el.iri === systemToUpdate.iri);
                 _systems.splice(index, 1, systemToUpdate);

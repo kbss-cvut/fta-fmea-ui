@@ -19,7 +19,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
     const [requestConfirmation] = useConfirmDialog()
     const [showSnackbar] = useSnackbar();
 
-    const [system, updateSystem] = useCurrentSystem()
+    const [system, addComponent, updateComponent, removeComponent] = useCurrentSystem()
     setAppBarName(system?.name);
     const _localContext = useLocalContext({system})
 
@@ -46,21 +46,11 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
 
     const [componentDialogOpen, setComponentDialogOpen] = useState(false);
     const handleComponentCreated = (newComponent: Component) => {
-        // @ts-ignore
-        const systemClone = cloneDeep(_localContext.system);
-
-        systemClone.components = concat(flatten([systemClone.components]), newComponent);
-        updateSystem(systemClone);
+        addComponent(newComponent);
     }
 
     const handleComponentUpdate = (componentToUpdate: Component) => {
-        // @ts-ignore
-        const systemClone = cloneDeep(_localContext.system);
-
-        const index = findIndex(flatten([systemClone.components]), el => el.iri === componentToUpdate.iri);
-        systemClone.components.splice(index, 1, componentToUpdate);
-
-        updateSystem(systemClone);
+        updateComponent(componentToUpdate);
     }
 
     const handleComponentDelete = (componentToDelete: Component) => {
@@ -68,12 +58,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
             setSidebarSelectedComponent(null);
 
             componentService.remove(componentToDelete.iri)
-                .then(value => {
-                    // @ts-ignore
-                    const systemClone = componentService.removeComponentReferences(cloneDeep(_localContext.system), componentToDelete.iri)
-
-                    updateSystem(systemClone);
-                })
+                .then(value => removeComponent(componentToDelete))
                 .catch(reason => showSnackbar(reason, SnackbarType.ERROR));
         }
 

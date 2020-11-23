@@ -6,6 +6,8 @@ import {Controller, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {Component} from "@models/componentModel";
 import {schema} from "../../../../dialog/component/Component.schema";
+import * as componentService from "@services/componentService";
+import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 
 interface Props {
     component: Component,
@@ -13,8 +15,9 @@ interface Props {
 }
 
 const ComponentEditMenu = ({component, onComponentUpdated}: Props) => {
+    const [showSnackbar] = useSnackbar();
 
-    const {control, register, errors, handleSubmit, formState, reset} = useForm({
+    const {control, errors, handleSubmit, formState, reset} = useForm({
         resolver: yupResolver(schema),
     });
     const {isSubmitting, isDirty} = formState;
@@ -26,7 +29,10 @@ const ComponentEditMenu = ({component, onComponentUpdated}: Props) => {
     const handleComponentUpdate = async (values: any) => {
         let componentClone = cloneDeep(component) as Component
         componentClone.name = values.name
-        onComponentUpdated(componentClone)
+
+        componentService.update(componentClone)
+            .then(value => onComponentUpdated(value))
+            .catch(reason => showSnackbar(reason, SnackbarType.ERROR));
     }
 
 
