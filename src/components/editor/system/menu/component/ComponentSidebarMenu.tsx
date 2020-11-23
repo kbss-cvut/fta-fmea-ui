@@ -26,8 +26,12 @@ const ComponentSidebarMenu = ({component, onComponentUpdated, systemComponents}:
     const {control, setValue} = useForm();
     const [linkComponent, setLinkComponent] = useState<Component | null>(component?.linkedComponent);
     useEffect(() => {
-        setValue('linkedComponent', component?.linkedComponent)
+        setLinkComponent(component?.linkedComponent)
     }, [component])
+
+    useEffect(() => {
+        setValue('linkedComponent', component?.linkedComponent)
+    }, [linkComponent])
 
     const handleLinkedComponentChange = (linkedComponent: Component | null) => {
         if (linkedComponent) {

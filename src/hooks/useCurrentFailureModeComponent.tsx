@@ -5,8 +5,7 @@ import * as failureModeService from "@services/failureModeService"
 import {axiosSource} from "@services/utils/axiosUtils";
 import {ChildrenProps} from "@utils/hookUtils";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
-import {FailureMode} from "@models/failureModeModel";
-import {Component} from "../models/componentModel";
+import {Component} from "@models/componentModel";
 
 export const failureModeContext = createContext<[Component]>(null!);
 
