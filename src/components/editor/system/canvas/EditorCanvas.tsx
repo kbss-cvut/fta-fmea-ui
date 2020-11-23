@@ -106,7 +106,8 @@ const EditorCanvas = ({system, sidebarSelectedComponent, exportImage, onBlankCon
     }
 
     const layout = (graph) => {
-        joint.layout.DirectedGraph.layout(graph.getElements(), {
+        joint.layout.DirectedGraph.layout(graph, {
+            rankDir: "RL",
             dagre: dagre,
             graphlib: graphlib,
             setVertices: true,
@@ -156,6 +157,9 @@ const EditorCanvas = ({system, sidebarSelectedComponent, exportImage, onBlankCon
                 link.addTo(container);
             }
         })
+        if (container) {
+            layout(container)
+        }
     }
 
     return (
