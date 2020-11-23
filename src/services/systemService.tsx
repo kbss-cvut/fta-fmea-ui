@@ -5,6 +5,7 @@ import {System, CONTEXT} from "@models/systemModel";
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {deepOmit} from "@utils/lodashUtils";
+import {Component, CONTEXT as COMPONENT_CONTEXT} from "@models/componentModel";
 
 export const findAll = async (): Promise<System[]> => {
     try {
@@ -102,7 +103,7 @@ export const addComponent = async (systemIri: string, componentUri: string): Pro
         const systemFragment = extractFragment(systemIri);
         const componentFragment = extractFragment(componentUri);
 
-        await axiosClient.put(
+        await axiosClient.post(
             `/systems/${systemFragment}/components/${componentFragment}`,
             null,
             {
@@ -114,6 +115,28 @@ export const addComponent = async (systemIri: string, componentUri: string): Pro
     } catch (e) {
         console.log('System Service - Failed to call /addComponent')
         return new Promise((resolve, reject) => reject("Failed to add component"));
+    }
+}
+
+export const updateComponent = async (systemIri: string, updateComponent: Component): Promise<void> => {
+    try {
+        const systemFragment = extractFragment(systemIri);
+        const componentFragment = extractFragment(updateComponent.iri);
+
+        const updateRequest = Object.assign({}, updateComponent, {"@context": COMPONENT_CONTEXT})
+
+        await axiosClient.put(
+            `/systems/${systemFragment}/components/${componentFragment}`,
+            updateRequest,
+            {
+                headers: authHeaders()
+            }
+        )
+
+        return new Promise((resolve) => resolve());
+    } catch (e) {
+        console.log('System Service - Failed to call /updateComponent')
+        return new Promise((resolve, reject) => reject("Failed to add updateComponent"));
     }
 }
 

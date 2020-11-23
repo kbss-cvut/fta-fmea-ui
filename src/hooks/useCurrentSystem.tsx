@@ -43,14 +43,17 @@ export const CurrentSystemProvider = ({systemIri, children}: Props) => {
     }
 
     const updateComponent = (componentToUpdate: Component) => {
-        const systemClone = cloneDeep(_system);
-        const components = flatten([systemClone.components])
+        systemService.updateComponent(systemIri, componentToUpdate)
+            .then(value => {
+                const systemClone = cloneDeep(_system);
+                const components = flatten([systemClone.components])
 
-        const index = findIndex(components, el => el.iri === componentToUpdate.iri);
-        components.splice(index, 1, componentToUpdate);
-        systemClone.components = components
+                const index = findIndex(components, el => el.iri === componentToUpdate.iri);
+                components.splice(index, 1, componentToUpdate);
+                systemClone.components = components
 
-        _setSystem(systemClone);
+                _setSystem(systemClone);
+            }).catch(reason => showSnackbar(reason, SnackbarType.ERROR));
     }
 
     const removeComponent = async (component: Component) => {
