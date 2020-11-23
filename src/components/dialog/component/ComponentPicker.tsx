@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {IconButton, TextField} from "@material-ui/core";
+import {IconButton, TextField, Typography} from "@material-ui/core";
 import {Autocomplete} from "@material-ui/lab";
 import {useComponents} from "@hooks/useComponents";
 import AddIcon from "@material-ui/icons/Add";
@@ -42,8 +42,7 @@ const ComponentPicker = ({selectedComponent, onComponentSelected}: Props) => {
                 defaultValue={selectedComponent}
             />
 
-            <DividerWithText>Create new Component</DividerWithText>
-
+            <Typography variant="subtitle1">Create new Component</Typography>
             <div className={classes.creationBox}>
                 <Controller as={TextField} autoFocus margin="dense" id="name" label="Component Name"
                             type="text" fullWidth name="name" control={control} defaultValue=""

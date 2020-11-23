@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Box, IconButton, TextField} from "@material-ui/core";
+import {Box, IconButton, TextField, Typography} from "@material-ui/core";
 import {useFunctions} from "@hooks/useFunctions";
 import {Autocomplete} from "@material-ui/lab";
 import {Function} from "@models/functionModel";
@@ -40,6 +40,7 @@ const FunctionPicker = ({selectedFunction, onFunctionSelected}: Props) => {
                 defaultValue={selectedFunction}
             />
 
+            <Typography variant="subtitle1">Create new Function</Typography>
             <Box className={classes.addButtonDiv}>
                 <Controller as={TextField} autoFocus margin="dense" id="name" label="Function Name"
                             type="text" fullWidth name="name" control={control} defaultValue=""
