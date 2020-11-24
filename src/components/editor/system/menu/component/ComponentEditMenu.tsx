@@ -1,10 +1,9 @@
 import * as React from "react";
 import {useEffect} from "react";
-import {cloneDeep} from "lodash";
 import {Button, TextField} from "@material-ui/core";
 import {Controller, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {Component} from "@models/componentModel";
+import {Component, UpdateComponent} from "@models/componentModel";
 import {schema} from "../../../../dialog/component/Component.schema";
 import * as componentService from "@services/componentService";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
@@ -27,10 +26,12 @@ const ComponentEditMenu = ({component, onComponentUpdated}: Props) => {
     }
 
     const handleComponentUpdate = async (values: any) => {
-        let componentClone = cloneDeep(component) as Component
-        componentClone.name = values.name
+        const updateComponent = {
+            uri: component.iri,
+            name: values.name
+        } as UpdateComponent
 
-        componentService.update(componentClone)
+        componentService.update(updateComponent)
             .then(value => onComponentUpdated(value))
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR));
     }

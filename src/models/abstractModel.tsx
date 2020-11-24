@@ -7,3 +7,7 @@ export interface AbstractModel {
     iri?: string,
     types?: string[]
 }
+
+export interface AbstractUpdateModel {
+    uri: string,
+}

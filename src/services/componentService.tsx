@@ -1,4 +1,4 @@
-import {Component, CONTEXT, CreateComponent} from "@models/componentModel";
+import {Component, CONTEXT, CreateComponent, UpdateComponent} from "@models/componentModel";
 import {Function, CONTEXT as FUNCTION_CONTEXT, CreateFunction} from "@models/functionModel";
 import JsonLdUtils from "@utils/JsonLdUtils";
 import {authHeaders} from "@services/utils/authUtils";
@@ -46,15 +46,11 @@ export const create = async (component: CreateComponent): Promise<Component> => 
     }
 }
 
-export const update = async (component: Component): Promise<Component> => {
+export const update = async (componentUpdate: UpdateComponent): Promise<Component> => {
     try {
-        const updateRequest = Object.assign(
-            {}, component, {"@context": CONTEXT}
-        )
-
         const response = await axiosClient.put(
             '/components',
-            updateRequest,
+            componentUpdate,
             {
                 headers: authHeaders()
             }

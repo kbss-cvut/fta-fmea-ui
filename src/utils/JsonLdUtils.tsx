@@ -81,12 +81,13 @@ export default class JsonLdUtils {
                     }
                 }
             } else if (typeof val === "object") {
-                const reference = JsonLdUtils.getReferencedNodeIfExists(val, idMap);
-                if (reference) {
-                    node[p] = reference;
-                } else {
-                    JsonLdUtils.processNode(val, idMap);
-                }
+                JsonLdUtils.processNode(val, idMap);
+                // const reference = JsonLdUtils.getReferencedNodeIfExists(val, idMap);
+                // if (reference) {
+                //     node[p] = reference;
+                // } else {
+                //     JsonLdUtils.processNode(val, idMap);
+                // }
             }
         });
     }

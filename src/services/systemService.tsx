@@ -118,28 +118,6 @@ export const addComponent = async (systemIri: string, componentUri: string): Pro
     }
 }
 
-export const updateComponent = async (systemIri: string, updateComponent: Component): Promise<void> => {
-    try {
-        const systemFragment = extractFragment(systemIri);
-        const componentFragment = extractFragment(updateComponent.iri);
-
-        const updateRequest = Object.assign({}, updateComponent, {"@context": COMPONENT_CONTEXT})
-
-        await axiosClient.put(
-            `/systems/${systemFragment}/components/${componentFragment}`,
-            updateRequest,
-            {
-                headers: authHeaders()
-            }
-        )
-
-        return new Promise((resolve) => resolve());
-    } catch (e) {
-        console.log('System Service - Failed to call /updateComponent')
-        return new Promise((resolve, reject) => reject("Failed to add updateComponent"));
-    }
-}
-
 export const removeComponent = async (systemIri: string, componentUri: string): Promise<void> => {
     try {
         const systemFragment = extractFragment(systemIri);
