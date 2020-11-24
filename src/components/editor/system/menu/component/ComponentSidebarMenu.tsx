@@ -4,8 +4,7 @@ import {Component} from "@models/componentModel";
 import {FunctionsProvider} from "@hooks/useFunctions";
 import ComponentFunctionsList from "../function/ComponentFunctionsList";
 import ComponentEditMenu from "@components/editor/system/menu/component/ComponentEditMenu";
-import {filter, flatten, cloneDeep} from "lodash";
-import {Autocomplete} from "@material-ui/lab";
+import {filter, flatten, cloneDeep, find} from "lodash";
 import * as componentService from "@services/componentService";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import {useEffect, useState} from "react";
@@ -30,7 +29,8 @@ const ComponentSidebarMenu = ({component, onComponentUpdated, systemComponents}:
     }, [component])
 
     useEffect(() => {
-        setValue('linkedComponent', component?.linkedComponent)
+        const c = find(flatten([systemComponents]), el => el.iri === component?.linkedComponent?.iri)
+        setValue('linkedComponent', c)
     }, [linkComponent])
 
     const handleLinkedComponentChange = (linkedComponent: Component | null) => {
@@ -39,6 +39,7 @@ const ComponentSidebarMenu = ({component, onComponentUpdated, systemComponents}:
                 .then(value => onComponentUpdated(value))
                 .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
             setLinkComponent(linkedComponent)
+            component.linkedComponent = linkedComponent
         } else {
             componentService.unlinkComponent(component.iri)
                 .then(value => {
@@ -48,6 +49,7 @@ const ComponentSidebarMenu = ({component, onComponentUpdated, systemComponents}:
                 })
                 .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
             setLinkComponent(null)
+            component.linkedComponent = null
         }
     }
 
