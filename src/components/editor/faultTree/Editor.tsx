@@ -20,7 +20,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
     const [showSnackbar] = useSnackbar()
     const [requestConfirmation] = useConfirmDialog()
 
-    const [faultTree, updateFaultTree] = useCurrentFaultTree()
+    const [faultTree, refreshTree] = useCurrentFaultTree()
     const [rootEvent, setRootEvent] = useState<FaultEvent>()
     const _localContext = useLocalContext({rootEvent})
 
@@ -53,7 +53,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
 
         // propagate changes locally in the app
         faultTree.manifestingEvent = rootEventClone
-        updateFaultTree(faultTree)
+        refreshTree();
         setRootEvent(rootEventClone)
     }
 
@@ -69,7 +69,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
 
                 // propagate changes locally in the app
                 faultTree.manifestingEvent = rootEventClone
-                updateFaultTree(faultTree)
+                refreshTree();
             })
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
@@ -92,7 +92,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
 
                     // propagate changes locally in the app
                     faultTree.manifestingEvent = rootEventClone
-                    updateFaultTree(faultTree)
+                    refreshTree();
                 })
                 .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
         }

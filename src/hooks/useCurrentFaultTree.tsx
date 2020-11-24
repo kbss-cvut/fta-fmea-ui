@@ -7,13 +7,13 @@ import {axiosSource} from "@services/utils/axiosUtils";
 import {ChildrenProps} from "@utils/hookUtils";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 
-type faultTreeContextType = [FaultTree, (faultTree: FaultTree) => void];
+type faultTreeContextType = [FaultTree, () => void];
 
 export const faultTreeContext = createContext<faultTreeContextType>(null!);
 
 export const useCurrentFaultTree = () => {
-    const [faultTree, updateFaultTree] = useContext(faultTreeContext);
-    return [faultTree, updateFaultTree] as const;
+    const [faultTree, refreshTree] = useContext(faultTreeContext);
+    return [faultTree, refreshTree] as const;
 }
 
 interface Props extends ChildrenProps {
@@ -24,31 +24,22 @@ export const CurrentFaultTreeProvider = ({faultTreeIri, children}: Props) => {
     const [_faultTree, _setFaultTree] = useState<FaultTree>();
     const [showSnackbar] = useSnackbar()
 
-    const updateFaultTree = async (faultTree: FaultTree) => {
-        faultTreeService.update(faultTree)
-            .then(value => {
-                showSnackbar('Fault Tree updated', SnackbarType.SUCCESS)
-                _setFaultTree(value)
-            })
+    const fetchFaultTree = async () => {
+        faultTreeService.find(faultTreeIri)
+            .then(value => _setFaultTree(value))
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
 
-    useEffect(() => {
-        const fetchFaultTree = async () => {
-            faultTreeService.find(faultTreeIri)
-                .then(value => _setFaultTree(value))
-                .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
-        }
+    const refreshTree = fetchFaultTree;
 
+    useEffect(() => {
         fetchFaultTree()
 
-        return () => {
-            axiosSource.cancel("CurrentFaultTreeProvider - unmounting")
-        }
+        return () => axiosSource.cancel("CurrentFaultTreeProvider - unmounting")
     }, []);
 
     return (
-        <faultTreeContext.Provider value={[_faultTree, updateFaultTree]}>
+        <faultTreeContext.Provider value={[_faultTree, refreshTree]}>
             {children}
         </faultTreeContext.Provider>
     );
