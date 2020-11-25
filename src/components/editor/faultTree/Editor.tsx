@@ -1,8 +1,8 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {cloneDeep, concat, flatten, assign, filter} from "lodash";
+import {useHistory} from "react-router-dom";
 import EditorCanvas from "./canvas/EditorCanvas";
-import {findEventByIri, findEventParentByIri} from "@utils/treeUtils";
+import {findEventByIri} from "@utils/treeUtils";
 import ElementContextMenu from "./menu/ElementContextMenu";
 import {useLocalContext} from "@hooks/useLocalContext";
 import * as faultEventService from "../../../services/faultEventService";
@@ -15,8 +15,12 @@ import PngExporter, {PngExportData} from "@components/editor/export/PngExporter"
 
 import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@utils/contextMenu";
 import {DashboardTitleProps} from "@components/dashboard/DashboardTitleProps";
+import FailureModesTableDialog from "@components/dialog/failureModesTable/FailureModesTableDialog";
+import {ROUTES} from "@utils/constants";
+import {extractFragment} from "@services/utils/uriIdentifierUtils";
 
 const Editor = ({setAppBarName}: DashboardTitleProps) => {
+    const history = useHistory();
     const [showSnackbar] = useSnackbar()
     const [requestConfirmation] = useConfirmDialog()
 
@@ -73,6 +77,14 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
 
     const [exportData, setExportData] = useState<PngExportData>();
 
+    const [failureModesTableOpen, setFailureModesTableOpen] = useState(false);
+    const handleFailureModesTableCreated = (tableIri: string) => {
+        console.log(`handleFailureModesTableCreated - ${tableIri}`)
+
+        const tableFragment = extractFragment(tableIri);
+        history.push(ROUTES.FMEA + tableFragment);
+    }
+
     return (
         <React.Fragment>
             <EditorCanvas
@@ -81,6 +93,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
                 onEventUpdated={handleEventUpdate}
                 sidebarSelectedEvent={sidebarSelectedEvent}
                 onElementContextMenu={handleContextMenu}
+                onConvertToTable={() => setFailureModesTableOpen(true)}
             />
 
             <ElementContextMenu
@@ -98,6 +111,12 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
 
             {exportData && <PngExporter open={Boolean(exportData)} exportData={exportData}
                                         onClose={() => setExportData(null)}/>}
+
+            <FailureModesTableDialog
+                open={failureModesTableOpen}
+                faultTreeIri={faultTree?.iri}
+                onCreated={handleFailureModesTableCreated}
+                onClose={() => setFailureModesTableOpen(false)}/>
         </React.Fragment>
     );
 }

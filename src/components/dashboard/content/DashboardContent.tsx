@@ -44,7 +44,7 @@ const DashboardContent = () => {
                 <Divider/>
                 <DashboardFaultTreeList/>
 
-                <Typography variant="h5">Failure Modes</Typography>
+                <Typography variant="h5">FMEA Worksheets</Typography>
                 <Divider/>
                 <DashboardFailureModeList/>
             </div>

@@ -23,9 +23,10 @@ interface Props {
     exportImage: (string) => void,
     onElementContextMenu: (element: any, evt: any) => void,
     onEventUpdated: (faultEvent: FaultEvent) => void,
+    onConvertToTable: () => void,
 }
 
-const EditorCanvas = ({rootEvent, sidebarSelectedEvent, exportImage, onElementContextMenu, onEventUpdated}: Props) => {
+const EditorCanvas = ({rootEvent, sidebarSelectedEvent, exportImage, onElementContextMenu, onEventUpdated, onConvertToTable}: Props) => {
     const classes = useStyles()
 
     const containerRef = useRef(null)
@@ -142,7 +143,8 @@ const EditorCanvas = ({rootEvent, sidebarSelectedEvent, exportImage, onElementCo
                 {container && rootEvent && <FaultEventShape addSelf={addSelf} treeEvent={rootEvent}/>}
             </div>
             <SidebarMenu className={classes.sidebar}>
-                <DiagramOptions onRestoreLayout={() => layout(container)} onExportDiagram={handleDiagramExport}/>
+                <DiagramOptions onExportDiagram={handleDiagramExport} onConvertToTable={onConvertToTable}
+                    onRestoreLayout={() => layout(container)}/>
                 <FaultEventMenu shapeToolData={sidebarSelectedEvent} onEventUpdated={onEventUpdated}/>
             </SidebarMenu>
         </div>

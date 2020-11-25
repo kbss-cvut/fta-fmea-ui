@@ -4,7 +4,11 @@ import axiosClient from "@services/utils/axiosUtils";
 import {FaultTree, CONTEXT} from "@models/faultTreeModel";
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
-import {CONTEXT as EVENT_CONTEXT, FaultEvent} from "@models/eventModel";
+import {
+    CONTEXT as FAILURE_MODES_TABLE_CONTEXT,
+    CreateFailureModesTable,
+    FailureModesTable
+} from "@models/failureModesTableModel";
 
 export const findAll = async (): Promise<FaultTree[]> => {
     try {
@@ -96,20 +100,24 @@ export const remove = async (faultTreeIri: string): Promise<void> => {
     }
 }
 
-export const rootToLeafEventPath = async (treeIri: string, leafEventIri: string) : Promise<FaultEvent[]> => {
+export const createFailureModesTable = async (faultTreeIri: string, failureModesTable: CreateFailureModesTable): Promise<FailureModesTable> => {
     try {
-        const treeFragment = extractFragment(treeIri);
-        const leafFragment = extractFragment(leafEventIri);
+        const createRequest = Object.assign(
+            {"@type": [VocabularyUtils.FAILURE_MODES_TABLE]}, failureModesTable, {"@context": FAILURE_MODES_TABLE_CONTEXT}
+        )
 
-        const response = await axiosClient.get(
-            `/faultTrees/${treeFragment}/rootToLeafEventPath/${leafFragment}`,
+        const fragment = extractFragment(faultTreeIri);
+        const response = await axiosClient.post(
+            `/faultTrees/${fragment}/failureModesTable`,
+            createRequest,
             {
                 headers: authHeaders()
             }
         )
-        return JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(response.data, EVENT_CONTEXT);
+
+        return JsonLdUtils.compactAndResolveReferences<FailureModesTable>(response.data, FAILURE_MODES_TABLE_CONTEXT);
     } catch (e) {
-        console.log('Fault Tree Service - Failed to call /rootToLeafEventPath')
-        return new Promise((resolve, reject) => reject("Failed to resolve event paths"));
+        console.log('Fault Tree Service - Failed to call /createFailureModesTable')
+        return new Promise((resolve, reject) => reject("Failed to create failure modes table"));
     }
 }
