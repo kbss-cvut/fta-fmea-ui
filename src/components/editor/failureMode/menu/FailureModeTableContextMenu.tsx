@@ -10,7 +10,7 @@ interface Props {
 }
 
 // TODO reuse context menus
-const FailureModeContextMenu = ({anchorPosition, onClose, onRenameClick, onDelete}: Props) => {
+const FailureModeTableContextMenu = ({anchorPosition, onClose, onRenameClick, onDelete}: Props) => {
 
     const handleRenameClick = () => {
         onClose()
@@ -41,4 +41,4 @@ const FailureModeContextMenu = ({anchorPosition, onClose, onRenameClick, onDelet
     );
 }
 
-export default FailureModeContextMenu;
+export default FailureModeTableContextMenu;

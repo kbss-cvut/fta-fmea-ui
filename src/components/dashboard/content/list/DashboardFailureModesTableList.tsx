@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import * as React from "react";
-import {useFailureModes} from "@hooks/useFailureModes";
+import {useFailureModesTables} from "@hooks/useFailureModesTables";
 import useStyles from "@components/dashboard/content/list/DashboardList.styles";
 import {ROUTES} from "@utils/constants";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
@@ -22,30 +22,31 @@ import {useState} from "react";
 import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@utils/contextMenu";
 import {FailureMode} from "@models/failureModeModel";
 import SystemContextMenu from "@components/editor/system/menu/SystemContextMenu";
-import FailureModeContextMenu from "@components/editor/failureMode/menu/FailureModeContextMenu";
+import FailureModeTableContextMenu from "@components/editor/failureMode/menu/FailureModeTableContextMenu";
 import SystemEditDialog from "@components/dialog/system/SystemEditDialog";
-import FailureModeRenameDialog from "@components/dialog/failureMode/rename/FailureModeRenameDialog";
+import FailureModesTableRenameDialog from "@components/dialog/failureModesTable/rename/FailureModesTableRenameDialog";
+import {FailureModesTable} from "@models/failureModesTableModel";
 
-const DashboardFailureModeList = () => {
+const DashboardFailureModesTableList = () => {
     const classes = useStyles();
-    const [failureModes, , removeFailureMode] = useFailureModes();
+    const [tables, , removeTable] = useFailureModesTables();
 
-    const [contextMenuSelectedFailureMode, setContextMenuSelectedFailureMode] = useState<FailureMode>(null)
+    const [contextMenuSelectedTable, setContextMenuSelectedTable] = useState<FailureModesTable>(null)
     const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefaultAnchor)
 
-    const handleContextMenu = (evt, failureMode: FailureMode) => {
-        setContextMenuSelectedFailureMode(failureMode);
+    const handleContextMenu = (evt, selectedTable: FailureModesTable) => {
+        setContextMenuSelectedTable(selectedTable);
         setContextMenuAnchor({mouseX: evt.pageX, mouseY: evt.pageY,})
     }
 
     const [showConfirmDialog] = useConfirmDialog();
 
-    const handleDelete = (failureMode: FailureMode) => {
+    const handleDelete = (tableToDelete: FailureModesTable) => {
         showConfirmDialog({
-            title: 'Delete Failure Mode',
-            explanation: 'Proceed to delete the failure mode?',
+            title: 'Delete Failure Modes Table',
+            explanation: 'Proceed to delete the failure modes table?',
             onConfirm: () => {
-                removeFailureMode(failureMode);
+                removeTable(tableToDelete);
             },
         })
     }
@@ -55,7 +56,7 @@ const DashboardFailureModeList = () => {
     return (
         <React.Fragment>
             <GridList className={classes.gridList} cols={6}>
-                {failureModes.map((mode) => {
+                {tables.map((mode) => {
                     const routePath = ROUTES.FMEA + extractFragment(mode.iri);
                     return (
                         <GridListTile key={mode.iri} className={classes.gridListTile}>
@@ -79,17 +80,17 @@ const DashboardFailureModeList = () => {
                 })}
             </GridList>
 
-            <FailureModeContextMenu
+            <FailureModeTableContextMenu
                 anchorPosition={contextMenuAnchor}
                 onRenameClick={() => setRenameDialogOpen(true)}
-                onDelete={() => handleDelete(contextMenuSelectedFailureMode)}
+                onDelete={() => handleDelete(contextMenuSelectedTable)}
                 onClose={() => setContextMenuAnchor(contextMenuDefaultAnchor)}/>
 
-            <FailureModeRenameDialog open={renameDialogOpen}
-                                     handleCloseDialog={() => setRenameDialogOpen(false)}
-                                     failureMode={contextMenuSelectedFailureMode}/>
+            <FailureModesTableRenameDialog open={renameDialogOpen}
+                                           handleCloseDialog={() => setRenameDialogOpen(false)}
+                                           failureModesTable={contextMenuSelectedTable}/>
         </React.Fragment>
     );
 }
 
-export default DashboardFailureModeList;
+export default DashboardFailureModesTableList;

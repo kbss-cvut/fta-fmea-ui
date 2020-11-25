@@ -5,7 +5,7 @@ import {Divider, Typography} from "@material-ui/core";
 import FaultTreeDialog from "@components/dialog/faultTree/FaultTreeDialog";
 import {useState} from "react";
 import DashboardFaultTreeList from "@components/dashboard/content/list/DashboardFaultTreeList";
-import DashboardFailureModeList from "@components/dashboard/content/list/DashboardFailureModeList";
+import DashboardFailureModesTableList from "@components/dashboard/content/list/DashboardFailureModesTableList";
 import {SpeedDial, SpeedDialAction, SpeedDialIcon} from "@material-ui/lab";
 import FlightIcon from '@material-ui/icons/Flight';
 import NatureIcon from '@material-ui/icons/Nature';
@@ -46,7 +46,7 @@ const DashboardContent = () => {
 
                 <Typography variant="h5">FMEA Worksheets</Typography>
                 <Divider/>
-                <DashboardFailureModeList/>
+                <DashboardFailureModesTableList/>
             </div>
 
             <SpeedDial
