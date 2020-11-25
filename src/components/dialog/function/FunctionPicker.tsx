@@ -1,13 +1,13 @@
 import * as React from "react";
 
 import {Box, IconButton, TextField, Typography} from "@material-ui/core";
-import {useFunctions} from "@hooks/useFunctions";
+import {useFunctions} from "../../../hooks/useFunctions";
 import {Autocomplete} from "@material-ui/lab";
-import {Function} from "@models/functionModel";
+import {Function} from "../../../models/functionModel";
 import AddIcon from "@material-ui/icons/Add";
 import {Controller, useForm} from "react-hook-form";
-import {schema} from "@components/picker/function/FunctionPicker.schema";
-import useStyles from "@components/picker/function/FunctionPicker.styles";
+import {schema} from "./FunctionPicker.schema";
+import useStyles from "./FunctionPicker.styles";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 interface Props {

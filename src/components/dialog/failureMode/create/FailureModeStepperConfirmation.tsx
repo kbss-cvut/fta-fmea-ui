@@ -1,9 +1,9 @@
 import * as React from "react";
 
-import {Component} from "../../../../models/componentModel";
-import {Function} from "../../../../models/functionModel";
-import {FailureMode} from "../../../../models/failureModeModel";
-import {FaultEvent} from "../../../../models/eventModel";
+import {Component} from "@models/componentModel";
+import {Function} from "@models/functionModel";
+import {FailureMode} from "@models/failureModeModel";
+import {FaultEvent} from "@models/eventModel";
 import useStyles from "./FailureModeStepperConfirmation.styles";
 import {Grid, List, ListItem, ListItemText, Paper, Typography} from "@material-ui/core";
 

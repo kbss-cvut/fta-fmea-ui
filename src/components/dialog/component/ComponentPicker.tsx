@@ -9,7 +9,6 @@ import {Controller, useForm} from "react-hook-form";
 import {schema} from "./Component.schema";
 import useStyles from "./ComponentPicker.styles";
 import {yupResolver} from "@hookform/resolvers/yup";
-import DividerWithText from "../../materialui/DividerWithText";
 
 interface Props {
     selectedComponent: Component | null,

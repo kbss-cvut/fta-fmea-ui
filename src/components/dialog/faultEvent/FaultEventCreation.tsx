@@ -7,7 +7,6 @@ import {EventType, FaultEvent, GateType, gateTypeValues} from "@models/eventMode
 import {useFaultEvents} from "@hooks/useFaultEvents";
 import ControlledAutocomplete from "@components/materialui/ControlledAutocomplete";
 import {useEffect, useState} from "react";
-import DividerWithText from "@components/materialui/DividerWithText";
 
 interface Props {
     useFormMethods: any,
@@ -42,7 +41,7 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
 
     return (
         <div className={classes.divForm}>
-            <Typography variant={"subtitle1"} gutterBottom>Event:</Typography>
+            <Typography variant="subtitle1" gutterBottom>Event:</Typography>
             {eventReusing &&
             <React.Fragment>
                 <ControlledAutocomplete
@@ -54,8 +53,9 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
                     renderInput={(params) => <TextField {...params} label="Event" variant="outlined"/>}
                     defaultValue={null}
                 />
-                <DividerWithText>New Event</DividerWithText>
             </React.Fragment>}
+
+            <Typography variant="subtitle1" className={classes.newEventTitle}>Create new Event:</Typography>
 
             <FormControl className={classes.formControl}>
                 <InputLabel id="event-type-select-label">Type</InputLabel>
@@ -121,9 +121,10 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
                     as={
                         <Select labelId="gate-type-select-label" id="gate-type-select" error={!!errors.gateType}>
                             {
-                                gateTypeValues().map(value =>{
+                                gateTypeValues().map(value => {
                                     const [enabled, optionValue] = value
-                                    return <MenuItem key={`option-${value}`} value={optionValue} disabled={!enabled}>{value}</MenuItem>
+                                    return <MenuItem key={`option-${value}`} value={optionValue}
+                                                     disabled={!enabled}>{value}</MenuItem>
                                 })
                             }
                         </Select>

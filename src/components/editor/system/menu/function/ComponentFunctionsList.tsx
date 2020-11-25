@@ -13,7 +13,7 @@ import AddIcon from "@material-ui/icons/Add";
 import useStyles from "@components/editor/system/menu/function/ComponentFunctionsList.styles";
 import {useFunctions} from "@hooks/useFunctions";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {schema} from "@components/picker/function/FunctionPicker.schema";
+import {schema} from "@components/dialog/function/FunctionPicker.schema";
 import DeleteIcon from '@material-ui/icons/Delete';
 import {Function} from "@models/functionModel";
 import {useConfirmDialog} from "@hooks/useConfirmDialog";

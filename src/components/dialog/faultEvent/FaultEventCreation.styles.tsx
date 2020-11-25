@@ -6,6 +6,9 @@ const useStyles = makeStyles((theme: Theme) =>
         divForm: {
             flexGrow: 1
         },
+        newEventTitle: {
+            margin: theme.spacing(1, 0)
+        },
         rpnBox: {
             display: 'flex',
             gap: '1em'
