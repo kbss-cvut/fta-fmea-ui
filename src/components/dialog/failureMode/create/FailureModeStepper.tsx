@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
@@ -14,36 +14,25 @@ import useStyles from "./FailureModeStepper.styles";
 import FailureModeStepperConfirmation from "./FailureModeStepperConfirmation";
 import FailureModeCreationStep from "./FailureModeCreationStep";
 import {CreateFailureMode, FailureMode} from "@models/failureModeModel";
-import {FaultEvent} from "@models/eventModel";
-import {useRootToLeafPath} from "@hooks/useRootToLeafPath";
-import {findIndex} from "lodash";
-import * as componentService from "@services/componentService";
+import * as faultEventService from "@services/faultEventService";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
-import {toEventsWithoutChildren} from "@services/faultEventService";
 
-const stepTitles = ["Component", "Influenced Function", "Effects", "Confirmation"];
+const stepTitles = ["Failure Mode", "Component", "Influenced Function", "Confirmation"];
 
 interface Props {
+    eventIri: string,
+    onFailureModeCreated: () => void,
     onClose: () => void,
 }
 
-const FailureModeStepper = ({onClose}: Props) => {
+const FailureModeStepper = ({eventIri, onFailureModeCreated, onClose}: Props) => {
     const classes = useStyles();
     const [showSnackbar] = useSnackbar();
 
-    const eventPath = useRootToLeafPath()
-    const [eventNamesPath, setEventNamesPath] = useState([]);
-
-    useEffect(() => {
-        setEventNamesPath(eventPath.map(value => value.name))
-        setEffects(eventPath)
-    }, [eventPath])
-
     const [activeStep, setActiveStep] = useState(0);
+    const [selectedFailureMode, setSelectedFailureMode] = useState<FailureMode | null>(null)
     const [selectedComponent, setSelectedComponent] = useState<Component | null>(null)
     const [selectedFunction, setSelectedFunction] = useState<Function | null>(null)
-    const [selectedFailureMode, setSelectedFailureMode] = useState<FailureMode | null>(null)
-    const [effects, setEffects] = useState<FaultEvent[]>(eventPath)
 
     const handleNext = () => setActiveStep((prev) => prev + 1);
     const handleBack = () => setActiveStep((prev) => prev - 1);
@@ -53,41 +42,33 @@ const FailureModeStepper = ({onClose}: Props) => {
         setSelectedComponent(component)
     }
 
-    const handleEventsPathChanged = (events: string[]) => {
-        const selectedEvents = eventPath.filter(value => findIndex(events, (e) => e === value.name) > -1)
-        setEffects(selectedEvents)
-    }
-
     const handleSteps = (step) => {
         switch (step) {
             case 0:
+                return (
+                    <FailureModeCreationStep
+                        failureMode={selectedFailureMode}
+                        onFailureModeChanged={setSelectedFailureMode}/>
+                );
+            case 1:
                 return (
                     <ComponentsProvider>
                         <ComponentPicker selectedComponent={selectedComponent}
                                          onComponentSelected={handleComponentSelected}/>
                     </ComponentsProvider>
                 );
-            case 1:
+            case 2:
                 return (
                     <FunctionsProvider componentUri={selectedComponent?.iri}>
                         <FunctionPicker selectedFunction={selectedFunction} onFunctionSelected={setSelectedFunction}/>
                     </FunctionsProvider>
-                );
-            case 2:
-                return (
-                    <FailureModeCreationStep
-                        failureMode={selectedFailureMode}
-                        onFailureModeChanged={setSelectedFailureMode}
-                        eventNamesPath={eventNamesPath}
-                        onEventPathChanged={handleEventsPathChanged}/>
                 );
             case 3:
                 return (
                     <FailureModeStepperConfirmation
                         component={selectedComponent}
                         componentFunction={selectedFunction}
-                        failureMode={selectedFailureMode}
-                        effects={effects}/>
+                        failureMode={selectedFailureMode}/>
                 )
             default:
                 break;
@@ -97,11 +78,11 @@ const FailureModeStepper = ({onClose}: Props) => {
     const nextButtonEnabled = (step) => {
         switch (step) {
             case 0:
-                return Boolean(selectedComponent);
-            case 1:
-                return Boolean(selectedFunction);
-            case 2:
                 return Boolean(selectedFailureMode);
+            case 1:
+                return Boolean(selectedComponent);
+            case 2:
+                return Boolean(selectedFunction);
             default:
                 return true;
         }
@@ -141,13 +122,14 @@ const FailureModeStepper = ({onClose}: Props) => {
     const handleCreateFailureMode = () => {
         const createFailureMode = {
             name: selectedFailureMode.name,
-            effects: toEventsWithoutChildren(effects),
-            influencedFunction: selectedFunction
+            component: selectedComponent,
+            influencedFunctions: [selectedFunction]
         } as CreateFailureMode
 
-        componentService.addFailureMode(selectedComponent.iri, createFailureMode)
-            .then(r => {
+        faultEventService.addFailureMode(eventIri, createFailureMode)
+            .then(value => {
                 showSnackbar('Failure Mode Created', SnackbarType.SUCCESS)
+                onFailureModeCreated()
                 onClose()
             })
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))

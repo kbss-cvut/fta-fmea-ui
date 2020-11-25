@@ -1,6 +1,7 @@
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {AbstractModel, CONTEXT as ABSTRACT_CONTEXT} from "@models/abstractModel";
 import {CONTEXT as RPN_CONTEXT, RiskPriorityNumber} from "@models/rpnModel";
+import {FailureMode, CONTEXT as FAILURE_MODE_CONTEXT} from "@models/failureModeModel";
 
 const ctx = {
     "name": VocabularyUtils.PREFIX + "hasName",
@@ -11,9 +12,10 @@ const ctx = {
     "rpn": VocabularyUtils.PREFIX + "hasRPN",
     "probability": VocabularyUtils.PREFIX + "hasProbability",
     "children": VocabularyUtils.PREFIX + "hasChildren",
+    "failureMode": VocabularyUtils.PREFIX + "hasFailureMode",
 };
 
-export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, RPN_CONTEXT);
+export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, RPN_CONTEXT, FAILURE_MODE_CONTEXT);
 
 export enum EventType {
     BASIC = "BASIC",
@@ -31,6 +33,7 @@ export interface FaultEvent extends AbstractModel {
     gateType?: GateType,
     probability?: number,
     children?: FaultEvent[],
+    failureMode?: FailureMode,
 }
 
 export enum GateType {

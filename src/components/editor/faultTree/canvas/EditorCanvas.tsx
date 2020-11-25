@@ -15,6 +15,7 @@ import {handleCanvasMouseWheel} from "@utils/canvasZoom";
 import FaultEventMenu from "@components/editor/faultTree/menu/FaultEventMenu";
 import DiagramOptions from "@components/editor/menu/DiagramOptions";
 import {encodeCanvas} from "@utils/canvasExport";
+import {EventFailureModeProvider} from "@hooks/useEventFailureMode";
 
 interface Props {
     rootEvent: FaultEvent,

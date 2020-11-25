@@ -6,6 +6,7 @@ import {CONTEXT as EVENT_CONTEXT, EventType, FaultEvent, GateType} from "@models
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {flatten} from "lodash";
+import {CONTEXT as FAILURE_MODE_CONTEXT, CreateFailureMode, FailureMode} from "@models/failureModeModel";
 
 export const findFaultEvents = async (): Promise<FaultEvent[]> => {
     try {
@@ -110,10 +111,60 @@ export const eventFromHookFormValues = (values: any): FaultEvent => {
     return faultEvent;
 }
 
-// children are cleared to prevent issues with duplicate RPNs and references in invalid order
-export const toEventsWithoutChildren = (events: FaultEvent[]) => {
-    return events.map(e => {
-        e.children = []
-        return e
-    })
+export const getFailureMode = async (eventUri: string): Promise<FailureMode> => {
+    try {
+        const fragment = extractFragment(eventUri);
+
+        const response = await axiosClient.get(
+            `/faultEvents/${fragment}/failureMode`,
+            {
+                headers: authHeaders()
+            }
+        )
+
+        return JsonLdUtils.compactAndResolveReferences<FailureMode>(response.data, FAILURE_MODE_CONTEXT);
+    } catch (e) {
+        console.log('Event Service - Failed to call /getFailureMode')
+        return new Promise((resolve, reject) => reject("Failed to load event failure mode"));
+    }
+}
+
+export const addFailureMode = async (eventUri: string, failureMode: CreateFailureMode): Promise<FailureMode> => {
+    try {
+        const fragment = extractFragment(eventUri);
+        const createRequest = Object.assign(
+            {"@type": [VocabularyUtils.FAILURE_MODE]}, failureMode, {"@context": FAILURE_MODE_CONTEXT}
+        )
+
+        const response = await axiosClient.post(
+            `/faultEvents/${fragment}/failureMode`,
+            createRequest,
+            {
+                headers: authHeaders()
+            }
+        )
+
+        return JsonLdUtils.compactAndResolveReferences<FailureMode>(response.data, FAILURE_MODE_CONTEXT);
+    } catch (e) {
+        console.log('Event Service - Failed to call /addFailureMode')
+        return new Promise((resolve, reject) => reject("Failed to create failure mode"));
+    }
+}
+
+export const deleteFailureMode = async (eventUri: string): Promise<void> => {
+    try {
+        const fragment = extractFragment(eventUri);
+
+        await axiosClient.delete(
+            `/faultEvents/${fragment}/failureMode`,
+            {
+                headers: authHeaders()
+            }
+        )
+
+        return new Promise((resolve) => resolve());
+    } catch (e) {
+        console.log('Event Service - Failed to call /deleteFailureMode')
+        return new Promise((resolve, reject) => reject("Failed to delete event failure mode"));
+    }
 }

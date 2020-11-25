@@ -1,27 +1,26 @@
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {Mitigation, CONTEXT as MITIGATION_CONTEXT} from "@models/mitigationModel";
-import {AuthoredModel, CONTEXT as AUTHORED_CONTEXT} from "@models/authoredModel";
 import {FaultEvent, CONTEXT as EVENT_CONTEXT} from "@models/eventModel";
 import {Function, CONTEXT as FUNCTION_CONTEXT} from "@models/functionModel";
+import {Component,CONTEXT as COMPONENT_CONTEXT} from "@models/componentModel";
+import {AbstractModel, CONTEXT as ABSTRACT_CONTEXT} from "@models/abstractModel";
 
 const ctx = {
-    "influencedFunction": VocabularyUtils.PREFIX + "influences",
+    "influencedFunctions": VocabularyUtils.PREFIX + "influences",
     "effects": VocabularyUtils.PREFIX + "hasEffect",
     "mitigation": VocabularyUtils.PREFIX + "isMitigatedBy",
+    "component": VocabularyUtils.PREFIX + "hasComponent",
 };
 
-export const CONTEXT = Object.assign({}, ctx, AUTHORED_CONTEXT, EVENT_CONTEXT, MITIGATION_CONTEXT, FUNCTION_CONTEXT);
+export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, EVENT_CONTEXT, MITIGATION_CONTEXT, FUNCTION_CONTEXT, COMPONENT_CONTEXT);
 
-export interface CreateFailureMode extends AuthoredModel {
+export interface CreateFailureMode extends AbstractModel {
     name: string,
-    influencedFunction?: Function,
-    effects?: any[],
+    influencedFunctions?: Function[],
+    component: Component,
     mitigation?: Mitigation[]
 }
 
-export interface FailureMode extends AuthoredModel {
-    name: string,
-    influencedFunction?: Function,
+export interface FailureMode extends CreateFailureMode {
     effects?: FaultEvent[],
-    mitigation?: Mitigation[]
 }

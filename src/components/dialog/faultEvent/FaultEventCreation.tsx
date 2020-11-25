@@ -53,9 +53,8 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
                     renderInput={(params) => <TextField {...params} label="Event" variant="outlined"/>}
                     defaultValue={null}
                 />
+                <Typography variant="subtitle1" className={classes.newEventTitle}>Create new Event:</Typography>
             </React.Fragment>}
-
-            <Typography variant="subtitle1" className={classes.newEventTitle}>Create new Event:</Typography>
 
             <FormControl className={classes.formControl}>
                 <InputLabel id="event-type-select-label">Type</InputLabel>

@@ -4,6 +4,8 @@ import {EventType, FaultEvent} from "@models/eventModel";
 import * as React from "react";
 import FailureModeDialog from "../../../dialog/failureMode/create/FailureModeDialog";
 import {useState} from "react";
+import {EventFailureModeProvider, useEventFailureMode} from "@hooks/useEventFailureMode";
+import EventFailureModeList from "@components/editor/faultTree/menu/failureMode/EventFailureModeList";
 
 interface Props {
     shapeToolData?: FaultEvent,
@@ -20,18 +22,20 @@ const FaultEventMenu = ({shapeToolData, onEventUpdated}: Props) => {
             <Divider/>
 
             {
-                shapeToolData && shapeToolData.eventType !== EventType.INTERMEDIATE &&
-                <React.Fragment>
-                    <Typography variant="h5" gutterBottom>Failure Modes</Typography>
-                    <Button color="primary" onClick={() => setFailureModeDialogOpen(true)}>
-                        Create Failure Mode
-                    </Button>
-                </React.Fragment>
-            }
+                shapeToolData &&
+                <EventFailureModeProvider eventIri={shapeToolData?.iri}>
+                    <Typography variant="h5" gutterBottom>Failure Mode</Typography>
+                    <EventFailureModeList/>
 
-            <FailureModeDialog open={failureModeDialogOpen && Boolean(shapeToolData)}
-                               onClose={() => setFailureModeDialogOpen(false)}
-                               leafEventIri={shapeToolData?.iri}/>
+                    <Button color="primary" onClick={() => setFailureModeDialogOpen(true)}>
+                        Set Failure Mode
+                    </Button>
+
+                    <FailureModeDialog open={failureModeDialogOpen && Boolean(shapeToolData)}
+                                       onClose={() => setFailureModeDialogOpen(false)}
+                                       eventIri={shapeToolData?.iri}/>
+                </EventFailureModeProvider>
+            }
         </React.Fragment>
     );
 }

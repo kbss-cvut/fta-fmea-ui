@@ -120,28 +120,6 @@ export const removeFunction = async (componentIri: string, functionIri: string) 
     }
 }
 
-export const addFailureMode = async (componentUri: string, failureMode: FailureMode): Promise<FailureMode> => {
-    try {
-        const fragment = extractFragment(componentUri);
-        const createRequest = Object.assign(
-            {"@type": [VocabularyUtils.FAILURE_MODE]}, failureMode, {"@context": FAILURE_MODE_CONTEXT}
-        )
-
-        const response = await axiosClient.post(
-            `/components/${fragment}/failureModes`,
-            createRequest,
-            {
-                headers: authHeaders()
-            }
-        )
-
-        return JsonLdUtils.compactAndResolveReferences<FailureMode>(response.data, FAILURE_MODE_CONTEXT);
-    } catch (e) {
-        console.log('Component Service - Failed to call add failure mode')
-        return new Promise((resolve, reject) => reject("Failed to create failure mode"));
-    }
-}
-
 export const linkComponent = async (componentUri: string, linkUri: string): Promise<Component> => {
     try {
         const fragment = extractFragment(componentUri);

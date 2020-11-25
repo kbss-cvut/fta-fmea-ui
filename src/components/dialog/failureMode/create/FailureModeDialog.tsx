@@ -3,25 +3,21 @@ import Dialog from '@material-ui/core/Dialog';
 import {DialogTitle} from "../../../materialui/dialog/DialogTitle";
 import {DialogContent} from "../../../materialui/dialog/DialogContent";
 import FailureModeStepper from "./FailureModeStepper";
-import {RootToLeafEventPathProvider} from "../../../../hooks/useRootToLeafPath";
-import {useCurrentFaultTree} from "../../../../hooks/useCurrentFaultTree";
+import {useEventFailureMode} from "@hooks/useEventFailureMode";
 
 interface Props {
     open: boolean,
     onClose: () => void,
-    leafEventIri: string,
+    eventIri: string,
 }
 
-const FailureModeDialog = ({open, onClose, leafEventIri}: Props) => {
-    const [faultTree,] = useCurrentFaultTree();
-
+const FailureModeDialog = ({open, onClose, eventIri}: Props) => {
+    const [,,refreshFailureMode] = useEventFailureMode();
     return (
         <Dialog open={open} onClose={onClose} aria-labelledby="failure-mode-dialog" fullWidth maxWidth="lg">
             <DialogTitle id="failure-mode-dialog" onClose={onClose}>Create Failure Mode</DialogTitle>
             <DialogContent dividers>
-                <RootToLeafEventPathProvider faultTreeIri={faultTree?.iri} leafEventIri={leafEventIri}>
-                    <FailureModeStepper onClose={onClose}/>
-                </RootToLeafEventPathProvider>
+                <FailureModeStepper onClose={onClose} eventIri={eventIri} onFailureModeCreated={refreshFailureMode}/>
             </DialogContent>
         </Dialog>
     );
