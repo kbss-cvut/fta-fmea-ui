@@ -5,7 +5,6 @@ import {System, CONTEXT} from "@models/systemModel";
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {deepOmit} from "@utils/lodashUtils";
-import {Component, CONTEXT as COMPONENT_CONTEXT} from "@models/componentModel";
 
 export const findAll = async (): Promise<System[]> => {
     try {

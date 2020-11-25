@@ -17,7 +17,7 @@ import {FaultEventsProvider} from "@hooks/useFaultEvents";
 interface Props {
     open: boolean,
     eventIri: string,
-    onCreated: (newEvent: FaultEvent) => void,
+    onCreated: () => void,
     onClose: () => void,
 }
 
@@ -34,7 +34,7 @@ const FaultEventDialog = ({open, eventIri, onCreated, onClose}: Props) => {
         faultEventService.addEvent(eventIri, requestEvent)
             .then(value => {
                 onClose()
-                onCreated(value)
+                onCreated()
             })
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }

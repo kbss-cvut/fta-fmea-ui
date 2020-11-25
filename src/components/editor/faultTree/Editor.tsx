@@ -28,6 +28,11 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
         if (faultTree) {
             setAppBarName(faultTree.name)
             setRootEvent(faultTree.manifestingEvent)
+
+            if (contextMenuSelectedEvent) {
+                const sidebarEvent = findEventByIri(contextMenuSelectedEvent.iri, faultTree.manifestingEvent);
+                setSidebarSelectedEvent(sidebarEvent)
+            }
         }
     }, [faultTree])
 
@@ -44,33 +49,10 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
     }
 
     const [eventDialogOpen, setEventDialogOpen] = useState(false);
-    const handleEventCreated = (newEvent: FaultEvent) => {
-        // @ts-ignore
-        const rootEventClone = cloneDeep(_localContext.rootEvent);
-
-        const foundEvent = findEventByIri(contextMenuSelectedEvent.iri, rootEventClone);
-        foundEvent.children = concat(flatten([foundEvent.children]), newEvent)
-
-        // propagate changes locally in the app
-        faultTree.manifestingEvent = rootEventClone
-        refreshTree();
-        setRootEvent(rootEventClone)
-    }
 
     const handleEventUpdate = (eventToUpdate: FaultEvent) => {
-        console.log(`handleEventUpdate - ${eventToUpdate.iri}`)
         faultEventService.update(eventToUpdate)
-            .then(value => {
-                // @ts-ignore
-                const rootEventClone = cloneDeep(_localContext.rootEvent);
-
-                const foundEvent = findEventByIri(eventToUpdate.iri, rootEventClone);
-                assign(foundEvent, eventToUpdate)
-
-                // propagate changes locally in the app
-                faultTree.manifestingEvent = rootEventClone
-                refreshTree();
-            })
+            .then(value => refreshTree())
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
 
@@ -78,22 +60,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
         const deleteEvent = () => {
             setSidebarSelectedEvent(null);
             faultEventService.remove(eventToDelete.iri)
-                .then(value => {
-                    // @ts-ignore
-                    const rootEventClone = cloneDeep(_localContext.rootEvent);
-
-                    if (rootEventClone.iri === eventToDelete.iri) {
-                        // TODO how delete root event? Is it allowed?
-                        console.log('Removing top event')
-                    } else {
-                        const parent = findEventParentByIri(eventToDelete.iri, rootEventClone);
-                        parent.children = filter(flatten([parent.children]), (o) => o.iri !== eventToDelete.iri)
-                    }
-
-                    // propagate changes locally in the app
-                    faultTree.manifestingEvent = rootEventClone
-                    refreshTree();
-                })
+                .then(value => refreshTree())
                 .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
         }
 
@@ -126,7 +93,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
 
 
             <FaultEventDialog open={eventDialogOpen} eventIri={contextMenuSelectedEvent?.iri}
-                              onCreated={handleEventCreated}
+                              onCreated={refreshTree}
                               onClose={() => setEventDialogOpen(false)}/>
 
             {exportData && <PngExporter open={Boolean(exportData)} exportData={exportData}
