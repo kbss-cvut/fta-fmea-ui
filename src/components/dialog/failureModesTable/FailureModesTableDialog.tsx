@@ -10,6 +10,9 @@ import {schema} from "./FailureModesTableDialog.schema";
 import {CreateFailureModesTable} from "@models/failureModesTableModel";
 import * as faultTreeService from "@services/faultTreeService";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
+import FaultTreePaths from "@components/dialog/faultTree/paths/FaultTreePaths";
+import {FaultTreePathsProvider} from "@hooks/useFaultTreePaths";
+import {FaultEvent} from "@models/eventModel";
 
 interface Props {
     open: boolean,
@@ -24,7 +27,12 @@ const FailureModesTableDialog = ({open, onClose, onCreated, faultTreeIri}: Props
     const {handleSubmit, register, errors, formState} = useFormMethods;
     const {isSubmitting} = formState;
 
+    const selectedPathsMap = new Map<number, FaultEvent[]>();
+
     const handleConversion = (values: any) => {
+        // TODO take paths and create rows!
+        // TODO assign RPN
+
         const table = {
             name: values.fmeaName,
         } as CreateFailureModesTable
@@ -37,6 +45,10 @@ const FailureModesTableDialog = ({open, onClose, onCreated, faultTreeIri}: Props
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
 
+    const updatePaths = (rowId: number, path: FaultEvent[]) => {
+        selectedPathsMap.set(rowId, path);
+    }
+
     return (
         <div>
             <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title" maxWidth="md"
@@ -47,6 +59,9 @@ const FailureModesTableDialog = ({open, onClose, onCreated, faultTreeIri}: Props
                                fullWidth inputRef={register}
                                error={!!errors.fmeaName}
                                helperText={errors.fmeaName?.message}/>
+                    <FaultTreePathsProvider faultTreeIri={faultTreeIri}>
+                        <FaultTreePaths updatePaths={updatePaths}/>
+                    </FaultTreePathsProvider>
                 </DialogContent>
                 <DialogActions>
                     <Button disabled={isSubmitting} color="primary" onClick={handleSubmit(handleConversion)}>

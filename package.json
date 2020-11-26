@@ -17,6 +17,7 @@
     "jquery": "^3.5.1",
     "jsonld": "1.6.0",
     "lodash": "^4.17.20",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hook-form": "^6.9.6",

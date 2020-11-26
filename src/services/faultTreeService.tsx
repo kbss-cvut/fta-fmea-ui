@@ -1,7 +1,8 @@
 import JsonLdUtils from "@utils/JsonLdUtils";
 import {authHeaders} from "@services/utils/authUtils";
 import axiosClient from "@services/utils/axiosUtils";
-import {FaultTree, CONTEXT} from "@models/faultTreeModel";
+import {CONTEXT, FaultTree} from "@models/faultTreeModel";
+import {CONTEXT as EVENT_CONTEXT, FaultEvent} from "@models/eventModel";
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {
@@ -99,6 +100,29 @@ export const remove = async (faultTreeIri: string): Promise<void> => {
         return new Promise((resolve, reject) => reject("Failed to remove fault tree"));
     }
 }
+
+export const getTreePaths = async (faultTreeIri: string): Promise<[FaultEvent[]]> => {
+    try {
+        const fragment = extractFragment(faultTreeIri);
+        const response = await axiosClient.get(
+            `/faultTrees/${fragment}/treePaths`,
+            {
+                headers: authHeaders()
+            }
+        )
+
+        const parseData = async (data) => {
+            return Promise.all(data.map(row => JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(row, EVENT_CONTEXT)));
+        }
+
+        // @ts-ignore
+        return await parseData(response.data);
+    } catch (e) {
+        console.log('Fault Tree Service - Failed to call /getTreePaths')
+        return new Promise((resolve, reject) => reject("Failed to load tree paths"));
+    }
+}
+
 
 export const createFailureModesTable = async (faultTreeIri: string, failureModesTable: CreateFailureModesTable): Promise<FailureModesTable> => {
     try {
