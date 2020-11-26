@@ -1,15 +1,15 @@
 import VocabularyUtils from "@utils/VocabularyUtils";
-import {AuthoredModel, CONTEXT as AUTHORED_CONTEXT} from "@models/authoredModel";
 import {FaultEvent, CONTEXT as EVENT_CONTEXT} from "@models/eventModel";
+import {AbstractModel,  CONTEXT as ABSTRACT_CONTEXT} from "@models/abstractModel";
 
 const ctx = {
     "manifestingEvent": VocabularyUtils.PREFIX + "isManifestedBy",
     "name": VocabularyUtils.PREFIX + "hasName",
 };
 
-export const CONTEXT = Object.assign({}, ctx, AUTHORED_CONTEXT, EVENT_CONTEXT);
+export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, EVENT_CONTEXT);
 
-export interface FaultTree extends AuthoredModel {
+export interface FaultTree extends AbstractModel {
     name: string,
     manifestingEvent: FaultEvent,
 }
