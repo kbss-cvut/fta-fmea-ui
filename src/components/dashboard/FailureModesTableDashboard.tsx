@@ -6,16 +6,16 @@ import Toolbar from "@material-ui/core/Toolbar";
 import useStyles from "./Dashboard.styles";
 import {composeFragment} from "@services/utils/uriIdentifierUtils";
 import {useState} from "react";
-import {CurrentFailureModeProvider} from "../../hooks/useCurrentFailureMode";
+import {CurrentFailureModesTableProvider} from "@hooks/useCurrentFailureModesTable";
 import FailureModeTable from "../editor/failureMode/FailureModeTable";
 
-const FailureModeDashboard = () => {
+const FailureModesTableDashboard = () => {
     const classes = useStyles();
 
     const {fmeaFragment} = useParams();
-    const failureModeIri = composeFragment(fmeaFragment);
+    const tableIri = composeFragment(fmeaFragment);
 
-    const [appBarTitle, setAppBarTitle] = useState('FailureMode')
+    const [appBarTitle, setAppBarTitle] = useState('FMEA Worksheet')
 
     return (
         <div className={classes.root}>
@@ -23,11 +23,11 @@ const FailureModeDashboard = () => {
             <AppBar title={appBarTitle} showBackButton/>
             <Toolbar/>
 
-            <CurrentFailureModeProvider failureModeIri={failureModeIri}>
+            <CurrentFailureModesTableProvider tableIri={tableIri}>
                 <FailureModeTable setAppBarName={setAppBarTitle}/>
-            </CurrentFailureModeProvider>
+            </CurrentFailureModesTableProvider>
         </div>
     );
 }
 
-export default FailureModeDashboard;
+export default FailureModesTableDashboard;

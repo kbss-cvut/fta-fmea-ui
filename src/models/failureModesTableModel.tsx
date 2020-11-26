@@ -23,3 +23,9 @@ export interface FailureModesTable extends CreateFailureModesTable {
     tree: FaultTree,
     rows: FailureModesRow[]
 }
+
+export interface FailureModesTableData {
+    name: string,
+    rows: any,
+    columns: any,
+}

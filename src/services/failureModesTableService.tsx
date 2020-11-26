@@ -1,8 +1,12 @@
 import JsonLdUtils from "@utils/JsonLdUtils";
 import {authHeaders} from "@services/utils/authUtils";
 import axiosClient from "@services/utils/axiosUtils";
-import {FailureModesTable, CONTEXT, UpdateFailureModesTable} from "../models/failureModesTableModel";
-import {FaultTree} from "@models/faultTreeModel";
+import {
+    FailureModesTable,
+    CONTEXT,
+    UpdateFailureModesTable,
+    FailureModesTableData
+} from "@models/failureModesTableModel";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
 
 export const findAll = async (): Promise<FailureModesTable[]> => {
@@ -52,5 +56,22 @@ export const remove = async (tableIri: string): Promise<void> => {
     } catch (e) {
         console.log('Failure Modes Table Service - Failed to call /remove')
         return new Promise((resolve, reject) => reject("Failed to remove failure modes tables"));
+    }
+}
+
+export const computeTableData = async (tableIri: string): Promise<FailureModesTableData> => {
+    try {
+        const fragment = extractFragment(tableIri);
+
+        const response = await axiosClient.get(
+            `/failureModesTable/${fragment}/computeTableData`,
+            {
+                headers: authHeaders()
+            }
+        );
+        return new Promise((resolve) => resolve(response.data));
+    } catch (e) {
+        console.log('Failure Modes Table Service - Failed to call /computeTableData')
+        return new Promise((resolve, reject) => reject("Failed to load failure modes table data"));
     }
 }

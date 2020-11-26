@@ -58,24 +58,6 @@ export const update = async (failureMode: FailureMode): Promise<FailureMode> => 
     }
 }
 
-export const getComponent = async (failureModeIri: string): Promise<Component> => {
-    try {
-        const fragment = extractFragment(failureModeIri);
-
-        const response = await axiosClient.get<Component>(
-            `/failureModes/${fragment}/component`,
-            {
-                headers: authHeaders()
-            }
-        )
-
-        return JsonLdUtils.compactAndResolveReferences<Component>(response.data, COMPONENT_CONTEXT)
-    } catch (e) {
-        console.log('Failure Mode Service - Failed to call /getComponent')
-        return new Promise((resolve, reject) => reject("Failed to load component by failure mode"));
-    }
-}
-
 export const remove = async (failureModeIri: string): Promise<void> => {
     try {
         const fragment = extractFragment(failureModeIri);
