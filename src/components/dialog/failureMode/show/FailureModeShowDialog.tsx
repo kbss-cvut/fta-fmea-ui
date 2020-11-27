@@ -26,6 +26,7 @@ const FailureModeShowDialog = ({open, onClose, failureMode}: Props) => {
                     component={failureMode?.component}
                     componentFunction={influencedFunction}
                     failureMode={failureMode}
+                    mitigation={failureMode?.mitigation}
                 />
                 }
             </DialogContent>

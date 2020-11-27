@@ -16,8 +16,10 @@ import FailureModeCreationStep from "./FailureModeCreationStep";
 import {CreateFailureMode, FailureMode} from "@models/failureModeModel";
 import * as faultEventService from "@services/faultEventService";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
+import {Mitigation} from "@models/mitigationModel";
+import MitigationCreation from "@components/dialog/mitigation/MitigationCreation";
 
-const stepTitles = ["Failure Mode", "Component", "Influenced Function", "Confirmation"];
+const stepTitles = ["Failure Mode", "Component", "Influenced Function", "Mitigation", "Confirmation"];
 
 interface Props {
     eventIri: string,
@@ -33,6 +35,7 @@ const FailureModeStepper = ({eventIri, onFailureModeCreated, onClose}: Props) =>
     const [selectedFailureMode, setSelectedFailureMode] = useState<FailureMode | null>(null)
     const [selectedComponent, setSelectedComponent] = useState<Component | null>(null)
     const [selectedFunction, setSelectedFunction] = useState<Function | null>(null)
+    const [selectedMitigation, setSelectedMitigation] = useState<Mitigation | null>(null)
 
     const handleNext = () => setActiveStep((prev) => prev + 1);
     const handleBack = () => setActiveStep((prev) => prev - 1);
@@ -65,10 +68,15 @@ const FailureModeStepper = ({eventIri, onFailureModeCreated, onClose}: Props) =>
                 );
             case 3:
                 return (
+                    <MitigationCreation mitigation={selectedMitigation} onMitigationChanged={setSelectedMitigation}/>
+                );
+            case 4:
+                return (
                     <FailureModeStepperConfirmation
                         component={selectedComponent}
                         componentFunction={selectedFunction}
-                        failureMode={selectedFailureMode}/>
+                        failureMode={selectedFailureMode}
+                        mitigation={selectedMitigation}/>
                 )
             default:
                 break;
@@ -83,6 +91,8 @@ const FailureModeStepper = ({eventIri, onFailureModeCreated, onClose}: Props) =>
                 return Boolean(selectedComponent);
             case 2:
                 return Boolean(selectedFunction);
+            case 3:
+                return Boolean(selectedMitigation);
             default:
                 return true;
         }
@@ -123,7 +133,8 @@ const FailureModeStepper = ({eventIri, onFailureModeCreated, onClose}: Props) =>
         const createFailureMode = {
             name: selectedFailureMode.name,
             component: selectedComponent,
-            influencedFunctions: [selectedFunction]
+            influencedFunctions: [selectedFunction],
+            mitigation: selectedMitigation,
         } as CreateFailureMode
 
         faultEventService.addFailureMode(eventIri, createFailureMode)

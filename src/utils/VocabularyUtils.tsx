@@ -5,6 +5,7 @@ export default {
 
     USER: _NS_FTA_FMEA + "User",
     COMPONENT: _NS_FTA_FMEA + "Component",
+    MITIGATION: _NS_FTA_FMEA + "Mitigation",
     FUNCTION: _NS_FTA_FMEA + "Function",
     FAULT_EVENT: _NS_FTA_FMEA + "FaultEvent",
     FAILURE_MODE: _NS_FTA_FMEA + "FailureMode",

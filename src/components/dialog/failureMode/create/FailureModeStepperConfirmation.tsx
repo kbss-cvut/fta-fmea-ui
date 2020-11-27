@@ -5,14 +5,16 @@ import {Function} from "@models/functionModel";
 import {FailureMode} from "@models/failureModeModel";
 import useStyles from "./FailureModeStepperConfirmation.styles";
 import {Grid, Paper, Typography} from "@material-ui/core";
+import {Mitigation} from "@models/mitigationModel";
 
 interface Props {
     component: Component,
     componentFunction: Function
     failureMode: FailureMode,
+    mitigation: Mitigation,
 }
 
-const FailureModeStepperConfirmation = ({component, componentFunction, failureMode}: Props) => {
+const FailureModeStepperConfirmation = ({component, componentFunction, failureMode, mitigation}: Props) => {
     const classes = useStyles();
 
     return (
@@ -34,6 +36,12 @@ const FailureModeStepperConfirmation = ({component, componentFunction, failureMo
                     <Paper className={classes.paper}>
                         <Typography variant="h6">Function:</Typography>
                         <Typography variant="body1">{componentFunction.name}</Typography>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper className={classes.paper}>
+                        <Typography variant="h6">Mitigation:</Typography>
+                        <Typography variant="body1">{mitigation?.description}</Typography>
                     </Paper>
                 </Grid>
             </Grid>
