@@ -6,6 +6,8 @@ import FailureModeDialog from "../../../dialog/failureMode/create/FailureModeDia
 import {useState} from "react";
 import {EventFailureModeProvider, useEventFailureMode} from "@hooks/useEventFailureMode";
 import EventFailureModeList from "@components/editor/faultTree/menu/failureMode/EventFailureModeList";
+import {FailureMode} from "@models/failureModeModel";
+import FailureModeShowDialog from "@components/dialog/failureMode/show/FailureModeShowDialog";
 
 interface Props {
     shapeToolData?: FaultEvent,
@@ -14,6 +16,14 @@ interface Props {
 
 const FaultEventMenu = ({shapeToolData, onEventUpdated}: Props) => {
     const [failureModeDialogOpen, setFailureModeDialogOpen] = useState(false);
+
+    const [failureModeOverviewDialogOpen, setFailureModeOverviewDialogOpen] = useState(false);
+    const [failureModeOverview, setFailureModeOverview] = useState<FailureMode | null>(null);
+
+    const handleFailureModeClicked = (failureMode: FailureMode) => {
+        setFailureModeOverview(failureMode);
+        setFailureModeOverviewDialogOpen(true);
+    }
 
     return (
         <React.Fragment>
@@ -25,7 +35,7 @@ const FaultEventMenu = ({shapeToolData, onEventUpdated}: Props) => {
                 shapeToolData &&
                 <EventFailureModeProvider eventIri={shapeToolData?.iri}>
                     <Typography variant="h5" gutterBottom>Failure Mode</Typography>
-                    <EventFailureModeList/>
+                    <EventFailureModeList onFailureModeClick={handleFailureModeClicked}/>
 
                     <Button color="primary" onClick={() => setFailureModeDialogOpen(true)}>
                         Set Failure Mode
@@ -34,6 +44,9 @@ const FaultEventMenu = ({shapeToolData, onEventUpdated}: Props) => {
                     <FailureModeDialog open={failureModeDialogOpen && Boolean(shapeToolData)}
                                        onClose={() => setFailureModeDialogOpen(false)}
                                        eventIri={shapeToolData?.iri}/>
+
+                    <FailureModeShowDialog open={failureModeOverviewDialogOpen} failureMode={failureModeOverview}
+                                           onClose={() => setFailureModeOverviewDialogOpen(false)}/>
                 </EventFailureModeProvider>
             }
         </React.Fragment>

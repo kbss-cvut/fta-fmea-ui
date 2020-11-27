@@ -3,8 +3,11 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import * as React from "react";
 import {useEventFailureMode} from "@hooks/useEventFailureMode";
 
+interface Props {
+    onFailureModeClick: (FailureMode) => void,
+}
 
-const EventFailureModeList = () => {
+const EventFailureModeList = ({onFailureModeClick}: Props) => {
     const [failureMode, deleteFailureMode] = useEventFailureMode();
 
     return (
@@ -12,8 +15,8 @@ const EventFailureModeList = () => {
             {
                 failureMode ?
                     <List>
-                        <ListItem>
-                            <ListItemText primary={failureMode?.name}/>
+                        <ListItem button>
+                            <ListItemText primary={failureMode?.name} onClick={() => onFailureModeClick(failureMode)}/>
                             <ListItemSecondaryAction>
                                 <IconButton edge="end" aria-label="delete" onClick={deleteFailureMode}>
                                     <DeleteIcon/>
