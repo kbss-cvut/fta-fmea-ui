@@ -80,6 +80,28 @@ export const computeTableData = async (tableIri: string): Promise<FailureModesTa
     }
 }
 
+export const exportCsv = async (tableIri: string, title: string): Promise<string> => {
+    try {
+        const fragment = extractFragment(tableIri);
+
+        const response = await axiosClient.get(
+            `/failureModesTable/${fragment}/export`,
+            {
+                headers: authHeaders()
+            }
+        );
+
+        const type = response.headers['content-type']
+        const blob = new Blob([response.data], { type: type})
+        const link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = title + ".csv";
+        link.click()
+    } catch (e) {
+        console.log('Failure Modes Table Service - Failed to call /exportCsv')
+        return new Promise((resolve, reject) => reject("Failed to export table data"));
+    }
+}
 
 
 export const eventPathsToRows = (eventPathsMap: Map<number, FaultEvent[]>, rpnsMap: Map<number, RiskPriorityNumber>): FailureModesRow[] => {
