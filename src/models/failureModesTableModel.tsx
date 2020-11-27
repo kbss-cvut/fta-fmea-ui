@@ -13,6 +13,7 @@ export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, FAULT_TREE_CONTE
 
 export interface CreateFailureModesTable extends AbstractModel {
     name: string,
+    rows: FailureModesRow[],
 }
 
 export interface UpdateFailureModesTable extends AbstractUpdateModel {

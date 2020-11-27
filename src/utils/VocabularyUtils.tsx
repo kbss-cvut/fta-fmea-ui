@@ -12,4 +12,5 @@ export default {
     FAULT_TREE: _NS_FTA_FMEA + "FaultTree",
     SYSTEM: _NS_FTA_FMEA + "System",
     FAILURE_MODES_TABLE: _NS_FTA_FMEA + "FailureModesTable",
+    FAILURE_MODES_ROW: _NS_FTA_FMEA + "FailureModesRow",
 }

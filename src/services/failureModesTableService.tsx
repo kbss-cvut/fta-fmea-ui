@@ -8,6 +8,9 @@ import {
     FailureModesTableData
 } from "@models/failureModesTableModel";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
+import {FaultEvent} from "@models/eventModel";
+import {FailureModesRow} from "@models/failureModesRowModel";
+import VocabularyUtils from "@utils/VocabularyUtils";
 
 export const findAll = async (): Promise<FailureModesTable[]> => {
     try {
@@ -74,4 +77,14 @@ export const computeTableData = async (tableIri: string): Promise<FailureModesTa
         console.log('Failure Modes Table Service - Failed to call /computeTableData')
         return new Promise((resolve, reject) => reject("Failed to load failure modes table data"));
     }
+}
+
+export const eventPathsToRows = (eventPaths: FaultEvent[][]): FailureModesRow[] => {
+    return eventPaths.map(path => {
+        return {
+            "@type": [VocabularyUtils.FAILURE_MODES_ROW],
+            localEffect: path[0],
+            effects: (path.length > 1) ? path.slice(1) : []
+        } as FailureModesRow
+    })
 }

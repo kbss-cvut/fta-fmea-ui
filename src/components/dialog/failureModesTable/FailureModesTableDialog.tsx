@@ -9,6 +9,7 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {schema} from "./FailureModesTableDialog.schema";
 import {CreateFailureModesTable} from "@models/failureModesTableModel";
 import * as faultTreeService from "@services/faultTreeService";
+import * as failureModesTableService from "@services/failureModesTableService";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import FaultTreePaths from "@components/dialog/faultTree/paths/FaultTreePaths";
 import {FaultTreePathsProvider} from "@hooks/useFaultTreePaths";
@@ -30,11 +31,14 @@ const FailureModesTableDialog = ({open, onClose, onCreated, faultTreeIri}: Props
     const selectedPathsMap = new Map<number, FaultEvent[]>();
 
     const handleConversion = (values: any) => {
-        // TODO take paths and create rows!
+        // TODO make sure does not unselect first & last
         // TODO assign RPN
+        const tableRows = failureModesTableService.eventPathsToRows(Array.from(selectedPathsMap.values()));
+        console.log(tableRows)
 
         const table = {
             name: values.fmeaName,
+            rows: tableRows,
         } as CreateFailureModesTable
 
         faultTreeService.createFailureModesTable(faultTreeIri, table)
