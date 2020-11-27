@@ -1,6 +1,5 @@
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {AbstractModel, CONTEXT as ABSTRACT_CONTEXT} from "@models/abstractModel";
-import {CONTEXT as RPN_CONTEXT, RiskPriorityNumber} from "@models/rpnModel";
 import {FailureMode, CONTEXT as FAILURE_MODE_CONTEXT} from "@models/failureModeModel";
 
 const ctx = {
@@ -15,7 +14,7 @@ const ctx = {
     "failureMode": VocabularyUtils.PREFIX + "hasFailureMode",
 };
 
-export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, RPN_CONTEXT, FAILURE_MODE_CONTEXT);
+export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, FAILURE_MODE_CONTEXT);
 
 export enum EventType {
     BASIC = "BASIC",
@@ -29,7 +28,6 @@ export interface FaultEvent extends AbstractModel {
     eventType: EventType,
     name: string,
     description?: string,
-    rpn: RiskPriorityNumber,
     gateType?: GateType,
     probability?: number,
     children?: FaultEvent[],

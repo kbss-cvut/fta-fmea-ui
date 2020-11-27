@@ -9,7 +9,6 @@ const FailureModeTable = ({setAppBarName}: DashboardTitleProps) => {
     const classes = useStyles();
 
     const tableData = useCurrentFailureModesTable();
-    console.log(tableData)
 
     const [tableColumns, setTableColumns] = useState([]);
     const [tableRows, setTableRows] = useState([]);

@@ -11,7 +11,6 @@ import {useForm} from "react-hook-form";
 import {schema} from "./FaultEventCreation.schema";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {eventFromHookFormValues} from "@services/faultEventService";
-import {FaultEvent} from "@models/eventModel";
 import {FaultEventsProvider} from "@hooks/useFaultEvents";
 
 interface Props {

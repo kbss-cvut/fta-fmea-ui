@@ -27,9 +27,6 @@ const ShapeToolPane = ({data, onEventUpdated}: Props) => {
             name: data.name,
             description: data.description,
             probability: data.probability,
-            severity: data.rpn.severity,
-            occurrence: data.rpn.occurrence,
-            detection: data.rpn.detection,
             gateType: data.gateType
         }
 

@@ -11,6 +11,7 @@ import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {FaultEvent} from "@models/eventModel";
 import {FailureModesRow} from "@models/failureModesRowModel";
 import VocabularyUtils from "@utils/VocabularyUtils";
+import {RiskPriorityNumber} from "@models/rpnModel";
 
 export const findAll = async (): Promise<FailureModesTable[]> => {
     try {
@@ -79,12 +80,21 @@ export const computeTableData = async (tableIri: string): Promise<FailureModesTa
     }
 }
 
-export const eventPathsToRows = (eventPaths: FaultEvent[][]): FailureModesRow[] => {
-    return eventPaths.map(path => {
+
+
+export const eventPathsToRows = (eventPathsMap: Map<number, FaultEvent[]>, rpnsMap: Map<number, RiskPriorityNumber>): FailureModesRow[] => {
+    return Array.from(eventPathsMap).map(([key, path]) => {
+        const rpn = rpnsMap.get(key)
         return {
             "@type": [VocabularyUtils.FAILURE_MODES_ROW],
             localEffect: path[0],
-            effects: (path.length > 1) ? path.slice(1) : []
-        } as FailureModesRow
-    })
+            effects: (path.length > 1) ? path.slice(1) : [],
+            rpn: {
+                "@type": [VocabularyUtils.RPN],
+                severity: rpn?.severity,
+                occurrence: rpn?.occurrence,
+                detection: rpn?.detection,
+            },
+        } as FailureModesRow;
+    });
 }

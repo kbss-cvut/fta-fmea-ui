@@ -14,6 +14,7 @@ import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import FaultTreePaths from "@components/dialog/faultTree/paths/FaultTreePaths";
 import {FaultTreePathsProvider} from "@hooks/useFaultTreePaths";
 import {FaultEvent} from "@models/eventModel";
+import {RiskPriorityNumber} from "@models/rpnModel";
 
 interface Props {
     open: boolean,
@@ -29,12 +30,11 @@ const FailureModesTableDialog = ({open, onClose, onCreated, faultTreeIri}: Props
     const {isSubmitting} = formState;
 
     const selectedPathsMap = new Map<number, FaultEvent[]>();
+    const selectedRPNsMap = new Map<number, RiskPriorityNumber>();
 
     const handleConversion = (values: any) => {
         // TODO make sure does not unselect first & last
-        // TODO assign RPN
-        const tableRows = failureModesTableService.eventPathsToRows(Array.from(selectedPathsMap.values()));
-        console.log(tableRows)
+        const tableRows = failureModesTableService.eventPathsToRows(selectedPathsMap, selectedRPNsMap);
 
         const table = {
             name: values.fmeaName,
@@ -53,6 +53,10 @@ const FailureModesTableDialog = ({open, onClose, onCreated, faultTreeIri}: Props
         selectedPathsMap.set(rowId, path);
     }
 
+    const updateRpn = (rowId: number, rpn: RiskPriorityNumber) => {
+        selectedRPNsMap.set(rowId, rpn);
+    }
+
     return (
         <div>
             <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title" maxWidth="md"
@@ -60,11 +64,10 @@ const FailureModesTableDialog = ({open, onClose, onCreated, faultTreeIri}: Props
                 <DialogTitle id="form-dialog-title" onClose={onClose}>Convert To FMEA</DialogTitle>
                 <DialogContent dividers>
                     <TextField autoFocus margin="dense" label="FMEA Name" name="fmeaName" type="text"
-                               fullWidth inputRef={register}
-                               error={!!errors.fmeaName}
+                               fullWidth inputRef={register} error={!!errors.fmeaName}
                                helperText={errors.fmeaName?.message}/>
                     <FaultTreePathsProvider faultTreeIri={faultTreeIri}>
-                        <FaultTreePaths updatePaths={updatePaths}/>
+                        <FaultTreePaths updatePaths={updatePaths} updateRpn={updateRpn}/>
                     </FaultTreePathsProvider>
                 </DialogContent>
                 <DialogActions>

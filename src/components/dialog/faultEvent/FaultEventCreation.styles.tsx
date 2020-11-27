@@ -9,12 +9,8 @@ const useStyles = makeStyles((theme: Theme) =>
         newEventTitle: {
             margin: theme.spacing(1, 0)
         },
-        rpnBox: {
-            display: 'flex',
-            gap: '1em'
-        },
-        rpnBoxItem: {
-            flexGrow: 1,
+        formControlDiv: {
+            width: '100%',
         },
         formControl: {
             minWidth: 120,

@@ -1,16 +1,16 @@
-import {makeStyles} from "@material-ui/core";
+import {makeStyles, Theme} from "@material-ui/core";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
     container: {
-        margin: ".5rem 0 .5rem",
-        textAlign: "center",
+        margin: theme.spacing(1, 0, 1),
+        textAlign: "left",
     },
     chipsDiv: {
-        marginTop: ".3rem",
+        marginTop: theme.spacing(2),
     },
     chip: {
-        margin: ".5rem",
-        padding: "0.5rem",
+        margin: theme.spacing(1),
+        padding: theme.spacing(1),
     },
     formHelperText: {
         textAlign: "center",

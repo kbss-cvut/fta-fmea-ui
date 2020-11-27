@@ -29,9 +29,6 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
             setValue('name', selectedEvent.name)
             setValue('description', selectedEvent.description)
             setValue('probability', selectedEvent.probability)
-            setValue('occurrence', selectedEvent.rpn?.occurrence)
-            setValue('severity', selectedEvent.rpn?.severity)
-            setValue('detection', selectedEvent.rpn?.detection)
             setValue('eventType', selectedEvent.eventType)
             setValue('gateType', selectedEvent.gateType)
         } else {
@@ -92,47 +89,28 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
                         defaultValue=""
             />
 
-            <Box className={classes.rpnBox}>
-                <Controller as={TextField} control={control} label="Occurrence" type="number" name="occurrence"
-                            InputProps={{inputProps: {min: 0, max: 10, step: 1}}}
-                            error={!!errors.occurrence} helperText={errors.occurrence?.message}
-                            className={classes.rpnBoxItem}
-                            disabled={existingEventSelected} defaultValue=""
-                />
-                <Controller as={TextField} control={control} label="Severity" type="number" name="severity"
-                            InputProps={{inputProps: {min: 0, max: 10, step: 1}}}
-                            error={!!errors.severity} helperText={errors?.severity?.message}
-                            className={classes.rpnBoxItem}
-                            disabled={existingEventSelected} defaultValue=""
-                />
-                <Controller as={TextField} control={control} label="Detection" type="number" name="detection"
-                            InputProps={{inputProps: {min: 0, max: 10, step: 1}}}
-                            error={!!errors.detection} helperText={errors?.detection?.message}
-                            className={classes.rpnBoxItem}
-                            disabled={existingEventSelected} defaultValue=""
-                />
-            </Box>
-
             {(eventTypeWatch === EventType.INTERMEDIATE || !eventTypeWatch) &&
-            <FormControl className={classes.formControl}>
-                <InputLabel id="gate-type-select-label">Gate Type</InputLabel>
-                <Controller
-                    as={
-                        <Select labelId="gate-type-select-label" id="gate-type-select" error={!!errors.gateType}>
-                            {
-                                gateTypeValues().map(value => {
-                                    const [enabled, optionValue] = value
-                                    return <MenuItem key={`option-${value}`} value={optionValue}
-                                                     disabled={!enabled}>{value}</MenuItem>
-                                })
-                            }
-                        </Select>
-                    }
-                    name="gateType"
-                    control={control}
-                    defaultValue={GateType.OR}
-                    disabled={existingEventSelected}/>
-            </FormControl>}
+            <div className={classes.formControlDiv}>
+                <FormControl className={classes.formControl}>
+                    <InputLabel id="gate-type-select-label">Gate Type</InputLabel>
+                    <Controller
+                        as={
+                            <Select labelId="gate-type-select-label" id="gate-type-select" error={!!errors.gateType}>
+                                {
+                                    gateTypeValues().map(value => {
+                                        const [enabled, optionValue] = value
+                                        return <MenuItem key={`option-${value}`} value={optionValue}
+                                                         disabled={!enabled}>{value}</MenuItem>
+                                    })
+                                }
+                            </Select>
+                        }
+                        name="gateType"
+                        control={control}
+                        defaultValue={GateType.OR}
+                        disabled={existingEventSelected}/>
+                </FormControl>
+            </div>}
         </div>
     );
 }

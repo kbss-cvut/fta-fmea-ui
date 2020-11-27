@@ -96,12 +96,6 @@ export const eventFromHookFormValues = (values: any): FaultEvent => {
             name: values.name,
             description: values.description,
             probability: values.probability,
-            rpn: {
-                severity: values.severity,
-                occurrence: values.occurrence,
-                detection: values.detection,
-                "@type": [VocabularyUtils.RPN]
-            },
             "@type": [VocabularyUtils.FAULT_EVENT],
         } as FaultEvent
 
