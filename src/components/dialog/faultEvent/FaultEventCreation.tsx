@@ -4,7 +4,7 @@ import {Box, Divider, FormControl, InputLabel, MenuItem, Select, TextField, Typo
 import useStyles from "@components/dialog/faultEvent/FaultEventCreation.styles";
 import {Controller} from "react-hook-form";
 import {EventType, FaultEvent, GateType, gateTypeValues} from "@models/eventModel";
-import {useFaultEvents} from "@hooks/useFaultEvents";
+import {useReusableFaultEvents} from "@hooks/useReusableFaultEvents";
 import ControlledAutocomplete from "@components/materialui/ControlledAutocomplete";
 import {useEffect, useState} from "react";
 
@@ -18,7 +18,7 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
 
     const {errors, control, setValue, reset, watch} = useFormMethods
 
-    const faultEvents = useFaultEvents()
+    const faultEvents = useReusableFaultEvents()
     const [selectedEvent, setSelectedEvent] = useState<FaultEvent | null>(null)
     const existingEventSelected = Boolean(selectedEvent)
 

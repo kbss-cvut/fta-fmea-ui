@@ -13,7 +13,7 @@ import {useFaultTrees} from "@hooks/useFaultTrees";
 import {FaultTree} from "@models/faultTreeModel";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {schema as eventSchema} from "@components/dialog/faultEvent/FaultEventCreation.schema";
-import {FaultEventsProvider} from "@hooks/useFaultEvents";
+import {FaultEventsReuseProvider} from "@hooks/useReusableFaultEvents";
 
 const FaultTreeDialog = ({open, handleCloseDialog}) => {
     const [, addFaultTree] = useFaultTrees()
@@ -48,9 +48,9 @@ const FaultTreeDialog = ({open, handleCloseDialog}) => {
                                fullWidth inputRef={useFormMethods.register}
                                error={!!useFormMethods.errors.faultTreeName}
                                helperText={useFormMethods.errors.faultTreeName?.message}/>
-                    <FaultEventsProvider>
+                    <FaultEventsReuseProvider>
                         <FaultEventCreation useFormMethods={useFormMethods} eventReusing={true}/>
-                    </FaultEventsProvider>
+                    </FaultEventsReuseProvider>
                 </DialogContent>
                 <DialogActions>
                     <Button disabled={processing} color="primary" onClick={handleSubmit(handleCreateFaultTree)}>

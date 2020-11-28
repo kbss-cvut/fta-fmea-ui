@@ -8,7 +8,7 @@ import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {flatten} from "lodash";
 import {CONTEXT as FAILURE_MODE_CONTEXT, CreateFailureMode, FailureMode} from "@models/failureModeModel";
 
-export const findFaultEvents = async (): Promise<FaultEvent[]> => {
+export const findAll = async (): Promise<FaultEvent[]> => {
     try {
         const response = await axiosClient.get(
             `/faultEvents`,
@@ -19,7 +19,7 @@ export const findFaultEvents = async (): Promise<FaultEvent[]> => {
 
         return JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(response.data, EVENT_CONTEXT);
     } catch (e) {
-        console.log('Event Service - Failed to call /findFaultEvents')
+        console.log('Event Service - Failed to call /findAll')
         return new Promise((resolve, reject) => reject("Failed to find fault events"));
     }
 }

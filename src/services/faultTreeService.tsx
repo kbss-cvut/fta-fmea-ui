@@ -101,6 +101,23 @@ export const remove = async (faultTreeIri: string): Promise<void> => {
     }
 }
 
+export const getReusableEvents = async (faultTreeIri: string): Promise<FaultEvent[]> => {
+    try {
+        const fragment = extractFragment(faultTreeIri);
+        const response = await axiosClient.get(
+            `/faultTrees/${fragment}/reusableEvents`,
+            {
+                headers: authHeaders()
+            }
+        )
+
+        return JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(response.data, EVENT_CONTEXT);
+    } catch (e) {
+        console.log('Fault Tree Service - Failed to call /getReusableEvents')
+        return new Promise((resolve, reject) => reject("Failed to find reusable fault events"));
+    }
+}
+
 export const getTreePaths = async (faultTreeIri: string): Promise<[FaultEvent[]]> => {
     try {
         const fragment = extractFragment(faultTreeIri);

@@ -106,7 +106,8 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
                 onClose={() => setContextMenuAnchor(contextMenuDefaultAnchor)}/>
 
 
-            <FaultEventDialog open={eventDialogOpen} eventIri={contextMenuSelectedEvent?.iri}
+            <FaultEventDialog open={eventDialogOpen}
+                              eventIri={contextMenuSelectedEvent?.iri} treeUri={faultTree?.iri}
                               onCreated={refreshTree}
                               onClose={() => setEventDialogOpen(false)}/>
 

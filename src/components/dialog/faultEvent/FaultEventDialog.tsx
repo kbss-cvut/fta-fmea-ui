@@ -11,16 +11,17 @@ import {useForm} from "react-hook-form";
 import {schema} from "./FaultEventCreation.schema";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {eventFromHookFormValues} from "@services/faultEventService";
-import {FaultEventsProvider} from "@hooks/useFaultEvents";
+import {FaultEventsReuseProvider} from "@hooks/useReusableFaultEvents";
 
 interface Props {
     open: boolean,
     eventIri: string,
+    treeUri: string,
     onCreated: () => void,
     onClose: () => void,
 }
 
-const FaultEventDialog = ({open, eventIri, onCreated, onClose}: Props) => {
+const FaultEventDialog = ({open, eventIri, treeUri, onCreated, onClose}: Props) => {
     const [showSnackbar] = useSnackbar()
 
     const useFormMethods = useForm({resolver: yupResolver(schema)});
@@ -43,9 +44,9 @@ const FaultEventDialog = ({open, eventIri, onCreated, onClose}: Props) => {
             <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title" maxWidth="md" fullWidth>
                 <DialogTitle id="form-dialog-title" onClose={onClose}>Create Event</DialogTitle>
                 <DialogContent dividers>
-                    <FaultEventsProvider>
+                    <FaultEventsReuseProvider treeUri={treeUri}>
                         <FaultEventCreation useFormMethods={useFormMethods} eventReusing={true}/>
-                    </FaultEventsProvider>
+                    </FaultEventsReuseProvider>
                 </DialogContent>
                 <DialogActions>
                     <Button disabled={isSubmitting} color="primary" onClick={handleSubmit(handleCreateEvent)}>
