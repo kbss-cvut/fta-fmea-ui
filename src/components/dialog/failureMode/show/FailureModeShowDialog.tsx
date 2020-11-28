@@ -13,9 +13,10 @@ interface Props {
 }
 
 const FailureModeShowDialog = ({open, onClose, failureMode}: Props) => {
-    // TODO pick correct function !!!
-    // @ts-ignore
-    const influencedFunction = find(flatten([failureMode?.component?.functions]), (f) => f?.iri === failureMode?.influencedFunctions?.iri)
+    // resolve references from component functions
+    const componentFunctions = failureMode?.influencedFunctions?.map(modeFunction => {
+        return find(flatten([failureMode?.component?.functions]), (f) => f?.iri === modeFunction?.iri)
+    })
 
     return (
         <Dialog open={open} onClose={onClose} aria-labelledby="failure-mode-show-dialog" fullWidth maxWidth="lg">
@@ -24,7 +25,7 @@ const FailureModeShowDialog = ({open, onClose, failureMode}: Props) => {
                 {failureMode &&
                 <FailureModeStepperConfirmation
                     component={failureMode?.component}
-                    componentFunction={influencedFunction}
+                    componentFunctions={componentFunctions}
                     failureMode={failureMode}
                     mitigation={failureMode?.mitigation}
                 />

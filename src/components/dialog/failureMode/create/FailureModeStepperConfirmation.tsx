@@ -9,12 +9,12 @@ import {Mitigation} from "@models/mitigationModel";
 
 interface Props {
     component: Component,
-    componentFunction: Function
+    componentFunctions: Function[],
     failureMode: FailureMode,
     mitigation: Mitigation,
 }
 
-const FailureModeStepperConfirmation = ({component, componentFunction, failureMode, mitigation}: Props) => {
+const FailureModeStepperConfirmation = ({component, componentFunctions, failureMode, mitigation}: Props) => {
     const classes = useStyles();
 
     return (
@@ -35,7 +35,7 @@ const FailureModeStepperConfirmation = ({component, componentFunction, failureMo
                 <Grid item xs={12}>
                     <Paper className={classes.paper}>
                         <Typography variant="h6">Function:</Typography>
-                        <Typography variant="body1">{componentFunction.name}</Typography>
+                        {componentFunctions.map(f => <Typography variant="body1">{f.name}</Typography>)}
                     </Paper>
                 </Grid>
                 <Grid item xs={12}>

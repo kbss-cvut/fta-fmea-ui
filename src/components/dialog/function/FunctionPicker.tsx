@@ -1,21 +1,22 @@
 import * as React from "react";
 
 import {Box, IconButton, TextField, Typography} from "@material-ui/core";
-import {useFunctions} from "../../../hooks/useFunctions";
+import {useFunctions} from "@hooks/useFunctions";
 import {Autocomplete} from "@material-ui/lab";
-import {Function} from "../../../models/functionModel";
+import {Function} from "@models/functionModel";
 import AddIcon from "@material-ui/icons/Add";
 import {Controller, useForm} from "react-hook-form";
 import {schema} from "./FunctionPicker.schema";
 import useStyles from "./FunctionPicker.styles";
 import { yupResolver } from "@hookform/resolvers/yup";
+import {useState} from "react";
 
 interface Props {
-    selectedFunction: Function | null,
-    onFunctionSelected: (Function) => void,
+    selectedFunctions: Function[] | null,
+    onFunctionsSelected: (functions: Function[]) => void,
 }
 
-const FunctionPicker = ({selectedFunction, onFunctionSelected}: Props) => {
+const FunctionPicker = ({selectedFunctions, onFunctionsSelected}: Props) => {
     const classes = useStyles()
 
     const [functions, addFunction] = useFunctions()
@@ -28,16 +29,27 @@ const FunctionPicker = ({selectedFunction, onFunctionSelected}: Props) => {
         reset(values)
     }
 
+    const [_selectedFunctions, _setSelectedFunctions] = useState<Function[]>([])
+
+    const handleChange = (values: Function[]) => {
+        _setSelectedFunctions(values)
+        onFunctionsSelected(values)
+    }
+
     // TODO ControlledAutocomplete
     return (
         <React.Fragment>
             <Autocomplete
+                className={classes.autocomplete}
+                multiple
                 options={functions}
                 getOptionLabel={(option) => option.name}
-                onChange={(event, value: Function) => onFunctionSelected(value)}
-                renderInput={(params) => <TextField {...params} label="Select Function" variant="outlined"/>}
                 clearOnBlur={true}
-                defaultValue={selectedFunction}
+                defaultValue={selectedFunctions}
+                onChange={(event, values: Function[]) => handleChange(values)}
+                renderInput={(params) => (
+                    <TextField {...params} label="Select Functions" variant="standard"/>
+                )}
             />
 
             <Typography variant="subtitle1">Create new Function</Typography>

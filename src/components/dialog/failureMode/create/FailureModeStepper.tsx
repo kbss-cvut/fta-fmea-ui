@@ -34,14 +34,14 @@ const FailureModeStepper = ({eventIri, onFailureModeCreated, onClose}: Props) =>
     const [activeStep, setActiveStep] = useState(0);
     const [selectedFailureMode, setSelectedFailureMode] = useState<FailureMode | null>(null)
     const [selectedComponent, setSelectedComponent] = useState<Component | null>(null)
-    const [selectedFunction, setSelectedFunction] = useState<Function | null>(null)
+    const [selectedFunctions, setSelectedFunctions] = useState<Function[]>([])
     const [selectedMitigation, setSelectedMitigation] = useState<Mitigation | null>(null)
 
     const handleNext = () => setActiveStep((prev) => prev + 1);
     const handleBack = () => setActiveStep((prev) => prev - 1);
 
     const handleComponentSelected = (component: Component) => {
-        setSelectedFunction(null)
+        setSelectedFunctions([])
         setSelectedComponent(component)
     }
 
@@ -63,7 +63,7 @@ const FailureModeStepper = ({eventIri, onFailureModeCreated, onClose}: Props) =>
             case 2:
                 return (
                     <FunctionsProvider componentUri={selectedComponent?.iri}>
-                        <FunctionPicker selectedFunction={selectedFunction} onFunctionSelected={setSelectedFunction}/>
+                        <FunctionPicker selectedFunctions={selectedFunctions} onFunctionsSelected={setSelectedFunctions} />
                     </FunctionsProvider>
                 );
             case 3:
@@ -74,7 +74,7 @@ const FailureModeStepper = ({eventIri, onFailureModeCreated, onClose}: Props) =>
                 return (
                     <FailureModeStepperConfirmation
                         component={selectedComponent}
-                        componentFunction={selectedFunction}
+                        componentFunctions={selectedFunctions}
                         failureMode={selectedFailureMode}
                         mitigation={selectedMitigation}/>
                 )
@@ -90,7 +90,7 @@ const FailureModeStepper = ({eventIri, onFailureModeCreated, onClose}: Props) =>
             case 1:
                 return Boolean(selectedComponent);
             case 2:
-                return Boolean(selectedFunction);
+                return selectedFunctions.length > 0;
             case 3:
                 return Boolean(selectedMitigation);
             default:
@@ -133,7 +133,7 @@ const FailureModeStepper = ({eventIri, onFailureModeCreated, onClose}: Props) =>
         const createFailureMode = {
             name: selectedFailureMode.name,
             component: selectedComponent,
-            influencedFunctions: [selectedFunction],
+            influencedFunctions: selectedFunctions,
             mitigation: selectedMitigation,
         } as CreateFailureMode
 

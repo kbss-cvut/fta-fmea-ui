@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme: Theme) =>
         addButton: {
             alignSelf: 'flex-end'
         },
+        autocomplete: {
+            marginTop: theme.spacing(3),
+        },
     }),
 );
 
