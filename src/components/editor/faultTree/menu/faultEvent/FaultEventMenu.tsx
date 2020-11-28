@@ -12,9 +12,10 @@ import FailureModeShowDialog from "../../../../dialog/failureMode/show/FailureMo
 interface Props {
     shapeToolData?: FaultEvent,
     onEventUpdated: (faultEvent: FaultEvent) => void,
+    refreshTree: () => void,
 }
 
-const FaultEventMenu = ({shapeToolData, onEventUpdated}: Props) => {
+const FaultEventMenu = ({shapeToolData, onEventUpdated, refreshTree}: Props) => {
     const [failureModeDialogOpen, setFailureModeDialogOpen] = useState(false);
 
     const [failureModeOverviewDialogOpen, setFailureModeOverviewDialogOpen] = useState(false);
@@ -28,7 +29,7 @@ const FaultEventMenu = ({shapeToolData, onEventUpdated}: Props) => {
     return (
         <React.Fragment>
             <Typography variant="h5" gutterBottom>Edit Event</Typography>
-            <FaultEventShapeToolPane data={shapeToolData} onEventUpdated={onEventUpdated}/>
+            <FaultEventShapeToolPane data={shapeToolData} onEventUpdated={onEventUpdated} refreshTree={refreshTree}/>
             <Divider/>
 
             {

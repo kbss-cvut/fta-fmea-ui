@@ -94,6 +94,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
                 sidebarSelectedEvent={sidebarSelectedEvent}
                 onElementContextMenu={handleContextMenu}
                 onConvertToTable={() => setFailureModesTableOpen(true)}
+                refreshTree={refreshTree}
             />
 
             <FaultEventContextMenu

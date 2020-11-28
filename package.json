@@ -8,6 +8,7 @@
     "@material-ui/data-grid": "^4.0.0-alpha.10",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
+    "array-move": "^3.0.1",
     "axios": "^0.20.0",
     "backbone": "^1.4.0",
     "dagre": "^0.8.5",
@@ -23,6 +24,7 @@
     "react-hook-form": "^6.9.6",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "react-sortable-hoc": "^1.11.0",
     "typescript": "^3.7.5",
     "yup": "^0.29.3"
   },

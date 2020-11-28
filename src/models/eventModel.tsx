@@ -12,6 +12,8 @@ const ctx = {
     "probability": VocabularyUtils.PREFIX + "hasProbability",
     "children": VocabularyUtils.PREFIX + "hasChildren",
     "failureMode": VocabularyUtils.PREFIX + "hasFailureMode",
+    "sequenceProbability": VocabularyUtils.PREFIX + "hasSequenceProbability",
+    "childrenSequence": VocabularyUtils.PREFIX + "hasChildrenSequence",
 };
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, FAILURE_MODE_CONTEXT);
@@ -32,6 +34,8 @@ export interface FaultEvent extends AbstractModel {
     probability?: number,
     children?: FaultEvent[],
     failureMode?: FailureMode,
+    sequenceProbability?: number,
+    childrenSequence?: any,
 }
 
 export enum GateType {

@@ -5,7 +5,7 @@ import JsonLdUtils from "@utils/JsonLdUtils";
 import {CONTEXT as EVENT_CONTEXT, EventType, FaultEvent, GateType} from "@models/eventModel";
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
-import {flatten} from "lodash";
+import {findIndex, flatten, sortBy} from "lodash";
 import {CONTEXT as FAILURE_MODE_CONTEXT, CreateFailureMode, FailureMode} from "@models/failureModeModel";
 
 export const findAll = async (): Promise<FaultEvent[]> => {
@@ -161,4 +161,35 @@ export const deleteFailureMode = async (eventUri: string): Promise<void> => {
         console.log('Event Service - Failed to call /deleteFailureMode')
         return new Promise((resolve, reject) => reject("Failed to delete event failure mode"));
     }
+}
+
+
+export const updateChildrenSequence = async (faultEventIri: string, childrenSequence: FaultEvent[]): Promise<void> => {
+    try {
+        const updateRequest = flatten([childrenSequence]).map(child => child.iri);
+
+        const fragment = extractFragment(faultEventIri);
+        await axiosClient.put(
+            `/faultEvents/${fragment}/childrenSequence`,
+            updateRequest,
+            {
+                headers: authHeaders()
+            }
+        )
+        return new Promise((resolve) => resolve());
+    } catch (e) {
+        console.log('Event Service - Failed to call /updateChildrenSequence')
+        return new Promise((resolve, reject) => reject("Failed to update children sequence"));
+    }
+}
+
+export const sequenceListToArray = (sequenceList: any): string[] => {
+    return (sequenceList) ? flatten([sequenceList["@list"]]).map(value => value.iri) : [];
+}
+
+export const eventChildrenSorted = (eventChildren: FaultEvent[], sequence: string[]): FaultEvent[] => {
+    const flattenedChildren = flatten([eventChildren]);
+    const flattenedSequence = flatten(sequence);
+
+    return sortBy(flattenedChildren, child => findIndex(flattenedSequence, el => el === child.iri));
 }
