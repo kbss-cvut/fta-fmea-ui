@@ -2,20 +2,20 @@ import * as React from "react";
 import {useEffect} from "react";
 import {merge, cloneDeep} from "lodash";
 import {Button, Typography} from "@material-ui/core";
-import FaultEventCreation from "../../../dialog/faultEvent/FaultEventCreation";
+import FaultEventCreation from "../../../../dialog/faultEvent/FaultEventCreation";
 import {useForm} from "react-hook-form";
-import {schema as eventSchema} from "../../../dialog/faultEvent/FaultEventCreation.schema";
+import {schema as eventSchema} from "../../../../dialog/faultEvent/FaultEventCreation.schema";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {eventFromHookFormValues} from "../../../../services/faultEventService";
-import {deepOmit} from "../../../../utils/lodashUtils";
-import {FaultEvent} from "../../../../models/eventModel";
+import {eventFromHookFormValues} from "../../../../../services/faultEventService";
+import {deepOmit} from "../../../../../utils/lodashUtils";
+import {FaultEvent} from "../../../../../models/eventModel";
 
 interface Props {
     data?: FaultEvent,
     onEventUpdated: (faultEvent: FaultEvent) => void,
 }
 
-const ShapeToolPane = ({data, onEventUpdated}: Props) => {
+const FaultEventShapeToolPane = ({data, onEventUpdated}: Props) => {
     let editorPane;
     let updateFunction;
     let useFormMethods;
@@ -71,4 +71,4 @@ const ShapeToolPane = ({data, onEventUpdated}: Props) => {
     );
 }
 
-export default ShapeToolPane;
+export default FaultEventShapeToolPane;

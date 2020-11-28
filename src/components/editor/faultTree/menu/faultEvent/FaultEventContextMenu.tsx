@@ -1,10 +1,11 @@
 import {Menu, MenuItem} from "@material-ui/core";
 import * as React from "react";
-import {EventType} from "@models/eventModel";
-import {ElementContextMenuAnchor} from "@utils/contextMenu";
+import {EventType} from "../../../../../models/eventModel";
+import {ElementContextMenuAnchor} from "../../../../../utils/contextMenu";
 
 interface Props {
     eventType: EventType,
+    isRootEvent: boolean,
     anchorPosition: ElementContextMenuAnchor,
     onEditClick: () => void,
     onNewEventClick: () => void,
@@ -12,7 +13,7 @@ interface Props {
     onClose: () => void,
 }
 
-const ElementContextMenu = ({eventType, anchorPosition, onClose, onEditClick, onNewEventClick, onEventDelete}: Props) => {
+const FaultEventContextMenu = ({eventType, isRootEvent, anchorPosition, onClose, onEditClick, onNewEventClick, onEventDelete}: Props) => {
 
     const handleEditClick = () => {
         onClose()
@@ -45,9 +46,11 @@ const ElementContextMenu = ({eventType, anchorPosition, onClose, onEditClick, on
             <MenuItem key="event-menu-edit" onClick={handleEditClick}>Edit</MenuItem>
             {eventType === EventType.INTERMEDIATE &&
             <MenuItem key="event-menu-new-event" onClick={handleNewEventClick}>New Event</MenuItem>}
+            {!isRootEvent &&
             <MenuItem key="event-menu-delete" onClick={handleDeleteClick}>Delete</MenuItem>
+            }
         </Menu>
     );
 }
 
-export default ElementContextMenu;
+export default FaultEventContextMenu;

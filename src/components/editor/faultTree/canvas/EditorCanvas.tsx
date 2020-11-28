@@ -12,7 +12,7 @@ import SidebarMenu from "../menu/SidebarMenu";
 import {FTABoundary} from "../shapes/shapesDefinitions";
 import {FaultEvent} from "@models/eventModel";
 import {handleCanvasMouseWheel} from "@utils/canvasZoom";
-import FaultEventMenu from "@components/editor/faultTree/menu/FaultEventMenu";
+import FaultEventMenu from "@components/editor/faultTree/menu/faultEvent/FaultEventMenu";
 import DiagramOptions from "@components/editor/menu/DiagramOptions";
 import {encodeCanvas} from "@utils/canvasExport";
 import {EventFailureModeProvider} from "@hooks/useEventFailureMode";

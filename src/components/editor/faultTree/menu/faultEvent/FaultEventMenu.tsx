@@ -1,13 +1,13 @@
 import {Button, Divider, Paper, Typography} from "@material-ui/core";
-import ShapeToolPane from "./ShapeToolPane";
-import {EventType, FaultEvent} from "@models/eventModel";
+import FaultEventShapeToolPane from "./FaultEventShapeToolPane";
+import {EventType, FaultEvent} from "../../../../../models/eventModel";
 import * as React from "react";
-import FailureModeDialog from "../../../dialog/failureMode/create/FailureModeDialog";
+import FailureModeDialog from "../../../../dialog/failureMode/create/FailureModeDialog";
 import {useState} from "react";
-import {EventFailureModeProvider, useEventFailureMode} from "@hooks/useEventFailureMode";
-import EventFailureModeList from "@components/editor/faultTree/menu/failureMode/EventFailureModeList";
-import {FailureMode} from "@models/failureModeModel";
-import FailureModeShowDialog from "@components/dialog/failureMode/show/FailureModeShowDialog";
+import {EventFailureModeProvider, useEventFailureMode} from "../../../../../hooks/useEventFailureMode";
+import EventFailureModeList from "../failureMode/EventFailureModeList";
+import {FailureMode} from "../../../../../models/failureModeModel";
+import FailureModeShowDialog from "../../../../dialog/failureMode/show/FailureModeShowDialog";
 
 interface Props {
     shapeToolData?: FaultEvent,
@@ -28,7 +28,7 @@ const FaultEventMenu = ({shapeToolData, onEventUpdated}: Props) => {
     return (
         <React.Fragment>
             <Typography variant="h5" gutterBottom>Edit Event</Typography>
-            <ShapeToolPane data={shapeToolData} onEventUpdated={onEventUpdated}/>
+            <FaultEventShapeToolPane data={shapeToolData} onEventUpdated={onEventUpdated}/>
             <Divider/>
 
             {

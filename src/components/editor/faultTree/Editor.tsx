@@ -3,9 +3,9 @@ import {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import EditorCanvas from "./canvas/EditorCanvas";
 import {findEventByIri} from "@utils/treeUtils";
-import ElementContextMenu from "./menu/ElementContextMenu";
+import FaultEventContextMenu from "./menu/faultEvent/FaultEventContextMenu";
 import {useLocalContext} from "@hooks/useLocalContext";
-import * as faultEventService from "../../../services/faultEventService";
+import * as faultEventService from "@services/faultEventService";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import {useCurrentFaultTree} from "@hooks/useCurrentFaultTree";
 import {useConfirmDialog} from "@hooks/useConfirmDialog";
@@ -96,8 +96,9 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
                 onConvertToTable={() => setFailureModesTableOpen(true)}
             />
 
-            <ElementContextMenu
+            <FaultEventContextMenu
                 eventType={contextMenuSelectedEvent?.eventType}
+                isRootEvent={contextMenuSelectedEvent?.iri === faultTree?.manifestingEvent?.iri}
                 anchorPosition={contextMenuAnchor}
                 onEditClick={() => setSidebarSelectedEvent(contextMenuSelectedEvent)}
                 onNewEventClick={() => setEventDialogOpen(true)}

@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Menu, MenuItem} from "@material-ui/core";
-import {ElementContextMenuAnchor} from "@utils/contextMenu";
+import {ElementContextMenuAnchor} from "../../../../../utils/contextMenu";
 
 interface Props {
     anchorPosition: ElementContextMenuAnchor,

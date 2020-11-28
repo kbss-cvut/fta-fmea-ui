@@ -14,7 +14,7 @@ import useStyles from "./DashboardList.styles";
 import {useState} from "react";
 import {FaultTree} from "@models/faultTreeModel";
 import {useConfirmDialog} from "@hooks/useConfirmDialog";
-import FaultTreeContextMenu from "@components/editor/faultTree/menu/FaultTreeContextMenu";
+import FaultTreeContextMenu from "@components/editor/faultTree/menu/faultTree/FaultTreeContextMenu";
 import FaultTreeEditDialog from "@components/dialog/faultTree/FaultTreeEditDialog";
 import {Link as RouterLink} from "react-router-dom";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
