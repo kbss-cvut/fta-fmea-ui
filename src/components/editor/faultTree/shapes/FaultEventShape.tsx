@@ -1,13 +1,16 @@
 import * as React from "react";
-import * as _ from "lodash";
+import {flatten} from "lodash";
 import {useEffect, useState} from "react";
-import {EventType} from "@models/eventModel";
+import {EventType, FaultEvent} from "@models/eventModel";
 import ConnectorShape from "./ConnectorShape";
 import {JointEventShapeProps} from "./EventShapeProps";
 import {createShape} from "@services/jointService";
+import {sequenceListToArray} from "@services/faultEventService";
+import * as faultEventService from "@services/faultEventService";
 
 const FaultEventShape = ({addSelf, treeEvent, parentShape}: JointEventShapeProps) => {
     const [currentShape, setCurrentShape] = useState<any>(undefined)
+    const [sortedChildren, setSortedChildren] = useState<FaultEvent[]>([]);
 
     useEffect(() => {
         const eventShape = createShape(treeEvent);
@@ -19,7 +22,7 @@ const FaultEventShape = ({addSelf, treeEvent, parentShape}: JointEventShapeProps
         }
 
         eventShape.attr(['label', 'text'], treeEvent.name);
-        if(treeEvent.probability) {
+        if (treeEvent.probability) {
             eventShape.attr(['probabilityLabel', 'text'], treeEvent.probability.toExponential(2));
         }
 
@@ -28,16 +31,19 @@ const FaultEventShape = ({addSelf, treeEvent, parentShape}: JointEventShapeProps
 
         setCurrentShape(eventShape)
 
+        // sort children in diagram
+        const sequence = sequenceListToArray(treeEvent.childrenSequence)
+        setSortedChildren(faultEventService.eventChildrenSorted(flatten([treeEvent.children]), sequence))
+
         return () => eventShape.remove();
     }, [treeEvent]);
 
     return (
         <React.Fragment>
             {
-                currentShape && _.flatten([treeEvent.children])
-                    .map(value => <FaultEventShape addSelf={addSelf} treeEvent={value}
-                                                   key={value.iri} parentShape={currentShape}/>
-                    )}
+                currentShape && sortedChildren.map(value =>
+                    <FaultEventShape addSelf={addSelf} treeEvent={value} key={value.iri} parentShape={currentShape}/>
+                )}
             {
                 currentShape && parentShape &&
                 <ConnectorShape addSelf={addSelf}

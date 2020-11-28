@@ -71,9 +71,7 @@ const FaultEventChildrenReorderList = ({eventChildren, handleReorder}: Props) =>
     };
 
     const handleChildrenReordered = (values: any[]) => {
-        console.log('handleChildrenReordered')
         const reorderedValues = values.map(child => child.value);
-        console.log(reorderedValues)
         handleReorder(reorderedValues);
     }
 
