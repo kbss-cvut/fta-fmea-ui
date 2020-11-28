@@ -91,7 +91,7 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
                         defaultValue=""
             />
 
-            {(gateTypeWatch === GateType.PRIORITY_AND || !gateTypeWatch) &&
+            {((gateTypeWatch === GateType.PRIORITY_AND || !gateTypeWatch) && (eventTypeWatch === EventType.INTERMEDIATE && gateTypeWatch === GateType.PRIORITY_AND)) &&
             <Controller as={TextField} control={control} label="Sequence Probability"
                         type="number" name="sequenceProbability"
                         InputProps={{inputProps: {min: 0, max: 1, step: 0.01}}}
