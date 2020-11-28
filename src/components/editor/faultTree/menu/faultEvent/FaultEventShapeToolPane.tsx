@@ -1,18 +1,18 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {merge, cloneDeep} from "lodash";
-import {Button, Typography} from "@material-ui/core";
+import {cloneDeep, merge} from "lodash";
+import {Button, Divider, Typography} from "@material-ui/core";
 import FaultEventCreation from "../../../../dialog/faultEvent/FaultEventCreation";
 import {useForm} from "react-hook-form";
 import {schema as eventSchema} from "../../../../dialog/faultEvent/FaultEventCreation.schema";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as faultEventService from "@services/faultEventService";
+import {sequenceListToArray} from "@services/faultEventService";
 import {deepOmit} from "@utils/lodashUtils";
-import {FaultEvent} from "@models/eventModel";
+import {FaultEvent, GateType} from "@models/eventModel";
 import FaultEventChildrenReorderList
     from "@components/editor/faultTree/menu/faultEvent/reorder/FaultEventChildrenReorderList";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
-import {sequenceListToArray} from "@services/faultEventService";
 
 interface Props {
     data?: FaultEvent,
@@ -63,7 +63,7 @@ const FaultEventShapeToolPane = ({data, onEventUpdated, refreshTree}: Props) => 
 
     useEffect(() => {
         reset(defaultValues)
-        if(data) {
+        if (data) {
             const sequence = sequenceListToArray(data.childrenSequence)
             const sorted = faultEventService.eventChildrenSorted(data.children, sequence)
             setEventChildren(sorted)
@@ -80,12 +80,17 @@ const FaultEventShapeToolPane = ({data, onEventUpdated, refreshTree}: Props) => 
     return (
         <React.Fragment>
             {editorPane}
-            {eventChildren && <FaultEventChildrenReorderList eventChildren={eventChildren} handleReorder={handleChildrenReordered}/>}
             {isDirty &&
             <Button disabled={isSubmitting || !eventSelected} color="primary"
                     onClick={handleSubmit(updateFunction)}>
                 Save
-            </Button>
+            </Button>}
+            {data?.gateType === GateType.PRIORITY_AND && eventChildren &&
+            <React.Fragment>
+                <Divider/>
+                <Typography variant="h5">Children Order:</Typography>
+                <FaultEventChildrenReorderList eventChildren={eventChildren} handleReorder={handleChildrenReordered}/>
+            </React.Fragment>
             }
         </React.Fragment>
     );
