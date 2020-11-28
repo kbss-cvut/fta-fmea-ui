@@ -2,6 +2,7 @@ import axiosClient from "@services/utils/axiosUtils";
 import {authHeaders} from "@services/utils/authUtils";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {UriReference} from "@models/utils/uriReference";
+import {handleServerError} from "./utils/responseUtils";
 
 export const addFailureMode = async (functionIri: string, failureModeIri: string): Promise<void> => {
     try {
@@ -17,6 +18,7 @@ export const addFailureMode = async (functionIri: string, failureModeIri: string
         )
     } catch (e) {
         console.log('Function Service - Failed to call /addFailureMode')
-        return new Promise((resolve, reject) => reject("Failed to add failure mode"));
+        const defaultMessage = "Failed to add failure mode";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }

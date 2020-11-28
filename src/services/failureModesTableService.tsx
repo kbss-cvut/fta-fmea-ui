@@ -12,6 +12,7 @@ import {FaultEvent} from "@models/eventModel";
 import {FailureModesRow} from "@models/failureModesRowModel";
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {RiskPriorityNumber} from "@models/rpnModel";
+import {handleServerError} from "@services/utils/responseUtils";
 
 export const findAll = async (): Promise<FailureModesTable[]> => {
     try {
@@ -25,7 +26,8 @@ export const findAll = async (): Promise<FailureModesTable[]> => {
         return JsonLdUtils.compactAndResolveReferencesAsArray<FailureModesTable>(response.data, CONTEXT)
     } catch (e) {
         console.log('Failure Modes Table Service - Failed to call /findAll')
-        return new Promise((resolve, reject) => reject("Failed to load failure modes tables"));
+        const defaultMessage = "Failed to load failure modes tables";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -42,7 +44,8 @@ export const update = async (table: UpdateFailureModesTable): Promise<FailureMod
         return JsonLdUtils.compactAndResolveReferences<FailureModesTable>(response.data, CONTEXT);
     } catch (e) {
         console.log('Failure Modes Table Service - Failed to call /update')
-        return new Promise((resolve, reject) => reject("Failed to failure modes tables"));
+        const defaultMessage = "Failed to update failure modes tables";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -59,7 +62,8 @@ export const remove = async (tableIri: string): Promise<void> => {
         return new Promise((resolve) => resolve());
     } catch (e) {
         console.log('Failure Modes Table Service - Failed to call /remove')
-        return new Promise((resolve, reject) => reject("Failed to remove failure modes tables"));
+        const defaultMessage = "Failed to remove failure modes tables";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -76,7 +80,8 @@ export const computeTableData = async (tableIri: string): Promise<FailureModesTa
         return new Promise((resolve) => resolve(response.data));
     } catch (e) {
         console.log('Failure Modes Table Service - Failed to call /computeTableData')
-        return new Promise((resolve, reject) => reject("Failed to load failure modes table data"));
+        const defaultMessage = "Failed to load failure modes table data";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -99,7 +104,8 @@ export const exportCsv = async (tableIri: string, title: string): Promise<string
         link.click()
     } catch (e) {
         console.log('Failure Modes Table Service - Failed to call /exportCsv')
-        return new Promise((resolve, reject) => reject("Failed to export table data"));
+        const defaultMessage = "Failed to export table data";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 

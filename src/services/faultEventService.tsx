@@ -7,6 +7,7 @@ import VocabularyUtils from "@utils/VocabularyUtils";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {findIndex, flatten, sortBy} from "lodash";
 import {CONTEXT as FAILURE_MODE_CONTEXT, CreateFailureMode, FailureMode} from "@models/failureModeModel";
+import {handleServerError} from "@services/utils/responseUtils";
 
 export const findAll = async (): Promise<FaultEvent[]> => {
     try {
@@ -20,7 +21,8 @@ export const findAll = async (): Promise<FaultEvent[]> => {
         return JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(response.data, EVENT_CONTEXT);
     } catch (e) {
         console.log('Event Service - Failed to call /findAll')
-        return new Promise((resolve, reject) => reject("Failed to find fault events"));
+        const defaultMessage = "Failed to find fault events";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -38,7 +40,8 @@ export const update = async (faultEvent: FaultEvent): Promise<void> => {
         return new Promise((resolve) => resolve());
     } catch (e) {
         console.log('Event Service - Failed to call /update')
-        return new Promise((resolve, reject) => reject("Failed to update fault event"));
+        const defaultMessage = "Failed to update fault event";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -55,7 +58,8 @@ export const remove = async (faultEventIri: string): Promise<void> => {
         return new Promise((resolve) => resolve());
     } catch (e) {
         console.log('Event Service - Failed to call /remove')
-        return new Promise((resolve, reject) => reject("Failed to remove fault event"));
+        const defaultMessage = "Failed to remove fault event";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -81,7 +85,8 @@ export const addEvent = async (faultEventIri: string, event: FaultEvent): Promis
         return JsonLdUtils.compactAndResolveReferences<FaultEvent>(response.data, EVENT_CONTEXT);
     } catch (e) {
         console.log('Event Service - Failed to call /addEvent')
-        return new Promise((resolve, reject) => reject("Failed to create event"));
+        const defaultMessage = "Failed to create event";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -120,7 +125,8 @@ export const getFailureMode = async (eventUri: string): Promise<FailureMode> => 
         return JsonLdUtils.compactAndResolveReferences<FailureMode>(response.data, FAILURE_MODE_CONTEXT);
     } catch (e) {
         console.log('Event Service - Failed to call /getFailureMode')
-        return new Promise((resolve, reject) => reject("Failed to load event failure mode"));
+        const defaultMessage = "Failed to load event failure mode";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -142,7 +148,8 @@ export const addFailureMode = async (eventUri: string, failureMode: CreateFailur
         return JsonLdUtils.compactAndResolveReferences<FailureMode>(response.data, FAILURE_MODE_CONTEXT);
     } catch (e) {
         console.log('Event Service - Failed to call /addFailureMode')
-        return new Promise((resolve, reject) => reject("Failed to create failure mode"));
+        const defaultMessage = "Failed to create failure mode";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -160,7 +167,8 @@ export const deleteFailureMode = async (eventUri: string): Promise<void> => {
         return new Promise((resolve) => resolve());
     } catch (e) {
         console.log('Event Service - Failed to call /deleteFailureMode')
-        return new Promise((resolve, reject) => reject("Failed to delete event failure mode"));
+        const defaultMessage = "Failed to delete event failure mode";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -180,7 +188,8 @@ export const updateChildrenSequence = async (faultEventIri: string, childrenSequ
         return new Promise((resolve) => resolve());
     } catch (e) {
         console.log('Event Service - Failed to call /updateChildrenSequence')
-        return new Promise((resolve, reject) => reject("Failed to update children sequence"));
+        const defaultMessage = "Failed to update children sequence";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 

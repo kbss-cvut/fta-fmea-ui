@@ -10,6 +10,7 @@ import axiosClient from "@services/utils/axiosUtils";
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {JSONLD} from "@utils/constants";
 import {authHeaders} from "@services/utils/authUtils";
+import {handleServerError} from "@services/utils/responseUtils";
 
 
 export const register = async (loginRequest: UserRegisterRequest): Promise<UserRegisterResponse> => {
@@ -29,7 +30,8 @@ export const register = async (loginRequest: UserRegisterRequest): Promise<UserR
         return response.data
     } catch (e) {
         console.log('Failed to call /register')
-        return new Promise((resolve, reject) => reject("Registration failed"));
+        const defaultMessage = "Registration failed";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -43,7 +45,8 @@ export const login = async (loginRequest: UserLoginRequest): Promise<UserLoginRe
         return response.data
     } catch (e) {
         console.log('Failed to call /login')
-        return new Promise((resolve, reject) => reject("Login failed"));
+        const defaultMessage = "Login failed";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -60,6 +63,7 @@ export const changePassword = async (changePasswordRequest: ChangePasswordReques
         new Promise(resolve => resolve());
     } catch (e) {
         console.log('Failed to call /current')
-        return new Promise((resolve, reject) => reject("Password change failed."));
+        const defaultMessage = "Password change failed.";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }

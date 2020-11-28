@@ -8,6 +8,7 @@ import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {FailureMode, CONTEXT as FAILURE_MODE_CONTEXT} from "@models/failureModeModel";
 import {System} from "@models/systemModel";
 import {flatten, filter} from "lodash";
+import {handleServerError} from "@services/utils/responseUtils";
 
 export const findAll = async (): Promise<Component[]> => {
     try {
@@ -21,7 +22,8 @@ export const findAll = async (): Promise<Component[]> => {
         return JsonLdUtils.compactAndResolveReferencesAsArray<Component>(response.data, CONTEXT)
     } catch (e) {
         console.log('Component Service - Failed to call /findAll')
-        return new Promise((resolve, reject) => reject("Failed to load components"));
+        const defaultMessage = "Failed to load components";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -42,7 +44,8 @@ export const create = async (component: CreateComponent): Promise<Component> => 
         return JsonLdUtils.compactAndResolveReferences<Component>(response.data, CONTEXT);
     } catch (e) {
         console.log('Component Service - Failed to call /create')
-        return new Promise((resolve, reject) => reject("Failed to create component"));
+        const defaultMessage = "Failed to create component";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -59,7 +62,8 @@ export const update = async (componentUpdate: UpdateComponent): Promise<Componen
         return JsonLdUtils.compactAndResolveReferences<Component>(response.data, CONTEXT);
     } catch (e) {
         console.log('Component Service - Failed to call /update')
-        return new Promise((resolve, reject) => reject("Failed to update component"));
+        const defaultMessage = "Failed to update component";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -76,7 +80,8 @@ export const functions = async (componentUri: string): Promise<Function[]> => {
         return JsonLdUtils.compactAndResolveReferencesAsArray<Function>(response.data, FUNCTION_CONTEXT)
     } catch (e) {
         console.log('Component Service - Failed to call /functions')
-        return new Promise((resolve, reject) => reject("Failed to load functions"));
+        const defaultMessage = "Failed to load functions";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -98,7 +103,8 @@ export const addFunction = async (componentUri: string, f: CreateFunction): Prom
         return JsonLdUtils.compactAndResolveReferences<Function>(response.data, CONTEXT);
     } catch (e) {
         console.log('Component Service - Failed to call create function')
-        return new Promise((resolve, reject) => reject("Failed to create function"));
+        const defaultMessage = "Failed to create function";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -116,7 +122,8 @@ export const removeFunction = async (componentIri: string, functionIri: string) 
         return new Promise((resolve) => resolve());
     } catch (e) {
         console.log('Component Service - Failed to call /removeFunction')
-        return new Promise((resolve, reject) => reject("Failed to remove function"));
+        const defaultMessage = "Failed to remove function";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -136,7 +143,8 @@ export const linkComponent = async (componentUri: string, linkUri: string): Prom
         return JsonLdUtils.compactAndResolveReferences<Component>(response.data, CONTEXT);
     } catch (e) {
         console.log('Component Service - Failed to call /linkComponent')
-        return new Promise((resolve, reject) => reject("Failed to link components"));
+        const defaultMessage = "Failed to link components";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -154,7 +162,8 @@ export const unlinkComponent = async (componentUri: string): Promise<void> => {
         return new Promise((resolve) => resolve());
     } catch (e) {
         console.log('Component Service - Failed to call /unlinkComponent')
-        return new Promise((resolve, reject) => reject("Failed to unlink components"));
+        const defaultMessage = "Failed to unlink components";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -171,7 +180,8 @@ export const remove = async (componentIri: string): Promise<void> => {
         return new Promise((resolve) => resolve());
     } catch (e) {
         console.log('Component Service - Failed to call /remove')
-        return new Promise((resolve, reject) => reject("Failed to remove component"));
+        const defaultMessage = "Failed to remove component";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 

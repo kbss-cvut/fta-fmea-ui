@@ -10,6 +10,7 @@ import {
     CreateFailureModesTable,
     FailureModesTable
 } from "@models/failureModesTableModel";
+import {handleServerError} from "@services/utils/responseUtils";
 
 export const findAll = async (): Promise<FaultTree[]> => {
     try {
@@ -23,7 +24,8 @@ export const findAll = async (): Promise<FaultTree[]> => {
         return JsonLdUtils.compactAndResolveReferencesAsArray<FaultTree>(response.data, CONTEXT)
     } catch (e) {
         console.log('Fault Tree Service - Failed to call /findAll')
-        return new Promise((resolve, reject) => reject("Failed to load fault trees"));
+        const defaultMessage = "Failed to load fault trees";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -40,7 +42,8 @@ export const find = async (faultTreeUri: string): Promise<FaultTree> => {
         return JsonLdUtils.compactAndResolveReferences<FaultTree>(response.data, CONTEXT)
     } catch (e) {
         console.log('Fault Tree Service - Failed to call /find')
-        return new Promise((resolve, reject) => reject("Failed to find fault tree"));
+        const defaultMessage = "Failed to find fault tree";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -61,7 +64,8 @@ export const create = async (faultTree: FaultTree): Promise<FaultTree> => {
         return JsonLdUtils.compactAndResolveReferences<FaultTree>(response.data, CONTEXT);
     } catch (e) {
         console.log('Fault Tree Service - Failed to call /create')
-        return new Promise((resolve, reject) => reject("Failed to create fault tree"));
+        const defaultMessage = "Failed to create fault tree";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -80,7 +84,8 @@ export const update = async (faultTree: FaultTree): Promise<FaultTree> => {
         return JsonLdUtils.compactAndResolveReferences<FaultTree>(response.data, CONTEXT);
     } catch (e) {
         console.log('Fault Tree Service - Failed to call /update')
-        return new Promise((resolve, reject) => reject("Failed to update fault tree"));
+        const defaultMessage = "Failed to update fault tree";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -97,7 +102,8 @@ export const remove = async (faultTreeIri: string): Promise<void> => {
         return new Promise((resolve) => resolve());
     } catch (e) {
         console.log('Fault Tree Service - Failed to call /remove')
-        return new Promise((resolve, reject) => reject("Failed to remove fault tree"));
+        const defaultMessage = "Failed to remove fault tree";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -114,7 +120,8 @@ export const getReusableEvents = async (faultTreeIri: string): Promise<FaultEven
         return JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(response.data, EVENT_CONTEXT);
     } catch (e) {
         console.log('Fault Tree Service - Failed to call /getReusableEvents')
-        return new Promise((resolve, reject) => reject("Failed to find reusable fault events"));
+        const defaultMessage = "Failed to find reusable fault events";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -136,7 +143,8 @@ export const getTreePaths = async (faultTreeIri: string): Promise<[FaultEvent[]]
         return await parseData(response.data);
     } catch (e) {
         console.log('Fault Tree Service - Failed to call /getTreePaths')
-        return new Promise((resolve, reject) => reject("Failed to load tree paths"));
+        const defaultMessage = "Failed to load tree paths";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
 
@@ -159,6 +167,7 @@ export const createFailureModesTable = async (faultTreeIri: string, failureModes
         return JsonLdUtils.compactAndResolveReferences<FailureModesTable>(response.data, FAILURE_MODES_TABLE_CONTEXT);
     } catch (e) {
         console.log('Fault Tree Service - Failed to call /createFailureModesTable')
-        return new Promise((resolve, reject) => reject("Failed to create failure modes table"));
+        const defaultMessage = "Failed to create failure modes table";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
