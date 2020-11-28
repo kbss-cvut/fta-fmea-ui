@@ -4,7 +4,6 @@ import * as PropTypes from "prop-types";
 // https://bit.dev/lubuskie/material-ui/multiple-select-chips
 
 import {
-    makeStyles,
     FormLabel,
     Chip,
     Typography,
@@ -13,13 +12,29 @@ import {
 import useStyles from "./MultipleSelectChips.styles";
 
 
-const MultipleSelectChips = ({value, setValue, options, label, error, setError,}) => {
+interface Props {
+    value: any[],
+    setValue: (updatedValue: any[]) => void,
+    options: any[],
+    fixedValues?: any[],
+    label?: string,
+    error: string,
+    setError: (string) => void,
+}
+
+const MultipleSelectChips = ({value, setValue, options, fixedValues, label, error, setError,}: Props) => {
     const classes = useStyles();
 
     const handleClick = (clickedValue) => {
         if (setError) {
             setError("");
         }
+
+        if (fixedValues.find((e) => e === clickedValue)) {
+            console.log('Fixed value - cannot be unselected.')
+            return
+        }
+
         if (value.find((e) => e === clickedValue)) {
             const index = value.findIndex((e) => e === clickedValue);
             let arr = [...value];
@@ -56,11 +71,7 @@ const MultipleSelectChips = ({value, setValue, options, label, error, setError,}
                                 className={classes.chip}
                                 key={i}
                                 color="primary"
-                                variant={
-                                    value.find((e) => e === option.value)
-                                        ? "default"
-                                        : "outlined"
-                                }
+                                variant={value.find((e) => e === option.value) ? "default" : "outlined"}
                                 label={<Typography variant="body2">{`${option.label}`}</Typography>}
                                 clickable
                                 onClick={() => handleClick(option.value)}

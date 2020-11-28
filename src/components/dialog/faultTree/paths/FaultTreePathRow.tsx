@@ -26,6 +26,7 @@ const FaultTreePathRow = ({path, rowId, onRowChanged, onRpnChanged}: Props) => {
     const options = flatten([path]).map(item => {
         return {label: item.name, value: item}
     }) as any[];
+    const fixedValues = [options[0].value, options[options.length - 1].value];
 
     const handlePathChange = (value) => {
         setValue(value);
@@ -71,6 +72,7 @@ const FaultTreePathRow = ({path, rowId, onRowChanged, onRpnChanged}: Props) => {
                 value={value}
                 setValue={handlePathChange}
                 options={options}
+                fixedValues={fixedValues}
                 error={error}
                 setError={setError}
             />
