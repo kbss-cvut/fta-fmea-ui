@@ -49,7 +49,7 @@ const FaultTreeDialog = ({open, handleCloseDialog}) => {
                                error={!!useFormMethods.errors.faultTreeName}
                                helperText={useFormMethods.errors.faultTreeName?.message}/>
                     <FaultEventsReuseProvider>
-                        <FaultEventCreation useFormMethods={useFormMethods} eventReusing={true}/>
+                        <FaultEventCreation useFormMethods={useFormMethods} eventReusing/>
                     </FaultEventsReuseProvider>
                 </DialogContent>
                 <DialogActions>
