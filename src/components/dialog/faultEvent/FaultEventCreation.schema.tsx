@@ -26,5 +26,10 @@ export const schema = Yup.object().shape({
             is: (eventType) => eventType === EventType.INTERMEDIATE,
             then: Yup.string().notOneOf([GateType.UNUSED]),
             otherwise: Yup.string().oneOf([GateType.UNUSED]),
-        })
+        }),
+    sequenceProbability: Yup.number()
+        .transform(yupOptionalNumber)
+        .notRequired()
+        .min(0, 'Sequence probability cannot be lower than 0')
+        .max(1, 'Sequence probability cannot be greater than 1'),
 });

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Box, Divider, FormControl, InputLabel, MenuItem, Select, TextField, Typography,} from "@material-ui/core";
+import {FormControl, InputLabel, MenuItem, Select, TextField, Typography,} from "@material-ui/core";
 import useStyles from "@components/dialog/faultEvent/FaultEventCreation.styles";
 import {Controller} from "react-hook-form";
 import {EventType, FaultEvent, GateType, gateTypeValues} from "@models/eventModel";
@@ -23,6 +23,7 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
     const existingEventSelected = Boolean(selectedEvent)
 
     const eventTypeWatch = watch('eventType')
+    const gateTypeWatch = watch('gateType')
 
     useEffect(() => {
         if (selectedEvent) {
@@ -31,6 +32,7 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
             setValue('probability', selectedEvent.probability)
             setValue('eventType', selectedEvent.eventType)
             setValue('gateType', selectedEvent.gateType)
+            setValue('sequenceProbability', selectedEvent.sequenceProbability)
         } else {
             reset()
         }
@@ -88,6 +90,15 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
                         disabled={existingEventSelected || eventTypeWatch === EventType.INTERMEDIATE}
                         defaultValue=""
             />
+
+            {(gateTypeWatch === GateType.PRIORITY_AND || !gateTypeWatch) &&
+            <Controller as={TextField} control={control} label="Sequence Probability"
+                        type="number" name="sequenceProbability"
+                        InputProps={{inputProps: {min: 0, max: 1, step: 0.01}}}
+                        error={!!errors.sequenceProbability} helperText={errors.sequenceProbability?.message}
+                        className={classes.sequenceProbability}
+                        defaultValue=""
+            />}
 
             {(eventTypeWatch === EventType.INTERMEDIATE || !eventTypeWatch) &&
             <div className={classes.formControlDiv}>

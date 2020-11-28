@@ -7,6 +7,7 @@ import {JointEventShapeProps} from "./EventShapeProps";
 import {createShape} from "@services/jointService";
 import {sequenceListToArray} from "@services/faultEventService";
 import * as faultEventService from "@services/faultEventService";
+import {has} from "lodash";
 
 const FaultEventShape = ({addSelf, treeEvent, parentShape}: JointEventShapeProps) => {
     const [currentShape, setCurrentShape] = useState<any>(undefined)
@@ -22,7 +23,7 @@ const FaultEventShape = ({addSelf, treeEvent, parentShape}: JointEventShapeProps
         }
 
         eventShape.attr(['label', 'text'], treeEvent.name);
-        if (treeEvent.probability) {
+        if (has(treeEvent, 'probability')) {
             eventShape.attr(['probabilityLabel', 'text'], treeEvent.probability.toExponential(2));
         }
 

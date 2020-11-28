@@ -18,6 +18,10 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         probability: {
             minWidth: 120,
+        },
+        sequenceProbability: {
+            marginLeft: theme.spacing(1),
+            minWidth: 160,
         }
     }),
 );
