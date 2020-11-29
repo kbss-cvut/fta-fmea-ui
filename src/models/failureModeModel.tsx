@@ -14,13 +14,10 @@ const ctx = {
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, EVENT_CONTEXT, MITIGATION_CONTEXT, FUNCTION_CONTEXT, COMPONENT_CONTEXT);
 
-export interface CreateFailureMode extends AbstractModel {
+export interface FailureMode extends AbstractModel {
     name: string,
     influencedFunctions?: Function[],
     component: Component,
-    mitigation?: Mitigation
-}
-
-export interface FailureMode extends CreateFailureMode {
+    mitigation?: Mitigation,
     effects?: FaultEvent[],
 }

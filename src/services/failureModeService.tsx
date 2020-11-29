@@ -4,6 +4,7 @@ import axiosClient from "@services/utils/axiosUtils";
 import {FailureMode, CONTEXT} from "@models/failureModeModel";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {handleServerError} from "./utils/responseUtils";
+import {deepOmit} from "@utils/lodashUtils";
 
 export const findAll = async (): Promise<FailureMode[]> => {
     try {
@@ -43,7 +44,8 @@ export const find = async (failureModeIri: string): Promise<FailureMode> => {
 
 export const update = async (failureMode: FailureMode): Promise<FailureMode> => {
     try {
-        const updateRequest = Object.assign({}, failureMode, {"@context": CONTEXT})
+        const updateFailureMode = deepOmit(failureMode, '@type')
+        const updateRequest = Object.assign({}, updateFailureMode, {"@context": CONTEXT})
 
         const response = await axiosClient.put(
             '/failureModes',

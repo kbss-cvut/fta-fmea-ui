@@ -13,29 +13,37 @@ import {FunctionsProvider} from "@hooks/useFunctions";
 import useStyles from "./FailureModeStepper.styles";
 import FailureModeStepperConfirmation from "./FailureModeStepperConfirmation";
 import FailureModeCreationStep from "./FailureModeCreationStep";
-import {CreateFailureMode, FailureMode} from "@models/failureModeModel";
-import * as faultEventService from "@services/faultEventService";
-import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
+import {FailureMode} from "@models/failureModeModel";
 import {Mitigation} from "@models/mitigationModel";
 import MitigationCreation from "@components/dialog/mitigation/MitigationCreation";
+import {merge} from "lodash";
 
 const stepTitles = ["Failure Mode", "Component", "Influenced Function", "Mitigation", "Confirmation"];
 
 interface Props {
-    eventIri: string,
-    onFailureModeCreated: () => void,
-    onClose: () => void,
+    buttonTitle: string,
+    onConfirmationClick: (FailureMode) => void,
+
+    initialFailureMode?: FailureMode,
+    initialComponent?: Component,
+    initialFunctions?: Function[],
+    initialMitigation?: Mitigation,
 }
 
-const FailureModeStepper = ({eventIri, onFailureModeCreated, onClose}: Props) => {
+const FailureModeStepper = ({
+                                buttonTitle, onConfirmationClick,
+                                initialFailureMode = null,
+                                initialComponent = null,
+                                initialFunctions = [],
+                                initialMitigation = null
+                            }: Props) => {
     const classes = useStyles();
-    const [showSnackbar] = useSnackbar();
 
     const [activeStep, setActiveStep] = useState(0);
-    const [selectedFailureMode, setSelectedFailureMode] = useState<FailureMode | null>(null)
-    const [selectedComponent, setSelectedComponent] = useState<Component | null>(null)
-    const [selectedFunctions, setSelectedFunctions] = useState<Function[]>([])
-    const [selectedMitigation, setSelectedMitigation] = useState<Mitigation | null>(null)
+    const [selectedFailureMode, setSelectedFailureMode] = useState<FailureMode | null>(initialFailureMode)
+    const [selectedComponent, setSelectedComponent] = useState<Component | null>(initialComponent)
+    const [selectedFunctions, setSelectedFunctions] = useState<Function[]>(initialFunctions)
+    const [selectedMitigation, setSelectedMitigation] = useState<Mitigation | null>(initialMitigation)
 
     const handleNext = () => setActiveStep((prev) => prev + 1);
     const handleBack = () => setActiveStep((prev) => prev - 1);
@@ -63,7 +71,8 @@ const FailureModeStepper = ({eventIri, onFailureModeCreated, onClose}: Props) =>
             case 2:
                 return (
                     <FunctionsProvider componentUri={selectedComponent?.iri}>
-                        <FunctionPicker selectedFunctions={selectedFunctions} onFunctionsSelected={setSelectedFunctions} />
+                        <FunctionPicker selectedFunctions={selectedFunctions}
+                                        onFunctionsSelected={setSelectedFunctions}/>
                     </FunctionsProvider>
                 );
             case 3:
@@ -113,7 +122,7 @@ const FailureModeStepper = ({eventIri, onFailureModeCreated, onClose}: Props) =>
                 return (
                     <div className={classes.navigationButtonsDiv}>
                         <Button variant="contained" color="primary" onClick={handleBack}>Back</Button>
-                        <Button color="primary" onClick={handleCreateFailureMode}>Create</Button>
+                        <Button color="primary" onClick={handleConfirmClicked}>{buttonTitle}</Button>
                     </div>
                 );
             default:
@@ -129,21 +138,18 @@ const FailureModeStepper = ({eventIri, onFailureModeCreated, onClose}: Props) =>
         }
     };
 
-    const handleCreateFailureMode = () => {
-        const createFailureMode = {
-            name: selectedFailureMode.name,
-            component: selectedComponent,
-            influencedFunctions: selectedFunctions,
-            mitigation: selectedMitigation,
-        } as CreateFailureMode
+    const handleConfirmClicked = () => {
+        const failureMode = (initialFailureMode) ? initialFailureMode : {} as FailureMode;
+        merge(failureMode, selectedFailureMode);
 
-        faultEventService.addFailureMode(eventIri, createFailureMode)
-            .then(value => {
-                showSnackbar('Failure Mode Created', SnackbarType.SUCCESS)
-                onFailureModeCreated()
-                onClose()
-            })
-            .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
+        const mitigation = (initialMitigation)? initialMitigation : {} as Mitigation;
+        merge(mitigation, selectedMitigation);
+
+        failureMode.component = selectedComponent
+        failureMode.influencedFunctions = selectedFunctions
+        failureMode.mitigation = mitigation
+
+        onConfirmationClick(failureMode)
     }
 
     return (

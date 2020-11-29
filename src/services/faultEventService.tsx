@@ -6,7 +6,7 @@ import {CONTEXT as EVENT_CONTEXT, EventType, FaultEvent, GateType} from "@models
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {findIndex, flatten, sortBy} from "lodash";
-import {CONTEXT as FAILURE_MODE_CONTEXT, CreateFailureMode, FailureMode} from "@models/failureModeModel";
+import {CONTEXT as FAILURE_MODE_CONTEXT, FailureMode} from "@models/failureModeModel";
 import {handleServerError} from "@services/utils/responseUtils";
 
 export const findAll = async (): Promise<FaultEvent[]> => {
@@ -130,7 +130,7 @@ export const getFailureMode = async (eventUri: string): Promise<FailureMode> => 
     }
 }
 
-export const addFailureMode = async (eventUri: string, failureMode: CreateFailureMode): Promise<FailureMode> => {
+export const addFailureMode = async (eventUri: string, failureMode: FailureMode): Promise<FailureMode> => {
     try {
         const fragment = extractFragment(eventUri);
         const createRequest = Object.assign(
