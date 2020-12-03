@@ -22,7 +22,7 @@ const FailureModeTable = ({setAppBarName}: DashboardTitleProps) => {
     }, [tableData]);
 
     return (<div className={classes.root}>
-        <DataGrid rows={tableRows} columns={tableColumns} pageSize={5}/>
+        <DataGrid rows={tableRows} columns={tableColumns} pageSize={20}/>
     </div>)
 }
 

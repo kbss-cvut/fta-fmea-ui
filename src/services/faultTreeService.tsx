@@ -171,3 +171,21 @@ export const createFailureModesTable = async (faultTreeIri: string, failureModes
         return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
+
+export const findFailureModesTable = async (faultTreeIri: string): Promise<FailureModesTable> => {
+    try {
+        const fragment = extractFragment(faultTreeIri);
+        const response = await axiosClient.get<FailureModesTable>(
+            `/faultTrees/${fragment}/failureModesTable`,
+            {
+                headers: authHeaders()
+            }
+        )
+
+        return JsonLdUtils.compactAndResolveReferences<FailureModesTable>(response.data, FAILURE_MODES_TABLE_CONTEXT);
+    } catch (e) {
+        console.log('Fault Tree Service - Failed to call /findFailureModesTable')
+        const defaultMessage = "Failed to load failure modes table";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    }
+}

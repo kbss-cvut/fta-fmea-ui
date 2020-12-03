@@ -15,7 +15,8 @@ import {handleCanvasMouseWheel} from "@utils/canvasZoom";
 import FaultEventMenu from "@components/editor/faultTree/menu/faultEvent/FaultEventMenu";
 import DiagramOptions from "@components/editor/menu/DiagramOptions";
 import {encodeCanvas} from "@utils/canvasExport";
-import {EventFailureModeProvider} from "@hooks/useEventFailureMode";
+import FaultTreeFailureModesTable from "@components/editor/faultTree/menu/failureModesTable/FaultTreeFailureModesTable";
+import {CurrentFaultTreeTableProvider} from "@hooks/useCurrentFaultTreeTable";
 
 interface Props {
     rootEvent: FaultEvent,
@@ -145,8 +146,12 @@ const EditorCanvas = ({rootEvent, sidebarSelectedEvent, exportImage, onElementCo
             </div>
             <SidebarMenu className={classes.sidebar}>
                 <DiagramOptions onExportDiagram={handleDiagramExport} onConvertToTable={onConvertToTable}
-                    onRestoreLayout={() => layout(container)}/>
-                <FaultEventMenu shapeToolData={sidebarSelectedEvent} onEventUpdated={onEventUpdated} refreshTree={refreshTree}/>
+                                onRestoreLayout={() => layout(container)}/>
+                <CurrentFaultTreeTableProvider>
+                    <FaultTreeFailureModesTable/>
+                </CurrentFaultTreeTableProvider>
+                <FaultEventMenu shapeToolData={sidebarSelectedEvent} onEventUpdated={onEventUpdated}
+                                refreshTree={refreshTree}/>
             </SidebarMenu>
         </div>
     );

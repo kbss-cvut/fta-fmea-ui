@@ -13,6 +13,7 @@ import {FaultEvent, GateType} from "@models/eventModel";
 import FaultEventChildrenReorderList
     from "@components/editor/faultTree/menu/faultEvent/reorder/FaultEventChildrenReorderList";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
+import useStyles from "@components/editor/faultTree/menu/faultEvent/FaultEventShapeToolPane.styles";
 
 interface Props {
     data?: FaultEvent,
@@ -21,6 +22,7 @@ interface Props {
 }
 
 const FaultEventShapeToolPane = ({data, onEventUpdated, refreshTree}: Props) => {
+    const classes = useStyles();
     const [showSnackbar] = useSnackbar();
 
     let editorPane;
@@ -55,7 +57,8 @@ const FaultEventShapeToolPane = ({data, onEventUpdated, refreshTree}: Props) => 
     } else {
         defaultValues = {}
         useFormMethods = useForm();
-        editorPane = <Typography variant="subtitle1" align='left'>No Event selected</Typography>
+        editorPane =
+            <Typography className={classes.emptyTitle} variant="subtitle1" align='left'>No Event selected</Typography>
     }
 
     const eventSelected = Boolean(data)
