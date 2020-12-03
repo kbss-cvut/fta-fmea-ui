@@ -13,10 +13,9 @@ import {FTABoundary} from "../shapes/shapesDefinitions";
 import {FaultEvent} from "@models/eventModel";
 import {handleCanvasMouseWheel} from "@utils/canvasZoom";
 import FaultEventMenu from "@components/editor/faultTree/menu/faultEvent/FaultEventMenu";
-import DiagramOptions from "@components/editor/menu/DiagramOptions";
 import {encodeCanvas} from "@utils/canvasExport";
-import FaultTreeFailureModesTable from "@components/editor/faultTree/menu/failureModesTable/FaultTreeFailureModesTable";
 import {CurrentFaultTreeTableProvider} from "@hooks/useCurrentFaultTreeTable";
+import SidebarMenuHeader from "@components/editor/faultTree/menu/SidebarMenuHeader";
 
 interface Props {
     rootEvent: FaultEvent,
@@ -145,10 +144,9 @@ const EditorCanvas = ({rootEvent, sidebarSelectedEvent, exportImage, onElementCo
                 {container && rootEvent && <FaultEventShape addSelf={addSelf} treeEvent={rootEvent}/>}
             </div>
             <SidebarMenu className={classes.sidebar}>
-                <DiagramOptions onExportDiagram={handleDiagramExport} onConvertToTable={onConvertToTable}
-                                onRestoreLayout={() => layout(container)}/>
                 <CurrentFaultTreeTableProvider>
-                    <FaultTreeFailureModesTable/>
+                    <SidebarMenuHeader onExportDiagram={handleDiagramExport}
+                                       onConvertToTable={onConvertToTable} onRestoreLayout={() => layout(container)}/>
                 </CurrentFaultTreeTableProvider>
                 <FaultEventMenu shapeToolData={sidebarSelectedEvent} onEventUpdated={onEventUpdated}
                                 refreshTree={refreshTree}/>

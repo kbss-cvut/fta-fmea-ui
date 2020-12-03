@@ -8,9 +8,10 @@ export interface Props {
     onRestoreLayout: () => void,
     onExportDiagram: () => void,
     onConvertToTable?: () => void,
+    tableConversionAllowed?: boolean,
 }
 
-const DiagramOptions = ({onRestoreLayout, onExportDiagram, onConvertToTable}: Props) => {
+const DiagramOptions = ({onRestoreLayout, onExportDiagram, onConvertToTable, tableConversionAllowed = false}: Props) => {
     return (
         <React.Fragment>
             <Typography variant="h5" gutterBottom>Diagram Options</Typography>
@@ -22,7 +23,7 @@ const DiagramOptions = ({onRestoreLayout, onExportDiagram, onConvertToTable}: Pr
                     <SaveAltIcon/>
                 </IconButton>
                 {
-                    onConvertToTable &&
+                    tableConversionAllowed &&
                     <IconButton color="primary" onClick={onConvertToTable} aria-label="convert">
                         <TableChartIcon/>
                     </IconButton>

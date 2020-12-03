@@ -6,15 +6,16 @@ import {
     Typography
 } from "@material-ui/core";
 import * as React from "react";
-import {useCurrentFaultTreeTable} from "@hooks/useCurrentFaultTreeTable";
 import {Link as RouterLink} from "react-router-dom";
 import {ROUTES} from "@utils/constants";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
-import FaultEventShapeToolPane from "@components/editor/faultTree/menu/faultEvent/FaultEventShapeToolPane";
+import {FailureModesTable} from "@models/failureModesTableModel";
 
-const FaultTreeFailureModesTable = () => {
-    const table = useCurrentFaultTreeTable();
+interface Props {
+    table: FailureModesTable
+}
 
+const FaultTreeFailureModesTable = ({table}:Props) => {
     return (
         <React.Fragment>
             {
