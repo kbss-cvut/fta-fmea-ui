@@ -1,6 +1,5 @@
 import * as React from "react";
 import {useEffect} from "react";
-import {JointProps} from "../../faultTree/shapes/EventShapeProps";
 import {Component} from "@models/componentModel";
 import {SystemComponent} from "@components/editor/system/shapes/shapesDefinitions";
 

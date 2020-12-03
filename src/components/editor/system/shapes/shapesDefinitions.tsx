@@ -59,3 +59,30 @@ export const SystemComponent = BaseComponent.define('system.Component', {
         selector: 'label'
     },],
 });
+
+export const SystemLink = joint.dia.Link.define('system.Link', {
+    attrs: {
+        line: {
+            connection: true,
+            stroke: '#333333',
+            strokeWidth: 2,
+            strokeLinejoin: 'round',
+            targetMarker: {
+                'type': 'path',
+                'stroke': '#333333',
+                'stroke-width': 2,
+                fill: 'white',
+                d: 'M 40 0 L 20 10 L 0 0 L 20 -10 z'
+            }
+        },
+    }
+}, {
+    markup: [{
+        tagName: 'path',
+        selector: 'line',
+        attributes: {
+            'fill': 'none',
+            'pointer-events': 'none'
+        }
+    },]
+}, );

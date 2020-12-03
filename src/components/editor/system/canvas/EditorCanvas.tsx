@@ -16,6 +16,7 @@ import DiagramOptions from "@components/editor/menu/DiagramOptions";
 import SidebarMenu from "@components/editor/faultTree/menu/SidebarMenu";
 import {encodeCanvas} from "@utils/canvasExport";
 import ComponentSidebarMenu from "@components/editor/system/menu/component/ComponentSidebarMenu";
+import {SystemLink} from "@components/editor/system/shapes/shapesDefinitions";
 
 interface Props {
     system: System,
@@ -150,7 +151,7 @@ const EditorCanvas = ({system, sidebarSelectedComponent, exportImage, onBlankCon
             const sourceShape = componentShapesMap.get(sourceIri)
             const targetShape = componentShapesMap.get(targetIri)
             if (sourceShape && targetShape) {
-                const link = new joint.shapes.standard.Link();
+                const link = new SystemLink();
 
                 link.source(targetShape);
                 link.target(sourceShape);
