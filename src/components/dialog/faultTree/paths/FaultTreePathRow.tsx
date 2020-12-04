@@ -52,14 +52,14 @@ const FaultTreePathRow = ({path, rowId, onRowChanged, onRpnChanged}: Props) => {
     return (
         <Paper className={classes.paper}>
             <Box className={classes.rpnBox}>
-                <Controller as={TextField} control={control} label="Occurrence" type="number" name="occurrence"
-                            InputProps={{inputProps: {min: 1, max: 10, step: 1}}}
-                            error={!!errors.occurrence} helperText={errors.occurrence?.message}
-                            className={classes.rpnBoxItem} defaultValue=""
-                />
                 <Controller as={TextField} control={control} label="Severity" type="number" name="severity"
                             InputProps={{inputProps: {min: 1, max: 10, step: 1}}}
                             error={!!errors.severity} helperText={errors?.severity?.message}
+                            className={classes.rpnBoxItem} defaultValue=""
+                />
+                <Controller as={TextField} control={control} label="Occurrence" type="number" name="occurrence"
+                            InputProps={{inputProps: {min: 1, max: 10, step: 1}}}
+                            error={!!errors.occurrence} helperText={errors.occurrence?.message}
                             className={classes.rpnBoxItem} defaultValue=""
                 />
                 <Controller as={TextField} control={control} label="Detection" type="number" name="detection"

@@ -7,10 +7,13 @@ import {ChildrenProps} from "@utils/hookUtils";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import {FailureModesTableData} from "@models/failureModesTableModel";
 
-const failureModesTableContext = createContext<FailureModesTableData>(null!);
+type failureModesTableContextType = [FailureModesTableData, () => void];
+
+const failureModesTableContext = createContext<failureModesTableContextType>(null!);
 
 export const useCurrentFailureModesTable = () => {
-    return useContext(failureModesTableContext);
+    const [tableData, refreshTable] = useContext(failureModesTableContext);
+    return [tableData, refreshTable] as const;
 }
 
 interface Props extends ChildrenProps {
@@ -21,20 +24,20 @@ export const CurrentFailureModesTableProvider = ({tableIri, children}: Props) =>
     const [_tableData, _setTableData] = useState<FailureModesTableData>();
     const [showSnackbar] = useSnackbar()
 
-    useEffect(() => {
-        const fetchTableData = async () => {
-            failureModesTableService.computeTableData(tableIri)
-                .then(value => _setTableData(value))
-                .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
-        }
+    const fetchTableData = async () => {
+        failureModesTableService.computeTableData(tableIri)
+            .then(value => _setTableData(value))
+            .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
+    }
 
+    useEffect(() => {
         fetchTableData()
 
         return () => axiosSource.cancel("CurrentFailureModesTableProvider - unmounting")
     }, []);
 
     return (
-        <failureModesTableContext.Provider value={_tableData}>
+        <failureModesTableContext.Provider value={[_tableData, fetchTableData]}>
             {children}
         </failureModesTableContext.Provider>
     );
