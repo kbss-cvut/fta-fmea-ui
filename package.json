@@ -31,7 +31,7 @@
   "scripts": {
     "build": "webpack --env.NODE_ENV=prod",
     "watch": "webpack -w --env.NODE_ENV=dev",
-    "start": "webpack-dev-server -d --content-base ./public --env.NODE_ENV=prod"
+    "start": "webpack-dev-server -d --content-base ./public --env.NODE_ENV=dev"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.4",
