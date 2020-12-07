@@ -29,9 +29,9 @@
     "yup": "^0.29.3"
   },
   "scripts": {
-    "build": "webpack",
-    "watch": "webpack -w",
-    "start": "webpack-dev-server -d --content-base ./public"
+    "build": "webpack --env.NODE_ENV=prod",
+    "watch": "webpack -w --env.NODE_ENV=dev",
+    "start": "webpack-dev-server -d --content-base ./public --env.NODE_ENV=prod"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.4",
