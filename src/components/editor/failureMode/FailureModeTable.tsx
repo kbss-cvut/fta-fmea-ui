@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import useStyles from "./FailureModeTable.styles";
 import {DashboardTitleProps} from "../../dashboard/DashboardTitleProps";
 import {useCurrentFailureModesTable} from "@hooks/useCurrentFailureModesTable";
-import {CellParams, ColDef, DataGrid, GridApi} from '@material-ui/data-grid';
+import {ColDef, DataGrid} from '@material-ui/data-grid';
 import {Button} from "@material-ui/core";
 import FailureModesRowEditDialog from "@components/dialog/failureModesRow/FailureModesRowEditDialog";
 import {EditRowRpn} from "@models/failureModesRowModel";
@@ -29,7 +29,7 @@ const FailureModeTable = ({setAppBarName}: DashboardTitleProps) => {
                 flex: 1,
                 align: "center",
                 disableClickEventBubbling: true,
-                renderCell: (params: CellParams) => {
+                renderCell: (params) => {
                     const onClick = () => {
                         const rowData = params.data;
 
