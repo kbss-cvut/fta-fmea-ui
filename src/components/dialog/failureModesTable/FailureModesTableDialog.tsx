@@ -60,7 +60,7 @@ const FailureModesTableDialog = ({open, onClose, onCreated, faultTreeIri}: Props
     return (
         <div>
             <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title" maxWidth="md"
-                    fullWidth>
+                    fullWidth scroll="paper">
                 <DialogTitle id="form-dialog-title" onClose={onClose}>Convert To FMEA</DialogTitle>
                 <DialogContent dividers>
                     <TextField autoFocus margin="dense" label="FMEA Name" name="fmeaName" type="text"
