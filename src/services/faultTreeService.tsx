@@ -189,3 +189,26 @@ export const findFailureModesTable = async (faultTreeIri: string): Promise<Failu
         return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
+
+
+export const getTreePathsAggregate = async (): Promise<[FaultEvent[]]> => {
+    try {
+        const response = await axiosClient.get(
+            '/faultTrees/treeAggregate/treePathsAggregate',
+            {
+                headers: authHeaders()
+            }
+        )
+
+        const parseData = async (data) => {
+            return Promise.all(data.map(row => JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(row, EVENT_CONTEXT)));
+        }
+
+        // @ts-ignore
+        return await parseData(response.data);
+    } catch (e) {
+        console.log('Fault Tree Service - Failed to call /getTreePathsAggregate')
+        const defaultMessage = "Failed to load all tree paths";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    }
+}

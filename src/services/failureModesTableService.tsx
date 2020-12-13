@@ -5,7 +5,7 @@ import {
     FailureModesTable,
     CONTEXT,
     UpdateFailureModesTable,
-    FailureModesTableData
+    FailureModesTableData, CreateFailureModesTable
 } from "@models/failureModesTableModel";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {FaultEvent} from "@models/eventModel";
@@ -97,7 +97,7 @@ export const exportCsv = async (tableIri: string, title: string): Promise<string
         );
 
         const type = response.headers['content-type']
-        const blob = new Blob([response.data], { type: type})
+        const blob = new Blob([response.data], {type: type})
         const link = document.createElement('a')
         link.href = window.URL.createObjectURL(blob)
         link.download = title + ".csv";
@@ -109,12 +109,35 @@ export const exportCsv = async (tableIri: string, title: string): Promise<string
     }
 }
 
+export const createAggregate = async (table: CreateFailureModesTable): Promise<FailureModesTable> => {
+    try {
+        const createRequest = Object.assign(
+            {"@type": [VocabularyUtils.FAILURE_MODES_TABLE]}, table, {"@context": CONTEXT}
+        )
+
+        const response = await axiosClient.post(
+            `/failureModesTable`,
+            createRequest,
+            {
+                headers: authHeaders()
+            }
+        )
+
+        return JsonLdUtils.compactAndResolveReferences<FailureModesTable>(response.data, CONTEXT);
+    } catch (e) {
+        console.log('Failure Modes Table Service - Failed to call /createAggregate')
+        const defaultMessage = "Failed to create failure modes aggregate table";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    }
+}
+
 
 export const eventPathsToRows = (eventPathsMap: Map<number, FaultEvent[]>, rpnsMap: Map<number, RiskPriorityNumber>): FailureModesRow[] => {
     return Array.from(eventPathsMap).map(([key, path]) => {
         const rpn = rpnsMap.get(key)
         return {
             "@type": [VocabularyUtils.FAILURE_MODES_ROW],
+            finalEffect: path[path.length - 1],
             localEffect: path[0],
             effects: (path.length > 1) ? path.slice(1) : [],
             rpn: {

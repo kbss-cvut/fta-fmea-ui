@@ -6,25 +6,25 @@ import {DialogContent} from "@components/materialui/dialog/DialogContent";
 import {useForm} from "react-hook-form";
 import {DialogActions} from "@components/materialui/dialog/DialogActions";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {schema} from "./FailureModesTableDialog.schema";
 import {CreateFailureModesTable} from "@models/failureModesTableModel";
-import * as faultTreeService from "@services/faultTreeService";
 import * as failureModesTableService from "@services/failureModesTableService";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
-import FaultTreePaths from "@components/dialog/faultTree/paths/FaultTreePaths";
-import {FaultTreePathsProvider} from "@hooks/useFaultTreePaths";
 import {FaultEvent} from "@models/eventModel";
 import {RiskPriorityNumber} from "@models/rpnModel";
+import {schema} from "../FailureModesTableDialog.schema";
+import {FaultTreePathsAggregateProvider} from "@hooks/useFaultTreePathsAggregate";
+import FaultTreePathsAggregate from "../../faultTree/pathsAggregate/FaultTreePathsAggregate";
+import {useFailureModesTables} from "@hooks/useFailureModesTables";
 
 interface Props {
     open: boolean,
-    faultTreeIri: string,
-    onCreated: (tableIri: string) => void,
     onClose: () => void,
 }
 
-const FailureModesTableDialog = ({open, onClose, onCreated, faultTreeIri}: Props) => {
+const FailureModesTableAggregateDialog = ({open, onClose}: Props) => {
     const [showSnackbar] = useSnackbar();
+    const [, , , addTableAggregate] = useFailureModesTables();
+
     const useFormMethods = useForm({resolver: yupResolver(schema)});
     const {handleSubmit, register, errors, formState} = useFormMethods;
     const {isSubmitting} = formState;
@@ -32,7 +32,7 @@ const FailureModesTableDialog = ({open, onClose, onCreated, faultTreeIri}: Props
     const selectedPathsMap = new Map<number, FaultEvent[]>();
     const selectedRPNsMap = new Map<number, RiskPriorityNumber>();
 
-    const handleCreate = (values: any) => {
+    const handleConversion = (values: any) => {
         const tableRows = failureModesTableService.eventPathsToRows(selectedPathsMap, selectedRPNsMap);
 
         const table = {
@@ -42,7 +42,7 @@ const FailureModesTableDialog = ({open, onClose, onCreated, faultTreeIri}: Props
 
         failureModesTableService.createAggregate(table)
             .then(value => {
-                onCreated(value.iri)
+                addTableAggregate(value)
                 onClose()
             })
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
@@ -60,18 +60,18 @@ const FailureModesTableDialog = ({open, onClose, onCreated, faultTreeIri}: Props
         <div>
             <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title" maxWidth="md"
                     fullWidth scroll="paper">
-                <DialogTitle id="form-dialog-title" onClose={onClose}>Convert To FMEA</DialogTitle>
+                <DialogTitle id="form-dialog-title" onClose={onClose}>FMEA Aggregates</DialogTitle>
                 <DialogContent dividers>
                     <TextField autoFocus margin="dense" label="FMEA Name" name="fmeaName" type="text"
                                fullWidth inputRef={register} error={!!errors.fmeaName}
                                helperText={errors.fmeaName?.message}/>
-                    <FaultTreePathsProvider faultTreeIri={faultTreeIri}>
-                        <FaultTreePaths updatePaths={updatePaths} updateRpn={updateRpn}/>
-                    </FaultTreePathsProvider>
+                    <FaultTreePathsAggregateProvider>
+                        <FaultTreePathsAggregate updatePaths={updatePaths} updateRpn={updateRpn}/>
+                    </FaultTreePathsAggregateProvider>
                 </DialogContent>
                 <DialogActions>
-                    <Button disabled={isSubmitting} color="primary" onClick={handleSubmit(handleCreate)}>
-                        Convert
+                    <Button disabled={isSubmitting} color="primary" onClick={handleSubmit(handleConversion)}>
+                        Create
                     </Button>
                 </DialogActions>
             </Dialog>
@@ -79,4 +79,4 @@ const FailureModesTableDialog = ({open, onClose, onCreated, faultTreeIri}: Props
     );
 }
 
-export default FailureModesTableDialog;
+export default FailureModesTableAggregateDialog;

@@ -13,13 +13,14 @@ type failureModesTableContextType = [
     FailureModesTable[],
     (tableToUpdate: UpdateFailureModesTable) => void,
     (tableToRemove: FailureModesTable) => void,
+    (addTableAggregate: FailureModesTable) => void,
 ];
 
 const failureModesTableContext = createContext<failureModesTableContextType>(null!);
 
 export const useFailureModesTables = () => {
-    const [failureModesTables, updateTable, removeTable] = useContext(failureModesTableContext);
-    return [failureModesTables, updateTable, removeTable] as const;
+    const [failureModesTables, updateTable, removeTable, addTableAggregate] = useContext(failureModesTableContext);
+    return [failureModesTables, updateTable, removeTable, addTableAggregate] as const;
 }
 
 export const FailureModesTablesProvider = ({children}: ChildrenProps) => {
@@ -60,8 +61,13 @@ export const FailureModesTablesProvider = ({children}: ChildrenProps) => {
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
 
+    const addTableAggregate = (table: FailureModesTable) => {
+        showSnackbar('FMEA Table Aggregate Created', SnackbarType.SUCCESS);
+        _setTables([..._tables, table])
+    }
+
     return (
-        <failureModesTableContext.Provider value={[_tables, updateFailureMode, removeFailureMode]}>
+        <failureModesTableContext.Provider value={[_tables, updateFailureMode, removeFailureMode, addTableAggregate]}>
             {children}
         </failureModesTableContext.Provider>
     );

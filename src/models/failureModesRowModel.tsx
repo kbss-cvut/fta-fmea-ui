@@ -4,6 +4,7 @@ import {AbstractModel, AbstractUpdateModel, CONTEXT as ABSTRACT_CONTEXT} from ".
 import {CONTEXT as RPN_CONTEXT, RiskPriorityNumber} from "@models/rpnModel";
 
 const ctx = {
+    "finalEffect": VocabularyUtils.PREFIX + "hasFinalEffect",
     "localEffect": VocabularyUtils.PREFIX + "hasLocalEffect",
     "effects": VocabularyUtils.PREFIX + "hasEffect",
 };
@@ -11,6 +12,7 @@ const ctx = {
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, EVENT_CONTEXT, RPN_CONTEXT);
 
 export interface FailureModesRow extends AbstractModel {
+    finalEffect: FaultEvent,
     localEffect: FaultEvent,
     effects: FaultEvent[],
     rpn: RiskPriorityNumber,

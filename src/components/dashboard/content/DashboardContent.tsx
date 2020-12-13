@@ -11,17 +11,18 @@ import FlightIcon from '@material-ui/icons/Flight';
 import NatureIcon from '@material-ui/icons/Nature';
 import DashboardSystemList from "@components/dashboard/content/list/DashboardSystemList";
 import SystemDialog from "@components/dialog/system/SystemDialog";
+import TableChartIcon from "@material-ui/icons/TableChart";
+import FailureModesTableAggregateDialog
+    from "@components/dialog/failureModesTable/aggregate/FailureModesTableAggregateDialog";
 
 const DashboardContent = () => {
     const classes = useStyles();
 
     const [speedDialOpen, setSpeedDialOpen] = React.useState(false);
 
-    const [createFaultTreeDialogOpen, setCreateFaultTreeDialogOpen] = useState(false)
-    const closeTreeDialog = () => setCreateFaultTreeDialogOpen(false)
-
-    const [createSystemDialogOpen, setCreateSystemDialogOpen] = useState(false)
-    const closeSystemDialog = () => setCreateSystemDialogOpen(false)
+    const [createFaultTreeDialogOpen, setCreateFaultTreeDialogOpen] = useState(false);
+    const [createSystemDialogOpen, setCreateSystemDialogOpen] = useState(false);
+    const [createFmeaAggregateDialogOpen, setCreateFmeaAggregateDialogOpen] = useState(false);
 
     const handleNewFaultTree = () => {
         setSpeedDialOpen(false);
@@ -31,6 +32,11 @@ const DashboardContent = () => {
     const handleNewSystem = () => {
         setSpeedDialOpen(false);
         setCreateSystemDialogOpen(true);
+    }
+
+    const handleNewFmeaAggregate = () => {
+        setSpeedDialOpen(false);
+        setCreateFmeaAggregateDialogOpen(true);
     }
 
     return (
@@ -57,6 +63,9 @@ const DashboardContent = () => {
                 onOpen={() => setSpeedDialOpen(true)}
                 open={speedDialOpen}
             >
+                <SpeedDialAction key="speed-dial-action-new-table-aggregate" icon={<TableChartIcon/>} tooltipOpen
+                                 tooltipTitle={"Aggregated FMEA"} title={"Aggregated FMEA"}
+                                 onClick={handleNewFmeaAggregate}/>
                 <SpeedDialAction key="speed-dial-action-new-tree" icon={<NatureIcon/>} tooltipOpen
                                  tooltipTitle={"Fault Tree"} title={"Fault Tree"}
                                  onClick={handleNewFaultTree}/>
@@ -65,8 +74,11 @@ const DashboardContent = () => {
                                  onClick={handleNewSystem}/>
             </SpeedDial>
 
-            <FaultTreeDialog open={createFaultTreeDialogOpen} handleCloseDialog={closeTreeDialog}/>
-            <SystemDialog open={createSystemDialogOpen} handleCloseDialog={closeSystemDialog}/>
+            <FaultTreeDialog open={createFaultTreeDialogOpen}
+                             handleCloseDialog={() => setCreateFaultTreeDialogOpen(false)}/>
+            <SystemDialog open={createSystemDialogOpen} handleCloseDialog={() => setCreateSystemDialogOpen(false)}/>
+            <FailureModesTableAggregateDialog open={createFmeaAggregateDialogOpen}
+                                              onClose={() => setCreateFmeaAggregateDialogOpen(false)}/>
         </React.Fragment>
     );
 }
