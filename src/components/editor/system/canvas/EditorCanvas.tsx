@@ -8,32 +8,31 @@ import {useLocalContext} from "@hooks/useLocalContext";
 import {V} from "jointjs";
 import {System} from "@models/systemModel";
 import {Component} from "@models/componentModel";
-import {PngExportData} from "../../export/PngExporter";
 import {flatten, cloneDeep} from "lodash";
 import ComponentShape from "@components/editor/system/shapes/ComponentShape";
 import {handleCanvasMouseWheel} from "@utils/canvasZoom";
 import DiagramOptions from "@components/editor/menu/DiagramOptions";
 import SidebarMenu from "@components/editor/faultTree/menu/SidebarMenu";
-import {encodeCanvas} from "@utils/canvasExport";
 import ComponentSidebarMenu from "@components/editor/system/menu/component/ComponentSidebarMenu";
 import {SystemLink} from "@components/editor/system/shapes/shapesDefinitions";
+import * as svgService from "@services/svgService";
+import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 
 interface Props {
     system: System,
     sidebarSelectedComponent: Component,
-    exportImage: (string) => void,
     onBlankContextMenu: (evt: any) => void,
     onElementContextMenu: (element: any, evt: any) => void,
     onComponentUpdated: (component: Component) => void,
 }
 
-const EditorCanvas = ({system, sidebarSelectedComponent, exportImage, onBlankContextMenu, onElementContextMenu, onComponentUpdated}: Props) => {
+const EditorCanvas = ({system, sidebarSelectedComponent, onBlankContextMenu, onElementContextMenu, onComponentUpdated}: Props) => {
     const classes = useStyles()
+    const [showSnackbar] = useSnackbar();
 
     const containerRef = useRef(null)
 
     const [container, setContainer] = useState<joint.dia.Graph>()
-    const [canvasDimensions, setCanvasDimensions] = useState([0, 0]);
 
     const [dragStartPosition, setDragStartPosition] = useState<{ x: number, y: number } | null>(null)
     const localContext = useLocalContext({dragStartPosition})
@@ -41,7 +40,6 @@ const EditorCanvas = ({system, sidebarSelectedComponent, exportImage, onBlankCon
     useEffect(() => {
         const canvasWidth = containerRef.current.clientWidth;
         const canvasHeight = containerRef.current.clientHeight;
-        setCanvasDimensions([canvasWidth, canvasHeight]);
 
         const graph = new joint.dia.Graph;
         const divContainer = document.getElementById("jointjs-system-container");
@@ -119,9 +117,9 @@ const EditorCanvas = ({system, sidebarSelectedComponent, exportImage, onBlankCon
 
     const handleDiagramExport = () => {
         const svgPaper = document.querySelector('#jointjs-system-container > svg');
-        const [width, height] = canvasDimensions;
-        const encodedData = encodeCanvas(svgPaper)
-        exportImage({encodedData: encodedData, width: width, height: height} as PngExportData)
+        const svgString = new XMLSerializer().serializeToString(svgPaper);
+        svgService.exportPng(svgString, system?.name)
+            .catch(reason => showSnackbar(reason, SnackbarType.ERROR));
     }
 
 

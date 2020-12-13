@@ -11,8 +11,6 @@ import {useCurrentFaultTree} from "@hooks/useCurrentFaultTree";
 import {useConfirmDialog} from "@hooks/useConfirmDialog";
 import FaultEventDialog from "../../dialog/faultEvent/FaultEventDialog";
 import {FaultEvent} from "@models/eventModel";
-import PngExporter, {PngExportData} from "@components/editor/export/PngExporter";
-
 import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@utils/contextMenu";
 import {DashboardTitleProps} from "@components/dashboard/DashboardTitleProps";
 import FailureModesTableDialog from "@components/dialog/failureModesTable/FailureModesTableDialog";
@@ -75,8 +73,6 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
         })
     }
 
-    const [exportData, setExportData] = useState<PngExportData>();
-
     const [failureModesTableOpen, setFailureModesTableOpen] = useState(false);
     const handleFailureModesTableCreated = (tableIri: string) => {
         console.log(`handleFailureModesTableCreated - ${tableIri}`)
@@ -88,8 +84,8 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
     return (
         <React.Fragment>
             <EditorCanvas
+                treeName={faultTree?.name}
                 rootEvent={rootEvent}
-                exportImage={(encodedData) => setExportData(encodedData)}
                 onEventUpdated={handleEventUpdate}
                 sidebarSelectedEvent={sidebarSelectedEvent}
                 onElementContextMenu={handleContextMenu}
@@ -111,9 +107,6 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
                               eventIri={contextMenuSelectedEvent?.iri} treeUri={faultTree?.iri}
                               onCreated={refreshTree}
                               onClose={() => setEventDialogOpen(false)}/>
-
-            {exportData && <PngExporter open={Boolean(exportData)} exportData={exportData}
-                                        onClose={() => setExportData(null)}/>}
 
             <FailureModesTableDialog
                 open={failureModesTableOpen}

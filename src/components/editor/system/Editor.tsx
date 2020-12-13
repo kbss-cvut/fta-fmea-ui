@@ -1,8 +1,7 @@
 import * as React from "react";
 import {useState} from "react";
-import {cloneDeep, concat, flatten, findIndex} from "lodash";
+import {flatten, findIndex} from "lodash";
 import {useConfirmDialog} from "@hooks/useConfirmDialog";
-import PngExporter, {PngExportData} from "@components/editor/export/PngExporter";
 
 import {useCurrentSystem} from "@hooks/useCurrentSystem";
 import {Component} from "@models/componentModel";
@@ -69,13 +68,10 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
         })
     }
 
-    const [exportData, setExportData] = useState<PngExportData>();
-
     return (
         <React.Fragment>
             <EditorCanvas
                 system={system}
-                exportImage={(encodedData) => setExportData(encodedData)}
                 onComponentUpdated={handleComponentUpdate}
                 sidebarSelectedComponent={sidebarSelectedComponent}
                 onBlankContextMenu={handleBlankContextMenu}
@@ -94,9 +90,6 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
             <ComponentDialog open={componentDialogOpen}
                              onCreated={handleComponentCreated}
                              onClose={() => setComponentDialogOpen(false)}/>
-
-            {exportData && <PngExporter open={Boolean(exportData)} exportData={exportData}
-                                        onClose={() => setExportData(null)}/>}
         </React.Fragment>
     );
 }

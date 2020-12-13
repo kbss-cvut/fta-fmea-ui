@@ -6,34 +6,34 @@ import * as joint from 'jointjs';
 import * as dagre from 'dagre';
 import * as graphlib from 'graphlib';
 import {useLocalContext} from "@hooks/useLocalContext";
-import {PngExportData} from "../../export/PngExporter";
 import {V} from "jointjs";
 import SidebarMenu from "../menu/SidebarMenu";
 import {FTABoundary} from "../shapes/shapesDefinitions";
 import {FaultEvent} from "@models/eventModel";
 import {handleCanvasMouseWheel} from "@utils/canvasZoom";
 import FaultEventMenu from "@components/editor/faultTree/menu/faultEvent/FaultEventMenu";
-import {encodeCanvas} from "@utils/canvasExport";
 import {CurrentFaultTreeTableProvider} from "@hooks/useCurrentFaultTreeTable";
 import SidebarMenuHeader from "@components/editor/faultTree/menu/SidebarMenuHeader";
+import * as svgService from "@services/svgService";
+import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 
 interface Props {
+    treeName: string,
     rootEvent: FaultEvent,
     sidebarSelectedEvent: FaultEvent,
-    exportImage: (string) => void,
     onElementContextMenu: (element: any, evt: any) => void,
     onEventUpdated: (faultEvent: FaultEvent) => void,
     onConvertToTable: () => void,
     refreshTree: () => void,
 }
 
-const EditorCanvas = ({rootEvent, sidebarSelectedEvent, exportImage, onElementContextMenu, onEventUpdated, onConvertToTable, refreshTree}: Props) => {
+const EditorCanvas = ({treeName, rootEvent, sidebarSelectedEvent, onElementContextMenu, onEventUpdated, onConvertToTable, refreshTree}: Props) => {
     const classes = useStyles()
+    const [showSnackbar] = useSnackbar();
 
     const containerRef = useRef(null)
 
     const [container, setContainer] = useState<joint.dia.Graph>()
-    const [canvasDimensions, setCanvasDimensions] = useState([0, 0]);
 
     const [dragStartPosition, setDragStartPosition] = useState<{ x: number, y: number } | null>(null)
     const localContext = useLocalContext({dragStartPosition})
@@ -41,7 +41,6 @@ const EditorCanvas = ({rootEvent, sidebarSelectedEvent, exportImage, onElementCo
     useEffect(() => {
         const canvasWidth = containerRef.current.clientWidth;
         const canvasHeight = containerRef.current.clientHeight;
-        setCanvasDimensions([canvasWidth, canvasHeight]);
 
         const graph = new joint.dia.Graph;
         const divContainer = document.getElementById("jointjs-container");
@@ -133,9 +132,10 @@ const EditorCanvas = ({rootEvent, sidebarSelectedEvent, exportImage, onElementCo
 
     const handleDiagramExport = () => {
         const svgPaper = document.querySelector('#jointjs-container > svg');
-        const [width, height] = canvasDimensions;
-        const encodedData = encodeCanvas(svgPaper)
-        exportImage({encodedData: encodedData, width: width, height: height} as PngExportData)
+
+        const svgString = new XMLSerializer().serializeToString(svgPaper);
+        svgService.exportPng(svgString, treeName)
+            .catch(reason => showSnackbar(reason, SnackbarType.ERROR));
     }
 
     return (
