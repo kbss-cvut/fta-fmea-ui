@@ -51,9 +51,8 @@ const EditorCanvas = ({system, sidebarSelectedComponent, onBlankContextMenu, onE
             height: canvasHeight,
             gridSize: 10,
             drawGrid: true,
-            defaultConnectionPoint: {name: 'boundary', args: {extrapolate: true}},
-            defaultConnector: {name: 'rounded'},
-            defaultRouter: {name: 'orthogonal'},
+            defaultConnector: {name: 'normal'},
+            defaultRouter: {name: 'normal'},
         })
 
         // @ts-ignore
@@ -106,7 +105,7 @@ const EditorCanvas = ({system, sidebarSelectedComponent, onBlankContextMenu, onE
 
     const layout = (graph) => {
         joint.layout.DirectedGraph.layout(graph, {
-            rankDir: "RL",
+            rankDir: "BT",
             dagre: dagre,
             graphlib: graphlib,
             setVertices: true,
@@ -152,7 +151,12 @@ const EditorCanvas = ({system, sidebarSelectedComponent, onBlankContextMenu, onE
                 const link = new SystemLink();
 
                 link.source(targetShape);
-                link.target(sourceShape);
+                link.target(sourceShape, {
+                    connectionPoint: {
+                        name: 'anchor',
+                    },
+                    anchor: {name: 'bottom'}
+                });
                 link.addTo(container);
             }
         })
