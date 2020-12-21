@@ -9,18 +9,29 @@ export const STORAGE_KEYS = {
 const context = process.env.CONTEXT;
 
 export const ROUTES = {
-    REGISTER: context+"/register",
-    LOGIN: context+"/login",
-    LOGOUT: context+"/logout",
+    REGISTER: context + "/register",
+    LOGIN: context + "/login",
+    LOGOUT: context + "/logout",
 
     DASHBOARD: context + "/",
-    SYSTEM: context+"/system/",
-    FTA: context+"/fta/",
-    FMEA: context+"/fmea/",
+    SYSTEM: context + "/system/",
+    FTA: context + "/fta/",
+    FMEA: context + "/fmea/",
 }
 
 export const ROUTE_PARAMS = {
     SYSTEM_FRAGMENT: ":systemFragment",
     FTA_FRAGMENT: ":treeFragment",
     FMEA_FRAGMENT: ":fmeaFragment",
+}
+
+export const SVG_PAN_ZOOM_OPTIONS = {
+    center: false,
+    zoomEnabled: true,
+    panEnabled: true,
+    controlIconsEnabled: true,
+    fit: false,
+    minZoom: 0.5,
+    maxZoom: 2.5,
+    zoomScaleSensitivity: 0.5
 }

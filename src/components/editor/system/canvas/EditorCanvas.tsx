@@ -4,19 +4,18 @@ import useStyles from "../../EditorCanvas.styles";
 import * as joint from 'jointjs';
 import * as dagre from 'dagre';
 import * as graphlib from 'graphlib';
-import {useLocalContext} from "@hooks/useLocalContext";
-import {V} from "jointjs";
 import {System} from "@models/systemModel";
 import {Component} from "@models/componentModel";
 import {flatten, cloneDeep} from "lodash";
 import ComponentShape from "@components/editor/system/shapes/ComponentShape";
-import {handleCanvasMouseWheel} from "@utils/canvasZoom";
 import DiagramOptions from "@components/editor/menu/DiagramOptions";
 import SidebarMenu from "@components/editor/faultTree/menu/SidebarMenu";
 import ComponentSidebarMenu from "@components/editor/system/menu/component/ComponentSidebarMenu";
 import {SystemLink} from "@components/editor/system/shapes/shapesDefinitions";
 import * as svgService from "@services/svgService";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
+import * as svgPanZoom from "svg-pan-zoom";
+import {SVG_PAN_ZOOM_OPTIONS} from "@utils/constants";
 
 interface Props {
     system: System,
@@ -34,9 +33,6 @@ const EditorCanvas = ({system, sidebarSelectedComponent, onBlankContextMenu, onE
 
     const [container, setContainer] = useState<joint.dia.Graph>()
 
-    const [dragStartPosition, setDragStartPosition] = useState<{ x: number, y: number } | null>(null)
-    const localContext = useLocalContext({dragStartPosition})
-
     useEffect(() => {
         const canvasWidth = containerRef.current.clientWidth;
         const canvasHeight = containerRef.current.clientHeight;
@@ -51,9 +47,12 @@ const EditorCanvas = ({system, sidebarSelectedComponent, onBlankContextMenu, onE
             height: canvasHeight,
             gridSize: 10,
             drawGrid: true,
+            restrictTranslate: true,
             defaultConnector: {name: 'normal'},
             defaultRouter: {name: 'normal'},
         })
+
+        svgPanZoom('#jointjs-system-container > svg', SVG_PAN_ZOOM_OPTIONS);
 
         // @ts-ignore
         paper.on({
@@ -63,27 +62,6 @@ const EditorCanvas = ({system, sidebarSelectedComponent, onBlankContextMenu, onE
             'element:contextmenu': (elementView, evt) => {
                 onElementContextMenu(elementView, evt)
             },
-            // Zoom in,out
-            'cell:mousewheel': (cellView, evt, x, y, delta) => {
-                handleCanvasMouseWheel(evt, x, y, delta, paper)
-            },
-            'blank:mousewheel': (evt, x, y, delta) => {
-                handleCanvasMouseWheel(evt, x, y, delta, paper)
-            },
-            // Canvas dragging
-            'blank:pointerdown': (evt, x, y) => {
-                const scale = V(paper.viewport).scale();
-                setDragStartPosition({x: x * scale.sx, y: y * scale.sy})
-            },
-            'cell:pointerup blank:pointerup': () => setDragStartPosition(null),
-        })
-
-        divContainer.addEventListener('mousemove', e => {
-            // @ts-ignore
-            if (localContext.dragStartPosition) {
-                // @ts-ignore
-                paper.translate(e.offsetX - localContext.dragStartPosition.x, e.offsetY - localContext.dragStartPosition.y);
-            }
         })
 
         setContainer(graph)

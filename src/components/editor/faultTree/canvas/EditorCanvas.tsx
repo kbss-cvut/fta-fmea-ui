@@ -5,17 +5,16 @@ import FaultEventShape from "../shapes/FaultEventShape";
 import * as joint from 'jointjs';
 import * as dagre from 'dagre';
 import * as graphlib from 'graphlib';
-import {useLocalContext} from "@hooks/useLocalContext";
-import {V} from "jointjs";
 import SidebarMenu from "../menu/SidebarMenu";
 import {FTABoundary} from "../shapes/shapesDefinitions";
 import {FaultEvent} from "@models/eventModel";
-import {handleCanvasMouseWheel} from "@utils/canvasZoom";
 import FaultEventMenu from "@components/editor/faultTree/menu/faultEvent/FaultEventMenu";
 import {CurrentFaultTreeTableProvider} from "@hooks/useCurrentFaultTreeTable";
 import SidebarMenuHeader from "@components/editor/faultTree/menu/SidebarMenuHeader";
 import * as svgService from "@services/svgService";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
+import * as svgPanZoom from "svg-pan-zoom";
+import {SVG_PAN_ZOOM_OPTIONS} from "@utils/constants";
 
 interface Props {
     treeName: string,
@@ -35,9 +34,6 @@ const EditorCanvas = ({treeName, rootEvent, sidebarSelectedEvent, onElementConte
 
     const [container, setContainer] = useState<joint.dia.Graph>()
 
-    const [dragStartPosition, setDragStartPosition] = useState<{ x: number, y: number } | null>(null)
-    const localContext = useLocalContext({dragStartPosition})
-
     useEffect(() => {
         const canvasWidth = containerRef.current.clientWidth;
         const canvasHeight = containerRef.current.clientHeight;
@@ -52,30 +48,19 @@ const EditorCanvas = ({treeName, rootEvent, sidebarSelectedEvent, onElementConte
             height: canvasHeight,
             gridSize: 10,
             drawGrid: true,
-            //async: true,
+            restrictTranslate: true,
             defaultConnectionPoint: {name: 'boundary', args: {extrapolate: true}},
             defaultConnector: {name: 'rounded'},
             defaultRouter: {name: 'orthogonal'},
         })
+
+        svgPanZoom('#jointjs-container > svg', SVG_PAN_ZOOM_OPTIONS);
 
         // @ts-ignore
         paper.on({
             'element:contextmenu': (elementView, evt) => {
                 onElementContextMenu(elementView, evt)
             },
-            // Zoom in,out
-            'cell:mousewheel': (cellView, evt, x, y, delta) => {
-                handleCanvasMouseWheel(evt, x, y, delta, paper)
-            },
-            'blank:mousewheel': (evt, x, y, delta) => {
-                handleCanvasMouseWheel(evt, x, y, delta, paper)
-            },
-            // Canvas dragging
-            'blank:pointerdown': (evt, x, y) => {
-                const scale = V(paper.viewport).scale();
-                setDragStartPosition({x: x * scale.sx, y: y * scale.sy})
-            },
-            'cell:pointerup blank:pointerup': () => setDragStartPosition(null),
             'element:mouseenter': (elementView) => {
                 const tools = new joint.dia.ToolsView({
                     tools: [FTABoundary.factory()]
@@ -85,14 +70,6 @@ const EditorCanvas = ({treeName, rootEvent, sidebarSelectedEvent, onElementConte
             'element:mouseleave': function (elementView) {
                 elementView.removeTools();
             },
-        })
-
-        divContainer.addEventListener('mousemove', e => {
-            // @ts-ignore
-            if (localContext.dragStartPosition) {
-                // @ts-ignore
-                paper.translate(e.offsetX - localContext.dragStartPosition.x, e.offsetY - localContext.dragStartPosition.y);
-            }
         })
 
         setContainer(graph)
