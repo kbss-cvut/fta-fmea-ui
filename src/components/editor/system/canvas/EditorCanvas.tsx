@@ -12,10 +12,9 @@ import DiagramOptions from "@components/editor/menu/DiagramOptions";
 import SidebarMenu from "@components/editor/faultTree/menu/SidebarMenu";
 import ComponentSidebarMenu from "@components/editor/system/menu/component/ComponentSidebarMenu";
 import {SystemLink} from "@components/editor/system/shapes/shapesDefinitions";
-import * as svgService from "@services/svgService";
-import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import * as svgPanZoom from "svg-pan-zoom";
 import {SVG_PAN_ZOOM_OPTIONS} from "@utils/constants";
+import {saveSvgAsPng} from "save-svg-as-png";
 
 interface Props {
     system: System,
@@ -27,11 +26,14 @@ interface Props {
 
 const EditorCanvas = ({system, sidebarSelectedComponent, onBlankContextMenu, onElementContextMenu, onComponentUpdated}: Props) => {
     const classes = useStyles()
-    const [showSnackbar] = useSnackbar();
 
     const containerRef = useRef(null)
 
     const [container, setContainer] = useState<joint.dia.Graph>()
+
+    const [svgZoom, setSvgZoom] = useState(null)
+    const [currentZoom, setCurrentZoom] = useState(1);
+    const [isExportingImage, setIsExportingImage] = useState(false);
 
     useEffect(() => {
         const canvasWidth = containerRef.current.clientWidth;
@@ -52,7 +54,11 @@ const EditorCanvas = ({system, sidebarSelectedComponent, onBlankContextMenu, onE
             defaultRouter: {name: 'normal'},
         })
 
-        svgPanZoom('#jointjs-system-container > svg', SVG_PAN_ZOOM_OPTIONS);
+        const diagramZoom = svgPanZoom('#jointjs-system-container > svg', {
+            ...SVG_PAN_ZOOM_OPTIONS,
+            onZoom: setCurrentZoom,
+        });
+        setSvgZoom(diagramZoom);
 
         // @ts-ignore
         paper.on({
@@ -66,6 +72,21 @@ const EditorCanvas = ({system, sidebarSelectedComponent, onBlankContextMenu, onE
 
         setContainer(graph)
     }, []);
+
+    useEffect(() => {
+        if(isExportingImage) {
+            const svgPaper = document.querySelector('#jointjs-system-container > svg');
+            const padding = 20;
+            const bbox = container.getBBox().inflate(padding);
+
+            saveSvgAsPng(svgPaper, system?.name + '.png', {
+                width: (bbox.width * currentZoom) + padding,
+                height: (bbox.height * currentZoom) + padding,
+            });
+
+            setIsExportingImage(false);
+        }
+    }, [isExportingImage])
 
     const [componentShapesMap, setComponentShapesMap] = useState<Map<string, any>>(new Map());
     const [componentLinksMap, setComponentLinksMap] = useState<Map<string, string>>(new Map());
@@ -93,12 +114,9 @@ const EditorCanvas = ({system, sidebarSelectedComponent, onBlankContextMenu, onE
     }
 
     const handleDiagramExport = () => {
-        const svgPaper = document.querySelector('#jointjs-system-container > svg');
-        const svgString = new XMLSerializer().serializeToString(svgPaper);
-        svgService.exportPng(svgString, system?.name)
-            .catch(reason => showSnackbar(reason, SnackbarType.ERROR));
+        svgZoom.reset();
+        setIsExportingImage(true);
     }
-
 
     const addLink = (componentIri: string, linkedComponentIri: string) => {
         setComponentLinksMap(prevMap => {

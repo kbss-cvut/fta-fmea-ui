@@ -11,10 +11,9 @@ import {FaultEvent} from "@models/eventModel";
 import FaultEventMenu from "@components/editor/faultTree/menu/faultEvent/FaultEventMenu";
 import {CurrentFaultTreeTableProvider} from "@hooks/useCurrentFaultTreeTable";
 import SidebarMenuHeader from "@components/editor/faultTree/menu/SidebarMenuHeader";
-import * as svgService from "@services/svgService";
-import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import * as svgPanZoom from "svg-pan-zoom";
 import {SVG_PAN_ZOOM_OPTIONS} from "@utils/constants";
+import {saveSvgAsPng} from "save-svg-as-png";
 
 interface Props {
     treeName: string,
@@ -28,11 +27,14 @@ interface Props {
 
 const EditorCanvas = ({treeName, rootEvent, sidebarSelectedEvent, onElementContextMenu, onEventUpdated, onConvertToTable, refreshTree}: Props) => {
     const classes = useStyles()
-    const [showSnackbar] = useSnackbar();
 
     const containerRef = useRef(null)
 
     const [container, setContainer] = useState<joint.dia.Graph>()
+
+    const [svgZoom, setSvgZoom] = useState(null)
+    const [currentZoom, setCurrentZoom] = useState(1);
+    const [isExportingImage, setIsExportingImage] = useState(false);
 
     useEffect(() => {
         const canvasWidth = containerRef.current.clientWidth;
@@ -54,7 +56,11 @@ const EditorCanvas = ({treeName, rootEvent, sidebarSelectedEvent, onElementConte
             defaultRouter: {name: 'orthogonal'},
         })
 
-        svgPanZoom('#jointjs-container > svg', SVG_PAN_ZOOM_OPTIONS);
+        const diagramZoom = svgPanZoom('#jointjs-container > svg', {
+            ...SVG_PAN_ZOOM_OPTIONS,
+            onZoom: setCurrentZoom,
+        });
+        setSvgZoom(diagramZoom);
 
         // @ts-ignore
         paper.on({
@@ -74,6 +80,21 @@ const EditorCanvas = ({treeName, rootEvent, sidebarSelectedEvent, onElementConte
 
         setContainer(graph)
     }, []);
+
+    useEffect(() => {
+        if(isExportingImage) {
+            const svgPaper = document.querySelector('#jointjs-container > svg');
+            const padding = 20;
+            const bbox = container.getBBox().inflate(padding);
+
+            saveSvgAsPng(svgPaper, treeName + '.png', {
+                width: (bbox.width * currentZoom) + padding,
+                height: (bbox.height * currentZoom) + padding,
+            });
+
+            setIsExportingImage(false);
+        }
+    }, [isExportingImage])
 
     const addSelf = (shape: any) => {
         shape.addTo(container)
@@ -108,11 +129,8 @@ const EditorCanvas = ({treeName, rootEvent, sidebarSelectedEvent, onElementConte
     }
 
     const handleDiagramExport = () => {
-        const svgPaper = document.querySelector('#jointjs-container > svg');
-
-        const svgString = new XMLSerializer().serializeToString(svgPaper);
-        svgService.exportPng(svgString, treeName)
-            .catch(reason => showSnackbar(reason, SnackbarType.ERROR));
+        svgZoom.reset();
+        setIsExportingImage(true);
     }
 
     return (
