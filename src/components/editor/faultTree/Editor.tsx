@@ -16,6 +16,8 @@ import {DashboardTitleProps} from "@components/dashboard/DashboardTitleProps";
 import FailureModesTableDialog from "@components/dialog/failureModesTable/FailureModesTableDialog";
 import {ROUTES} from "@utils/constants";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
+import {FTABoundary} from "@components/editor/faultTree/shapes/shapesDefinitions";
+import * as joint from "jointjs";
 
 const Editor = ({setAppBarName}: DashboardTitleProps) => {
     const history = useHistory();
@@ -24,7 +26,9 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
 
     const [faultTree, refreshTree] = useCurrentFaultTree()
     const [rootEvent, setRootEvent] = useState<FaultEvent>()
-    const _localContext = useLocalContext({rootEvent})
+
+    const [highlightedElementView, setHighlightedElementView] = useState(null)
+    const _localContext = useLocalContext({rootEvent: rootEvent, highlightedElementView: highlightedElementView})
 
     useEffect(() => {
         if (faultTree) {
@@ -38,6 +42,12 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
         }
     }, [faultTree])
 
+    useEffect(() => {
+        if (highlightedElementView) {
+            highlightBorders(highlightedElementView);
+        }
+    }, [highlightedElementView])
+
     const [contextMenuSelectedEvent, setContextMenuSelectedEvent] = useState<FaultEvent>(null)
     const [sidebarSelectedEvent, setSidebarSelectedEvent] = useState<FaultEvent>(null)
 
@@ -48,6 +58,32 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
         const foundEvent = findEventByIri(elementIri, _localContext.rootEvent);
         setContextMenuSelectedEvent(foundEvent);
         setContextMenuAnchor({mouseX: evt.pageX, mouseY: evt.pageY,})
+    }
+
+    const handleElementPointerClick = (elementView) => {
+        const elementIri = elementView.model.get('custom/faultEventIri');
+        // @ts-ignore
+        const foundEvent = findEventByIri(elementIri, _localContext.rootEvent);
+
+        setSidebarSelectedEvent(foundEvent);
+        setHighlightedElementView(elementView);
+    }
+
+    const handleBlankPointerClick = () => {
+        setSidebarSelectedEvent(null);
+        hideHighlightedBorders();
+    }
+
+    const highlightBorders = (elementView) => {
+        const tools = new joint.dia.ToolsView({
+            tools: [FTABoundary.factory()]
+        });
+        elementView.addTools(tools);
+    }
+    const hideHighlightedBorders = () => {
+        // @ts-ignore
+        _localContext.highlightedElementView?.removeTools();
+        setHighlightedElementView(null);
     }
 
     const [eventDialogOpen, setEventDialogOpen] = useState(false);
@@ -61,6 +97,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
     const handleEventDelete = (eventToDelete: FaultEvent) => {
         const deleteEvent = () => {
             setSidebarSelectedEvent(null);
+            hideHighlightedBorders();
             faultEventService.remove(eventToDelete.iri)
                 .then(value => refreshTree())
                 .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
@@ -89,6 +126,8 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
                 onEventUpdated={handleEventUpdate}
                 sidebarSelectedEvent={sidebarSelectedEvent}
                 onElementContextMenu={handleContextMenu}
+                onElementPointerClick={handleElementPointerClick}
+                onBlankPointerClick={handleBlankPointerClick}
                 onConvertToTable={() => setFailureModesTableOpen(true)}
                 refreshTree={refreshTree}
             />
@@ -97,7 +136,6 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
                 eventType={contextMenuSelectedEvent?.eventType}
                 isRootEvent={contextMenuSelectedEvent?.iri === faultTree?.manifestingEvent?.iri}
                 anchorPosition={contextMenuAnchor}
-                onEditClick={() => setSidebarSelectedEvent(contextMenuSelectedEvent)}
                 onNewEventClick={() => setEventDialogOpen(true)}
                 onEventDelete={() => handleEventDelete(contextMenuSelectedEvent)}
                 onClose={() => setContextMenuAnchor(contextMenuDefaultAnchor)}/>

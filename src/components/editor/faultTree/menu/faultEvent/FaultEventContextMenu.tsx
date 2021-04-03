@@ -7,19 +7,12 @@ interface Props {
     eventType: EventType,
     isRootEvent: boolean,
     anchorPosition: ElementContextMenuAnchor,
-    onEditClick: () => void,
     onNewEventClick: () => void,
     onEventDelete: () => void,
     onClose: () => void,
 }
 
-const FaultEventContextMenu = ({eventType, isRootEvent, anchorPosition, onClose, onEditClick, onNewEventClick, onEventDelete}: Props) => {
-
-    const handleEditClick = () => {
-        onClose()
-        onEditClick()
-    }
-
+const FaultEventContextMenu = ({eventType, isRootEvent, anchorPosition, onClose, onNewEventClick, onEventDelete}: Props) => {
     const handleNewEventClick = () => {
         onClose()
         onNewEventClick()
@@ -43,7 +36,6 @@ const FaultEventContextMenu = ({eventType, isRootEvent, anchorPosition, onClose,
                 } : undefined
             }
         >
-            <MenuItem key="event-menu-edit" onClick={handleEditClick}>Edit</MenuItem>
             {eventType === EventType.INTERMEDIATE &&
             <MenuItem key="event-menu-new-event" onClick={handleNewEventClick}>New Event</MenuItem>}
             {!isRootEvent &&
