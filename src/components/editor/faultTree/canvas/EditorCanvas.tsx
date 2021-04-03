@@ -102,10 +102,6 @@ const EditorCanvas = ({
         }
     }, [isExportingImage])
 
-    useEffect(() => {
-
-    }, [sidebarSelectedEvent])
-
     const addSelf = (shape: any) => {
         shape.addTo(container)
         layout(container)
