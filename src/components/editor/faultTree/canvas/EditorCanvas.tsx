@@ -115,7 +115,8 @@ const EditorCanvas = ({
         const autoLayoutElements = [];
         const manualLayoutElements = [];
         graph.getElements().forEach((el) => {
-            if(el.get('custom/faultEventIri') === sidebarSelectedEvent?.iri) {
+            const faultEventIri = el.get('custom/faultEventIri');
+            if(faultEventIri && faultEventIri === sidebarSelectedEvent?.iri) {
                 const elementView = el.findView(jointPaper);
                 setHighlightedElement(elementView)
             }
