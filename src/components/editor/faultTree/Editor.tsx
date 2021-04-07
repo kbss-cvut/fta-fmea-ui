@@ -129,6 +129,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
                 onElementPointerClick={handleElementPointerClick}
                 onBlankPointerClick={handleBlankPointerClick}
                 onConvertToTable={() => setFailureModesTableOpen(true)}
+                setHighlightedElement={setHighlightedElementView}
                 refreshTree={refreshTree}
             />
 

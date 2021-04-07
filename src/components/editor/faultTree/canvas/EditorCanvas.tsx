@@ -24,6 +24,7 @@ interface Props {
     onEventUpdated: (faultEvent: FaultEvent) => void,
     onConvertToTable: () => void,
     refreshTree: () => void,
+    setHighlightedElement: (element: any) => void,
 }
 
 const EditorCanvas = ({
@@ -35,13 +36,15 @@ const EditorCanvas = ({
                           onBlankPointerClick,
                           onEventUpdated,
                           onConvertToTable,
-                          refreshTree
+                          refreshTree,
+                          setHighlightedElement
                       }: Props) => {
     const classes = useStyles()
 
     const containerRef = useRef(null)
 
     const [container, setContainer] = useState<joint.dia.Graph>()
+    const [jointPaper, setJointPaper] = useState<joint.dia.Paper>()
 
     const [svgZoom, setSvgZoom] = useState(null)
     const [currentZoom, setCurrentZoom] = useState(1);
@@ -85,6 +88,7 @@ const EditorCanvas = ({
         })
 
         setContainer(graph)
+        setJointPaper(paper);
     }, []);
 
     useEffect(() => {
@@ -111,6 +115,11 @@ const EditorCanvas = ({
         const autoLayoutElements = [];
         const manualLayoutElements = [];
         graph.getElements().forEach((el) => {
+            if(el.get('custom/faultEventIri') === sidebarSelectedEvent?.iri) {
+                const elementView = el.findView(jointPaper);
+                setHighlightedElement(elementView)
+            }
+
             if (el.get('type') === 'fta.ConditioningEvent') {
                 manualLayoutElements.push(el);
             } else {
