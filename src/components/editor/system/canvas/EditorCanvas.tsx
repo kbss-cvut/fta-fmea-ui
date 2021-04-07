@@ -68,6 +68,8 @@ const EditorCanvas = ({system, sidebarSelectedComponent, onBlankContextMenu, onE
             'element:contextmenu': (elementView, evt) => {
                 onElementContextMenu(elementView, evt)
             },
+            'blank:pointerdown': () => diagramZoom.enablePan(),
+            'blank:pointerup': () => diagramZoom.disablePan(),
         })
 
         setContainer(graph)

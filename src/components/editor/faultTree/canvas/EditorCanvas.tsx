@@ -84,7 +84,9 @@ const EditorCanvas = ({
             'element:pointerclick': (elementView, evt) => {
                 onElementPointerClick(elementView, evt)
             },
-            'blank:pointerclick': () => onBlankPointerClick()
+            'blank:pointerclick': () => onBlankPointerClick(),
+            'blank:pointerdown': () => diagramZoom.enablePan(),
+            'blank:pointerup': () => diagramZoom.disablePan(),
         })
 
         setContainer(graph)

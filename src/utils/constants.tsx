@@ -28,7 +28,7 @@ export const ROUTE_PARAMS = {
 export const SVG_PAN_ZOOM_OPTIONS = {
     center: false,
     zoomEnabled: true,
-    panEnabled: true,
+    panEnabled: false,
     controlIconsEnabled: true,
     fit: false,
     minZoom: 0.5,
