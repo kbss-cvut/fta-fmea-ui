@@ -40,9 +40,6 @@ module.exports = env => {
         },
 
         plugins: [
-            new ExtractTextPlugin({
-                filename: 'build/app.bundle.css',
-            }),
             new Dotenv({
                 path: `./.env.${env.NODE_ENV === "prod" ? "prod" : "dev"}`,
             })
