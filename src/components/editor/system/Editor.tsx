@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {flatten, findIndex} from "lodash";
 import {useConfirmDialog} from "@hooks/useConfirmDialog";
 
@@ -13,6 +13,8 @@ import ComponentDialog from "@components/dialog/component/ComponentDialog";
 import * as componentService from "@services/componentService";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import {DashboardTitleProps} from "@components/dashboard/DashboardTitleProps";
+import * as joint from "jointjs";
+import {FTABoundary} from "@components/editor/faultTree/shapes/shapesDefinitions";
 
 const Editor = ({setAppBarName}: DashboardTitleProps) => {
     const [requestConfirmation] = useConfirmDialog()
@@ -20,7 +22,15 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
 
     const [system, addComponent, updateComponent, removeComponent] = useCurrentSystem()
     setAppBarName(system?.name);
-    const _localContext = useLocalContext({system})
+
+    const [highlightedElementView, setHighlightedElementView] = useState(null)
+    const _localContext = useLocalContext({system: system, highlightedElementView: highlightedElementView})
+
+    useEffect(() => {
+        if (highlightedElementView) {
+            highlightBorders(highlightedElementView);
+        }
+    }, [highlightedElementView])
 
     const [contextMenuSelectedComponent, setContextMenuSelectedComponent] = useState<Component>(null)
     const [sidebarSelectedComponent, setSidebarSelectedComponent] = useState<Component>(null)
@@ -41,6 +51,36 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
             setContextMenuSelectedComponent(flattenedComponents[index]);
             setContextMenuAnchor({mouseX: evt.pageX, mouseY: evt.pageY,})
         }
+    }
+
+    const handleElementPointerClick = (elementView) => {
+        const componentIri = elementView.model.get('custom/componentIri');
+
+        // @ts-ignore
+        const flattenedComponents = flatten([_localContext.system.components]);
+        const index = findIndex(flattenedComponents, el => el.iri === componentIri);
+        if (index > -1) {
+            setSidebarSelectedComponent(flattenedComponents[index]);
+            setHighlightedElementView(elementView);
+            highlightBorders(elementView);
+        }
+    }
+
+    const handleBlankPointerClick = () => {
+        setSidebarSelectedComponent(null);
+        hideHighlightedBorders();
+    }
+
+    const highlightBorders = (elementView) => {
+        const tools = new joint.dia.ToolsView({
+            tools: [FTABoundary.factory()]
+        });
+        elementView.addTools(tools);
+    }
+    const hideHighlightedBorders = () => {
+        // @ts-ignore
+        _localContext.highlightedElementView?.removeTools();
+        setHighlightedElementView(null);
     }
 
     const [componentDialogOpen, setComponentDialogOpen] = useState(false);
@@ -76,12 +116,13 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
                 sidebarSelectedComponent={sidebarSelectedComponent}
                 onBlankContextMenu={handleBlankContextMenu}
                 onElementContextMenu={handleContextMenu}
-            />
+                onBlankPointerClick={handleBlankPointerClick}
+                onElementPointerClick={handleElementPointerClick}
+                setHighlightedElement={setHighlightedElementView}/>
 
             <ComponentContextMenu
                 anchorPosition={contextMenuAnchor}
                 onComponentCreate={() => setComponentDialogOpen(true)}
-                onEditClick={() => setSidebarSelectedComponent(contextMenuSelectedComponent)}
                 onComponentDelete={() => handleComponentDelete(contextMenuSelectedComponent)}
                 onClose={() => setContextMenuAnchor(contextMenuDefaultAnchor)}
                 createOnly={!Boolean(contextMenuSelectedComponent)}

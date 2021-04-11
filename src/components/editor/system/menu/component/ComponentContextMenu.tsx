@@ -4,22 +4,16 @@ import {ElementContextMenuAnchor} from "@utils/contextMenu";
 
 interface Props {
     anchorPosition: ElementContextMenuAnchor,
-    onEditClick: () => void,
     onComponentCreate: () => void,
     onComponentDelete: () => void,
     createOnly: boolean,
     onClose: () => void,
 }
 
-const ComponentContextMenu = ({anchorPosition, onClose, onEditClick, onComponentDelete, onComponentCreate, createOnly}: Props) => {
+const ComponentContextMenu = ({anchorPosition, onClose, onComponentDelete, onComponentCreate, createOnly}: Props) => {
     const handleCreateClick = () => {
         onClose()
         onComponentCreate()
-    }
-
-    const handleEditClick = () => {
-        onClose()
-        onEditClick()
     }
 
     const handleDeleteClick = () => {
@@ -41,7 +35,6 @@ const ComponentContextMenu = ({anchorPosition, onClose, onEditClick, onComponent
             }
         >
             <MenuItem key="component-create" onClick={handleCreateClick}>Create</MenuItem>
-            {!createOnly && <MenuItem key="component-edit" onClick={handleEditClick}>Edit</MenuItem>}
             {!createOnly && <MenuItem key="component-delete" onClick={handleDeleteClick}>Delete</MenuItem>}
         </Menu>
     );
