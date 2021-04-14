@@ -12,7 +12,8 @@ export interface User extends AbstractModel {
     iri?: string,
     username?: string,
     token?: string,
-    authenticated: boolean
+    authenticated: boolean,
+    roles: string[]
 }
 
 export interface ChangePasswordRequest {
@@ -31,6 +32,7 @@ export interface UserLoginResponse {
     uri: string,
     username: string,
     token: string,
+    roles: string[]
 }
 
 export interface UserRegisterRequest extends UserLoginRequest {

@@ -10,6 +10,7 @@ const context = process.env.CONTEXT;
 
 export const ROUTES = {
     REGISTER: context + "/register",
+    ADMINISTRATION: context + "/administration",
     LOGIN: context + "/login",
     LOGOUT: context + "/logout",
 

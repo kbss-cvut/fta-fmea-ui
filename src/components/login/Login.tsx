@@ -44,7 +44,8 @@ const Login = () => {
                 iri: loginResponse.uri,
                 username: loginResponse.username,
                 token: loginResponse.token,
-                authenticated: true
+                authenticated: true,
+                roles: loginResponse.roles
             })
         }).catch(reason => {
             setLoggingIn(false)
