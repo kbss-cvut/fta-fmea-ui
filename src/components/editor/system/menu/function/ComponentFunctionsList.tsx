@@ -1,35 +1,53 @@
 import * as React from "react";
 import {
-    Box,
-    IconButton,
-    List,
-    ListItem,
+    Box, Checkbox, FormControl,
+    IconButton, InputLabel,
+    List, ListItem,
     ListItemSecondaryAction,
-    ListItemText,
-    TextField,
+    ListItemText, MenuItem, Select,
+    TextField, FormGroup,
 } from "@material-ui/core";
-import {Controller, useForm} from "react-hook-form";
+import {useForm, Controller} from "react-hook-form";
 import AddIcon from "@material-ui/icons/Add";
 import useStyles from "@components/editor/system/menu/function/ComponentFunctionsList.styles";
 import {useFunctions} from "@hooks/useFunctions";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {schema} from "@components/dialog/function/FunctionPicker.schema";
 import DeleteIcon from '@material-ui/icons/Delete';
-import {Function} from "@models/functionModel";
+import {CreateFunction, Function} from "@models/functionModel";
 import {useConfirmDialog} from "@hooks/useConfirmDialog";
+import {useState} from "react";
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250,
+        },
+    },
+}
 
 const ComponentFunctionsList = () => {
     const classes = useStyles();
 
     const [requestConfirmation] = useConfirmDialog()
+    const [functions, addFunction, removeFunction, addRequiredFunction, allFunctions] = useFunctions();
+    const [requiredFunctions, setRequiredFunctions] = useState<Function[]>([]);
 
-    const [functions, addFunction, removeFunction] = useFunctions();
     const {register, handleSubmit, errors, control, reset} = useForm({
         resolver: yupResolver(schema)
     });
     const _handleCreateFunction = (values: any) => {
-        addFunction({name: values.name});
+        let createFunction: CreateFunction = {name: values.name}
+        addFunction(createFunction).then(f => {
+            requiredFunctions.forEach(selectedF => {
+                addRequiredFunction(f.iri, selectedF.iri)
+            })
+        })
         reset(values)
+        setRequiredFunctions([])
     }
 
     const handleDeleteFunction = (funcToDelete: Function) => {
@@ -40,6 +58,11 @@ const ComponentFunctionsList = () => {
         })
     }
 
+    const handleChange = (event) => {
+        setRequiredFunctions(event.target.value);
+    }
+
+    // @ts-ignore
     return (
         <React.Fragment>
             <List>
@@ -53,14 +76,40 @@ const ComponentFunctionsList = () => {
                 </ListItem>)}
             </List>
             <Box className={classes.functions}>
-                <Controller as={TextField} autoFocus margin="dense" id="name" label="Function Name"
-                            type="text" fullWidth name="name" control={control} defaultValue=""
-                            inputRef={register} error={!!errors.name} helperText={errors.name?.message}/>
-                <IconButton className={classes.button} color="primary" component="span"
-                            onClick={handleSubmit(_handleCreateFunction)}>
-                    <AddIcon/>
-                </IconButton>
+                <FormGroup>
+                    <FormControl>
+                        <Controller as={TextField} autoFocus margin="dense" id="name" label="Function Name"
+                                    type="text" fullWidth name="name" control={control} defaultValue=""
+                                    inputRef={register} error={!!errors.name} helperText={errors.name?.message}/>
+                    </FormControl>
+                    <FormControl>
+                        <InputLabel id="required-functions-multiselect-label">Required functions:</InputLabel>
+                        <Select
+                            labelId="required-functions-multiselect-label"
+                            id="required-functions-multiselect"
+                            multiple
+                            value={requiredFunctions}
+                            onChange={handleChange}
+                            renderValue={(selected: any[]) => (selected.map(value => value.name).join(", "))}
+                            MenuProps={MenuProps}
+                        >
+                            {(allFunctions || []).map((f) =>
+                                //@ts-ignore
+                                <MenuItem key={f.key} value={f}>
+                                    <Checkbox checked={!!requiredFunctions.includes(f)}/>
+                                    <ListItemText primary={f.name}/>
+                                </MenuItem>
+                            )}
+                        </Select>
+                        <IconButton className={classes.button} color="primary" component="span"
+                                    onClick={handleSubmit(_handleCreateFunction)}>
+                            <AddIcon/>
+                        </IconButton>
+                    </FormControl>
+                </FormGroup>
             </Box>
+
+
         </React.Fragment>
     );
 }
