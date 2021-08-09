@@ -5,10 +5,14 @@ const useStyles = makeStyles(() =>
     createStyles({
         functions: {
             width: '100%'
-        },
+         },
         button: {
             alignSelf: 'flex-end'
         },
+        editHeader:{
+            display: 'flex',
+            justifyContent: 'space-between'
+        }
     }),
 );
 
