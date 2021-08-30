@@ -5,7 +5,7 @@ import {
     List, ListItem,
     ListItemSecondaryAction,
     ListItemText, MenuItem, Select,
-    TextField, FormGroup, Grid, Tooltip
+    TextField, FormGroup, Tooltip
 } from "@material-ui/core";
 import {useForm, Controller} from "react-hook-form";
 import AddIcon from "@material-ui/icons/Add";
@@ -14,12 +14,16 @@ import {useFunctions} from "@hooks/useFunctions";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {schema} from "@components/dialog/function/FunctionPicker.schema";
 import DeleteIcon from '@material-ui/icons/Delete';
-import CloseIcon from '@material-ui/icons/Close'
-import {CreateFunction, Function} from "@models/functionModel";
+import { Function} from "@models/functionModel";
 import {useConfirmDialog} from "@hooks/useConfirmDialog";
 import {useState} from "react";
 import {Edit} from "@material-ui/icons";
 import DeviceHubIcon from '@material-ui/icons/DeviceHub';
+import {useHistory} from "react-router-dom";
+import {extractFragment} from "@services/utils/uriIdentifierUtils";
+import {useCurrentSystem} from "@hooks/useCurrentSystem";
+import ComponentFunctionEdit from "@components/editor/system/menu/function/ComponentFunctionEdit";
+import {formatFunctionOutput, formatOutput} from "@utils/formatOutputUtils";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -34,8 +38,10 @@ const MenuProps = {
 
 const ComponentFunctionsList = () => {
     const classes = useStyles();
+    const history = useHistory();
+    const [system] = useCurrentSystem()
     const [requestConfirmation] = useConfirmDialog()
-    const [functions, addFunction, editFunction, removeFunction, addRequiredFunction, allFunctions, functionsAndComponents] = useFunctions()
+    const [functions, addFunction,, removeFunction,,, functionsAndComponents,generateFDTree] = useFunctions()
     const [requiredFunctions, setRequiredFunctions] = useState<Function[]>([]);
     const [selectedFunction, setSelectedFunction] = useState<Function>()
     const [showEdit, setShowEdit] = useState<boolean>(false)
@@ -44,39 +50,15 @@ const ComponentFunctionsList = () => {
         resolver: yupResolver(schema)
     });
     const _handleCreateFunction = (values: any) => {
-        let createFunction: CreateFunction = {name: values.name}
-        addFunction(createFunction).then(f => {
-            requiredFunctions.forEach(selectedF => {
-                addRequiredFunction(f.iri, selectedF.iri)
-            })
-        })
+        let createFunction: Function = {name: values.name, requiredFunctions: requiredFunctions,failureModes: []}
+        addFunction(createFunction)
         reset(values)
         setRequiredFunctions([])
     }
 
     const showEditForm = (funcToEdit: Function) => {
         setSelectedFunction(funcToEdit)
-
-        if (!Array.isArray(funcToEdit.requiredFunctions)) {
-            funcToEdit.requiredFunctions = [funcToEdit.requiredFunctions]
-        }
-        funcToEdit.requiredFunctions.forEach(func => {
-            requiredFunctions.push(allFunctions.find(f => f.iri == func.iri))
-        })
         setShowEdit(true)
-    }
-
-    const hideEditForm = () => {
-        setRequiredFunctions([])
-        setShowEdit(false)
-    }
-
-    const handleEditFunction = (funcToEdit: Function) => {
-        selectedFunction.name = funcToEdit.name
-        selectedFunction.requiredFunctions = requiredFunctions
-        editFunction(selectedFunction)
-        setRequiredFunctions([])
-        setShowEdit(false)
     }
 
     const handleDeleteFunction = (funcToDelete: Function) => {
@@ -91,13 +73,10 @@ const ComponentFunctionsList = () => {
         setRequiredFunctions(event.target.value)
     }
 
-    const formatFunctionOutput = (func, comp) => {
-        let result = func.name + (comp != null ? " (" + comp.name + " )" : "")
-        return result.length > 50 ? result.substring(0, 50).concat("...") : result
-    }
-
-    const formatOutput = (name, limit) => {
-        return name.length > limit ? name.substring(0, limit).concat("...") : name
+    const generateFunctionalDependencyTree = (functionUri: string, systemName:string, functionName: string) => {
+        generateFDTree(functionUri, systemName, functionName).then(value => {
+            history.replace( `/fta/${extractFragment(value.iri)}`);
+        })
     }
 
     // @ts-ignore
@@ -105,54 +84,7 @@ const ComponentFunctionsList = () => {
         <React.Fragment>
             <List>
                 {showEdit
-                    ? <Grid>
-                        <Box component="div" className={classes.editHeader}>
-                            <h4>Edit function:</h4>
-                            <IconButton component="div" onClick={handleSubmit(hideEditForm)}>
-                                <CloseIcon/>
-                            </IconButton>
-                        </Box>
-                        <Box className={classes.functions}>
-                            <FormGroup>
-                                <FormControl>
-                                    <Controller as={TextField} autoFocus margin="dense" id="name" label="Function Name"
-                                                type="text" fullWidth name="name" control={control}
-                                                defaultValue={selectedFunction.name}
-                                                inputRef={register} error={!!errors.name}
-                                                helperText={errors.name?.message}/>
-                                </FormControl>
-                                <FormControl>
-                                    <InputLabel id="required-functions-multiselect-label">Required
-                                        functions:</InputLabel>
-                                    <Select
-                                        labelId="required-functions-multiselect-label"
-                                        id="required-functions-multiselect"
-                                        multiple
-                                        displayEmpty
-                                        value={requiredFunctions}
-                                        onChange={handleChange}
-                                        renderValue={(selected: any[]) => (formatOutput(selected.map(value => value.name).join(", "), 65))}
-                                        MenuProps={MenuProps}
-                                    >
-                                        {functionsAndComponents.map((f) =>
-                                            //@ts-ignore
-                                            <MenuItem key={f[0].iri} value={f[0]}>
-                                                <Checkbox checked={requiredFunctions.includes(f[0])}/>
-                                                <Tooltip disableFocusListener
-                                                         title={f[0].name + (f[1] != null ? " (" + f[1].name + ")" : "")}>
-                                                    <ListItemText primary={formatFunctionOutput(f[0], f[1])}/>
-                                                </Tooltip>
-                                            </MenuItem>
-                                        )}
-                                    </Select>
-                                    <IconButton className={classes.button} color="primary" component="span"
-                                                onClick={handleSubmit(handleEditFunction)}>
-                                        <Edit/>
-                                    </IconButton>
-                                </FormControl>
-                            </FormGroup>
-                        </Box>
-                    </Grid>
+                    ? <ComponentFunctionEdit selectedFunction={selectedFunction} setShowEdit={setShowEdit}/>
                     : <Box>
                         {functions.map(f => <ListItem>
                             <ListItemText primary={formatOutput(f.name, 35)}/>
@@ -162,7 +94,7 @@ const ComponentFunctionsList = () => {
                                 </IconButton>
                                 <Tooltip disableFocusListener
                                          title={Array.isArray(f.requiredFunctions) ? f.requiredFunctions.map(func => func.name).join(", ") || "None" : f.requiredFunctions['name']}>
-                                    <IconButton className={classes.button}>
+                                    <IconButton className={classes.button} onClick={() => generateFunctionalDependencyTree(f.iri, system.name, f.name)}>
                                         <DeviceHubIcon/>
                                     </IconButton>
                                 </Tooltip>
