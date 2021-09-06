@@ -1,15 +1,18 @@
 import {makeStyles} from "@material-ui/core";
-import {createStyles, Theme} from "@material-ui/core/styles";
+import {createStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() =>
     createStyles({
         functions: {
-            display: 'inline-flex',
-            width: '100%',
-        },
+            width: '100%'
+         },
         button: {
             alignSelf: 'flex-end'
         },
+        editHeader:{
+            display: 'flex',
+            justifyContent: 'space-between'
+        }
     }),
 );
 

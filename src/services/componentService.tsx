@@ -85,13 +85,12 @@ export const functions = async (componentUri: string): Promise<Function[]> => {
     }
 }
 
-export const addFunction = async (componentUri: string, f: CreateFunction): Promise<Function> => {
+export const addFunction = async (componentUri: string, f: Function): Promise<Function> => {
     try {
         const fragment = extractFragment(componentUri);
         const createRequest = Object.assign(
             {"@type": [VocabularyUtils.FUNCTION]}, f, {"@context": FUNCTION_CONTEXT}
         )
-
         const response = await axiosClient.post(
             `/components/${fragment}/functions`,
             createRequest,
