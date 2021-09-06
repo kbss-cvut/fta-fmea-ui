@@ -9,7 +9,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "array-move": "^3.0.1",
-    "axios": "^0.20.0",
+    "axios": "^0.21.2",
     "backbone": "^1.4.0",
     "dagre": "^0.8.5",
     "graphlib": "^2.1.8",
