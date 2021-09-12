@@ -25,7 +25,7 @@ const FunctionPicker = ({selectedFunctions, onFunctionsSelected}: Props) => {
     });
 
     const _handleCreateFunction = (values: any) => {
-        addFunction({name: values.name})
+        addFunction({failureModes: [], requiredFunctions: [], name: values.name})
         reset(values)
     }
 

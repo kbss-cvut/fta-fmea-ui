@@ -10,6 +10,7 @@ import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import {useEffect, useState} from "react";
 import ControlledAutocomplete from "@components/materialui/ControlledAutocomplete";
 import {useForm} from "react-hook-form";
+import {FailureModeProvider} from "@hooks/useFailureModes";
 
 interface Props {
     component: Component,
@@ -64,7 +65,9 @@ const ComponentSidebarMenu = ({component, onComponentUpdated, systemComponents}:
             {component && <React.Fragment>
                 <Typography variant="h6" gutterBottom>Functions</Typography>
                 <FunctionsProvider componentUri={component?.iri}>
-                    <ComponentFunctionsList/>
+                    <FailureModeProvider>
+                        <ComponentFunctionsList/>
+                    </FailureModeProvider>
                 </FunctionsProvider>
                 <Divider/>
             </React.Fragment>}

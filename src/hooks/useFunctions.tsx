@@ -14,7 +14,7 @@ import {getComponent} from "@services/functionService";
 
 type functionContextType = [
     Function[],
-    (f: CreateFunction) => Promise<any>,
+    (f: Function) => Promise<any>,
     (funcToEdit: Function) => void,
     (funcToDelete: Function) => void,
     (functionUri: string, requiredFunctionUri: string) => void,

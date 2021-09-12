@@ -24,6 +24,9 @@ import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {useCurrentSystem} from "@hooks/useCurrentSystem";
 import ComponentFunctionEdit from "@components/editor/system/menu/function/ComponentFunctionEdit";
 import {formatFunctionOutput, formatOutput} from "@utils/formatOutputUtils";
+import {FailureMode} from "@models/failureModeModel";
+import FailureModesList from "@components/editor/failureMode/FailureModesList";
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -44,15 +47,17 @@ const ComponentFunctionsList = () => {
     const [functions, addFunction,, removeFunction,,, functionsAndComponents,generateFDTree] = useFunctions()
     const [requiredFunctions, setRequiredFunctions] = useState<Function[]>([]);
     const [selectedFunction, setSelectedFunction] = useState<Function>()
+    const [selectedFailureModes, setSelectedFailureModes] = useState<FailureMode[]>([])
     const [showEdit, setShowEdit] = useState<boolean>(false)
 
     const {register, handleSubmit, errors, control, reset} = useForm({
         resolver: yupResolver(schema)
     });
     const _handleCreateFunction = (values: any) => {
-        let createFunction: Function = {name: values.name, requiredFunctions: requiredFunctions,failureModes: []}
+        let createFunction: Function = {name: values.name, requiredFunctions: requiredFunctions,failureModes: selectedFailureModes}
         addFunction(createFunction)
         reset(values)
+        setSelectedFailureModes([])
         setRequiredFunctions([])
     }
 
@@ -132,6 +137,9 @@ const ComponentFunctionsList = () => {
                                             </MenuItem>
                                         )}
                                     </Select>
+                                </FormControl>
+                                <FormControl>
+                                    <FailureModesList selectedFailureModes={selectedFailureModes} setSelectedFailureModes={setSelectedFailureModes} functionFailureModes={[]}/>
                                     <IconButton className={classes.button} color="primary" component="span"
                                                 onClick={handleSubmit(_handleCreateFunction)}>
                                         <AddIcon/>

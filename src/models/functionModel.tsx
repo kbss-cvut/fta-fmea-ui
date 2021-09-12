@@ -4,7 +4,7 @@ import {AbstractModel, CONTEXT as ABSTRACT_CONTEXT} from "@models/abstractModel"
 
 const ctx = {
     "name": VocabularyUtils.PREFIX + "hasName",
-    "failureModes": VocabularyUtils.PREFIX + "hasFailureMode",
+    "failureModes": VocabularyUtils.PREFIX + "impairedBy",
     "requiredFunctions": VocabularyUtils.PREFIX + "requires"
 };
 

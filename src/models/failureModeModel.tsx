@@ -6,7 +6,7 @@ import {Component,CONTEXT as COMPONENT_CONTEXT} from "@models/componentModel";
 import {AbstractModel, CONTEXT as ABSTRACT_CONTEXT} from "@models/abstractModel";
 
 const ctx = {
-    "influencedFunctions": VocabularyUtils.PREFIX + "influences",
+    "impairedFunctions": VocabularyUtils.PREFIX + "impairs",
     "effects": VocabularyUtils.PREFIX + "hasEffect",
     "mitigation": VocabularyUtils.PREFIX + "isMitigatedBy",
     "component": VocabularyUtils.PREFIX + "hasComponent",

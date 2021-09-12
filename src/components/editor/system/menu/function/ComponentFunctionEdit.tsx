@@ -20,15 +20,17 @@ import {useFunctions} from "@hooks/useFunctions";
 import {useEffect, useState} from "react";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {schema} from "@components/dialog/function/FunctionPicker.schema";
-import {editFunction} from "@services/functionService";
 import {formatFunctionOutput, formatOutput} from "@utils/formatOutputUtils";
+import FailureModesList from "@components/editor/failureMode/FailureModesList";
+import {FailureMode} from "@models/failureModeModel";
 
 
 const ComponentFunctionsList = (props: { selectedFunction: Function, setShowEdit}) => {
     const classes = useStyles();
 
-    const [,,,,,allFunctions,functionsAndComponents] = useFunctions()
+    const [,,editFunction,,,allFunctions,functionsAndComponents] = useFunctions()
     const [requiredFunctions, setRequiredFunctions] = useState<Function[]>([]);
+    const [selectedFailureModes, setSelectedFailureModes] = useState<FailureMode[]>([])
     const {register, handleSubmit, errors, control} = useForm({
         resolver: yupResolver(schema)
     });
@@ -43,8 +45,10 @@ const ComponentFunctionsList = (props: { selectedFunction: Function, setShowEdit
     const handleEditFunction = (funcToEdit: Function) => {
         props.selectedFunction.name = funcToEdit.name
         props.selectedFunction.requiredFunctions = requiredFunctions
+        props.selectedFunction.failureModes = selectedFailureModes
         editFunction(props.selectedFunction)
         setRequiredFunctions([])
+        setSelectedFailureModes([])
         props.setShowEdit(false)
     }
 
@@ -80,7 +84,7 @@ const ComponentFunctionsList = (props: { selectedFunction: Function, setShowEdit
                                     helperText={errors.name?.message}/>
                     </FormControl>
                     <FormControl>
-                        <InputLabel shrink={true} id="required-functions-multiselect-label1">Required
+                        <InputLabel shrink={requiredFunctions.length != 0} id="required-functions-multiselect-label1">Required
                             functions:</InputLabel>
                         <Select
                             labelId="required-functions-multiselect-label1"
@@ -101,6 +105,9 @@ const ComponentFunctionsList = (props: { selectedFunction: Function, setShowEdit
                                 </MenuItem>
                             )}
                         </Select>
+                    </FormControl>
+                    <FormControl>
+                        <FailureModesList functionFailureModes={props.selectedFunction.failureModes} selectedFailureModes={selectedFailureModes} setSelectedFailureModes={setSelectedFailureModes}/>
                         <IconButton className={classes.button} color="primary" component="span"
                                     onClick={handleSubmit(handleEditFunction)}>
                             <Edit/>
