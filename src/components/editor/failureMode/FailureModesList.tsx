@@ -19,10 +19,12 @@ const FailureModesList = ({functionFailureModes,selectedFailureModes, setSelecte
     }
 
     useEffect(()=>{
-        if (!Array.isArray(functionFailureModes)) {
+
+        if (!Array.isArray(functionFailureModes) && functionFailureModes != null) {
             functionFailureModes = [functionFailureModes]
         }
-        functionFailureModes.forEach(failureMode => {
+
+        (functionFailureModes || []).forEach(failureMode => {
             selectedFailureModes.push(allFailureModes.find(fm => fm.iri == failureMode.iri))
         })
     },[])

@@ -91,7 +91,7 @@ const ComponentFunctionsList = () => {
                 {showEdit
                     ? <ComponentFunctionEdit selectedFunction={selectedFunction} setShowEdit={setShowEdit}/>
                     : <Box>
-                        {functions.map(f => <ListItem>
+                        {functions.map(f => <ListItem key={f.iri}>
                             <ListItemText primary={formatOutput(f.name, 35)}/>
                             <ListItemSecondaryAction>
                                 <IconButton className={classes.button} onClick={() => showEditForm(f)}>
@@ -129,7 +129,7 @@ const ComponentFunctionsList = () => {
                                     >
                                         {functionsAndComponents.map((f) =>
                                             //@ts-ignore
-                                            <MenuItem key={f[0].key} value={f[0]}>
+                                            <MenuItem key={f[0].iri} value={f[0]}>
                                                 <Checkbox checked={!!requiredFunctions.includes(f[0])}/>
                                                 <Tooltip disableFocusListener title={f[0].name + (f[1] != null ? " (" + f[1].name + ")" : "")}>
                                                     <ListItemText primary={formatFunctionOutput(f[0], f[1])}/>
