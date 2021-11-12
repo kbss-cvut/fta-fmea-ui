@@ -80,3 +80,43 @@ export const remove = async (failureModeIri: string): Promise<void> => {
         return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
+
+export const addFailureModeToFunction = async (functionIri: string, failureModeIri: string): Promise<void> => {
+    try {
+        const functionFragment = extractFragment(functionIri);
+        const fmFragment = extractFragment(failureModeIri);
+
+        await axiosClient.post(
+            `/failureModes/${functionFragment}/impairedBehavior/${failureModeIri}`,
+            {},
+            {
+                headers: authHeaders()
+            }
+        )
+
+        return new Promise((resolve) => resolve());
+    } catch (e) {
+        console.log('Failure Mode Service - Failed to call /addFailureModeToFunction')
+        const defaultMessage = "Failed to add failure mode";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    }
+}
+export const removeFailureModeToFunction = async (functionIri: string, failureModeIri: string): Promise<void> => {
+    try {
+        const functionFragment = extractFragment(functionIri);
+        const fmFragment = extractFragment(failureModeIri);
+
+         await axiosClient.delete(
+            `/failureModes/${functionFragment}/impairedBehavior/${failureModeIri}`,
+            {
+                headers: authHeaders()
+            }
+        )
+
+        return new Promise((resolve) => resolve());
+    } catch (e) {
+        console.log('Failure Mode Service - Failed to call /removeFailureModeToFunction')
+        const defaultMessage = "Failed to remove failure mode";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    }
+}

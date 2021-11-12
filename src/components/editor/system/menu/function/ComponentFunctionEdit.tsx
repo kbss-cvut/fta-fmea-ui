@@ -25,18 +25,19 @@ import FailureModesList from "@components/editor/failureMode/FailureModesList";
 import {FailureMode} from "@models/failureModeModel";
 
 
-const ComponentFunctionsList = (props: { selectedFunction: Function, setShowEdit}) => {
+const ComponentFunctionsList = (props: { selectedFunction: Function, selectedFailureModes: FailureMode[], setShowEdit, updateFailureModes, setSelectedFailureModes}) => {
     const classes = useStyles();
 
     const [,,editFunction,,,allFunctions,functionsAndComponents] = useFunctions()
     const [requiredFunctions, setRequiredFunctions] = useState<Function[]>([]);
-    const [selectedFailureModes, setSelectedFailureModes] = useState<FailureMode[]>([])
+    const [currentFailureModes, setCurrentFailureModes] = useState<FailureMode[]>([])
     const {register, handleSubmit, errors, control} = useForm({
         resolver: yupResolver(schema)
     });
 
     const hideEditForm = () => {
         setRequiredFunctions([])
+        props.setSelectedFailureModes([])
         props.setShowEdit(false)
     }
 
@@ -45,10 +46,10 @@ const ComponentFunctionsList = (props: { selectedFunction: Function, setShowEdit
     const handleEditFunction = (funcToEdit: Function) => {
         props.selectedFunction.name = funcToEdit.name
         props.selectedFunction.requiredFunctions = requiredFunctions
-        props.selectedFunction.failureModes = selectedFailureModes
         editFunction(props.selectedFunction)
+        props.updateFailureModes(currentFailureModes,props.selectedFailureModes,props.selectedFunction.iri)
         setRequiredFunctions([])
-        setSelectedFailureModes([])
+        props.setSelectedFailureModes([])
         props.setShowEdit(false)
     }
 
@@ -107,7 +108,10 @@ const ComponentFunctionsList = (props: { selectedFunction: Function, setShowEdit
                         </Select>
                     </FormControl>
                     <FormControl>
-                        <FailureModesList functionFailureModes={props.selectedFunction.failureModes} selectedFailureModes={selectedFailureModes} setSelectedFailureModes={setSelectedFailureModes}/>
+                        <FailureModesList functionIri={props.selectedFunction.iri}
+                                          selectedFailureModes={props.selectedFailureModes}
+                                          setSelectedFailureModes={props.setSelectedFailureModes}
+                                          setCurrentFailureModes={setCurrentFailureModes}/>
                         <IconButton className={classes.button} color="primary" component="span"
                                     onClick={handleSubmit(handleEditFunction)}>
                             <Edit/>

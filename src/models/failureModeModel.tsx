@@ -6,7 +6,7 @@ import {Component,CONTEXT as COMPONENT_CONTEXT} from "@models/componentModel";
 import {AbstractModel, CONTEXT as ABSTRACT_CONTEXT} from "@models/abstractModel";
 
 const ctx = {
-    "impairedFunctions": VocabularyUtils.PREFIX + "impairs",
+    "impairedBehaviors": VocabularyUtils.PREFIX + "impairs",
     "effects": VocabularyUtils.PREFIX + "hasEffect",
     "mitigation": VocabularyUtils.PREFIX + "isMitigatedBy",
     "component": VocabularyUtils.PREFIX + "hasComponent",
@@ -16,7 +16,7 @@ export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, EVENT_CONTEXT, M
 
 export interface FailureMode extends AbstractModel {
     name: string,
-    influencedFunctions?: Function[],
+    impairedBehaviors?: Function[],
     component: Component,
     mitigation?: Mitigation,
     effects?: FaultEvent[],

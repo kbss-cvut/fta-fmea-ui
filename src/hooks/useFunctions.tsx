@@ -10,6 +10,7 @@ import {filter} from "lodash";
 import {Component} from "@models/componentModel";
 import {FaultTree} from "@models/faultTreeModel";
 import {getComponent} from "@services/functionService";
+import {FailureMode} from "@models/failureModeModel";
 
 
 type functionContextType = [
@@ -20,14 +21,15 @@ type functionContextType = [
     (functionUri: string, requiredFunctionUri: string) => void,
     Function[],
     [Function,Component][],
-    (functionUri: string, systemName:string, functionName: string) => Promise<FaultTree>
+    (functionUri: string, systemName:string, functionName: string) => Promise<FaultTree>,
+    (functionUri: string) => Promise<FailureMode[]>
 ];
 
 export const functionsContext = createContext<functionContextType>(null!);
 
 export const useFunctions = () => {
-    const  [functions, addFunction, editFunction, deleteFunction, addRequiredFunction, allFunctions, functionsAndComponents, generateFDTree] = useContext(functionsContext);
-    return [functions, addFunction, editFunction, deleteFunction, addRequiredFunction, allFunctions, functionsAndComponents, generateFDTree] as const;
+    const  [functions, addFunction, editFunction, deleteFunction, addRequiredFunction, allFunctions, functionsAndComponents, generateFDTree, getFailureModes] = useContext(functionsContext);
+    return [functions, addFunction, editFunction, deleteFunction, addRequiredFunction, allFunctions, functionsAndComponents, generateFDTree, getFailureModes] as const;
 }
 
 type FunctionProviderProps = {
@@ -85,6 +87,15 @@ export const FunctionsProvider = ({children, componentUri}: FunctionProviderProp
 
     }
 
+    const getFailureModes = async(functionUri: string) => {
+        return functionService.getImpairedBehavior(functionUri)
+            .then(value => {return value})
+            .catch(reason => {
+                showSnackbar(reason, SnackbarType.ERROR)
+                return null
+            })
+    }
+
     useEffect(() => {
         const fetchFunctions = async () => {
             if (componentUri) {
@@ -116,7 +127,7 @@ export const FunctionsProvider = ({children, componentUri}: FunctionProviderProp
     }, [componentUri]);
 
     return (
-        <functionsContext.Provider value={[_functions, addFunction,editFunction, removeFunction,addRequiredFunction, _allFunctions, _functionsAndComponents,generateFDTree]}>
+        <functionsContext.Provider value={[_functions, addFunction,editFunction, removeFunction,addRequiredFunction, _allFunctions, _functionsAndComponents,generateFDTree,getFailureModes]}>
             {children}
         </functionsContext.Provider>
     );

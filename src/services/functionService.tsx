@@ -4,9 +4,11 @@ import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {UriReference} from "@models/utils/uriReference";
 import {handleServerError} from "./utils/responseUtils";
 import {CONTEXT as FUNCTION_CONTEXT, Function} from "../models/functionModel";
+import {CONTEXT as FAILURE_MODE_CONTEXT} from "../models/failureModeModel";
 import JsonLdUtils from "../utils/JsonLdUtils";
 import {Component} from "@models/componentModel";
 import {CONTEXT, FaultTree} from "@models/faultTreeModel";
+import {FailureMode} from "@models/failureModeModel";
 
 export const addFailureMode = async (functionIri: string, failureModeIri: string): Promise<void> => {
     try {
@@ -68,7 +70,6 @@ export const addRequiredFunction = async (functionUri: string, requiredFunctionU
 export const editFunction = async (f: Function): Promise<void> => {
     try {
         const updateRequest = Object.assign({}, f, {"@context": FUNCTION_CONTEXT})
-
         await axiosClient.put(
             '/functions',
             updateRequest,
@@ -116,6 +117,24 @@ export const generateFDTree = async (functionUri: string, faultTreeName: string)
     } catch (e) {
         console.log('Fault Tree Service - Failed to call /generateRequiredFunctionsTree')
         const defaultMessage = "Failed to create fault tree";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    }
+}
+
+export const getImpairedBehavior = async (functionUri: string): Promise<FailureMode[]> => {
+    try {
+        const fragment = extractFragment(functionUri);
+
+        const response = await axiosClient.get(
+            `/functions/${fragment}/impairedBehaviors`,
+            {
+                headers: authHeaders()
+            }
+        )
+        return JsonLdUtils.compactAndResolveReferencesAsArray<FailureMode>(response.data, FAILURE_MODE_CONTEXT)
+    } catch (e) {
+        console.log('Function Service - Failed to call /getImpairedBehavior')
+        const defaultMessage = "Failed to get impaired behaviors";
         return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }

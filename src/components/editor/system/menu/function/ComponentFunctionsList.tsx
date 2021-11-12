@@ -26,6 +26,7 @@ import ComponentFunctionEdit from "@components/editor/system/menu/function/Compo
 import {formatFunctionOutput, formatOutput} from "@utils/formatOutputUtils";
 import {FailureMode} from "@models/failureModeModel";
 import FailureModesList from "@components/editor/failureMode/FailureModesList";
+import {useFailureMode} from "@hooks/useFailureModes";
 
 
 const ITEM_HEIGHT = 48;
@@ -43,6 +44,7 @@ const ComponentFunctionsList = () => {
     const classes = useStyles();
     const history = useHistory();
     const [system] = useCurrentSystem()
+    const [,, addFailureModeToFunction, removeFailureModeToFunction] = useFailureMode()
     const [requestConfirmation] = useConfirmDialog()
     const [functions, addFunction,, removeFunction,,, functionsAndComponents,generateFDTree] = useFunctions()
     const [requiredFunctions, setRequiredFunctions] = useState<Function[]>([]);
@@ -54,8 +56,8 @@ const ComponentFunctionsList = () => {
         resolver: yupResolver(schema)
     });
     const _handleCreateFunction = (values: any) => {
-        let createFunction: Function = {name: values.name, requiredFunctions: requiredFunctions,failureModes: selectedFailureModes}
-        addFunction(createFunction)
+        let createFunction: Function = {name: values.name, requiredFunctions: requiredFunctions,failureModes: []}
+        addFunction(createFunction).then(f => selectedFailureModes.forEach(fm => addFailureModeToFunction(fm.iri,f.iri)))
         reset(values)
         setSelectedFailureModes([])
         setRequiredFunctions([])
@@ -64,6 +66,25 @@ const ComponentFunctionsList = () => {
     const showEditForm = (funcToEdit: Function) => {
         setSelectedFunction(funcToEdit)
         setShowEdit(true)
+    }
+
+    const updateFailureModes = (currentFailureModes: FailureMode[], selectedFailureModes: FailureMode[], functionIri: string) => {
+        if (!Array.isArray(selectedFailureModes) && selectedFailureModes != null) {
+            selectedFailureModes = [selectedFailureModes]
+        }
+        let currentFMIris = (currentFailureModes || []).map(fm => fm.iri)
+        let selectedFMIris = (selectedFailureModes || []).map(fm => fm.iri)
+
+        currentFMIris.forEach(fmIri => {
+            if(!selectedFMIris.includes(fmIri)){
+                removeFailureModeToFunction(fmIri,functionIri)
+            }
+        })
+        selectedFMIris.forEach(fmIri =>{
+            if(!currentFMIris.includes(fmIri)){
+                addFailureModeToFunction(fmIri,functionIri)
+            }
+        })
     }
 
     const handleDeleteFunction = (funcToDelete: Function) => {
@@ -89,7 +110,10 @@ const ComponentFunctionsList = () => {
         <React.Fragment>
             <List>
                 {showEdit
-                    ? <ComponentFunctionEdit selectedFunction={selectedFunction} setShowEdit={setShowEdit}/>
+                    ? <ComponentFunctionEdit selectedFunction={selectedFunction} 
+                                             selectedFailureModes={selectedFailureModes} 
+                                             setSelectedFailureModes={setSelectedFailureModes} 
+                                             setShowEdit={setShowEdit} updateFailureModes={updateFailureModes}/>
                     : <Box>
                         {functions.map(f => <ListItem key={f.iri}>
                             <ListItemText primary={formatOutput(f.name, 35)}/>
@@ -139,7 +163,7 @@ const ComponentFunctionsList = () => {
                                     </Select>
                                 </FormControl>
                                 <FormControl>
-                                    <FailureModesList selectedFailureModes={selectedFailureModes} setSelectedFailureModes={setSelectedFailureModes} functionFailureModes={[]}/>
+                                    <FailureModesList functionIri={""} selectedFailureModes={selectedFailureModes} setSelectedFailureModes={setSelectedFailureModes} setCurrentFailureModes={()=>{}}/>
                                     <IconButton className={classes.button} color="primary" component="span"
                                                 onClick={handleSubmit(_handleCreateFunction)}>
                                         <AddIcon/>

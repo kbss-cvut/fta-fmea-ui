@@ -1,37 +1,48 @@
 import * as React from "react";
-import { useFailureMode} from "@hooks/useFailureModes";
+import {useFailureMode} from "@hooks/useFailureModes";
 import {Checkbox, InputLabel, ListItemText, MenuItem, Select} from "@material-ui/core";
 import {FailureMode} from "../../../models/failureModeModel";
 import {formatOutput} from "@utils/formatOutputUtils";
 import {useEffect} from "react";
+import {useFunctions} from "@hooks/useFunctions";
 
 interface Props {
-    functionFailureModes: FailureMode[],
+    functionIri: string,
     selectedFailureModes: FailureMode[],
-    setSelectedFailureModes: (arg) => void
+    setSelectedFailureModes: (arg) => void,
+    setCurrentFailureModes: (arg) => void
 }
 
-const FailureModesList = ({functionFailureModes,selectedFailureModes, setSelectedFailureModes}: Props ) => {
+const FailureModesList = ({
+                              functionIri,
+                              selectedFailureModes,
+                              setSelectedFailureModes,
+                              setCurrentFailureModes
+                          }: Props) => {
     const [allFailureModes] = useFailureMode()
+    const [, , , , , , , , getFailureModes] = useFunctions()
+
 
     const handleChange = (event) => {
         setSelectedFailureModes(event.target.value)
     }
 
-    useEffect(()=>{
-
-        if (!Array.isArray(functionFailureModes) && functionFailureModes != null) {
-            functionFailureModes = [functionFailureModes]
+    useEffect(() => {
+        if (functionIri != "") {
+            getFailureModes(functionIri)
+                .then(failureModes => {
+                    failureModes.forEach(failureMode=>{
+                        selectedFailureModes.push(allFailureModes.get(failureMode.iri))
+                    })
+                    setCurrentFailureModes(failureModes)
+                })
         }
-
-        (functionFailureModes || []).forEach(failureMode => {
-            selectedFailureModes.push(allFailureModes.find(fm => fm.iri == failureMode.iri))
-        })
-    },[])
+    }, [])
 
     return (
         <React.Fragment>
-            <InputLabel shrink={selectedFailureModes.length != 0} id="failure-modes-multiselect-label"> Failure modes:</InputLabel>
+            <InputLabel shrink={selectedFailureModes.length != 0} id="failure-modes-multiselect-label"> Failure
+                modes:</InputLabel>
             <Select
                 labelId="failure-modes-multiselect-label"
                 id="failure-modes-multiselect"
@@ -40,7 +51,8 @@ const FailureModesList = ({functionFailureModes,selectedFailureModes, setSelecte
                 onChange={handleChange}
                 renderValue={(selected: any[]) => formatOutput(selected.map(value => value.name).join(", "), 65)}
             >
-                {(allFailureModes || []).map((failureMode) =>
+
+                {(Array.from(allFailureModes.values())).map((failureMode) =>
                     //@ts-ignore
                     <MenuItem key={failureMode.iri} value={failureMode}>
                         <Checkbox checked={selectedFailureModes.includes(failureMode)}/>
