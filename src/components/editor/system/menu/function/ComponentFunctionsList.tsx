@@ -44,7 +44,7 @@ const ComponentFunctionsList = () => {
     const classes = useStyles();
     const history = useHistory();
     const [system] = useCurrentSystem()
-    const [,, addFailureModeToFunction, removeFailureModeToFunction] = useFailureMode()
+    const [,,,,addFailureModeToFunction, removeFailureModeToFunction] = useFailureMode()
     const [requestConfirmation] = useConfirmDialog()
     const [functions, addFunction,, removeFunction,,, functionsAndComponents,generateFDTree] = useFunctions()
     const [requiredFunctions, setRequiredFunctions] = useState<Function[]>([]);
@@ -163,7 +163,7 @@ const ComponentFunctionsList = () => {
                                     </Select>
                                 </FormControl>
                                 <FormControl>
-                                    <FailureModesList functionIri={""} selectedFailureModes={selectedFailureModes} setSelectedFailureModes={setSelectedFailureModes} setCurrentFailureModes={()=>{}}/>
+                                    <FailureModesList label={"Failure modes: "} functionIri={""} selectedFailureModes={selectedFailureModes} setSelectedFailureModes={setSelectedFailureModes} setCurrentFailureModes={()=>{}}/>
                                     <IconButton className={classes.button} color="primary" component="span"
                                                 onClick={handleSubmit(_handleCreateFunction)}>
                                         <AddIcon/>

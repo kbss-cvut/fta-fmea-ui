@@ -1,19 +1,20 @@
 import * as React from "react";
 import {useFailureMode} from "@hooks/useFailureModes";
 import {Checkbox, InputLabel, ListItemText, MenuItem, Select} from "@material-ui/core";
-import {FailureMode} from "../../../models/failureModeModel";
+import {FailureMode} from "@models/failureModeModel";
 import {formatOutput} from "@utils/formatOutputUtils";
 import {useEffect} from "react";
 import {useFunctions} from "@hooks/useFunctions";
 
 interface Props {
+    label: string,
     functionIri: string,
     selectedFailureModes: FailureMode[],
     setSelectedFailureModes: (arg) => void,
     setCurrentFailureModes: (arg) => void
 }
 
-const FailureModesList = ({
+const FailureModesList = ({   label,
                               functionIri,
                               selectedFailureModes,
                               setSelectedFailureModes,
@@ -41,8 +42,7 @@ const FailureModesList = ({
 
     return (
         <React.Fragment>
-            <InputLabel shrink={selectedFailureModes.length != 0} id="failure-modes-multiselect-label"> Failure
-                modes:</InputLabel>
+            <InputLabel shrink={selectedFailureModes.length != 0} id="failure-modes-multiselect-label"> {label} </InputLabel>
             <Select
                 labelId="failure-modes-multiselect-label"
                 id="failure-modes-multiselect"
@@ -56,7 +56,7 @@ const FailureModesList = ({
                     //@ts-ignore
                     <MenuItem key={failureMode.iri} value={failureMode}>
                         <Checkbox checked={selectedFailureModes.includes(failureMode)}/>
-                        <ListItemText primary={failureMode.name + " (" + failureMode.component.name + ")"}/>
+                        <ListItemText primary={failureMode.name + " (" + (failureMode.component !== undefined ? failureMode.component.name : "None") + ")"}/>
                     </MenuItem>
                 )}
             </Select>

@@ -108,10 +108,12 @@ const ComponentFunctionsList = (props: { selectedFunction: Function, selectedFai
                         </Select>
                     </FormControl>
                     <FormControl>
-                        <FailureModesList functionIri={props.selectedFunction.iri}
-                                          selectedFailureModes={props.selectedFailureModes}
-                                          setSelectedFailureModes={props.setSelectedFailureModes}
-                                          setCurrentFailureModes={setCurrentFailureModes}/>
+                        <FailureModesList 
+                                        label={"Failure modes: "}
+                                        functionIri={props.selectedFunction.iri}
+                                        selectedFailureModes={props.selectedFailureModes}
+                                        setSelectedFailureModes={props.setSelectedFailureModes}
+                                        setCurrentFailureModes={setCurrentFailureModes}/>
                         <IconButton className={classes.button} color="primary" component="span"
                                     onClick={handleSubmit(handleEditFunction)}>
                             <Edit/>

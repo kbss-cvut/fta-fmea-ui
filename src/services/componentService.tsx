@@ -10,6 +10,20 @@ import {System} from "@models/systemModel";
 import {flatten, filter} from "lodash";
 import {handleServerError} from "@services/utils/responseUtils";
 
+ 
+const getCircularReplacer = () => {
+	const seen = new WeakSet();
+	return (key, value) => {
+		if (typeof value === "object" && value !== null) {
+			if (seen.has(value)) {
+				return;
+			}
+			seen.add(value);
+		}
+		return value;
+	};
+};
+
 export const findAll = async (): Promise<Component[]> => {
     try {
         const response = await axiosClient.get<Component[]>(
@@ -85,6 +99,24 @@ export const functions = async (componentUri: string): Promise<Function[]> => {
     }
 }
 
+export const failureModes = async (componentUri: string): Promise<FailureMode[]> => {
+    try {
+        const fragment = extractFragment(componentUri);
+        const response = await axiosClient.get<FailureMode[]>(
+            `/components/${fragment}/failureModes`,
+            {
+                headers: authHeaders()
+            }
+        )
+
+        return JsonLdUtils.compactAndResolveReferencesAsArray<FailureMode>(response.data, FAILURE_MODE_CONTEXT)
+    } catch (e) {
+        console.log('Component Service - Failed to call /failureModes')
+        const defaultMessage = "Failed to load failure modes";
+        return new Promise((_resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    }
+}
+
 export const addFunction = async (componentUri: string, f: Function): Promise<Function> => {
     try {
         const fragment = extractFragment(componentUri);
@@ -118,7 +150,7 @@ export const removeFunction = async (componentIri: string, functionIri: string) 
                 headers: authHeaders()
             }
         )
-        return new Promise((resolve) => resolve());
+        return new Promise<void>((resolve) => resolve());
     } catch (e) {
         console.log('Component Service - Failed to call /removeFunction')
         const defaultMessage = "Failed to remove function";
@@ -194,4 +226,46 @@ export const removeComponentReferences = (system: System, componentIri: string):
         return c
     });
     return system;
+}
+
+export const addFailureMode = async (componentUri: string, failureMode: FailureMode): Promise<FailureMode> => {
+    try {
+        const componentFragment = extractFragment(componentUri);
+        const createRequest = Object.assign(
+			{ "@type": [VocabularyUtils.FAILURE_MODE] },
+			JSON.parse(JSON.stringify(failureMode, getCircularReplacer())),
+			{
+				"@context": FAILURE_MODE_CONTEXT,
+			}
+		);
+		const response = await axiosClient.post(`/components/${componentUri}/failureModes`, createRequest, {
+			headers: authHeaders(),
+		});
+    
+        return JsonLdUtils.compactAndResolveReferences<FailureMode>(response.data, FAILURE_MODE_CONTEXT);
+    } catch (e) {
+        console.log('Component Service - Failed to call create failure mode')
+        console.log(e)
+        const defaultMessage = "Failed to create failure mode";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    }
+}
+
+export const removeFailureMode = async (componentIri: string, failureModeUri: string) => {
+    try {
+        const componentFragment = extractFragment(componentIri);
+        const failureModeFragment = extractFragment(failureModeUri);
+
+        await axiosClient.delete(
+            `/components/${componentFragment}/functions/${failureModeFragment}`,
+            {
+                headers: authHeaders()
+            }
+        )
+        return new Promise<void>((resolve) => resolve());
+    } catch (e) {
+        console.log('Component Service - Failed to call /removeFailureMode')
+        const defaultMessage = "Failed to remove failure mode";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    }
 }

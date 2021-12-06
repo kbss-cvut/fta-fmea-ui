@@ -3,6 +3,7 @@ import {Divider, TextField, Typography} from "@material-ui/core";
 import {Component} from "@models/componentModel";
 import {FunctionsProvider} from "@hooks/useFunctions";
 import ComponentFunctionsList from "../function/ComponentFunctionsList";
+import ComponentFailureModesList from "../failureMode/ComponentFailureModesList";
 import ComponentEditMenu from "@components/editor/system/menu/component/ComponentEditMenu";
 import {filter, flatten, cloneDeep, find} from "lodash";
 import * as componentService from "@services/componentService";
@@ -65,8 +66,9 @@ const ComponentSidebarMenu = ({component, onComponentUpdated, systemComponents}:
             {component && <React.Fragment>
                 <Typography variant="h6" gutterBottom>Functions</Typography>
                 <FunctionsProvider componentUri={component?.iri}>
-                    <FailureModeProvider>
+                    <FailureModeProvider component={component}>
                         <ComponentFunctionsList/>
+                        <ComponentFailureModesList component={component}/>
                     </FailureModeProvider>
                 </FunctionsProvider>
                 <Divider/>
