@@ -23,44 +23,19 @@ export const findAll = async (): Promise<FailureMode[]> => {
         return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
- 
+
 const getCircularReplacer = () => {
     const seen = new WeakSet();
     return (key, value) => {
-      if (typeof value === "object" && value !== null) {
-        if (seen.has(value)) {
-          return;
-        }
-        seen.add(value);
-      }
-      return value;
-    };
-  };
-
-export const createFailureMode = async (failureMode: FailureMode): Promise<FailureMode> => {
-    try {
-        failureMode.component = null
-        const createRequest = Object.assign(
-            {"@type": [VocabularyUtils.FAILURE_MODE]}, JSON.parse(JSON.stringify(failureMode, getCircularReplacer())) , {"@context": CONTEXT}
-            // {"@type": [VocabularyUtils.FAILURE_MODE]}, failureMode , {"@context": CONTEXT}
-        
-            )
-        const response = await axiosClient.post(
-            `/failureModes`,
-            createRequest,
-            {
-                headers: authHeaders()
+        if (typeof value === "object" && value !== null) {
+            if (seen.has(value)) {
+                return;
             }
-        )
-
-        return JsonLdUtils.compactAndResolveReferences<FailureMode>(response.data, CONTEXT);
-    } catch (e) {
-        console.log(e)
-        console.log('Component Service - Failed to call create failure mode')
-        const defaultMessage = "Failed to create failure mode";
-        return new Promise((_resolve, reject) => reject(handleServerError(e, defaultMessage)));
-    }
-}
+            seen.add(value);
+        }
+        return value;
+    };
+};
 
 export const find = async (failureModeIri: string): Promise<FailureMode> => {
     try {
@@ -145,7 +120,7 @@ export const removeFailureModeToFunction = async (functionIri: string, failureMo
         const functionFragment = extractFragment(functionIri);
         const fmFragment = extractFragment(failureModeIri);
 
-         await axiosClient.delete(
+        await axiosClient.delete(
             `/failureModes/${functionFragment}/impairedBehavior/${failureModeIri}`,
             {
                 headers: authHeaders()
@@ -162,54 +137,54 @@ export const removeFailureModeToFunction = async (functionIri: string, failureMo
 
 
 export const addDependantFailureMode = async (failureModeIri: string, dependantFailureModeIri: string, type: string): Promise<void> => {
-	try {
-		const fmIri= extractFragment(failureModeIri);
-		const dependantFMIri = extractFragment(dependantFailureModeIri);
+    try {
+        const fmIri= extractFragment(failureModeIri);
+        const dependantFMIri = extractFragment(dependantFailureModeIri);
 
-		await axiosClient.post(
-			`/failureModes/${fmIri}/${type}/${dependantFMIri}`,
-			{},
-			{
-				headers: authHeaders(),
-			}
-		);
-		return new Promise((resolve) => resolve());
-	} catch (e) {
-		console.log("Failure Mode Service - Failed to call /addDependantFailureMode");
-		const defaultMessage = "Failed to add failure mode";
-		return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
-	}
+        await axiosClient.post(
+            `/failureModes/${fmIri}/${type}/${dependantFMIri}`,
+            {},
+            {
+                headers: authHeaders(),
+            }
+        );
+        return new Promise((resolve) => resolve());
+    } catch (e) {
+        console.log("Failure Mode Service - Failed to call /addDependantFailureMode");
+        const defaultMessage = "Failed to add failure mode";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    }
 };
 export const removeDependantFailureMode = async (failureModeIri: string, dependantFailureModeIri: string, type: string): Promise<void> => {
-	try {
-		const fmIri = extractFragment(failureModeIri);
-		const dependantFMIri = extractFragment(dependantFailureModeIri);
+    try {
+        const fmIri = extractFragment(failureModeIri);
+        const dependantFMIri = extractFragment(dependantFailureModeIri);
 
-		await axiosClient.delete(`/failureModes/${fmIri}/${type}/${dependantFMIri}`, {
-			headers: authHeaders(),
-		});
+        await axiosClient.delete(`/failureModes/${fmIri}/${type}/${dependantFMIri}`, {
+            headers: authHeaders(),
+        });
 
-		return new Promise((resolve) => resolve());
-	} catch (e) {
-		console.log("Failure Mode Service - Failed to call /removeDependantFailureMode");
-		const defaultMessage = "Failed to remove failure mode";
-		return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
-	}
+        return new Promise((resolve) => resolve());
+    } catch (e) {
+        console.log("Failure Mode Service - Failed to call /removeDependantFailureMode");
+        const defaultMessage = "Failed to remove failure mode";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    }
 };
 
 export const editFailureMode = async (failureMode: FailureMode): Promise<FailureMode> => {
-	try {
-		const updateRequest = Object.assign({}, JSON.parse(JSON.stringify(failureMode, getCircularReplacer())), {
-			"@context": CONTEXT,
-		});
-		const response = await axiosClient.put("/failureModes", updateRequest, {
-			headers: authHeaders(),
-		});
+    try {
+        const updateRequest = Object.assign({}, JSON.parse(JSON.stringify(failureMode, getCircularReplacer())), {
+            "@context": CONTEXT,
+        });
+        const response = await axiosClient.put("/failureModes", updateRequest, {
+            headers: authHeaders(),
+        });
         return JsonLdUtils.compactAndResolveReferences<FailureMode>(response.data, CONTEXT);
-	} catch (e) {
+    } catch (e) {
         console.log(e)
-		console.log("Failure mode service - Failed to call /update");
-		const defaultMessage = "Failed to update failure mode";
-		return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
-	}
+        console.log("Failure mode service - Failed to call /update");
+        const defaultMessage = "Failed to update failure mode";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    }
 };

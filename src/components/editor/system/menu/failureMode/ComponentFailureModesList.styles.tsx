@@ -5,7 +5,7 @@ const useStyles = makeStyles(() =>
     createStyles({
         failureModes: {
             width: '100%'
-         },
+        },
         button: {
             alignSelf: 'flex-end'
         },

@@ -48,9 +48,9 @@ const ComponentFailureModesEdit = (props: {
 
 	const hideEditForm = () => {
 		props.setSelectedFailureMode([]);
-        setBehaviorType(BehaviorType.ATOMIC)
-        setFailureModeParts([])
-        setRequiredFailureModes([])
+		setBehaviorType(BehaviorType.ATOMIC)
+		setFailureModeParts([])
+		setRequiredFailureModes([])
 		props.setShowEdit(false);
 	};
 
@@ -58,34 +58,27 @@ const ComponentFailureModesEdit = (props: {
 		let currentFMIris = currentFMs.map((fm) => fm.iri);
 		let selectedFMIris = selectedFMs.map((fm) => fm.iri);
 
-        currentFMs.forEach((fm) => {
+		currentFMs.forEach((fm) => {
 			if (!selectedFMIris.includes(fm.iri)) {
-                removeDependantFailureMode(props.selectedFailureMode, fm, type);
-                console.log("odstranuju req");
-                
+				removeDependantFailureMode(props.selectedFailureMode, fm, type);
 			}
 		});
 
 		selectedFMs.forEach((fm) => {
 			if (!currentFMIris.includes(fm.iri)) {
-                addDependantFailureMode(props.selectedFailureMode, fm, type);
-
-				
-                console.log("pridavam req");
-                console.log(fm);
-				console.log(fm.iri);
+				addDependantFailureMode(props.selectedFailureMode, fm, type);
 			}
 		});
 	};
 
 	const updateFailureMode = (values: any) => {
-        console.log(values)
-        props.selectedFailureMode.name = values.name;
-        props.selectedFailureMode.behaviorType = behaviorType;
-        processFailureModeUpdate(props.selectedFailureMode.requiredBehaviors, requiredFailureModes, "requiredBehavior");
+		console.log(values)
+		props.selectedFailureMode.name = values.name;
+		props.selectedFailureMode.behaviorType = behaviorType;
+		processFailureModeUpdate(props.selectedFailureMode.requiredBehaviors, requiredFailureModes, "requiredBehavior");
 		processFailureModeUpdate(props.selectedFailureMode.childBehaviors, failureModeParts, "childBehavior");
-        editFailureMode(props.selectedFailureMode).then((fm) => props.setSelectedFailureMode(fm))
-        hideEditForm()
+		editFailureMode(props.selectedFailureMode).then((fm) => props.setSelectedFailureMode(fm))
+		hideEditForm()
 	};
 
 	const handleBehaviorTypeChange = (event) => {
@@ -112,10 +105,14 @@ const ComponentFailureModesEdit = (props: {
 
 		setBehaviorType(props.selectedFailureMode.behaviorType);
 		props.selectedFailureMode.childBehaviors.forEach((fm) => {
-			setFailureModeParts([...failureModeParts, allFailureModes.get(fm.iri)]);
+			failureModeParts.push(allFailureModes.get(fm.iri));
+
+			// setFailureModeParts([...failureModeParts, allFailureModes.get(fm.iri)]);
 		});
 		props.selectedFailureMode.requiredBehaviors.forEach((fm) => {
-			setRequiredFailureModes([...requiredFailureModes, allFailureModes.get(fm.iri)]);
+			console.log("skrrra")
+			requiredFailureModes.push(allFailureModes.get(fm.iri));
+			// setRequiredFailureModes([...requiredFailureModes, allFailureModes.get(fm.iri)]);
 		});
 	}, []);
 

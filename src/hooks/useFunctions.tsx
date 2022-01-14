@@ -47,6 +47,13 @@ export const FunctionsProvider = ({children, componentUri}: FunctionProviderProp
         return componentService.addFunction(componentUri, f)
             .then(value => {
                 _setFunctions([..._functions, value])
+                functionService.getComponent(f.iri)
+                    .then((comp) => {
+                        _setFunctionsAndComponents((value) => [...value, [f, comp]]);
+                    })
+                    .catch(() => {
+                        _setFunctionsAndComponents((value) => [...value, [f, null]]);
+                    });
                 showSnackbar('Function created', SnackbarType.SUCCESS)
                 return value
             }).catch(reason => showSnackbar(reason, SnackbarType.ERROR))
