@@ -61,9 +61,11 @@ const ComponentFunctionsList = (props: { selectedFunction: Function, selectedFai
         if (!Array.isArray(props.selectedFunction.requiredFunctions)) {
             props.selectedFunction.requiredFunctions = [props.selectedFunction.requiredFunctions]
         }
-        props.selectedFunction.requiredFunctions.forEach(func => {
-            requiredFunctions.push(allFunctions.find(f => f.iri == func.iri))
-        })
+        setRequiredFunctions(props.selectedFunction.requiredFunctions.map((func) => allFunctions.find(f => f.iri == func.iri)));
+        // setCurrentFailureModes(props.selectedFunction.failureModes.map((func) => all.find(f => f.iri == func.iri)));
+        // props.selectedFunction.requiredFunctions.forEach(func => {
+        //     requiredFunctions.push(allFunctions.find(f => f.iri == func.iri))
+        // })
     },[])
 
 

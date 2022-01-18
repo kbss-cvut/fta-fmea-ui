@@ -21,11 +21,13 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
     const [showSnackbar] = useSnackbar();
 
     const [system, addComponent, updateComponent, removeComponent] = useCurrentSystem()
-    setAppBarName(system?.name);
 
     const [highlightedElementView, setHighlightedElementView] = useState(null)
     const _localContext = useLocalContext({system: system, highlightedElementView: highlightedElementView})
 
+    useEffect(() => {
+        setAppBarName(system?.name);
+    })
     useEffect(() => {
         if (highlightedElementView) {
             highlightBorders(highlightedElementView);
