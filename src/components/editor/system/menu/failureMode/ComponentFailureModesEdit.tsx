@@ -111,12 +111,12 @@ const ComponentFailureModesEdit = (props: {
 		}
 
 		setBehaviorType(props.selectedFailureMode.behaviorType);
-		props.selectedFailureMode.childBehaviors.forEach((fm) => {
-			setFailureModeParts([...failureModeParts, allFailureModes.get(fm.iri)]);
-		});
-		props.selectedFailureMode.requiredBehaviors.forEach((fm) => {
-			setRequiredFailureModes([...requiredFailureModes, allFailureModes.get(fm.iri)]);
-		});
+		setFailureModeParts(
+			props.selectedFailureMode.childBehaviors.map((fm) => allFailureModes.get(fm.iri))
+		);
+		setRequiredFailureModes(
+			props.selectedFailureMode.requiredBehaviors.map((fm) => allFailureModes.get(fm.iri))
+		);
 	}, []);
 
 	return (
