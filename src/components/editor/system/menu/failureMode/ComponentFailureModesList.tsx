@@ -37,196 +37,215 @@ import Button from '@material-ui/core/Button';
 
 const ComponentFailureModesList = ({ component }) => {
   const classes = useStyles();
-  const [allFailureModes, createFailureMode, , , , , componentFailureModes,,,removeFailureMode, addExistingFailureModes] = useFailureMode();
+  const [
+      allFailureModes,
+      createFailureMode,
+      ,
+      ,
+      ,
+      ,
+      componentFailureModes,
+      ,
+      ,
+      removeFailureMode,
+      addExistingFailureMode,
+  ] = useFailureMode();
   const [failureModeParts, setFailureModeParts] = useState<FailureMode[]>([]);
-	const [showSnackbar] = useSnackbar();
+  const [showSnackbar] = useSnackbar();
   const [showEdit, setShowEdit] = useState(false);
   const [requiredFailureModes, setRequiredFailureModes] = useState<FailureMode[]>([]);
   const [behaviorType, setBehaviorType] = useState<BehaviorType>(BehaviorType.ATOMIC);
   const [selectedFailureMode, setSelectedFailureMode] = useState<FailureMode>();
   const [requestConfirmation] = useConfirmDialog();
-  const [failureModesToAdd, setFailureModesToAdd] = useState<FailureMode[]>([]);
+  const [failureModeToAdd, setFailureModeToAdd] = useState<FailureMode>();
   const [dialog, showDialog] = useState<boolean>(false);
 
   const showEditForm = (fm: FailureMode) => {
-    setSelectedFailureMode(fm);
-    setShowEdit(true);
+      setSelectedFailureMode(fm);
+      setShowEdit(true);
   };
 
   const handleClickOpen = () => {
-    showDialog(true);
+      showDialog(true);
   };
 
   const closeDialogWindow = () => {
-    setFailureModesToAdd([]);
-    showDialog(false);
+      setFailureModeToAdd(null);
+      showDialog(false);
   };
 
   const { register, handleSubmit, errors, control, reset } = useForm({
-    resolver: yupResolver(schema),
+      resolver: yupResolver(schema),
   });
 
   const handleBehaviorTypeChange = (event) => {
-    setBehaviorType(event.target.value);
-    if (event.target.value === BehaviorType.ATOMIC) {
-      setFailureModeParts([]);
-    }
+      setBehaviorType(event.target.value);
+      if (event.target.value === BehaviorType.ATOMIC) {
+          setFailureModeParts([]);
+      }
   };
 
   const _handleCreateFailureMode = (values: any) => {
-    let failureMode: FailureMode = {
-      name: values.name as string,
-      behaviorType: behaviorType,
-      component: component,
-      requiredBehaviors: [],
-      childBehaviors: []
-    };
+      let failureMode: FailureMode = {
+          name: values.name as string,
+          behaviorType: behaviorType,
+          component: component,
+          requiredBehaviors: [],
+          childBehaviors: [],
+      };
 
-    createFailureMode(failureMode, requiredFailureModes, failureModeParts);
-    reset(values);
-    setFailureModeParts([]);
-    setRequiredFailureModes([]);
-    setBehaviorType(BehaviorType.ATOMIC);
+      createFailureMode(failureMode, requiredFailureModes, failureModeParts);
+      reset(values);
+      setFailureModeParts([]);
+      setRequiredFailureModes([]);
+      setBehaviorType(BehaviorType.ATOMIC);
   };
 
-  const handleAddExistingFMs = () => {
-    failureModesToAdd.forEach(fm => addExistingFailureModes(fm)) 
-    closeDialogWindow();
-  }
-  
+  const handleAddExistingFM = () => {
+      addExistingFailureMode(failureModeToAdd);
+      closeDialogWindow();
+  };
+
   const handleDeleteFunction = (failureMode: FailureMode) => {
-    requestConfirmation({
-      title: "Delete Failure Mode?",
-      explanation: "Are you sure you want to delete the failure mode?",
-      onConfirm: () => removeFailureMode(failureMode)
-    });
+      requestConfirmation({
+          title: "Delete Failure Mode?",
+          explanation: "Are you sure you want to delete the failure mode?",
+          onConfirm: () => removeFailureMode(failureMode),
+      });
   };
 
   return (
       <React.Fragment>
-        <Typography variant="h6" gutterBottom>
-          Failure Modes
-        </Typography>
+          <Typography variant="h6" gutterBottom>
+              Failure Modes
+          </Typography>
 
-        {showEdit ? (
-            <ComponentFailureModesEdit
-                selectedFailureMode={selectedFailureMode}
-                setShowEdit={setShowEdit}
-                setSelectedFailureMode={setSelectedFailureMode}
-            />
-        ) : (
-            <Box>
-              <List>
-                <Box>
-                  {componentFailureModes.map((fm) => (
-                      <ListItem key={fm.iri}>
-                        <ListItemText primary={fm.name} />
-                        <ListItemSecondaryAction>
-                          <IconButton className={classes.actionButton} onClick={() => showEditForm(fm)}>
-                            <Edit />
-                          </IconButton>
-                          <IconButton className={classes.actionButton} onClick={() => handleDeleteFunction(fm)}>
-                            <DeleteIcon />
-                          </IconButton>
-                        </ListItemSecondaryAction>
-                      </ListItem>
-                  ))}
-                </Box>
-              </List>
-
+          {showEdit ? (
+              <ComponentFailureModesEdit
+                  selectedFailureMode={selectedFailureMode}
+                  setShowEdit={setShowEdit}
+                  setSelectedFailureMode={setSelectedFailureMode}
+              />
+          ) : (
               <Box>
-                <FormGroup>
-                  <FormControl>
-                    <Controller
-                        as={TextField}
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Failure mode name"
-                        type="text"
-                        fullWidth
-                        name="name"
-                        defaultValue=""
-                        control={control}
-                        inputRef={register}
-                        error={!!errors.name}
-                        helperText={errors.name?.message}
-                    />
-                  </FormControl>
+                  <List>
+                      <Box>
+                          {componentFailureModes.map((fm) => (
+                              <ListItem key={fm.iri}>
+                                  <ListItemText primary={fm.name} />
+                                  <ListItemSecondaryAction>
+                                      <IconButton className={classes.actionButton} onClick={() => showEditForm(fm)}>
+                                          <Edit />
+                                      </IconButton>
+                                      <IconButton
+                                          className={classes.actionButton}
+                                          onClick={() => handleDeleteFunction(fm)}
+                                      >
+                                          <DeleteIcon />
+                                      </IconButton>
+                                  </ListItemSecondaryAction>
+                              </ListItem>
+                          ))}
+                      </Box>
+                  </List>
 
-                  <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Behavior Type</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={behaviorType}
-                        label="Behavior type"
-                        onChange={handleBehaviorTypeChange}
-                    >
-                      <MenuItem value={BehaviorType.ATOMIC}>Atomic</MenuItem>
-                      <MenuItem value={BehaviorType.AND}>And</MenuItem>
-                      <MenuItem value={BehaviorType.OR}>Or</MenuItem>
-                    </Select>
-                  </FormControl>
+                  <Box>
+                      <FormGroup>
+                          <FormControl>
+                              <Controller
+                                  as={TextField}
+                                  autoFocus
+                                  margin="dense"
+                                  id="name"
+                                  label="Failure mode name"
+                                  type="text"
+                                  fullWidth
+                                  name="name"
+                                  defaultValue=""
+                                  control={control}
+                                  inputRef={register}
+                                  error={!!errors.name}
+                                  helperText={errors.name?.message}
+                              />
+                          </FormControl>
 
-                  {behaviorType != BehaviorType.ATOMIC && (
-                      <FormControl fullWidth>
-                        <FailureModesList
-                            label={"Parts: "}
-                            functionIri={""}
-                            selectedFailureModes={failureModeParts}
-                            setSelectedFailureModes={setFailureModeParts}
-                            setCurrentFailureModes={() => {}}
-                        />
-                      </FormControl>
-                  )}
-                  <FormControl fullWidth>
-                    <FailureModesList
-                        label={"Required Failure Modes: "}
-                        functionIri={""}
-                        selectedFailureModes={requiredFailureModes}
-                        setSelectedFailureModes={setRequiredFailureModes}
-                        setCurrentFailureModes={() => {}}
-                    />
-                    <Box className={classes.actionButton}>
-                    	<Button color="primary" variant="outlined" onClick={handleClickOpen} component="span">Add existing</Button>      
-						<IconButton
-							className={classes.actionButton}
-							color="primary"
-							component="span"
-							onClick={handleSubmit(_handleCreateFailureMode)}
-						>
-						<AddIcon />
-						</IconButton>
-                    </Box>
-                  </FormControl>
-                </FormGroup>
+                          <FormControl fullWidth>
+                              <InputLabel id="demo-simple-select-label">Behavior Type</InputLabel>
+                              <Select
+                                  labelId="demo-simple-select-label"
+                                  id="demo-simple-select"
+                                  value={behaviorType}
+                                  label="Behavior type"
+                                  onChange={handleBehaviorTypeChange}
+                              >
+                                  <MenuItem value={BehaviorType.ATOMIC}>Atomic</MenuItem>
+                                  <MenuItem value={BehaviorType.AND}>And</MenuItem>
+                                  <MenuItem value={BehaviorType.OR}>Or</MenuItem>
+                              </Select>
+                          </FormControl>
+
+                          {behaviorType != BehaviorType.ATOMIC && (
+                              <FormControl fullWidth>
+                                  <FailureModesList
+                                      label={"Parts: "}
+                                      functionIri={""}
+                                      selectedFailureModes={failureModeParts}
+                                      setSelectedFailureModes={setFailureModeParts}
+                                      setCurrentFailureModes={() => {}}
+                                  />
+                              </FormControl>
+                          )}
+                          <FormControl fullWidth>
+                              <FailureModesList
+                                  label={"Required Failure Modes: "}
+                                  functionIri={""}
+                                  selectedFailureModes={requiredFailureModes}
+                                  setSelectedFailureModes={setRequiredFailureModes}
+                                  setCurrentFailureModes={() => {}}
+                              />
+                              <Box className={classes.actionButton}>
+                                  <Button color="primary" variant="outlined" onClick={handleClickOpen} component="span">
+                                      Add existing
+                                  </Button>
+                                  <IconButton
+                                      className={classes.actionButton}
+                                      color="primary"
+                                      component="span"
+                                      onClick={handleSubmit(_handleCreateFailureMode)}
+                                  >
+                                      <AddIcon />
+                                  </IconButton>
+                              </Box>
+                          </FormControl>
+                      </FormGroup>
+                  </Box>
+
+                  <Dialog open={dialog} onClose={closeDialogWindow} fullWidth maxWidth="sm">
+                      <DialogTitle>Add existing failure mode </DialogTitle>
+                      <DialogContent>
+                          <Autocomplete
+                              id="add-existing-failure-mode"
+                              options={[...allFailureModes]
+                                  .filter(([fmIri, fm]) => ((fm.component && fm.component.iri) || "") !== component.iri)
+                                  .map((value) => value[1])}
+                              onChange={(event: any, newValue: any) => {
+                                  setFailureModeToAdd(newValue);
+                                  showSnackbar("Failure mode's component will be changed", SnackbarType.INFO);
+                              }}
+                              getOptionLabel={(option) =>
+                                  option.name + " (" + (option.component == null ? "None" : option.component.name) + ")"
+                              }
+                              fullWidth
+                              renderInput={(params) => <TextField {...params} label="Existing failure modes" />}
+                          />
+                      </DialogContent>
+                      <DialogActions>
+                          <Button color="primary" onClick={closeDialogWindow}>Cancel</Button>
+                          <Button color="primary" onClick={handleAddExistingFM}>Add</Button>
+                      </DialogActions>
+                  </Dialog>
               </Box>
-			  
-              <Dialog open={dialog} onClose={closeDialogWindow} fullWidth maxWidth="sm" >
-				<DialogTitle>Add existing failure mode </DialogTitle>
-				<DialogContent>
-				<Autocomplete
-					id="add-existing-failure-mode"
-					options={[...allFailureModes].filter(([fmIri, fm]) => ((fm.component && fm.component.iri) || "") !== component.iri).map(value => value[1])}
-					value={failureModesToAdd}
-					onChange={(event: any, newValue: any) => {
-						setFailureModesToAdd(newValue);
-						showSnackbar('Failure mode\'s component will be changed', SnackbarType.INFO);
-						}}
-					getOptionLabel={(option) => option.name + " (" + (option.component == null ? "None": option.component.name) + ")"}
-					fullWidth
-					multiple
-					renderInput={(params) => <TextField {...params} label="Existing failure modes" />}
-				/>
-				</DialogContent>
-				<DialogActions>
-				<Button color="primary" onClick={closeDialogWindow}> Cancel </Button>
-				<Button color="primary" onClick={handleAddExistingFMs}> Add </Button>
-				</DialogActions>
-                </Dialog>
-            </Box>            
-        )}
+          )}
       </React.Fragment>
   );
 };
