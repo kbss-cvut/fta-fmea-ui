@@ -5,12 +5,10 @@ import * as failureModeService from "@services/failureModeService"
 import * as componentService from "@services/componentService"
 import * as systemService from "@services/systemService"
 import {FailureMode} from "@models/failureModeModel";
-import {ChildrenProps} from "@utils/hookUtils";
 import {filter} from "lodash";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {Component} from "@models/componentModel";
-import ComponentFailureModesList from "@components/editor/system/menu/failureMode/ComponentFailureModesList";
 
 type failureModeContextType = [
     Map<string, FailureMode>,
@@ -22,7 +20,9 @@ type failureModeContextType = [
     FailureMode[],
     (failureMode: FailureMode, dependantFailureMode: FailureMode, type: string) => void,
     (failureMode: FailureMode, dependantFailureMode: FailureMode, type: string) => void,
+    (failureMode: FailureMode) => void,
     (failureMode: FailureMode) => void
+
 ];
 
 const failureModeContext = createContext<failureModeContextType>(null!);
@@ -38,7 +38,8 @@ export const useFailureMode = () => {
         componentFailureModes,
         addDependantFailureMode,
         removeDependantFailureMode,
-        removeFailureMode
+        removeFailureMode,
+        addExistingFailureMode
     ] = useContext(failureModeContext);
     return [
         allFailureModes,
@@ -51,6 +52,7 @@ export const useFailureMode = () => {
         addDependantFailureMode,
         removeDependantFailureMode,
         removeFailureMode,
+        addExistingFailureMode
     ] as const;
 }
 
@@ -63,17 +65,6 @@ export const FailureModeProvider = ({children, component}: FailureModeProviderPr
     const [_allFailureModes, _setAllFailureModes] = useState<Map<string, FailureMode>>(new Map)
     const [_componentFailureModes,_setComponentFailureModes] = useState<FailureMode[]>([])
     const [showSnackbar] = useSnackbar()
-
-
-    // const addFailureMode = async (failureMode: FailureMode) => {
-    //     return componentService.addFailureMode(component.iri, failureMode.iri)
-    //         .then(fm => {
-    //             _setComponentFailureModes([..._componentFailureModes, fm])
-    //             _setAllFailureModes(new Map(_allFailureModes).set(fm.iri,fm))
-    //             showSnackbar('Failure mode created', SnackbarType.SUCCESS)
-    //             return fm
-    //         }).catch(reason => showSnackbar(reason, SnackbarType.ERROR))
-    // }
 
     const removeFailureMode = async (failureMode: FailureMode) => {
         componentService.removeFailureMode(component.iri, failureMode.iri)
@@ -132,9 +123,9 @@ export const FailureModeProvider = ({children, component}: FailureModeProviderPr
         failureModeService
             .removeDependantFailureMode(extractFragment(failureMode.iri), extractFragment(dependantFailureMode.iri), type)
             .then(() => {
-                if(type === "requiredBehavior"){
+                if(type === "requiredBehavior"){                 
                     failureMode.requiredBehaviors = filter(failureMode.requiredBehaviors, (fm) => fm.iri !== dependantFailureMode.iri);
-                }else{
+                }else{                    
                     failureMode.childBehaviors = filter(failureMode.childBehaviors, (fm) => fm.iri !== dependantFailureMode.iri);
                 }
             })
@@ -173,10 +164,35 @@ export const FailureModeProvider = ({children, component}: FailureModeProviderPr
 
     const editFailureMode = async (failureMode: FailureMode): Promise<FailureMode> =>{
         return failureModeService.editFailureMode(failureMode)
-            .then((value) => {
-                // showSnackbar("FailureMode edited", SnackbarType.SUCCESS))
-                return value
+            .then((editedFailureMode) => {
+                _setAllFailureModes(new Map([..._allFailureModes].filter(([iri, _fm]) => iri !== failureMode.iri)).set(editedFailureMode.iri, editedFailureMode));
+                showSnackbar("FailureMode edited", SnackbarType.SUCCESS);
+                return editedFailureMode
             })
+    }
+
+    const addExistingFailureMode = async (failureMode: FailureMode) => {
+        if(failureMode.component == null){
+            componentService
+            .addFailureModeByURI(component.iri, failureMode.iri)
+            .then(() => reassignVariables(failureMode))
+            .catch(reason => showSnackbar(reason, SnackbarType.ERROR));
+            return
+        }
+        
+        let oldComponent = failureMode.component
+        componentService
+            .removeFailureMode(oldComponent.iri, failureMode.iri)
+            .then(() => componentService.addFailureModeByURI(component.iri, failureMode.iri)
+                .then(() => reassignVariables(failureMode)))
+                .catch(reason => showSnackbar(reason, SnackbarType.ERROR));
+    }
+
+    const reassignVariables = (failureMode: FailureMode) => {
+        failureMode.component = component
+        _setComponentFailureModes([..._componentFailureModes.filter(el => el.iri !== failureMode.iri),failureMode])
+        _setAllFailureModes(new Map([..._allFailureModes].filter(([iri, _fm]) => iri !== failureMode.iri)).set(failureMode.iri, failureMode));
+        showSnackbar("FailureMode edited", SnackbarType.SUCCESS);
     }
 
     useEffect(() => {
@@ -197,6 +213,7 @@ export const FailureModeProvider = ({children, component}: FailureModeProviderPr
                 addDependantFailureMode,
                 removeDependantFailureMode,
                 removeFailureMode,
+                addExistingFailureMode
             ]}
         >
             {children}

@@ -6,7 +6,7 @@ const useStyles = makeStyles(() =>
         failureModes: {
             width: '100%'
         },
-        button: {
+        actionButton: {
             alignSelf: 'flex-end'
         },
         editHeader:{

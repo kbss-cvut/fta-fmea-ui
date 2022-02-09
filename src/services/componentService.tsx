@@ -228,6 +228,26 @@ export const removeComponentReferences = (system: System, componentIri: string):
     return system;
 }
 
+export const addFailureModeByURI = async (componentUri: string, failureModeUri: string): Promise<void> => {
+    try {
+        const fragment = extractFragment(componentUri);
+        const functionFragment = extractFragment(failureModeUri);
+
+        await axiosClient.post(
+            `/components/${fragment}/failureModes/${functionFragment}`,
+            {},
+            {
+                headers: authHeaders()
+            }
+        )
+        return new Promise((resolve) => resolve());
+    } catch (e) {
+        console.log('Component Service - Failed to call add failure mode by URI')
+        const defaultMessage = "Failed to add existing failure mode";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    }
+}
+
 export const addFailureMode = async (componentUri: string, failureMode: FailureMode): Promise<FailureMode> => {
     try {
         const componentFragment = extractFragment(componentUri);

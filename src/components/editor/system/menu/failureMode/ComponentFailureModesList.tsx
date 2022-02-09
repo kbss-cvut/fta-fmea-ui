@@ -2,7 +2,6 @@ import * as React from "react";
 import { useFailureMode } from "@hooks/useFailureModes";
 import {
   Box,
-  Checkbox,
   FormControl,
   FormGroup,
   IconButton,
@@ -14,7 +13,6 @@ import {
   MenuItem,
   Select,
   TextField,
-  Tooltip,
   Typography,
 } from "@material-ui/core";
 import { Edit } from "@material-ui/icons";
@@ -26,23 +24,42 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { BehaviorType, FailureMode } from "@models/failureModeModel";
 import useStyles from "../failureMode/ComponentFailureModesList.styles";
 import { schema } from "@components/dialog/failureMode/FailureMode.schema";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useConfirmDialog } from "@hooks/useConfirmDialog";
 import ComponentFailureModesEdit from "@components/editor/system/menu/failureMode/ComponentFailureModesEdit";
+import { Autocomplete } from "@material-ui/lab";
+import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
 
 const ComponentFailureModesList = ({ component }) => {
   const classes = useStyles();
-  const [allFailureModes, createFailureMode, , , , , componentFailureModes,,,removeFailureMode] = useFailureMode();
+  const [allFailureModes, createFailureMode, , , , , componentFailureModes,,,removeFailureMode, addExistingFailureModes] = useFailureMode();
   const [failureModeParts, setFailureModeParts] = useState<FailureMode[]>([]);
+	const [showSnackbar] = useSnackbar();
   const [showEdit, setShowEdit] = useState(false);
   const [requiredFailureModes, setRequiredFailureModes] = useState<FailureMode[]>([]);
   const [behaviorType, setBehaviorType] = useState<BehaviorType>(BehaviorType.ATOMIC);
   const [selectedFailureMode, setSelectedFailureMode] = useState<FailureMode>();
   const [requestConfirmation] = useConfirmDialog();
+  const [failureModesToAdd, setFailureModesToAdd] = useState<FailureMode[]>([]);
+  const [dialog, showDialog] = useState<boolean>(false);
 
   const showEditForm = (fm: FailureMode) => {
     setSelectedFailureMode(fm);
     setShowEdit(true);
+  };
+
+  const handleClickOpen = () => {
+    showDialog(true);
+  };
+
+  const closeDialogWindow = () => {
+    setFailureModesToAdd([]);
+    showDialog(false);
   };
 
   const { register, handleSubmit, errors, control, reset } = useForm({
@@ -72,6 +89,11 @@ const ComponentFailureModesList = ({ component }) => {
     setBehaviorType(BehaviorType.ATOMIC);
   };
 
+  const handleAddExistingFMs = () => {
+    failureModesToAdd.forEach(fm => addExistingFailureModes(fm)) 
+    closeDialogWindow();
+  }
+  
   const handleDeleteFunction = (failureMode: FailureMode) => {
     requestConfirmation({
       title: "Delete Failure Mode?",
@@ -100,10 +122,10 @@ const ComponentFailureModesList = ({ component }) => {
                       <ListItem key={fm.iri}>
                         <ListItemText primary={fm.name} />
                         <ListItemSecondaryAction>
-                          <IconButton className={classes.button} onClick={() => showEditForm(fm)}>
+                          <IconButton className={classes.actionButton} onClick={() => showEditForm(fm)}>
                             <Edit />
                           </IconButton>
-                          <IconButton className={classes.button} onClick={() => handleDeleteFunction(fm)}>
+                          <IconButton className={classes.actionButton} onClick={() => handleDeleteFunction(fm)}>
                             <DeleteIcon />
                           </IconButton>
                         </ListItemSecondaryAction>
@@ -166,18 +188,44 @@ const ComponentFailureModesList = ({ component }) => {
                         setSelectedFailureModes={setRequiredFailureModes}
                         setCurrentFailureModes={() => {}}
                     />
-                    <IconButton
-                        className={classes.button}
-                        color="primary"
-                        component="span"
-                        onClick={handleSubmit(_handleCreateFailureMode)}
-                    >
-                      <AddIcon />
-                    </IconButton>
+                    <Box className={classes.actionButton}>
+                    	<Button color="primary" variant="outlined" onClick={handleClickOpen} component="span">Add existing</Button>      
+						<IconButton
+							className={classes.actionButton}
+							color="primary"
+							component="span"
+							onClick={handleSubmit(_handleCreateFailureMode)}
+						>
+						<AddIcon />
+						</IconButton>
+                    </Box>
                   </FormControl>
                 </FormGroup>
               </Box>
-            </Box>
+			  
+              <Dialog open={dialog} onClose={closeDialogWindow} fullWidth maxWidth="sm" >
+				<DialogTitle>Add existing failure mode </DialogTitle>
+				<DialogContent>
+				<Autocomplete
+					id="add-existing-failure-mode"
+					options={[...allFailureModes].filter(([fmIri, fm]) => ((fm.component && fm.component.iri) || "") !== component.iri).map(value => value[1])}
+					value={failureModesToAdd}
+					onChange={(event: any, newValue: any) => {
+						setFailureModesToAdd(newValue);
+						showSnackbar('Failure mode\'s component will be changed', SnackbarType.INFO);
+						}}
+					getOptionLabel={(option) => option.name + " (" + (option.component == null ? "None": option.component.name) + ")"}
+					fullWidth
+					multiple
+					renderInput={(params) => <TextField {...params} label="Existing failure modes" />}
+				/>
+				</DialogContent>
+				<DialogActions>
+				<Button color="primary" onClick={closeDialogWindow}> Cancel </Button>
+				<Button color="primary" onClick={handleAddExistingFMs}> Add </Button>
+				</DialogActions>
+                </Dialog>
+            </Box>            
         )}
       </React.Fragment>
   );

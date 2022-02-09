@@ -183,7 +183,7 @@ const ComponentFailureModesEdit = (props: {
 								setCurrentFailureModes={() => {}}
 							/>
 							<IconButton
-								className={classes.button}
+								className={classes.actionButton}
 								color="primary"
 								component="span"
 								onClick={handleSubmit(updateFailureMode)}
