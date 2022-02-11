@@ -67,7 +67,7 @@ const ComponentSidebarMenu = ({component, onComponentUpdated, systemComponents}:
                 <Typography variant="h6" gutterBottom>Functions</Typography>
                 <FunctionsProvider componentUri={component?.iri}>
                     <FailureModeProvider component={component}>
-                        <ComponentFunctionsList/>
+                        <ComponentFunctionsList component={component} />
                         <ComponentFailureModesList component={component}/>
                     </FailureModeProvider>
                 </FunctionsProvider>

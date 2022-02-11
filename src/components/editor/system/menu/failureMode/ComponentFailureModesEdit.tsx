@@ -1,4 +1,3 @@
-import { useConfirmDialog } from "@hooks/useConfirmDialog";
 import { useFailureMode } from "@hooks/useFailureModes";
 import { BehaviorType, FailureMode } from "@models/failureModeModel";
 import * as React from "react";
@@ -6,29 +5,22 @@ import useStyles from "../failureMode/ComponentFailureModesList.styles";
 import {
 	Grid,
 	Box,
-	Checkbox,
 	FormControl,
 	FormGroup,
 	IconButton,
 	InputLabel,
-	List,
-	ListItem,
-	ListItemSecondaryAction,
-	ListItemText,
-	MenuItem,
 	Select,
 	TextField,
-	Tooltip,
-	Typography,
+	MenuItem
 } from "@material-ui/core";
 import { schema } from "@components/dialog/failureMode/FailureMode.schema";
 import FailureModesList from "@components/editor/failureMode/FailureModesList";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
-import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 import { useEffect } from "react";
+import { checkArray } from "@utils/validationUtils";
 
 const ComponentFailureModesEdit = (props: {
 	selectedFailureMode: FailureMode;
@@ -36,13 +28,15 @@ const ComponentFailureModesEdit = (props: {
 	setShowEdit;
 }) => {
 	const classes = useStyles();
-	const [allFailureModes, createFailureMode, editFailureMode ,,,, componentFailureModes, addDependantFailureMode, removeDependantFailureMode] = useFailureMode();
+	const [allFailureModes,, editFailureMode ,,,,, addDependantFailureMode, removeDependantFailureMode,,,getTransitiveClosure] = useFailureMode();
 	const [failureModeParts, setFailureModeParts] = React.useState<FailureMode[]>([]);
 	const [requiredFailureModes, setRequiredFailureModes] = React.useState<FailureMode[]>([]);
 	const [behaviorType, setBehaviorType] = React.useState<BehaviorType>(BehaviorType.ATOMIC);
-	const [requestConfirmation] = useConfirmDialog();
+	const [childTransitiveClosure, setChildTransitiveClosure] = React.useState<string[]>([]);
+	const [requiredTransitiveClosure, setRequiredTransitiveClosure] = React.useState<string[]>([]);
 
-	const { register, handleSubmit, errors, control, reset } = useForm({
+
+	const { register, handleSubmit, errors, control } = useForm({
 		resolver: yupResolver(schema),
 	});
 
@@ -61,25 +55,17 @@ const ComponentFailureModesEdit = (props: {
         currentFMs.forEach((fm) => {
 			if (!selectedFMIris.includes(fm.iri)) {
                 removeDependantFailureMode(props.selectedFailureMode, fm, type);
-                console.log("odstranuju req");
-                
 			}
 		});
 
 		selectedFMs.forEach((fm) => {
 			if (!currentFMIris.includes(fm.iri)) {
                 addDependantFailureMode(props.selectedFailureMode, fm, type);
-
-				
-                console.log("pridavam req");
-                console.log(fm);
-				console.log(fm.iri);
 			}
 		});
 	};
 
 	const updateFailureMode = (values: any) => {
-        console.log(values)
         props.selectedFailureMode.name = values.name;
         props.selectedFailureMode.behaviorType = behaviorType;
         processFailureModeUpdate(props.selectedFailureMode.requiredBehaviors, requiredFailureModes, "requiredBehavior");
@@ -93,30 +79,30 @@ const ComponentFailureModesEdit = (props: {
 		if (event.target.value === BehaviorType.ATOMIC) {
 			setFailureModeParts([]);
 		}
-		console.log(componentFailureModes);
 	};
 
 	useEffect(() => {
-		if (
-			!Array.isArray(props.selectedFailureMode.childBehaviors) &&
-			props.selectedFailureMode.childBehaviors != null
-		) {
-			props.selectedFailureMode.childBehaviors = [props.selectedFailureMode.childBehaviors];
-		}
-		if (
-			!Array.isArray(props.selectedFailureMode.requiredBehaviors) &&
-			props.selectedFailureMode.requiredBehaviors != null
-		) {
-			props.selectedFailureMode.requiredBehaviors = [props.selectedFailureMode.requiredBehaviors];
-		}
+
+		props.selectedFailureMode.childBehaviors = checkArray(props.selectedFailureMode.childBehaviors);
+		props.selectedFailureMode.requiredBehaviors = checkArray(props.selectedFailureMode.requiredBehaviors);
 
 		setBehaviorType(props.selectedFailureMode.behaviorType);
+		
 		setFailureModeParts(
 			props.selectedFailureMode.childBehaviors.map((fm) => allFailureModes.get(fm.iri))
 		);
+
 		setRequiredFailureModes(
 			props.selectedFailureMode.requiredBehaviors.map((fm) => allFailureModes.get(fm.iri))
 		);
+
+		getTransitiveClosure(props.selectedFailureMode.iri, "child").then(value => {
+			setChildTransitiveClosure(value)    
+		})
+	
+		getTransitiveClosure(props.selectedFailureMode.iri, "required").then(value => {
+			setRequiredTransitiveClosure(value)
+		})
 	}, []);
 
 	return (
@@ -171,6 +157,7 @@ const ComponentFailureModesEdit = (props: {
 									selectedFailureModes={failureModeParts}
 									setSelectedFailureModes={setFailureModeParts}
 									setCurrentFailureModes={() => {}}
+									transitiveClosure={childTransitiveClosure}
 								/>
 							</FormControl>
 						)}
@@ -180,7 +167,8 @@ const ComponentFailureModesEdit = (props: {
 								functionIri={""}
 								selectedFailureModes={requiredFailureModes}
 								setSelectedFailureModes={setRequiredFailureModes}
-								setCurrentFailureModes={() => {}}
+								setCurrentFailureModes={() => { } } 
+								transitiveClosure={requiredTransitiveClosure}
 							/>
 							<IconButton
 								className={classes.actionButton}

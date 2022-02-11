@@ -188,3 +188,18 @@ export const editFailureMode = async (failureMode: FailureMode): Promise<Failure
         return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 };
+
+export const getTransitiveClosure = async (failureModeUri: string, type: string): Promise<string[]> => {
+    try {
+      const failureModeFragment = extractFragment(failureModeUri);
+      const response = await axiosClient.get<string[]>(`/failureModes/${failureModeFragment}/${type}TransitiveClosure`, {
+        headers: authHeaders(),
+      });
+      return response.data
+    } catch (e) {
+      console.log("FailureMode Service - Failed to call getTransitiveClosure");
+      const defaultMessage = "Failed to load component";
+      return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    }
+  };
+  

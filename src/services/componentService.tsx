@@ -139,6 +139,28 @@ export const addFunction = async (componentUri: string, f: Function): Promise<Fu
     }
 }
 
+export const addFunctionByURI = async (componentUri: string, functionUri: string): Promise<Function> => {
+    try {
+        const fragment = extractFragment(componentUri);
+        const functionFragment = extractFragment(functionUri);
+        
+        const response = await axiosClient.post(
+            `/components/${fragment}/functions/${functionFragment}`,
+            {},
+            {
+                headers: authHeaders()
+            }
+        )
+
+        return JsonLdUtils.compactAndResolveReferences<Function>(response.data, CONTEXT);
+    } catch (e) {
+        console.log(e)
+        console.log('Component Service - Failed to call add function by URI')
+        const defaultMessage = "Failed to add existing function";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    }
+}
+
 export const removeFunction = async (componentIri: string, functionIri: string) => {
     try {
         const componentFragment = extractFragment(componentIri);

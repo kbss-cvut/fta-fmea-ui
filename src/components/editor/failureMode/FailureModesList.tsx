@@ -5,21 +5,26 @@ import {FailureMode} from "@models/failureModeModel";
 import {formatOutput} from "@utils/formatOutputUtils";
 import {useEffect} from "react";
 import {useFunctions} from "@hooks/useFunctions";
+import useStyles from "@components/editor/system/menu/failureMode/ComponentFailureModesList.styles";
+
 
 interface Props {
     label: string,
     functionIri: string,
     selectedFailureModes: FailureMode[],
     setSelectedFailureModes: (arg) => void,
-    setCurrentFailureModes: (arg) => void
+    setCurrentFailureModes: (arg) => void,
+    transitiveClosure: string[]
 }
 
 const FailureModesList = ({   label,
                               functionIri,
                               selectedFailureModes,
                               setSelectedFailureModes,
-                              setCurrentFailureModes
+                              setCurrentFailureModes,
+                              transitiveClosure
                           }: Props) => {
+    const classes = useStyles();
     const [allFailureModes] = useFailureMode()
     const [, , , , , , , , getFailureModes] = useFunctions()
 
@@ -32,9 +37,7 @@ const FailureModesList = ({   label,
         if (functionIri != "") {
             getFailureModes(functionIri)
                 .then(failureModes => {
-                    failureModes.forEach(failureMode=>{
-                        selectedFailureModes.push(allFailureModes.get(failureMode.iri))
-                    })
+                    setSelectedFailureModes([...selectedFailureModes, ...failureModes.map(fm => allFailureModes.get(fm.iri))])
                     setCurrentFailureModes(failureModes)
                 })
         }
@@ -54,7 +57,7 @@ const FailureModesList = ({   label,
 
                 {(Array.from(allFailureModes.values())).map((failureMode) =>
                     //@ts-ignore
-                    <MenuItem key={failureMode.iri} value={failureMode}>
+                    <MenuItem key={failureMode.iri} value={failureMode} className={(transitiveClosure.includes(failureMode.iri) ? classes.closure : "")}>
                         <Checkbox checked={selectedFailureModes.includes(failureMode)}/>
                         <ListItemText primary={failureMode.name + " (" + (failureMode.component !== undefined ? failureMode.component.name : "None") + ")"}/>
                     </MenuItem>

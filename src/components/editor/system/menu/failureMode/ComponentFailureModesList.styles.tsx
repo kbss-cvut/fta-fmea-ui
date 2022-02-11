@@ -12,7 +12,10 @@ const useStyles = makeStyles(() =>
         editHeader:{
             display: 'flex',
             justifyContent: 'space-between'
-        }
+        },
+        closure :{
+            color: "#A9A9A9"
+        } 
     }),
 );
 

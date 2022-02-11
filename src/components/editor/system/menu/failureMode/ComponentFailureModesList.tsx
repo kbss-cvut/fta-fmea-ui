@@ -186,13 +186,14 @@ const ComponentFailureModesList = ({ component }) => {
 
                           {behaviorType != BehaviorType.ATOMIC && (
                               <FormControl fullWidth>
-                                  <FailureModesList
-                                      label={"Parts: "}
-                                      functionIri={""}
-                                      selectedFailureModes={failureModeParts}
-                                      setSelectedFailureModes={setFailureModeParts}
-                                      setCurrentFailureModes={() => {}}
-                                  />
+                                <FailureModesList
+                                          label={"Parts: "}
+                                          functionIri={""}
+                                          selectedFailureModes={failureModeParts}
+                                          setSelectedFailureModes={setFailureModeParts}
+                                          setCurrentFailureModes={() => { } }
+                                           transitiveClosure={[]}
+                                />
                               </FormControl>
                           )}
                           <FormControl fullWidth>
@@ -202,6 +203,7 @@ const ComponentFailureModesList = ({ component }) => {
                                   selectedFailureModes={requiredFailureModes}
                                   setSelectedFailureModes={setRequiredFailureModes}
                                   setCurrentFailureModes={() => {}}
+                                  transitiveClosure={[]}
                               />
                               <Box className={classes.actionButton}>
                                   <Button color="primary" variant="outlined" onClick={handleClickOpen} component="span">

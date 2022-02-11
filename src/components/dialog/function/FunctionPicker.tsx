@@ -1,4 +1,5 @@
 import * as React from "react";
+import {useState} from "react";
 
 import {Box, IconButton, TextField, Typography} from "@material-ui/core";
 import {useFunctions} from "@hooks/useFunctions";
@@ -8,8 +9,8 @@ import AddIcon from "@material-ui/icons/Add";
 import {Controller, useForm} from "react-hook-form";
 import {schema} from "./FunctionPicker.schema";
 import useStyles from "./FunctionPicker.styles";
-import { yupResolver } from "@hookform/resolvers/yup";
-import {useState} from "react";
+import {yupResolver} from "@hookform/resolvers/yup";
+import {BehaviorType} from "@models/failureModeModel";
 
 interface Props {
     selectedFunctions: Function[] | null,
@@ -25,7 +26,7 @@ const FunctionPicker = ({selectedFunctions, onFunctionsSelected}: Props) => {
     });
 
     const _handleCreateFunction = (values: any) => {
-        addFunction({failureModes: [], requiredFunctions: [], name: values.name})
+        addFunction({behaviorType: BehaviorType.ATOMIC, childBehaviors: [], failureModes: [], requiredFunctions: [], name: values.name})
         reset(values)
     }
 

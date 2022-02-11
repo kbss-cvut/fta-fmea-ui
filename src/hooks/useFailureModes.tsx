@@ -21,7 +21,9 @@ type failureModeContextType = [
     (failureMode: FailureMode, dependantFailureMode: FailureMode, type: string) => void,
     (failureMode: FailureMode, dependantFailureMode: FailureMode, type: string) => void,
     (failureMode: FailureMode) => void,
-    (failureMode: FailureMode) => void
+    (failureMode: FailureMode) => void,
+    (failureModeUri: string, type: string) => Promise<string[]>,
+
 
 ];
 
@@ -39,7 +41,8 @@ export const useFailureMode = () => {
         addDependantFailureMode,
         removeDependantFailureMode,
         removeFailureMode,
-        addExistingFailureMode
+        addExistingFailureMode,
+        getTransitiveClosure
     ] = useContext(failureModeContext);
     return [
         allFailureModes,
@@ -52,7 +55,8 @@ export const useFailureMode = () => {
         addDependantFailureMode,
         removeDependantFailureMode,
         removeFailureMode,
-        addExistingFailureMode
+        addExistingFailureMode,
+        getTransitiveClosure
     ] as const;
 }
 
@@ -104,6 +108,11 @@ export const FailureModeProvider = ({children, component}: FailureModeProviderPr
         failureModeService
             .removeFailureModeToFunction(extractFragment(functionIri),extractFragment(failureModeIri))
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
+    }
+
+    const getTransitiveClosure = async (functionUri: string, type: string) => {
+        return failureModeService.getTransitiveClosure(functionUri,type)
+        .then(value => value)
     }
 
     const addDependantFailureMode = async (failureMode: FailureMode, dependantFailureMode: FailureMode, type: string) => {
@@ -213,7 +222,8 @@ export const FailureModeProvider = ({children, component}: FailureModeProviderPr
                 addDependantFailureMode,
                 removeDependantFailureMode,
                 removeFailureMode,
-                addExistingFailureMode
+                addExistingFailureMode,
+                getTransitiveClosure
             ]}
         >
             {children}
