@@ -15,6 +15,8 @@ import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import {DashboardTitleProps} from "@components/dashboard/DashboardTitleProps";
 import * as joint from "jointjs";
 import {FTABoundary} from "@components/editor/faultTree/shapes/shapesDefinitions";
+import {AppBar, Box, Tab, Tabs, Typography} from "@material-ui/core";
+import EditorTree from "@components/editor/system/tree/EditorTree";
 
 const Editor = ({setAppBarName}: DashboardTitleProps) => {
     const [requestConfirmation] = useConfirmDialog()
@@ -58,15 +60,35 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
     const handleElementPointerClick = (elementView) => {
         const componentIri = elementView.model.get('custom/componentIri');
 
-        // @ts-ignore
-        const flattenedComponents = flatten([_localContext.system.components]);
-        const index = findIndex(flattenedComponents, el => el.iri === componentIri);
-        if (index > -1) {
-            setSidebarSelectedComponent(flattenedComponents[index]);
+        setSidebarSelectedIRI(componentIri, () => {
             setHighlightedElementView(elementView);
             highlightBorders(elementView);
+        })
+        // // @ts-ignore
+        // const flattenedComponents = flatten([_localContext.system.components]);
+        // const index = findIndex(flattenedComponents, el => el.iri === componentIri);
+        // if (index > -1) {
+        //     setSidebarSelectedComponent(flattenedComponents[index]);
+        //     setHighlightedElementView(elementView);
+        //     highlightBorders(elementView);
+        // }
+    };
+
+    const setSidebarSelectedIRI = (componentIri : string, onSuccess? : () => void) => {
+        // @ts-ignore
+        const component = getComponent(componentIri);
+        if (component !== null) {
+            setSidebarSelectedComponent(component);
+            if(onSuccess) onSuccess()
         }
-    }
+    };
+
+    const getComponent = (iri : string) => {
+        // @ts-ignore
+        const flattenedComponents = flatten([_localContext.system.components]);
+        const index = findIndex(flattenedComponents, el => el.iri === iri);
+        return index > -1 ? flattenedComponents[index] : null;
+    };
 
     const handleBlankPointerClick = () => {
         setSidebarSelectedComponent(null);
@@ -108,19 +130,88 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
             explanation: 'Deleting the component will delete all associated functions and failure modes. Are you sure?',
             onConfirm: deleteComponent,
         })
-    }
+    };
+
+
+    function a11yProps(index) {
+        return {
+            id: `simple-tab-${index}`,
+            'aria-controls': `simple-tabpanel-${index}`,
+        };
+    };
+
+    const [tab, setTab] = React.useState(0);
+    const handleChange = (event, newTab) => {
+        setTab(newTab);
+    };
+    function TabPanel(props) {
+        const { children, value, index, ...other } = props;
+        // const selected = value == index
+        return value == index ? children : null
+        // if(selected)
+        //     return children;
+        // return null
+        // return (
+            // <div
+            //     role="tabpanel"
+            //     hidden={value !== index}
+            //     id={`simple-tabpanel-${index}`}
+            //     aria-labelledby={`simple-tab-${index}`}
+            //     {...other}
+            // >
+            //     {value === index && (
+            //         <Box p={3}>
+            //             <Typography>{children}</Typography>
+            //         </Box>
+            //     )}
+            // </div>
+        // );
+    };
 
     return (
         <React.Fragment>
-            <EditorCanvas
-                system={system}
-                onComponentUpdated={handleComponentUpdate}
-                sidebarSelectedComponent={sidebarSelectedComponent}
-                onBlankContextMenu={handleBlankContextMenu}
-                onElementContextMenu={handleContextMenu}
-                onBlankPointerClick={handleBlankPointerClick}
-                onElementPointerClick={handleElementPointerClick}
-                setHighlightedElement={setHighlightedElementView}/>
+            <AppBar position="static">
+                <Tabs value={tab} onChange={handleChange} aria-label="simple tabs example">
+                    <Tab label="System Partonomy Diagram" {...a11yProps(0)} />
+                    <Tab label="System Partonomy Tree" {...a11yProps(1)} />
+                </Tabs>
+            </AppBar>
+            {/*<TabPanel value={tab} index={0}>*/}
+            {/*    /!*Item Three*!/*/}
+            {/*</TabPanel>*/}
+
+            {
+                tab == 0 &&
+                <EditorCanvas
+                    system={system}
+                    onComponentUpdated={handleComponentUpdate}
+                    sidebarSelectedComponent={sidebarSelectedComponent}
+                    onBlankContextMenu={handleBlankContextMenu}
+                    onElementContextMenu={handleContextMenu}
+                    onBlankPointerClick={handleBlankPointerClick}
+                    onElementPointerClick={handleElementPointerClick}
+                    setHighlightedElement={setHighlightedElementView}/> }
+
+            <TabPanel value={tab} index={1}>
+                {/*Item Two*/}
+                <EditorTree system={system}
+                            onComponentUpdated={handleComponentUpdate}
+                            // getSidebarSelectedComponent={() => sidebarSelectedComponent}
+                            onBlankContextMenu={handleBlankContextMenu}
+                            onElementContextMenu={handleContextMenu}
+                            onBlankPointerClick={handleBlankPointerClick}
+                            // setSidebarSelectedComponent={setSidebarSelectedIRI}
+                            setHighlightedElement={setHighlightedElementView}
+                />
+            </TabPanel>
+            {/*<TabPanel value={tab} index={2}>*/}
+            {/*    Item Three*/}
+            {/*</TabPanel>*/}
+
+            <ComponentDialog open={componentDialogOpen}
+                             onCreated={handleComponentCreated}
+                             onClose={() => setComponentDialogOpen(false)}/>
+
 
             <ComponentContextMenu
                 anchorPosition={contextMenuAnchor}
