@@ -60,7 +60,7 @@ const AppBar = ({title, showBackButton = false}: Props) => {
             onClose={handleMenuClose}
         >
 
-            {loggedUser.roles.indexOf("ROLE_ADMIN") >= 0 &&
+            {loggedUser.roles && loggedUser.roles.indexOf("ROLE_ADMIN") >= 0 &&
             <MenuItem onClick={navigateToAdmin}>Administration</MenuItem>
             }
             <MenuItem onClick={handleChangePasswordDialogOpen}>Change Password</MenuItem>
