@@ -20,7 +20,7 @@ const FailureModeShowDialog = ({open, onClose, failureMode}: Props) => {
     const [showSnackbar] = useSnackbar();
 
     // resolve references from component functions
-    const componentFunctions = flatten([failureMode?.influencedFunctions])?.map(modeFunction => {
+    const componentFunctions = flatten([failureMode?.impairedBehaviors])?.map(modeFunction => {
         return find(flatten([failureMode?.component?.functions]), (f) => f?.iri === modeFunction?.iri)
     })
 

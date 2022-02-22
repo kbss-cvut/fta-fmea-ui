@@ -146,7 +146,7 @@ const FailureModeStepper = ({
         merge(mitigation, selectedMitigation);
 
         failureMode.component = selectedComponent
-        failureMode.influencedFunctions = selectedFunctions
+        failureMode.impairedBehaviors = selectedFunctions
         failureMode.mitigation = mitigation
 
         onConfirmationClick(failureMode)

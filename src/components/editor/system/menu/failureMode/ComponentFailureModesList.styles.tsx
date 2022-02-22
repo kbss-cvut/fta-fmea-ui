@@ -3,20 +3,20 @@ import {createStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() =>
     createStyles({
-        functions: {
-            width: "100%",
+        failureModes: {
+            width: '100%'
         },
-        button: {
-            alignSelf: "flex-end",
+        actionButton: {
+            alignSelf: 'flex-end'
         },
-        editHeader: {
-            display: "flex",
-            justifyContent: "space-between",
+        editHeader:{
+            display: 'flex',
+            justifyContent: 'space-between'
         },
-        closure: {
+        closure :{
             color: "#A9A9A9"
-        }
-    })
+        } 
+    }),
 );
 
 export default useStyles;

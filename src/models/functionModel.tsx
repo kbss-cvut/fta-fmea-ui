@@ -1,11 +1,13 @@
 import VocabularyUtils from "@utils/VocabularyUtils";
-import {FailureMode, CONTEXT as FAILURE_MODE_CONTEXT} from "@models/failureModeModel";
+import {FailureMode, CONTEXT as FAILURE_MODE_CONTEXT, BehaviorType} from "@models/failureModeModel";
 import {AbstractModel, CONTEXT as ABSTRACT_CONTEXT} from "@models/abstractModel";
 
 const ctx = {
     "name": VocabularyUtils.PREFIX + "hasName",
-    "failureModes": VocabularyUtils.PREFIX + "hasFailureMode",
-    "requiredFunctions": VocabularyUtils.PREFIX + "requires"
+    "failureModes": VocabularyUtils.PREFIX + "impairedBy",
+    "requiredFunctions": VocabularyUtils.PREFIX + "requires",
+    "childBehaviors": VocabularyUtils.PREFIX + "hasChildBehavior",
+    "behaviorType": VocabularyUtils.PREFIX + "hasBehaviorType"
 };
 
 export const CONTEXT = Object.assign({}, ABSTRACT_CONTEXT, FAILURE_MODE_CONTEXT, ctx);
@@ -16,5 +18,7 @@ export interface CreateFunction extends AbstractModel {
 
 export interface Function extends CreateFunction {
     failureModes: FailureMode[],
-    requiredFunctions: Function[]
+    requiredFunctions: Function[],
+    childBehaviors: Function[],
+    behaviorType: BehaviorType
 }
