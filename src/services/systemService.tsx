@@ -6,6 +6,7 @@ import VocabularyUtils from "@utils/VocabularyUtils";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {deepOmit} from "@utils/lodashUtils";
 import {handleServerError} from "@services/utils/responseUtils";
+import { FailureMode } from "@models/failureModeModel";
 
 export const findAll = async (): Promise<System[]> => {
     try {
@@ -140,6 +141,25 @@ export const removeComponent = async (systemIri: string, componentUri: string): 
     } catch (e) {
         console.log('System Service - Failed to call /removeComponent')
         const defaultMessage = "Failed to remove component";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    }
+}
+
+export const failureModes = async (systemIri: string): Promise<FailureMode[]> => {
+    try {
+        const systemFragment = extractFragment(systemIri);
+
+        const response = await axiosClient.get<FailureMode[]>(
+            `/systems/${systemFragment}/failureModes`,
+            {
+                headers: authHeaders()
+            }
+        )
+
+        return JsonLdUtils.compactAndResolveReferencesAsArray<FailureMode>(response.data, CONTEXT)
+    } catch (e) {
+        console.log('System Service - Failed to call /findAll')
+        const defaultMessage = "Failed to load systems";
         return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }

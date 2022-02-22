@@ -21,15 +21,28 @@ interface Props {
     sidebarSelectedComponent: Component,
     onBlankContextMenu: (evt: any) => void,
     onElementContextMenu: (element: any, evt: any) => void,
+    onElementPointerClick: (element: any, evt: any) => void,
+    onBlankPointerClick: () => void,
     onComponentUpdated: (component: Component) => void,
+    setHighlightedElement: (element: any) => void,
 }
 
-const EditorCanvas = ({system, sidebarSelectedComponent, onBlankContextMenu, onElementContextMenu, onComponentUpdated}: Props) => {
+const EditorCanvas = ({
+                          system,
+                          sidebarSelectedComponent,
+                          onBlankContextMenu,
+                          onElementContextMenu,
+                          onElementPointerClick,
+                          onBlankPointerClick,
+                          onComponentUpdated,
+                          setHighlightedElement
+                      }: Props) => {
     const classes = useStyles()
 
     const containerRef = useRef(null)
 
     const [container, setContainer] = useState<joint.dia.Graph>()
+    const [jointPaper, setJointPaper] = useState<joint.dia.Paper>()
 
     const [svgZoom, setSvgZoom] = useState(null)
     const [currentZoom, setCurrentZoom] = useState(1);
@@ -68,9 +81,16 @@ const EditorCanvas = ({system, sidebarSelectedComponent, onBlankContextMenu, onE
             'element:contextmenu': (elementView, evt) => {
                 onElementContextMenu(elementView, evt)
             },
+            'element:pointerclick': (elementView, evt) => {
+                onElementPointerClick(elementView, evt)
+            },
+            'blank:pointerclick': () => onBlankPointerClick(),
+            'blank:pointerdown': () => diagramZoom.enablePan(),
+            'blank:pointerup': () => diagramZoom.disablePan(),
         })
 
         setContainer(graph)
+        setJointPaper(paper)
     }, []);
 
     useEffect(() => {
@@ -103,6 +123,14 @@ const EditorCanvas = ({system, sidebarSelectedComponent, onBlankContextMenu, onE
     }
 
     const layout = (graph) => {
+        graph.getElements().forEach((el) => {
+            const componentIri = el.get('custom/componentIri');
+            if(componentIri && componentIri === sidebarSelectedComponent?.iri) {
+                const elementView = el.findView(jointPaper);
+                setHighlightedElement(elementView)
+            }
+        })
+
         joint.layout.DirectedGraph.layout(graph, {
             rankDir: "BT",
             dagre: dagre,

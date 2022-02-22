@@ -6,7 +6,6 @@ import * as joint from 'jointjs';
 import * as dagre from 'dagre';
 import * as graphlib from 'graphlib';
 import SidebarMenu from "../menu/SidebarMenu";
-import {FTABoundary} from "../shapes/shapesDefinitions";
 import {FaultEvent} from "@models/eventModel";
 import FaultEventMenu from "@components/editor/faultTree/menu/faultEvent/FaultEventMenu";
 import {CurrentFaultTreeTableProvider} from "@hooks/useCurrentFaultTreeTable";
@@ -20,17 +19,32 @@ interface Props {
     rootEvent: FaultEvent,
     sidebarSelectedEvent: FaultEvent,
     onElementContextMenu: (element: any, evt: any) => void,
+    onElementPointerClick: (element: any, evt: any) => void,
+    onBlankPointerClick: () => void,
     onEventUpdated: (faultEvent: FaultEvent) => void,
     onConvertToTable: () => void,
     refreshTree: () => void,
+    setHighlightedElement: (element: any) => void,
 }
 
-const EditorCanvas = ({treeName, rootEvent, sidebarSelectedEvent, onElementContextMenu, onEventUpdated, onConvertToTable, refreshTree}: Props) => {
+const EditorCanvas = ({
+                          treeName,
+                          rootEvent,
+                          sidebarSelectedEvent,
+                          onElementContextMenu,
+                          onElementPointerClick,
+                          onBlankPointerClick,
+                          onEventUpdated,
+                          onConvertToTable,
+                          refreshTree,
+                          setHighlightedElement
+                      }: Props) => {
     const classes = useStyles()
 
     const containerRef = useRef(null)
 
     const [container, setContainer] = useState<joint.dia.Graph>()
+    const [jointPaper, setJointPaper] = useState<joint.dia.Paper>()
 
     const [svgZoom, setSvgZoom] = useState(null)
     const [currentZoom, setCurrentZoom] = useState(1);
@@ -67,22 +81,20 @@ const EditorCanvas = ({treeName, rootEvent, sidebarSelectedEvent, onElementConte
             'element:contextmenu': (elementView, evt) => {
                 onElementContextMenu(elementView, evt)
             },
-            'element:mouseenter': (elementView) => {
-                const tools = new joint.dia.ToolsView({
-                    tools: [FTABoundary.factory()]
-                });
-                elementView.addTools(tools);
+            'element:pointerclick': (elementView, evt) => {
+                onElementPointerClick(elementView, evt)
             },
-            'element:mouseleave': function (elementView) {
-                elementView.removeTools();
-            },
+            'blank:pointerclick': () => onBlankPointerClick(),
+            'blank:pointerdown': () => diagramZoom.enablePan(),
+            'blank:pointerup': () => diagramZoom.disablePan(),
         })
 
         setContainer(graph)
+        setJointPaper(paper);
     }, []);
 
     useEffect(() => {
-        if(isExportingImage) {
+        if (isExportingImage) {
             const svgPaper = document.querySelector('#jointjs-container > svg');
             const padding = 20;
             const bbox = container.getBBox().inflate(padding);
@@ -105,6 +117,12 @@ const EditorCanvas = ({treeName, rootEvent, sidebarSelectedEvent, onElementConte
         const autoLayoutElements = [];
         const manualLayoutElements = [];
         graph.getElements().forEach((el) => {
+            const faultEventIri = el.get('custom/faultEventIri');
+            if(faultEventIri && faultEventIri === sidebarSelectedEvent?.iri) {
+                const elementView = el.findView(jointPaper);
+                setHighlightedElement(elementView)
+            }
+
             if (el.get('type') === 'fta.ConditioningEvent') {
                 manualLayoutElements.push(el);
             } else {

@@ -24,7 +24,8 @@ export interface UpdateComponent extends AbstractUpdateModel {
 }
 
 export interface Component extends CreateComponent, AbstractModel {
+    uri: string,
     functions?: Function[],
     failureModes?: FailureMode[],
-    system?: System,
+    system?: System
 }
