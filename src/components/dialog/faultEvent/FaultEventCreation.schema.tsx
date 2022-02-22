@@ -4,7 +4,7 @@ import {EventType, GateType} from "@models/eventModel";
 
 export const schema = Yup.object().shape({
     name: Yup.string()
-        .min(3, 'Must be at least 3 character long')
+        .min(1, 'Must be at least 1 character long')
         .required('Event is mandatory'),
     description: Yup.string().default(''),
     probability: Yup.number()
