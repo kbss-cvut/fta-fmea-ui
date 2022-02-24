@@ -22,7 +22,10 @@ const AppRoutes = () => {
         <LoggedUserProvider>
             <Router history={appHistory}>
                 <Switch>
-                    <AdminRoute path={ROUTES.REGISTER} component={Register} restricted={true} exact/>
+                    {process.env.REACT_APP_ADMIN_REGISTRATION_ONLY === "true" 
+                        ? <AdminRoute  path={ROUTES.REGISTER} component={Register} restricted={true} exact />
+                        : <PublicRoute path={ROUTES.REGISTER} component={Register} restricted={true} exact />
+                    }
                     <PublicRoute path={ROUTES.LOGIN} component={Login} restricted={true} exact/>
                     <AdminRoute path={ROUTES.ADMINISTRATION} component={AdminDashboard} restricted={true} exact/>
 
