@@ -24,19 +24,21 @@ const CreateUser = ({setAppBarName}: DashboardTitleProps) => {
 
     const [registering, setRegistering] = useState(false)
 
-    const {register, handleSubmit, errors} = useForm({
+    const {register, handleSubmit, errors, reset} = useForm({
         resolver: yupResolver(schema)
     });
 
     const onSubmit = async (values: any) => {
         setRegistering(true)
-
+       
         userService.register({
             username: values.username,
             password: values.password
         }).then(value => {
             setRegistering(false);
             history.push(ROUTES.ADMINISTRATION);
+            showSnackbar("User successfully created.", SnackbarType.SUCCESS)
+            reset()           
         }).catch(reason => {
             setRegistering(false)
             showSnackbar(reason, SnackbarType.ERROR)
