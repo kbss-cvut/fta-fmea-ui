@@ -8,7 +8,7 @@ import {Menu, MenuItem, AppBar as MaterialAppBar} from "@material-ui/core";
 import {FormEvent, useState} from "react";
 import {useHistory} from "react-router-dom";
 import ChangePasswordDialog from "@components/dialog/password/ChangePasswordDialog";
-import {getLoggedUser} from "@hooks/useLoggedUser";
+import {getLoggedUser, useLoggedUser} from "@hooks/useLoggedUser";
 import {ROUTES} from "@utils/constants";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
@@ -18,6 +18,7 @@ interface Props {
 }
 
 const AppBar = ({title, showBackButton = false}: Props) => {
+    const [loggedUser] = useLoggedUser();
     const classes = useStyles();
     const history = useHistory();
 
@@ -42,6 +43,11 @@ const AppBar = ({title, showBackButton = false}: Props) => {
         history.push(ROUTES.LOGOUT)
     }
 
+    const navigateToAdmin = (e: FormEvent) => {
+        e.preventDefault();
+        history.push(ROUTES.ADMINISTRATION)
+    }
+
     const menuId = 'user-account-menu';
     const renderMenu = (
         <Menu
@@ -53,6 +59,10 @@ const AppBar = ({title, showBackButton = false}: Props) => {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
+
+            {loggedUser.roles && loggedUser.roles.indexOf("ROLE_ADMIN") >= 0 &&
+            <MenuItem onClick={navigateToAdmin}>Administration</MenuItem>
+            }
             <MenuItem onClick={handleChangePasswordDialogOpen}>Change Password</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>

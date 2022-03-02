@@ -44,7 +44,8 @@ const Login = () => {
                 iri: loginResponse.uri,
                 username: loginResponse.username,
                 token: loginResponse.token,
-                authenticated: true
+                authenticated: true,
+                roles: loginResponse.roles
             })
         }).catch(reason => {
             setLoggingIn(false)
@@ -100,13 +101,15 @@ const Login = () => {
                     >
                         Sign In
                     </Button>
-                    <Grid container>
-                        <Grid item>
-                            <MaterialLink variant="body2" component={RouterLink} to={ROUTES.REGISTER}>
-                                Don't have an account? Sign Up
-                            </MaterialLink>
+                    {process.env.REACT_APP_ADMIN_REGISTRATION_ONLY !== "true" && (
+                        <Grid container>
+                            <Grid item>
+                                <MaterialLink variant="body2" component={RouterLink} to={ROUTES.REGISTER}>
+                                    Don't have an account? Sign Up
+                                </MaterialLink>
+                            </Grid>
                         </Grid>
-                    </Grid>
+                    )}
                 </form>
             </div>
         </Container>
