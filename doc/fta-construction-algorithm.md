@@ -22,8 +22,8 @@ END
 ```
 GATE(behaviour: Behaviour):
 BEGIN
-	if (
-       (behaviour instanceOf Function) && (bahaviour instanceOf OrBehaviour) 
+     if (
+       (behaviour instanceOf Function) && (behaviour instanceOf OrBehaviour) 
        || (behaviour instanceOf FailureMode && (behaviour instanceOf AndBehaviour)
      ) 
 		return AND gate
@@ -35,15 +35,15 @@ END
 ```
 GET_DEPENDENT_BEHAVIOUR(behaviour: Behavior)
 BEGIN
-	return UNION_OF(behavior.child_behaviors,  behavior.required_behaviors, behavior.impairing_behaviors)
+	return UNION_OF(behavior.child_behaviors, behavior.required_behaviors, behavior.impairing_behaviors)
 END
 ```
 
 ## Example 1
-
+Demonstrates transformation of OR behavior.
 ![convert-require-imapair-behavior-model-to-fault-tree](https://user-images.githubusercontent.com/18463762/134146813-8a257931-26bb-4350-b954-c29ac7601c9c.png)
 
 ## Example 2
-
+Demonstrates transformation of AND behavior.
 ![convert-require-imapair-behavior-model-to-fault-tree-example-2](https://user-images.githubusercontent.com/18463762/137472141-065769d1-8f6c-4267-ac5e-4fc85c16a0c4.png)
 
