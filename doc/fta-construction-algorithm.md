@@ -39,15 +39,15 @@ BEGIN
 END
 ```
 
-## Example 1
+## Example 1 - Or Behaviour
 Demonstrates transformation of OR behavior.
 ![convert-require-imapair-behavior-model-to-fault-tree](https://user-images.githubusercontent.com/18463762/134146813-8a257931-26bb-4350-b954-c29ac7601c9c.png)
 
-## Example 2
+## Example 2 - And Behaviour
 Demonstrates transformation of AND behavior.
 ![convert-require-imapair-behavior-model-to-fault-tree-example-2](https://user-images.githubusercontent.com/18463762/137472141-065769d1-8f6c-4267-ac5e-4fc85c16a0c4.png)
 
-## Live examples
+## Example 3 - Live Demo
 ### FTA EXamples
 This example is a study by [1]. The analyzed system in this example is aircraft fuel system, including its subsystems (fuel transportation, fuel supplying and monitoring subsystem).  The following schema shows a fault tree that is created by this tool where circles represent root contributory factors, rectangles represent intermediate events, Boolean operators “AND” and “OR” are depicted with dedicated objects between intermediate events and contributory factors or other intermediate events.
 ![image](https://user-images.githubusercontent.com/30232007/159119541-9a755fb0-93b6-42ba-a185-9fd1beb13dfd.png)
