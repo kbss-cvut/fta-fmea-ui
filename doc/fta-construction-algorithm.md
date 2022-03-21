@@ -48,12 +48,15 @@ Demonstrates transformation of AND behavior.
 ![convert-require-imapair-behavior-model-to-fault-tree-example-2](https://user-images.githubusercontent.com/18463762/137472141-065769d1-8f6c-4267-ac5e-4fc85c16a0c4.png)
 
 ## Example 3 - Live Demo
-### FTA EXamples
-This example is a study by [1]. The analyzed system in this example is aircraft fuel system, including its subsystems (fuel transportation, fuel supplying and monitoring subsystem).  The following schema shows a fault tree that is created by this tool where circles represent root contributory factors, rectangles represent intermediate events, Boolean operators “AND” and “OR” are depicted with dedicated objects between intermediate events and contributory factors or other intermediate events.
-![image](https://user-images.githubusercontent.com/30232007/159119541-9a755fb0-93b6-42ba-a185-9fd1beb13dfd.png)
+This example is a study by [1]. The analyzed system (as shown in the follwing picture) is aircraft fuel system, including its subsystems (fuel transportation, fuel supplying and monitoring subsystem).  
+
+![image](https://user-images.githubusercontent.com/30232007/159237410-f43eeff7-477e-4f9f-9c56-6534669d725f.png)
+
+The link (https://kbss.felk.cvut.cz/fta-fmea-demo/fta/instance-1287330450) shows a fault tree that is created by this tool where circles or ovals represent root contributory factors, rectangles represent intermediate events, Boolean operators “AND” and “OR” are depicted with dedicated objects between intermediate events and contributory factors or other intermediate events.
 
 
-#References
+## References
+
 [1] Wei, Q., Jiao, J., Fan, J. & Zhao, T. (2016). An optimized method for generating fault tree from a counter-example. In 2016
 Annual Reliability and Maintainability Symposium (RAMS). IEEE.
 
