@@ -2,7 +2,7 @@
 
 FTA tree is generated from functional component structure, i.e. considering function parts, required functions
 as well as impairing failure modes. The generated FTA includes only AND and OR gates due to the
-modeling constructs used to describe system behaviors. The algorithm implemented in this tool is described by recursive function GENERATE_FTA which represents root node and some inner nodes of FTA tree as fault events. Each node that is represented by fault event is attached to OR gate or AND
+modeling constructs used to describe system behaviors. In the generated FTA tree, circles or ovals represent root contributory factors, rectangles represent intermediate events, Boolean operators “AND” and “OR” are depicted with dedicated objects between intermediate events and contributory factors or other intermediate events.The algorithm implemented in this tool is described by recursive function GENERATE_FTA which represents root node and some inner nodes of FTA tree as fault events. Each node that is represented by fault event is attached to OR gate or AND
 gate within the tree. Gate type is inferred from type of provided behaviour (function/failure mode/AND
 behaviour/OR behaviour). GET_DEPENDENT_BEHAVIOUR function returns all dependencies of
 given behaviour, i.e. required/impairing behaviours or child behaviours (in case of AND/OR behaviour
@@ -52,7 +52,7 @@ This example is a study by [1]. The analyzed system (as shown in the following p
 
 ![image](https://user-images.githubusercontent.com/30232007/159237410-f43eeff7-477e-4f9f-9c56-6534669d725f.png)
 
-The link (https://kbss.felk.cvut.cz/fta-fmea-demo/fta/instance-1287330450) shows a fault tree that is created by this tool where circles or ovals represent root contributory factors, rectangles represent intermediate events, Boolean operators “AND” and “OR” are depicted with dedicated objects between intermediate events and contributory factors or other intermediate events.
+The link (https://kbss.felk.cvut.cz/fta-fmea-demo/fta/instance-1287330450) shows a fault tree that is created by this tool.
 
 
 ## References
