@@ -48,7 +48,7 @@ Demonstrates transformation of AND behavior.
 ![convert-require-imapair-behavior-model-to-fault-tree-example-2](https://user-images.githubusercontent.com/18463762/137472141-065769d1-8f6c-4267-ac5e-4fc85c16a0c4.png)
 
 ## Example 3 - Live Demo
-This example is a study by [1]. The analyzed system (as shown in the following picture taken from [1]) is aircraft fuel system, including its subsystems (fuel transportation, fuel supplying and monitoring subsystem).  
+This example is a study by [1]. The analyzed system (as shown in the following picture taken from [1]) is aircraft fuel system, including its subsystems (fuel transportation, fuel supplying and monitoring subsystem).  The link (https://kbss.felk.cvut.cz/fta-fmea-demo/system/instance589946784) shows the part of system that is created by the tool.
 
 ![image](https://user-images.githubusercontent.com/30232007/159237410-f43eeff7-477e-4f9f-9c56-6534669d725f.png)
 
