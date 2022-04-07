@@ -6,7 +6,8 @@ export const STORAGE_KEYS = {
     USER: "loggedUser",
 }
 
-const context = process.env.CONTEXT;
+// const context = process.env.CONTEXT;
+const context = ""
 
 export const ROUTES = {
     REGISTER: context + "/register",
