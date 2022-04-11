@@ -181,14 +181,9 @@ export const FunctionsProvider = ({children, componentUri}: FunctionProviderProp
             functionService.findAllFunctions()
                 .then(func => {
                     _setAllFunctions(func)
-                    _setFunctionsAndComponents([])
-                    func.forEach(f => {
-                        functionService.getComponent(f.iri)
-                            .then(comp => {
-                                _setFunctionsAndComponents(value => [...value, [f,comp]])})
-                            .catch(() => {
-                                _setFunctionsAndComponents(value => [...value, [f,null]])})
-                    })
+                    let funcsAndComs : [Function,Component][] = []
+                    func.forEach( f => funcsAndComs.push([f, f['http://onto.fel.cvut.cz/ontologies/fta-fmea-application/hasComponent']]))
+                    _setFunctionsAndComponents(funcsAndComs)
                 })
                 .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
         }
