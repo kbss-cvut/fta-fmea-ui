@@ -5,7 +5,7 @@ import {FailureMode, CONTEXT} from "@models/failureModeModel";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {handleServerError} from "./utils/responseUtils";
 import {deepOmit} from "@utils/lodashUtils";
-import VocabularyUtils from "@utils/VocabularyUtils";
+import {getCircularReplacer} from "@utils/utils";
 
 export const findAll = async (): Promise<FailureMode[]> => {
     try {
@@ -23,19 +23,6 @@ export const findAll = async (): Promise<FailureMode[]> => {
         return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
-
-const getCircularReplacer = () => {
-    const seen = new WeakSet();
-    return (key, value) => {
-        if (typeof value === "object" && value !== null) {
-            if (seen.has(value)) {
-                return;
-            }
-            seen.add(value);
-        }
-        return value;
-    };
-};
 
 export const find = async (failureModeIri: string): Promise<FailureMode> => {
     try {
