@@ -1,7 +1,7 @@
 import * as React from "react";
 import {createContext, useContext, useEffect, useState} from "react";
 
-import {CreateFunction, Function} from "@models/functionModel";
+import { Function} from "@models/functionModel";
 import * as componentService from "@services/componentService"
 import * as functionService from "@services/functionService"
 import {axiosSource} from "@services/utils/axiosUtils";
@@ -20,11 +20,10 @@ type functionContextType = [
     (funcToDelete: Function) => void,
     (functionUri: string, requiredFunctionUri: string) => void,
     Function[],
-    [Function,Component][],
     (functionUri: string, systemName:string, functionName: string) => Promise<FaultTree>,
     (functionUri: string) => Promise<FailureMode[]>,
     (functionUri: string, type: string) => Promise<string[]>,
-    ([Function,Component], component: Component) => void
+    (Function, component: Component) => void
 ];
 
 export const functionsContext = createContext<functionContextType>(null!);
@@ -37,7 +36,6 @@ export const useFunctions = () => {
         deleteFunction,
         addRequiredFunction,
         allFunctions,
-        functionsAndComponents,
         generateFDTree,
         getFailureModes,
         getTransitiveClosure,
@@ -50,7 +48,6 @@ export const useFunctions = () => {
         deleteFunction,
         addRequiredFunction,
         allFunctions,
-        functionsAndComponents,
         generateFDTree,
         getFailureModes,
         getTransitiveClosure,
@@ -67,20 +64,12 @@ export const FunctionsProvider = ({children, componentUri}: FunctionProviderProp
     const [_functions, _setFunctions] = useState<Function[]>([]);
     const [_allFunctions, _setAllFunctions] = useState<Function[]>([]);
     const [showSnackbar] = useSnackbar()
-    const [_functionsAndComponents,_setFunctionsAndComponents] = useState<[Function,Component][]>([])
-    const [_functionClosures, _setFunctionClosures] = useState<Map<string, String[]>>(new Map());
 
     const addFunction = async (f: Function) => {
         return componentService.addFunction(componentUri, f)
             .then(value => {
                 _setFunctions([..._functions, value])
-                functionService.getComponent(f.iri)
-					.then((comp) => {
-						_setFunctionsAndComponents((value) => [...value, [f, comp]]);
-					})
-					.catch(() => {
-						_setFunctionsAndComponents((value) => [...value, [f, null]]);
-					});
+                _setAllFunctions([..._allFunctions, value])
                 showSnackbar('Function created', SnackbarType.SUCCESS)
                 return value
             }).catch(reason => showSnackbar(reason, SnackbarType.ERROR))
@@ -90,9 +79,7 @@ export const FunctionsProvider = ({children, componentUri}: FunctionProviderProp
         return functionService.editFunction(f)
             .then((func) => {
                 _setFunctions([..._functions.filter((el) => el.iri !== f.iri), func])
-
-                let cmp = _functionsAndComponents.find(el => el[0].iri == f.iri)[1]
-               _setFunctionsAndComponents((value) => [..._functionsAndComponents.filter((el) => el[0].iri != f.iri), [f, cmp]]);
+                _setAllFunctions([..._allFunctions.filter((el) => el.iri !== f.iri), func])
                 showSnackbar('Function edited', SnackbarType.SUCCESS)
                 return func
             })
@@ -102,9 +89,9 @@ export const FunctionsProvider = ({children, componentUri}: FunctionProviderProp
             })
     }   
 
-    const addExistingFunction = (functionToAdd: [Function, Component], component: Component) => {
-        let func = functionToAdd[0] 
-        let oldComponent = functionToAdd[1]
+    const addExistingFunction = (functionToAdd: Function, component: Component) => {
+        let func = functionToAdd
+        let oldComponent = functionToAdd.component
         
         if(oldComponent != null){
             componentService
@@ -121,7 +108,7 @@ export const FunctionsProvider = ({children, componentUri}: FunctionProviderProp
     const reassignVariables = (func: Function, component: Component) => {
         showSnackbar('Function added', SnackbarType.SUCCESS)
         _setFunctions([..._functions,func])
-        _setFunctionsAndComponents([..._functionsAndComponents.filter((e) => e[0].iri != func.iri), [func, component]]);     
+        _setAllFunctions([..._allFunctions, func])
     }
 
     const addRequiredFunction = async (functionUri: string, requiredFunctionUri: string) =>{
@@ -135,7 +122,7 @@ export const FunctionsProvider = ({children, componentUri}: FunctionProviderProp
                 showSnackbar('Function removed', SnackbarType.SUCCESS)
                 const updatedFunctions = filter(_functions, (el) => el.iri !== f.iri)
                 _setFunctions(updatedFunctions)
-                _setFunctionsAndComponents([..._functionsAndComponents.filter((e) => e[0].iri != f.iri), [f,null]]);     
+                _setAllFunctions([..._allFunctions.filter((el) => el.iri !== f.iri)])
             })
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
@@ -181,9 +168,6 @@ export const FunctionsProvider = ({children, componentUri}: FunctionProviderProp
             functionService.findAllFunctions()
                 .then(func => {
                     _setAllFunctions(func)
-                    let funcsAndComs : [Function,Component][] = []
-                    func.forEach( f => funcsAndComs.push([f, f['http://onto.fel.cvut.cz/ontologies/fta-fmea-application/hasComponent']]))
-                    _setFunctionsAndComponents(funcsAndComs)
                 })
                 .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
         }
@@ -202,7 +186,6 @@ export const FunctionsProvider = ({children, componentUri}: FunctionProviderProp
                 removeFunction,
                 addRequiredFunction,
                 _allFunctions,
-                _functionsAndComponents,
                 generateFDTree,
                 getFailureModes,
                 getTransitiveClosure,
