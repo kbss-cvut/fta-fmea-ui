@@ -2,7 +2,6 @@ import * as React from "react";
 import {useState} from "react";
 import {
     Box,
-    Checkbox,
     FormControl,
     FormGroup,
     IconButton,
@@ -31,8 +30,9 @@ import {useHistory} from "react-router-dom";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {useCurrentSystem} from "@hooks/useCurrentSystem";
 import ComponentFunctionEdit from "@components/editor/system/menu/function/ComponentFunctionEdit";
-import {formatFunctionOutput, formatOutput} from "@utils/formatOutputUtils";
-import {BehaviorType, FailureMode} from "@models/failureModeModel";
+import {formatOutput} from "@utils/formatOutputUtils";
+import {FailureMode} from "@models/failureModeModel";
+import {BehaviorType} from "@models/behaviorModel";
 import FailureModesList from "@components/editor/failureMode/FailureModesList";
 import {useFailureMode} from "@hooks/useFailureModes";
 import Button from "@material-ui/core/Button";
@@ -42,19 +42,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { Component } from "@models/componentModel";
+import FunctionsList from '@components/editor/system/menu/function/FunctionsList';
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-    PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 250,
-        },
-    },
-}
 
 const ComponentFunctionsList = ({ component }) => {
     const classes = useStyles();
@@ -62,14 +51,14 @@ const ComponentFunctionsList = ({ component }) => {
     const [system] = useCurrentSystem()
     const [,,,,addFailureModeToFunction, removeFailureModeToFunction] = useFailureMode()
     const [requestConfirmation] = useConfirmDialog()
-    const [functions, addFunction,, removeFunction,,, functionsAndComponents,generateFDTree,,, addExistingFunction] = useFunctions()
+    const [functions, addFunction,, removeFunction,, allFunctions, generateFDTree,,, addExistingFunction] = useFunctions()
     const [requiredFunctions, setRequiredFunctions] = useState<Function[]>([]);
     const [selectedFunction, setSelectedFunction] = useState<Function>()
     const [selectedFailureModes, setSelectedFailureModes] = useState<FailureMode[]>([])
     const [behaviorType, setBehaviorType] = useState<BehaviorType>(BehaviorType.ATOMIC);
     const [childBehaviors, setChildBehaviors] = useState<Function[]>([]);
     const [showEdit, setShowEdit] = useState<boolean>(false)
-	const [functionToAdd, setFunctionToAdd] = useState<[Function,Component]>()
+	const [functionToAdd, setFunctionToAdd] = useState<Function>()
 	const [showSnackbar] = useSnackbar()
 	const [dialog, showDialog] = useState<boolean>(false);
     const [open, setOpen] = useState<boolean>(false);
@@ -101,7 +90,7 @@ const ComponentFunctionsList = ({ component }) => {
     });
 
     const _handleCreateFunction = (values: any) => {      
-		let createFunction: Function = {name: values.name, requiredFunctions: requiredFunctions,failureModes: [], childBehaviors: childBehaviors, behaviorType: behaviorType}
+		let createFunction: Function = { name: values.name, requiredBehaviors: requiredFunctions, childBehaviors: childBehaviors, behaviorType: behaviorType}
 		addFunction(createFunction).then(f => selectedFailureModes.forEach(fm => addFailureModeToFunction(fm.iri,f.iri)))
 		reset(values)
         setSelectedFailureModes([])
@@ -151,14 +140,6 @@ const ComponentFunctionsList = ({ component }) => {
         })
     }
 
-    const handleChange = (event) => {
-        setRequiredFunctions(event.target.value)
-    }
-    
-    const handleChildBehaviorChange = (event) => {
-        setChildBehaviors(event.target.value)
-    }
-
     const generateFunctionalDependencyTree = (functionUri: string, systemName:string, functionName: string) => {
         generateFDTree(functionUri, systemName, functionName).then(value => {
             history.replace( `/fta/${extractFragment(value.iri)}`);
@@ -171,7 +152,6 @@ const ComponentFunctionsList = ({ component }) => {
 			<List>
 				{showEdit ? (
 					<ComponentFunctionEdit
-                        functionsAndComponents={functionsAndComponents}
 						selectedFunction={selectedFunction}
                         setSelectedFunction={setSelectedFunction}
 						selectedFailureModes={selectedFailureModes}
@@ -191,9 +171,9 @@ const ComponentFunctionsList = ({ component }) => {
 									<Tooltip
 										disableFocusListener
 										title={
-											Array.isArray(f.requiredFunctions)
-												? f.requiredFunctions.map((func) => func.name).join(", ") || "None"
-												: f.requiredFunctions["name"]
+											Array.isArray(f.requiredBehaviors)
+												? f.requiredBehaviors.map((func) => func.name).join(", ") || "None"
+												: f.requiredBehaviors["name"]
 										}
 									>
 										<IconButton
@@ -267,52 +247,21 @@ const ComponentFunctionsList = ({ component }) => {
 								</FormControl>
 
 								{behaviorType != BehaviorType.ATOMIC && (
-									<FormControl fullWidth>
-										<InputLabel id="required-functions-multiselect-label">Parts:</InputLabel>
-										<Select
-											labelId="required-functions-multiselect-label"
-											id="required-functions-multiselect"
-											multiple
-											value={childBehaviors}
-											onChange={handleChildBehaviorChange}
-											renderValue={(selected: any[]) => formatOutput(selected.map((value) => value.name).join(", "), 50)}
-											MenuProps={MenuProps}
-										>
-											{functionsAndComponents.map((f) => (
-												//@ts-ignore
-												<MenuItem key={f[0].iri} value={f[0]}>
-													<Checkbox checked={!!childBehaviors.includes(f[0])} />
-													<Tooltip disableFocusListener title={f[0].name + (f[1] != null ? " (" + f[1].name + ")" : "")}>
-														<ListItemText primary={formatFunctionOutput(f[0], f[1])} />
-													</Tooltip>
-												</MenuItem>
-											))}
-										</Select>
-									</FormControl>
+                                    <FunctionsList
+                                        label={"Parts: "}
+                                        selectedFunctions={childBehaviors}
+                                        setSelectedFunctions={setChildBehaviors}
+                                        transitiveClosure={[]}
+                                    />
 								)}
 
-								<FormControl>
-									<InputLabel id="required-functions-multiselect-label">Required functions:</InputLabel>
-									<Select
-										labelId="required-functions-multiselect-label"
-										id="required-functions-multiselect"
-										multiple
-										value={requiredFunctions}
-										onChange={handleChange}
-										renderValue={(selected: any[]) => formatOutput(selected.map((value) => value.name).join(", "), 50)}
-										MenuProps={MenuProps}
-									>
-										{functionsAndComponents.map((f) => (
-											//@ts-ignore
-											<MenuItem key={f[0].iri} value={f[0]}>
-												<Checkbox checked={!!requiredFunctions.includes(f[0])} />
-												<Tooltip disableFocusListener title={f[0].name + (f[1] != null ? " (" + f[1].name + ")" : "")}>
-													<ListItemText primary={formatFunctionOutput(f[0], f[1])} />
-												</Tooltip>
-											</MenuItem>
-										))}
-									</Select>
-								</FormControl>
+                                <FunctionsList
+                                 label={"Required Functions"}
+                                 selectedFunctions={requiredFunctions}
+                                 setSelectedFunctions={setRequiredFunctions}
+                                 transitiveClosure={[]}
+                                />
+
 								<FormControl>
 									<FailureModesList
 										label={"Failure modes: "}
@@ -353,15 +302,15 @@ const ComponentFunctionsList = ({ component }) => {
                             <DialogContent>
                                 <Autocomplete
                                     id="add-existing-function"
-                                    options={functionsAndComponents.filter(
-                                        (el) => !el[1] || el[1].iri !== component.iri
+                                    options={allFunctions.filter(
+                                        (el) => !el.component || el.component.iri !== component.iri
                                     )}
                                     onChange={(event: any, newValue: any) => {
                                         setFunctionToAdd(newValue);
                                         showSnackbar("Function's component will be changed", SnackbarType.INFO);
                                     }}
-                                    getOptionLabel={(option) =>
-                                        option[0].name + " (" + (option[1] == null ? "None" : option[1].name) + ")"
+                                    getOptionLabel={(func) =>
+                                        func.name + " (" + (func.component == null ? "None" : func.component.name) + ")"
                                     }
                                     fullWidth
                                     renderInput={(params) => <TextField {...params} label="Existing functions" />}

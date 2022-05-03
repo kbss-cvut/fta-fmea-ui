@@ -1,5 +1,6 @@
 import { useFailureMode } from "@hooks/useFailureModes";
-import { BehaviorType, FailureMode } from "@models/failureModeModel";
+import { FailureMode } from "@models/failureModeModel";
+import {BehaviorType} from "@models/behaviorModel";
 import * as React from "react";
 import useStyles from "../failureMode/ComponentFailureModesList.styles";
 import {

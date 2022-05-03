@@ -5,7 +5,6 @@ import { Controller, useForm } from "react-hook-form";
 import {
   Box,
   Button,
-  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
@@ -16,11 +15,9 @@ import {
   Grid,
   IconButton,
   InputLabel,
-  ListItemText,
   MenuItem,
   Select,
   TextField,
-  Tooltip,
 } from "@material-ui/core";
 import { Edit } from "@material-ui/icons";
 import CloseIcon from "@material-ui/icons/Close";
@@ -28,11 +25,11 @@ import useStyles from "@components/editor/system/menu/function/ComponentFunction
 import { useFunctions } from "@hooks/useFunctions";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "@components/dialog/function/FunctionPicker.schema";
-import { formatFunctionOutput, formatOutput } from "@utils/formatOutputUtils";
 import FailureModesList from "@components/editor/failureMode/FailureModesList";
-import { BehaviorType, FailureMode } from "@models/failureModeModel";
+import { FailureMode } from "@models/failureModeModel";
+import {BehaviorType} from "@models/behaviorModel";
 import { checkArray } from "@utils/validationUtils";
-import { Component } from "@models/componentModel";
+import FunctionsList from "@components/editor/system/menu/function/FunctionsList";
 
 interface MyProps {
   selectedFunction: Function;
@@ -41,12 +38,11 @@ interface MyProps {
   setShowEdit;
   updateFailureModes;
   setSelectedFailureModes;
-  functionsAndComponents: [Function, Component][];
 }
 
 const ComponentFunctionsList: React.FC<MyProps> = (props: MyProps) => {
   const classes = useStyles();
-  const [,, editFunction,,, allFunctions, functionsAndComponents,,, getTransitiveClosure] = useFunctions();
+  const [,, editFunction,,, allFunctions,,, getTransitiveClosure] = useFunctions();
   const [requiredFunctions, setRequiredFunctions] = useState<Function[]>([]);
   const [currentFailureModes, setCurrentFailureModes] = useState<FailureMode[]>([]);
   const [childBehaviors, setChildBehaviors] = useState<Function[]>([]);
@@ -72,12 +68,9 @@ const ComponentFunctionsList: React.FC<MyProps> = (props: MyProps) => {
     } else setBehaviorType(event.target.value);
   };
 
-  const handleChildBehaviorChange = (event) => {
-    setChildBehaviors(event.target.value);
-  };
   const handleEditFunction = (funcToEdit: Function) => {
     props.selectedFunction.name = funcToEdit.name;
-    props.selectedFunction.requiredFunctions = requiredFunctions;
+    props.selectedFunction.requiredBehaviors = requiredFunctions;
     props.selectedFunction.childBehaviors = childBehaviors;
     props.selectedFunction.behaviorType = behaviorType;
     editFunction(props.selectedFunction).then((f) => {props.setSelectedFunction(f)});
@@ -85,10 +78,6 @@ const ComponentFunctionsList: React.FC<MyProps> = (props: MyProps) => {
     setRequiredFunctions([]);
     props.setSelectedFailureModes([]);
     props.setShowEdit(false);
-  };
-
-  const handleChange = (event) => {
-    setRequiredFunctions(event.target.value);
   };
 
   const unselectFunctions = () => {
@@ -103,7 +92,7 @@ const ComponentFunctionsList: React.FC<MyProps> = (props: MyProps) => {
 
   useEffect(() => {
     setBehaviorType(props.selectedFunction.behaviorType);
-    props.selectedFunction.requiredFunctions = checkArray(props.selectedFunction.requiredFunctions);
+    props.selectedFunction.requiredBehaviors = checkArray(props.selectedFunction.requiredBehaviors);
     props.selectedFunction.childBehaviors = checkArray(props.selectedFunction.childBehaviors);
     
     setChildBehaviors(
@@ -111,7 +100,7 @@ const ComponentFunctionsList: React.FC<MyProps> = (props: MyProps) => {
     );
 
     setRequiredFunctions(
-        props.selectedFunction.requiredFunctions.map((f) => allFunctions.find(func => func.iri == f.iri))
+        props.selectedFunction.requiredBehaviors.map((f) => allFunctions.find(func => func.iri == f.iri))
     );
 
     getTransitiveClosure(props.selectedFunction.iri, "child").then(value => {
@@ -188,63 +177,25 @@ const ComponentFunctionsList: React.FC<MyProps> = (props: MyProps) => {
                           <MenuItem value={BehaviorType.OR}>Or</MenuItem>
                       </Select>
                   </FormControl>
-                  {behaviorType != BehaviorType.ATOMIC && (
-                      <FormControl fullWidth>
-                          <InputLabel id="required-functions-multiselect-label">Parts:</InputLabel>
-                          <Select
-                              labelId="required-functions-multiselect-label"
-                              id="required-functions-multiselect"
-                              multiple
-                              value={childBehaviors}
-                              onChange={handleChildBehaviorChange}
-                              renderValue={(selected: any[]) =>
-                                  formatOutput(selected.map((value) => value.name).join(", "), 50)
-                              }
-                          >
-                              {props.functionsAndComponents.map((f) => (
-                                  //@ts-ignore
-                                   <MenuItem key={f[0].iri} value={f[0]} className={(childTransitiveClosure.includes(f[0].iri) ? classes.closure : "")} >                                   
-                                      <Checkbox checked={!!childBehaviors.includes(f[0])} />
-                                      <Tooltip
-                                          disableFocusListener
-                                          title={f[0].name + (f[1] && " (" + f[1].name + ")")}
-                                      >
-                                          <ListItemText primary={formatFunctionOutput(f[0], f[1])} />
-                                      </Tooltip>
-                                  </MenuItem>
-                              ))}
-                          </Select>
-                      </FormControl>
-                  )}
 
-                  <FormControl>
-                      <InputLabel shrink={requiredFunctions.length != 0} id="required-functions-multiselect-label1">
-                          Required functions:
-                      </InputLabel>
-                      <Select
-                          labelId="required-functions-multiselect-label1"
-                          id="required-functions-multiselect"
-                          multiple
-                          value={requiredFunctions}
-                          onChange={handleChange}
-                          renderValue={(selected: any[]) =>
-                              formatOutput(selected.map((value) => value.name).join(", "), 65)
-                          }
-                      >
-                          {functionsAndComponents.map((f) => (
-                              //@ts-ignore
-                              <MenuItem key={f[0].iri} value={f[0]} className={(requiredTransitiveClosure.includes(f[0].iri) ? classes.closure : "")}>
-                                  <Checkbox checked={requiredFunctions.includes(f[0])} />
-                                  <Tooltip
-                                      disableFocusListener
-                                      title={f[0].name + (f[1] != null ? " (" + f[1].name + ")" : "")}
-                                  >
-                                      <ListItemText primary={formatFunctionOutput(f[0], f[1])} />
-                                  </Tooltip>
-                              </MenuItem>
-                          ))}
-                      </Select>
-                  </FormControl>
+                  {behaviorType != BehaviorType.ATOMIC
+                      && (
+                          <FunctionsList
+                            label={"Parts:"}
+                            selectedFunctions={childBehaviors}
+                            setSelectedFunctions={setChildBehaviors}
+                            transitiveClosure={childTransitiveClosure}
+                          />
+                      )
+                  }
+
+                  <FunctionsList
+                      label={"Required Functions:"}
+                      selectedFunctions={requiredFunctions}
+                      setSelectedFunctions={setRequiredFunctions}
+                      transitiveClosure={requiredTransitiveClosure}
+                  />
+
                   <FormControl>
                       <FailureModesList
                           label={"Failure modes: "}

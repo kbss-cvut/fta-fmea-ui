@@ -26,7 +26,7 @@ const FailureModesList = ({   label,
                           }: Props) => {
     const classes = useStyles();
     const [allFailureModes] = useFailureMode()
-    const [, , , , , , , , getFailureModes] = useFunctions()
+    const [, , , , , , , getFailureModes] = useFunctions()
 
 
     const handleChange = (event) => {

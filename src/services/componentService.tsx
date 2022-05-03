@@ -1,5 +1,5 @@
 import {Component, CONTEXT, CreateComponent, UpdateComponent} from "@models/componentModel";
-import {Function, CONTEXT as FUNCTION_CONTEXT, CreateFunction} from "@models/functionModel";
+import {Function, CONTEXT as FUNCTION_CONTEXT} from "@models/functionModel";
 import JsonLdUtils from "@utils/JsonLdUtils";
 import {authHeaders} from "@services/utils/authUtils";
 import axiosClient from "@services/utils/axiosUtils";
@@ -9,20 +9,7 @@ import {FailureMode, CONTEXT as FAILURE_MODE_CONTEXT} from "@models/failureModeM
 import {System} from "@models/systemModel";
 import {flatten, filter} from "lodash";
 import {handleServerError} from "@services/utils/responseUtils";
-
-
-const getCircularReplacer = () => {
-    const seen = new WeakSet();
-    return (key, value) => {
-        if (typeof value === "object" && value !== null) {
-            if (seen.has(value)) {
-                return;
-            }
-            seen.add(value);
-        }
-        return value;
-    };
-};
+import {getCircularReplacer} from "@utils/utils";
 
 export const findAll = async (): Promise<Component[]> => {
     try {
@@ -121,7 +108,7 @@ export const addFunction = async (componentUri: string, f: Function): Promise<Fu
     try {
         const fragment = extractFragment(componentUri);
         const createRequest = Object.assign(
-            {"@type": [VocabularyUtils.FUNCTION]}, f, {"@context": FUNCTION_CONTEXT}
+            {"@type": [VocabularyUtils.FUNCTION]}, JSON.parse(JSON.stringify(f, getCircularReplacer())), {"@context": FUNCTION_CONTEXT}
         )
         const response = await axiosClient.post(
             `/components/${fragment}/functions`,
