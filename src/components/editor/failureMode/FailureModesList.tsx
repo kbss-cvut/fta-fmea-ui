@@ -51,13 +51,25 @@ const FailureModesList = ({   label,
                 id="failure-modes-multiselect"
                 multiple
                 value={selectedFailureModes}
+                MenuProps={{
+                    anchorOrigin: {
+                        vertical: "top",
+                        horizontal: "left"
+                    },
+                    transformOrigin: {
+                        vertical: "bottom",
+                        horizontal: "left"
+                    },
+                    classes: { paper: classes.menuPaper},
+                    getContentAnchorEl: null
+                }}
                 onChange={handleChange}
                 renderValue={(selected: any[]) => formatOutput(selected.map(value => value.name).join(", "), 65)}
             >
 
                 {(Array.from(allFailureModes.values())).map((failureMode) =>
                     //@ts-ignore
-                    <MenuItem key={failureMode.iri} value={failureMode} className={(transitiveClosure.includes(failureMode.iri) ? classes.closure : "")}>
+                    <MenuItem key={failureMode.iri} value={failureMode} className={(transitiveClosure.includes(failureMode.iri) && classes.closure)}>
                         <Checkbox checked={selectedFailureModes.includes(failureMode)}/>
                         <ListItemText primary={failureMode.name + " (" + (failureMode.component !== undefined ? failureMode.component.name : "None") + ")"}/>
                     </MenuItem>

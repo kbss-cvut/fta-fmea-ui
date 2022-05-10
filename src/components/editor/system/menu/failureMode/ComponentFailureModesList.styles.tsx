@@ -15,7 +15,11 @@ const useStyles = makeStyles(() =>
         },
         closure :{
             color: "#A9A9A9"
-        } 
+        },
+        menuPaper: {
+            maxHeight: 500,
+            maxWidth: 300
+        }
     }),
 );
 
