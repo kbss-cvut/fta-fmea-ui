@@ -63,7 +63,8 @@ export const addRequiredFunction = async (functionUri: string, requiredFunctionU
 
 export const editFunction = async (f: Function): Promise<Function> => {
   try {
-    const updateRequest = Object.assign({}, JSON.parse(JSON.stringify(f, getCircularReplacer())), { "@context": FUNCTION_CONTEXT });
+    const {component, ...rest} = f;
+    const updateRequest = Object.assign({}, JSON.parse(JSON.stringify(rest, getCircularReplacer())), { "@context": FUNCTION_CONTEXT });
     const response = await axiosClient.put("/functions", updateRequest, {
       headers: authHeaders(),
     });
