@@ -48,7 +48,7 @@ const FunctionsList = ({label, selectedFunctions, setSelectedFunctions, transiti
                 {
                     allFunctions.map((f) => (
                         //@ts-ignore
-                        <MenuItem key={f.iri} value={f} className={(transitiveClosure.includes(f.iri) && classes.closure)}>
+                        <MenuItem key={f.iri} value={f} className={(transitiveClosure.includes(f.iri) ? classes.closure: "")}>
                             <Checkbox checked={!!selectedFunctions.includes(f)}/>
                             <Tooltip
                                 disableFocusListener

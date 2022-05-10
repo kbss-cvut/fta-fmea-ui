@@ -69,7 +69,7 @@ const FailureModesList = ({   label,
 
                 {(Array.from(allFailureModes.values())).map((failureMode) =>
                     //@ts-ignore
-                    <MenuItem key={failureMode.iri} value={failureMode} className={(transitiveClosure.includes(failureMode.iri) && classes.closure)}>
+                    <MenuItem key={failureMode.iri} value={failureMode} className={(transitiveClosure.includes(failureMode.iri) ? classes.closure : "")}>
                         <Checkbox checked={selectedFailureModes.includes(failureMode)}/>
                         <ListItemText primary={failureMode.name + " (" + (failureMode.component !== undefined ? failureMode.component.name : "None") + ")"}/>
                     </MenuItem>
