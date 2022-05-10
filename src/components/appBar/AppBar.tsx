@@ -48,6 +48,11 @@ const AppBar = ({title, showBackButton = false}: Props) => {
         history.push(ROUTES.ADMINISTRATION)
     }
 
+    const goBack = () => {
+        if (history.length > 2) history.goBack();
+        else history.push(ROUTES.DASHBOARD);
+    }
+
     const menuId = 'user-account-menu';
     const renderMenu = (
         <Menu
@@ -77,7 +82,7 @@ const AppBar = ({title, showBackButton = false}: Props) => {
                 <Toolbar>
                     {showBackButton &&
                     <IconButton edge="start" className={classes.menuButton} color="inherit"
-                                onClick={() => history.goBack()}>
+                                onClick={goBack}>
                         <ArrowBackIcon/>
                     </IconButton>
                     }

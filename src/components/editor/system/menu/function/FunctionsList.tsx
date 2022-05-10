@@ -30,17 +30,29 @@ const FunctionsList = ({label, selectedFunctions, setSelectedFunctions, transiti
                 id={label + "_multiselect"}
                 multiple
                 value={selectedFunctions}
+                MenuProps={{
+                    anchorOrigin: {
+                        vertical: "top",
+                        horizontal: "left"
+                    },
+                    transformOrigin: {
+                        vertical: "bottom",
+                        horizontal: "left"
+                    },
+                    classes: { paper: classes.menuPaper},
+                    getContentAnchorEl: null,
+                }}
                 onChange={handleChange}
                 renderValue={(selected: any[]) => formatOutput(selected.map((value) => value.name).join(", "), 50)}
             >
                 {
                     allFunctions.map((f) => (
                         //@ts-ignore
-                        <MenuItem key={f.iri} value={f} className={(transitiveClosure.includes(f.iri) ? classes.closure : "")}>
+                        <MenuItem key={f.iri} value={f} className={(transitiveClosure.includes(f.iri) ? classes.closure: "")}>
                             <Checkbox checked={!!selectedFunctions.includes(f)}/>
                             <Tooltip
                                 disableFocusListener
-                                title={f.name + (f.component && " (" + f.component.name + ")")}
+                                title={f.name + (f.component != null ? " (" + f.component.name + ")": " (None)") }
                             >
                                 <ListItemText primary={formatFunctionOutput(f, f.component)}/>
                             </Tooltip>
