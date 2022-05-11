@@ -1,15 +1,15 @@
 import axiosClient from "@services/utils/axiosUtils";
-import { authHeaders } from "@services/utils/authUtils";
-import { extractFragment } from "@services/utils/uriIdentifierUtils";
-import { UriReference } from "@models/utils/uriReference";
-import { handleServerError } from "./utils/responseUtils";
-import { CONTEXT as FUNCTION_CONTEXT, Function } from "../models/functionModel";
-import { CONTEXT as FAILURE_MODE_CONTEXT } from "../models/failureModeModel";
+import {authHeaders} from "@services/utils/authUtils";
+import {extractFragment} from "@services/utils/uriIdentifierUtils";
+import {UriReference} from "@models/utils/uriReference";
+import {handleServerError} from "./utils/responseUtils";
+import {CONTEXT as FUNCTION_CONTEXT, Function} from "../models/functionModel";
+import {CONTEXT as FAILURE_MODE_CONTEXT} from "../models/failureModeModel";
 import JsonLdUtils from "../utils/JsonLdUtils";
-import {getCircularReplacer} from "@utils/utils";
-import { Component } from "@models/componentModel";
-import { CONTEXT, FaultTree } from "@models/faultTreeModel";
-import { FailureMode } from "@models/failureModeModel";
+import {simplifyReferencesOfReferences} from "@utils/utils";
+import {Component} from "@models/componentModel";
+import {CONTEXT, FaultTree} from "@models/faultTreeModel";
+import {FailureMode} from "@models/failureModeModel";
 
 export const addFailureMode = async (functionIri: string, failureModeIri: string): Promise<void> => {
   try {
@@ -63,8 +63,7 @@ export const addRequiredFunction = async (functionUri: string, requiredFunctionU
 
 export const editFunction = async (f: Function): Promise<Function> => {
   try {
-    const {component, ...rest} = f;
-    const updateRequest = Object.assign({}, JSON.parse(JSON.stringify(rest, getCircularReplacer())), { "@context": FUNCTION_CONTEXT });
+    const updateRequest = Object.assign({}, simplifyReferencesOfReferences(f), { "@context": FUNCTION_CONTEXT });
     const response = await axiosClient.put("/functions", updateRequest, {
       headers: authHeaders(),
     });
