@@ -4,7 +4,7 @@ import {AbstractModel, CONTEXT as ABSTRACT_CONTEXT} from "@models/abstractModel"
 
 const ctx = {
     "name": VocabularyUtils.PREFIX + "hasName",
-    "components": VocabularyUtils.PREFIX + "hasComponent",
+    "components": VocabularyUtils.PREFIX + "hasPartComponent",
 };
 
 export const CONTEXT = Object.assign({}, ctx, COMPONENT_CONTEXT, ABSTRACT_CONTEXT);

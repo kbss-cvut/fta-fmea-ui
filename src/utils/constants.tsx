@@ -6,17 +6,16 @@ export const STORAGE_KEYS = {
     USER: "loggedUser",
 }
 
-const context = process.env.CONTEXT;
-
 export const ROUTES = {
-    REGISTER: context + "/register",
-    LOGIN: context + "/login",
-    LOGOUT: context + "/logout",
+    REGISTER: "/register",
+    ADMINISTRATION: "/administration",
+    LOGIN: "/login",
+    LOGOUT: "/logout",
 
-    DASHBOARD: context + "/",
-    SYSTEM: context + "/system/",
-    FTA: context + "/fta/",
-    FMEA: context + "/fmea/",
+    DASHBOARD: "/",
+    SYSTEM: "/system/",
+    FTA: "/fta/",
+    FMEA: "/fmea/",
 }
 
 export const ROUTE_PARAMS = {

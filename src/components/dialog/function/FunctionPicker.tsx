@@ -10,7 +10,7 @@ import {Controller, useForm} from "react-hook-form";
 import {schema} from "./FunctionPicker.schema";
 import useStyles from "./FunctionPicker.styles";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {BehaviorType} from "@models/failureModeModel";
+import {BehaviorType} from "@models/behaviorModel";
 
 interface Props {
     selectedFunctions: Function[] | null,
@@ -26,7 +26,7 @@ const FunctionPicker = ({selectedFunctions, onFunctionsSelected}: Props) => {
     });
 
     const _handleCreateFunction = (values: any) => {
-        addFunction({behaviorType: BehaviorType.ATOMIC, childBehaviors: [], failureModes: [], requiredFunctions: [], name: values.name})
+        addFunction({behaviorType: BehaviorType.ATOMIC, childBehaviors: [], requiredBehaviors: [], name: values.name})
         reset(values)
     }
 

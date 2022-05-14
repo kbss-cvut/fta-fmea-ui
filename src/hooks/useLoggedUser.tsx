@@ -18,7 +18,8 @@ export const getLoggedUser = (): User => {
 
     if (!item) {
         return {
-            authenticated: false
+            authenticated: false,
+            roles: []
         }
     }
 

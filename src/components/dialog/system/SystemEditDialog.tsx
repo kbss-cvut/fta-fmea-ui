@@ -39,6 +39,9 @@ const SystemEditDialog = ({open, handleCloseDialog, system}: Props) => {
         system.name = values.systemName;
         await updateSystem(system)
 
+        reset({
+            systemName: values.systemName
+        })
         setIsProcessing(false)
         handleCloseDialog()
     }

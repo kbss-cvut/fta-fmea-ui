@@ -83,7 +83,11 @@ export const FailureModeProvider = ({children, component}: FailureModeProviderPr
 
     const fetchAllFailureModes = async () => {
         failureModeService.findAll()
-            .then(failureModes => failureModes.forEach(failureMode => { _allFailureModes.set(failureMode.iri,failureMode)} ))
+            .then(failureModes => {
+                let map: Map<string, FailureMode> = new Map;
+                failureModes.forEach(failureMode => { map.set(failureMode.iri,failureMode)} );
+                _setAllFailureModes(map);
+            })
             .catch(() => _setAllFailureModes(null))
     }
 

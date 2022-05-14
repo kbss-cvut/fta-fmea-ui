@@ -26,7 +26,7 @@ const FailureModesList = ({   label,
                           }: Props) => {
     const classes = useStyles();
     const [allFailureModes] = useFailureMode()
-    const [, , , , , , , , getFailureModes] = useFunctions()
+    const [, , , , , , , getFailureModes] = useFunctions()
 
 
     const handleChange = (event) => {
@@ -51,6 +51,18 @@ const FailureModesList = ({   label,
                 id="failure-modes-multiselect"
                 multiple
                 value={selectedFailureModes}
+                MenuProps={{
+                    anchorOrigin: {
+                        vertical: "top",
+                        horizontal: "left"
+                    },
+                    transformOrigin: {
+                        vertical: "bottom",
+                        horizontal: "left"
+                    },
+                    classes: { paper: classes.menuPaper},
+                    getContentAnchorEl: null
+                }}
                 onChange={handleChange}
                 renderValue={(selected: any[]) => formatOutput(selected.map(value => value.name).join(", "), 65)}
             >

@@ -5,7 +5,9 @@ import {
     GridList,
     GridListTile,
     IconButton,
-    Link as MaterialLink
+    Link as MaterialLink,
+    Tooltip,
+    Typography
 } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import * as React from "react";
@@ -55,13 +57,18 @@ const DashboardFaultTreeList = () => {
                     return (
                         <GridListTile key={tree.iri} className={classes.gridListTile}>
                             <Card className={classes.card}>
-                                <CardHeader
+                                <CardHeader 
+                                    classes={{content: classes.cardTitle}}
                                     action={
                                         <IconButton aria-label="settings" onClick={(e) => handleContextMenu(e, tree)}>
                                             <MoreVertIcon/>
                                         </IconButton>
                                     }
-                                    title={tree.name}
+                                    title={
+                                        <Tooltip title={tree.name}>
+                                            <Typography variant="h5">{tree.name}</Typography>
+                                        </Tooltip>
+                                    }
                                 />
                                 <CardActions disableSpacing>
                                     <MaterialLink variant="button" component={RouterLink} to={routePath}>

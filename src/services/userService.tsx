@@ -23,7 +23,7 @@ export const register = async (loginRequest: UserRegisterRequest): Promise<UserR
             '/auth/register',
             jsonldRequest,
             {
-                headers: {'Content-type': JSONLD}
+                headers: {'Content-type': JSONLD, ...authHeaders()},
             }
         )
 

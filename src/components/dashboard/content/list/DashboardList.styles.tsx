@@ -11,6 +11,9 @@ const useStyles = makeStyles((theme: Theme) => {
             },
             card: {
                 margin: theme.spacing(1),
+            },
+            cardTitle: {
+                overflow: 'hidden'
             }
         })
     }
