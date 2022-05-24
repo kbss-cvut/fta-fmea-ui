@@ -13,6 +13,7 @@ import SidebarMenuHeader from "@components/editor/faultTree/menu/SidebarMenuHead
 import * as svgPanZoom from "svg-pan-zoom";
 import {SVG_PAN_ZOOM_OPTIONS} from "@utils/constants";
 import {saveSvgAsPng} from "save-svg-as-png";
+import usePrevious from "@hooks/usePrevious";
 
 interface Props {
     treeName: string,
@@ -49,6 +50,7 @@ const EditorCanvas = ({
     const [svgZoom, setSvgZoom] = useState(null)
     const [currentZoom, setCurrentZoom] = useState(1);
     const [isExportingImage, setIsExportingImage] = useState(false);
+    const prevRootEventIri = usePrevious(rootEvent?.iri)
 
     useEffect(() => {
         const canvasWidth = containerRef.current.clientWidth;
@@ -108,10 +110,22 @@ const EditorCanvas = ({
         }
     }, [isExportingImage])
 
-    const addSelf = (shape: any) => {
-        shape.addTo(container)
-        layout(container)
-    }
+    // let shapes = []
+    //
+    // const addSelf = (shape: any) => {
+    //     shapes.push(shape)
+    //     // shape.addTo(container)
+    //     // layout(container)
+    // }
+    //
+    // useEffect(() => {
+    //     if(container && shapes){
+    //         shapes.forEach(s => s.addTo(container))
+    //         layout(container)
+    //     }
+    // })
+
+
 
     const layout = (graph) => {
         const autoLayoutElements = [];
@@ -151,10 +165,43 @@ const EditorCanvas = ({
         setIsExportingImage(true);
     }
 
+
+    // let _shapes
+    // let _treeComponent
+    // if(prevRootEventIri != rootEvent?.iri) {
+    //
+    // }
+    // const renderTreeComponent = () => {
+    //     if (rootEvent) {
+    //         _shapes = []
+    //         const addSelf = (shape: any) => {
+    //             _shapes.push(shape)
+    //         }
+    //         _treeComponent = <FaultEventShape addSelf={addSelf} treeEvent={rootEvent}/>
+    //
+    //     }
+    //     return _treeComponent;
+    // }
+
+    // let [shapes, setShapes] = useState(_shapes)
+    // let [treeComponent, setTreeComponent] = useState(_treeComponent)
+    let treeComponent = null
+    useEffect(() => {
+        if (container && rootEvent &&prevRootEventIri != rootEvent.iri){
+            let _shapes = []
+            const addSelf = (shape: any) => {
+                _shapes.push(shape)
+            }
+            let _treeComponent = <FaultEventShape addSelf={addSelf} treeEvent={rootEvent}/>
+            _shapes.forEach(s => s.addTo(container))
+            layout(container)
+        }
+    }, [rootEvent, container])
+
     return (
         <div className={classes.root}>
             <div id="jointjs-container" className={classes.konvaContainer} ref={containerRef}>
-                {container && rootEvent && <FaultEventShape addSelf={addSelf} treeEvent={rootEvent}/>}
+                {treeComponent}
             </div>
             <SidebarMenu className={classes.sidebar}>
                 <CurrentFaultTreeTableProvider>

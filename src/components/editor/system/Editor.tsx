@@ -1,6 +1,6 @@
 import * as React from "react";
-import {useEffect, useState} from "react";
-import {flatten, findIndex} from "lodash";
+import {useEffect, useRef, useState} from "react";
+import {findIndex, flatten} from "lodash";
 import {useConfirmDialog} from "@hooks/useConfirmDialog";
 
 import {useCurrentSystem} from "@hooks/useCurrentSystem";
@@ -13,28 +13,24 @@ import ComponentDialog from "@components/dialog/component/ComponentDialog";
 import * as componentService from "@services/componentService";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import {DashboardTitleProps} from "@components/dashboard/DashboardTitleProps";
-import * as joint from "jointjs";
-import {FTABoundary} from "@components/editor/faultTree/shapes/shapesDefinitions";
-import {AppBar, Box, Tab, Tabs, Typography} from "@material-ui/core";
+import {AppBar, Tab, Tabs} from "@material-ui/core";
+import ComponentSidebarMenu from "@components/editor/system/menu/component/ComponentSidebarMenu";
+import SidebarMenu from "@components/editor/faultTree/menu/SidebarMenu";
+import useStyles from "@components/editor/EditorCanvas.styles";
 import EditorTree from "@components/editor/system/tree/EditorTree";
+import DiagramOptions from "@components/editor/menu/DiagramOptions";
 
 const Editor = ({setAppBarName}: DashboardTitleProps) => {
+    const classes = useStyles()
     const [requestConfirmation] = useConfirmDialog()
     const [showSnackbar] = useSnackbar();
 
     const [system, addComponent, updateComponent, removeComponent] = useCurrentSystem()
-
-    const [highlightedElementView, setHighlightedElementView] = useState(null)
-    const _localContext = useLocalContext({system: system, highlightedElementView: highlightedElementView})
+    const _localContext = useLocalContext({system: system})
 
     useEffect(() => {
         setAppBarName(system?.name);
     })
-    useEffect(() => {
-        if (highlightedElementView) {
-            highlightBorders(highlightedElementView);
-        }
-    }, [highlightedElementView])
 
     const [contextMenuSelectedComponent, setContextMenuSelectedComponent] = useState<Component>(null)
     const [sidebarSelectedComponent, setSidebarSelectedComponent] = useState<Component>(null)
@@ -45,66 +41,30 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
         setContextMenuAnchor({mouseX: evt.pageX, mouseY: evt.pageY,})
     }
 
-    const handleContextMenu = (elementView, evt) => {
-        const componentIri = elementView.model.get('custom/componentIri');
-
+    const getComponent = (componentIri : string) => {
         // @ts-ignore
-        const flattenedComponents = flatten([_localContext.system.components]);
+        const flattenedComponents =  flatten([_localContext.system.components]);
         const index = findIndex(flattenedComponents, el => el.iri === componentIri);
-        if (index > -1) {
-            setContextMenuSelectedComponent(flattenedComponents[index]);
+        return index > -1 ? flattenedComponents[index] : null
+    }
+
+    const handleContextMenu = (componentIri : string, elementView, evt) => {
+        let component = getComponent(componentIri)
+        if (component) {
+            setContextMenuSelectedComponent(component);
             setContextMenuAnchor({mouseX: evt.pageX, mouseY: evt.pageY,})
         }
     }
 
-    const handleElementPointerClick = (elementView) => {
-        const componentIri = elementView.model.get('custom/componentIri');
-
-        setSidebarSelectedIRI(componentIri, () => {
-            setHighlightedElementView(elementView);
-            highlightBorders(elementView);
-        })
-        // // @ts-ignore
-        // const flattenedComponents = flatten([_localContext.system.components]);
-        // const index = findIndex(flattenedComponents, el => el.iri === componentIri);
-        // if (index > -1) {
-        //     setSidebarSelectedComponent(flattenedComponents[index]);
-        //     setHighlightedElementView(elementView);
-        //     highlightBorders(elementView);
-        // }
-    };
-
-    const setSidebarSelectedIRI = (componentIri : string, onSuccess? : () => void) => {
-        // @ts-ignore
-        const component = getComponent(componentIri);
-        if (component !== null) {
+    const handleElementPointerClick = (componentIri : string, elementView, evt) => {
+        let component = getComponent(componentIri)
+        if (component) {
             setSidebarSelectedComponent(component);
-            if(onSuccess) onSuccess()
         }
-    };
-
-    const getComponent = (iri : string) => {
-        // @ts-ignore
-        const flattenedComponents = flatten([_localContext.system.components]);
-        const index = findIndex(flattenedComponents, el => el.iri === iri);
-        return index > -1 ? flattenedComponents[index] : null;
-    };
+    }
 
     const handleBlankPointerClick = () => {
         setSidebarSelectedComponent(null);
-        hideHighlightedBorders();
-    }
-
-    const highlightBorders = (elementView) => {
-        const tools = new joint.dia.ToolsView({
-            tools: [FTABoundary.factory()]
-        });
-        elementView.addTools(tools);
-    }
-    const hideHighlightedBorders = () => {
-        // @ts-ignore
-        _localContext.highlightedElementView?.removeTools();
-        setHighlightedElementView(null);
     }
 
     const [componentDialogOpen, setComponentDialogOpen] = useState(false);
@@ -114,6 +74,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
 
     const handleComponentUpdate = (componentToUpdate: Component) => {
         updateComponent(componentToUpdate);
+        setSidebarSelectedComponent(componentToUpdate);
     }
 
     const handleComponentDelete = (componentToDelete: Component) => {
@@ -132,7 +93,6 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
         })
     };
 
-
     function a11yProps(index) {
         return {
             id: `simple-tab-${index}`,
@@ -144,29 +104,6 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
     const handleChange = (event, newTab) => {
         setTab(newTab);
     };
-    function TabPanel(props) {
-        const { children, value, index, ...other } = props;
-        // const selected = value == index
-        return value == index ? children : null
-        // if(selected)
-        //     return children;
-        // return null
-        // return (
-            // <div
-            //     role="tabpanel"
-            //     hidden={value !== index}
-            //     id={`simple-tabpanel-${index}`}
-            //     aria-labelledby={`simple-tab-${index}`}
-            //     {...other}
-            // >
-            //     {value === index && (
-            //         <Box p={3}>
-            //             <Typography>{children}</Typography>
-            //         </Box>
-            //     )}
-            // </div>
-        // );
-    };
 
     return (
         <React.Fragment>
@@ -176,43 +113,25 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
                     <Tab label="System Partonomy Tree" {...a11yProps(1)} />
                 </Tabs>
             </AppBar>
-            {/*<TabPanel value={tab} index={0}>*/}
-            {/*    /!*Item Three*!/*/}
-            {/*</TabPanel>*/}
-
-            {
-                tab == 0 &&
-                <EditorCanvas
-                    system={system}
-                    onComponentUpdated={handleComponentUpdate}
-                    sidebarSelectedComponent={sidebarSelectedComponent}
-                    onBlankContextMenu={handleBlankContextMenu}
-                    onElementContextMenu={handleContextMenu}
-                    onBlankPointerClick={handleBlankPointerClick}
-                    onElementPointerClick={handleElementPointerClick}
-                    setHighlightedElement={setHighlightedElementView}/> }
-
-            <TabPanel value={tab} index={1}>
-                {/*Item Two*/}
-                <EditorTree system={system}
-                            onComponentUpdated={handleComponentUpdate}
-                            // getSidebarSelectedComponent={() => sidebarSelectedComponent}
-                            onBlankContextMenu={handleBlankContextMenu}
-                            onElementContextMenu={handleContextMenu}
-                            onBlankPointerClick={handleBlankPointerClick}
-                            // setSidebarSelectedComponent={setSidebarSelectedIRI}
-                            setHighlightedElement={setHighlightedElementView}
-                />
-            </TabPanel>
-            {/*<TabPanel value={tab} index={2}>*/}
-            {/*    Item Three*/}
-            {/*</TabPanel>*/}
-
-            <ComponentDialog open={componentDialogOpen}
-                             onCreated={handleComponentCreated}
-                             onClose={() => setComponentDialogOpen(false)}/>
-
-
+            <EditorCanvas
+                system={system}
+                sidebarSelectedComponent={sidebarSelectedComponent}
+                onBlankContextMenu={handleBlankContextMenu}
+                onElementContextMenu={handleContextMenu}
+                onBlankPointerClick={handleBlankPointerClick}
+                onElementPointerClick={handleElementPointerClick}
+                onComponentUpdated={handleComponentUpdate}
+                hide = {tab != 0}/>
+            <EditorTree
+                system={system}
+                sidebarSelectedComponent={sidebarSelectedComponent}
+                onBlankContextMenu={handleBlankContextMenu}
+                onElementContextMenu={handleContextMenu}
+                onBlankPointerClick={handleBlankPointerClick}
+                onElementPointerClick={handleElementPointerClick}
+                onComponentUpdated={handleComponentUpdate}
+                hide={tab != 1}
+            />
             <ComponentContextMenu
                 anchorPosition={contextMenuAnchor}
                 onComponentCreate={() => setComponentDialogOpen(true)}

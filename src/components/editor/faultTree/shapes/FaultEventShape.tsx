@@ -10,34 +10,58 @@ import * as faultEventService from "@services/faultEventService";
 import {has} from "lodash";
 
 const FaultEventShape = ({addSelf, treeEvent, parentShape}: JointEventShapeProps) => {
-    const [currentShape, setCurrentShape] = useState<any>(undefined)
-    const [sortedChildren, setSortedChildren] = useState<FaultEvent[]>([]);
 
-    useEffect(() => {
-        const eventShape = createShape(treeEvent);
-        addSelf(eventShape)
 
-        if (treeEvent.eventType == EventType.INTERMEDIATE) {
-            // @ts-ignore
-            eventShape.gate(treeEvent.gateType.toLowerCase())
-        }
+    const eventShape = createShape(treeEvent);
+    addSelf(eventShape)
 
-        eventShape.attr(['label', 'text'], treeEvent.name);
-        if (has(treeEvent, 'probability')) {
-            eventShape.attr(['probabilityLabel', 'text'], treeEvent.probability.toExponential(2));
-        }
-
+    if (treeEvent.eventType == EventType.INTERMEDIATE) {
         // @ts-ignore
-        eventShape.set('custom/faultEventIri', treeEvent.iri)
+        eventShape.gate(treeEvent.gateType.toLowerCase())
+    }
 
-        setCurrentShape(eventShape)
+    eventShape.attr(['label', 'text'], treeEvent.name);
+    if (has(treeEvent, 'probability')) {
+        eventShape.attr(['probabilityLabel', 'text'], treeEvent.probability.toExponential(2));
+    }
 
-        // sort children in diagram
-        const sequence = sequenceListToArray(treeEvent.childrenSequence)
-        setSortedChildren(faultEventService.eventChildrenSorted(flatten([treeEvent.children]), sequence))
+    // @ts-ignore
+    eventShape.set('custom/faultEventIri', treeEvent.iri)
 
-        return () => eventShape.remove();
-    }, [treeEvent]);
+    const currentShape = eventShape
+
+    // sort children in diagram
+    const sequence = sequenceListToArray(treeEvent.childrenSequence)
+    const sortedChildren = faultEventService.eventChildrenSorted(flatten([treeEvent.children]), sequence)
+
+    // const [currentShape, setCurrentShape] = useState<any>(undefined)
+    // const [sortedChildren, setSortedChildren] = useState<FaultEvent[]>([]);
+
+    // useEffect(() => {
+    //     const eventShape = createShape(treeEvent);
+    //     addSelf(eventShape)
+    //
+    //     if (treeEvent.eventType == EventType.INTERMEDIATE) {
+    //         // @ts-ignore
+    //         eventShape.gate(treeEvent.gateType.toLowerCase())
+    //     }
+    //
+    //     eventShape.attr(['label', 'text'], treeEvent.name);
+    //     if (has(treeEvent, 'probability')) {
+    //         eventShape.attr(['probabilityLabel', 'text'], treeEvent.probability.toExponential(2));
+    //     }
+    //
+    //     // @ts-ignore
+    //     eventShape.set('custom/faultEventIri', treeEvent.iri)
+    //
+    //     setCurrentShape(eventShape)
+    //
+    //     // sort children in diagram
+    //     const sequence = sequenceListToArray(treeEvent.childrenSequence)
+    //     setSortedChildren(faultEventService.eventChildrenSorted(flatten([treeEvent.children]), sequence))
+    //
+    //     return () => eventShape.remove();
+    // }, [treeEvent]);
 
     return (
         <React.Fragment>
