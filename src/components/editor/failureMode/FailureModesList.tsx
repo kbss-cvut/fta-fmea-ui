@@ -64,7 +64,7 @@ const FailureModesList = ({   label,
                     getContentAnchorEl: null
                 }}
                 onChange={handleChange}
-                renderValue={(selected: any[]) => formatOutput(selected.map(value => value.name).join(", "), 65)}
+                renderValue={(selected: any[]) => formatOutput(selected.filter(v => v).map(value => value.name).join(", "), 65)}
             >
 
                 {(Array.from(allFailureModes.values())).map((failureMode) =>
