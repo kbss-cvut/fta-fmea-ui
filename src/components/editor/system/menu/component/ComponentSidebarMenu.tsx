@@ -12,6 +12,7 @@ import {useEffect, useState} from "react";
 import ControlledAutocomplete from "@components/materialui/ControlledAutocomplete";
 import {useForm} from "react-hook-form";
 import {FailureModeProvider} from "@hooks/useFailureModes";
+import {simplifyReferencesOfReferences} from "@utils/utils";
 
 interface Props {
     component: Component,
@@ -32,7 +33,7 @@ const ComponentSidebarMenu = ({component, onComponentUpdated, systemComponents}:
 
     useEffect(() => {
         const c = find(flatten([systemComponents]), el => el.iri === component?.linkedComponent?.iri)
-        setValue('linkedComponent', c)
+        setValue('linkedComponent', c ? simplifyReferencesOfReferences(c) : null)
     }, [linkComponent])
 
     const handleLinkedComponentChange = (linkedComponent: Component | null) => {
@@ -84,6 +85,7 @@ const ComponentSidebarMenu = ({component, onComponentUpdated, systemComponents}:
                     getOptionLabel={(option) => option.name}
                     renderInput={(params) => <TextField {...params} label="Linked Component" variant="outlined"/>}
                     defaultValue={null}
+                    useSafeOptions={true}
                 />
 
             </React.Fragment>}
