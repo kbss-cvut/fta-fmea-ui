@@ -110,6 +110,7 @@ const ComponentFailureModesList = ({ component }) => {
       setFailureModeParts([]);
       setRequiredFailureModes([]);
       setBehaviorType(BehaviorType.ATOMIC);
+      setFMtype(FailureModeType.FailureMode);
   };
 
   const handleAddExistingFM = () => {
