@@ -1,5 +1,5 @@
 {
-  "name": "fta-fmea-ui",
+  "name": "@kbss-cvut/fta-fmea-ui",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
