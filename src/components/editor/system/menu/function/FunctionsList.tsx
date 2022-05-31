@@ -43,7 +43,7 @@ const FunctionsList = ({label, selectedFunctions, setSelectedFunctions, transiti
                     getContentAnchorEl: null,
                 }}
                 onChange={handleChange}
-                renderValue={(selected: any[]) => formatOutput(selected.map((value) => value.name).join(", "), 50)}
+                renderValue={(selected: any[]) => formatOutput(selected.filter(v => v).map((value) => value.name).join(", "), 50)}
             >
                 {
                     allFunctions.map((f) => (

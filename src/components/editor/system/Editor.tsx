@@ -92,6 +92,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
 
     const handleComponentUpdate = (componentToUpdate: Component) => {
         updateComponent(componentToUpdate);
+        setSidebarSelectedComponent(componentToUpdate);
     }
 
     const handleComponentDelete = (componentToDelete: Component) => {

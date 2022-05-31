@@ -39,6 +39,11 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
                 const sidebarEvent = findEventByIri(contextMenuSelectedEvent.iri, faultTree.manifestingEvent);
                 setSidebarSelectedEvent(sidebarEvent)
             }
+
+            if (sidebarSelectedEvent) {
+                const sidebarEvent = findEventByIri(sidebarSelectedEvent.iri, faultTree.manifestingEvent);
+                setSidebarSelectedEvent(sidebarEvent)
+            }
         }
     }, [faultTree])
 
