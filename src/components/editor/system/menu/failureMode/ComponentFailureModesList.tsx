@@ -35,6 +35,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
+import {simplifyReferencesOfReferences} from "@utils/utils";
 
 const ComponentFailureModesList = ({ component }) => {
   const classes = useStyles();
@@ -104,7 +105,7 @@ const ComponentFailureModesList = ({ component }) => {
           requiredBehaviors: [],
           childBehaviors: [],
       };
-
+      failureMode = simplifyReferencesOfReferences(failureMode)
       createFailureMode(failureMode, requiredFailureModes, failureModeParts);
       reset(values);
       setFailureModeParts([]);
