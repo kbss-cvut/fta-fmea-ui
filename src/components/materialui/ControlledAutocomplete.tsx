@@ -15,24 +15,28 @@ interface Props {
     useSafeOptions?: boolean
 }
 
-const ControlledAutocomplete = ({options = [], name, renderInput, getOptionLabel, control, onChangeCallback, renderOption, defaultValue, useSafeOptions = false}: Props) => {
-    let _options = options;
-    let _defaultValue = defaultValue;
-    let _getOptionValue = (data) => data;
+const prepareOptions = (useSafeOptions, inputOptions, defaultOption) => {
+    let options = inputOptions;
+    let defaultValue = defaultOption;
+    let getOptionValue = (option) => option;
 
     if (useSafeOptions) {
-        const getKey = (o) => o?.iri ? o.iri : o?.uri ? o.uri : null
-            let map: Map<string, any> = new Map()
+        // make options safe by simplifying their references
+        const getKey = (o) => o?.iri ? o.iri : (o?.uri ? o.uri : null)
+        const map: Map<string, any> = new Map()
         options.forEach(o => map.set(getKey(o), o))
-        _defaultValue = defaultValue ? simplifyReferencesOfReferences(defaultValue) : null
-        _options = options.map(o => simplifyReferencesOfReferences(o))
-        _getOptionValue = (data) => {
+        defaultValue = defaultValue ? simplifyReferencesOfReferences(defaultValue) : null
+        options = options.map(o => simplifyReferencesOfReferences(o))
+        getOptionValue = (data) => {
             let key = getKey(data)
-            key ? map.get(key) : data
+            return key ? map.get(key) : data
         }
     }
+    return [options, defaultValue, getOptionValue]
+}
 
-    const getOptionValue = _getOptionValue
+const ControlledAutocomplete = ({options = [], name, renderInput, getOptionLabel, control, onChangeCallback, renderOption, defaultValue, useSafeOptions = false}: Props) => {
+    const [_options, _defaultValue, getOptionValue] = prepareOptions(useSafeOptions, options, defaultValue)
 
     return (
         <Controller
