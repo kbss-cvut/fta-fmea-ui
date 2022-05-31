@@ -13,6 +13,7 @@ import SidebarMenuHeader from "@components/editor/faultTree/menu/SidebarMenuHead
 import * as svgPanZoom from "svg-pan-zoom";
 import {SVG_PAN_ZOOM_OPTIONS} from "@utils/constants";
 import {saveSvgAsPng} from "save-svg-as-png";
+import renderTree from "@components/editor/faultTree/shapes/RenderTree";
 
 interface Props {
     treeName: string,
@@ -151,10 +152,17 @@ const EditorCanvas = ({
         setIsExportingImage(true);
     }
 
+    useEffect(() =>{
+        if(container && rootEvent) {
+            container.removeCells(container.getCells());
+            renderTree(container, rootEvent, null)
+            layout(container)
+        }
+    }, [container, rootEvent])
+
     return (
         <div className={classes.root}>
             <div id="jointjs-container" className={classes.konvaContainer} ref={containerRef}>
-                {container && rootEvent && <FaultEventShape addSelf={addSelf} treeEvent={rootEvent}/>}
             </div>
             <SidebarMenu className={classes.sidebar}>
                 <CurrentFaultTreeTableProvider>
