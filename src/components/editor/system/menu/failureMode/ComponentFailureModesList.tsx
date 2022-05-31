@@ -21,7 +21,7 @@ import AddIcon from "@material-ui/icons/Add";
 import FailureModesList from "@components/editor/failureMode/FailureModesList";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FailureMode } from "@models/failureModeModel";
+import {FailureMode, FailureModeType} from "@models/failureModeModel";
 import { BehaviorType } from "@models/behaviorModel";
 import useStyles from "../failureMode/ComponentFailureModesList.styles";
 import { schema } from "@components/dialog/failureMode/FailureMode.schema";
@@ -56,12 +56,13 @@ const ComponentFailureModesList = ({ component }) => {
   const [showEdit, setShowEdit] = useState(false);
   const [requiredFailureModes, setRequiredFailureModes] = useState<FailureMode[]>([]);
   const [behaviorType, setBehaviorType] = useState<BehaviorType>(BehaviorType.ATOMIC);
+  const [failureModeType, setFMtype] = useState<FailureModeType>(FailureModeType.FailureMode);
   const [selectedFailureMode, setSelectedFailureMode] = useState<FailureMode>();
   const [requestConfirmation] = useConfirmDialog();
   const [failureModeToAdd, setFailureModeToAdd] = useState<FailureMode>();
   const [dialog, showDialog] = useState<boolean>(false);
 
-  const showEditForm = (fm: FailureMode) => {
+    const showEditForm = (fm: FailureMode) => {
       setSelectedFailureMode(fm);
       setShowEdit(true);
   };
@@ -86,10 +87,19 @@ const ComponentFailureModesList = ({ component }) => {
       }
   };
 
+    const handleFMTypeChange = (event) => {
+        setFMtype(event.target.value);
+        if(failureModeType === FailureModeType.FailureMode){
+            setBehaviorType(BehaviorType.ATOMIC);
+            setFailureModeParts([]);
+        }
+    };
+
   const _handleCreateFailureMode = (values: any) => {
       let failureMode: FailureMode = {
           name: values.name as string,
           behaviorType: behaviorType,
+          failureModeType: failureModeType,
           component: component,
           requiredBehaviors: [],
           childBehaviors: [],
@@ -100,6 +110,7 @@ const ComponentFailureModesList = ({ component }) => {
       setFailureModeParts([]);
       setRequiredFailureModes([]);
       setBehaviorType(BehaviorType.ATOMIC);
+      setFMtype(FailureModeType.FailureMode);
   };
 
   const handleAddExistingFM = () => {
@@ -171,55 +182,77 @@ const ComponentFailureModesList = ({ component }) => {
                           </FormControl>
 
                           <FormControl fullWidth>
-                              <InputLabel id="demo-simple-select-label">Behavior Type</InputLabel>
+                              <InputLabel id="failure-mode-type">Failure Mode Type</InputLabel>
                               <Select
-                                  labelId="demo-simple-select-label"
-                                  id="demo-simple-select"
-                                  value={behaviorType}
-                                  label="Behavior type"
-                                  onChange={handleBehaviorTypeChange}
+                                  labelId="failure-mode-type"
+                                  id="failure-mode-type-select"
+                                  value={failureModeType}
+                                  label="Failure Mode Type"
+                                  onChange={handleFMTypeChange}
                               >
-                                  <MenuItem value={BehaviorType.ATOMIC}>Atomic</MenuItem>
-                                  <MenuItem value={BehaviorType.AND}>And</MenuItem>
-                                  <MenuItem value={BehaviorType.OR}>Or</MenuItem>
+                                  <MenuItem value={FailureModeType.FailureMode}>Failure Mode</MenuItem>
+                                  <MenuItem value={FailureModeType.FailureModeCause}>Failure Mode Cause</MenuItem>
                               </Select>
                           </FormControl>
+                          {failureModeType === FailureModeType.FailureMode
+                              && (
+                                  <React.Fragment>
+                                      <FormControl fullWidth>
+                                          <InputLabel id="demo-simple-select-label">Behavior Type</InputLabel>
+                                          <Select
+                                              labelId="demo-simple-select-label"
+                                              id="demo-simple-select"
+                                              value={behaviorType}
+                                              label="Behavior type"
+                                              onChange={handleBehaviorTypeChange}
+                                          >
+                                              <MenuItem value={BehaviorType.ATOMIC}>Atomic</MenuItem>
+                                              <MenuItem value={BehaviorType.AND}>And</MenuItem>
+                                              <MenuItem value={BehaviorType.OR}>Or</MenuItem>
+                                          </Select>
+                                      </FormControl>
 
-                          {behaviorType != BehaviorType.ATOMIC && (
-                              <FormControl fullWidth>
-                                <FailureModesList
-                                          label={"Parts: "}
-                                          functionIri={""}
-                                          selectedFailureModes={failureModeParts}
-                                          setSelectedFailureModes={setFailureModeParts}
-                                          setCurrentFailureModes={() => { } }
-                                           transitiveClosure={[]}
-                                />
-                              </FormControl>
-                          )}
-                          <FormControl fullWidth>
-                              <FailureModesList
-                                  label={"Required Failure Modes: "}
-                                  functionIri={""}
-                                  selectedFailureModes={requiredFailureModes}
-                                  setSelectedFailureModes={setRequiredFailureModes}
-                                  setCurrentFailureModes={() => {}}
-                                  transitiveClosure={[]}
-                              />
-                              <Box className={classes.actionButton}>
-                                  <Button color="primary" variant="outlined" onClick={handleClickOpen} component="span">
-                                      Add existing
-                                  </Button>
-                                  <IconButton
-                                      className={classes.actionButton}
-                                      color="primary"
-                                      component="span"
-                                      onClick={handleSubmit(_handleCreateFailureMode)}
-                                  >
-                                      <AddIcon />
-                                  </IconButton>
-                              </Box>
-                          </FormControl>
+                                      {behaviorType != BehaviorType.ATOMIC && (
+                                          <FormControl fullWidth>
+                                              <FailureModesList
+                                                  label={"Parts: "}
+                                                  functionIri={""}
+                                                  selectedFailureModes={failureModeParts}
+                                                  setSelectedFailureModes={setFailureModeParts}
+                                                  setCurrentFailureModes={() => {
+                                                  }}
+                                                  transitiveClosure={[]}
+                                              />
+                                          </FormControl>
+                                      )}
+                                      <FormControl fullWidth>
+                                          <FailureModesList
+                                              label={"Required Failure Modes: "}
+                                              functionIri={""}
+                                              selectedFailureModes={requiredFailureModes}
+                                              setSelectedFailureModes={setRequiredFailureModes}
+                                              setCurrentFailureModes={() => {
+                                              }}
+                                              transitiveClosure={[]}
+                                          />
+                                      </FormControl>
+                                  </React.Fragment>
+                              )
+                          }
+                          <Box className={classes.actionButton}>
+                              <Button color="primary" variant="outlined" onClick={handleClickOpen}
+                                      component="span">
+                                  Add existing
+                              </Button>
+                              <IconButton
+                                  className={classes.actionButton}
+                                  color="primary"
+                                  component="span"
+                                  onClick={handleSubmit(_handleCreateFailureMode)}
+                              >
+                                  <AddIcon/>
+                              </IconButton>
+                          </Box>
                       </FormGroup>
                   </Box>
 

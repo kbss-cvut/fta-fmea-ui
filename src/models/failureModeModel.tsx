@@ -9,6 +9,7 @@ import {Behavior, CONTEXT as BEHAVIOR_CONTEXT} from "@models/behaviorModel";
 const ctx = {
     "effects": VocabularyUtils.PREFIX + "hasEffect",
     "mitigation": VocabularyUtils.PREFIX + "isMitigatedBy",
+    "failureModeType": VocabularyUtils.PREFIX + "hasFailureModeType"
 };
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, EVENT_CONTEXT, MITIGATION_CONTEXT, BEHAVIOR_CONTEXT, FUNCTION_CONTEXT, COMPONENT_CONTEXT);
@@ -16,4 +17,10 @@ export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, EVENT_CONTEXT, M
 export interface FailureMode extends Behavior {
     mitigation?: Mitigation,
     effects?: FaultEvent[],
+    failureModeType?: FailureModeType
+}
+
+export enum FailureModeType {
+    FailureMode = "FailureMode",
+    FailureModeCause = "FailureModeCause",
 }
