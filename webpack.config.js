@@ -26,7 +26,8 @@ module.exports = env => {
 
         devServer: {
             historyApiFallback: true,
-            publicPath: "/"
+            publicPath: "/",
+            host: '0.0.0.0',
         },
 
         // Supported file loaders
