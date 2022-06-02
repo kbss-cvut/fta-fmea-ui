@@ -204,6 +204,7 @@ const ComponentFunctionsList: React.FC<MyProps> = (props: MyProps) => {
                           setSelectedFailureModes={props.setSelectedFailureModes}
                           setCurrentFailureModes={setCurrentFailureModes}
                           transitiveClosure={[]}
+                          allowCauses={false}
                       />
                       <IconButton
                           className={classes.button}

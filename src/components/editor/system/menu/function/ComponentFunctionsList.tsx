@@ -270,7 +270,8 @@ const ComponentFunctionsList = ({ component }) => {
 										setSelectedFailureModes={setSelectedFailureModes}
 										setCurrentFailureModes={() => {}}
 										transitiveClosure={[]}
-									/>
+									    allowCauses={false}
+                                    />
                                     <Box className={classes.button}>
                                         <Button
                                             color="primary"
