@@ -14,7 +14,7 @@
     "dagre": "^0.8.5",
     "graphlib": "^2.1.8",
     "history": "4.10.1",
-    "jointjs": "^3.2.0",
+    "jointjs": "^3.4.2",
     "jquery": "^3.5.1",
     "jsonld": "1.6.0",
     "lodash": "^4.17.20",
