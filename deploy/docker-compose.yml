@@ -1,46 +1,32 @@
-version: '3'
+version: '3.8'
 
 services:
-  fta-fmea-nginx:
+  fta-fmea:
     build:
-      context: nginx
-      args:
-        CONTEXT: ${ROOT}
-    image: fta-fmea-nginx
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: fta-fmea
     ports:
-      - 80:80
-      - 443:443
+      - "8080:80"
+
+
+  fta-fmea-server:
+    build:
+      context: deploy/fta-fmea
+      dockerfile: deploy/Dockerfile
+    container_name: fta-fmea-server
+    ports:
+      - "9999:8080"
     depends_on:
-    - tool-backend
-    - tool-frontend
+      - graphdb
+    environment:
+      REPOSITORY_URL: http://graphdb:7200/repositories/fta-fmea
 
-  fta-fmea-frontend:
+
+  graphdb:
     build:
       context: ..
-      dockerfile: Dockerfile
-    container_name: fta-fmea-tool-ui
-
-
-  fta-fmea-backend:
-    build:
-      context: ..
-      dockerfile: Dockerfile
-    container_name: fta-fmea-tool
-    image: docker.pkg.github.com/kbss-cvut/fta-fmea/tool
-
-#  fta-fmea-db-server:
-#    build:
-#      context: db-server
-#      args:
-#        GRAPHDB_ZIP: $GRAPHDB_FILE
-#    image: fta-fmea-db-server
-#    environment:
-#      GDB_JAVA_OPTS: >-
-#        -Dgraphdb.external-url=${URL}${ROOT}/sluzby/db-server
-#    restart: always
-#    ports:
-#      - "7200:7200"
-#    volumes:
-#      - fta-fmea-db-server:/graphdb/home
-
-    # TODO: add Dockerfile for db server
+      dockerfile: deploy/db-server/Dockerfile
+    container_name: graphdb
+    ports:
+      - "7200:7200"
