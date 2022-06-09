@@ -1,9 +1,9 @@
 import * as React from "react";
+import {useEffect, useState} from "react";
 import {useFailureMode} from "@hooks/useFailureModes";
 import {Checkbox, InputLabel, ListItemText, MenuItem, Select} from "@material-ui/core";
 import {FailureMode, FailureModeType} from "@models/failureModeModel";
 import {formatOutput} from "@utils/formatOutputUtils";
-import {useEffect} from "react";
 import {useFunctions} from "@hooks/useFunctions";
 import useStyles from "@components/editor/system/menu/failureMode/ComponentFailureModesList.styles";
 
@@ -30,6 +30,8 @@ const FailureModesList = ({   label,
     const [allFailureModes] = useFailureMode()
     const [, , , , , , , getFailureModes] = useFunctions()
 
+    const [failureModes, setFailureModes] = useState<FailureMode[]>([])
+
 
     const handleChange = (event) => {
         setSelectedFailureModes(event.target.value)
@@ -44,6 +46,11 @@ const FailureModesList = ({   label,
                 })
         }
     }, [])
+
+    useEffect(()=>{
+        const fms = Array.from(allFailureModes.values())
+        setFailureModes(allowCauses ? fms : fms.filter(fm => fm.failureModeType === FailureModeType.FailureMode))
+    },[allFailureModes])
 
     return (
         <React.Fragment>
@@ -70,11 +77,7 @@ const FailureModesList = ({   label,
             >
 
                 {
-                    (Array.from(allFailureModes.values()))
-                        .filter(fm => {
-                            if (allowCauses) return true;
-                            else return !allowCauses && fm.failureModeType === FailureModeType.FailureMode;
-                        }).map((failureMode) =>
+                    failureModes.map((failureMode) =>
                     //@ts-ignore
                     <MenuItem key={failureMode.iri} value={failureMode} className={(transitiveClosure.includes(failureMode.iri) ? classes.closure : "")}>
                         <Checkbox checked={selectedFailureModes.includes(failureMode)}/>
