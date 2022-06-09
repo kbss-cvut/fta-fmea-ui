@@ -200,6 +200,7 @@ const ComponentFailureModesEdit = (props: {
 												setCurrentFailureModes={() => {
 												}}
 												transitiveClosure={childTransitiveClosure}
+											    allowCauses={false}
 											/>
 										</FormControl>
 									)}
@@ -212,6 +213,7 @@ const ComponentFailureModesEdit = (props: {
 											setCurrentFailureModes={() => {
 											}}
 											transitiveClosure={requiredTransitiveClosure}
+										    allowCauses
 										/>
 									</FormControl>
 								</React.Fragment>

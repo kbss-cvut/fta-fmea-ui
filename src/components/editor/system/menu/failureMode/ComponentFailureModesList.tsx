@@ -223,6 +223,7 @@ const ComponentFailureModesList = ({ component }) => {
                                                   setCurrentFailureModes={() => {
                                                   }}
                                                   transitiveClosure={[]}
+                                                  allowCauses={false}
                                               />
                                           </FormControl>
                                       )}
@@ -235,6 +236,7 @@ const ComponentFailureModesList = ({ component }) => {
                                               setCurrentFailureModes={() => {
                                               }}
                                               transitiveClosure={[]}
+                                              allowCauses
                                           />
                                       </FormControl>
                                   </React.Fragment>
