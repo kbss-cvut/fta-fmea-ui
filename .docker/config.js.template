@@ -1,0 +1,6 @@
+// Dynamic configuration
+window.__config__ = {
+  BASE_API_URL='${SERVER_URL}'/'${CONTEXT}'
+  REACT_APP_ADMIN_REGISTRATION_ONLY='${ADMIN_ONLY}'
+  CONTEXT='${CONTEXT}'
+}

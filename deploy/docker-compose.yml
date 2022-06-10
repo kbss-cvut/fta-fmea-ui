@@ -6,6 +6,10 @@ services:
       context: ..
       dockerfile: deploy/Dockerfile
     container_name: fta-fmea
+    environment:
+      BASE_API_URL: http://localhost:9999/
+      REACT_APP_ADMIN_REGISTRATION_ONLY: false
+      CONTEXT: fta-fmea
     ports:
       - "8080:80"
 
