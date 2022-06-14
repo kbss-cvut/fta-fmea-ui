@@ -35,3 +35,4 @@ jobs:
           file: ./Dockerfile
           push: true
           labels: ${{ steps.meta.outputs.labels }}
+          tags: v1, latest
