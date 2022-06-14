@@ -2,35 +2,32 @@ version: '3.8'
 
 services:
   fta-fmea:
-    build:
-      context: ..
-      dockerfile: deploy/Dockerfile
-    container_name: fta-fmea
+    image: ghcr.io/kbss-cvut/fta-fmea-ui/tool:pr-82
     environment:
-      BASE_API_URL: http://localhost:9999/
-      REACT_APP_ADMIN_REGISTRATION_ONLY: false
-      CONTEXT: fta-fmea
+      API_URL: ${API_URL:-http://localhost:9999/fta-fmea}
+      ADMIN_REGISTRATION_ONLY: ${ADMIN_REGISTRATION_ONLY:-false}
     ports:
       - "8080:80"
+    depends_on:
+      - fta-fmea-server
 
 
   fta-fmea-server:
-    build:
-      context: deploy/fta-fmea
-      dockerfile: deploy/Dockerfile
-    container_name: fta-fmea-server
+    image: ghcr.io/kbss-cvut/fta-fmea/tool:pr-24
     ports:
       - "9999:8080"
     depends_on:
       - graphdb
     environment:
-      REPOSITORY_URL: http://graphdb:7200/repositories/fta-fmea
+      REPOSITORY_URL: ${REPOSITORY_URL:-http://graphdb:7200/repositories/fta-fmea}
 
 
   graphdb:
     build:
-      context: ..
-      dockerfile: deploy/db-server/Dockerfile
+      context: .
+      dockerfile: db-server/Dockerfile
+      args:
+        GRAPHDB_ZIP: $GRAPHDB_FILE
     container_name: graphdb
     ports:
       - "7200:7200"
