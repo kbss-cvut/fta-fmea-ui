@@ -26,7 +26,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: docker.pkg.github.com/${{ github.repository }}
+          images: docker.pkg.github.com/${{ github.repository }}/tool
 
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
@@ -35,4 +35,4 @@ jobs:
           file: ./Dockerfile
           push: true
           labels: ${{ steps.meta.outputs.labels }}
-          tags: latest
+          tags: ${{ steps.meta.outputs.tags }}
