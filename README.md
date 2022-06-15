@@ -39,7 +39,5 @@ There are two flags which need to be set:
 
 ## Dockerization
 1. Download [GraphDB](https://graphdb.ontotext.com/) standalone server ZIP archive and place it into the `deploy/db-server` folder.
-2. Set `GRAPHDB_ZIP` variable in `deploy/db-server/Dockerfile` to the name of the file you downloaded.
-3. Clone [fta-fmea](https://github.com/kbss-cvut/fta-fmea) as a subfolder of the 'deploy' folder, i.e.:
-`git clone https://github.com/kbss-cvut/fta-fmea.git`
-4. Run `docker-compose up -d` to start the application.
+2. Set `GRAPHDB_ZIP` variable in `.env` file to point to the downloaded zip file.
+3. Run `docker-compose up -d` to start the application.
