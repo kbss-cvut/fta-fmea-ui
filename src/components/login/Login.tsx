@@ -101,7 +101,7 @@ const Login = () => {
                     >
                         Sign In
                     </Button>
-                    {process.env.REACT_APP_ADMIN_REGISTRATION_ONLY !== "true" && (
+                    {process.env.ADMIN_REGISTRATION_ONLY !== "true" && (
                         <Grid container>
                             <Grid item>
                                 <MaterialLink variant="body2" component={RouterLink} to={ROUTES.REGISTER}>
