@@ -1,6 +1,7 @@
 {
   "name": "fta-fmea-ui",
   "version": "0.1.0",
+  "homepage": ".",
   "private": true,
   "dependencies": {
     "@hookform/resolvers": "^1.0.0",
