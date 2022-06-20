@@ -23,8 +23,6 @@ COPY deploy/.docker/config.js.template /etc/nginx/config.js.template
 COPY deploy/.docker/error.html /usr/share/nginx/html/error.html
 COPY deploy/.docker/nginx.conf /etc/nginx/nginx.conf
 
-RUN sed -i 's|<base href="/">|<base href="/fta-fmea/">|g' /usr/share/nginx/html/index.html
-
 EXPOSE 80
 COPY deploy/.docker/docker-entrypoint.sh /
 RUN chmod a+x /docker-entrypoint.sh
