@@ -1,8 +1,9 @@
 const _NS_FTA_FMEA = "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/"
+const DC_TERMS = "http://purl.org/dc/terms/"
 
 export default {
     PREFIX: _NS_FTA_FMEA,
-
+    DC_TERMS: DC_TERMS,
     USER: _NS_FTA_FMEA + "User",
     COMPONENT: _NS_FTA_FMEA + "Component",
     MITIGATION: _NS_FTA_FMEA + "Mitigation",

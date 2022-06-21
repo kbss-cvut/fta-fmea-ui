@@ -24,6 +24,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
 
     const [highlightedElementView, setHighlightedElementView] = useState(null)
     const _localContext = useLocalContext({system: system, highlightedElementView: highlightedElementView})
+    const [mergeableComponents, setMergeableComponents] = useState(false)
 
     useEffect(() => {
         setAppBarName(system?.name);
@@ -111,6 +112,15 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
         })
     }
 
+    useEffect(() => {
+        setMergeableComponents( sidebarSelectedComponent
+            && contextMenuSelectedComponent && sidebarSelectedComponent.iri !== contextMenuSelectedComponent.iri)
+    },[sidebarSelectedComponent, contextMenuSelectedComponent])
+
+    const mergeComponents = () => {
+        // TODO: implement mergeComponents service
+    }
+
     return (
         <React.Fragment>
             <EditorCanvas
@@ -124,6 +134,9 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
                 setHighlightedElement={setHighlightedElementView}/>
 
             <ComponentContextMenu
+                mergeComponents={mergeComponents}
+                contextMenuSelectedComponent={contextMenuSelectedComponent}
+                mergeable={mergeableComponents}
                 anchorPosition={contextMenuAnchor}
                 onComponentCreate={() => setComponentDialogOpen(true)}
                 onComponentDelete={() => handleComponentDelete(contextMenuSelectedComponent)}
