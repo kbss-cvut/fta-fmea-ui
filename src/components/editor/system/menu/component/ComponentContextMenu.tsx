@@ -68,7 +68,7 @@ const ComponentContextMenu = ({anchorPosition, onClose, onComponentDelete, conte
             { createOnly && <MenuItem key="component-import" onClick={handleImportClick}>Import document</MenuItem>}
             {!createOnly && <MenuItem key="component-delete" onClick={handleDeleteClick}>Delete</MenuItem>}
             {!createOnly && <MenuItem key="component-source" onClick={handleGoToSource}> Go to source</MenuItem>}
-            { mergeable  && <MenuItem key="component-merge"  onClick={handleMergeClick}> Merge</MenuItem>}
+            { mergeable  && <MenuItem key="component-merge"  onClick={handleMergeClick}> Merge into selection</MenuItem>}
 
             { importDocumentsOpen
                 && <DocumentProvider>
