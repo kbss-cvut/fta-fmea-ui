@@ -11,6 +11,27 @@ import {flatten, filter} from "lodash";
 import {handleServerError} from "@services/utils/responseUtils";
 import {getCircularReplacer} from "@utils/utils";
 
+export async function mergeComponents(iri: string, iri2: string): Promise<void> {
+    try {
+        const fragment1 = extractFragment(iri)
+        const fragment2 = extractFragment(iri2)
+
+        await axiosClient.post(
+            `/components/mergeComponents/${fragment1}/${fragment2}`,
+            {},
+            {
+                headers: authHeaders()
+            }
+        )
+
+        return new Promise<void>((resolve) => resolve());
+    } catch (e) {
+        console.log('Component Service - Failed to call /mergeComponents')
+        const defaultMessage = "Failed to merge components";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    }
+}
+
 export const findAll = async (): Promise<Component[]> => {
     try {
         const response = await axiosClient.get<Component[]>(

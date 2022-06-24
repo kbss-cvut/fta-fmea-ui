@@ -14,13 +14,14 @@ type systemContextType = [
     (addComponent: Component) => void,
     (updateComponent: Component) => void,
     (removeComponent: Component) => void,
+    () => void
 ]
 
 export const systemContext = createContext<systemContextType>(null!);
 
 export const useCurrentSystem = () => {
-    const [system, addComponent, updateComponent, removeComponent] = useContext(systemContext);
-    return [system, addComponent, updateComponent, removeComponent] as const;
+    const [system, addComponent, updateComponent, removeComponent, fetchSystem] = useContext(systemContext);
+    return [system, addComponent, updateComponent, removeComponent, fetchSystem] as const;
 }
 
 interface Props extends ChildrenProps {
@@ -64,13 +65,13 @@ export const CurrentSystemProvider = ({systemIri, children}: Props) => {
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
 
-    useEffect(() => {
-        const fetchSystem = async () => {
-            systemService.find(systemIri)
-                .then(value => _setSystem(value))
-                .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
-        }
+    const fetchSystem = async () => {
+        systemService.find(systemIri)
+            .then(value => _setSystem(value))
+            .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
+    }
 
+    useEffect(() => {
         fetchSystem()
 
         return () => {
@@ -79,7 +80,7 @@ export const CurrentSystemProvider = ({systemIri, children}: Props) => {
     }, []);
 
     return (
-        <systemContext.Provider value={[_system, addComponent, updateComponent, removeComponent]}>
+        <systemContext.Provider value={[_system, addComponent, updateComponent, removeComponent, fetchSystem]}>
             {children}
         </systemContext.Provider>
     );

@@ -20,10 +20,11 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
     const [requestConfirmation] = useConfirmDialog()
     const [showSnackbar] = useSnackbar();
 
-    const [system, addComponent, updateComponent, removeComponent] = useCurrentSystem()
+    const [system, addComponent, updateComponent, removeComponent, fetchSystem] = useCurrentSystem()
 
     const [highlightedElementView, setHighlightedElementView] = useState(null)
     const _localContext = useLocalContext({system: system, highlightedElementView: highlightedElementView})
+    const [mergeableComponents, setMergeableComponents] = useState(false)
 
     useEffect(() => {
         setAppBarName(system?.name);
@@ -36,6 +37,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
 
     const [contextMenuSelectedComponent, setContextMenuSelectedComponent] = useState<Component>(null)
     const [sidebarSelectedComponent, setSidebarSelectedComponent] = useState<Component>(null)
+    const [showConfirmDialog] = useConfirmDialog();
 
     const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefaultAnchor)
     const handleBlankContextMenu = (evt) => {
@@ -111,6 +113,35 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
         })
     }
 
+    useEffect(() => {
+        setMergeableComponents( sidebarSelectedComponent
+            && contextMenuSelectedComponent && sidebarSelectedComponent.iri !== contextMenuSelectedComponent.iri)
+    },[sidebarSelectedComponent, contextMenuSelectedComponent])
+
+    const mergeComponents = () => {
+        if (contextMenuSelectedComponent.linkedComponent
+            && (!sidebarSelectedComponent.linkedComponent ||
+                contextMenuSelectedComponent.linkedComponent && sidebarSelectedComponent.linkedComponent
+                && sidebarSelectedComponent.linkedComponent.iri !== contextMenuSelectedComponent.linkedComponent.iri)
+            ){
+            showConfirmDialog({
+                title: 'Merge components',
+                explanation: 'Do you want to merge components? Parent component will be changed.',
+                onConfirm: () => {
+                    merge()
+                },
+            })
+        }else merge()
+
+    }
+    const merge = () => {
+        componentService.mergeComponents(sidebarSelectedComponent.iri, contextMenuSelectedComponent.iri)
+            .then(() => {
+                fetchSystem()
+                setSidebarSelectedComponent(null)
+            })
+    }
+
     return (
         <React.Fragment>
             <EditorCanvas
@@ -124,6 +155,9 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
                 setHighlightedElement={setHighlightedElementView}/>
 
             <ComponentContextMenu
+                mergeComponents={mergeComponents}
+                contextMenuSelectedComponent={contextMenuSelectedComponent}
+                mergeable={mergeableComponents}
                 anchorPosition={contextMenuAnchor}
                 onComponentCreate={() => setComponentDialogOpen(true)}
                 onComponentDelete={() => handleComponentDelete(contextMenuSelectedComponent)}
