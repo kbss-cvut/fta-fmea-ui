@@ -9,6 +9,7 @@ import {Controller, useForm} from "react-hook-form";
 import {schema} from "./Component.schema";
 import useStyles from "./ComponentPicker.styles";
 import {yupResolver} from "@hookform/resolvers/yup";
+import ControlledAutocomplete from "@components/materialui/ControlledAutocomplete";
 
 interface Props {
     selectedComponent: Component | null,
@@ -31,14 +32,17 @@ const ComponentPicker = ({selectedComponent, onComponentSelected}: Props) => {
     // TODO ControlledAutocomplete
     return (
         <React.Fragment>
-            <Autocomplete
+            <ControlledAutocomplete
+                control={control}
+                name={"component"}
                 fullWidth
                 options={components}
                 getOptionLabel={(option) => option.name}
-                onChange={(event, value: Component) => onComponentSelected(value)}
+                onChangeCallback={(value: Component) => onComponentSelected(value)}
                 renderInput={(params) => <TextField {...params} label="Select Component" variant="outlined"/>}
                 clearOnBlur={true}
                 defaultValue={selectedComponent}
+                useSafeOptions={true}
             />
 
             <Typography variant="subtitle1">Create new Component</Typography>
