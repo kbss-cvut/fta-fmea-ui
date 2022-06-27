@@ -35,7 +35,11 @@ module.exports = env => {
                 {
                     test: /\.tsx?$/,
                     loader: "ts-loader"
-                }
+                },
+                {
+                    test: /\.(png|jpg|gif|svg)$/,
+                    loader: 'file-loader'
+                },
             ]
         },
 
