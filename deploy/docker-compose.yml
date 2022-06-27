@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   fta-fmea:
-    image: ghcr.io/kbss-cvut/fta-fmea-ui/tool:pr-82
+    image: ghcr.io/kbss-cvut/fta-fmea-ui:latest
     environment:
       API_URL: ${API_URL:-http://localhost:9999/fta-fmea}
       ADMIN_REGISTRATION_ONLY: ${ADMIN_REGISTRATION_ONLY:-false}
@@ -13,7 +13,7 @@ services:
 
 
   fta-fmea-server:
-    image: ghcr.io/kbss-cvut/fta-fmea/tool:pr-24
+    image: ghcr.io/kbss-cvut/fta-fmea:latest
     ports:
       - "9999:8080"
     depends_on:
