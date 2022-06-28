@@ -10,3 +10,9 @@ This manual describes the features of FTA/FMEA tool. It shows basic dialogues, i
 2. Using the FTA/FMEA tool
 
 Data fields of the FTA/FMEA tool are manual entry or drop-down lists, that the user can select from. Drop-down lists can be accessed by clicking the drop-down arrow. The tool also features some function buttons that execute certain tool features.
+
+2.1 Login
+
+Registered user enters their credentials directly into the "Username" and "Password" data fiels. After clicking the "Loing" button, the main dashboard of the tool displays.
+
+![Login](https://user-images.githubusercontent.com/94048408/176140512-2940fab0-66a7-402c-8cda-f4671e604da5.png)
