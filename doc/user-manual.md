@@ -86,6 +86,11 @@ FTA trees are generated fully automatically from the available system descriptio
 
 ![autogenerate_FTA](https://user-images.githubusercontent.com/94048408/176169071-9be96f44-92ed-40cf-9e3d-6a3244004ec0.png)
 
+After the FTA is automatically generated, the user sees the complete tree that can be edited. The user can add probabilities and event descriptions, that will complete the tree. As for probabilities, it is sufficient to add these for leaf events, the rest will be automatically computed. The user can also add or delete events manually (in line with the principles in the next section), but it is recommended to change the system description rather than manually edit the autogenetated FTA tree, as manual edit will not prevent the same issues with next automatic generation from the system description data. Finally, the user can download the generated tree as PNG file by clicking the red circled icon in the example below.
+
+![auto_FTA](https://user-images.githubusercontent.com/94048408/176183358-bc7d5f01-6249-4a00-9cbf-fe244faf0313.png)
+
+
 2.4.2 Manual FTA trees
 
 Manual FTA trees can be composed directly by the user, by specifying events. In this case, the user starts from main dashboard, the "+" button in bottom right corner, and selecting "Fault tree". This will open a dialogue, where the user can specify the tree and top fault of the new FTA analysis. The user has the option to select from existing events (if already defined in the FTA/FMEA tool within some previous manual analysis), or define a new event, that will become the top event in the new FTA. Note, that "Type" for top events has to be selected "INTERMEDIATE", and it is not possible to start the FTA from a "BASIC" event type as the manual FTA can be created only downwards from the first (top) event. Lastly, the dialogue asks for a gateway, that will be used to connect next (intermediate or basic) events to the top event. The user can select from a predefined list of managed gateways in the tool. After clicking the "CREATE FAULT TREE" button, a canvas opens with a top event.
