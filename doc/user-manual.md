@@ -7,4 +7,5 @@ FTA/FMEA tool is a web-based application designed for reliability analysis of ha
 This manual describes the features of FTA/FMEA tool. It shows basic dialogues, interface and possible controls. The manual provides a comprehensive overview of main functions of the tool.
 
 2. Using the FTA/FMEA tool
+
 Data fields of the FTA/FMEA tool are manual entry or drop-down lists, that the user can select from. Drop-down lists can be accessed by clicking the drop-down arrow. The tool also features some function buttons that execute certain tool features.
