@@ -123,6 +123,10 @@ After clicking the FMEA icon in a complete FTA, the user is displayed with FMEA 
 ![auto_FTA_FMEA_conversion](https://user-images.githubusercontent.com/94048408/176186619-a577c29c-931e-40dd-aeb6-7d2848db46f3.png)
 ![auto_FTA_FMEA_woksheet](https://user-images.githubusercontent.com/94048408/176186859-d2b42c42-0d7e-44a4-853f-3c00d5375432.png)
 
+From the figures above it is clear, that the example FTA analysis did not contain information about causes, so the column is left blank. In order to provide the tool with the information about causes, the user must enter this information into the system description, namely for each of the components and functions. This can be done by "Diagram Options" bar, "Failure Modes" section discussed in section 2.3.2 of this manual. FTA/FMEA tool allows definition of causes as a "Failure Mode Cause" under the "Failure Mode Type" data field (red circled in the figure below). If this value is selected, the user can simply specify the cause and add it to the component failure modes. To link a cause fo failure mode, particular failure mode must have specified that other failure mode is required (the cause), in line with the steps described in section 2.3.2.
+
+![auto_FTA_FMEA_causes](https://user-images.githubusercontent.com/94048408/176188249-025d7103-1b30-43bc-91fa-9c990b553f9a.png)
+
 The user also has the option to convert the manually created FTA into an FMEA. This is enabled by clicking all the fault events in the FTA and using the button "SET FAILURE MODE" in the right-side bar (cf. with the edit event dialogue showed in the pictures above). After clicking the button, the users will be displayed a window, that allows specifying failure mode for the selected fault event in the FTA, the component it relates to, influenced function and applied mitigations. Throughut the dialogue, components, functions and failure modes can be reused from other datasets already available in the FTA/FMEA tool, or a new ones can be defined by the user.
 
 ![manual_FTA_FM](https://user-images.githubusercontent.com/94048408/176177113-d6654c0f-4bcd-4d9e-81e8-cd26a5d9832c.png)
