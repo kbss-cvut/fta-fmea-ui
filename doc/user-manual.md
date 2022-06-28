@@ -53,6 +53,7 @@ After clicking the button, a window opens, where the user can name the new syste
 
 Next, the user can start filling the details of the new component. This is done via left-clicking the component box in the canvas that highlights the selected component and displays details of the component under the "Diagram Options" bar in the right side.
 
-![modify_component_dialogue_2](https://user-images.githubusercontent.com/94048408/176152866-555ea968-67ea-4490-be5f-a0309e440976.png)
+![modify_component_dialogue_2](https://user-images.githubusercontent.com/94048408/176153049-23c85537-a69e-41f0-973e-c3fcb5a251cd.png)
+
 
 
