@@ -35,5 +35,12 @@ When clicking the "System" button via the create new dataset function (section 2
 
 ![create_system_dialogue](https://user-images.githubusercontent.com/94048408/176146273-fcb11c12-0a67-4192-b08d-33122ca497b6.png)
 
+2.3.1 Adding detailed system description
+
+Detailed system description can be added after clicking "OPEN" button on a selected system via main dashboard. If the system is new, it will have no components defined and the dialogue window will display as follows.
+
+![modify_system_dialogue_1](https://user-images.githubusercontent.com/94048408/176150452-33c18ccc-e911-407d-8c79-0d7d8692f24f.png)
+
+
 
 
