@@ -4,6 +4,7 @@
 FTA/FMEA tool is a web-based application designed for reliability analysis of hardware systems by means of Fault-tree Analysis (FTA) and Failure Modes and Effects Analysis. The tool manages data about hardware systems and components which are used for the reliability analyses. The primary goal of the tool was to enable automatic reliability assessment by either FTA, FMEA or both. This is especially useful during hardware system development, when reliability assessment has to be performed repetitively with each system design change, or when certain level of reliability has to be achieved. The tool also supports analysis of existing systems that are operated and the data from operations are used for update of the reliability analysis and subsequent change in systems maintenance.
 
 1.1 About the Manual
+
 This manual describes the features of FTA/FMEA tool. It shows basic dialogues, interface and possible controls. The manual provides a comprehensive overview of main functions of the tool.
 
 2. Using the FTA/FMEA tool
