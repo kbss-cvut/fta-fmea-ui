@@ -64,6 +64,10 @@ Details about component functions can be added under the "Functions" section of 
 ![modify_component_functions](https://user-images.githubusercontent.com/94048408/176159285-b55b3667-9c48-425c-ad84-4a4e0e00143a.png)
 ![copy_functions_to_component](https://user-images.githubusercontent.com/94048408/176161327-d11cda3b-098d-4565-a866-98b07342de51.png)
 
-After the editing of component functions is complete, the "Diagram Options" bar, section "Functions" shows a list of functions assigned with that component. Each has a three icons to the righ, namely edit the function (grey pen), generate FTA from the function (grey icon of FTA) and delete the function (grey bin icon).
+After the editing of component functions is complete, the "Diagram Options" bar, section "Functions" shows a list of functions assigned with that component. Each has a three icons to the righ, namely edit the function (grey pen), generate FTA from the function (grey icon of FTA) and delete the function (grey bin icon). Note that generating FTA will create an FTA tree where the top fault is the fault of the selected function, i.e. it will generate tree with all possible causes of that function fault. To enable this function, the system has to be described with all its components first.
 
 ![modify_component_dialogue_3](https://user-images.githubusercontent.com/94048408/176162913-d93874a6-9988-4024-ac96-013bcbfb7c8b.png)
+
+The next section allows the user to define failure modes, namely in the "Failure Modes" section of the "Diagram Options" bar, after a component is selected in the canvas. The logic of this section is the same as with "Functions" section, i.e. user can add failure modes, name them, specify whether these are atomic or complex, and possible how do atomic failure modes combine into complex modes. The bavior and the FTA/FMEA tool in this section is exactly the same as for Functions described above. After the editing of component failure modes is complete, the "Failure Modes" section of the "Diagram Options" bar shows the added failure modes, and allows their editing or deleting.
+
+![modify_component_FMs](https://user-images.githubusercontent.com/94048408/176164235-c825363b-53ed-457b-9082-e9bbe998b51a.png)
