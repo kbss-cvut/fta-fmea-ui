@@ -13,6 +13,6 @@ Data fields of the FTA/FMEA tool are manual entry or drop-down lists, that the u
 
 2.1 Login
 
-Registered user enters their credentials directly into the "Username" and "Password" data fiels. After clicking the "sing-in" button, the main dashboard of the tool displays.
+Registered user enters their credentials directly into the "Username" and "Password" data fields. After clicking the "sing-in" button, the main dashboard of the tool displays. The user has and option to create new user account by clicking on the "Don't have an account? Sing Up" button bellow the main "sing-in" button. The subsequent dialoge asks the used to fill their credentials and confirm the password, before they can access the tool.
 
 ![Login](https://user-images.githubusercontent.com/94048408/176140512-2940fab0-66a7-402c-8cda-f4671e604da5.png)
