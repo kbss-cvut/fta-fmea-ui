@@ -13,7 +13,7 @@ Data fields of the FTA/FMEA tool are manual entry or drop-down lists, that the u
 
 2.1 Login
 
-Registered user enters their credentials directly into the "Username" and "Password" data fields. After clicking the "sing-in" button, the main dashboard of the tool displays. The user has and option to create new user account by clicking on the "Don't have an account? Sing Up" button bellow the main "sing-in" button. The subsequent dialoge asks the used to fill their credentials and confirm the password, before they can access the tool.
+Registered user enters their credentials directly into the "Username" and "Password" data fields. After clicking the "sing-in" button, the main dashboard of the tool displays. The user has and option to create new user account by clicking on the "Don't have an account? Sing Up" button below the main "sing-in" button. The subsequent dialoge asks the used to fill their credentials and confirm the password, before they can access the tool.
 
 ![Login](https://user-images.githubusercontent.com/94048408/176141292-38721cd6-066e-46c6-9342-6b6540d7e8f8.png)
 
@@ -25,7 +25,7 @@ The main dashboard consists of a menu bar at the top (dark blue), with a button 
 
 2.2. Creating new dataset
 
-The user can create new dataset via main dashboard, by means of the dark-blue circle with "+" button, located and the right bottom corner of the dashboard. When moving the mouse courser over this button, a menu displays which the user can select from. Namely, a new system description, new FTA of new FMEA analysis can be performed (see picture bellow). Beware, that these allow only manual analysis; for automatic FTA and FMEA analysis a system descriptions need to be created first, so if there are no systems enters in the tool, it will no be possible to auto-generate FTA or FMEA analysis. Manual FTA or FMEA analysis does not require system description in advance.
+The user can create new dataset via main dashboard, by means of the dark-blue circle with "+" button, located and the right bottom corner of the dashboard. When moving the mouse courser over this button, a menu displays which the user can select from. Namely, a new system description, new FTA of new FMEA analysis can be performed (see picture below). Beware, that these allow only manual analysis; for automatic FTA and FMEA analysis a system descriptions need to be created first, so if there are no systems enters in the tool, it will no be possible to auto-generate FTA or FMEA analysis. Manual FTA or FMEA analysis does not require system description in advance.
 
 ![add_dataset](https://user-images.githubusercontent.com/94048408/176145104-1a45c42e-4fd2-45bf-be5a-0c1e1469cf59.png)
 
@@ -110,7 +110,15 @@ After clicking the button "CREATE EVENT", the new event will be added to the dia
 
 2.5 Creating new FMEA analysis
 
-The FTA/FMEA tool allows automatic FMEA worksheet generation from existing FTA analysis, or manual FMEA worksheet creation, where the entire worksheet can be progressively defined. The next sections describe both of the options.
+The FTA/FMEA tool allows automatic FMEA worksheet generation from the existing FTA analysis, or manual FMEA worksheet creation, where the entire worksheet can be progressively defined. The next sections describe both of the options.
+
+2.5.1 Automatic FMEA Worksheets
+
+FTA/FMEA tool in its current versions allows automatic FMEA generation only from existing FTA analysis (be it automatically generated or manually created). For the purpose, specific FMEA icon must be clicked when a completed FTA analysis is shown (see red circle in the figure below).
+
+![auto_FTA_FMEA](https://user-images.githubusercontent.com/94048408/176184910-06c84e51-40c8-427f-a28b-dd029abef6f3.png)
+
+
 
 The user also has the option to convert the manually created FTA into an FMEA. This is enabled by clicking all the fault events in the FTA and using the button "SET FAILURE MODE" in the right-side bar (cf. with the edit event dialogue showed in the pictures above). After clicking the button, the users will be displayed a window, that allows specifying failure mode for the selected fault event in the FTA, the component it relates to, influenced function and applied mitigations. Throughut the dialogue, components, functions and failure modes can be reused from other datasets already available in the FTA/FMEA tool, or a new ones can be defined by the user.
 
