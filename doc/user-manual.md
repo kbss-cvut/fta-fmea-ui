@@ -129,7 +129,9 @@ From the figures above it is clear, that the example FTA analysis did not contai
 
 Lastly, the completed FMEA worksheet can be edited (individual rows by clicking "EDIT" in the last column) to add mitgiations or change RPN afterwards. Also, the worksheed can be downloaded as CSV file by means of the dark-blue icon of floppy disk, located in the right bottom part of the FMEA worksheet display.
 
-The user also has the option to convert the manually created FTA into an FMEA. This is enabled by clicking all the fault events in the FTA and using the button "SET FAILURE MODE" in the right-side bar (cf. with the edit event dialogue showed in the pictures above). After clicking the button, the users will be displayed a window, that allows specifying failure mode for the selected fault event in the FTA, the component it relates to, influenced function and applied mitigations. Throughut the dialogue, components, functions and failure modes can be reused from other datasets already available in the FTA/FMEA tool, or a new ones can be defined by the user.
+2.5.2 Manual FMEA Worksheets
+
+Manual FMEA worksheets can be created from various places, where FTA events are edited. In these dialogues, there is "SET FAILURE MODE" button added at the end of the right-side bar, that is used for editing the fault events. After clicking the button, the users will be displayed a window, that allows specifying failure mode for the selected fault event in the FTA, the component it relates to, influenced function and applied mitigations. Throughut the dialogue, components, functions and failure modes can be reused from other datasets already available in the FTA/FMEA tool, or a new ones can be defined by the user.
 
 ![manual_FTA_FM](https://user-images.githubusercontent.com/94048408/176177113-d6654c0f-4bcd-4d9e-81e8-cd26a5d9832c.png)
 ![manual_FTA_FM_component](https://user-images.githubusercontent.com/94048408/176178523-af6c079a-a932-45e2-b8b4-3d3ccb6f53ba.png)
