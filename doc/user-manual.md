@@ -35,9 +35,9 @@ When clicking the "System" button via the create new dataset function (section 2
 
 ![create_system_dialogue](https://user-images.githubusercontent.com/94048408/176146273-fcb11c12-0a67-4192-b08d-33122ca497b6.png)
 
-2.3.1 Adding detailed system description
+2.3.1 Adding system components
 
-Detailed system description can be added after clicking "OPEN" button on a selected system via main dashboard. If the system is new, it will have no components defined and the dialogue window will display as follows.
+System components can be added after clicking "OPEN" button on a selected system via main dashboard. If the system is new, it will have no components defined and the dialogue window will display as follows.
 
 ![modify_system_dialogue_1](https://user-images.githubusercontent.com/94048408/176150452-33c18ccc-e911-407d-8c79-0d7d8692f24f.png)
 
@@ -51,9 +51,13 @@ After clicking the button, a window opens, where the user can name the new syste
 
 ![modify_component_dialogue_1](https://user-images.githubusercontent.com/94048408/176152193-8c745d53-92d3-43e1-a258-b485caf63cff.png)
 
-Next, the user can start filling the details of the new component. This is done via left-clicking the component box in the canvas that highlights the selected component and displays details of the component under the "Diagram Options" bar in the right side.
+Next, the user can start filling the details of the new component. This is done via left-clicking the component box in the canvas that highlights the selected component and displays details of the component under the "Diagram Options" bar in the right side. The user can see new sections of the bar: "Functions", Failure Modes" and Linked Components" with individual data fields. Some of these data fields already display with default values.
 
 ![modify_component_dialogue_2](https://user-images.githubusercontent.com/94048408/176153049-23c85537-a69e-41f0-973e-c3fcb5a251cd.png)
 
+2.3.1 Providing details of system components
 
+The user can add details about component functions, failure modes and related components, that together assemble the system. These three details are shown in this section.
 
+Details about component functions can be added under the "Functions" section of the "Diagram Options", when a component is highlighted in the canvas. Four types of information can be added. The first is function name that specifies the function to be added. Next is function complexity, that can be either "atomic", "and" or "or". Function complexity allows the user to create functions that consist of more detail functions, i.e. of function parts, that together create a more complex function. values "And", "Or" indicate, whether all or any of the part functions are necesary to ensure the more complex function. The value "atomic" means that the new function does not decompose into more detailed functions. Note, that complex functions can be created only after all atomic functions are defined, i.e. the dialogue allows 
+only selection from existing atomic functions in case the user wants to define "And" or "Or" function complexity.
