@@ -49,5 +49,5 @@ After clicking the button, a window opens, where the user can name the new syste
 
 ![create_component_dialogue](https://user-images.githubusercontent.com/94048408/176151766-aeb941c4-7672-47b8-962c-da100f84c060.png)
 
-![modify_component_dialogue_1](https://user-images.githubusercontent.com/94048408/176152118-7d70da5f-800c-40dc-85f7-0c1472dfcaf5.png)
+![modify_component_dialogue_1](https://user-images.githubusercontent.com/94048408/176152193-8c745d53-92d3-43e1-a258-b485caf63cff.png)
 
