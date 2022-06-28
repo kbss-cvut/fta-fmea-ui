@@ -88,7 +88,12 @@ FTA trees are generated fully automatically from the available system descriptio
 
 2.4.2 Manual FTA trees
 
-Manual FTA trees can be composed directly by the user, by specifying events. In this case, the user starts from main dashboard, the "+" button in bottom right corner, and selecting "Fault tree". This will open a dialogue, where the user can specify the tree and top fault of the new FTA analysis. The user has the option to select from existing events (if already defined in the FTA/FMEA tool within some previous manual analysis), or define a new event, that will become the top event in the new FTA. Lastly, the dialogue asks for a gateway, that will be used to connect intermediate events to the top events. The user can select from a predefined list of managed gateways in the tool. After clicking the "CREATE FAULT TREE" button, a canvas opens with a top event.
+Manual FTA trees can be composed directly by the user, by specifying events. In this case, the user starts from main dashboard, the "+" button in bottom right corner, and selecting "Fault tree". This will open a dialogue, where the user can specify the tree and top fault of the new FTA analysis. The user has the option to select from existing events (if already defined in the FTA/FMEA tool within some previous manual analysis), or define a new event, that will become the top event in the new FTA. Lastly, the dialogue asks for a gateway, that will be used to connect intermediate events to the top event. The user can select from a predefined list of managed gateways in the tool. After clicking the "CREATE FAULT TREE" button, a canvas opens with a top event.
 
 ![manual_FTA](https://user-images.githubusercontent.com/94048408/176170280-a4f4b829-4375-4ca1-9ee6-86f5444868db.png)
 
+In the canvas, after clicking the top event, the user is shown a dialogue bar, that allows editing the event. The dialogue shows the same datafields as when new manual FTA is created. 
+
+![manual_FTA_2](https://user-images.githubusercontent.com/94048408/176171413-92173133-cc5d-46e4-b8b1-d7b31523d4ff.png)
+
+To add intermediate events, the user must right-click the top event, that will trigger an option "new event". After clicking this option, a dialgue is displayed, that allows definition of an intermediate event with the same logic, as the top event was created. It means selecting from the existing events or defining a new event by its name, desription and probability. Lastly, the user can select "Gate Type", if this is intermediate event,. In case the event will be a leaf of the FTA tree, then the user needs to change the event type to "BASIC" in the "Type" data field.
