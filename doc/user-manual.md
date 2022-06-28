@@ -131,7 +131,11 @@ Lastly, the completed FMEA worksheet can be edited (individual rows by clicking 
 
 2.5.2 Manual FMEA Worksheets
 
-Manual FMEA worksheets can be created from various places, where FTA events are edited. In these dialogues, there is "SET FAILURE MODE" button added at the end of the right-side bar, that is used for editing the fault events. After clicking the button, the users will be displayed a window, that allows specifying failure mode for the selected fault event in the FTA, the component it relates to, influenced function and applied mitigations. Throughut the dialogue, components, functions and failure modes can be reused from other datasets already available in the FTA/FMEA tool, or a new ones can be defined by the user.
+Manual FMEA worksheets can be created from various places, where FTA events are edited. In these dialogues, there is "SET FAILURE MODE" button added at the end of the right-side bar, that is used for editing the fault events. See example in the picture below, where this button is red-circled.
+
+![manual_FTA_new_event_FMEA](https://user-images.githubusercontent.com/94048408/176191068-2eec5b29-ca48-4730-a344-0bf0f6566d58.png)
+
+After clicking the button, the user will be displayed a window, that allows specifying failure modes for the selected fault event in the FTA, the component it relates to, influenced functions and applied mitigations. Throughout the dialogue, components, functions and failure modes can be reused from other datasets already available in the FTA/FMEA tool, or a new ones can be defined by the user. After going through the dialogue, the user will receive a manually created FMEA worksheet of the same form as the automatically generated above. Note that manually creating FMEA does not modify the original system description and it may require entering the same information when the analysis is to be repeated in the future. It is, therefore, recommended to follow the automatic generation of FMEA and use manual FMEA only when necessary.
 
 ![manual_FTA_FM](https://user-images.githubusercontent.com/94048408/176177113-d6654c0f-4bcd-4d9e-81e8-cd26a5d9832c.png)
 ![manual_FTA_FM_component](https://user-images.githubusercontent.com/94048408/176178523-af6c079a-a932-45e2-b8b4-3d3ccb6f53ba.png)
