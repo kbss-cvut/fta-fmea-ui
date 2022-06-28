@@ -19,7 +19,14 @@ Registered user enters their credentials directly into the "Username" and "Passw
 
 2.1 Main Dashboard
 
-The main dashboard consists of a menu bar at the top (dark blue), with a button of user settings (white circle with a shape of person), and three main sections showing the data stored in the tool, namely "Systems", "Fault Trees" and "FMEA worksheets". In each of the sections, individual datasets/entries are displayed as rectangular shapes and the user can access any of those by cling respective "OPEN" button located on each of them. the following picture shows an example dashboard.
+The main dashboard consists of a menu bar at the top (dark blue), with a button of user settings (white circle with a shape of person), and three main sections showing the data stored in the tool, namely "Systems", "Fault Trees" and "FMEA worksheets". In each of the sections, individual datasets are displayed as rectangular shapes and the user can access any of those by cling respective "OPEN" button located on each of them, or click the three vertical dots at top right corner to rename or delete them. The following picture shows an example dashboard.
 
 ![Dashboard](https://user-images.githubusercontent.com/94048408/176143864-2996160d-f389-49ab-93f1-32ec8559445c.png)
+
+2.2. Creating new dataset
+
+The user can create new dataset via main dashboard, by means of the dark-blue circle with "+" button, located and the righ bottom corner of the dashboard. Whem moving the mouse coursor over this button, a menu displays which the user can select from. Namely, a new system description, new FTA of new FMEA analysis can be performed (see picture bellow).
+
+![add_dataset](https://user-images.githubusercontent.com/94048408/176145104-1a45c42e-4fd2-45bf-be5a-0c1e1469cf59.png)
+
 
