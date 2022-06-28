@@ -45,7 +45,8 @@ New component can be added by right-clicking the mouse on the canvas (the sectio
 
 ![modify_system_dialogue_2](https://user-images.githubusercontent.com/94048408/176151321-2f0d7e65-fce0-4a96-a7bd-df148b1d0a4f.png)
 
+After clicking the button, a window opens, where the user can name the new system component to be added.
 
-
+![create_component_dialogue](https://user-images.githubusercontent.com/94048408/176151766-aeb941c4-7672-47b8-962c-da100f84c060.png)
 
 
