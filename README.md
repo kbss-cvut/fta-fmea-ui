@@ -3,7 +3,7 @@
 This tool provides two types of reliability analyses - `Fault Tree Analysis (FTA)` and `Failure Modes and Effects
 Analysis (FMEA)`.
 It is primarily focused on FTA which offers possibilities for system partonomy definition,
-[FTA construction](./doc/fta-construction-algorithm.md) and an automatic conversion of the trees to FMEA tables given the unified ontological model.
+[FTA construction](./doc/fta-construction-algorithm.md) and an automatic conversion of the trees to FMEA tables given the unified ontological model. Detailed description of functions are described in [user manual](./doc/user-manual.md).
 
 ## Execution
 
