@@ -29,5 +29,11 @@ The user can create new dataset via main dashboard, by means of the dark-blue ci
 
 ![add_dataset](https://user-images.githubusercontent.com/94048408/176145104-1a45c42e-4fd2-45bf-be5a-0c1e1469cf59.png)
 
-2.2. Creating new system
+2.3 Creating new system
+
+When clicking the "System" button via the create new dataset function (section 2.2), the user gets into a dialogue, where first, the system has to be named (see picture below). The user enters the new system name and clicks the button "CREATE SYSTEM" to proceed. After clicking the button, the system displays in the "Systems" section of the main dashboard and it can be accessed via "OPEN" button, or possibly renamed or deleted via the three vertical dots button in the right top corner of the system shape.
+
+![create_system_dialogue](https://user-images.githubusercontent.com/94048408/176146273-fcb11c12-0a67-4192-b08d-33122ca497b6.png)
+
+
 
