@@ -82,7 +82,8 @@ The FTA/FMEA tool allows automatic FTA tree generation from existing model of a 
 
 2.4.1 Automatic FTA trees
 
-FTA trees are generated fully automatically from the available system description. In this option, it is necessary to model all the details, including functions and failure modes, to ensure proper FTA generation. The user can control the top fault in the tree by generating the tree from particular component and a function. If an FTA is required for the entire system, the user needs to find the component that aggregates all the other components into a whole, select its function (normally a function of the entire system) and click to generate FTA from that function. In the example below, the system is represented by component 2, that has part component 1. It follows, that component 2 will have some system-level function that depends on functions of copoment 1, and the user then clicks the FTA icon next to this function to obtain FTA analysis for the whole system.
+FTA trees are generated fully automatically from the available system description. In this option, it is necessary to model all the details, including functions and failure modes, to ensure proper FTA generation. The user can control the top fault in the tree by generating the tree from particular component and a function. If an FTA is required for the entire system, the user needs to find the component that aggregates all the other components into a whole, select its function (normally a function of the entire system) and click to generate FTA from that function. In the example below, the system is represented by component 2, that has part component 1. It follows, that component 2 will have some system-level function that depends on functions of copoment 1, and the user then clicks the FTA icon next to this function (circled in red) to obtain FTA analysis for the whole system.
 
-![autogenerate_FTA](https://user-images.githubusercontent.com/94048408/176168331-ad5a5899-39f6-4b4c-a883-b5abce225f7c.png)
+![autogenerate_FTA](https://user-images.githubusercontent.com/94048408/176169071-9be96f44-92ed-40cf-9e3d-6a3244004ec0.png)
+
 
