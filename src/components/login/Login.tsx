@@ -23,7 +23,7 @@ import {ROUTES} from "@utils/constants";
 
 
 // @ts-ignore
-import msmtLogo from '../../assets/MSMT.jpg';
+import msmtLogo from '../../assets/MSMT.png';
 // @ts-ignore
 import interExcellenceLogo from '../../assets/InterExcellence.png';
 
