@@ -7,6 +7,8 @@ import {ColDef, DataGrid} from '@material-ui/data-grid';
 import {Button} from "@material-ui/core";
 import FailureModesRowEditDialog from "@components/dialog/failureModesRow/FailureModesRowEditDialog";
 import {EditRowRpn} from "@models/failureModesRowModel";
+import {Mitigation} from "@models/mitigationModel";
+import {FailureMode} from "@models/failureModeModel";
 
 const FailureModeTable = ({setAppBarName}: DashboardTitleProps) => {
     const classes = useStyles();
@@ -17,7 +19,8 @@ const FailureModeTable = ({setAppBarName}: DashboardTitleProps) => {
     const [tableRows, setTableRows] = useState([]);
 
     const [selectedRpnRow, setSelectedRpnRow] = useState(null);
-
+    const [selectedMitigation, setSelectedMitigation] = useState(null);
+    const [failureModes, setFailureModes] = useState<FailureMode[]>([]);
     useEffect(() => {
         if (tableData) {
             setAppBarName(tableData?.name);
@@ -38,27 +41,36 @@ const FailureModeTable = ({setAppBarName}: DashboardTitleProps) => {
                             severity: rowData.severity,
                             occurrence: rowData.occurrence,
                             detection: rowData.detection,
+                            mitigationUri: rowData.mitigationId,
                         } as EditRowRpn;
 
                         setSelectedRpnRow(editRpnRow);
+
+                        const mit = {
+                            iri: rowData.mitigationId,
+                            name: rowData.mitigation,
+                            description: rowData.mitigationDescription,
+                        } as Mitigation;
+
+                        setSelectedMitigation(mit)
                     };
 
                     return <Button onClick={onClick}>Edit</Button>;
                 }
             });
 
-
-            setTableColumns(tableData.columns);
+            setFailureModes(tableData.failureModes)
+            setTableColumns(tableData.columns)
             setTableRows(tableData.rows);
         }
     }, [tableData]);
 
     return (<div className={classes.root}>
-        <DataGrid rows={tableRows} columns={tableColumns} pageSize={20}/>
+        <DataGrid rows={tableRows} columns={tableColumns} pageSize={20} />
 
         <FailureModesRowEditDialog
             open={Boolean(selectedRpnRow)} handleCloseDialog={() => setSelectedRpnRow(null)}
-            rowRpn={selectedRpnRow} onSuccess={refreshTable}/>
+            rowRpn={selectedRpnRow} onSuccess={refreshTable} mitigation={selectedMitigation} failureModes={failureModes}/>
     </div>)
 }
 
