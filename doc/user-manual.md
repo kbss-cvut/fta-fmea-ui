@@ -1,41 +1,40 @@
-1. Introduction
+# 1. Introduction
 
-1.1 FTA/FMEA tool
 FTA/FMEA tool is a web-based application designed for reliability analysis of hardware systems by means of Fault-tree Analysis (FTA) and Failure Modes and Effects Analysis. The tool manages data about hardware systems and components which are used for the reliability analyses. The primary goal of the tool was to enable automatic reliability assessment by either FTA, FMEA or both. This is especially useful during hardware system development, when reliability assessment has to be performed repetitively with each system design change, or when certain level of reliability has to be achieved. The tool also supports analysis of existing systems that are operated and the data from operations are used for update of the reliability analysis and subsequent change in systems maintenance.
 
-1.1 About the Manual
+## 1.1 About the Manual
 
 This manual describes the features of FTA/FMEA tool. It shows basic dialogues, interface and possible controls. The manual provides a comprehensive overview of main functions of the tool.
 
-2. Using the FTA/FMEA tool
+# 2. Using the FTA/FMEA tool
 
 Data fields of the FTA/FMEA tool are manual entry or drop-down lists, that the user can select from. Drop-down lists can be accessed by clicking the drop-down arrow. The tool also features some function buttons that execute certain tool features.
 
-2.1 Login
+## 2.1 Login
 
 Registered user enters their credentials directly into the "Username" and "Password" data fields. After clicking the "sing-in" button, the main dashboard of the tool displays. The user has and option to create new user account by clicking on the "Don't have an account? Sing Up" button below the main "sing-in" button. The subsequent dialoge asks the used to fill their credentials and confirm the password, before they can access the tool.
 
 ![Login](https://user-images.githubusercontent.com/94048408/176141292-38721cd6-066e-46c6-9342-6b6540d7e8f8.png)
 
-2.1 Main Dashboard
+## 2.2 Main Dashboard
 
 The main dashboard consists of a menu bar at the top (dark blue), with a button of user settings (white circle with a shape of person), and three main sections showing the data stored in the tool, namely "Systems", "Fault Trees" and "FMEA worksheets". In each of the sections, individual datasets are displayed as rectangular shapes and the user can access any of those by cling respective "OPEN" button located on each of them, or click the three vertical dots at top right corner to rename or delete them. The following picture shows an example dashboard.
 
 ![Dashboard](https://user-images.githubusercontent.com/94048408/176143864-2996160d-f389-49ab-93f1-32ec8559445c.png)
 
-2.2. Creating new dataset
+## 2.3 Creating new dataset
 
 The user can create new dataset via main dashboard, by means of the dark-blue circle with "+" button, located and the right bottom corner of the dashboard. When moving the mouse courser over this button, a menu displays which the user can select from. Namely, a new system description, new FTA of new FMEA analysis can be performed (see picture below). Beware, that these allow only manual analysis; for automatic FTA and FMEA analysis a system descriptions need to be created first, so if there are no systems enters in the tool, it will no be possible to auto-generate FTA or FMEA analysis. Manual FTA or FMEA analysis does not require system description in advance.
 
 ![add_dataset](https://user-images.githubusercontent.com/94048408/176145104-1a45c42e-4fd2-45bf-be5a-0c1e1469cf59.png)
 
-2.3 Creating new system
+## 2.4 Creating new system
 
-When clicking the "System" button via the create new dataset function (section 2.2), the user gets into a dialogue, where first, the system has to be named (see picture below). The user enters the new system name and clicks the button "CREATE SYSTEM" to proceed. After clicking the button, the system displays in the "Systems" section of the main dashboard and it can be accessed via "OPEN" button, or possibly renamed or deleted via the three vertical dots button in the right top corner of the system shape.
+When clicking the "System" button via the create new dataset function (section 2.3), the user gets into a dialogue, where first, the system has to be named (see picture below). The user enters the new system name and clicks the button "CREATE SYSTEM" to proceed. After clicking the button, the system displays in the "Systems" section of the main dashboard and it can be accessed via "OPEN" button, or possibly renamed or deleted via the three vertical dots button in the right top corner of the system shape.
 
 ![create_system_dialogue](https://user-images.githubusercontent.com/94048408/176146273-fcb11c12-0a67-4192-b08d-33122ca497b6.png)
 
-2.3.1 Adding system components
+### 2.4.1 Adding system components
 
 System components can be added after clicking "OPEN" button on a selected system via main dashboard. If the system is new, it will have no components defined and the dialogue window will display as follows.
 
@@ -55,7 +54,7 @@ Next, the user can start filling the details of the new component. This is done 
 
 ![modify_component_dialogue_2](https://user-images.githubusercontent.com/94048408/176153049-23c85537-a69e-41f0-973e-c3fcb5a251cd.png)
 
-2.3.2 Providing details of system components
+### 2.4.2 Providing details of system components
 
 The user can add details about component functions, failure modes and related components, that together assemble the system. These three details are shown in this section.
 
@@ -76,11 +75,11 @@ The last function of the "Diagram Options" bar is the possibility to link severa
 
 ![modify_component_link_component](https://user-images.githubusercontent.com/94048408/176166171-083b0faf-0d86-4334-abd6-b9323c7d32bf.png)
 
-2.4 Creating new FTA analysis
+## 2.5 Creating new FTA analysis
 
 The FTA/FMEA tool allows automatic FTA tree generation from existing model of a system, or manual FTA creation, where the entire tree can be progressively defined. The next sections describe both of the options.
 
-2.4.1 Automatic FTA trees
+### 2.5.1 Automatic FTA trees
 
 FTA trees are generated fully automatically from the available system description. In this option, it is necessary to model all the details, including functions and failure modes, to ensure proper FTA generation. The user can control the top fault in the tree by generating the tree from particular component and a function. If an FTA is required for the entire system, the user needs to find the component that aggregates all the other components into a whole, select its function (normally a function of the entire system) and click to generate FTA from that function. In the example below, the system is represented by component 2, that has part component 1. It follows, that component 2 will have some system-level function that depends on functions of copoment 1, and the user then clicks the FTA icon next to this function (circled in red) to obtain FTA analysis for the whole system.
 
@@ -91,7 +90,7 @@ After the FTA is automatically generated, the user sees the complete tree that c
 ![auto_FTA](https://user-images.githubusercontent.com/94048408/176183358-bc7d5f01-6249-4a00-9cbf-fe244faf0313.png)
 
 
-2.4.2 Manual FTA trees
+### 2.5.2 Manual FTA trees
 
 Manual FTA trees can be composed directly by the user, by specifying events. In this case, the user starts from main dashboard, the "+" button in bottom right corner, and selecting "Fault tree". This will open a dialogue, where the user can specify the tree and top fault of the new FTA analysis. The user has the option to select from existing events (if already defined in the FTA/FMEA tool within some previous manual analysis), or define a new event, that will become the top event in the new FTA. Note, that "Type" for top events has to be selected "INTERMEDIATE", and it is not possible to start the FTA from a "BASIC" event type as the manual FTA can be created only downwards from the first (top) event. Lastly, the dialogue asks for a gateway, that will be used to connect next (intermediate or basic) events to the top event. The user can select from a predefined list of managed gateways in the tool. After clicking the "CREATE FAULT TREE" button, a canvas opens with a top event.
 
@@ -108,11 +107,11 @@ To add intermediate events, the user must right-click the top event, that will p
 
 After clicking the button "CREATE EVENT", the new event will be added to the diagram and connected with the existing tree events. This way, the entire FTA tree can be created. 
 
-2.5 Creating new FMEA analysis
+## 2.6 Creating new FMEA analysis
 
 The FTA/FMEA tool allows automatic FMEA worksheet generation from the existing FTA analysis, or manual FMEA worksheet creation, where the entire worksheet can be progressively defined. The next sections describe both of the options.
 
-2.5.1 Automatic FMEA Worksheets
+### 2.6.1 Automatic FMEA Worksheets
 
 FTA/FMEA tool in its current versions allows automatic FMEA generation only from existing FTA analysis (be it automatically generated or manually created). For the purpose, specific FMEA icon must be clicked when a completed FTA analysis is shown (see red circle in the figure below).
 
@@ -123,13 +122,13 @@ After clicking the FMEA icon in a complete FTA, the user is displayed with FMEA 
 ![auto_FTA_FMEA_conversion](https://user-images.githubusercontent.com/94048408/176186619-a577c29c-931e-40dd-aeb6-7d2848db46f3.png)
 ![auto_FTA_FMEA_woksheet](https://user-images.githubusercontent.com/94048408/176189990-57e4ca3d-9e6d-40ca-b9b5-934079fb0a16.png)
 
-From the figures above it is clear, that the example FTA analysis did not contain information about causes, so the column is left blank. In order to provide the tool with the information about causes, the user must enter this information into the system description, namely for each of the components and functions. This can be done by "Diagram Options" bar, "Failure Modes" section discussed in section 2.3.2 of this manual. FTA/FMEA tool allows definition of causes as a "Failure Mode Cause" under the "Failure Mode Type" data field (red circled in the figure below). If this value is selected, the user can simply specify the cause and add it to the component failure modes. To link the cause fo a failure mode, particular failure mode must have specified that other failure mode is required (the cause), in line with the steps described in section 2.3.2. The autogenerated FMEA will then include this information in the worksheet.
+From the figures above it is clear, that the example FTA analysis did not contain information about causes, so the column is left blank. In order to provide the tool with the information about causes, the user must enter this information into the system description, namely for each of the components and functions. This can be done by "Diagram Options" bar, "Failure Modes" section discussed in section 2.4.2 of this manual. FTA/FMEA tool allows definition of causes as a "Failure Mode Cause" under the "Failure Mode Type" data field (red circled in the figure below). If this value is selected, the user can simply specify the cause and add it to the component failure modes. To link the cause fo a failure mode, particular failure mode must have specified that other failure mode is required (the cause), in line with the steps described in section 2.4.2. The autogenerated FMEA will then include this information in the worksheet.
 
 ![auto_FTA_FMEA_causes](https://user-images.githubusercontent.com/94048408/176188249-025d7103-1b30-43bc-91fa-9c990b553f9a.png)
 
 Lastly, the completed FMEA worksheet can be edited (individual rows by clicking "EDIT" in the last column) to add mitgiations or change RPN afterwards. Also, the worksheed can be downloaded as CSV file by means of the dark-blue icon of floppy disk, located in the right bottom part of the FMEA worksheet display.
 
-2.5.2 Manual FMEA Worksheets
+### 2.6.2 Manual FMEA Worksheets
 
 Manual FMEA worksheets can be created from various places, where FTA events are edited. In these dialogues, there is "SET FAILURE MODE" button added at the end of the right-side bar, that is used for editing the fault events. See example in the picture below, where this button is red-circled.
 
