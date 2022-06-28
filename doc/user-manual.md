@@ -55,7 +55,7 @@ Next, the user can start filling the details of the new component. This is done 
 
 ![modify_component_dialogue_2](https://user-images.githubusercontent.com/94048408/176153049-23c85537-a69e-41f0-973e-c3fcb5a251cd.png)
 
-2.3.1 Providing details of system components
+2.3.2 Providing details of system components
 
 The user can add details about component functions, failure modes and related components, that together assemble the system. These three details are shown in this section.
 
@@ -72,6 +72,6 @@ The next section allows the user to define failure modes, namely in the "Failure
 
 ![modify_component_FMs](https://user-images.githubusercontent.com/94048408/176164399-68c890ca-7bb7-4482-8068-4ef53e9f702e.png)
 
-The last function of the "Diagram Options" bar is the possibility to link several components together. This feature of the FTA/FMEA tool allows defining how component assemble into wholes (subsystems or systems). To enable the function, there must be at least two components defined in the system. Defining that a component is linked to other component means that the first is part of the latter. The tool opens a drop-down list when the user clicks the "Linked Component" datafield from which the user can select any other component to indicate, that the two components are linked. FTA/FMEA tool shows the result of component linking visually by means of the part-whole (aggregation) relationship of the UML language.
+The last function of the "Diagram Options" bar is the possibility to link several components together. This feature of the FTA/FMEA tool allows defining how component assemble into wholes (subsystems or systems). To enable the function, there must be at least two components defined in the system. Defining that a component is linked to other component means that the first is part of the latter. When the user clicks the "Linked Component" datafield, the tool opens a drop-down list from which the user can select any other component to indicate, that the two components are linked. FTA/FMEA tool shows the result of component linking visually by means of the part-whole (aggregation) relationship of the UML language. In the picture below, component 1 is highlighted and linked to component 2, indicating that part of component 2 is component 1.
 
 ![modify_component_link_component](https://user-images.githubusercontent.com/94048408/176166171-083b0faf-0d86-4334-abd6-b9323c7d32bf.png)
