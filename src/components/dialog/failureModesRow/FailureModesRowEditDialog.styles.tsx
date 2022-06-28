@@ -8,6 +8,12 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'flex',
             gap: '0.5em'
         },
+        mitigationBox : {
+            padding: theme.spacing(0, 1),
+            display: 'flex',
+            gap: '0.5em',
+            marginTop: '3%'
+        },
         rpnBoxItem: {
             flexGrow: 1,
         },

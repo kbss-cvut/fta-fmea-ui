@@ -13,7 +13,7 @@ export const CONTEXT = {
 
 export interface Behavior extends AbstractModel {
     name: string,
-    behaviorType: BehaviorType,
+    behaviorType?: BehaviorType,
     component?: Component,
     impairedBehaviors?: Behavior[],
     childBehaviors?: Behavior[],
