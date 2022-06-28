@@ -41,6 +41,11 @@ Detailed system description can be added after clicking "OPEN" button on a selec
 
 ![modify_system_dialogue_1](https://user-images.githubusercontent.com/94048408/176150452-33c18ccc-e911-407d-8c79-0d7d8692f24f.png)
 
+New component can be added by right-clicking the mouse on the canvas (the section with light grey dots). This will pop up a menu with "Create" button, that the user can click.
+
+![modify_system_dialogue_2](https://user-images.githubusercontent.com/94048408/176151321-2f0d7e65-fce0-4a96-a7bd-df148b1d0a4f.png)
+
+
 
 
 
