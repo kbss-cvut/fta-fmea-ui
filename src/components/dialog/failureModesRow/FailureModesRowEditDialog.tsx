@@ -128,11 +128,13 @@ const FailureModesRowEditDialog = ({open, handleCloseDialog, rowRpn, onSuccess, 
                 </Box>
 
                 <Box className={classes.mitigationBox}>
-                    <Controller as={TextField} control={control} label="Mitigation" type="text" name="name"
+                    <Controller as={TextField} control={control} label="Mitigation name" type="text" name="name"
                                 className={classes.rpnBoxItem} defaultValue=""/>
+                </Box>
 
-                    <Controller as={TextField} control={control} label="Mitigation description" type="text" name="description"
-                                className={classes.rpnBoxItem} defaultValue=""/>
+                <Box className={classes.mitigationBox}>
+                    <Controller as={TextField} control={control} label="Mitigation description" type="text"
+                                name="description" multiline rows={5} variant="outlined" className={classes.rpnBoxItem} defaultValue=""/>
                 </Box>
                 {/*<Box className={classes.mitigationBox}>*/}
                 {/*    <InputLabel id="failure-modes-multiselect-label"> Failure Mode </InputLabel>*/}
