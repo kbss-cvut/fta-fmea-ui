@@ -21,6 +21,12 @@ import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {ROUTES} from "@utils/constants";
 
+
+// @ts-ignore
+import msmtLogo from '../../assets/MSMT.png';
+// @ts-ignore
+import interExcellenceLogo from '../../assets/InterExcellence.png';
+
 const Login = () => {
     const classes = useStyles();
 
@@ -111,6 +117,10 @@ const Login = () => {
                         </Grid>
                     )}
                 </form>
+            </div>
+            <div className={classes.footer}>
+                <img src={msmtLogo} alt="MSMT Logo" className={classes.logo}/>
+                <img src={interExcellenceLogo} alt="InterExcellence logo" className={classes.logo}/>
             </div>
         </Container>
     );

@@ -1,4 +1,4 @@
-# FTA and FMEA tool
+**# FTA and FMEA tool
 
 This tool provides two types of reliability analyses - `Fault Tree Analysis (FTA)` and `Failure Modes and Effects
 Analysis (FMEA)`.
@@ -41,3 +41,13 @@ There are two flags which need to be set:
 1. Download [GraphDB](https://graphdb.ontotext.com/) standalone server ZIP archive and place it into the `deploy/db-server` folder.
 2. Set `GRAPHDB_ZIP` variable in `.env` file to point to the downloaded zip file.
 3. Run `docker-compose up -d` to start the application.
+
+-----
+<p align="center">
+    <img src="https://seeklogo.com/images/M/msmt-logo-84BD22A97D-seeklogo.com.png"/>
+</p>
+
+<p align="center">
+    <img src="https://www.msmt.cz/uploads/Odbor%2033/inter-excellence-color.jpg"/>
+</p>
+

@@ -13,6 +13,7 @@
     "axios": "^0.21.2",
     "backbone": "^1.4.0",
     "dagre": "^0.8.5",
+    "file-loader": "^6.2.0",
     "graphlib": "^2.1.8",
     "history": "4.10.1",
     "jointjs": "^3.4.2",
