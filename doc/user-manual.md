@@ -70,4 +70,4 @@ After the editing of component functions is complete, the "Diagram Options" bar,
 
 The next section allows the user to define failure modes, namely in the "Failure Modes" section of the "Diagram Options" bar, after a component is selected in the canvas. The logic of this section is the same as with "Functions" section, i.e. user can add failure modes, name them, specify whether these are atomic or complex, and possible how do atomic failure modes combine into complex modes. The bavior and the FTA/FMEA tool in this section is exactly the same as for Functions described above. After the editing of component failure modes is complete, the "Failure Modes" section of the "Diagram Options" bar shows the added failure modes, and allows their editing or deleting.
 
-![modify_component_FMs](https://user-images.githubusercontent.com/94048408/176164235-c825363b-53ed-457b-9082-e9bbe998b51a.png)
+![modify_component_FMs](https://user-images.githubusercontent.com/94048408/176164399-68c890ca-7bb7-4482-8068-4ef53e9f702e.png)
