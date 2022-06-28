@@ -75,3 +75,14 @@ The next section allows the user to define failure modes, namely in the "Failure
 The last function of the "Diagram Options" bar is the possibility to link several components together. This feature of the FTA/FMEA tool allows defining how component assemble into wholes (subsystems or systems). To enable the function, there must be at least two components defined in the system. Defining that a component is linked to other component means that the first is part of the latter. When the user clicks the "Linked Component" datafield, the tool opens a drop-down list from which the user can select any other component to indicate, that the two components are linked. FTA/FMEA tool shows the result of component linking visually by means of the part-whole (aggregation) relationship of the UML language. In the picture below, component 1 is highlighted and linked to component 2, indicating that part of component 2 is component 1.
 
 ![modify_component_link_component](https://user-images.githubusercontent.com/94048408/176166171-083b0faf-0d86-4334-abd6-b9323c7d32bf.png)
+
+2.4 Creating new FTA analysis
+
+The FTA/FMEA tool allows automatic FTA tree generation from existing model of a system, or manual FTA creation, where the entire tree can be progressively defined. The next sections describe both of the options.
+
+2.4.1 Automatic FTA trees
+
+FTA trees are generated fully automatically from the available system description. In this option, it is necessary to model all the details, including functions and failure modes, to ensure proper FTA generation. The user can control the top fault in the tree by generating the tree from particular component and a function. If an FTA is required for the entire system, the user needs to find the component that aggregates all the other components into a whole, select its function (normally a function of the entire system) and click to generate FTA from that function. In the example below, the system is represented by component 2, that has part component 1. It follows, that component 2 will have some system-level function that depends on functions of copoment 1, and the user then clicks the FTA icon next to this function to obtain FTA analysis for the whole system.
+
+![autogenerate_FTA](https://user-images.githubusercontent.com/94048408/176168331-ad5a5899-39f6-4b4c-a883-b5abce225f7c.png)
+
