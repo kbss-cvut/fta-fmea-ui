@@ -25,7 +25,7 @@ The main dashboard consists of a menu bar at the top (dark blue), with a button 
 
 2.2. Creating new dataset
 
-The user can create new dataset via main dashboard, by means of the dark-blue circle with "+" button, located and the righ bottom corner of the dashboard. Whem moving the mouse coursor over this button, a menu displays which the user can select from. Namely, a new system description, new FTA of new FMEA analysis can be performed (see picture bellow).
+The user can create new dataset via main dashboard, by means of the dark-blue circle with "+" button, located and the right bottom corner of the dashboard. When moving the mouse courser over this button, a menu displays which the user can select from. Namely, a new system description, new FTA of new FMEA analysis can be performed (see picture bellow). Beware, that FTA and FMEA analysis can be created on from existing system descriptions, so if there are no systems enters in the tool, it will no be possible to generate FTA or FMEA analysis.
 
 ![add_dataset](https://user-images.githubusercontent.com/94048408/176145104-1a45c42e-4fd2-45bf-be5a-0c1e1469cf59.png)
 
