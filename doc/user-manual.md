@@ -19,4 +19,4 @@ Registered user enters their credentials directly into the "Username" and "Passw
 
 2.1 Main Dashboard
 
-The main dashboard consists of a menu bar at the top (dark blue), with a button of user settings (white circle with a shape of person), and three main sections showing the data stored in the tool, namely "Systems", "Fault Trees" and "FMEA worksheets". In each of the sections, individual datasets/entries are displayed as rectangular shapes and the user can access any of those by cling respective "OPEN" button located on each of them.
+The main dashboard consists of a menu bar at the top (dark blue), with a button of user settings (white circle with a shape of person), and three main sections showing the data stored in the tool, namely "Systems", "Fault Trees" and "FMEA worksheets". In each of the sections, individual datasets/entries are displayed as rectangular shapes and the user can access any of those by cling respective "OPEN" button located on each of them. the following picture shows an example dashboard.
