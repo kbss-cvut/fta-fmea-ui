@@ -41,7 +41,6 @@ const FailureModeShowDialog = ({open, onClose, failureMode}: Props) => {
                 {failureMode && <FailureModeStepper
                     buttonTitle="Save" onConfirmationClick={handleSaveClicked}
                     initialFailureMode={failureMode} initialComponent={failureMode?.component}
-                    initialFunctions={componentFunctions} initialMitigation={failureMode?.mitigation}
                 />}
             </DialogContent>
         </Dialog>

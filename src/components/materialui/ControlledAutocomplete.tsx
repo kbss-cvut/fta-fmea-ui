@@ -12,7 +12,9 @@ interface Props {
     onChangeCallback?,
     renderOption?: any,
     defaultValue?: any,
-    useSafeOptions?: boolean
+    useSafeOptions?: boolean,
+    fullWidth?: boolean,
+    clearOnBlur?: boolean
 }
 
 const prepareOptions = (useSafeOptions, inputOptions, defaultOption) => {
@@ -35,17 +37,20 @@ const prepareOptions = (useSafeOptions, inputOptions, defaultOption) => {
     return [options, defaultValue, getOptionValue]
 }
 
-const ControlledAutocomplete = ({options = [], name, renderInput, getOptionLabel, control, onChangeCallback, renderOption, defaultValue, useSafeOptions = false}: Props) => {
+const ControlledAutocomplete = ({options = [], name, renderInput, getOptionLabel, control, onChangeCallback, renderOption,
+                                    defaultValue, useSafeOptions = false, fullWidth=false, clearOnBlur= false}: Props) => {
     const [_options, _defaultValue, getOptionValue] = prepareOptions(useSafeOptions, options, defaultValue)
 
     return (
         <Controller
             render={({onChange, ...props}) => (
                 <Autocomplete
+                    fullWidth
                     options={_options}
                     getOptionLabel={getOptionLabel}
                     renderOption={renderOption}
                     renderInput={renderInput}
+                    clearOnBlur={clearOnBlur}
                     onChange={(e, data) => {
                         let _data = getOptionValue(data)
                         onChangeCallback(_data)

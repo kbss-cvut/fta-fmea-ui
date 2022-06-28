@@ -8,6 +8,7 @@ import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {findIndex, flatten, sortBy} from "lodash";
 import {CONTEXT as FAILURE_MODE_CONTEXT, FailureMode} from "@models/failureModeModel";
 import {handleServerError} from "@services/utils/responseUtils";
+import {simplifyReferencesOfReferences} from "@utils/utils";
 
 export const findAll = async (): Promise<FaultEvent[]> => {
     try {
@@ -134,7 +135,7 @@ export const addFailureMode = async (eventUri: string, failureMode: FailureMode)
     try {
         const fragment = extractFragment(eventUri);
         const createRequest = Object.assign(
-            {"@type": [VocabularyUtils.FAILURE_MODE]}, failureMode, {"@context": FAILURE_MODE_CONTEXT}
+        {"@type": [VocabularyUtils.FAILURE_MODE]}, simplifyReferencesOfReferences(failureMode), {"@context": FAILURE_MODE_CONTEXT}
         )
 
         const response = await axiosClient.post(

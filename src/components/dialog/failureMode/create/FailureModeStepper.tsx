@@ -5,20 +5,15 @@ import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import ComponentPicker from "@components/dialog/component/ComponentPicker";
 import {Component} from "@models/componentModel";
-import {Function} from "@models/functionModel";
 import {Button} from "@material-ui/core";
-import FunctionPicker from "@components/dialog/function/FunctionPicker";
 import {ComponentsProvider} from "@hooks/useComponents";
-import {FunctionsProvider} from "@hooks/useFunctions";
 import useStyles from "./FailureModeStepper.styles";
 import FailureModeStepperConfirmation from "./FailureModeStepperConfirmation";
 import FailureModeCreationStep from "./FailureModeCreationStep";
 import {FailureMode} from "@models/failureModeModel";
-import {Mitigation} from "@models/mitigationModel";
-import MitigationCreation from "@components/dialog/mitigation/MitigationCreation";
 import {merge} from "lodash";
 
-const stepTitles = ["Failure Mode", "Component", "Influenced Function", "Mitigation", "Confirmation"];
+const stepTitles = ["Failure Mode", "Component", "Confirmation"];
 
 interface Props {
     buttonTitle: string,
@@ -26,30 +21,23 @@ interface Props {
 
     initialFailureMode?: FailureMode,
     initialComponent?: Component,
-    initialFunctions?: Function[],
-    initialMitigation?: Mitigation,
 }
 
 const FailureModeStepper = ({
                                 buttonTitle, onConfirmationClick,
                                 initialFailureMode = null,
                                 initialComponent = null,
-                                initialFunctions = [],
-                                initialMitigation = null
                             }: Props) => {
     const classes = useStyles();
 
     const [activeStep, setActiveStep] = useState(0);
     const [selectedFailureMode, setSelectedFailureMode] = useState<FailureMode | null>(initialFailureMode)
     const [selectedComponent, setSelectedComponent] = useState<Component | null>(initialComponent)
-    const [selectedFunctions, setSelectedFunctions] = useState<Function[]>(initialFunctions)
-    const [selectedMitigation, setSelectedMitigation] = useState<Mitigation | null>(initialMitigation)
 
     const handleNext = () => setActiveStep((prev) => prev + 1);
     const handleBack = () => setActiveStep((prev) => prev - 1);
 
     const handleComponentSelected = (component: Component) => {
-        setSelectedFunctions([])
         setSelectedComponent(component)
     }
 
@@ -68,24 +56,11 @@ const FailureModeStepper = ({
                                          onComponentSelected={handleComponentSelected}/>
                     </ComponentsProvider>
                 );
-            case 2:
-                return (
-                    <FunctionsProvider componentUri={selectedComponent?.iri}>
-                        <FunctionPicker selectedFunctions={selectedFunctions}
-                                        onFunctionsSelected={setSelectedFunctions}/>
-                    </FunctionsProvider>
-                );
             case 3:
-                return (
-                    <MitigationCreation mitigation={selectedMitigation} onMitigationChanged={setSelectedMitigation}/>
-                );
-            case 4:
                 return (
                     <FailureModeStepperConfirmation
                         component={selectedComponent}
-                        componentFunctions={selectedFunctions}
-                        failureMode={selectedFailureMode}
-                        mitigation={selectedMitigation}/>
+                        failureMode={selectedFailureMode}/>
                 )
             default:
                 break;
@@ -98,10 +73,6 @@ const FailureModeStepper = ({
                 return Boolean(selectedFailureMode);
             case 1:
                 return Boolean(selectedComponent);
-            case 2:
-                return selectedFunctions.length > 0;
-            case 3:
-                return Boolean(selectedMitigation);
             default:
                 return true;
         }
@@ -142,12 +113,7 @@ const FailureModeStepper = ({
         const failureMode = (initialFailureMode) ? initialFailureMode : {} as FailureMode;
         merge(failureMode, selectedFailureMode);
 
-        const mitigation = (initialMitigation)? initialMitigation : {} as Mitigation;
-        merge(mitigation, selectedMitigation);
-
         failureMode.component = selectedComponent
-        failureMode.impairedBehaviors = selectedFunctions
-        failureMode.mitigation = mitigation
 
         onConfirmationClick(failureMode)
     }
