@@ -86,4 +86,6 @@ FTA trees are generated fully automatically from the available system descriptio
 
 ![autogenerate_FTA](https://user-images.githubusercontent.com/94048408/176169071-9be96f44-92ed-40cf-9e3d-6a3244004ec0.png)
 
+2.4.2 Manual FTA trees
 
+Manual FTA trees can be composed directly by the user, by specifying events.
