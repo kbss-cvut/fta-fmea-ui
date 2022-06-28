@@ -98,6 +98,6 @@ In the canvas, after clicking the top event, the user is shown a dialogue bar, t
 
 To add intermediate events, the user must right-click the top event, that will pop-up an option to add "new event". After clicking this "new event", a dialgue is displayed, that allows definition of an intermediate event with the same logic, as the top event was created. It means selecting from the existing events or defining a new event by its type, name, desription and probability. The user can again select "Gate Type", if this intermediate event type was selected (i.e. the tree will continue downwards). In case the event will be a leaf of the FTA tree, then the user sets the event type to "BASIC" in the "Type" data field and the option to select "Gate Type" disappears.
 
-![manual_FTA_new_event](https://user-images.githubusercontent.com/94048408/176173935-9f248975-61c2-4599-97ae-6866020dee60.png)
+![manual_FTA_new_event](https://user-images.githubusercontent.com/94048408/176174063-786167db-7f14-45e8-b91b-69f9edafcf08.png)
 ![manual_FTA_new_event_dialogie](https://user-images.githubusercontent.com/94048408/176173946-06b0eecf-e469-4d80-a263-0d7bb2fa01ce.png)
 
