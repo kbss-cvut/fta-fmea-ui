@@ -16,3 +16,7 @@ Data fields of the FTA/FMEA tool are manual entry or drop-down lists, that the u
 Registered user enters their credentials directly into the "Username" and "Password" data fields. After clicking the "sing-in" button, the main dashboard of the tool displays. The user has and option to create new user account by clicking on the "Don't have an account? Sing Up" button bellow the main "sing-in" button. The subsequent dialoge asks the used to fill their credentials and confirm the password, before they can access the tool.
 
 ![Login](https://user-images.githubusercontent.com/94048408/176141292-38721cd6-066e-46c6-9342-6b6540d7e8f8.png)
+
+2.1 Main Dashboard
+
+The main dashboard consists of a menu bar at the top (dark blue), with a button of user settings (white circle with a shape of person), and three main sections showing the data stored in the tool, namely "Systems", "Fault Trees" and "FMEA worksheets". In each of the sections, individual datasets/entries are displayed as rectangular shapes and the user can access any of those by cling respective "OPEN" button located on each of them.
