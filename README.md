@@ -1,4 +1,4 @@
-**# FTA and FMEA tool
+# FTA and FMEA tool
 
 This tool provides two types of reliability analyses - `Fault Tree Analysis (FTA)` and `Failure Modes and Effects
 Analysis (FMEA)`.
@@ -43,6 +43,7 @@ There are two flags which need to be set:
 3. Run `docker-compose up -d` to start the application.
 
 -----
+This repository was created within the project [LTACH19032](https://starfos.tacr.cz/en/project/LTACH19032).
 <p align="center">
     <img src="https://seeklogo.com/images/M/msmt-logo-84BD22A97D-seeklogo.com.png"/>
 </p>
