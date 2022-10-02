@@ -84,13 +84,13 @@ export const remove = async (failureModeIri: string): Promise<void> => {
     }
 }
 
-export const addFailureModeToFunction = async (functionIri: string, failureModeIri: string): Promise<void> => {
+export const addFailureModeToFunction = async (failureModeIri: string, functionIri: string): Promise<void> => {
     try {
         const functionFragment = extractFragment(functionIri);
         const fmFragment = extractFragment(failureModeIri);
 
         await axiosClient.post(
-            `/failureModes/${functionFragment}/impairedBehavior/${failureModeIri}`,
+            `/failureModes/${failureModeIri}/impairedBehavior/${functionFragment}`,
             {},
             {
                 headers: authHeaders()

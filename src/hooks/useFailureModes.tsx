@@ -73,9 +73,16 @@ export const FailureModeProvider = ({children, component}: FailureModeProviderPr
     const removeFailureMode = async (failureMode: FailureMode) => {
         componentService.removeFailureMode(component.iri, failureMode.iri)
             .then(() => {
+                // ad-hoc fix - failureMode.component to null without fetching from server
+                failureMode.component = undefined
+                let tmpFailureMode = _allFailureModes.get(failureMode.iri)
+                if(tmpFailureMode)
+                    tmpFailureMode.component = undefined
+
                 showSnackbar('Failure mode removed', SnackbarType.SUCCESS)
-                _setComponentFailureModes(filter(_componentFailureModes, (el) => el.iri !== failureMode.iri) || [])
-                _setAllFailureModes(filter(_allFailureModes, (el) => el.iri !== failureMode.iri) || new Map<string,FailureMode>())
+                let tmpFailureModes = new Map(_allFailureModes)
+                tmpFailureModes.delete(failureMode.iri)
+                _setComponentFailureModes([... tmpFailureModes.values()])
             })
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
@@ -102,9 +109,9 @@ export const FailureModeProvider = ({children, component}: FailureModeProviderPr
             .then(failureModes => failureModes)
     }
 
-    const addFailureModeToFunction = async(functionIri: string, failureModeIri: string) => {
+    const addFailureModeToFunction = async(failureModeIri: string, functionIri: string) => {
         failureModeService
-            .addFailureModeToFunction(extractFragment(functionIri),extractFragment(failureModeIri))
+            .addFailureModeToFunction(extractFragment(failureModeIri),extractFragment(functionIri))
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
 

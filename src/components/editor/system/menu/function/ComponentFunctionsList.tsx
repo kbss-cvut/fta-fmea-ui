@@ -44,6 +44,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import FunctionsList from '@components/editor/system/menu/function/FunctionsList';
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
+import {simplifyReferencesOfReferences} from "@utils/utils";
 
 const ComponentFunctionsList = ({ component }) => {
     const classes = useStyles();
@@ -91,6 +92,7 @@ const ComponentFunctionsList = ({ component }) => {
 
     const _handleCreateFunction = (values: any) => {      
 		let createFunction: Function = { name: values.name, requiredBehaviors: requiredFunctions, childBehaviors: childBehaviors, behaviorType: behaviorType}
+        createFunction = simplifyReferencesOfReferences(createFunction);
 		addFunction(createFunction).then(f => selectedFailureModes.forEach(fm => addFailureModeToFunction(fm.iri,f.iri)))
 		reset(values)
         setSelectedFailureModes([])
