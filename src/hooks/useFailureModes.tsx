@@ -102,9 +102,9 @@ export const FailureModeProvider = ({children, component}: FailureModeProviderPr
             .then(failureModes => failureModes)
     }
 
-    const addFailureModeToFunction = async(functionIri: string, failureModeIri: string) => {
+    const addFailureModeToFunction = async(failureModeIri: string, functionIri: string) => {
         failureModeService
-            .addFailureModeToFunction(extractFragment(functionIri),extractFragment(failureModeIri))
+            .addFailureModeToFunction(extractFragment(failureModeIri),extractFragment(functionIri))
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
 
