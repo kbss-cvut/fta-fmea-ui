@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Controller} from "react-hook-form";
 import {Autocomplete} from "@material-ui/lab";
-import {simplifyReferencesOfReferences} from "@utils/utils";
+import {simplifyReferences} from "@utils/utils";
 
 interface Props {
     name: string
@@ -27,8 +27,8 @@ const prepareOptions = (useSafeOptions, inputOptions, defaultOption) => {
         const getKey = (o) => o?.iri ? o.iri : (o?.uri ? o.uri : null)
         const map: Map<string, any> = new Map()
         options.forEach(o => map.set(getKey(o), o))
-        defaultValue = defaultValue ? simplifyReferencesOfReferences(defaultValue) : null
-        options = options.map(o => simplifyReferencesOfReferences(o))
+        defaultValue = defaultValue ? simplifyReferences(defaultValue) : null
+        options = options.map(o => simplifyReferences(o))
         getOptionValue = (data) => {
             let key = getKey(data)
             return key ? map.get(key) : data

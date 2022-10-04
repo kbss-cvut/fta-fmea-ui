@@ -17,7 +17,7 @@ export const simplifyReferencesOfReferences =  <Type extends AbstractModel>(b : 
     return transformReferences(b, simplifyReferences);
 }
 
-const simplifyReferences =  <Type extends AbstractModel>(b : Type): Type => {
+export const simplifyReferences =  <Type extends AbstractModel>(b : Type): Type => {
     return transformReferences(b, removeReferences)
 }
 
