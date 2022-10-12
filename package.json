@@ -18,7 +18,7 @@
     "history": "4.10.1",
     "jointjs": "^3.4.2",
     "jquery": "^3.5.1",
-    "jsonld": "1.6.0",
+    "jsonld": "8.1.0",
     "lodash": "^4.17.20",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
