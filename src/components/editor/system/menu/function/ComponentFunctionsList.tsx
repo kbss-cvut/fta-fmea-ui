@@ -45,6 +45,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import FunctionsList from '@components/editor/system/menu/function/FunctionsList';
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 import {simplifyReferencesOfReferences} from "@utils/utils";
+import SafeAutocomplete from "@components/materialui/SafeAutocomplete";
 
 const ComponentFunctionsList = ({ component }) => {
     const classes = useStyles();
@@ -303,12 +304,13 @@ const ComponentFunctionsList = ({ component }) => {
                         <Dialog open={dialog} onClose={handleShowDialog} fullWidth maxWidth="sm">
                             <DialogTitle>Add existing function </DialogTitle>
                             <DialogContent>
-                                <Autocomplete
+                                <SafeAutocomplete
                                     id="add-existing-function"
+                                    useSafeOptions={true}
                                     options={allFunctions.filter(
                                         (el) => !el.component || el.component.iri !== component.iri
                                     )}
-                                    onChange={(event: any, newValue: any) => {
+                                    onChangeCallback={(e, newValue: any) => {
                                         setFunctionToAdd(newValue);
                                         showSnackbar("Function's component will be changed", SnackbarType.INFO);
                                     }}

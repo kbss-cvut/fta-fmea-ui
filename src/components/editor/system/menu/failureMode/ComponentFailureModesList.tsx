@@ -36,6 +36,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
 import {simplifyReferencesOfReferences} from "@utils/utils";
+import SafeAutocomplete from "@components/materialui/SafeAutocomplete";
 
 const ComponentFailureModesList = ({ component }) => {
   const classes = useStyles();
@@ -262,12 +263,13 @@ const ComponentFailureModesList = ({ component }) => {
                   <Dialog open={dialog} onClose={closeDialogWindow} fullWidth maxWidth="sm">
                       <DialogTitle>Add existing failure mode </DialogTitle>
                       <DialogContent>
-                          <Autocomplete
+                          <SafeAutocomplete
                               id="add-existing-failure-mode"
+                              useSafeOptions={true}
                               options={[...allFailureModes]
                                   .filter(([fmIri, fm]) => ((fm.component && fm.component.iri) || "") !== component.iri)
                                   .map((value) => value[1])}
-                              onChange={(event: any, newValue: any) => {
+                              onChangeCallback={(event: any, newValue: any) => {
                                   setFailureModeToAdd(newValue);
                                   showSnackbar("Failure mode's component will be changed", SnackbarType.INFO);
                               }}

@@ -39,6 +39,7 @@ const prepareOptions = (useSafeOptions, inputOptions, defaultOption) => {
 
 const ControlledAutocomplete = ({options = [], name, renderInput, getOptionLabel, control, onChangeCallback, renderOption,
                                     defaultValue, useSafeOptions = false, fullWidth=false, clearOnBlur= false}: Props) => {
+    // TODO - refactor use SafeAutocomplete instead of the implementation here
     const [_options, _defaultValue, getOptionValue] = prepareOptions(useSafeOptions, options, defaultValue)
 
     return (

@@ -1,7 +1,6 @@
 import * as React from "react";
 
 import {IconButton, TextField, Typography} from "@material-ui/core";
-import {Autocomplete} from "@material-ui/lab";
 import {useComponents} from "@hooks/useComponents";
 import AddIcon from "@material-ui/icons/Add";
 import {Component} from "@models/componentModel";
