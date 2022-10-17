@@ -23,7 +23,7 @@ export const simplifyReferences =  <Type extends AbstractModel>(b : Type): Type 
 
 const removeReferences =  <Type extends AbstractModel> (o :Type): Type => {
     // @ts-ignore
-    return {uri: o.iri, name: o.name, types: o.types} as Type;
+    return {iri: o.iri, name: o.name, types: o.types} as Type;
 }
 
 const isAbstractModel = (e: any): e is AbstractModel => {
