@@ -6,7 +6,7 @@ import {handleServerError} from "./utils/responseUtils";
 import {CONTEXT as FUNCTION_CONTEXT, Function} from "../models/functionModel";
 import {CONTEXT as FAILURE_MODE_CONTEXT} from "../models/failureModeModel";
 import JsonLdUtils from "../utils/JsonLdUtils";
-import {simplifyReferencesOfReferences} from "@utils/utils";
+import {simplifyReferences} from "@utils/utils";
 import {Component} from "@models/componentModel";
 import {CONTEXT, FaultTree} from "@models/faultTreeModel";
 import {FailureMode} from "@models/failureModeModel";
@@ -63,7 +63,7 @@ export const addRequiredFunction = async (functionUri: string, requiredFunctionU
 
 export const editFunction = async (f: Function): Promise<Function> => {
   try {
-    const updateRequest = Object.assign({}, simplifyReferencesOfReferences(f), { "@context": FUNCTION_CONTEXT });
+    const updateRequest = Object.assign({}, simplifyReferences(f), { "@context": FUNCTION_CONTEXT });
     const response = await axiosClient.put("/functions", updateRequest, {
       headers: authHeaders(),
     });
