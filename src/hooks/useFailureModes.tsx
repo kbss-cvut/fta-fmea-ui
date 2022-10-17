@@ -80,9 +80,8 @@ export const FailureModeProvider = ({children, component}: FailureModeProviderPr
                     tmpFailureMode.component = undefined
 
                 showSnackbar('Failure mode removed', SnackbarType.SUCCESS)
-                let tmpFailureModes = new Map(_allFailureModes)
-                tmpFailureModes.delete(failureMode.iri)
-                _setComponentFailureModes([... tmpFailureModes.values()])
+                let tmpFailureModes = _componentFailureModes.filter(fm => fm.iri !== failureMode.iri)
+                _setComponentFailureModes([... tmpFailureModes])
             })
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }

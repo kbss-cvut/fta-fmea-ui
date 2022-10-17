@@ -108,7 +108,7 @@ export const FunctionsProvider = ({children, componentUri}: FunctionProviderProp
     const reassignVariables = (func: Function, component: Component) => {
         showSnackbar('Function added', SnackbarType.SUCCESS)
         _setFunctions([..._functions,func])
-        _setAllFunctions([..._allFunctions, func])
+        _setAllFunctions([..._allFunctions.filter(f => f.iri !== func.iri)])
     }
 
     const addRequiredFunction = async (functionUri: string, requiredFunctionUri: string) =>{
@@ -122,7 +122,7 @@ export const FunctionsProvider = ({children, componentUri}: FunctionProviderProp
                 showSnackbar('Function removed', SnackbarType.SUCCESS)
                 const updatedFunctions = filter(_functions, (el) => el.iri !== f.iri)
                 _setFunctions(updatedFunctions)
-                _setAllFunctions([..._allFunctions.filter((el) => el.iri !== f.iri)])
+                _setAllFunctions([..._allFunctions.filter((el) => el.iri !== f.iri), f])
             })
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
