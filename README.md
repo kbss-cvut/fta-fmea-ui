@@ -37,7 +37,7 @@ There are two flags which need to be set:
 * Running demo application - [kbss/fta-fmea-demo](https://kbss.felk.cvut.cz/fta-fmea-demo/) 
 * Backend project - [fta-fmea](https://github.com/kbss-cvut/fta-fmea)
 
-## Dockerization
+## Running complete tool in Docker
 1. Download [GraphDB](https://graphdb.ontotext.com/) standalone server ZIP archive and place it into the `deploy/db-server` folder.
 2. Set `GRAPHDB_ZIP` variable in `.env` file to point to the downloaded zip file.
 3. Run `docker-compose up -d` to start the application.
