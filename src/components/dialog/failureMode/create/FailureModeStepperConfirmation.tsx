@@ -11,7 +11,7 @@ interface Props {
 }
 
 const FailureModeStepperConfirmation = ({failureMode,component }: Props) => {
-    const classes = useStyles();
+    const { classes } = useStyles();
 
     return (
         <div className={classes.root}>

@@ -24,7 +24,7 @@ import {ROUTES} from "@utils/constants";
 import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@utils/contextMenu";
 
 const DashboardFaultTreeList = () => {
-    const classes = useStyles();
+    const { classes } = useStyles();
     const [faultTrees, , , removeTree] = useFaultTrees();
 
     const [contextMenuSelectedTree, setContextMenuSelectedTree] = useState<FaultTree>(null)

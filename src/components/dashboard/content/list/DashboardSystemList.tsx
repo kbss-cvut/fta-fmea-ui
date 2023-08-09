@@ -24,7 +24,7 @@ import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@utils/context
 import SystemContextMenu from "@components/editor/system/menu/SystemContextMenu";
 
 const DashboardSystemList = () => {
-    const classes = useStyles();
+    const { classes } = useStyles();
     const [systems, , , removeSystem] = useSystems();
 
     const [contextMenuSelectedSystem, setContextMenuSelectedSystem] = useState<System>(null)

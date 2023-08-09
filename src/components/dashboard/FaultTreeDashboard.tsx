@@ -10,7 +10,7 @@ import Editor from "../editor/faultTree/Editor";
 import {useState} from "react";
 
 const FaultTreeDashboard = () => {
-    const classes = useStyles();
+    const { classes } = useStyles();
 
     const {treeFragment} = useParams();
     const treeIri = composeFragment(treeFragment);

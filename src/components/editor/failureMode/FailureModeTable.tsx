@@ -11,7 +11,7 @@ import {Mitigation} from "@models/mitigationModel";
 import {FailureMode} from "@models/failureModeModel";
 
 const FailureModeTable = ({setAppBarName}: DashboardTitleProps) => {
-    const classes = useStyles();
+    const { classes } = useStyles();
 
     const [tableData, refreshTable] = useCurrentFailureModesTable();
 

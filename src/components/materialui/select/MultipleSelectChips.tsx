@@ -23,7 +23,7 @@ interface Props {
 }
 
 const MultipleSelectChips = ({value, setValue, options, fixedValues, label, error, setError,}: Props) => {
-    const classes = useStyles();
+    const { classes } = useStyles();
 
     const handleClick = (clickedValue) => {
         if (setError) {

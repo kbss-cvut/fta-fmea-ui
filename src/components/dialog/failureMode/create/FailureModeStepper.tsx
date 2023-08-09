@@ -28,7 +28,7 @@ const FailureModeStepper = ({
                                 initialFailureMode = null,
                                 initialComponent = null,
                             }: Props) => {
-    const classes = useStyles();
+    const { classes } = useStyles();
 
     const [activeStep, setActiveStep] = useState(0);
     const [selectedFailureMode, setSelectedFailureMode] = useState<FailureMode | null>(initialFailureMode)

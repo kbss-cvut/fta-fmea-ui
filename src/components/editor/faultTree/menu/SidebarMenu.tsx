@@ -8,7 +8,7 @@ interface Props extends ChildrenProps {
 }
 
 const SidebarMenu = ({children, className}: Props) => {
-    const classes = useStyles()
+    const { classes } = useStyles()
 
     return (
         <div className={className}>

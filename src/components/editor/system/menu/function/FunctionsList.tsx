@@ -16,7 +16,7 @@ interface FunctionListProps {
 const FunctionsList = ({label, selectedFunctions, setSelectedFunctions, transitiveClosure}: FunctionListProps) => {
 
     const [,,,,,allFunctions] = useFunctions()
-    const classes = useStyles();
+    const { classes } = useStyles();
     const ref = React.useRef();
 
     const handleChange = (event) => {

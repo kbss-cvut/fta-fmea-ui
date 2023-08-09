@@ -16,7 +16,7 @@ interface Props {
 }
 
 const ComponentPicker = ({selectedComponent, onComponentSelected}: Props) => {
-    const classes = useStyles()
+    const { classes } = useStyles()
 
     const [components, addComponent] = useComponents()
     const {register, handleSubmit, formState: { errors }, reset, control} = useForm({

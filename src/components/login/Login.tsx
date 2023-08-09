@@ -28,7 +28,7 @@ import msmtLogo from '../../assets/MSMT.png';
 import interExcellenceLogo from '../../assets/InterExcellence.png';
 
 const Login = () => {
-    const classes = useStyles();
+    const { classes } = useStyles();
 
     const [_, setLoggedUser] = useLoggedUser();
     const [showSnackbar] = useSnackbar()

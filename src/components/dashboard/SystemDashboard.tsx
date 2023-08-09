@@ -10,7 +10,7 @@ import {CurrentSystemProvider} from "@hooks/useCurrentSystem";
 import {useState} from "react";
 
 const SystemDashboard = () => {
-    const classes = useStyles();
+    const { classes } = useStyles();
 
     const {systemFragment} = useParams();
     const systemIri = composeFragment(systemFragment);

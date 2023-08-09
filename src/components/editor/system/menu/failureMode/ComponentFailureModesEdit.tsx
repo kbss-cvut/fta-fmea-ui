@@ -29,7 +29,7 @@ const ComponentFailureModesEdit = (props: {
 	setSelectedFailureMode;
 	setShowEdit;
 }) => {
-	const classes = useStyles();
+	const { classes } = useStyles();
 	const [allFailureModes,, editFailureMode ,,,,, addDependantFailureMode, removeDependantFailureMode,,,getTransitiveClosure] = useFailureMode();
 	const [failureModeParts, setFailureModeParts] = React.useState<FailureMode[]>([]);
 	const [requiredFailureModes, setRequiredFailureModes] = React.useState<FailureMode[]>([]);

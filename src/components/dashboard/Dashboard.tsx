@@ -7,7 +7,7 @@ import Toolbar from "@mui/material/Toolbar";
 import useStyles from "@components/dashboard/Dashboard.styles";
 
 const Dashboard = () => {
-    const classes = useStyles();
+    const { classes } = useStyles();
 
     return (
         <DashboardContentProvider>

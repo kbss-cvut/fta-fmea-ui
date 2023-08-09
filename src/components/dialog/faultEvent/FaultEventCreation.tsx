@@ -15,7 +15,7 @@ interface Props {
 
 // TODO: remove ts-ignores and migrate to higher version of react-hook-form
 const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
-    const classes = useStyles()
+    const { classes } = useStyles()
 
     const {formState: {errors}, control, setValue, reset, watch, register} = useFormMethods
 

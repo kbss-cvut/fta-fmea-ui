@@ -11,7 +11,7 @@ import {useState} from "react";
 import CreateUser from "../register/CreateUser";
 
 const AdminDashboard = () => {
-    const classes = useStyles();
+    const { classes } = useStyles();
     const [appBarTitle, setAppBarTitle] = useState('Admin')
 
     return (

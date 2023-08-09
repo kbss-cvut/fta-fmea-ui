@@ -35,7 +35,7 @@ interface Props {
 
 // TODO: remove ts-ignores and migrate to higher version of react-hook-form
 const FailureModesRowEditDialog = ({open, handleCloseDialog, rowRpn, onSuccess, mitigation, failureModes}: Props) => {
-    const classes = useStyles();
+    const { classes } = useStyles();
     const [showSnackbar] = useSnackbar();
     const [selectedFailureMode, setSelectedFailureMode] = useState<FailureMode>(null);
     const [showConfirmDialog] = useConfirmDialog();

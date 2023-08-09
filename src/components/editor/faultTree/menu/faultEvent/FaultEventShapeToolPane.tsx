@@ -22,7 +22,7 @@ interface Props {
 }
 
 const FaultEventShapeToolPane = ({data, onEventUpdated, refreshTree}: Props) => {
-    const classes = useStyles();
+    const { classes } = useStyles();
     const [showSnackbar] = useSnackbar();
 
     let editorPane;

@@ -26,7 +26,7 @@ const FailureModesList = ({   label,
                               setCurrentFailureModes,
                               transitiveClosure
                           }: Props) => {
-    const classes = useStyles();
+    const { classes } = useStyles();
     const [allFailureModes] = useFailureMode()
     const [, , , , , , , getFailureModes] = useFunctions()
 

@@ -13,7 +13,7 @@ import * as failureModesTableService from "@services/failureModesTableService";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 
 const FailureModesTableDashboard = () => {
-    const classes = useStyles();
+    const { classes } = useStyles();
     const [showSnackbar] = useSnackbar();
 
     const {fmeaFragment} = useParams();

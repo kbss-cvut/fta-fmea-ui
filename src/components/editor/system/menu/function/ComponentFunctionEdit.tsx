@@ -41,7 +41,7 @@ interface MyProps {
 }
 
 const ComponentFunctionsList: React.FC<MyProps> = (props: MyProps) => {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const [,, editFunction,,, allFunctions,,, getTransitiveClosure] = useFunctions();
   const [requiredFunctions, setRequiredFunctions] = useState<Function[]>([]);
   const [currentFailureModes, setCurrentFailureModes] = useState<FailureMode[]>([]);

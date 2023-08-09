@@ -1,10 +1,10 @@
 import * as React from "react";
-import {WithStyles, withStyles, createStyles} from '@mui/styles';
+import { withStyles } from 'tss-react/mui';
 import MuiDialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
-import {Theme} from "@mui/material";
+import {ClassNameMap, Theme} from "@mui/material";
+import {createStyles} from "@mui/material/styles";
 
 export const styles = (theme: Theme) =>
     createStyles({
@@ -20,13 +20,14 @@ export const styles = (theme: Theme) =>
         },
     });
 
-interface DialogTitleProps extends WithStyles<typeof styles> {
+interface DialogTitleProps {
     id: string;
     children: React.ReactNode;
     onClose: () => void;
+    classes?: ClassNameMap<string>
 }
 
-export const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
+export const DialogTitle = withStyles((props: DialogTitleProps) => {
     const {children, classes, onClose, ...other} = props;
     return (
         <MuiDialogTitle classes={classes} {...other}>
@@ -44,4 +45,4 @@ export const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
             ) : null}
         </MuiDialogTitle>
     );
-});
+}, styles);

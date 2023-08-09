@@ -28,7 +28,7 @@ import FailureModesTableRenameDialog from "@components/dialog/failureModesTable/
 import {FailureModesTable} from "@models/failureModesTableModel";
 
 const DashboardFailureModesTableList = () => {
-    const classes = useStyles();
+    const { classes } = useStyles();
     const [tables, , removeTable] = useFailureModesTables();
 
     const [contextMenuSelectedTable, setContextMenuSelectedTable] = useState<FailureModesTable>(null)

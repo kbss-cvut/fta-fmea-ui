@@ -19,7 +19,7 @@ interface Props {
 
 const AppBar = ({title, showBackButton = false}: Props) => {
     const [loggedUser] = useLoggedUser();
-    const classes = useStyles();
+    const { classes } = useStyles();
     const history = useNavigate();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

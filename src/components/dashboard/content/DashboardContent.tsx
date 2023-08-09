@@ -17,7 +17,7 @@ import FailureModesTableAggregateDialog
     from "@components/dialog/failureModesTable/aggregate/FailureModesTableAggregateDialog";
 
 const DashboardContent = () => {
-    const classes = useStyles();
+    const { classes } = useStyles();
 
     const [speedDialOpen, setSpeedDialOpen] = React.useState(false);
 

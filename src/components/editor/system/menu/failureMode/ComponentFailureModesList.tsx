@@ -39,7 +39,7 @@ import {simplifyReferencesOfReferences} from "@utils/utils";
 import SafeAutocomplete from "@components/materialui/SafeAutocomplete";
 
 const ComponentFailureModesList = ({ component }) => {
-  const classes = useStyles();
+  const { classes } = useStyles();
   const [
       allFailureModes,
       createFailureMode,

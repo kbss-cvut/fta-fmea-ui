@@ -1,8 +1,8 @@
-import {createStyles, makeStyles} from "@mui/styles";
+import { makeStyles } from 'tss-react/mui';
 import {Theme} from "@mui/material";
 
-const useStyles = makeStyles((theme: Theme) => {
-        return createStyles({
+const useStyles = makeStyles()((theme: Theme) => {
+        return {
             root: {
                 flexGrow: 1,
                 padding: theme.spacing(3)
@@ -15,8 +15,8 @@ const useStyles = makeStyles((theme: Theme) => {
             backdrop: {
                 zIndex: 5,
             }
-        })
-    }
-);
+        };
+    });
 
+// TODO jss-to-tss-react codemod: usages of this hook outside of this file will not be converted.
 export default useStyles;

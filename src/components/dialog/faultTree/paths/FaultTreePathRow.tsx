@@ -18,7 +18,7 @@ interface Props {
 }
 
 const FaultTreePathRow = ({path, rowId, onRowChanged, onRpnChanged}: Props) => {
-    const classes = useStyles();
+    const { classes } = useStyles();
 
     const [value, setValue] = useState(path)
     const [error, setError] = useState("")

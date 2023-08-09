@@ -10,7 +10,6 @@
     "@mui/icons-material": "^5.14.3",
     "@mui/lab": "^5.0.0-alpha.138",
     "@mui/material": "^5.14.3",
-    "@mui/styles": "^5.14.3",
     "@mui/x-data-grid": "^6.10.2",
     "array-move": "^4.0.0",
     "axios": "^1.4.0",
@@ -34,6 +33,7 @@
     "react-sortable-hoc": "^2.0.0",
     "save-svg-as-png": "^1.4.17",
     "svg-pan-zoom": "^3.6.1",
+    "tss-react": "^4.8.8",
     "typescript": "^5.1.6",
     "yup": "^1.2.0"
   },

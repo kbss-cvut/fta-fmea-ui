@@ -21,7 +21,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import {ROUTES} from "@utils/constants";
 
 const Register = () => {
-    const classes = useStyles();
+    const { classes } = useStyles();
     const history = useNavigate();
 
     const [showSnackbar] = useSnackbar()

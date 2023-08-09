@@ -18,7 +18,7 @@ interface Props {
 }
 
 const FunctionPicker = ({selectedFunctions, onFunctionsSelected}: Props) => {
-    const classes = useStyles()
+    const { classes } = useStyles()
 
     const [functions, addFunction] = useFunctions()
     const {register, handleSubmit, errors, reset, control} = useForm({

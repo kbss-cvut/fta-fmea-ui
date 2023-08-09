@@ -17,7 +17,7 @@ import {ROUTES} from "@utils/constants";
 import {DashboardTitleProps} from "@components/dashboard/DashboardTitleProps";
 
 const CreateUser = ({setAppBarName}: DashboardTitleProps) => {
-    const classes = useStyles();
+    const { classes } = useStyles();
     const history = useNavigate();
 
     const [showSnackbar] = useSnackbar()
