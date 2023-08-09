@@ -1,6 +1,5 @@
 "use strict";
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const path = require('path')

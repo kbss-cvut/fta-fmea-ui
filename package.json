@@ -11,6 +11,7 @@
     "@mui/lab": "^5.0.0-alpha.138",
     "@mui/material": "^5.14.3",
     "@mui/x-data-grid": "^6.10.2",
+    "@types/react-beautiful-dnd": "^13.1.4",
     "array-move": "^4.0.0",
     "axios": "^1.4.0",
     "backbone": "^1.5.0",
@@ -24,13 +25,12 @@
     "lodash": "^4.17.21",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.2",
     "react-icons": "^4.10.1",
     "react-router-dom": "^6.14.2",
-    "react-scripts": "5.0.1",
     "react-select": "^5.7.4",
-    "react-sortable-hoc": "^2.0.0",
     "save-svg-as-png": "^1.4.17",
     "svg-pan-zoom": "^3.6.1",
     "tss-react": "^4.8.8",
@@ -53,10 +53,10 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/yup": "^0.29.14",
     "dotenv-webpack": "^8.0.1",
-    "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "ts-loader": "^9.4.4",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
   }
 }
