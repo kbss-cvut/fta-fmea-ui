@@ -1,5 +1,5 @@
-import {IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography} from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
+import {IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 import * as React from "react";
 import {useEventFailureMode} from "@hooks/useEventFailureMode";
 
@@ -18,7 +18,7 @@ const EventFailureModeList = ({onFailureModeClick}: Props) => {
                         <ListItem button>
                             <ListItemText primary={failureMode?.name} onClick={() => onFailureModeClick(failureMode)}/>
                             <ListItemSecondaryAction>
-                                <IconButton edge="end" aria-label="delete" onClick={deleteFailureMode}>
+                                <IconButton edge="end" aria-label="delete" onClick={deleteFailureMode} size="large">
                                     <DeleteIcon/>
                                 </IconButton>
                             </ListItemSecondaryAction>

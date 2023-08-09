@@ -1,4 +1,4 @@
-import {Button, Divider, Paper, Typography} from "@material-ui/core";
+import {Button, Divider, Paper, Typography} from "@mui/material";
 import FaultEventShapeToolPane from "./FaultEventShapeToolPane";
 import {EventType, FaultEvent} from "../../../../../models/eventModel";
 import * as React from "react";

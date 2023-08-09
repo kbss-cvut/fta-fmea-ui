@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import {FailureMode} from "@models/failureModeModel";
-import {TextField} from "@material-ui/core";
+import {TextField} from "@mui/material";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {schema} from "../FailureMode.schema";
@@ -32,8 +32,8 @@ const FailureModeCreationStep = ({failureMode, onFailureModeChanged}: Props) => 
     return (
         <div>
             <TextField autoFocus margin="dense" label="Failure Mode Name" name="name" type="text"
-                       fullWidth inputRef={useFormMethods.register}
-                       error={!!useFormMethods.errors.name}/>
+                       fullWidth { ...useFormMethods.register("name") }
+                       error={!!useFormMethods.formState.errors.name}/>
         </div>
     );
 }

@@ -14,10 +14,10 @@ import {
   Select,
   TextField,
   Typography,
-} from "@material-ui/core";
-import { Edit } from "@material-ui/icons";
-import DeleteIcon from "@material-ui/icons/Delete";
-import AddIcon from "@material-ui/icons/Add";
+} from "@mui/material";
+import { Edit } from "@mui/icons-material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
 import FailureModesList from "@components/editor/failureMode/FailureModesList";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -28,13 +28,13 @@ import { schema } from "@components/dialog/failureMode/FailureMode.schema";
 import { useState } from "react";
 import { useConfirmDialog } from "@hooks/useConfirmDialog";
 import ComponentFailureModesEdit from "@components/editor/system/menu/failureMode/ComponentFailureModesEdit";
-import { Autocomplete } from "@material-ui/lab";
+import { Autocomplete } from "@mui/lab";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Button from '@material-ui/core/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
 import {simplifyReferencesOfReferences} from "@utils/utils";
 import SafeAutocomplete from "@components/materialui/SafeAutocomplete";
 
@@ -78,7 +78,7 @@ const ComponentFailureModesList = ({ component }) => {
       showDialog(false);
   };
 
-  const { register, handleSubmit, errors, control, reset } = useForm({
+  const { register, handleSubmit, formState: { errors }, control, reset } = useForm({
       resolver: yupResolver(schema),
   });
 
@@ -148,13 +148,16 @@ const ComponentFailureModesList = ({ component }) => {
                               <ListItem key={fm.iri}>
                                   <ListItemText primary={fm.name} />
                                   <ListItemSecondaryAction>
-                                      <IconButton className={classes.actionButton} onClick={() => showEditForm(fm)}>
+                                      <IconButton
+                                          className={classes.actionButton}
+                                          onClick={() => showEditForm(fm)}
+                                          size="large">
                                           <Edit />
                                       </IconButton>
                                       <IconButton
                                           className={classes.actionButton}
                                           onClick={() => handleDeleteFunction(fm)}
-                                      >
+                                          size="large">
                                           <DeleteIcon />
                                       </IconButton>
                                   </ListItemSecondaryAction>
@@ -166,21 +169,16 @@ const ComponentFailureModesList = ({ component }) => {
                   <Box>
                       <FormGroup>
                           <FormControl>
-                              <Controller
-                                  as={TextField}
-                                  autoFocus
-                                  margin="dense"
-                                  id="name"
-                                  label="Failure mode name"
-                                  type="text"
-                                  fullWidth
-                                  name="name"
-                                  defaultValue=""
-                                  control={control}
-                                  inputRef={register}
-                                  error={!!errors.name}
-                                  helperText={errors.name?.message}
-                              />
+                              <TextField autoFocus
+                                         margin="dense"
+                                         id="name"
+                                         label="Failure mode name"
+                                         type="text"
+                                         fullWidth
+                                         name="name"
+                                         defaultValue=""
+                                         error={!!errors.name}
+                                         helperText={errors.name?.message} {...register("name")}/>
                           </FormControl>
 
                           <FormControl fullWidth>
@@ -253,7 +251,7 @@ const ComponentFailureModesList = ({ component }) => {
                                   color="primary"
                                   component="span"
                                   onClick={handleSubmit(_handleCreateFailureMode)}
-                              >
+                                  size="large">
                                   <AddIcon/>
                               </IconButton>
                           </Box>
@@ -273,9 +271,11 @@ const ComponentFailureModesList = ({ component }) => {
                                   setFailureModeToAdd(newValue);
                                   showSnackbar("Failure mode's component will be changed", SnackbarType.INFO);
                               }}
-                              getOptionLabel={(option) =>
-                                  option.name + " (" + (option.component == null ? "None" : option.component.name) + ")"
-                              }
+                              getOptionLabel={(option) => {
+                                  // TODO: Find out what the hell is going on here according to docs this has different signature https://mui.com/material-ui/api/autocomplete/
+                                    const failureMode = option as FailureMode;
+                                    return failureMode.name + " (" + (failureMode.component == null ? "None" : failureMode.component.name) + ")"
+                              }}
                               fullWidth
                               renderInput={(params) => <TextField {...params} label="Existing failure modes" />}
                           />

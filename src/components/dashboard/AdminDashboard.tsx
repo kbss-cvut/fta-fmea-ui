@@ -1,9 +1,8 @@
 import * as React from "react";
 import {useParams} from "react-router-dom";
 import AppBar from "../appBar/AppBar";
-import {CssBaseline, Grid} from "@material-ui/core";
-import {Toolbar, Container, Paper} from "@material-ui/core";
-import { sizing } from '@material-ui/system';
+import {CssBaseline, Grid} from "@mui/material";
+import {Toolbar, Container, Paper} from "@mui/material";
 import useStyles from "./Dashboard.styles";
 import {composeFragment} from "@services/utils/uriIdentifierUtils";
 import Editor from "../editor/system/Editor";

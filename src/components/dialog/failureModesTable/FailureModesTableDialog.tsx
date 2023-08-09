@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Button, Dialog, TextField,} from "@material-ui/core";
+import {Button, Dialog, TextField,} from "@mui/material";
 import {DialogTitle} from "@components/materialui/dialog/DialogTitle";
 import {DialogContent} from "@components/materialui/dialog/DialogContent";
 import {useForm} from "react-hook-form";
@@ -26,7 +26,7 @@ interface Props {
 const FailureModesTableDialog = ({open, onClose, onCreated, faultTreeIri}: Props) => {
     const [showSnackbar] = useSnackbar();
     const useFormMethods = useForm({resolver: yupResolver(schema)});
-    const {handleSubmit, register, errors, formState} = useFormMethods;
+    const {handleSubmit, register, formState: { errors }, formState} = useFormMethods;
     const {isSubmitting} = formState;
 
     const selectedPathsMap = new Map<number, FaultEvent[]>();

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Button, Dialog, TextField,} from "@material-ui/core";
+import {Button, Dialog, TextField,} from "@mui/material";
 import {DialogTitle} from "@components/materialui/dialog/DialogTitle";
 import {DialogContent} from "@components/materialui/dialog/DialogContent";
 import {useForm} from "react-hook-form";
@@ -50,7 +50,7 @@ const FaultTreeEditDialog = ({open, handleCloseDialog, faultTree}: Props) => {
             <DialogContent dividers>
                 <TextField autoFocus margin="dense" label="Fault Tree Name" name="faultTreeName" type="text"
                            fullWidth inputRef={useFormMethods.register}
-                           error={!!useFormMethods.errors.faultTreeName}/>
+                           error={!!useFormMethods.formState.errors.faultTreeName}/>
             </DialogContent>
             <DialogActions>
                 <Button disabled={processing} color="primary" onClick={handleSubmit(handleCreateFaultTree)}>

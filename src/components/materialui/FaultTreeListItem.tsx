@@ -1,8 +1,8 @@
 import * as React from "react";
-import IconButton from "@material-ui/core/IconButton";
+import IconButton from "@mui/material/IconButton";
 import {useState} from "react";
-import {ListItem, ListItemSecondaryAction, ListItemText} from "@material-ui/core";
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import {ListItem, ListItemSecondaryAction, ListItemText} from "@mui/material";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "../editor/faultTree/menu/faultEvent/FaultEventContextMenu";
 import FaultTreeContextMenu from "../editor/faultTree/menu/faultTree/FaultTreeContextMenu";
 import {FaultTree} from "@models/faultTreeModel";
@@ -44,7 +44,7 @@ const FaultTreeListItem = ({faultTree, onClick}: Props) => {
             <ListItem button onClick={onClick}>
                 <ListItemText primary={faultTree.name}/>
                 <ListItemSecondaryAction>
-                    <IconButton edge="end" onClick={handleContextMenu}>
+                    <IconButton edge="end" onClick={handleContextMenu} size="large">
                         <MoreVertIcon/>
                     </IconButton>
                 </ListItemSecondaryAction>

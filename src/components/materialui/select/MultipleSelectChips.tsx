@@ -8,7 +8,7 @@ import {
     Chip,
     Typography,
     FormHelperText,
-} from "@material-ui/core";
+} from "@mui/material";
 import useStyles from "./MultipleSelectChips.styles";
 
 
@@ -71,6 +71,8 @@ const MultipleSelectChips = ({value, setValue, options, fixedValues, label, erro
                                 className={classes.chip}
                                 key={i}
                                 color="primary"
+                                // TODO: @ts-ignore hotfix
+                                //@ts-ignore
                                 variant={value.find((e) => e === option.value) ? "default" : "outlined"}
                                 label={<Typography variant="body2">{`${option.label}`}</Typography>}
                                 clickable

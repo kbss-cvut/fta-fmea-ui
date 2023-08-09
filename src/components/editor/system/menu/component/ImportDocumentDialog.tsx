@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Button, Dialog, FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
+import {Button, Dialog, FormControl, InputLabel, MenuItem, Select} from "@mui/material";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import {useForm} from "react-hook-form";
 import {DialogTitle} from "../../../../materialui/dialog/DialogTitle";
@@ -45,7 +45,8 @@ const ImportDocumentDialog = ({open, handleCloseDialog}) => {
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             defaultValue=""
-                            value={document ? document : ""}
+                            // TODO: find out what document is and why it was passed as document and not its name
+                            value={document ? document.name : ""}
                             label="Documents"
                             onChange={handleSetDocument}
                         >

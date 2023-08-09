@@ -2,13 +2,13 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 
 import {SortableContainer, SortableElement, SortableHandle} from "react-sortable-hoc";
-import * as arrayMove from "array-move";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import DragHandleIcon from "@material-ui/icons/DragHandle";
+import {arrayMoveImmutable} from "array-move";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
+import DragHandleIcon from "@mui/icons-material/DragHandle";
 
 import {FaultEvent} from "@models/eventModel";
 import {flatten, sortBy, findIndex} from "lodash";
@@ -22,19 +22,19 @@ const DragHandle = SortableHandle(() => (
     </ListItemIcon>
 ));
 
-const SortableItem = SortableElement(({text}) => (
+const SortableItem = SortableElement<{ value: string }>(({value}) => (
     <ListItem ContainerComponent="div">
-        <ListItemText primary={text}/>
+        <ListItemText primary={value}/>
         <ListItemSecondaryAction>
             <DragHandle/>
         </ListItemSecondaryAction>
     </ListItem>
 ));
 
-const SortableListContainer = SortableContainer(({items}) => (
+const SortableListContainer = SortableContainer<{items: React.ReactNode[]}>(({items}) => (
     <List component="div">
         {items.map(({id, text}, index) => (
-            <SortableItem key={id} index={index} text={text}/>
+            <SortableItem key={id} index={index} value={text}/>
         ))}
     </List>
 ));
@@ -64,7 +64,7 @@ const FaultEventChildrenReorderList = ({eventChildren, handleReorder}: Props) =>
 
     const onSortEnd = ({oldIndex, newIndex}) => {
         setItems(items => {
-            const newItems = arrayMove(items, oldIndex, newIndex)
+            const newItems = arrayMoveImmutable(items, oldIndex, newIndex)
             handleChildrenReordered(newItems);
             return newItems;
         });

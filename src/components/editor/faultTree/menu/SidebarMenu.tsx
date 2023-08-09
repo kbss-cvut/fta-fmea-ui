@@ -1,6 +1,6 @@
 import * as React from "react";
 import useStyles from "./SidebarMenu.styles";
-import {Paper,} from "@material-ui/core";
+import {Paper,} from "@mui/material";
 import {ChildrenProps} from "@utils/hookUtils";
 
 interface Props extends ChildrenProps {

@@ -13,13 +13,13 @@ import {
 	Select,
 	TextField,
 	MenuItem
-} from "@material-ui/core";
+} from "@mui/material";
 import { schema } from "@components/dialog/failureMode/FailureMode.schema";
 import FailureModesList from "@components/editor/failureMode/FailureModesList";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
-import AddIcon from "@material-ui/icons/Add";
-import CloseIcon from "@material-ui/icons/Close";
+import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
 import { useEffect } from "react";
 import { checkArray } from "@utils/validationUtils";
 import {useConfirmDialog} from "@hooks/useConfirmDialog";
@@ -40,7 +40,7 @@ const ComponentFailureModesEdit = (props: {
 	const [requestConfirmation] = useConfirmDialog();
 
 
-	const { register, handleSubmit, errors, control } = useForm({
+	const { register, handleSubmit, formState: { errors }, control } = useForm({
 		resolver: yupResolver(schema),
 	});
 
@@ -130,31 +130,27 @@ const ComponentFailureModesEdit = (props: {
 	}, []);
 
 	return (
-		<React.Fragment>
+        <React.Fragment>
 			<Grid>
 				<Box component="div" className={classes.editHeader}>
 					<h4>Edit failure mode:</h4>
-					<IconButton component="div" onClick={hideEditForm}>
+					<IconButton component="div" onClick={hideEditForm} size="large">
 						<CloseIcon />
 					</IconButton>
 				</Box>
 				<Box>
 					<FormGroup>
 						<FormControl>
-							<Controller
-								as={TextField}
-								autoFocus
-								margin="dense"
-								id="name"
-								label="Failure mode name"
-								type="text"
-								fullWidth
-								name="name"
-								defaultValue={props.selectedFailureMode.name}
-								control={control}
-								inputRef={register}
-								error={!!errors.name}
-								helperText={errors.name?.message}
+							<TextField autoFocus
+									   margin="dense"
+									   id="name"
+									   label="Failure mode name"
+									   type="text"
+									   fullWidth
+									   name="name"
+									   defaultValue={props.selectedFailureMode.name}
+									   error={!!errors.name}
+									   helperText={errors.name?.message} {...register("name")}
 							/>
 						</FormControl>
 
@@ -219,18 +215,18 @@ const ComponentFailureModesEdit = (props: {
 								</React.Fragment>
 							)}
 						<IconButton
-							className={classes.actionButton}
-							color="primary"
-							component="span"
-							onClick={handleSubmit(updateFailureMode)}
-						>
+                            className={classes.actionButton}
+                            color="primary"
+                            component="span"
+                            onClick={handleSubmit(updateFailureMode)}
+                            size="large">
 							<AddIcon/>
 						</IconButton>
 					</FormGroup>
 				</Box>
 			</Grid>
 		</React.Fragment>
-	);
+    );
 };
 
 export default ComponentFailureModesEdit;

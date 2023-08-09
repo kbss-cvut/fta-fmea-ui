@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Controller} from "react-hook-form";
-import {Autocomplete} from "@material-ui/lab";
+import {Autocomplete} from "@mui/lab";
 import {simplifyReferences} from "@utils/utils";
 
 interface Props {
@@ -34,7 +34,9 @@ const prepareOptions = (useSafeOptions, inputOptions, defaultOption) => {
             return key ? map.get(key) : data
         }
     }
-    return [options, defaultValue, getOptionValue]
+
+    // TODO: The last map is hotfix to make it work with new mui
+    return [options.map((o) => ({ ...o, label: o.name })), defaultValue, getOptionValue]
 }
 
 const ControlledAutocomplete = ({options = [], name, renderInput, getOptionLabel, control, onChangeCallback, renderOption,
@@ -44,9 +46,10 @@ const ControlledAutocomplete = ({options = [], name, renderInput, getOptionLabel
 
     return (
         <Controller
-            render={({onChange, ...props}) => (
+            render={({field: { onChange }, ...props}) => (
                 <Autocomplete
                     fullWidth
+                    disablePortal
                     options={_options}
                     getOptionLabel={getOptionLabel}
                     renderOption={renderOption}
@@ -60,7 +63,7 @@ const ControlledAutocomplete = ({options = [], name, renderInput, getOptionLabel
                     {...props}
                 />
             )}
-            onChange={([, data]) => data}
+            // onChange={([, data]) => data}
             defaultValue={_defaultValue}
             name={name}
             control={control}

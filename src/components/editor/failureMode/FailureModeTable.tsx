@@ -3,8 +3,8 @@ import {useEffect, useState} from "react";
 import useStyles from "./FailureModeTable.styles";
 import {DashboardTitleProps} from "../../dashboard/DashboardTitleProps";
 import {useCurrentFailureModesTable} from "@hooks/useCurrentFailureModesTable";
-import {ColDef, DataGrid} from '@material-ui/data-grid';
-import {Button} from "@material-ui/core";
+import {DataGrid} from '@mui/x-data-grid';
+import {Button} from "@mui/material";
 import FailureModesRowEditDialog from "@components/dialog/failureModesRow/FailureModesRowEditDialog";
 import {EditRowRpn} from "@models/failureModesRowModel";
 import {Mitigation} from "@models/mitigationModel";
@@ -25,7 +25,7 @@ const FailureModeTable = ({setAppBarName}: DashboardTitleProps) => {
         if (tableData) {
             setAppBarName(tableData?.name);
 
-            (tableData.columns as ColDef[]).push({
+            (tableData.columns as any[]).push({
                 field: "",
                 headerName: "Edit",
                 sortable: false,
@@ -66,7 +66,8 @@ const FailureModeTable = ({setAppBarName}: DashboardTitleProps) => {
     }, [tableData]);
 
     return (<div className={classes.root}>
-        <DataGrid rows={tableRows} columns={tableColumns} pageSize={20} />
+        {/*TODO: This probably forces the data grid be on the first page only*/}
+        <DataGrid rows={tableRows} columns={tableColumns} paginationModel={{page: 1, pageSize: 20}} />
 
         <FailureModesRowEditDialog
             open={Boolean(selectedRpnRow)} handleCloseDialog={() => setSelectedRpnRow(null)}

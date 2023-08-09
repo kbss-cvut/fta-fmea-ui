@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
 import {useFailureMode} from "@hooks/useFailureModes";
-import {Checkbox, InputLabel, ListItemText, MenuItem, Select} from "@material-ui/core";
+import {Checkbox, InputLabel, ListItemText, MenuItem, Select} from "@mui/material";
 import {FailureMode, FailureModeType} from "@models/failureModeModel";
 import {formatOutput} from "@utils/formatOutputUtils";
 import {useFunctions} from "@hooks/useFunctions";
@@ -69,8 +69,7 @@ const FailureModesList = ({   label,
                         vertical: "bottom",
                         horizontal: "left"
                     },
-                    classes: { paper: classes.menuPaper},
-                    getContentAnchorEl: null
+                    classes: { paper: classes.menuPaper}
                 }}
                 onChange={handleChange}
                 renderValue={(selected: any[]) => formatOutput(selected.filter(v => v).map(value => value.name).join(", "), 65)}

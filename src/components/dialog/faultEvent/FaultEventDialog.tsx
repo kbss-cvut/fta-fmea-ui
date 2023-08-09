@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Button, Dialog,} from "@material-ui/core";
+import {Button, Dialog,} from "@mui/material";
 import {DialogTitle} from "@components/materialui/dialog/DialogTitle";
 import {DialogContent} from "@components/materialui/dialog/DialogContent";
 import {DialogActions} from "@components/materialui/dialog/DialogActions";
@@ -12,6 +12,7 @@ import {schema} from "./FaultEventCreation.schema";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {eventFromHookFormValues} from "@services/faultEventService";
 import {FaultEventsReuseProvider} from "@hooks/useReusableFaultEvents";
+import {useEffect} from "react";
 
 interface Props {
     open: boolean,

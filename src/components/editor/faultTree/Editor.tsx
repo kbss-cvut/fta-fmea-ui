@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {useHistory} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import EditorCanvas from "./canvas/EditorCanvas";
 import {findEventByIri} from "@utils/treeUtils";
 import FaultEventContextMenu from "./menu/faultEvent/FaultEventContextMenu";
@@ -20,7 +20,7 @@ import {FTABoundary} from "@components/editor/faultTree/shapes/shapesDefinitions
 import * as joint from "jointjs";
 
 const Editor = ({setAppBarName}: DashboardTitleProps) => {
-    const history = useHistory();
+    const history = useNavigate();
     const [showSnackbar] = useSnackbar()
     const [requestConfirmation] = useConfirmDialog()
 
@@ -120,7 +120,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
         console.log(`handleFailureModesTableCreated - ${tableIri}`)
 
         const tableFragment = extractFragment(tableIri);
-        history.push(ROUTES.FMEA + tableFragment);
+        history(ROUTES.FMEA + tableFragment);
     }
 
     return (

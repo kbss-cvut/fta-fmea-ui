@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import {IconButton, TextField, Typography} from "@material-ui/core";
+import {IconButton, TextField, Typography} from "@mui/material";
 import {useComponents} from "@hooks/useComponents";
-import AddIcon from "@material-ui/icons/Add";
+import AddIcon from "@mui/icons-material/Add";
 import {Component} from "@models/componentModel";
 import {Controller, useForm} from "react-hook-form";
 import {schema} from "./Component.schema";
@@ -19,7 +19,7 @@ const ComponentPicker = ({selectedComponent, onComponentSelected}: Props) => {
     const classes = useStyles()
 
     const [components, addComponent] = useComponents()
-    const {register, handleSubmit, errors, reset, control} = useForm({
+    const {register, handleSubmit, formState: { errors }, reset, control} = useForm({
         resolver: yupResolver(schema)
     });
 
@@ -27,6 +27,8 @@ const ComponentPicker = ({selectedComponent, onComponentSelected}: Props) => {
         addComponent({name: values.name})
         reset(values)
     }
+
+    console.log(components);
 
     // TODO ControlledAutocomplete
     return (
@@ -46,11 +48,24 @@ const ComponentPicker = ({selectedComponent, onComponentSelected}: Props) => {
 
             <Typography variant="subtitle1">Create new Component</Typography>
             <div className={classes.creationBox}>
-                <Controller as={TextField} autoFocus margin="dense" id="name" label="Component Name"
-                            type="text" fullWidth name="name" control={control} defaultValue=""
-                            inputRef={register} error={!!errors.name} helperText={errors.name?.message}/>
-                <IconButton className={classes.addButton} color="primary" component="span"
-                            onClick={handleSubmit(_handleCreateComponent)}>
+                <TextField
+                    {...register("name")}
+                    error={!!errors.name}
+                    helperText={errors.name?.message}
+                    variant="outlined"
+                    fullWidth
+                    id="name"
+                    label="Component name"
+                    name="name"
+                    autoFocus
+                    margin={"dense"}
+                />
+                <IconButton
+                    className={classes.addButton}
+                    color="primary"
+                    component="span"
+                    onClick={handleSubmit(_handleCreateComponent)}
+                    size="large">
                     <AddIcon/>
                 </IconButton>
             </div>

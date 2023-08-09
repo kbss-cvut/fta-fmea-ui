@@ -4,7 +4,7 @@ import {
     ListItem,
     ListItemText,
     Typography
-} from "@material-ui/core";
+} from "@mui/material";
 import * as React from "react";
 import {Link as RouterLink} from "react-router-dom";
 import {ROUTES} from "@utils/constants";

@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Divider, TextField, Typography} from "@material-ui/core";
+import {Divider, TextField, Typography} from "@mui/material";
 import {Component} from "@models/componentModel";
 import {FunctionsProvider} from "@hooks/useFunctions";
 import ComponentFunctionsList from "../function/ComponentFunctionsList";

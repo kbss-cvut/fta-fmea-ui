@@ -36,7 +36,7 @@ const FaultEventShape = ({addSelf, treeEvent, parentShape}: JointEventShapeProps
         const sequence = sequenceListToArray(treeEvent.childrenSequence)
         setSortedChildren(faultEventService.eventChildrenSorted(flatten([treeEvent.children]), sequence))
 
-        return () => eventShape.remove();
+        return () => { eventShape.remove() };
     }, [treeEvent]);
 
     return (

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Button, Dialog, TextField,} from "@material-ui/core";
+import {Button, Dialog, TextField,} from "@mui/material";
 import {DialogTitle} from "@components/materialui/dialog/DialogTitle";
 import {DialogContent} from "@components/materialui/dialog/DialogContent";
 import {DialogActions} from "@components/materialui/dialog/DialogActions";
@@ -21,7 +21,7 @@ const ComponentDialog = ({open, onCreated, onClose}: Props) => {
     const [showSnackbar] = useSnackbar()
 
     const useFormMethods = useForm({resolver: yupResolver(schema)});
-    const {handleSubmit, formState, register, errors} = useFormMethods;
+    const {handleSubmit, formState, register, formState: { errors }} = useFormMethods;
     const {isSubmitting} = formState
 
     const handleCreateComponent = async (values: any) => {
@@ -43,7 +43,7 @@ const ComponentDialog = ({open, onCreated, onClose}: Props) => {
                 <DialogTitle id="form-dialog-title" onClose={onClose}>Create Component</DialogTitle>
                 <DialogContent dividers>
                     <TextField autoFocus margin="dense" label="Component Name" name="name" type="text"
-                               fullWidth inputRef={register}
+                               fullWidth {...register("name")}
                                error={!!errors.name} helperText={errors.name?.message}/>
                 </DialogContent>
                 <DialogActions>

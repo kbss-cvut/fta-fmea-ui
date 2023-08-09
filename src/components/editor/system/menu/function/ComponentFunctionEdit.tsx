@@ -18,9 +18,9 @@ import {
   MenuItem,
   Select,
   TextField,
-} from "@material-ui/core";
-import { Edit } from "@material-ui/icons";
-import CloseIcon from "@material-ui/icons/Close";
+} from "@mui/material";
+import { Edit } from "@mui/icons-material";
+import CloseIcon from "@mui/icons-material/Close";
 import useStyles from "@components/editor/system/menu/function/ComponentFunctionsList.styles";
 import { useFunctions } from "@hooks/useFunctions";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -52,7 +52,7 @@ const ComponentFunctionsList: React.FC<MyProps> = (props: MyProps) => {
   const [childTransitiveClosure, setChildTransitiveClosure] = useState<string[]>([]);
 
 
-  const { register, handleSubmit, errors, control } = useForm({
+  const { register, handleSubmit, formState: { errors }, control } = useForm({
     resolver: yupResolver(schema),
   });
 
@@ -117,7 +117,7 @@ const ComponentFunctionsList: React.FC<MyProps> = (props: MyProps) => {
       <Grid>
           <Box component="div" className={classes.editHeader}>
               <h4>Edit function:</h4>   
-              <IconButton component="div" onClick={handleSubmit(hideEditForm)}>
+              <IconButton component="div" onClick={handleSubmit(hideEditForm)} size="large">
                   <CloseIcon />
               </IconButton>
           </Box>
@@ -146,20 +146,17 @@ const ComponentFunctionsList: React.FC<MyProps> = (props: MyProps) => {
                   </Dialog>
 
                   <FormControl>
-                      <Controller
-                          as={TextField}
+                      <TextField
                           autoFocus
                           margin="dense"
                           id="name"
                           label="Function Name"
                           type="text"
                           fullWidth
-                          name="name"
-                          control={control}
                           defaultValue={props.selectedFunction.name}
-                          inputRef={register}
                           error={!!errors.name}
                           helperText={errors.name?.message}
+                          {...register("name")}
                       />
                   </FormControl>
 
@@ -211,7 +208,7 @@ const ComponentFunctionsList: React.FC<MyProps> = (props: MyProps) => {
                           color="primary"
                           component="span"
                           onClick={handleSubmit(handleEditFunction)}
-                      >
+                          size="large">
                           <Edit />
                       </IconButton>
                   </FormControl>

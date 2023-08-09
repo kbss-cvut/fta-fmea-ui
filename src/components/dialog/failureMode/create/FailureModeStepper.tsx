@@ -1,11 +1,11 @@
 import * as React from "react";
 import {useState} from "react";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
 import ComponentPicker from "@components/dialog/component/ComponentPicker";
 import {Component} from "@models/componentModel";
-import {Button} from "@material-ui/core";
+import {Button} from "@mui/material";
 import {ComponentsProvider} from "@hooks/useComponents";
 import useStyles from "./FailureModeStepper.styles";
 import FailureModeStepperConfirmation from "./FailureModeStepperConfirmation";

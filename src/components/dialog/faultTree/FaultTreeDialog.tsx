@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Button, Dialog, TextField,} from "@material-ui/core";
+import {Button, Dialog, TextField,} from "@mui/material";
 import {DialogTitle} from "@components/materialui/dialog/DialogTitle";
 import {DialogContent} from "@components/materialui/dialog/DialogContent";
 import {useForm} from "react-hook-form";
@@ -20,7 +20,7 @@ const FaultTreeDialog = ({open, handleCloseDialog}) => {
     const [processing, setIsProcessing] = useState(false)
 
     const useFormMethods = useForm({resolver: yupResolver(schema.concat(eventSchema))});
-    const {handleSubmit} = useFormMethods;
+    const {handleSubmit, register} = useFormMethods;
 
     const handleCreateFaultTree = async (values: any) => {
         setIsProcessing(true)
@@ -45,9 +45,10 @@ const FaultTreeDialog = ({open, handleCloseDialog}) => {
                 <DialogTitle id="form-dialog-title" onClose={handleCloseDialog}>Create Fault Tree</DialogTitle>
                 <DialogContent dividers>
                     <TextField autoFocus margin="dense" label="Fault Tree Name" name="faultTreeName" type="text"
-                               fullWidth inputRef={useFormMethods.register}
-                               error={!!useFormMethods.errors.faultTreeName}
-                               helperText={useFormMethods.errors.faultTreeName?.message}/>
+                               fullWidth
+                               error={!!useFormMethods.formState.errors.faultTreeName}
+                               {...register("faultTreeName")}
+                               helperText={useFormMethods.formState.errors.faultTreeName?.message}/>
                     <FaultEventsReuseProvider>
                         <FaultEventCreation useFormMethods={useFormMethods} eventReusing/>
                     </FaultEventsReuseProvider>

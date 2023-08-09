@@ -2,14 +2,14 @@ import {
     Card,
     CardActions,
     CardHeader,
-    GridList,
-    GridListTile,
+    ImageList,
+    ImageListItem,
     IconButton,
     Link as MaterialLink,
     Tooltip,
     Typography
-} from "@material-ui/core";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+} from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import * as React from "react";
 import {useFaultTrees} from "@hooks/useFaultTrees";
 import useStyles from "./DashboardList.styles";
@@ -51,16 +51,19 @@ const DashboardFaultTreeList = () => {
 
     return (
         <React.Fragment>
-            <GridList className={classes.gridList} cols={6}>
+            <ImageList className={classes.gridList} cols={6}>
                 {faultTrees.map((tree) => {
                     const routePath = ROUTES.FTA + extractFragment(tree.iri);
                     return (
-                        <GridListTile key={tree.iri} className={classes.gridListTile}>
+                        <ImageListItem key={tree.iri} className={classes.gridListTile}>
                             <Card className={classes.card}>
                                 <CardHeader 
                                     classes={{content: classes.cardTitle}}
                                     action={
-                                        <IconButton aria-label="settings" onClick={(e) => handleContextMenu(e, tree)}>
+                                        <IconButton
+                                            aria-label="settings"
+                                            onClick={(e) => handleContextMenu(e, tree)}
+                                            size="large">
                                             <MoreVertIcon/>
                                         </IconButton>
                                     }
@@ -76,10 +79,10 @@ const DashboardFaultTreeList = () => {
                                     </MaterialLink>
                                 </CardActions>
                             </Card>
-                        </GridListTile>
-                    )
+                        </ImageListItem>
+                    );
                 })}
-            </GridList>
+            </ImageList>
 
             <FaultTreeContextMenu
                 anchorPosition={contextMenuAnchor}

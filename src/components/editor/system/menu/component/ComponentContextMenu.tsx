@@ -1,4 +1,4 @@
-import {Menu, MenuItem} from "@material-ui/core";
+import {Menu, MenuItem} from "@mui/material";
 import * as React from "react";
 import {ElementContextMenuAnchor} from "@utils/contextMenu";
 import ImportDocumentDialog from "@components/editor/system/menu/component/ImportDocumentDialog";

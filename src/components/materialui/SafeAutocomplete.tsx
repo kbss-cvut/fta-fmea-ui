@@ -1,7 +1,7 @@
 import * as React from "react";
-import {Autocomplete} from "@material-ui/lab";
+import {Autocomplete} from "@mui/material";
 import {simplifyReferences} from "@utils/utils";
-import {AutocompleteProps} from "@material-ui/lab/Autocomplete/Autocomplete";
+import {AutocompleteProps} from "@mui/material/Autocomplete/Autocomplete";
 
 interface Props<
     T,

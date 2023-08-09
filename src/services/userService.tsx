@@ -60,7 +60,7 @@ export const changePassword = async (changePasswordRequest: ChangePasswordReques
             }
         )
 
-        new Promise(resolve => resolve());
+        new Promise<void>(resolve => resolve());
     } catch (e) {
         console.log('Failed to call /current')
         const defaultMessage = "Password change failed.";

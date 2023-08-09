@@ -1,9 +1,9 @@
 import * as React from "react";
 import {useParams} from "react-router-dom";
 import AppBar from "../appBar/AppBar";
-import {CssBaseline, Fab} from "@material-ui/core";
-import Toolbar from "@material-ui/core/Toolbar";
-import SaveIcon from '@material-ui/icons/Save';
+import {CssBaseline, Fab} from "@mui/material";
+import Toolbar from "@mui/material/Toolbar";
+import SaveIcon from '@mui/icons-material/Save';
 import useStyles from "./Dashboard.styles";
 import {composeFragment} from "@services/utils/uriIdentifierUtils";
 import {useState} from "react";

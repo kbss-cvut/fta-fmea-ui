@@ -3,12 +3,12 @@ import {
     Grid,
     TextField,
     Typography
-} from "@material-ui/core";
+} from "@mui/material";
 import * as React from "react";
 import useStyles from "@components/register/Register.styles";
 import {useState} from "react";
 import * as userService from "@services/userService";
-import {useHistory} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useForm} from 'react-hook-form';
 import {schema} from "@components/register/Register.schema";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
@@ -18,13 +18,13 @@ import {DashboardTitleProps} from "@components/dashboard/DashboardTitleProps";
 
 const CreateUser = ({setAppBarName}: DashboardTitleProps) => {
     const classes = useStyles();
-    const history = useHistory();
+    const history = useNavigate();
 
     const [showSnackbar] = useSnackbar()
 
     const [registering, setRegistering] = useState(false)
 
-    const {register, handleSubmit, errors, reset} = useForm({
+    const {register, handleSubmit, formState: {errors}, reset} = useForm({
         resolver: yupResolver(schema)
     });
 
@@ -36,7 +36,7 @@ const CreateUser = ({setAppBarName}: DashboardTitleProps) => {
             password: values.password
         }).then(value => {
             setRegistering(false);
-            history.push(ROUTES.ADMINISTRATION);
+            history(ROUTES.ADMINISTRATION);
             showSnackbar("User successfully created.", SnackbarType.SUCCESS)
             reset()           
         }).catch(reason => {

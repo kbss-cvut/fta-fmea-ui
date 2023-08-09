@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Button, Dialog, TextField,} from "@material-ui/core";
+import {Button, Dialog, TextField,} from "@mui/material";
 import {DialogTitle} from "../../../materialui/dialog/DialogTitle";
 import {DialogContent} from "../../../materialui/dialog/DialogContent";
 import {useForm} from "react-hook-form";
@@ -54,7 +54,7 @@ const FailureModesTableRenameDialog = ({open, handleCloseDialog, failureModesTab
             <DialogContent dividers>
                 <TextField autoFocus margin="dense" label="Failure Modes Table Name" name="fmeaName" type="text"
                            fullWidth inputRef={useFormMethods.register}
-                           error={!!useFormMethods.errors.fmeaName}/>
+                           error={!!useFormMethods.formState.errors.fmeaName}/>
             </DialogContent>
             <DialogActions>
                 <Button disabled={processing} color="primary" onClick={handleSubmit(handleRenameFailureModesTable)}>
