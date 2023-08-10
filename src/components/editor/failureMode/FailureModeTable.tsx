@@ -34,7 +34,8 @@ const FailureModeTable = ({setAppBarName}: DashboardTitleProps) => {
                 disableClickEventBubbling: true,
                 renderCell: (params) => {
                     const onClick = () => {
-                        const rowData = params.data;
+                        console.log(params);
+                        const rowData = params.row;
 
                         const editRpnRow = {
                             uri: rowData.rowId,

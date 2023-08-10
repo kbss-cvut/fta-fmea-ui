@@ -25,7 +25,7 @@ const SystemEditDialog = ({open, handleCloseDialog, system}: Props) => {
         resolver: yupResolver(schema),
         defaultValues: {systemName: system?.name}
     });
-    const {handleSubmit, reset} = useFormMethods;
+    const {handleSubmit, reset, register} = useFormMethods;
 
     useEffect(() => {
         reset({
@@ -52,7 +52,7 @@ const SystemEditDialog = ({open, handleCloseDialog, system}: Props) => {
             <DialogTitle id="system-edit-dialog-title" onClose={handleCloseDialog}>Edit System</DialogTitle>
             <DialogContent dividers>
                 <TextField autoFocus margin="dense" label="System Name" name="systemName" type="text"
-                           fullWidth inputRef={useFormMethods.register}
+                           fullWidth {...register("systemName")}
                            error={!!useFormMethods.formState.errors.systemName}/>
             </DialogContent>
             <DialogActions>

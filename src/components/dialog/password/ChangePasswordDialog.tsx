@@ -35,11 +35,11 @@ const ChangePasswordDialog = ({open, handleCloseDialog, user}) => {
             <form onSubmit={handleSubmit(handleChangePassword)} noValidate>
                 <DialogTitle id="form-dialog-title" onClose={handleCloseDialog}>Change Password?</DialogTitle>
                 <DialogContent dividers>
-                    <TextField inputRef={register} margin="normal" required fullWidth
+                    <TextField margin="normal" required fullWidth {...register("password")}
                                name="password" label="Current Password" type="password"
                                error={!!errors.password}/>
 
-                    <TextField inputRef={register} margin="normal" required fullWidth
+                    <TextField margin="normal" required fullWidth {...register("newPassword")}
                                name="newPassword" label="New Password" type="password"
                                error={!!errors.newPassword}/>
                 </DialogContent>

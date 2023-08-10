@@ -49,7 +49,7 @@ const FaultTreeEditDialog = ({open, handleCloseDialog, faultTree}: Props) => {
             <DialogTitle id="tree-edit-dialog-title" onClose={handleCloseDialog}>Edit Fault Tree</DialogTitle>
             <DialogContent dividers>
                 <TextField autoFocus margin="dense" label="Fault Tree Name" name="faultTreeName" type="text"
-                           fullWidth inputRef={useFormMethods.register}
+                           fullWidth {...useFormMethods.register("faultTreeName")}
                            error={!!useFormMethods.formState.errors.faultTreeName}/>
             </DialogContent>
             <DialogActions>
