@@ -63,7 +63,7 @@ const FailureModesTableDialog = ({open, onClose, onCreated, faultTreeIri}: Props
                 <DialogTitle id="form-dialog-title" onClose={onClose}>Convert To FMEA</DialogTitle>
                 <DialogContent dividers>
                     <TextField autoFocus margin="dense" label="FMEA Name" name="fmeaName" type="text"
-                               fullWidth inputRef={register} error={!!errors.fmeaName}
+                               fullWidth error={!!errors.fmeaName} {...register("fmeaName")}
                                helperText={errors.fmeaName?.message}/>
                     <FaultTreePathsProvider faultTreeIri={faultTreeIri}>
                         <FaultTreePaths updatePaths={updatePaths} updateRpn={updateRpn}/>

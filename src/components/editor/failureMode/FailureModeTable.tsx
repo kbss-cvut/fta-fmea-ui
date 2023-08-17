@@ -63,12 +63,13 @@ const FailureModeTable = ({setAppBarName}: DashboardTitleProps) => {
             setFailureModes(tableData.failureModes)
             setTableColumns(tableData.columns)
             setTableRows(tableData.rows);
+            console.log(tableData.rows);
         }
     }, [tableData]);
 
     return (<div className={classes.root}>
         {/*TODO: This probably forces the data grid be on the first page only*/}
-        <DataGrid rows={tableRows} columns={tableColumns} paginationModel={{page: 1, pageSize: 20}} />
+        <DataGrid rows={tableRows} columns={tableColumns} />
 
         <FailureModesRowEditDialog
             open={Boolean(selectedRpnRow)} handleCloseDialog={() => setSelectedRpnRow(null)}
