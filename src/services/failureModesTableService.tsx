@@ -17,7 +17,7 @@ import {handleServerError} from "@services/utils/responseUtils";
 export const findAll = async (): Promise<FailureModesTable[]> => {
     try {
         const response = await axiosClient.get<FailureModesTable[]>(
-            '/failureModesTable',
+            '/failureModesTable/summaries',
             {
                 headers: authHeaders()
             }
@@ -133,6 +133,7 @@ export const createAggregate = async (table: CreateFailureModesTable): Promise<F
 
 
 export const eventPathsToRows = (eventPathsMap: Map<number, FaultEvent[]>, rpnsMap: Map<number, RiskPriorityNumber>): FailureModesRow[] => {
+    // this transformation does not follow the FMEA generation rules established in issues/46
     return Array.from(eventPathsMap).map(([key, path]) => {
         const rpn = rpnsMap.get(key)
         return {

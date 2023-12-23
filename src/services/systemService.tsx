@@ -11,7 +11,7 @@ import { FailureMode } from "@models/failureModeModel";
 export const findAll = async (): Promise<System[]> => {
     try {
         const response = await axiosClient.get<System[]>(
-            '/systems',
+            '/systems/summaries',
             {
                 headers: authHeaders()
             }
