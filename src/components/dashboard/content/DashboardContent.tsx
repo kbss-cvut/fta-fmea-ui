@@ -6,7 +6,7 @@ import FaultTreeDialog from "@components/dialog/faultTree/FaultTreeDialog";
 import {useState} from "react";
 import DashboardFaultTreeList from "@components/dashboard/content/list/DashboardFaultTreeList";
 import DashboardFailureModesTableList from "@components/dashboard/content/list/DashboardFailureModesTableList";
-import {SpeedDial, SpeedDialIcon} from "@mui/lab";
+import {SpeedDial, SpeedDialIcon} from "@mui/material";
 import {SpeedDialAction} from "@mui/material";
 import FlightIcon from '@mui/icons-material/Flight';
 import NatureIcon from '@mui/icons-material/Nature';
