@@ -1,0 +1,33 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix sail: <http://www.openrdf.org/config/sail#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix graphdb: <http://www.ontotext.com/config/graphdb#>.
+
+<#fta-fmea> a rep:Repository;
+  rep:repositoryID "fta-fmea";
+  rep:repositoryImpl [
+      rep:repositoryType "graphdb:SailRepository";
+      <http://www.openrdf.org/config/repository/sail#sailImpl> [
+          graphdb:base-URL "http://example.org/owlim#";
+          graphdb:check-for-inconsistencies "false";
+          graphdb:defaultNS "";
+          graphdb:disable-sameAs "true";
+          graphdb:enable-context-index "true";
+          graphdb:enable-literal-index "true";
+          graphdb:enablePredicateList "true";
+          graphdb:entity-id-size "32";
+          graphdb:entity-index-size "10000000";
+          graphdb:imports "";
+          graphdb:in-memory-literal-properties "true";
+          graphdb:owlim-license "";
+          graphdb:query-limit-results "0";
+          graphdb:query-timeout "0";
+          graphdb:read-only "false";
+          graphdb:repository-type "file-repository";
+          graphdb:storage-folder "storage";
+          graphdb:throw-QueryEvaluationException-on-timeout "false";
+          sail:sailType "graphdb:Sail"
+        ]
+    ];
+  rdfs:label "FTA/FMEA tool repository" .

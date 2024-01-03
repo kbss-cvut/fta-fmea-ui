@@ -38,9 +38,9 @@ There are two flags which need to be set:
 * Backend project - [fta-fmea](https://github.com/kbss-cvut/fta-fmea)
 
 ## Running complete tool in Docker
-1. Download [GraphDB](https://graphdb.ontotext.com/) standalone server ZIP archive and place it into the `deploy/db-server` folder.
-2. Set `GRAPHDB_ZIP` variable in `.env` file to point to the downloaded zip file.
-3. Run `docker-compose up -d` to start the application.
+1. Change working directory using `cd ./deploy/no-proxy`
+2. Run `docker-compose up -d` to start the application.
+3. The application should be accessible at `http:/localhost:8080/`
 
 -----
 This repository was created within the project [LTACH19032](https://starfos.tacr.cz/en/project/LTACH19032).
