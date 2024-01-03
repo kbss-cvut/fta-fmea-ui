@@ -4,7 +4,7 @@ services:
   fta-fmea:
     image: ghcr.io/kbss-cvut/fta-fmea-ui:latest
     environment:
-      API_URL: ${API_URL:-http://localhost:9999/fta-fmea}
+      API_URL: ${API_URL:-http://localhost:9999/}
       ADMIN_REGISTRATION_ONLY: ${ADMIN_REGISTRATION_ONLY:-false}
     ports:
       - "8080:80"
@@ -15,19 +15,23 @@ services:
   fta-fmea-server:
     image: ghcr.io/kbss-cvut/fta-fmea:latest
     ports:
-      - "9999:8080"
+      - "9999:9999"
     depends_on:
-      - graphdb
+      - db-server
     environment:
-      REPOSITORY_URL: ${REPOSITORY_URL:-http://graphdb:7200/repositories/fta-fmea}
+      REPOSITORY_URL: ${REPOSITORY_URL:-http://db-server:7200/repositories/fta-fmea}
 
 
-  graphdb:
+  db-server:
     build:
-      context: .
-      dockerfile: db-server/Dockerfile
-      args:
-        GRAPHDB_ZIP: $GRAPHDB_FILE
-    container_name: graphdb
+      context: ../shared/db-server
+    expose:
+      - "7200"
     ports:
       - "7200:7200"
+    restart: always
+    volumes:
+      - db-server:/opt/graphdb/home
+
+volumes:
+  db-server:
