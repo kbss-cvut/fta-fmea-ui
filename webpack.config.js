@@ -1,15 +1,18 @@
 "use strict";
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const path = require('path')
 
-module.exports = env => {
+module.exports = function(env) {
     return {
+        infrastructureLogging: {
+            appendOnly: true,
+            level: "verbose"
+        },
         // Set debugging source maps to be "inline" for
         // simplicity and ease of use
-        devtool: "inline-source-map",
+        devtool: 'inline-cheap-source-map',
 
         mode: 'development',
 
@@ -26,7 +29,7 @@ module.exports = env => {
 
         devServer: {
             historyApiFallback: true,
-            publicPath: "/"
+            // publicPath: "/"
         },
 
         // Supported file loaders

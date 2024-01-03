@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Button, Dialog, TextField,} from "@material-ui/core";
+import {Button, Dialog, TextField,} from "@mui/material";
 import {DialogTitle} from "@components/materialui/dialog/DialogTitle";
 import {DialogContent} from "@components/materialui/dialog/DialogContent";
 import {useForm} from "react-hook-form";
@@ -25,7 +25,7 @@ const SystemEditDialog = ({open, handleCloseDialog, system}: Props) => {
         resolver: yupResolver(schema),
         defaultValues: {systemName: system?.name}
     });
-    const {handleSubmit, reset} = useFormMethods;
+    const {handleSubmit, reset, register} = useFormMethods;
 
     useEffect(() => {
         reset({
@@ -52,8 +52,8 @@ const SystemEditDialog = ({open, handleCloseDialog, system}: Props) => {
             <DialogTitle id="system-edit-dialog-title" onClose={handleCloseDialog}>Edit System</DialogTitle>
             <DialogContent dividers>
                 <TextField autoFocus margin="dense" label="System Name" name="systemName" type="text"
-                           fullWidth inputRef={useFormMethods.register}
-                           error={!!useFormMethods.errors.systemName}/>
+                           fullWidth {...register("systemName")}
+                           error={!!useFormMethods.formState.errors.systemName}/>
             </DialogContent>
             <DialogActions>
                 <Button disabled={processing} color="primary" onClick={handleSubmit(handleUpdateSystem)}>

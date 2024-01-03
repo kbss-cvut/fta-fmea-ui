@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import {Mitigation} from "@models/mitigationModel";
-import {TextField} from "@material-ui/core";
+import {TextField} from "@mui/material";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {useEffect} from "react";

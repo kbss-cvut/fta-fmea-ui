@@ -1,7 +1,8 @@
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import { makeStyles } from 'tss-react/mui';
+import {Theme} from "@mui/material"
 
-const useStyles = makeStyles((theme: Theme) => {
-        return createStyles({
+const useStyles = makeStyles()((theme: Theme) => {
+        return {
             gridList: {
                 padding: theme.spacing(1, 0, ),
                 height: 'auto',
@@ -15,8 +16,8 @@ const useStyles = makeStyles((theme: Theme) => {
             cardTitle: {
                 overflow: 'hidden'
             }
-        })
-    }
-);
+        };
+    });
 
+// TODO jss-to-tss-react codemod: usages of this hook outside of this file will not be converted.
 export default useStyles;

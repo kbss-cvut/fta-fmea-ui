@@ -3,7 +3,7 @@ import * as React from "react";
 import {Component} from "@models/componentModel";
 import {FailureMode} from "@models/failureModeModel";
 import useStyles from "./FailureModeStepperConfirmation.styles";
-import {Grid, Paper, Typography} from "@material-ui/core";
+import {Grid, Paper, Typography} from "@mui/material";
 
 interface Props {
     component: Component,
@@ -11,7 +11,7 @@ interface Props {
 }
 
 const FailureModeStepperConfirmation = ({failureMode,component }: Props) => {
-    const classes = useStyles();
+    const { classes } = useStyles();
 
     return (
         <div className={classes.root}>

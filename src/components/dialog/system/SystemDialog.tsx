@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Button, Dialog, TextField,} from "@material-ui/core";
+import {Button, Dialog, TextField,} from "@mui/material";
 import {DialogTitle} from "@components/materialui/dialog/DialogTitle";
 import {DialogContent} from "@components/materialui/dialog/DialogContent";
 import {useForm} from "react-hook-form";
@@ -16,7 +16,7 @@ const SystemDialog = ({open, handleCloseDialog}) => {
     const [processing, setIsProcessing] = useState(false)
 
     const useFormMethods = useForm({resolver: yupResolver(schema)});
-    const {handleSubmit, register, errors} = useFormMethods;
+    const {handleSubmit, register, formState: { errors }} = useFormMethods;
 
     const handleCreateSystem = async (values: any) => {
         setIsProcessing(true)
@@ -38,9 +38,8 @@ const SystemDialog = ({open, handleCloseDialog}) => {
                 <DialogTitle id="form-dialog-title" onClose={handleCloseDialog}>Create System</DialogTitle>
                 <DialogContent dividers>
                     <TextField autoFocus margin="dense" label="System Name" name="systemName" type="text"
-                               fullWidth inputRef={register}
-                               error={!!errors.systemName}
-                               helperText={errors.systemName?.message}/>
+                               fullWidth error={!!errors.systemName}
+                               helperText={errors.systemName?.message} {...register("systemName")}/>
                 </DialogContent>
                 <DialogActions>
                     <Button disabled={processing} color="primary" onClick={handleSubmit(handleCreateSystem)}>

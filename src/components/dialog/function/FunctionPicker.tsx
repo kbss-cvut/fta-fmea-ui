@@ -1,11 +1,11 @@
 import * as React from "react";
 import {useState} from "react";
 
-import {Box, IconButton, TextField, Typography} from "@material-ui/core";
+import {Box, IconButton, TextField, Typography} from "@mui/material";
 import {useFunctions} from "@hooks/useFunctions";
-import {Autocomplete} from "@material-ui/lab";
+import {Autocomplete} from "@mui/lab";
 import {Function} from "@models/functionModel";
-import AddIcon from "@material-ui/icons/Add";
+import AddIcon from "@mui/icons-material/Add";
 import {Controller, useForm} from "react-hook-form";
 import {schema} from "./FunctionPicker.schema";
 import useStyles from "./FunctionPicker.styles";
@@ -18,7 +18,7 @@ interface Props {
 }
 
 const FunctionPicker = ({selectedFunctions, onFunctionsSelected}: Props) => {
-    const classes = useStyles()
+    const { classes } = useStyles()
 
     const [functions, addFunction] = useFunctions()
     const {register, handleSubmit, errors, reset, control} = useForm({
@@ -58,8 +58,12 @@ const FunctionPicker = ({selectedFunctions, onFunctionsSelected}: Props) => {
                 <Controller as={TextField} autoFocus margin="dense" id="name" label="Function Name"
                             type="text" fullWidth name="name" control={control} defaultValue=""
                             inputRef={register} error={!!errors.name} helperText={errors.name?.message}/>
-                <IconButton className={classes.addButton} color="primary" component="span"
-                            onClick={handleSubmit(_handleCreateFunction)}>
+                <IconButton
+                    className={classes.addButton}
+                    color="primary"
+                    component="span"
+                    onClick={handleSubmit(_handleCreateFunction)}
+                    size="large">
                     <AddIcon/>
                 </IconButton>
             </Box>

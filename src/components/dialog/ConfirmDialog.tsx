@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
 import {DialogTitle} from "@components/materialui/dialog/DialogTitle";
 import {DialogContent} from "@components/materialui/dialog/DialogContent";
 import {DialogActions} from "@components/materialui/dialog/DialogActions";

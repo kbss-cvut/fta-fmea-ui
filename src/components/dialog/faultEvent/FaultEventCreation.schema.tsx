@@ -10,12 +10,12 @@ export const schema = Yup.object().shape({
     probability: Yup.number()
         .when('eventType', {
             is: (eventType) => eventType === EventType.INTERMEDIATE,
-            then: Yup.number()
+            then: (schema) => schema
                 .transform(yupOptionalNumber)
                 .notRequired()
                 .min(0, 'Probability cannot be lower than 0')
                 .max(10, 'Probability cannot be greater than 10'),
-            otherwise: Yup.number()
+            otherwise: (schema) => schema
                 .min(0, 'Probability cannot be lower than 0')
                 .max(1, 'Probability cannot be greater than 1')
                 .required('Probability is mandatory'),
@@ -24,8 +24,8 @@ export const schema = Yup.object().shape({
     gateType: Yup.string()
         .when('eventType', {
             is: (eventType) => eventType === EventType.INTERMEDIATE,
-            then: Yup.string().notOneOf([GateType.UNUSED]),
-            otherwise: Yup.string().oneOf([GateType.UNUSED]),
+            then: (schema) => schema.notOneOf([GateType.UNUSED]),
+            otherwise: (schema) => schema.oneOf([GateType.UNUSED]),
         }),
     sequenceProbability: Yup.number()
         .transform(yupOptionalNumber)

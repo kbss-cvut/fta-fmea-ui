@@ -1,7 +1,8 @@
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import { makeStyles } from 'tss-react/mui';
+import {Theme} from "@mui/material";
 
-const useStyles = makeStyles((theme: Theme) => {
-        return createStyles({
+const useStyles = makeStyles()((theme: Theme) => {
+        return {
             root: {
                 display: "flex",
                 flexFlow: "column",
@@ -13,8 +14,8 @@ const useStyles = makeStyles((theme: Theme) => {
                 bottom: theme.spacing(8),
                 right: theme.spacing(2),
             },
-        })
-    }
-);
+        };
+    });
 
+// TODO jss-to-tss-react codemod: usages of this hook outside of this file will not be converted.
 export default useStyles;

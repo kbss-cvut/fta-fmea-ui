@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
 import {cloneDeep, merge} from "lodash";
-import {Button, Divider, Typography} from "@material-ui/core";
+import {Button, Divider, Typography} from "@mui/material";
 import FaultEventCreation from "../../../../dialog/faultEvent/FaultEventCreation";
 import {useForm} from "react-hook-form";
 import {schema as eventSchema} from "../../../../dialog/faultEvent/FaultEventCreation.schema";
@@ -22,7 +22,7 @@ interface Props {
 }
 
 const FaultEventShapeToolPane = ({data, onEventUpdated, refreshTree}: Props) => {
-    const classes = useStyles();
+    const { classes } = useStyles();
     const [showSnackbar] = useSnackbar();
 
     let editorPane;
@@ -31,6 +31,7 @@ const FaultEventShapeToolPane = ({data, onEventUpdated, refreshTree}: Props) => 
     let defaultValues;
 
     if (data) {
+        console.log(data);
         defaultValues = {
             eventType: data.eventType,
             name: data.name,
@@ -45,6 +46,7 @@ const FaultEventShapeToolPane = ({data, onEventUpdated, refreshTree}: Props) => 
         });
 
         updateFunction = async (values: any) => {
+            console.log(values);
             let dataClone = cloneDeep(data)
 
             const updatedFaultEvent = deepOmit(faultEventService.eventFromHookFormValues(values), '@type')
@@ -86,7 +88,8 @@ const FaultEventShapeToolPane = ({data, onEventUpdated, refreshTree}: Props) => 
             {editorPane}
             {isDirty &&
             <Button disabled={isSubmitting || !eventSelected} color="primary"
-                    onClick={handleSubmit(updateFunction)}>
+                    onClick={handleSubmit(updateFunction)}
+            >
                 Save
             </Button>}
             {data?.gateType === GateType.PRIORITY_AND && eventChildren &&

@@ -1,8 +1,9 @@
-import {Theme, withStyles} from "@material-ui/core/styles";
-import MuiDialogContent from "@material-ui/core/DialogContent";
+import MuiDialogContent from "@mui/material/DialogContent";
+import {Theme} from "@mui/material"
+import { withStyles } from 'tss-react/mui';
 
-export const DialogContent = withStyles((theme: Theme) => ({
+export const DialogContent = withStyles(MuiDialogContent, (theme: Theme) => ({
     root: {
         padding: theme.spacing(2),
     },
-}))(MuiDialogContent);
+}));

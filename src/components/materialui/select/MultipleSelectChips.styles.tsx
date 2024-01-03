@@ -1,6 +1,7 @@
-import {makeStyles, Theme} from "@material-ui/core";
+import { makeStyles } from 'tss-react/mui';
+import {Theme} from "@mui/material"
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles()((theme: Theme) => ({
     container: {
         margin: theme.spacing(1, 0, 1),
         textAlign: "left",
@@ -17,4 +18,5 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
+// TODO jss-to-tss-react codemod: usages of this hook outside of this file will not be converted.
 export default useStyles;

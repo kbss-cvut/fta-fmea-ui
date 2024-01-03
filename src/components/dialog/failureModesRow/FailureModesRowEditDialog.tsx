@@ -5,7 +5,7 @@ import {
     Button,
     Dialog,
     TextField,
-} from "@material-ui/core";
+} from "@mui/material";
 
 import {Controller, useForm} from "react-hook-form";
 import {useEffect, useState} from "react";
@@ -32,8 +32,10 @@ interface Props {
     failureModes: FailureMode[]
 }
 
+
+// TODO: remove ts-ignores and migrate to higher version of react-hook-form
 const FailureModesRowEditDialog = ({open, handleCloseDialog, rowRpn, onSuccess, mitigation, failureModes}: Props) => {
-    const classes = useStyles();
+    const { classes } = useStyles();
     const [showSnackbar] = useSnackbar();
     const [selectedFailureMode, setSelectedFailureMode] = useState<FailureMode>(null);
     const [showConfirmDialog] = useConfirmDialog();
@@ -50,7 +52,7 @@ const FailureModesRowEditDialog = ({open, handleCloseDialog, rowRpn, onSuccess, 
         resolver: yupResolver(schema),
         defaultValues: initialValues
     });
-    const {handleSubmit, reset, formState, errors, control} = useFormMethods;
+    const {handleSubmit, reset, formState, formState: { errors }, control, register} = useFormMethods;
     const {isSubmitting} = formState;
 
     useEffect(() => {
@@ -110,31 +112,27 @@ const FailureModesRowEditDialog = ({open, handleCloseDialog, rowRpn, onSuccess, 
             <DialogContent dividers>
 
                 <Box className={classes.rpnBox}>
-                    <Controller as={TextField} control={control} label="Severity" type="number" name="severity"
-                                InputProps={{inputProps: {min: 1, max: 10, step: 1}}}
-                                error={!!errors.severity}
-                                className={classes.rpnBoxItem} defaultValue=""
-                    />
-                    <Controller as={TextField} control={control} label="Occurrence" type="number" name="occurrence"
-                                InputProps={{inputProps: {min: 1, max: 10, step: 1}}}
-                                error={!!errors.occurrence}
-                                className={classes.rpnBoxItem} defaultValue=""
-                    />
-                    <Controller as={TextField} control={control} label="Detection" type="number" name="detection"
-                                InputProps={{inputProps: {min: 1, max: 10, step: 1}}}
-                                error={!!errors.detection}
-                                className={classes.rpnBoxItem} defaultValue=""
+                    <TextField label="Severity" type="number" name="severity" inputProps={{min: 1, max: 10, step: 1}}
+                               error={!!errors.severity} className={classes.rpnBoxItem} {...register("severity")} />
+                    <TextField label="Occurrence" type="number" name="occurrence" inputProps={{ min: 1, max: 10, step: 1 }}
+                               error={!!errors.occurrence} className={classes.rpnBoxItem} {...register("occurrence")} />
+                    <TextField label="Detection" type="number" name="detection" inputProps={{ min: 1, max: 10, step: 1 }}
+                               error={!!errors.detection} className={classes.rpnBoxItem} {...register("detection")} />
+                </Box>
+
+                <Box className={classes.mitigationBox}>
+                    <TextField label="Mitigation name" type="text" name="name" className={classes.rpnBoxItem}
+                               //@ts-ignore
+                               {...register("name")}
                     />
                 </Box>
 
                 <Box className={classes.mitigationBox}>
-                    <Controller as={TextField} control={control} label="Mitigation name" type="text" name="name"
-                                className={classes.rpnBoxItem} defaultValue=""/>
-                </Box>
-
-                <Box className={classes.mitigationBox}>
-                    <Controller as={TextField} control={control} label="Mitigation description" type="text"
-                                name="description" multiline rows={5} variant="outlined" className={classes.rpnBoxItem} defaultValue=""/>
+                    <TextField label="Mitigation description" type="text" name={"description"}
+                               multiline rows={5} variant="outlined" className={classes.rpnBoxItem}
+                               //@ts-ignore
+                               {...register("description")}
+                    />
                 </Box>
                 {/*<Box className={classes.mitigationBox}>*/}
                 {/*    <InputLabel id="failure-modes-multiselect-label"> Failure Mode </InputLabel>*/}

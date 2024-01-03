@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Dialog from '@material-ui/core/Dialog';
+import Dialog from '@mui/material/Dialog';
 import {DialogTitle} from "../../../materialui/dialog/DialogTitle";
 import {DialogContent} from "../../../materialui/dialog/DialogContent";
 import {FailureMode} from "@models/failureModeModel";

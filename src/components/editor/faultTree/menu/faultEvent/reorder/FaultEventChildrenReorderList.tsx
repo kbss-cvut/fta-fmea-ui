@@ -1,43 +1,12 @@
 import * as React from "react";
 import {useEffect, useState} from "react";
 
-import {SortableContainer, SortableElement, SortableHandle} from "react-sortable-hoc";
-import * as arrayMove from "array-move";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import DragHandleIcon from "@material-ui/icons/DragHandle";
+import {arrayMoveImmutable} from "array-move";
+import DragHandleIcon from "@mui/icons-material/DragHandle";
 
 import {FaultEvent} from "@models/eventModel";
-import {flatten, sortBy, findIndex} from "lodash";
-import {eventChildrenSorted} from "@services/faultEventService";
-
-// https://codesandbox.io/s/l7v0qz869z
-
-const DragHandle = SortableHandle(() => (
-    <ListItemIcon>
-        <DragHandleIcon/>
-    </ListItemIcon>
-));
-
-const SortableItem = SortableElement(({text}) => (
-    <ListItem ContainerComponent="div">
-        <ListItemText primary={text}/>
-        <ListItemSecondaryAction>
-            <DragHandle/>
-        </ListItemSecondaryAction>
-    </ListItem>
-));
-
-const SortableListContainer = SortableContainer(({items}) => (
-    <List component="div">
-        {items.map(({id, text}, index) => (
-            <SortableItem key={id} index={index} text={text}/>
-        ))}
-    </List>
-));
+import {flatten} from "lodash";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 
 interface Props {
@@ -62,9 +31,16 @@ const FaultEventChildrenReorderList = ({eventChildren, handleReorder}: Props) =>
         setItems(mapChildEvents(eventChildren));
     }, [eventChildren])
 
-    const onSortEnd = ({oldIndex, newIndex}) => {
+    const onSortEnd = (result) => {
+        if(!result.destination) return;
+
+        const oldIndex = result.source.index;
+        const newIndex = result.destination.index;
+
+        console.log(result);
+
         setItems(items => {
-            const newItems = arrayMove(items, oldIndex, newIndex)
+            const newItems = arrayMoveImmutable(items, oldIndex, newIndex)
             handleChildrenReordered(newItems);
             return newItems;
         });
@@ -76,12 +52,31 @@ const FaultEventChildrenReorderList = ({eventChildren, handleReorder}: Props) =>
     }
 
     return (
-        <SortableListContainer
-            items={items}
-            onSortEnd={onSortEnd}
-            useDragHandle={true}
-            lockAxis="y"
-        />
+        <DragDropContext onDragEnd={onSortEnd}>
+            <Droppable droppableId={"faultEventList"}>
+                {(provided) => (
+                    <div {...provided.droppableProps} ref={provided.innerRef}>
+                        {
+                            items.map((item, idx) => (
+                                <Draggable key={item.id} draggableId={`fault-event-${item.id}`} index={idx}>
+                                    {(provided) => (
+                                        <div ref={provided.innerRef}
+                                            {...provided.draggableProps}
+                                             {...provided.dragHandleProps}>
+                                            <div style={{ border: "solid 1px rgba(0, 0, 0, 0.23)", padding: "12px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                                                { item.text }
+                                                <DragHandleIcon/>
+                                            </div>
+                                        </div>
+                                    )}
+                                </Draggable>
+                            ))
+                        }
+                        { provided.placeholder }
+                    </div>
+                )}
+            </Droppable>
+        </DragDropContext>
     );
 };
 

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Button, Dialog, TextField,} from "@material-ui/core";
+import {Button, Dialog, TextField,} from "@mui/material";
 import {DialogTitle} from "@components/materialui/dialog/DialogTitle";
 import {DialogContent} from "@components/materialui/dialog/DialogContent";
 import {useForm} from "react-hook-form";
@@ -26,8 +26,7 @@ const FailureModesTableAggregateDialog = ({open, onClose}: Props) => {
     const [, , , addTableAggregate] = useFailureModesTables();
 
     const useFormMethods = useForm({resolver: yupResolver(schema)});
-    const {handleSubmit, register, errors, formState} = useFormMethods;
-    const {isSubmitting} = formState;
+    const {handleSubmit, register, formState: { errors, isSubmitting }} = useFormMethods;
 
     const selectedPathsMap = new Map<number, FaultEvent[]>();
     const selectedRPNsMap = new Map<number, RiskPriorityNumber>();
@@ -63,7 +62,8 @@ const FailureModesTableAggregateDialog = ({open, onClose}: Props) => {
                 <DialogTitle id="form-dialog-title" onClose={onClose}>FMEA Aggregates</DialogTitle>
                 <DialogContent dividers>
                     <TextField autoFocus margin="dense" label="FMEA Name" name="fmeaName" type="text"
-                               fullWidth inputRef={register} error={!!errors.fmeaName}
+                               fullWidth error={!!errors.fmeaName}
+                               {...register("fmeaName")}
                                helperText={errors.fmeaName?.message}/>
                     <FaultTreePathsAggregateProvider>
                         <FaultTreePathsAggregate updatePaths={updatePaths} updateRpn={updateRpn}/>

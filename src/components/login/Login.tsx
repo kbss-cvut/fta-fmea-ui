@@ -7,9 +7,9 @@ import {
     Typography,
     CssBaseline,
     Avatar
-} from "@material-ui/core";
-import {Link as MaterialLink} from '@material-ui/core';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+} from "@mui/material";
+import {Link as MaterialLink} from '@mui/material';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import {useState} from "react";
 import useStyles from "@components/login/Login.styles";
 import * as userService from "@services/userService";
@@ -28,12 +28,12 @@ import msmtLogo from '../../assets/MSMT.png';
 import interExcellenceLogo from '../../assets/InterExcellence.png';
 
 const Login = () => {
-    const classes = useStyles();
+    const { classes } = useStyles();
 
     const [_, setLoggedUser] = useLoggedUser();
     const [showSnackbar] = useSnackbar()
 
-    const {register, handleSubmit, errors} = useForm({
+    const {register, handleSubmit, formState: { errors }} = useForm({
         resolver: yupResolver(schema)
     });
 
@@ -71,9 +71,9 @@ const Login = () => {
                 </Typography>
                 <form className={classes.form} onSubmit={handleSubmit(onSubmit)} noValidate>
                     <TextField
-                        inputRef={register}
+                        {...register("username")}
                         error={!!errors.username}
-                        helperText={errors.username?.message}
+                        // helperText={errors.username?.message as string}
                         variant="outlined"
                         margin="normal"
                         required
@@ -84,9 +84,9 @@ const Login = () => {
                         autoFocus
                     />
                     <TextField
-                        inputRef={register}
+                        {...register("password")}
                         error={!!errors.password}
-                        helperText={errors.password?.message}
+                        // helperText={errors.password?.message as string}
                         variant="outlined"
                         margin="normal"
                         required

@@ -1,16 +1,16 @@
-import {makeStyles} from "@material-ui/core";
-import {createStyles, Theme} from "@material-ui/core/styles";
+import { makeStyles } from 'tss-react/mui';
 
-const useStyles = makeStyles(() =>
-    createStyles({
+const useStyles = makeStyles()(() =>
+    ({
         creationBox: {
             display: 'inline-flex',
             width: '100%'
         },
+
         addButton: {
             alignSelf: 'flex-end'
-        },
-    }),
-);
+        }
+    }));
 
+// TODO jss-to-tss-react codemod: usages of this hook outside of this file will not be converted.
 export default useStyles;

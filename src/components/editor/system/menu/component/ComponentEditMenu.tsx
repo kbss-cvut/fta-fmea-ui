@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useEffect} from "react";
-import {Button, TextField} from "@material-ui/core";
+import {Button, TextField} from "@mui/material";
 import {Controller, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {Component, UpdateComponent} from "@models/componentModel";
@@ -16,7 +16,7 @@ interface Props {
 const ComponentEditMenu = ({component, onComponentUpdated}: Props) => {
     const [showSnackbar] = useSnackbar();
 
-    const {control, errors, handleSubmit, formState, reset} = useForm({
+    const {control, register, formState: { errors }, handleSubmit, formState, reset} = useForm({
         resolver: yupResolver(schema),
     });
     const {isSubmitting, isDirty} = formState;
@@ -44,8 +44,8 @@ const ComponentEditMenu = ({component, onComponentUpdated}: Props) => {
 
     return (
         <React.Fragment>
-            <Controller as={TextField} autoFocus margin="dense" id="component-name-edit" label="Component Name"
-                        type="text" fullWidth name="name" control={control} defaultValue="" error={!!errors.name}/>
+            <TextField autoFocus margin="dense" id="component-name-edit" label="Component Name"
+                       type="text" fullWidth name="name" defaultValue={component.name} error={!!errors.name} {...register("name")}/>
             {isDirty &&
             <Button disabled={isSubmitting} color="primary" onClick={handleSubmit(handleComponentUpdate)}>
                 Save

@@ -40,7 +40,7 @@ const EditorCanvas = ({
                           refreshTree,
                           setHighlightedElement
                       }: Props) => {
-    const classes = useStyles()
+    const { classes } = useStyles()
 
     const containerRef = useRef(null)
 

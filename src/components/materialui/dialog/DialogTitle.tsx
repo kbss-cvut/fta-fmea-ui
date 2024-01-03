@@ -1,10 +1,10 @@
 import * as React from "react";
-import {Theme, WithStyles, withStyles} from '@material-ui/core/styles';
-import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import Typography from '@material-ui/core/Typography';
-import {createStyles} from "@material-ui/core";
+import { withStyles } from 'tss-react/mui';
+import MuiDialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import {ClassNameMap, Theme} from "@mui/material";
+import {createStyles} from "@mui/material/styles";
 
 export const styles = (theme: Theme) =>
     createStyles({
@@ -20,22 +20,29 @@ export const styles = (theme: Theme) =>
         },
     });
 
-interface DialogTitleProps extends WithStyles<typeof styles> {
+interface DialogTitleProps {
     id: string;
     children: React.ReactNode;
     onClose: () => void;
+    classes?: ClassNameMap<string>
 }
 
-export const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
+export const DialogTitle = withStyles((props: DialogTitleProps) => {
     const {children, classes, onClose, ...other} = props;
     return (
-        <MuiDialogTitle disableTypography className={classes.root} {...other}>
-            <Typography variant="h6">{children}</Typography>
+        <MuiDialogTitle classes={classes} {...other}>
+            {/*// TODO: This is hotfix since disableTypography is removed in MUIv5*/}
+            {/*<Typography variant="h6">{children}</Typography>*/}
+            { children }
             {onClose ? (
-                <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+                <IconButton
+                    aria-label="close"
+                    className={classes.closeButton}
+                    onClick={onClose}
+                    size="large">
                     <CloseIcon/>
                 </IconButton>
             ) : null}
         </MuiDialogTitle>
     );
-});
+}, styles);

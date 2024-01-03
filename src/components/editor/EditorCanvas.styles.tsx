@@ -1,8 +1,8 @@
-import {createStyles, makeStyles, Theme} from "@material-ui/core/styles";
+import {Theme} from "@mui/material/";
+import { makeStyles } from 'tss-react/mui';
 
-
-const useStyles = makeStyles((theme: Theme) => {
-        return createStyles({
+const useStyles = makeStyles()((theme: Theme) => {
+        return {
             root: {
                 flexGrow: 1,
                 display: 'flex',
@@ -20,8 +20,8 @@ const useStyles = makeStyles((theme: Theme) => {
                 maxWidth: '30%',
                 minWidth: '30%',
             }
-        })
-    }
-);
+        };
+    });
 
+// TODO jss-to-tss-react codemod: usages of this hook outside of this file will not be converted.
 export default useStyles;

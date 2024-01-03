@@ -1,8 +1,8 @@
 import * as React from "react";
 import {createContext, useContext, useState} from "react";
 import {ChildrenProps} from "@utils/hookUtils";
-import {Snackbar} from "@material-ui/core";
-import {Alert} from "@material-ui/lab";
+import {Snackbar} from "@mui/material";
+import {Alert} from "@mui/lab";
 
 export enum SnackbarType {
     ERROR = "error",

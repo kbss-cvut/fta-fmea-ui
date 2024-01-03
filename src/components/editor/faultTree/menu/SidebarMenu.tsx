@@ -1,6 +1,6 @@
 import * as React from "react";
 import useStyles from "./SidebarMenu.styles";
-import {Paper,} from "@material-ui/core";
+import {Paper,} from "@mui/material";
 import {ChildrenProps} from "@utils/hookUtils";
 
 interface Props extends ChildrenProps {
@@ -8,7 +8,7 @@ interface Props extends ChildrenProps {
 }
 
 const SidebarMenu = ({children, className}: Props) => {
-    const classes = useStyles()
+    const { classes } = useStyles()
 
     return (
         <div className={className}>

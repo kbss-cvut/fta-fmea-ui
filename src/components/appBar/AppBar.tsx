@@ -1,16 +1,16 @@
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
 import * as React from "react";
 import useStyles from "@components/appBar/AppBar.styles";
-import {AccountCircle} from "@material-ui/icons";
-import {Menu, MenuItem, AppBar as MaterialAppBar} from "@material-ui/core";
+import {AccountCircle} from "@mui/icons-material";
+import {Menu, MenuItem, AppBar as MaterialAppBar} from "@mui/material";
 import {FormEvent, useState} from "react";
-import {useHistory} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import ChangePasswordDialog from "@components/dialog/password/ChangePasswordDialog";
 import {getLoggedUser, useLoggedUser} from "@hooks/useLoggedUser";
 import {ROUTES} from "@utils/constants";
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 interface Props {
     title: string,
@@ -19,8 +19,8 @@ interface Props {
 
 const AppBar = ({title, showBackButton = false}: Props) => {
     const [loggedUser] = useLoggedUser();
-    const classes = useStyles();
-    const history = useHistory();
+    const { classes } = useStyles();
+    const history = useNavigate();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const isMenuOpen = Boolean(anchorEl);
@@ -40,17 +40,17 @@ const AppBar = ({title, showBackButton = false}: Props) => {
 
     const handleLogout = (e: FormEvent) => {
         e.preventDefault();
-        history.push(ROUTES.LOGOUT)
+        history(ROUTES.LOGOUT)
     }
 
     const navigateToAdmin = (e: FormEvent) => {
         e.preventDefault();
-        history.push(ROUTES.ADMINISTRATION)
+        history(ROUTES.ADMINISTRATION)
     }
 
     const goBack = () => {
-        if (history.length > 2) history.goBack();
-        else history.push(ROUTES.DASHBOARD);
+        if (history.length > 2) history(-1);
+        else history(ROUTES.DASHBOARD);
     }
 
     const menuId = 'user-account-menu';
@@ -81,8 +81,12 @@ const AppBar = ({title, showBackButton = false}: Props) => {
                 position="fixed">
                 <Toolbar>
                     {showBackButton &&
-                    <IconButton edge="start" className={classes.menuButton} color="inherit"
-                                onClick={goBack}>
+                    <IconButton
+                        edge="start"
+                        className={classes.menuButton}
+                        color="inherit"
+                        onClick={goBack}
+                        size="large">
                         <ArrowBackIcon/>
                     </IconButton>
                     }
@@ -94,7 +98,7 @@ const AppBar = ({title, showBackButton = false}: Props) => {
                         aria-haspopup="true"
                         onClick={handleProfileMenuOpen}
                         color="inherit"
-                    >
+                        size="large">
                         <AccountCircle/>
                     </IconButton>
                 </Toolbar>

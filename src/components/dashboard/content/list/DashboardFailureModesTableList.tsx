@@ -4,12 +4,12 @@ import {
     CardActions,
     CardHeader,
     Grid,
-    GridList,
-    GridListTile,
+    ImageList,
+    ImageListItem,
     IconButton,
     Link as MaterialLink
-} from "@material-ui/core";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+} from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import * as React from "react";
 import {useFailureModesTables} from "@hooks/useFailureModesTables";
 import useStyles from "@components/dashboard/content/list/DashboardList.styles";
@@ -28,7 +28,7 @@ import FailureModesTableRenameDialog from "@components/dialog/failureModesTable/
 import {FailureModesTable} from "@models/failureModesTableModel";
 
 const DashboardFailureModesTableList = () => {
-    const classes = useStyles();
+    const { classes } = useStyles();
     const [tables, , removeTable] = useFailureModesTables();
 
     const [contextMenuSelectedTable, setContextMenuSelectedTable] = useState<FailureModesTable>(null)
@@ -55,15 +55,18 @@ const DashboardFailureModesTableList = () => {
 
     return (
         <React.Fragment>
-            <GridList className={classes.gridList} cols={6}>
-                {tables.map((mode) => {
+            <ImageList className={classes.gridList} cols={6}>
+                {tables.filter(m => !!m && !!m.iri).map((mode) => {
                     const routePath = ROUTES.FMEA + extractFragment(mode.iri);
                     return (
-                        <GridListTile key={mode.iri} className={classes.gridListTile}>
+                        <ImageListItem key={mode.iri} className={classes.gridListTile}>
                             <Card className={classes.card}>
                                 <CardHeader
                                     action={
-                                        <IconButton aria-label="settings" onClick={(e) => handleContextMenu(e, mode)}>
+                                        <IconButton
+                                            aria-label="settings"
+                                            onClick={(e) => handleContextMenu(e, mode)}
+                                            size="large">
                                             <MoreVertIcon/>
                                         </IconButton>
                                     }
@@ -75,10 +78,10 @@ const DashboardFailureModesTableList = () => {
                                     </MaterialLink>
                                 </CardActions>
                             </Card>
-                        </GridListTile>
-                    )
+                        </ImageListItem>
+                    );
                 })}
-            </GridList>
+            </ImageList>
 
             <FailureModeTableContextMenu
                 anchorPosition={contextMenuAnchor}

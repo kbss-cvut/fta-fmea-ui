@@ -3,15 +3,15 @@ import {useEffect, useState} from "react";
 import useStyles from "./FailureModeTable.styles";
 import {DashboardTitleProps} from "../../dashboard/DashboardTitleProps";
 import {useCurrentFailureModesTable} from "@hooks/useCurrentFailureModesTable";
-import {ColDef, DataGrid} from '@material-ui/data-grid';
-import {Button} from "@material-ui/core";
+import {DataGrid} from '@mui/x-data-grid';
+import {Button} from "@mui/material";
 import FailureModesRowEditDialog from "@components/dialog/failureModesRow/FailureModesRowEditDialog";
 import {EditRowRpn} from "@models/failureModesRowModel";
 import {Mitigation} from "@models/mitigationModel";
 import {FailureMode} from "@models/failureModeModel";
 
 const FailureModeTable = ({setAppBarName}: DashboardTitleProps) => {
-    const classes = useStyles();
+    const { classes } = useStyles();
 
     const [tableData, refreshTable] = useCurrentFailureModesTable();
 
@@ -25,7 +25,7 @@ const FailureModeTable = ({setAppBarName}: DashboardTitleProps) => {
         if (tableData) {
             setAppBarName(tableData?.name);
 
-            (tableData.columns as ColDef[]).push({
+            (tableData.columns as any[]).push({
                 field: "",
                 headerName: "Edit",
                 sortable: false,
@@ -34,7 +34,8 @@ const FailureModeTable = ({setAppBarName}: DashboardTitleProps) => {
                 disableClickEventBubbling: true,
                 renderCell: (params) => {
                     const onClick = () => {
-                        const rowData = params.data;
+                        console.log(params);
+                        const rowData = params.row;
 
                         const editRpnRow = {
                             uri: rowData.rowId,
@@ -62,11 +63,13 @@ const FailureModeTable = ({setAppBarName}: DashboardTitleProps) => {
             setFailureModes(tableData.failureModes)
             setTableColumns(tableData.columns)
             setTableRows(tableData.rows);
+            console.log(tableData.rows);
         }
     }, [tableData]);
 
     return (<div className={classes.root}>
-        <DataGrid rows={tableRows} columns={tableColumns} pageSize={20} />
+        {/*TODO: This probably forces the data grid be on the first page only*/}
+        <DataGrid rows={tableRows} columns={tableColumns} />
 
         <FailureModesRowEditDialog
             open={Boolean(selectedRpnRow)} handleCloseDialog={() => setSelectedRpnRow(null)}

@@ -2,14 +2,14 @@ import {
     Card,
     CardActions,
     CardHeader,
-    GridList,
-    GridListTile,
+    ImageList,
+    ImageListItem,
     IconButton,
     Link as MaterialLink,
     Tooltip,
     Typography
-} from "@material-ui/core";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+} from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import * as React from "react";
 import useStyles from "./DashboardList.styles";
 import {useState} from "react";
@@ -24,7 +24,7 @@ import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@utils/context
 import SystemContextMenu from "@components/editor/system/menu/SystemContextMenu";
 
 const DashboardSystemList = () => {
-    const classes = useStyles();
+    const { classes } = useStyles();
     const [systems, , , removeSystem] = useSystems();
 
     const [contextMenuSelectedSystem, setContextMenuSelectedSystem] = useState<System>(null)
@@ -51,16 +51,19 @@ const DashboardSystemList = () => {
 
     return (
         <React.Fragment>
-            <GridList className={classes.gridList} cols={6}>
-                {systems.map((system) => {
+            <ImageList className={classes.gridList} cols={6}>
+                {systems.filter(s => !!s && !!s.iri).map((system) => {
                     const routePath = ROUTES.SYSTEM + extractFragment(system.iri);
                     return (
-                        <GridListTile key={system.iri} className={classes.gridListTile}>
+                        <ImageListItem key={system.iri} className={classes.gridListTile}>
                             <Card className={classes.card}>
                                 <CardHeader
                                     classes={{content: classes.cardTitle}}
                                     action={
-                                        <IconButton aria-label="settings" onClick={(e) => handleContextMenu(e, system)}>
+                                        <IconButton
+                                            aria-label="settings"
+                                            onClick={(e) => handleContextMenu(e, system)}
+                                            size="large">
                                             <MoreVertIcon/>
                                         </IconButton>
                                     }
@@ -76,10 +79,10 @@ const DashboardSystemList = () => {
                                     </MaterialLink>
                                 </CardActions>
                             </Card>
-                        </GridListTile>
-                    )
+                        </ImageListItem>
+                    );
                 })}
-            </GridList>
+            </ImageList>
 
             <SystemContextMenu
                 anchorPosition={contextMenuAnchor}

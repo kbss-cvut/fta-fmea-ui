@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Checkbox, FormControl, InputLabel, ListItemText, MenuItem, Select, Tooltip} from "@material-ui/core";
+import {Checkbox, FormControl, InputLabel, ListItemText, MenuItem, Select, Tooltip} from "@mui/material";
 import {formatFunctionOutput, formatOutput} from "@utils/formatOutputUtils";
 import {useFunctions} from "@hooks/useFunctions";
 import {FailureMode} from "@models/failureModeModel";
@@ -16,7 +16,8 @@ interface FunctionListProps {
 const FunctionsList = ({label, selectedFunctions, setSelectedFunctions, transitiveClosure}: FunctionListProps) => {
 
     const [,,,,,allFunctions] = useFunctions()
-    const classes = useStyles();
+    const { classes } = useStyles();
+    const ref = React.useRef();
 
     const handleChange = (event) => {
         setSelectedFunctions(event.target.value)
@@ -39,8 +40,7 @@ const FunctionsList = ({label, selectedFunctions, setSelectedFunctions, transiti
                         vertical: "bottom",
                         horizontal: "left"
                     },
-                    classes: { paper: classes.menuPaper},
-                    getContentAnchorEl: null,
+                    classes: { paper: classes.menuPaper}
                 }}
                 onChange={handleChange}
                 renderValue={(selected: any[]) => formatOutput(selected.filter(v => v).map((value) => value.name).join(", "), 50)}

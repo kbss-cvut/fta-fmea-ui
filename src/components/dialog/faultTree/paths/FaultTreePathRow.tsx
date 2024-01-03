@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import MultipleSelectChips from "@components/materialui/select/MultipleSelectChips";
 import {FaultEvent} from "@models/eventModel";
 import {flatten} from "lodash";
-import {Box, Paper, TextField} from "@material-ui/core";
+import {Box, Paper, TextField} from "@mui/material";
 import {Controller, useForm} from "react-hook-form";
 import useStyles from "@components/dialog/faultTree/paths/FaultTreePathRow.styles";
 import {yupResolver} from "@hookform/resolvers/yup";
@@ -18,7 +18,7 @@ interface Props {
 }
 
 const FaultTreePathRow = ({path, rowId, onRowChanged, onRpnChanged}: Props) => {
-    const classes = useStyles();
+    const { classes } = useStyles();
 
     const [value, setValue] = useState(path)
     const [error, setError] = useState("")
@@ -33,7 +33,7 @@ const FaultTreePathRow = ({path, rowId, onRowChanged, onRpnChanged}: Props) => {
         onRowChanged(rowId, value);
     }
 
-    const {control, errors, handleSubmit, watch} = useForm({
+    const {control, formState: { errors }, handleSubmit, watch, register} = useForm({
         resolver: yupResolver(schema),
         mode: "onChange"
     });
@@ -52,20 +52,23 @@ const FaultTreePathRow = ({path, rowId, onRowChanged, onRpnChanged}: Props) => {
     return (
         <Paper className={classes.paper}>
             <Box className={classes.rpnBox}>
-                <Controller as={TextField} control={control} label="Severity" type="number" name="severity"
-                            InputProps={{inputProps: {min: 1, max: 10, step: 1}}}
-                            error={!!errors.severity} helperText={errors?.severity?.message}
-                            className={classes.rpnBoxItem} defaultValue=""
+                {/*TODO: Adding ts-ignore and will update use-hook-form*/}
+                <TextField label="Severity" type="number" name="severity"
+                           inputProps={{inputProps: {min: 1, max: 10, step: 1}}}
+                           error={!!errors.severity} className={classes.rpnBoxItem}
+                           {...register("severity")}
                 />
-                <Controller as={TextField} control={control} label="Occurrence" type="number" name="occurrence"
-                            InputProps={{inputProps: {min: 1, max: 10, step: 1}}}
-                            error={!!errors.occurrence} helperText={errors.occurrence?.message}
-                            className={classes.rpnBoxItem} defaultValue=""
+
+                <TextField label="Occurrence" type="number" name="occurrence"
+                           inputProps={{min: 1, max: 10, step: 1}}
+                           error={!!errors.occurrence} helperText={errors.occurrence?.message}
+                           className={classes.rpnBoxItem}
                 />
-                <Controller as={TextField} control={control} label="Detection" type="number" name="detection"
-                            InputProps={{inputProps: {min: 1, max: 10, step: 1}}}
-                            error={!!errors.detection} helperText={errors?.detection?.message}
-                            className={classes.rpnBoxItem} defaultValue=""
+
+                <TextField label="Detection" type="number" name="detection"
+                            inputProps={{min: 1, max: 10, step: 1}}
+                           error={!!errors.detection} helperText={errors?.detection?.message}
+                           className={classes.rpnBoxItem}
                 />
             </Box>
             <MultipleSelectChips

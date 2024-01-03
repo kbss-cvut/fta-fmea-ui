@@ -1,7 +1,9 @@
 import * as React from "react";
-import {createMuiTheme, ThemeOptions} from "@material-ui/core";
+import { adaptV4Theme } from '@mui/material/styles';
+import {createMuiTheme, DeprecatedThemeOptions} from "@mui/material";
+import {createTheme} from "@mui/material/styles";
 
-declare module '@material-ui/core/styles/createMuiTheme' {
+declare module '@mui/material/styles' {
     interface Theme {
         appDrawer: {
             width: React.CSSProperties['width']
@@ -16,7 +18,7 @@ declare module '@material-ui/core/styles/createMuiTheme' {
         }
     }
     // allow configuration using `createMuiTheme`
-    interface ThemeOptions {
+    interface DeprecatedThemeOptions {
         appDrawer?: {
             width?: React.CSSProperties['width']
         },
@@ -31,10 +33,10 @@ declare module '@material-ui/core/styles/createMuiTheme' {
     }
 }
 
-const createCustomMuiTheme = (options: ThemeOptions) => {
-    return createMuiTheme({
+const createCustomMuiTheme = (options: DeprecatedThemeOptions) => {
+    return createTheme(adaptV4Theme({
         ...options,
-    })
+    }));
 }
 
 export default createCustomMuiTheme;

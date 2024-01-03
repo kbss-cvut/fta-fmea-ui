@@ -1,6 +1,6 @@
 import * as React from "react";
 import FaultTreePathRow from "@components/dialog/faultTree/paths/FaultTreePathRow";
-import {Typography} from "@material-ui/core";
+import {Typography} from "@mui/material";
 import {FaultEvent} from "@models/eventModel";
 import {RiskPriorityNumber} from "@models/rpnModel";
 import {useFaultTreePathsAggregate} from "@hooks/useFaultTreePathsAggregate";

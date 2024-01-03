@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import {Button, Dialog, TextField,} from "@material-ui/core";
+import {Button, Dialog, TextField,} from "@mui/material";
 import {DialogTitle} from "../../materialui/dialog/DialogTitle";
 import {DialogContent} from "../../materialui/dialog/DialogContent";
 import {useForm} from "react-hook-form";
@@ -14,8 +14,7 @@ import {schema} from "./ChangePasswordDialog.schema";
 const ChangePasswordDialog = ({open, handleCloseDialog, user}) => {
     const [showSnackbar] = useSnackbar();
 
-    const {register, handleSubmit, errors, formState} = useForm({resolver: yupResolver(schema),});
-    const {isSubmitting} = formState
+    const {register, handleSubmit, formState: {errors, isSubmitting}} = useForm({resolver: yupResolver(schema),});
 
     const handleChangePassword = async (values: any) => {
         userService.changePassword({
@@ -36,11 +35,11 @@ const ChangePasswordDialog = ({open, handleCloseDialog, user}) => {
             <form onSubmit={handleSubmit(handleChangePassword)} noValidate>
                 <DialogTitle id="form-dialog-title" onClose={handleCloseDialog}>Change Password?</DialogTitle>
                 <DialogContent dividers>
-                    <TextField inputRef={register} margin="normal" required fullWidth
+                    <TextField margin="normal" required fullWidth {...register("password")}
                                name="password" label="Current Password" type="password"
                                error={!!errors.password}/>
 
-                    <TextField inputRef={register} margin="normal" required fullWidth
+                    <TextField margin="normal" required fullWidth {...register("newPassword")}
                                name="newPassword" label="New Password" type="password"
                                error={!!errors.newPassword}/>
                 </DialogContent>
