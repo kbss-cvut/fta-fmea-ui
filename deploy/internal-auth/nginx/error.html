@@ -1,0 +1,38 @@
+<!-- FTA/FMEA tool Nginx reverse proxy-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>
+      <!--# echo var="status" default="" -->
+      | FTA/FMEA tool
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--# if expr="$status = 502" -->
+      <meta http-equiv="refresh" content="2">
+    <!--# endif -->
+  </head>
+  <style type="text/css">
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      height: 100vh;
+      margin: 0;
+      background: #263238 linear-gradient(5deg, #057fa5 0%, #263238 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+<body>
+  <!--# if expr="$status = 502" -->
+     <h1>The application is currently being updated</h1>
+     <p>You will be redirected to the new version in a few seconds.</p>
+     <p>If you see this message for more than a minute, something has gone wrong.</p>
+   <!--# else -->
+     <h1>Sorry, something went wrong.</h1>
+    <p><!--# echo var="status" default="" --></p>
+  <!--# endif -->
+</body>
+</html>

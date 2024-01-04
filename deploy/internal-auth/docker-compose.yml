@@ -1,0 +1,60 @@
+version: '3.9'
+
+# Provide access to fta-fmea-ui that runs locally in dev mode
+x-access-for-local-development: &local-dev-env
+    cors.allowedOrigins: "http://localhost:3000"
+
+services:
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx/template-variables.conf:/etc/nginx/templates/variables.conf.template:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/error.html:/usr/share/nginx/html/error.html:ro
+    ports:
+      - "127.0.0.1:${INTERNAL_HOST_PORT:-1235}:80"
+    restart: always
+    depends_on:
+      - fta-fmea
+      - fta-fmea-server
+      - db-server
+    environment:
+      FTA_FMEA_ORIGIN: "${PUBLIC_ORIGIN:-http://localhost:${INTERNAL_HOST_PORT:-1235}}"
+      FTA_FMEA_ROOT_PATH: "${FTA_FMEA_ROOT_PATH:-/fta-fmea}"
+
+  fta-fmea:
+    image: ghcr.io/kbss-cvut/fta-fmea-ui:latest
+    environment:
+      API_URL: "${PUBLIC_ORIGIN:-http://localhost:${INTERNAL_HOST_PORT:-1235}}${FTA_FMEA_ROOT_PATH:-/fta-fmea}/services/fta-fmea-server"
+      ADMIN_REGISTRATION_ONLY: ${ADMIN_REGISTRATION_ONLY:-false}
+    expose:
+      - "80"
+    depends_on:
+      - fta-fmea-server
+
+  fta-fmea-server:
+    image: ghcr.io/kbss-cvut/fta-fmea:latest
+    expose:
+      - "9999"
+    depends_on:
+      - db-server
+    restart: always
+    environment:
+      <<: *local-dev-env
+      REPOSITORY_URL: ${REPOSITORY_URL:-http://db-server:7200/repositories/fta-fmea}
+      #appContext: "${PUBLIC_ORIGIN:-http://localhost:${INTERNAL_HOST_PORT:-1235}}${FTA_FMEA_ROOT_PATH:-/fta-fmea}"
+      server.servlet.context-path: "/fta-fmea"
+
+  db-server:
+    build:
+      context: ../shared/db-server
+    environment:
+      GDB_JAVA_OPTS: "-Dgraphdb.external-url=${PUBLIC_ORIGIN:-http://localhost:${INTERNAL_HOST_PORT:-1235}}${FTA_FMEA_ROOT_PATH:-/fta-fmea}/services/db-server"
+    expose:
+      - "7200"
+    restart: always
+    volumes:
+      - db-server:/opt/graphdb/home
+
+volumes:
+  db-server:
