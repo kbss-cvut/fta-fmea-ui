@@ -13,8 +13,8 @@ export const CONTEXT = Object.assign({}, ctx);
 
 export interface Rectangle {
     iri?: string,
-    x: number,
-    y: number,
-    width: number,
-    height: number
+    x?: number,
+    y?: number,
+    width?: number,
+    height?: number
 }
