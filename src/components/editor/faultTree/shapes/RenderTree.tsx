@@ -5,6 +5,7 @@ import * as faultEventService from "../../../../services/faultEventService";
 import {Link} from "./shapesDefinitions";
 import {flatten} from "lodash";
 import {has} from "lodash";
+import {JOINTJS_NODE_MODEL} from "@components/editor/faultTree/shapes/constants";
 
 const renderLink = (container, source, target) => {
     // @ts-ignore
@@ -26,7 +27,7 @@ const renderTree = (container, node, parentShape = null) => {
         nodeShape.attr(['probabilityLabel', 'text'], node.probability.toExponential(2));
     }
     // @ts-ignore
-    nodeShape.set('custom/faultEventIri', node.iri)
+    nodeShape.set(JOINTJS_NODE_MODEL.faultEventIri, node.iri)
 
     // Render link
     if(parentShape){

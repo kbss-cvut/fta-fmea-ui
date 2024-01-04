@@ -19,6 +19,7 @@ import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {FTABoundary} from "@components/editor/faultTree/shapes/shapesDefinitions";
 import * as joint from "jointjs";
 import {Rectangle} from "@models/utils/Rectangle";
+import {JOINTJS_NODE_MODEL} from "@components/editor/faultTree/shapes/constants";
 
 const Editor = ({setAppBarName}: DashboardTitleProps) => {
     const history = useNavigate();
@@ -59,7 +60,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
 
     const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefaultAnchor)
     const handleContextMenu = (elementView, evt) => {
-        const elementIri = elementView.model.get('custom/faultEventIri');
+        const elementIri = elementView.model.get(JOINTJS_NODE_MODEL.faultEventIri);
         // @ts-ignore
         const foundEvent = findEventByIri(elementIri, _localContext.rootEvent);
         setContextMenuSelectedEvent(foundEvent);
@@ -67,7 +68,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
     }
 
     const handleElementPointerClick = (elementView) => {
-        const elementIri = elementView.model.get('custom/faultEventIri');
+        const elementIri = elementView.model.get(JOINTJS_NODE_MODEL.faultEventIri);
         // @ts-ignore
         const foundEvent = findEventByIri(elementIri, _localContext.rootEvent);
 
@@ -81,7 +82,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
     }
 
     const handleMoveEvent = (elementView, evt) => {
-        const faultEventIri = elementView.model.get('custom/faultEventIri');
+        const faultEventIri = elementView.model.get(JOINTJS_NODE_MODEL.faultEventIri);
         // @ts-ignore
         const movedEvent = findEventByIri(faultEventIri, _localContext.rootEvent);
         const rect :Rectangle = movedEvent.rectangle;

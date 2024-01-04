@@ -8,6 +8,7 @@ import {createShape} from "@services/jointService";
 import {sequenceListToArray} from "@services/faultEventService";
 import * as faultEventService from "@services/faultEventService";
 import {has} from "lodash";
+import {JOINTJS_NODE_MODEL} from "@components/editor/faultTree/shapes/constants";
 
 const FaultEventShape = ({addSelf, treeEvent, parentShape}: JointEventShapeProps) => {
     const [currentShape, setCurrentShape] = useState<any>(undefined)
@@ -28,7 +29,7 @@ const FaultEventShape = ({addSelf, treeEvent, parentShape}: JointEventShapeProps
         }
 
         // @ts-ignore
-        eventShape.set('custom/faultEventIri', treeEvent.iri)
+        eventShape.set(JOINTJS_NODE_MODEL.faultEventIri, treeEvent.iri)
 
         setCurrentShape(eventShape)
 
