@@ -15,6 +15,12 @@ import {SVG_PAN_ZOOM_OPTIONS} from "@utils/constants";
 import {saveSvgAsPng} from "save-svg-as-png";
 import renderTree from "@components/editor/faultTree/shapes/RenderTree";
 
+enum MOVE_NODE {
+    DRAGGING = 0,
+    RELEASING =1
+}
+
+
 interface Props {
     treeName: string,
     rootEvent: FaultEvent,
@@ -24,6 +30,7 @@ interface Props {
     onBlankPointerClick: () => void,
     onEventUpdated: (faultEvent: FaultEvent) => void,
     onConvertToTable: () => void,
+    onNodeMove: (element: any, evt: any) => void,
     refreshTree: () => void,
     setHighlightedElement: (element: any) => void,
 }
@@ -37,6 +44,7 @@ const EditorCanvas = ({
                           onBlankPointerClick,
                           onEventUpdated,
                           onConvertToTable,
+                          onNodeMove,
                           refreshTree,
                           setHighlightedElement
                       }: Props) => {
@@ -51,6 +59,11 @@ const EditorCanvas = ({
     const [currentZoom, setCurrentZoom] = useState(1);
     const [isExportingImage, setIsExportingImage] = useState(false);
 
+    let isDraggingNode = false;
+    const setIsDraggingNode = (val: boolean) => {
+        isDraggingNode = val;
+    }
+
     useEffect(() => {
         const canvasWidth = containerRef.current.clientWidth;
         const canvasHeight = containerRef.current.clientHeight;
@@ -58,6 +71,7 @@ const EditorCanvas = ({
         const graph = new joint.dia.Graph;
         const divContainer = document.getElementById("jointjs-container");
         const paper = new joint.dia.Paper({
+
             // @ts-ignore
             el: divContainer,
             model: graph,
@@ -85,6 +99,13 @@ const EditorCanvas = ({
             'element:pointerclick': (elementView, evt) => {
                 onElementPointerClick(elementView, evt)
             },
+            'element:pointermove': (elementView: joint.dia.ElementView, evt: joint.dia.Event, x: number, y: number) =>
+                {
+                    handleNodeMove(MOVE_NODE.DRAGGING, elementView, evt, x, y);
+                },
+            'element:pointerup': (elementView: joint.dia.ElementView, evt: joint.dia.Event, x: number, y: number) => {
+                handleNodeMove(MOVE_NODE.RELEASING, elementView, evt, x, y);
+            },
             'blank:pointerclick': () => onBlankPointerClick(),
             'blank:pointerdown': () => diagramZoom.enablePan(),
             'blank:pointerup': () => diagramZoom.disablePan(),
@@ -93,6 +114,17 @@ const EditorCanvas = ({
         setContainer(graph)
         setJointPaper(paper);
     }, []);
+
+    const handleNodeMove = (move: MOVE_NODE, elementView: joint.dia.ElementView, evt: joint.dia.Event, x: number, y: number) => {
+        if(!isDraggingNode && move === MOVE_NODE.DRAGGING){
+            setIsDraggingNode(true);
+            return;
+        }
+        if(isDraggingNode && move === MOVE_NODE.RELEASING) {
+            onNodeMove(elementView, evt);
+            setIsDraggingNode(false);
+        }
+    }
 
     useEffect(() => {
         if (isExportingImage) {
