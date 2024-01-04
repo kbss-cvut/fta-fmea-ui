@@ -18,6 +18,7 @@ import {ROUTES} from "@utils/constants";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {FTABoundary} from "@components/editor/faultTree/shapes/shapesDefinitions";
 import * as joint from "jointjs";
+import {Rectangle} from "@models/utils/Rectangle";
 
 const Editor = ({setAppBarName}: DashboardTitleProps) => {
     const history = useNavigate();
@@ -79,6 +80,22 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
         hideHighlightedBorders();
     }
 
+    const handleMoveEvent = (elementView, evt) => {
+        const faultEventIri = elementView.model.get('custom/faultEventIri');
+        // @ts-ignore
+        const movedEvent = findEventByIri(faultEventIri, _localContext.rootEvent);
+        const rect :Rectangle = movedEvent.rectangle;
+        const size = elementView.model.attributes.size;
+        const position = elementView.model.attributes.position;
+        if(rect.x != position.x || rect.y != position.y || rect.width != size.width || rect.height != size.height) {
+            rect.x = position.x;
+            rect.y = position.x;
+            rect.width = size.width;
+            rect.height = size.height;
+            faultEventService.updateEventRectangle(faultEventIri, rect.iri, rect);
+        }
+    }
+
     const highlightBorders = (elementView) => {
         const tools = new joint.dia.ToolsView({
             tools: [FTABoundary.factory()]
@@ -134,6 +151,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
                 onElementPointerClick={handleElementPointerClick}
                 onBlankPointerClick={handleBlankPointerClick}
                 onConvertToTable={() => setFailureModesTableOpen(true)}
+                onNodeMove={handleMoveEvent}
                 setHighlightedElement={setHighlightedElementView}
                 refreshTree={refreshTree}
             />
