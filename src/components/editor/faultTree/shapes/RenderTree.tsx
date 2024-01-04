@@ -28,7 +28,12 @@ const renderTree = (container, node, parentShape = null) => {
     }
     // @ts-ignore
     nodeShape.set(JOINTJS_NODE_MODEL.faultEventIri, node.iri)
-
+    const r = node.rectangle;
+    if(r &&  r.x && r.y && r.width && r.height){
+        nodeShape.position(node.rectangle.x, node.rectangle.y);
+        // @ts-ignore
+        nodeShape.set(JOINTJS_NODE_MODEL.hasPersistentPosition, true);
+    }
     // Render link
     if(parentShape){
         renderLink(container, parentShape, nodeShape)

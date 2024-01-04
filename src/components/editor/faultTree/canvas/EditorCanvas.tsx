@@ -159,7 +159,7 @@ const EditorCanvas = ({
 
             if (el.get('type') === 'fta.ConditioningEvent') {
                 manualLayoutElements.push(el);
-            } else {
+            } else if(!el.get(JOINTJS_NODE_MODEL.hasPersistentPosition)) {
                 autoLayoutElements.push(el);
             }
         });
