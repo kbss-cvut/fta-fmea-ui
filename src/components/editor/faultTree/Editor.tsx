@@ -90,7 +90,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
         const position = elementView.model.attributes.position;
         if(rect.x != position.x || rect.y != position.y || rect.width != size.width || rect.height != size.height) {
             rect.x = position.x;
-            rect.y = position.x;
+            rect.y = position.y;
             rect.width = size.width;
             rect.height = size.height;
             faultEventService.updateEventRectangle(faultEventIri, rect.iri, rect);
