@@ -15,7 +15,7 @@ import {handleServerError} from "@services/utils/responseUtils";
 export const findAll = async (): Promise<FaultTree[]> => {
     try {
         const response = await axiosClient.get<FaultTree[]>(
-            '/faultTrees',
+            '/faultTrees/summaries',
             {
                 headers: authHeaders()
             }
