@@ -9,6 +9,7 @@ import {findIndex, flatten, sortBy} from "lodash";
 import {CONTEXT as FAILURE_MODE_CONTEXT, FailureMode} from "@models/failureModeModel";
 import {handleServerError} from "@services/utils/responseUtils";
 import {simplifyReferencesOfReferences} from "@utils/utils";
+import {Rectangle, CONTEXT as RECTANGLE_CONTEXT} from "@models/utils/Rectangle";
 
 export const findAll = async (): Promise<FaultEvent[]> => {
     try {
@@ -87,6 +88,26 @@ export const addEvent = async (faultEventIri: string, event: FaultEvent): Promis
     } catch (e) {
         console.log('Event Service - Failed to call /addEvent')
         const defaultMessage = "Failed to create event";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    }
+}
+
+export const updateEventRectangle = async (faultEventIri: string, rectangleIri: string, rect: Rectangle) :Promise<void> => {
+    try {
+        const fragment = extractFragment(faultEventIri);
+        const updateRequest = Object.assign({}, rect, {"@context": RECTANGLE_CONTEXT});
+
+        await axiosClient.put(
+            `/faultEvents/${fragment}/rectangle`,
+            updateRequest,
+            {
+                headers: authHeaders()
+            }
+        )
+        return new Promise((resolve) => resolve());
+    } catch (e) {
+        console.log('Event Service - Failed to call /updateRectangle')
+        const defaultMessage = "Failed to update rectangle";
         return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
