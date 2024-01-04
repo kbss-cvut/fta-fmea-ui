@@ -14,6 +14,7 @@ import * as svgPanZoom from "svg-pan-zoom";
 import {SVG_PAN_ZOOM_OPTIONS} from "@utils/constants";
 import {saveSvgAsPng} from "save-svg-as-png";
 import renderTree from "@components/editor/faultTree/shapes/RenderTree";
+import {JOINTJS_NODE_MODEL} from "@components/editor/faultTree/shapes/constants";
 
 enum MOVE_NODE {
     DRAGGING = 0,
@@ -150,7 +151,7 @@ const EditorCanvas = ({
         const autoLayoutElements = [];
         const manualLayoutElements = [];
         graph.getElements().forEach((el) => {
-            const faultEventIri = el.get('custom/faultEventIri');
+            const faultEventIri = el.get(JOINTJS_NODE_MODEL.faultEventIri);
             if(faultEventIri && faultEventIri === sidebarSelectedEvent?.iri) {
                 const elementView = el.findView(jointPaper);
                 setHighlightedElement(elementView)
