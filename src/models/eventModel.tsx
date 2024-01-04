@@ -1,6 +1,7 @@
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {AbstractModel, CONTEXT as ABSTRACT_CONTEXT} from "@models/abstractModel";
 import {FailureMode, CONTEXT as FAILURE_MODE_CONTEXT} from "@models/failureModeModel";
+import {Rectangle, CONTEXT as RECTANGLE_CONTEXT, PREFIX as DIAGRAM_PREFIX} from "@models/utils/Rectangle";
 
 const ctx = {
     "name": VocabularyUtils.PREFIX + "hasName",
@@ -14,9 +15,10 @@ const ctx = {
     "failureMode": VocabularyUtils.PREFIX + "hasFailureMode",
     "sequenceProbability": VocabularyUtils.PREFIX + "hasSequenceProbability",
     "childrenSequence": VocabularyUtils.PREFIX + "hasChildrenSequence",
+    "rectangle": DIAGRAM_PREFIX + "has-rectangle",
 };
 
-export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, FAILURE_MODE_CONTEXT);
+export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, FAILURE_MODE_CONTEXT, RECTANGLE_CONTEXT);
 
 export enum EventType {
     BASIC = "BASIC",
@@ -36,6 +38,7 @@ export interface FaultEvent extends AbstractModel {
     failureMode?: FailureMode,
     sequenceProbability?: number,
     childrenSequence?: any,
+    rectangle?: Rectangle,
 }
 
 export enum GateType {
