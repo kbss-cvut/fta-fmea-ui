@@ -16,8 +16,6 @@ FROM nginx
 
 COPY --from=build /usr/src/app/public/index.html /usr/share/nginx/html/index.html
 COPY --from=build /usr/src/app/public/build/bundle.js /usr/share/nginx/html/build/bundle.js
-COPY --from=build /usr/src/app/public/images/InterExcellence.png /usr/share/nginx/html/images/InterExcellence.png
-COPY --from=build /usr/src/app/public/images/MSMT.png /usr/share/nginx/html/images/MSMT.png
 
 RUN chmod a+r -R /usr/share/nginx/html
 
