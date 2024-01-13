@@ -60,10 +60,7 @@ const EditorCanvas = ({
     const [currentZoom, setCurrentZoom] = useState(1);
     const [isExportingImage, setIsExportingImage] = useState(false);
 
-    let isDraggingNode = false;
-    const setIsDraggingNode = (val: boolean) => {
-        isDraggingNode = val;
-    }
+    let dragStartPosition = null;
 
     useEffect(() => {
         const canvasWidth = containerRef.current.clientWidth;
@@ -117,13 +114,11 @@ const EditorCanvas = ({
     }, []);
 
     const handleNodeMove = (move: MOVE_NODE, elementView: joint.dia.ElementView, evt: joint.dia.Event, x: number, y: number) => {
-        if(!isDraggingNode && move === MOVE_NODE.DRAGGING){
-            setIsDraggingNode(true);
-            return;
-        }
-        if(isDraggingNode && move === MOVE_NODE.RELEASING) {
+        if(!dragStartPosition && move === MOVE_NODE.DRAGGING)
+            dragStartPosition = [x, y];
+        else if(dragStartPosition && (dragStartPosition[0] != x ||  dragStartPosition[1] != y) && move === MOVE_NODE.RELEASING){
+            dragStartPosition = null;
             onNodeMove(elementView, evt);
-            setIsDraggingNode(false);
         }
     }
 
