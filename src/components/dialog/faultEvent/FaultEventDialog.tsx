@@ -12,13 +12,13 @@ import {schema} from "./FaultEventCreation.schema";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {eventFromHookFormValues} from "@services/faultEventService";
 import {FaultEventsReuseProvider} from "@hooks/useReusableFaultEvents";
-import {useEffect} from "react";
+import {FaultEvent} from "@models/eventModel";
 
 interface Props {
     open: boolean,
     eventIri: string,
     treeUri: string,
-    onCreated: () => void,
+    onCreated: (element: FaultEvent) => void,
     onClose: () => void,
 }
 
@@ -34,8 +34,8 @@ const FaultEventDialog = ({open, eventIri, treeUri, onCreated, onClose}: Props) 
 
         faultEventService.addEvent(eventIri, requestEvent)
             .then(value => {
-                onClose()
-                onCreated()
+                onClose();
+                onCreated(value);
             })
             .catch(reason => showSnackbar(reason, SnackbarType.ERROR))
     }
