@@ -169,8 +169,7 @@ const ComponentFailureModesList = ({ component }) => {
                   <Box>
                       <FormGroup>
                           <FormControl>
-                              <TextField autoFocus
-                                         margin="dense"
+                              <TextField margin="dense"
                                          id="name"
                                          label="Failure mode name"
                                          type="text"
