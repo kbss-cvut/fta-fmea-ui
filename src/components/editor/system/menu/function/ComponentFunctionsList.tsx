@@ -148,7 +148,6 @@ const ComponentFunctionsList = ({ component }) => {
         })
     }
 
-    // @ts-ignore
     return (
         <React.Fragment>
 			<List>

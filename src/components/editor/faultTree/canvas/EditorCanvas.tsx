@@ -70,7 +70,6 @@ const EditorCanvas = ({
         const divContainer = document.getElementById("jointjs-container");
         const paper = new joint.dia.Paper({
 
-            // @ts-ignore
             el: divContainer,
             model: graph,
             width: canvasWidth,
@@ -89,7 +88,6 @@ const EditorCanvas = ({
         });
         setSvgZoom(diagramZoom);
 
-        // @ts-ignore
         paper.on({
             'element:contextmenu': (elementView, evt) => {
                 onElementContextMenu(elementView, evt)

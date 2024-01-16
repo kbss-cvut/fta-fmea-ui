@@ -45,11 +45,20 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
         setContextMenuAnchor({mouseX: evt.pageX, mouseY: evt.pageY,})
     }
 
+    const getSystem = ()  => {
+        // @ts-ignore
+        return _localContext.system;
+    }
+
+    const getHighlightedElementView = () => {
+        // @ts-ignore
+        return _localContext.highlightedElementView
+    }
+
     const handleContextMenu = (elementView, evt) => {
         const componentIri = elementView.model.get('custom/componentIri');
 
-        // @ts-ignore
-        const flattenedComponents = flatten([_localContext.system.components]);
+        const flattenedComponents = flatten([getSystem().components]);
         const index = findIndex(flattenedComponents, el => el.iri === componentIri);
         if (index > -1) {
             setContextMenuSelectedComponent(flattenedComponents[index]);
@@ -60,8 +69,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
     const handleElementPointerClick = (elementView) => {
         const componentIri = elementView.model.get('custom/componentIri');
 
-        // @ts-ignore
-        const flattenedComponents = flatten([_localContext.system.components]);
+        const flattenedComponents = flatten([getSystem().components]);
         const index = findIndex(flattenedComponents, el => el.iri === componentIri);
         if (index > -1) {
             setSidebarSelectedComponent(flattenedComponents[index]);
@@ -82,8 +90,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
         elementView.addTools(tools);
     }
     const hideHighlightedBorders = () => {
-        // @ts-ignore
-        _localContext.highlightedElementView?.removeTools();
+        getHighlightedElementView()?.removeTools();
         setHighlightedElementView(null);
     }
 
