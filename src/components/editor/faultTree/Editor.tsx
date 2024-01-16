@@ -32,6 +32,16 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
     const [highlightedElementView, setHighlightedElementView] = useState(null)
     const _localContext = useLocalContext({rootEvent: rootEvent, highlightedElementView: highlightedElementView})
 
+    const getRootEvent = () : FaultEvent => {
+        // @ts-ignore
+        return _localContext.rootEvent;
+    }
+
+    const getHighlightedElementView = () => {
+        // @ts-ignore
+        return _localContext.highlightedElementView
+    }
+
     useEffect(() => {
         if (faultTree) {
             setAppBarName(faultTree.name)
@@ -61,16 +71,15 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
     const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefaultAnchor)
     const handleContextMenu = (elementView, evt) => {
         const elementIri = elementView.model.get(JOINTJS_NODE_MODEL.faultEventIri);
-        // @ts-ignore
-        const foundEvent = findEventByIri(elementIri, _localContext.rootEvent);
+
+        const foundEvent = findEventByIri(elementIri, getRootEvent());
         setContextMenuSelectedEvent(foundEvent);
         setContextMenuAnchor({mouseX: evt.pageX, mouseY: evt.pageY,})
     }
 
     const handleElementPointerClick = (elementView) => {
         const elementIri = elementView.model.get(JOINTJS_NODE_MODEL.faultEventIri);
-        // @ts-ignore
-        const foundEvent = findEventByIri(elementIri, _localContext.rootEvent);
+        const foundEvent = findEventByIri(elementIri, getRootEvent());
 
         setSidebarSelectedEvent(foundEvent);
         setHighlightedElementView(elementView);
@@ -83,8 +92,8 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
 
     const handleMoveEvent = (elementView, evt) => {
         const faultEventIri = elementView.model.get(JOINTJS_NODE_MODEL.faultEventIri);
-        // @ts-ignore
-        const movedEvent = findEventByIri(faultEventIri, _localContext.rootEvent);
+
+        const movedEvent = findEventByIri(faultEventIri, getRootEvent());
         const rect :Rectangle = movedEvent.rectangle;
         const size = elementView.model.attributes.size;
         const position = elementView.model.attributes.position;
@@ -104,8 +113,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
         elementView.addTools(tools);
     }
     const hideHighlightedBorders = () => {
-        // @ts-ignore
-        _localContext.highlightedElementView?.removeTools();
+        getHighlightedElementView()?.removeTools();
         setHighlightedElementView(null);
     }
 

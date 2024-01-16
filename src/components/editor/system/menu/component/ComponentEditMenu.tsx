@@ -38,7 +38,6 @@ const ComponentEditMenu = ({component, onComponentUpdated}: Props) => {
 
 
     useEffect(() => {
-        // @ts-ignore
         reset(defaultValues)
     }, [component])
 
