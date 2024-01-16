@@ -39,6 +39,8 @@ export default class JsonLdUtils {
     ): Promise<T[]> {
         if (Array.isArray(input) && input.length === 0) {
             return Promise.resolve([]);
+        } else if (Array.isArray(input["@graph"]) && input["@graph"].length === 0) {
+            return Promise.resolve([]);
         }
         return compact(input, context)
             .then((res) => JsonLdUtils.loadArrayFromCompactedGraph<T>(res))
