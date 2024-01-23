@@ -101,6 +101,14 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
                        error={!!errors.description} helperText={errors.description?.message}
                        defaultValue="" disabled={existingEventSelected} {...register("description")}/>
 
+            { eventTypeWatch !== EventType.INTERMEDIATE && <TextField label="Probability"
+                       type="number" name="probability"
+                       min={0} max={1} step={0.01}
+                       inputProps={{ min:0, max:1, step: 0.01 }}
+                       error={!!errors.probability} helperText={errors.probability?.message}
+                       className={classes.probability}
+                       defaultValue="" {...register("probability")}/>
+            }
             {((gateTypeWatch === GateType.PRIORITY_AND || !gateTypeWatch) && (eventTypeWatch === EventType.INTERMEDIATE && gateTypeWatch === GateType.PRIORITY_AND)) &&
                 /* TODO: sort out default value UI bug */
                 // TODO: The form cannot be submitted if the gate is not priority and
