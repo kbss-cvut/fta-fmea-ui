@@ -1,6 +1,4 @@
 import * as React from "react";
-import { adaptV4Theme } from '@mui/material/styles';
-import {createMuiTheme, DeprecatedThemeOptions} from "@mui/material";
 import {createTheme} from "@mui/material/styles";
 
 declare module '@mui/material/styles' {
@@ -33,10 +31,10 @@ declare module '@mui/material/styles' {
     }
 }
 
-const createCustomMuiTheme = (options: DeprecatedThemeOptions) => {
-    return createTheme(adaptV4Theme({
+const createCustomMuiTheme = (options) => {
+    return createTheme({
         ...options,
-    }));
+    });
 }
 
 export default createCustomMuiTheme;
