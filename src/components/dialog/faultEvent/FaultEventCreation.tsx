@@ -6,7 +6,7 @@ import {Controller} from "react-hook-form";
 import {EventType, FaultEvent, GateType, gateTypeValues} from "@models/eventModel";
 import {useReusableFaultEvents} from "@hooks/useReusableFaultEvents";
 import ControlledAutocomplete from "@components/materialui/ControlledAutocomplete";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 
 interface Props {
     useFormMethods: any,
@@ -22,7 +22,7 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
     const faultEvents = useReusableFaultEvents()
     const [selectedEvent, setSelectedEvent] = useState<FaultEvent | null>(null)
     const existingEventSelected = Boolean(selectedEvent)
-
+    const lastGateTypeRef = useRef(selectedEvent?.gateType)
     const eventTypeWatch = watch('eventType')
     const gateTypeWatch = watch('gateType')
 
@@ -59,14 +59,25 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
             <FormControl disabled={existingEventSelected} className={classes.formControl}>
                 <InputLabel id="event-type-select-label">Type</InputLabel>
                 <Controller
-                    render={({ field  }) =>
-                        <Select {...field} disabled={existingEventSelected} labelId="event-type-select-label" label="Type">
+                    render={({ field  }) => {
+                        const _onChnage = field.onChange;
+                        field.onChange = (e) => {
+                            _onChnage(e);
+                            console.log(e);
+                            if (e.target.value === EventType.BASIC) {
+                                lastGateTypeRef.current = selectedEvent?.gateType;
+                                setValue('gateType', GateType.UNUSED);
+                            } else
+                                setValue('gateType', lastGateTypeRef.current)
+                        }
+                        return <Select {...field}
+                                disabled={existingEventSelected} labelId="event-type-select-label" label="Type">
                             {
                                 Object.values(EventType).map(value =>
                                     <MenuItem key={value} value={value}>{value}</MenuItem>)
                             }
-                        </Select>
-                    }
+                        </Select>;
+                    }}
                     name="eventType"
                     control={control}
                     defaultValue={EventType.INTERMEDIATE}
