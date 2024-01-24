@@ -35,9 +35,9 @@ const FaultEventShapeToolPane = ({data, onEventUpdated, refreshTree}: Props) => 
             eventType: data.eventType,
             "fault-event-name": data.name,
             description: data.description,
-            probability: data.probability + "",
-            gateType: data.gateType,
-            sequenceProbability: data.sequenceProbability + "",
+            probability: data.probability,
+            gateType: data.gateType == GateType.UNUSED ? null : data.gateType,
+            sequenceProbability: data.sequenceProbability,
         }
 
         useFormMethods = useForm({
