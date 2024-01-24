@@ -35,7 +35,7 @@
     "svg-pan-zoom": "^3.6.1",
     "tss-react": "^4.8.8",
     "typescript": "^5.1.6",
-    "yup": "^1.2.0"
+    "yup": "^1.3.3"
   },
   "scripts": {
     "build": "webpack --env NODE_ENV=prod",
