@@ -1,10 +1,14 @@
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {Mitigation, CONTEXT as MITIGATION_CONTEXT} from "@models/mitigationModel";
-import {FaultEvent, CONTEXT as EVENT_CONTEXT} from "@models/eventModel";
-import {CONTEXT as FUNCTION_CONTEXT} from "@models/functionModel";
-import {CONTEXT as COMPONENT_CONTEXT} from "@models/componentModel";
-import {CONTEXT as ABSTRACT_CONTEXT} from "@models/abstractModel";
-import {Behavior, CONTEXT as BEHAVIOR_CONTEXT} from "@models/behaviorModel";
+import {FaultEvent} from "@models/eventModel";
+import {
+    ABSTRACT_CONTEXT,
+    FUNCTION_CONTEXT,
+    BEHAVIOR_CONTEXT,
+    EVENT_CONTEXT,
+    COMPONENT_CONTEXT
+} from "@models/modelsContext";
+import {Behavior} from "@models/behaviorModel";
 
 const ctx = {
     "effects": VocabularyUtils.PREFIX + "hasEffect",
