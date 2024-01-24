@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "homepage": ".",
   "private": true,
+  "type": "module",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -35,12 +36,13 @@
     "svg-pan-zoom": "^3.6.1",
     "tss-react": "^4.8.8",
     "typescript": "^5.1.6",
+    "vite": "^5.0.11",
     "yup": "^1.2.0"
   },
   "scripts": {
-    "build": "webpack --env NODE_ENV=prod",
-    "watch": "webpack -w --env NODE_ENV=dev",
-    "start": "webpack serve --env NODE_ENV=dev"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.17.0",
@@ -52,11 +54,9 @@
     "@types/react-dom": "^18.2.7",
     "@types/react-router-dom": "^5.3.3",
     "@types/yup": "^0.29.14",
+    "@vitejs/plugin-react": "^4.2.1",
     "dotenv-webpack": "^8.0.1",
     "ts-loader": "^9.4.4",
-    "tsconfig-paths-webpack-plugin": "^4.1.0",
-    "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1"
+    "vite-plugin-env-compatible": "^2.0.1"
   }
 }
