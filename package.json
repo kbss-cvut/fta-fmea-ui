@@ -57,6 +57,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "dotenv-webpack": "^8.0.1",
     "ts-loader": "^9.4.4",
-    "vite-plugin-env-compatible": "^2.0.1"
+    "vite-plugin-env-compatible": "^2.0.1",
+    "vite-tsconfig-paths": "^4.3.1"
   }
 }
