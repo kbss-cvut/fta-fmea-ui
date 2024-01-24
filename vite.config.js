@@ -5,13 +5,20 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
   base: "",
+  root: "",
   plugins: [
     react(),
     envCompatible(),
     tsconfigPaths()
   ],
   build: {
-    sourcemap: true
+    sourcemap: true,
+    emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        entryFileNames: "index.js"
+      }
+    }
   },
   define: {
     "process.env": process.env

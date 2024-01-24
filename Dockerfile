@@ -1,4 +1,4 @@
-FROM node:16-alpine AS BASE
+FROM node:20 AS BASE
 WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 
@@ -14,8 +14,8 @@ RUN npm run build
 # RELEASE STAGE
 FROM nginx
 
-COPY --from=build /usr/src/app/public/index.html /usr/share/nginx/html/index.html
-COPY --from=build /usr/src/app/public/build/bundle.js /usr/share/nginx/html/build/bundle.js
+COPY --from=build /usr/src/app/index.html /usr/share/nginx/html/index.html
+COPY --from=build /usr/src/app/dist/index.js /usr/share/nginx/html/build/bundle.js
 
 RUN chmod a+r -R /usr/share/nginx/html
 
