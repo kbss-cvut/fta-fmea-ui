@@ -129,7 +129,7 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
                         render={({field}) => {
                             return <Select {...field} disabled={existingEventSelected}  labelId="gate-type-select-label" label="Gate Type" error={!!errors.gateType}>
                                 {
-                                    gateTypeValues().map(value => {
+                                    gateTypeValues().filter(value => value[0]).map(value => {
                                         const [enabled, optionValue] = value
                                         return <MenuItem key={optionValue} value={optionValue}
                                                          disabled={!enabled}>{optionValue}</MenuItem>
