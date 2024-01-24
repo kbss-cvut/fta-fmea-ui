@@ -10,6 +10,9 @@ export default defineConfig({
     envCompatible(),
     tsconfigPaths()
   ],
+  build: {
+    sourcemap: true
+  },
   define: {
     "process.env": process.env
   },
@@ -22,7 +25,6 @@ export default defineConfig({
       '@utils': '/src/utils',
       '@services': '/src/services',
       '@models': '/src/models'
-
     },
   },
 });
