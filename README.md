@@ -9,8 +9,8 @@ It is primarily focused on FTA which offers possibilities for system partonomy d
 
 ```shell script
 npm install
-npm run watch
-npx serve
+npm run build
+npm run preview
 ```
 
 ## Registration
@@ -18,7 +18,7 @@ Tool also supports configuration to disable registration of new user within secu
 There are two flags which need to be set:
 
 * Backend - Run application with `-Dspring.profiles.active=admin-registration-only` profile
-* Frontend - Set `REACT_APP_ADMIN_REGISTRATION_ONLY` in [.env.prod](.env.prod) to true
+* Frontend - Set `VITE_APP_ADMIN_REGISTRATION_ONLY` in [.env.prod](.env.prod) to true
 
 
 
