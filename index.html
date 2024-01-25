@@ -5,7 +5,9 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Runtime environment variables -->
-    <script src="/config.js"></script>
+    <!-- With Vite, type must be text/javascript, see:
+    https://stackoverflow.com/questions/70617812/change-environmet-variables-at-runtime-react-vite-with-docker-and-nginx-->
+    <script type="text/javascript" src="/config.js"></script>
     <title>FTA/FMEA Analysis</title>
 </head>
 <body>
