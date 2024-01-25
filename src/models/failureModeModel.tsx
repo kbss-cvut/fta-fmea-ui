@@ -1,12 +1,13 @@
 import VocabularyUtils from "@utils/VocabularyUtils";
-import {Mitigation, CONTEXT as MITIGATION_CONTEXT} from "@models/mitigationModel";
+import {Mitigation} from "@models/mitigationModel";
 import {FaultEvent} from "@models/eventModel";
 import {
     ABSTRACT_CONTEXT,
     FUNCTION_CONTEXT,
     BEHAVIOR_CONTEXT,
     EVENT_CONTEXT,
-    COMPONENT_CONTEXT
+    COMPONENT_CONTEXT,
+    MITIGATION_CONTEXT
 } from "@models/modelsContext";
 import {Behavior} from "@models/behaviorModel";
 

@@ -15,3 +15,6 @@ export const EVENT_CONTEXT = {
 
 export const FUNCTION_CONTEXT = {
 };
+
+export const MITIGATION_CONTEXT = {
+};
