@@ -23,7 +23,7 @@ const AppRoutes = () => {
             <BrowserRouter /*history={appHistory}*/>
                 <Routes>
                     {/*TODO: revisit routing, this is hotfix to support react-router v6*/}
-                    {process.env.ADMIN_REGISTRATION_ONLY === "true"
+                    {import.meta.env.VITE_ADMIN_REGISTRATION_ONLY === "true"
                         ? <Route path={ROUTES.REGISTER} element={<AdminRoute><Register/></AdminRoute>}/>
                         : <Route path={ROUTES.REGISTER} element={<PublicRoute restricted={true}><Register/></PublicRoute>}/>
                     }

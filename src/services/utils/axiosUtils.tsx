@@ -3,8 +3,7 @@ import {appHistory} from "@components/routes/AppRoutes";
 import {ROUTES} from "@utils/constants";
 
 const axiosClient = axios.create({
-    // @ts-ignore
-    baseURL: window.__config__.API_URL
+    baseURL: import.meta.env.VITE_API_URL
 });
 
 axiosClient.interceptors.response.use(
