@@ -1,6 +1,5 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import envCompatible from "vite-plugin-env-compatible";
 import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
@@ -8,7 +7,6 @@ export default defineConfig({
   root: "",
   plugins: [
     react(),
-    envCompatible(),
     tsconfigPaths()
   ],
   build: {
@@ -19,9 +17,6 @@ export default defineConfig({
         entryFileNames: "index.js"
       }
     }
-  },
-  define: {
-    "process.env": process.env
   },
   resolve: {
     alias: {
