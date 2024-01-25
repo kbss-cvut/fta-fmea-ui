@@ -18,7 +18,7 @@ Tool also supports configuration to disable registration of new user within secu
 There are two flags which need to be set:
 
 * Backend - Run application with `-Dspring.profiles.active=admin-registration-only` profile
-* Frontend - Set `VITE_APP_ADMIN_REGISTRATION_ONLY` in [.env.prod](.env.prod) to true
+* Frontend - Set `VITE_APP_ADMIN_REGISTRATION_ONLY` in [.env.production](.env.production) to true
 
 
 
