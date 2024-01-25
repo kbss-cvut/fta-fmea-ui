@@ -4,8 +4,8 @@ services:
   fta-fmea:
     image: ghcr.io/kbss-cvut/fta-fmea-ui:latest
     environment:
-      VITE_API_URL: ${VITE_API_URL:-http://localhost:9999/}
-      VITE_ADMIN_REGISTRATION_ONLY: ${VITE_ADMIN_REGISTRATION_ONLY:-false}
+      API_URL: ${VITE_API_URL:-http://localhost:9999/}
+      ADMIN_REGISTRATION_ONLY: ${VITE_ADMIN_REGISTRATION_ONLY:-false}
     ports:
       - "8080:80"
     depends_on:
