@@ -37,8 +37,6 @@ const FaultEventChildrenReorderList = ({eventChildren, handleReorder}: Props) =>
         const oldIndex = result.source.index;
         const newIndex = result.destination.index;
 
-        console.log(result);
-
         setItems(items => {
             const newItems = arrayMoveImmutable(items, oldIndex, newIndex)
             handleChildrenReordered(newItems);

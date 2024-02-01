@@ -119,6 +119,11 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
 
     const [eventDialogOpen, setEventDialogOpen] = useState(false);
 
+    const handleEventCreate = (newEvent: FaultEvent) => {
+        setSidebarSelectedEvent(newEvent);
+        refreshTree();
+    }
+
     const handleEventUpdate = (eventToUpdate: FaultEvent) => {
         faultEventService.update(eventToUpdate)
             .then(value => refreshTree())
@@ -176,7 +181,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
 
             <FaultEventDialog open={eventDialogOpen}
                               eventIri={contextMenuSelectedEvent?.iri} treeUri={faultTree?.iri}
-                              onCreated={refreshTree}
+                              onCreated={(newEvent) => handleEventCreate(newEvent)}
                               onClose={() => setEventDialogOpen(false)}/>
 
             <FailureModesTableDialog

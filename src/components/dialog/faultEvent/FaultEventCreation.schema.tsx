@@ -3,7 +3,7 @@ import {yupOptionalNumber} from "@utils/validationUtils";
 import {EventType, GateType} from "@models/eventModel";
 
 export const schema = Yup.object().shape({
-    name: Yup.string()
+    "fault-event-name": Yup.string()
         .min(1, 'Must be at least 1 character long')
         .required('Event is mandatory'),
     description: Yup.string().default(''),

@@ -31,10 +31,9 @@ const FaultEventShapeToolPane = ({data, onEventUpdated, refreshTree}: Props) => 
     let defaultValues;
 
     if (data) {
-        console.log(data);
         defaultValues = {
             eventType: data.eventType,
-            name: data.name,
+            "fault-event-name": data.name,
             description: data.description,
             probability: data.probability + "",
             gateType: data.gateType,
@@ -46,7 +45,6 @@ const FaultEventShapeToolPane = ({data, onEventUpdated, refreshTree}: Props) => 
         });
 
         updateFunction = async (values: any) => {
-            console.log(values);
             let dataClone = cloneDeep(data)
 
             const updatedFaultEvent = deepOmit(faultEventService.eventFromHookFormValues(values), '@type')
