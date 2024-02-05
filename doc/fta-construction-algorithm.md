@@ -60,35 +60,35 @@ following causes occur:
 ```
 GENERATE_FAULT_TREE(behaviour: Behaviour)
 BEGIN
-	fault-event = Create FaultEvent
-	IF behaviour is Function
-	    fault-evnt.gate = OR
-	else IF behaviour is FailureMode
-	    fault-evnt.gate = AND
+  fault-event = Create -FaultEvent
+  IF behaviour is Function
+    fault-evnt.gate = OR
+  ELSE IF behaviour is FailureMode
+    fault-evnt.gate = AND
 	    
-	IF behaviour.child_behaviours is not empty  
-        fault-event-due-to-parts = Create FaultEvent with GATE(behaviour.gateType)
-        fault-event.add(fault-event-due-to-parts)
-        for each behaviourPart in behaviour.behaviourParts 
-            fault-event-due-to-parts.add(GENERATE_FAULT_TREE(behaviourPart))
+  IF behaviour.child_behaviours is not empty  
+    fault-event-due-to-parts = Create FaultEvent with GATE(behaviour.gateType)
+    fault-event.add(fault-event-due-to-parts)
+    FOR EACH behaviourPart IN behaviour.behaviourParts 
+      fault-event-due-to-parts.add(GENERATE_FAULT_TREE(behaviourPart))
 	
-	FOR EACH b in behaviour.required_behaviours;
-		fault-event.add(GENERATE_FAULT_TREE(b))
+  FOR EACH b IN behaviour.required_behaviours;
+    fault-event.add(GENERATE_FAULT_TREE(b))
 		
-	FOR EACH b in behaviour.impairing_behaviors;
-		fault-event.add(GENERATE_FAULT_TREE(b))
-		
-	RETUNR fault-event
+  FOR EACH b IN behaviour.impairing_behaviors;
+    fault-event.add(GENERATE_FAULT_TREE(b))
+      
+  RETUNR fault-event
 END
 ```
 
 ```
 GATE(behaviour: Behaviour):
 BEGIN
-     IF (behaviour is Function) 
-        RETURN negate(behaviour.behaviourType)
-     IF (behaviour is FailureMode) 
-		RETURN behaviour.behaviourType
+  IF (behaviour is Function) 
+    RETURN negate(behaviour.behaviourType)
+  IF (behaviour is FailureMode) 
+    RETURN behaviour.behaviourType
 END
 ```
 
