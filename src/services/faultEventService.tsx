@@ -2,7 +2,7 @@ import axiosClient from "@services/utils/axiosUtils";
 import {authHeaders} from "@services/utils/authUtils";
 
 import JsonLdUtils from "@utils/JsonLdUtils";
-import {CONTEXT as EVENT_CONTEXT, EventType, FaultEvent, GateType} from "@models/eventModel";
+import {CONTEXT as EVENT_CONTEXT, EventType, FaultEvent} from "@models/eventModel";
 import VocabularyUtils from "@utils/VocabularyUtils";
 import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {findIndex, flatten, sortBy} from "lodash";
@@ -127,7 +127,7 @@ export const eventFromHookFormValues = (values: any): FaultEvent => {
             "@type": [VocabularyUtils.FAULT_EVENT],
         } as FaultEvent
 
-        faultEvent.gateType = (faultEvent.eventType === EventType.INTERMEDIATE) ? values.gateType : GateType.UNUSED;
+        faultEvent.gateType = (faultEvent.eventType === EventType.INTERMEDIATE) ? values.gateType : null;
     }
 
     return faultEvent;

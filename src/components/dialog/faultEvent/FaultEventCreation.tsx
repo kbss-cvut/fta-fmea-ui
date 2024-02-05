@@ -136,7 +136,6 @@ const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
                                 }
                             </Select>
                         }}
-                        rules={{ required: eventTypeWatch === EventType.INTERMEDIATE || !eventTypeWatch }}
                         name="gateType"
                         control={control}
                         defaultValue={GateType.OR}/>

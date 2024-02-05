@@ -21,7 +21,7 @@ export const schema = Yup.object().shape({
                 .required('Probability is mandatory'),
         }),
     eventType: Yup.string(),
-    gateType: Yup.string().nullable()
+    gateType: Yup.string().nullable().default(null)
         .when('eventType', {
             is: (eventType) => eventType === EventType.INTERMEDIATE,
             then: (schema) => schema.oneOf([
