@@ -33,10 +33,10 @@ const FaultEventShapeToolPane = ({data, onEventUpdated, refreshTree}: Props) => 
     if (data) {
         defaultValues = {
             eventType: data.eventType,
-            "fault-event-name": data.name,
+            name: data.name,
             description: data.description,
             probability: data.probability,
-            gateType: data.gateType == GateType.UNUSED ? null : data.gateType,
+            gateType: data.gateType,
             sequenceProbability: data.sequenceProbability,
         }
 
