@@ -1,4 +1,4 @@
-import {CONTEXT as FAILURE_MODE_CONTEXT} from "@models/failureModeModel";
+import {FAILURE_MODE_CONTEXT} from "@models/modelsContext";
 import {AbstractModel, CONTEXT as ABSTRACT_CONTEXT} from "@models/abstractModel";
 import {Behavior, CONTEXT as BEHAVIOR_CONTEXT} from "@models/behaviorModel";
 

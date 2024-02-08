@@ -1,8 +1,9 @@
 import VocabularyUtils from "@utils/VocabularyUtils";
-import {Function, CONTEXT as FUNCTION_CONTEXT} from "@models/functionModel";
-import {FailureMode, CONTEXT as FAILURE_MODE_CONTEXT} from "@models/failureModeModel";
+import {Function} from "@models/functionModel";
+import {FailureMode} from "@models/failureModeModel";
 import {System} from "@models/systemModel";
 import {AbstractModel, AbstractUpdateModel, CONTEXT as ABSTRACT_CONTEXT} from "@models/abstractModel";
+import {FAILURE_MODE_CONTEXT, FUNCTION_CONTEXT} from "@models/modelsContext";
 
 const ctx = {
     "name": VocabularyUtils.PREFIX + "hasName",

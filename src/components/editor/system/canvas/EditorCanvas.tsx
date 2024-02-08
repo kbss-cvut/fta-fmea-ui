@@ -12,7 +12,7 @@ import DiagramOptions from "@components/editor/menu/DiagramOptions";
 import SidebarMenu from "@components/editor/faultTree/menu/SidebarMenu";
 import ComponentSidebarMenu from "@components/editor/system/menu/component/ComponentSidebarMenu";
 import {SystemLink} from "@components/editor/system/shapes/shapesDefinitions";
-import * as svgPanZoom from "svg-pan-zoom";
+import svgPanZoom from "svg-pan-zoom";
 import {SVG_PAN_ZOOM_OPTIONS} from "@utils/constants";
 import {saveSvgAsPng} from "save-svg-as-png";
 

@@ -10,7 +10,7 @@ import {FaultEvent} from "@models/eventModel";
 import FaultEventMenu from "@components/editor/faultTree/menu/faultEvent/FaultEventMenu";
 import {CurrentFaultTreeTableProvider} from "@hooks/useCurrentFaultTreeTable";
 import SidebarMenuHeader from "@components/editor/faultTree/menu/SidebarMenuHeader";
-import * as svgPanZoom from "svg-pan-zoom";
+import svgPanZoom from "svg-pan-zoom";
 import {SVG_PAN_ZOOM_OPTIONS} from "@utils/constants";
 import {saveSvgAsPng} from "save-svg-as-png";
 import renderTree from "@components/editor/faultTree/shapes/RenderTree";
