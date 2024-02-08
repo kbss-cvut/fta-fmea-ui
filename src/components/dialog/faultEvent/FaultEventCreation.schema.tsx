@@ -3,7 +3,7 @@ import {yupOptionalNumber} from "@utils/validationUtils";
 import {EventType, GateType} from "@models/eventModel";
 
 export const schema = Yup.object().shape({
-    "fault-event-name": Yup.string()
+    "name": Yup.string()
         .min(1, 'Must be at least 1 character long')
         .required('Event is mandatory'),
     description: Yup.string().default(''),
@@ -21,11 +21,13 @@ export const schema = Yup.object().shape({
                 .required('Probability is mandatory'),
         }),
     eventType: Yup.string(),
-    gateType: Yup.string()
+    gateType: Yup.string().nullable().default(null)
         .when('eventType', {
             is: (eventType) => eventType === EventType.INTERMEDIATE,
-            then: (schema) => schema.notOneOf([GateType.UNUSED]),
-            otherwise: (schema) => schema.oneOf([GateType.UNUSED]),
+            then: (schema) => schema.oneOf([
+                GateType.OR, GateType.AND, GateType.PRIORITY_AND, GateType.XOR, GateType.INHIBIT]
+            ),
+            otherwise: (schema) => schema.oneOf([null]),
         }),
     sequenceProbability: Yup.number()
         .transform(yupOptionalNumber)

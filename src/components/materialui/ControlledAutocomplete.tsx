@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Controller} from "react-hook-form";
-import {Autocomplete} from "@mui/lab";
+import {Autocomplete} from "@mui/material";
 import {simplifyReferences} from "@utils/utils";
 
 interface Props {
@@ -46,7 +46,7 @@ const ControlledAutocomplete = ({options = [], name, renderInput, getOptionLabel
 
     return (
         <Controller
-            render={({field: { onChange }, ...props}) => (
+            render={({field: { onChange, onBlur, value, ref }, ...props}) => (
                 <Autocomplete
                     fullWidth
                     disablePortal
@@ -60,7 +60,9 @@ const ControlledAutocomplete = ({options = [], name, renderInput, getOptionLabel
                         onChangeCallback(_data)
                         onChange(data)
                     }}
-                    {...props}
+                    onBlur={onBlur}
+                    value={value}
+                    ref={ref}
                 />
             )}
             // onChange={([, data]) => data}
