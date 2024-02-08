@@ -8,17 +8,14 @@ const useStyles = makeStyles()((theme: Theme) => {
                 display: 'flex',
             },
             konvaContainer: {
-                marginTop: theme.spacing(1),
-                height: `100%`,
+                height: 'calc(100vh - 64px)',
                 flexGrow: 7,
             },
             sidebar: {
-                padding: theme.spacing(1, 0, 0, 1),
-                height: '100%',
+                height: 'calc(100vh - 64px)',
                 overflow: 'hidden',
                 flexGrow: 3,
-                maxWidth: '30%',
-                minWidth: '30%',
+                width: '30%',
             }
         };
     });

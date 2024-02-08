@@ -154,8 +154,12 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
         history(ROUTES.FMEA + tableFragment);
     }
 
+    const handleOnContextMenu = (event: React.MouseEvent<HTMLDivElement>) => {
+        event.preventDefault();
+    }
+
     return (
-        <React.Fragment>
+        <div onContextMenu={handleOnContextMenu}>
             <EditorCanvas
                 treeName={faultTree?.name}
                 rootEvent={rootEvent}
@@ -189,7 +193,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
                 faultTreeIri={faultTree?.iri}
                 onCreated={handleFailureModesTableCreated}
                 onClose={() => setFailureModesTableOpen(false)}/>
-        </React.Fragment>
+        </div>
     );
 }
 

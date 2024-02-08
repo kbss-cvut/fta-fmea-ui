@@ -1,7 +1,7 @@
 import {Menu, MenuItem} from "@mui/material";
 import * as React from "react";
-import {EventType} from "../../../../../models/eventModel";
-import {ElementContextMenuAnchor} from "../../../../../utils/contextMenu";
+import {EventType} from "@models/eventModel";
+import {ElementContextMenuAnchor} from "@utils/contextMenu";
 
 interface Props {
     eventType: EventType,
