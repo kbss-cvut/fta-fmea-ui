@@ -31,6 +31,7 @@ interface Props {
     onBlankPointerClick: () => void,
     onEventUpdated: (faultEvent: FaultEvent) => void,
     onConvertToTable: () => void,
+    onCutSetAnalysis: () => void,
     onNodeMove: (element: any, evt: any) => void,
     refreshTree: () => void,
     setHighlightedElement: (element: any) => void,
@@ -45,6 +46,7 @@ const EditorCanvas = ({
                           onBlankPointerClick,
                           onEventUpdated,
                           onConvertToTable,
+                          onCutSetAnalysis,
                           onNodeMove,
                           refreshTree,
                           setHighlightedElement
@@ -76,6 +78,7 @@ const EditorCanvas = ({
             height: canvasHeight,
             gridSize: 10,
             drawGrid: true,
+            drawGridSize: 50,
             restrictTranslate: true,
             defaultConnectionPoint: {name: 'boundary', args: {extrapolate: true}},
             defaultConnector: {name: 'rounded'},
@@ -193,7 +196,9 @@ const EditorCanvas = ({
             <SidebarMenu className={classes.sidebar}>
                 <CurrentFaultTreeTableProvider>
                     <SidebarMenuHeader onExportDiagram={handleDiagramExport}
-                                       onConvertToTable={onConvertToTable} onRestoreLayout={() => layout(container)}/>
+                                       onConvertToTable={onConvertToTable} onRestoreLayout={() => layout(container)}
+                                       onCutSetAnalysis={onCutSetAnalysis}
+                    />
                 </CurrentFaultTreeTableProvider>
                 <FaultEventMenu shapeToolData={sidebarSelectedEvent} onEventUpdated={onEventUpdated}
                                 refreshTree={refreshTree}/>
