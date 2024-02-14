@@ -45,7 +45,6 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
 
     useEffect(() => {
         if (faultTree) {
-            console.log(faultTree.faultEventScenarios)
             setAppBarName(faultTree.name)
             setRootEvent(faultTree.manifestingEvent)
 
@@ -149,7 +148,6 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
     }
 
     const handleCutSetAnalysis = () => {
-        console.log(`handleCutSetAnalysis(${faultTree.iri})` )
         calculateCutSets(faultTree.iri)
             .then( (d) => {
                 refreshTree();
