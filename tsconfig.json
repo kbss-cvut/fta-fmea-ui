@@ -14,7 +14,8 @@
       "@services/*": ["./src/services/*"],
       "@styles/*": ["./src/styles/*"],
       "@utils/*": ["./src/utils/*"],
-      "@hooks/*": ["./src/hooks/*"]
+      "@hooks/*": ["./src/hooks/*"],
+      "@dialog/*": ["./src/components/dialog/*"]
     },
     "lib": [
       "es2017",

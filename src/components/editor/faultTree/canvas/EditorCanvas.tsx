@@ -1,7 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import * as React from "react";
 import useStyles from "../../EditorCanvas.styles";
-import FaultEventShape from "../shapes/FaultEventShape";
 import * as joint from 'jointjs';
 import * as dagre from 'dagre';
 import * as graphlib from 'graphlib';
