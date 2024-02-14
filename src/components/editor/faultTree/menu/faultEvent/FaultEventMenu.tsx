@@ -1,13 +1,13 @@
-import {Button, Divider, Paper, Typography} from "@mui/material";
+import {Button, Divider, Typography} from "@mui/material";
 import FaultEventShapeToolPane from "./FaultEventShapeToolPane";
-import {EventType, FaultEvent} from "../../../../../models/eventModel";
+import {FaultEvent} from "@models/eventModel";
 import * as React from "react";
-import FailureModeDialog from "../../../../dialog/failureMode/create/FailureModeDialog";
+import FailureModeDialog from "@dialog/failureMode/create/FailureModeDialog";
 import {useState} from "react";
-import {EventFailureModeProvider, useEventFailureMode} from "../../../../../hooks/useEventFailureMode";
+import {EventFailureModeProvider} from "@hooks/useEventFailureMode";
 import EventFailureModeList from "../failureMode/EventFailureModeList";
-import {FailureMode} from "../../../../../models/failureModeModel";
-import FailureModeShowDialog from "../../../../dialog/failureMode/show/FailureModeShowDialog";
+import {FailureMode} from "@models/failureModeModel";
+import FailureModeShowDialog from "@dialog/failureMode/show/FailureModeShowDialog";
 
 interface Props {
     shapeToolData?: FaultEvent,

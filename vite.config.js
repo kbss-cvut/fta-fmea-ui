@@ -26,7 +26,8 @@ export default defineConfig({
       '@hooks': '/src/hooks',
       '@utils': '/src/utils',
       '@services': '/src/services',
-      '@models': '/src/models'
+      '@models': '/src/models',
+      '@dialog': '/src/components/dialog'
     },
   },
 });
