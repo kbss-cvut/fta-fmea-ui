@@ -1,11 +1,11 @@
-import {createShape} from "../../../../services/jointService";
-import {EventType} from "../../../../models/eventModel";
-import {sequenceListToArray} from "../../../../services/faultEventService";
-import * as faultEventService from "../../../../services/faultEventService";
+import {createShape} from "@services/jointService";
+import {EventType} from "@models/eventModel";
+import {sequenceListToArray} from "@services/faultEventService";
+import * as faultEventService from "@services/faultEventService";
 import {Link} from "./shapesDefinitions";
 import {flatten} from "lodash";
 import {has} from "lodash";
-import {JOINTJS_NODE_MODEL} from "@components/editor/faultTree/shapes/constants";
+import {JOINTJS_NODE_MODEL} from "@components/editor/faultTree/shapes/Constants";
 
 const renderLink = (container, source, target) => {
     // @ts-ignore

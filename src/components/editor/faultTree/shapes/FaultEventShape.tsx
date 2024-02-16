@@ -8,7 +8,7 @@ import {createShape} from "@services/jointService";
 import {sequenceListToArray} from "@services/faultEventService";
 import * as faultEventService from "@services/faultEventService";
 import {has} from "lodash";
-import {JOINTJS_NODE_MODEL} from "@components/editor/faultTree/shapes/constants";
+import {JOINTJS_NODE_MODEL} from "./Constants";
 
 const FaultEventShape = ({addSelf, treeEvent, parentShape}: JointEventShapeProps) => {
     const [currentShape, setCurrentShape] = useState<any>(undefined)
@@ -22,7 +22,6 @@ const FaultEventShape = ({addSelf, treeEvent, parentShape}: JointEventShapeProps
             // @ts-ignore
             eventShape.gate(treeEvent.gateType.toLowerCase())
         }
-
         eventShape.attr(['label', 'text'], treeEvent.name);
         if (has(treeEvent, 'probability')) {
             eventShape.attr(['probabilityLabel', 'text'], treeEvent.probability.toExponential(2));

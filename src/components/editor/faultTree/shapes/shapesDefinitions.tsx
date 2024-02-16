@@ -11,18 +11,15 @@ const Event = joint.dia.Element.define('fta.Event', {
             fillOpacity: 0.2
         },
         label: {
-            textWrap: {
-                height: -20,
-                width: -20,
-                ellipsis: true
-            },
-            refX: '50%',
-            refY: '50%',
             fontSize: 16,
             fontFamily: 'sans-serif',
             fill: '#333333',
             textAnchor: 'middle',
-            textVerticalAnchor: 'middle'
+            textVerticalAnchor: 'middle',
+            textWrap:{
+                width: 100,
+                height: 1000
+            }
         },
         probabilityLabel: {
             fontSize: 16,
@@ -42,38 +39,36 @@ const Event = joint.dia.Element.define('fta.Event', {
 },);
 
 export const IntermediateEvent = Event.define('fta.IntermediateEvent', {
-    size: {
-        width: 100,
-        height: 100
-    },
     attrs: {
         root: {
             title: 'Intermediate Event'
         },
         body: {
-            refWidth: '100%',
-            refHeight: -40,
+            ref: 'label',
+            x: '-calc(0.5*w)',
+            y: '-calc(0.5*h)',
+            minWidth: 100,
+            width: 100,
+            height: 'calc(h)',
+            strokeWidth: 2,
+            fillOpacity: 0.2,
             stroke: '#3c4260',
             fill: '#3c4260'
         },
         gate: {
+            ref: 'label',
             gateType: 'or',
             stroke: '#7c68fc',
             fill: '#7c68fc',
             fillOpacity: 0.2,
             strokeWidth: 2,
-            refX: '50%',
-            refY: '100%',
+            x: 50,
+            y: 'calc(0.7*h)',
             fillRule: 'nonzero',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            // refX: '50%',
+            // refY: '-calc(8*h)'
         },
-        label: {
-            textWrap: {
-                height: -40,
-                width: -10,
-            },
-            refY2: -20
-        }
     }
 }, {
     markup: [{

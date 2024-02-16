@@ -19,7 +19,7 @@ import {extractFragment} from "@services/utils/uriIdentifierUtils";
 import {FTABoundary} from "@components/editor/faultTree/shapes/shapesDefinitions";
 import * as joint from "jointjs";
 import {Rectangle} from "@models/utils/Rectangle";
-import {JOINTJS_NODE_MODEL} from "@components/editor/faultTree/shapes/constants";
+import {JOINTJS_NODE_MODEL} from "@components/editor/faultTree/shapes/Constants";
 
 const Editor = ({setAppBarName}: DashboardTitleProps) => {
     const history = useNavigate();

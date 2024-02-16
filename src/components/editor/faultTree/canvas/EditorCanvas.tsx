@@ -13,7 +13,7 @@ import svgPanZoom from "svg-pan-zoom";
 import {SVG_PAN_ZOOM_OPTIONS} from "@utils/constants";
 import {saveSvgAsPng} from "save-svg-as-png";
 import renderTree from "@components/editor/faultTree/shapes/RenderTree";
-import {JOINTJS_NODE_MODEL} from "@components/editor/faultTree/shapes/constants";
+import {JOINTJS_NODE_MODEL} from "@components/editor/faultTree/shapes/Constants";
 
 enum MOVE_NODE {
     DRAGGING = 0,
