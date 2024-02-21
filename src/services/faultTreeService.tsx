@@ -212,3 +212,25 @@ export const getTreePathsAggregate = async (): Promise<[FaultEvent[]]> => {
         return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
     }
 }
+
+
+export const calculateCutSets = async (faultTreeUri: string) => {
+    try {
+        const fragment = extractFragment(faultTreeUri);
+        const response = await axiosClient.put(
+            `/faultTrees/${fragment}/cutsets`,
+            null,
+            {
+                headers: authHeaders()
+            }
+        )
+
+        return response;
+    } catch (e) {
+        console.log('Fault Tree Service - Failed to call /cutsets')
+        const defaultMessage = "Failed to calculate cutsets of fault tree";
+        return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    }
+}
+
+

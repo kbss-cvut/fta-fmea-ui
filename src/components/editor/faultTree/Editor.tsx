@@ -20,6 +20,7 @@ import {FTABoundary} from "@components/editor/faultTree/shapes/shapesDefinitions
 import * as joint from "jointjs";
 import {Rectangle} from "@models/utils/Rectangle";
 import {JOINTJS_NODE_MODEL} from "@components/editor/faultTree/shapes/constants";
+import {calculateCutSets} from "@services/faultTreeService";
 
 const Editor = ({setAppBarName}: DashboardTitleProps) => {
     const history = useNavigate();
@@ -146,6 +147,16 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
         })
     }
 
+    const handleCutSetAnalysis = () => {
+        calculateCutSets(faultTree.iri)
+            .then( (d) => {
+                refreshTree();
+            })
+            .catch(reason => {
+                showSnackbar(reason, SnackbarType.ERROR)
+            })
+    }
+
     const [failureModesTableOpen, setFailureModesTableOpen] = useState(false);
     const handleFailureModesTableCreated = (tableIri: string) => {
         console.log(`handleFailureModesTableCreated - ${tableIri}`)
@@ -168,6 +179,7 @@ const Editor = ({setAppBarName}: DashboardTitleProps) => {
                 onElementContextMenu={handleContextMenu}
                 onElementPointerClick={handleElementPointerClick}
                 onBlankPointerClick={handleBlankPointerClick}
+                onCutSetAnalysis={handleCutSetAnalysis}
                 onConvertToTable={() => setFailureModesTableOpen(true)}
                 onNodeMove={handleMoveEvent}
                 setHighlightedElement={setHighlightedElementView}
