@@ -12,11 +12,6 @@ export default defineConfig({
   build: {
     sourcemap: true,
     emptyOutDir: true,
-    rollupOptions: {
-      output: {
-        entryFileNames: "index.js"
-      }
-    }
   },
   resolve: {
     alias: {
