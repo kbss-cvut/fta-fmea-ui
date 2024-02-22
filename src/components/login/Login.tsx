@@ -19,7 +19,7 @@ import {useForm} from "react-hook-form";
 import {schema} from "@components/login/Login.schema";
 import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {environmentVariables, ROUTES} from "@utils/constants";
+import {ENVVariable, ROUTES} from "@utils/constants";
 
 
 
@@ -103,7 +103,7 @@ const Login = () => {
                     >
                         Sign In
                     </Button>
-                    {environmentVariables.ADMIN_REGISTRATION_ONLY !== "true" && (
+                    {ENVVariable.ADMIN_REGISTRATION_ONLY !== "true" && (
                         <Grid container>
                             <Grid item>
                                 <MaterialLink variant="body2" component={RouterLink} to={ROUTES.REGISTER}>

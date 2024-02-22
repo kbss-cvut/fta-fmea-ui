@@ -1,23 +1,16 @@
-import * as React from "react";
-
-/**
- * Aggregated object of process.env and window.__config__ to allow dynamic configuration
- */
-const ENV = {
-    ...Object.keys(import.meta.env).reduce<Record<string, string>>((acc, key) => {
-        const strippedKey = key.replace("VITE_", "");
-        acc[strippedKey] = import.meta.env[key]!;
-        return acc;
-    }, {}),
-    ...(window as any).__config__,
-};
-
 /**
  * Helper to make sure that all envs are defined properly
- * @param name env variable name (without the REACT_APP prefix)
+ * @param name env variable name (with the VITE prefix)
  * @param defaultValue Default variable name
  */
 const getEnv = (name: string, defaultValue?: string): string => {
+    let ENV;
+    if ((window as any).__config__ && Object.keys((window as any).__config__).length > 0) {
+        ENV = {
+            ...(window as any).__config__
+        };
+    } else ENV = import.meta.env;
+
     const value = ENV[name] || defaultValue;
     if (value !== undefined) {
         return value;
@@ -25,11 +18,11 @@ const getEnv = (name: string, defaultValue?: string): string => {
     throw new Error(`Missing environment variable: ${name}`);
 }
 
-export const environmentVariables = {
-    API_URL: getEnv("API_URL","http://localhost:9999"),
-    CONTEXT: getEnv("CONTEXT", ''),
-    ADMIN_REGISTRATION_ONLY: getEnv("ADMIN_REGISTRATION_ONLY", "false"),
-    TITLE: getEnv("TITLE", "FTA/FMEA Analysis")
+export const ENVVariable = {
+    API_URL: getEnv("VITE_API_URL","http://localhost:9999"),
+    CONTEXT: getEnv("VITE_CONTEXT", ''),
+    ADMIN_REGISTRATION_ONLY: getEnv("VITE_ADMIN_REGISTRATION_ONLY", "false"),
+    TITLE: getEnv("VITE_TITLE", "FTA/FMEA")
 }
 
 

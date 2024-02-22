@@ -6,7 +6,7 @@ import AppRoutes from "@components/routes/AppRoutes";
 import {appTheme} from "@styles/App.styles";
 import {SnackbarProvider} from "@hooks/useSnackbar";
 import {ConfirmDialogProvider} from "@hooks/useConfirmDialog";
-import {environmentVariables} from "@utils/constants";
+import {ENVVariable} from "@utils/constants";
 
 
 declare module '@mui/material/styles' {
@@ -18,7 +18,7 @@ const App = () => {
     useEffect(() => {
         const changeAppTitle = ()=>  {
             document.querySelector('title').textContent
-                = environmentVariables.TITLE;
+                = ENVVariable.TITLE;
         }
         changeAppTitle();
     }, [document.querySelector('title').textContent]);

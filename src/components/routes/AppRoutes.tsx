@@ -8,7 +8,7 @@ import PrivateRoute from "@components/routes/PrivateRoute";
 import Register from "@components/register/Register";
 import {createHashHistory} from "history";
 import {LoggedUserProvider} from "@hooks/useLoggedUser";
-import {environmentVariables, ROUTE_PARAMS, ROUTES} from "@utils/constants";
+import {ENVVariable, ROUTE_PARAMS, ROUTES} from "@utils/constants";
 import FaultTreeDashboard from "@components/dashboard/FaultTreeDashboard";
 import SystemDashboard from "@components/dashboard/SystemDashboard";
 import FailureModesTableDashboard from "@components/dashboard/FailureModesTableDashboard";
@@ -23,7 +23,7 @@ const AppRoutes = () => {
             <BrowserRouter /*history={appHistory}*/>
                 <Routes>
                     {/*TODO: revisit routing, this is hotfix to support react-router v6*/}
-                    {environmentVariables.ADMIN_REGISTRATION_ONLY === "true"
+                    {ENVVariable.ADMIN_REGISTRATION_ONLY === "true"
                         ? <Route path={ROUTES.REGISTER} element={<AdminRoute><Register/></AdminRoute>}/>
                         : <Route path={ROUTES.REGISTER} element={<PublicRoute restricted={true}><Register/></PublicRoute>}/>
                     }
