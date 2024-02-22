@@ -1,9 +1,9 @@
 import axios from 'axios'
 import {appHistory} from "@components/routes/AppRoutes";
-import {ROUTES} from "@utils/constants";
+import {environmentVariables, ROUTES} from "@utils/constants";
 
 const axiosClient = axios.create({
-    baseURL: (window as any).__config__.API_URL
+    baseURL: environmentVariables.API_URL
 });
 
 axiosClient.interceptors.response.use(
