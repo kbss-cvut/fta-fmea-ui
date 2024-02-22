@@ -1,10 +1,12 @@
 import * as React from "react";
+import {useEffect} from "react";
 
 import { ThemeProvider, Theme, StyledEngineProvider } from "@mui/material/styles";
 import AppRoutes from "@components/routes/AppRoutes";
 import {appTheme} from "@styles/App.styles";
 import {SnackbarProvider} from "@hooks/useSnackbar";
 import {ConfirmDialogProvider} from "@hooks/useConfirmDialog";
+import {environmentVariables} from "@utils/constants";
 
 
 declare module '@mui/material/styles' {
@@ -13,6 +15,14 @@ declare module '@mui/material/styles' {
 }
 
 const App = () => {
+    useEffect(() => {
+        const changeAppTitle = ()=>  {
+            document.querySelector('title').textContent
+                = environmentVariables.TITLE;
+        }
+        changeAppTitle();
+    }, [document.querySelector('title').textContent]);
+
     return (
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={appTheme}>

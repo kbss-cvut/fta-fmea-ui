@@ -2,4 +2,5 @@
 window.__config__ = {
   API_URL:'${API_URL}',
   ADMIN_REGISTRATION_ONLY:'${ADMIN_REGISTRATION_ONLY}'
+  TITLE:'${TITLE}',
 }
