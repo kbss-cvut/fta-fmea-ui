@@ -4,7 +4,7 @@
  * @param defaultValue Default variable name
  */
 const getEnv = (name: string, defaultValue?: string): string => {
-    let ENV;
+    let ENV: ImportMetaEnv;
     if ((window as any).__config__ && Object.keys((window as any).__config__).length > 0) {
         ENV = {
             ...(window as any).__config__

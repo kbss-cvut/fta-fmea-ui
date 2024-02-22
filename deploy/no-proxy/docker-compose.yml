@@ -6,7 +6,7 @@ services:
     environment:
       VITE_API_URL: ${VITE_API_URL:-http://localhost:9999/}
       VITE_ADMIN_REGISTRATION_ONLY: ${VITE_ADMIN_REGISTRATION_ONLY:-false}
-      VITE_TITLE: ${VITE_TITLE:-DOCKER}
+      VITE_TITLE: ${VITE_TITLE:-FTA/FMEA Analysis}
     ports:
       - "8080:80"
     depends_on:
