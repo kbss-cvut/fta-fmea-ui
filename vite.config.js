@@ -12,12 +12,8 @@ export default defineConfig({
   build: {
     sourcemap: true,
     emptyOutDir: true,
-    rollupOptions: {
-      output: {
-        entryFileNames: "index.js"
-      }
-    }
   },
+  envPrefix: 'FTA_FMEA_',
   resolve: {
     alias: {
       'jsonld': 'jsonld/dist/jsonld.js',
