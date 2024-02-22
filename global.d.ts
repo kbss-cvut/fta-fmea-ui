@@ -1,7 +1,7 @@
 interface Window {
     __config__: {
-        API_URL: string;
-        ADMIN_REGISTRATION_ONLY: string;
-        TITLE: string;
+        VITE_API_URL: string;
+        VITE_ADMIN_REGISTRATION_ONLY: string;
+        VITE_TITLE: string;
     }
 }
