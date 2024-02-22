@@ -1,7 +1,7 @@
 interface Window {
     __config__: {
-        VITE_API_URL: string;
-        VITE_ADMIN_REGISTRATION_ONLY: string;
-        VITE_TITLE: string;
+        FTA_FMEA_API_URL: string;
+        FTA_FMEA_ADMIN_REGISTRATION_ONLY: string;
+        FTA_FMEA_TITLE: string;
     }
 }

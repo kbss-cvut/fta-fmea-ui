@@ -13,6 +13,7 @@ export default defineConfig({
     sourcemap: true,
     emptyOutDir: true,
   },
+  envPrefix: 'FTA_FMEA_',
   resolve: {
     alias: {
       'jsonld': 'jsonld/dist/jsonld.js',
