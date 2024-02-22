@@ -1,4 +1,4 @@
-import {Divider, IconButton, Typography} from "@mui/material";
+import {Divider, Button, IconButton, Typography} from "@mui/material";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
 import TableChartIcon from '@mui/icons-material/TableChart';
@@ -8,10 +8,11 @@ export interface Props {
     onRestoreLayout: () => void,
     onExportDiagram: () => void,
     onConvertToTable?: () => void,
+    onCutSetAnalysis?: () => void,
     tableConversionAllowed?: boolean,
 }
 
-const DiagramOptions = ({onRestoreLayout, onExportDiagram, onConvertToTable, tableConversionAllowed = false}: Props) => {
+const DiagramOptions = ({onRestoreLayout, onExportDiagram, onConvertToTable, onCutSetAnalysis, tableConversionAllowed = false}: Props) => {
     return (
         <React.Fragment>
             <Typography variant="h5" gutterBottom>Diagram Options</Typography>
@@ -36,6 +37,8 @@ const DiagramOptions = ({onRestoreLayout, onExportDiagram, onConvertToTable, tab
                         <TableChartIcon/>
                     </IconButton>
                 }
+                {onCutSetAnalysis && <Button onClick={onCutSetAnalysis}>cutsets</Button>}
+
             </div>
             <Divider/>
         </React.Fragment>
