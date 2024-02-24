@@ -32,12 +32,24 @@ const Event = joint.dia.Element.define('fta.Event', {
             textVerticalAnchor: 'middle',
             refX: '20%',
             refY: '110%',
+        },
+        probabilityRequirementLabel: {
+            fontSize: 16,
+            fontFamily: 'sans-serif',
+            fill: '#333333',
+            textAnchor: 'end',
+            textVerticalAnchor: 'middle',
+            refX: '100%',
+            refY: '-10%',
         }
     }
 }, {
     markup: [{
         tagName: 'text',
         selector: 'probabilityLabel'
+    }, {
+        tagName: 'text',
+        selector: 'probabilityRequirementLabel'
     }]
 },);
 
@@ -88,6 +100,9 @@ export const IntermediateEvent = Event.define('fta.IntermediateEvent', {
     }, {
         tagName: 'text',
         selector: 'probabilityLabel'
+    }, {
+        tagName: 'text',
+        selector: 'probabilityRequirementLabel'
     }],
     gateTypes: {
         or: 'M -20 0 C -20 -15 -10 -30 0 -30 C 10 -30 20 -15 20 0 C 10 -6 -10 -6 -20 0',
@@ -140,6 +155,9 @@ export const ExternalEvent = Event.define('fta.ExternalEvent', {
     }, {
         tagName: 'text',
         selector: 'probabilityLabel'
+    }, {
+        tagName: 'text',
+        selector: 'probabilityRequirementLabel'
     }]
 });
 
@@ -168,6 +186,9 @@ export const UndevelopedEvent = Event.define('fta.UndevelopedEvent', {
     }, {
         tagName: 'text',
         selector: 'probabilityLabel'
+    }, {
+        tagName: 'text',
+        selector: 'probabilityRequirementLabel'
     }]
 });
 
@@ -199,6 +220,9 @@ export const BasicEvent = Event.define('fta.BasicEvent', {
     }, {
         tagName: 'text',
         selector: 'probabilityLabel'
+    }, {
+        tagName: 'text',
+        selector: 'probabilityRequirementLabel'
     }]
 });
 
@@ -232,6 +256,9 @@ export const ConditioningEvent = Event.define('fta.ConditioningEvent', {
     }, {
         tagName: 'text',
         selector: 'probabilityLabel'
+    }, {
+        tagName: 'text',
+        selector: 'probabilityRequirementLabel'
     }]
 });
 
