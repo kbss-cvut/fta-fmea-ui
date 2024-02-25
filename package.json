@@ -45,7 +45,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prettier:check": "npx prettier --check .",
+    "prettier:format": "npx prettier --write .",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.17.0",
@@ -59,7 +62,14 @@
     "@types/yup": "^0.29.14",
     "@vitejs/plugin-react": "^4.2.1",
     "dotenv-webpack": "^8.0.1",
+    "eslint-config-prettier": "^9.1.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "3.2.5",
     "ts-loader": "^9.4.4",
     "vite-tsconfig-paths": "^4.3.1"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   }
 }
