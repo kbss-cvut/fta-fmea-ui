@@ -26,6 +26,9 @@ const renderTree = (container, node, parentShape = null) => {
     if (has(node, 'probability')) {
         nodeShape.attr(['probabilityLabel', 'text'], node.probability.toExponential(2));
     }
+    if (has(node, 'probabilityRequirement')) {
+        nodeShape.attr(['probabilityRequirementLabel', 'text'], node.probability.toExponential(2))
+    }
     // @ts-ignore
     nodeShape.set(JOINTJS_NODE_MODEL.faultEventIri, node.iri)
     const r = node.rectangle;

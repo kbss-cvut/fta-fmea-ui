@@ -39,6 +39,7 @@ export interface FaultEvent extends AbstractModel {
     sequenceProbability?: number,
     childrenSequence?: any,
     rectangle?: Rectangle,
+    probabilityRequirement?: number
 }
 
 export enum GateType {
