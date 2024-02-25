@@ -11,7 +11,6 @@ It is primarily focused on FTA which offers possibilities for system partonomy d
 npm install
 npm run build
 npm run preview (only preview)
-npm run dev (for development)
 ```
 
 ## Registration
