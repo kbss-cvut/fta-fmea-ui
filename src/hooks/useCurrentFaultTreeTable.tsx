@@ -1,41 +1,38 @@
 import * as React from "react";
-import {createContext, useContext, useEffect, useState} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
-import * as faultTreeService from "@services/faultTreeService"
-import {axiosSource} from "@services/utils/axiosUtils";
-import {ChildrenProps} from "@utils/hookUtils";
-import {SnackbarType, useSnackbar} from "@hooks/useSnackbar";
-import {FailureModesTable} from "@models/failureModesTableModel";
-import {useCurrentFaultTree} from "./useCurrentFaultTree";
+import * as faultTreeService from "@services/faultTreeService";
+import { axiosSource } from "@services/utils/axiosUtils";
+import { ChildrenProps } from "@utils/hookUtils";
+import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
+import { FailureModesTable } from "@models/failureModesTableModel";
+import { useCurrentFaultTree } from "./useCurrentFaultTree";
 
 const failureModesTableContext = createContext<FailureModesTable>(null!);
 
 export const useCurrentFaultTreeTable = () => {
-    return useContext(failureModesTableContext);
-}
+  return useContext(failureModesTableContext);
+};
 
-export const CurrentFaultTreeTableProvider = ({children}: ChildrenProps) => {
-    const [faultTree] = useCurrentFaultTree();
+export const CurrentFaultTreeTableProvider = ({ children }: ChildrenProps) => {
+  const [faultTree] = useCurrentFaultTree();
 
-    const [_table, _setTable] = useState<FailureModesTable>();
+  const [_table, _setTable] = useState<FailureModesTable>();
 
-    useEffect(() => {
-        const fetchTable = async () => {
-            faultTreeService.findFailureModesTable(faultTree.iri)
-                .then(value => _setTable(value))
-                .catch(reason => _setTable(null))
-        }
+  useEffect(() => {
+    const fetchTable = async () => {
+      faultTreeService
+        .findFailureModesTable(faultTree.iri)
+        .then((value) => _setTable(value))
+        .catch((reason) => _setTable(null));
+    };
 
-        if(faultTree) {
-            fetchTable()
-        }
+    if (faultTree) {
+      fetchTable();
+    }
 
-        return () => axiosSource.cancel("CurrentFaultTreeTableProvider - unmounting")
-    }, [faultTree?.iri]);
+    return () => axiosSource.cancel("CurrentFaultTreeTableProvider - unmounting");
+  }, [faultTree?.iri]);
 
-    return (
-        <failureModesTableContext.Provider value={_table}>
-            {children}
-        </failureModesTableContext.Provider>
-    );
-}
+  return <failureModesTableContext.Provider value={_table}>{children}</failureModesTableContext.Provider>;
+};

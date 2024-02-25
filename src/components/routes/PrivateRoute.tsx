@@ -1,36 +1,29 @@
-import {Navigate, Route} from "react-router-dom";
+import { Navigate, Route } from "react-router-dom";
 import * as React from "react";
-import {useLoggedUser} from "@hooks/useLoggedUser";
-import {ROUTES} from "@utils/constants";
+import { useLoggedUser } from "@hooks/useLoggedUser";
+import { ROUTES } from "@utils/constants";
 
 // TODO: Fix temporary hack to support react-router v6
 const Element = ({ component: Component, loggedUser, ...props }) => {
-    return <>
-        {
-            loggedUser && loggedUser.authenticated ?
-                <Component {...props} />
-                : <Navigate to={ROUTES.LOGIN}/>
+  return <>{loggedUser && loggedUser.authenticated ? <Component {...props} /> : <Navigate to={ROUTES.LOGIN} />}</>;
+};
 
-        }
-    </>
-}
+const PrivateRoute = ({ children, ...rest }) => {
+  const [loggedUser] = useLoggedUser();
 
-const PrivateRoute = ({children, ...rest}) => {
-    const [loggedUser] = useLoggedUser();
+  console.log("Private route");
 
-    console.log("Private route")
+  if (!(loggedUser && loggedUser.authenticated)) {
+    return <Navigate to={ROUTES.LOGIN} />;
+  }
 
-    if(!(loggedUser && loggedUser.authenticated)) {
-        return <Navigate to={ROUTES.LOGIN}/>
-    }
+  return children;
 
-    return children;
-
-    // return (
-    //     // Show the component only when the user is logged in
-    //     // Otherwise, redirect the user to /login page
-    //     <Route {...rest} element={<Element component={component} loggedUser={loggedUser}/>}/>
-    // );
+  // return (
+  //     // Show the component only when the user is logged in
+  //     // Otherwise, redirect the user to /login page
+  //     <Route {...rest} element={<Element component={component} loggedUser={loggedUser}/>}/>
+  // );
 };
 
 export default PrivateRoute;

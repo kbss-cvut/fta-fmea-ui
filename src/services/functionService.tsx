@@ -1,15 +1,15 @@
 import axiosClient from "@services/utils/axiosUtils";
-import {authHeaders} from "@services/utils/authUtils";
-import {extractFragment} from "@services/utils/uriIdentifierUtils";
-import {UriReference} from "@models/utils/uriReference";
-import {handleServerError} from "./utils/responseUtils";
-import {CONTEXT as FUNCTION_CONTEXT, Function} from "../models/functionModel";
-import {CONTEXT as FAILURE_MODE_CONTEXT} from "../models/failureModeModel";
+import { authHeaders } from "@services/utils/authUtils";
+import { extractFragment } from "@services/utils/uriIdentifierUtils";
+import { UriReference } from "@models/utils/uriReference";
+import { handleServerError } from "./utils/responseUtils";
+import { CONTEXT as FUNCTION_CONTEXT, Function } from "../models/functionModel";
+import { CONTEXT as FAILURE_MODE_CONTEXT } from "../models/failureModeModel";
 import JsonLdUtils from "../utils/JsonLdUtils";
-import {simplifyReferences} from "@utils/utils";
-import {Component} from "@models/componentModel";
-import {CONTEXT, FaultTree} from "@models/faultTreeModel";
-import {FailureMode} from "@models/failureModeModel";
+import { simplifyReferences } from "@utils/utils";
+import { Component } from "@models/componentModel";
+import { CONTEXT, FaultTree } from "@models/faultTreeModel";
+import { FailureMode } from "@models/failureModeModel";
 
 export const addFailureMode = async (functionIri: string, failureModeIri: string): Promise<void> => {
   try {
@@ -50,7 +50,7 @@ export const addRequiredFunction = async (functionUri: string, requiredFunctionU
       createRequest,
       {
         headers: authHeaders(),
-      }
+      },
     );
 
     return JsonLdUtils.compactAndResolveReferences<Function>(response.data, FUNCTION_CONTEXT);
@@ -96,7 +96,7 @@ export const generateFDTree = async (functionUri: string, faultTreeName: string)
       {},
       {
         headers: authHeaders(),
-      }
+      },
     );
 
     return JsonLdUtils.compactAndResolveReferences<FaultTree>(response.data, CONTEXT);
@@ -128,7 +128,7 @@ export const getTransitiveClosure = async (functionUri: string, type: string): P
     const response = await axiosClient.get<string[]>(`/functions/${functionFragment}/${type}TransitiveClosure`, {
       headers: authHeaders(),
     });
-    return response.data
+    return response.data;
   } catch (e) {
     console.log("Function Service - Failed to call getTransitiveClosure");
     const defaultMessage = "Failed to load component";

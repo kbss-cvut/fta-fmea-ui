@@ -1,3 +1,2 @@
 // Dynamic configuration
-window.__config__ = {
-}
+window.__config__ = {};
