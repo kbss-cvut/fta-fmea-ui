@@ -1,54 +1,52 @@
-import {createShape} from "../../../../services/jointService";
-import {EventType} from "../../../../models/eventModel";
-import {sequenceListToArray} from "../../../../services/faultEventService";
+import { createShape } from "../../../../services/jointService";
+import { EventType } from "../../../../models/eventModel";
+import { sequenceListToArray } from "../../../../services/faultEventService";
 import * as faultEventService from "../../../../services/faultEventService";
-import {Link} from "./shapesDefinitions";
-import {flatten} from "lodash";
-import {has} from "lodash";
-import {JOINTJS_NODE_MODEL} from "@components/editor/faultTree/shapes/constants";
+import { Link } from "./shapesDefinitions";
+import { flatten } from "lodash";
+import { has } from "lodash";
+import { JOINTJS_NODE_MODEL } from "@components/editor/faultTree/shapes/constants";
 
 const renderLink = (container, source, target) => {
-    // @ts-ignore
-    const link = Link.create(source, target);
-    link.addTo(container);
+  // @ts-ignore
+  const link = Link.create(source, target);
+  link.addTo(container);
 };
 
-
 const renderTree = (container, node, parentShape = null) => {
-    // render node shape
-    let nodeShape = createShape(node);
-    nodeShape.addTo(container)
-    if (node.eventType == EventType.INTERMEDIATE) {
-        // @ts-ignore
-        nodeShape.gate(node.gateType.toLowerCase())
-    }
-    nodeShape.attr(['label', 'text'], node.name);
-    if (has(node, 'probability')) {
-        nodeShape.attr(['probabilityLabel', 'text'], node.probability.toExponential(2));
-    }
-    if (has(node, 'probabilityRequirement')) {
-        nodeShape.attr(['probabilityRequirementLabel', 'text'], node.probability.toExponential(2))
-    }
+  // render node shape
+  let nodeShape = createShape(node);
+  nodeShape.addTo(container);
+  if (node.eventType == EventType.INTERMEDIATE) {
     // @ts-ignore
-    nodeShape.set(JOINTJS_NODE_MODEL.faultEventIri, node.iri)
-    const r = node.rectangle;
-    if(r &&  r.x && r.y && r.width && r.height){
-        nodeShape.position(node.rectangle.x, node.rectangle.y);
-        // @ts-ignore
-        nodeShape.set(JOINTJS_NODE_MODEL.hasPersistentPosition, true);
-    }
-    // Render link
-    if(parentShape){
-        renderLink(container, parentShape, nodeShape)
-    }
+    nodeShape.gate(node.gateType.toLowerCase());
+  }
+  nodeShape.attr(["label", "text"], node.name);
+  if (has(node, "probability")) {
+    nodeShape.attr(["probabilityLabel", "text"], node.probability.toExponential(2));
+  }
+  if (has(node, "probabilityRequirement")) {
+    nodeShape.attr(["probabilityRequirementLabel", "text"], node.probability.toExponential(2));
+  }
+  // @ts-ignore
+  nodeShape.set(JOINTJS_NODE_MODEL.faultEventIri, node.iri);
+  const r = node.rectangle;
+  if (r && r.x && r.y && r.width && r.height) {
+    nodeShape.position(node.rectangle.x, node.rectangle.y);
+    // @ts-ignore
+    nodeShape.set(JOINTJS_NODE_MODEL.hasPersistentPosition, true);
+  }
+  // Render link
+  if (parentShape) {
+    renderLink(container, parentShape, nodeShape);
+  }
 
-    // render children
-    // sort children in diagram
-    const sequence = sequenceListToArray(node.childrenSequence)
-    faultEventService.eventChildrenSorted(flatten([node.children]), sequence)
-    const childNodes = faultEventService.eventChildrenSorted(flatten([node.children]), sequence)
-    if(childNodes)
-        childNodes.forEach(n => renderTree(container, n, nodeShape));
+  // render children
+  // sort children in diagram
+  const sequence = sequenceListToArray(node.childrenSequence);
+  faultEventService.eventChildrenSorted(flatten([node.children]), sequence);
+  const childNodes = faultEventService.eventChildrenSorted(flatten([node.children]), sequence);
+  if (childNodes) childNodes.forEach((n) => renderTree(container, n, nodeShape));
 };
 
 export default renderTree;

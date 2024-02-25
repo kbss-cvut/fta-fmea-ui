@@ -1,14 +1,14 @@
 import VocabularyUtils from "@utils/VocabularyUtils";
-import {AbstractModel, CONTEXT as ABSTRACT_CONTEXT} from "@models/abstractModel";
+import { AbstractModel, CONTEXT as ABSTRACT_CONTEXT } from "@models/abstractModel";
 
 const ctx = {
-    "name": VocabularyUtils.PREFIX + "hasName",
-    "iri": VocabularyUtils.PREFIX + "iri"
-}
+  name: VocabularyUtils.PREFIX + "hasName",
+  iri: VocabularyUtils.PREFIX + "iri",
+};
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT);
 
 export interface DocumentModel extends AbstractModel {
-    iri: string,
-    name: string
+  iri: string;
+  name: string;
 }

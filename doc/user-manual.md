@@ -89,23 +89,22 @@ After the FTA is automatically generated, the user sees the complete tree that c
 
 ![auto_FTA](https://user-images.githubusercontent.com/94048408/176183358-bc7d5f01-6249-4a00-9cbf-fe244faf0313.png)
 
-
 ### 2.5.2 Manual FTA trees
 
 Manual FTA trees can be composed directly by the user, by specifying events. In this case, the user starts from main dashboard, the "+" button in bottom right corner, and selecting "Fault tree". This will open a dialogue, where the user can specify the tree and top fault of the new FTA analysis. The user has the option to select from existing events (if already defined in the FTA/FMEA tool within some previous manual analysis), or define a new event, that will become the top event in the new FTA. Note, that "Type" for top events has to be selected "INTERMEDIATE", and it is not possible to start the FTA from a "BASIC" event type as the manual FTA can be created only downwards from the first (top) event. Lastly, the dialogue asks for a gateway, that will be used to connect next (intermediate or basic) events to the top event. The user can select from a predefined list of managed gateways in the tool. After clicking the "CREATE FAULT TREE" button, a canvas opens with a top event.
 
 ![manual_FTA](https://user-images.githubusercontent.com/94048408/176170280-a4f4b829-4375-4ca1-9ee6-86f5444868db.png)
 
-In the canvas, after clicking the top event, the user is shown a dialogue bar, that allows editing the event. The dialogue shows the same datafields as when new manual FTA is created. 
+In the canvas, after clicking the top event, the user is shown a dialogue bar, that allows editing the event. The dialogue shows the same datafields as when new manual FTA is created.
 
 ![manual_FTA_2](https://user-images.githubusercontent.com/94048408/176171413-92173133-cc5d-46e4-b8b1-d7b31523d4ff.png)
 
-To add intermediate events, the user must right-click the top event, that will pop-up an option to add "new event". After clicking this "new event", a dialogue is displayed, that allows definition of an intermediate event with the same logic, as the top event was created. It means selecting from the existing events or defining a new event by its type, name, description and probability. The user can again select "Gate Type", if the intermediate event type was selected (i.e. the tree will continue downwards). In case the event will be a leaf of the FTA tree, then the user sets the event type to "BASIC" in the "Type" data field and the option to select "Gate Type" disappears. Note, that other gate types are supported in line with the standard FTA (i.e. external, undeveloped or conditioning). Note also, that probability can be defined only for basic, undeveloped or external event types. All other event types will have their probability automatically computed. 
+To add intermediate events, the user must right-click the top event, that will pop-up an option to add "new event". After clicking this "new event", a dialogue is displayed, that allows definition of an intermediate event with the same logic, as the top event was created. It means selecting from the existing events or defining a new event by its type, name, description and probability. The user can again select "Gate Type", if the intermediate event type was selected (i.e. the tree will continue downwards). In case the event will be a leaf of the FTA tree, then the user sets the event type to "BASIC" in the "Type" data field and the option to select "Gate Type" disappears. Note, that other gate types are supported in line with the standard FTA (i.e. external, undeveloped or conditioning). Note also, that probability can be defined only for basic, undeveloped or external event types. All other event types will have their probability automatically computed.
 
 ![manual_FTA_new_event](https://user-images.githubusercontent.com/94048408/176174063-786167db-7f14-45e8-b91b-69f9edafcf08.png)
 ![manual_FTA_new_event_dialogie](https://user-images.githubusercontent.com/94048408/176173946-06b0eecf-e469-4d80-a263-0d7bb2fa01ce.png)
 
-After clicking the button "CREATE EVENT", the new event will be added to the diagram and connected with the existing tree events. This way, the entire FTA tree can be created. 
+After clicking the button "CREATE EVENT", the new event will be added to the diagram and connected with the existing tree events. This way, the entire FTA tree can be created.
 
 ## 2.6 Creating new FMEA analysis
 

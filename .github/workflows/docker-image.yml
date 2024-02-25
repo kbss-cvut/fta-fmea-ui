@@ -2,16 +2,15 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
 
 jobs:
-
   build:
     # Skip if PR is from a fork
     if: github.event_name != 'pull_request' || github.event.repository.full_name == github.event.pull_request.head.repo.full_name
