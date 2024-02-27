@@ -42,20 +42,6 @@ const DashboardContent = () => {
 
     return (
         <React.Fragment>
-            <div className={classes.root}>
-                <Typography variant="h5">Systems</Typography>
-                <Divider/>
-                <DashboardSystemList/>
-
-                <Typography variant="h5">Fault Trees</Typography>
-                <Divider/>
-                <DashboardFaultTreeList/>
-
-                <Typography variant="h5">FMEA Worksheets</Typography>
-                <Divider/>
-                <DashboardFailureModesTableList/>
-            </div>
-
             <SpeedDial
                 ariaLabel="SpeedDial Dashboard"
                 className={classes.speedDial}
