@@ -1,35 +1,41 @@
 import VocabularyUtils from "@utils/VocabularyUtils";
-import {AbstractModel, AbstractUpdateModel, CONTEXT as ABSTRACT_CONTEXT} from "./abstractModel";
-import {FailureModesRow, CONTEXT as FAILURE_MODES_ROW_CONTEXT} from "./failureModesRowModel";
-import {FaultTree, CONTEXT as FAULT_TREE_CONTEXT} from "./faultTreeModel";
-import {FailureMode, CONTEXT as FAILURE_MODES_CONTEXT} from "@models/failureModeModel";
-
+import { AbstractModel, AbstractUpdateModel, CONTEXT as ABSTRACT_CONTEXT } from "./abstractModel";
+import { FailureModesRow, CONTEXT as FAILURE_MODES_ROW_CONTEXT } from "./failureModesRowModel";
+import { FaultTree, CONTEXT as FAULT_TREE_CONTEXT } from "./faultTreeModel";
+import { FailureMode, CONTEXT as FAILURE_MODES_CONTEXT } from "@models/failureModeModel";
 
 const ctx = {
-    "name": VocabularyUtils.PREFIX + "hasName",
-    "tree": VocabularyUtils.PREFIX + "isDerivedFrom",
-    "rows": VocabularyUtils.PREFIX + "hasRow",
+  name: VocabularyUtils.PREFIX + "hasName",
+  tree: VocabularyUtils.PREFIX + "isDerivedFrom",
+  rows: VocabularyUtils.PREFIX + "hasRow",
 };
 
-export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, FAULT_TREE_CONTEXT, FAILURE_MODES_ROW_CONTEXT, FAILURE_MODES_CONTEXT);
+export const CONTEXT = Object.assign(
+  {},
+  ctx,
+  ABSTRACT_CONTEXT,
+  FAULT_TREE_CONTEXT,
+  FAILURE_MODES_ROW_CONTEXT,
+  FAILURE_MODES_CONTEXT,
+);
 
 export interface CreateFailureModesTable extends AbstractModel {
-    name: string,
-    rows: FailureModesRow[],
+  name: string;
+  rows: FailureModesRow[];
 }
 
 export interface UpdateFailureModesTable extends AbstractUpdateModel {
-    name: string,
+  name: string;
 }
 
 export interface FailureModesTable extends CreateFailureModesTable {
-    tree: FaultTree,
-    rows: FailureModesRow[]
+  tree: FaultTree;
+  rows: FailureModesRow[];
 }
 
 export interface FailureModesTableData {
-    name: string,
-    rows: any,
-    columns: any,
-    failureModes: FailureMode[]
+  name: string;
+  rows: any;
+  columns: any;
+  failureModes: FailureMode[];
 }

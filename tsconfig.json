@@ -16,15 +16,8 @@
       "@utils/*": ["./src/utils/*"],
       "@hooks/*": ["./src/hooks/*"]
     },
-    "lib": [
-      "es2017",
-      "dom",
-      "dom.iterable"
-    ],
+    "lib": ["es2017", "dom", "dom.iterable"],
     "types": ["vite/client"]
   },
-  "include": [
-    "src/*.ts",
-    "src/*.tsx"
-  ]
+  "include": ["src/*.ts", "src/*.tsx"]
 }

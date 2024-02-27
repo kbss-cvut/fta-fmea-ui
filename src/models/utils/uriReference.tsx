@@ -1,3 +1,3 @@
 export interface UriReference {
-    uri: string
+  uri: string;
 }

@@ -1,148 +1,198 @@
 import * as React from "react";
 
-import {FormControl, InputLabel, MenuItem, Select, TextField, Typography,} from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import useStyles from "@components/dialog/faultEvent/FaultEventCreation.styles";
-import {Controller} from "react-hook-form";
-import {EventType, FaultEvent, GateType, gateTypeValues} from "@models/eventModel";
-import {useReusableFaultEvents} from "@hooks/useReusableFaultEvents";
+import { Controller } from "react-hook-form";
+import { EventType, FaultEvent, GateType, gateTypeValues } from "@models/eventModel";
+import { useReusableFaultEvents } from "@hooks/useReusableFaultEvents";
 import ControlledAutocomplete from "@components/materialui/ControlledAutocomplete";
-import {useEffect, useRef, useState} from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Props {
-    useFormMethods: any,
-    eventReusing: boolean
+  useFormMethods: any;
+  eventReusing: boolean;
 }
 
 // TODO: remove ts-ignores and migrate to higher version of react-hook-form
-const FaultEventCreation = ({useFormMethods, eventReusing}: Props) => {
-    const { classes } = useStyles()
+const FaultEventCreation = ({ useFormMethods, eventReusing }: Props) => {
+  const { classes } = useStyles();
 
-    const {formState: {errors}, control, setValue, reset, watch, register} = useFormMethods
+  const {
+    formState: { errors },
+    control,
+    setValue,
+    reset,
+    watch,
+    register,
+  } = useFormMethods;
 
-    const faultEvents = useReusableFaultEvents()
-    const [selectedEvent, setSelectedEvent] = useState<FaultEvent | null>(null)
-    const existingEventSelected = Boolean(selectedEvent)
-    const lastGateTypeRef = useRef(selectedEvent?.gateType)
-    const eventTypeWatch = watch('eventType')
-    const gateTypeWatch = watch('gateType')
+  const faultEvents = useReusableFaultEvents();
+  const [selectedEvent, setSelectedEvent] = useState<FaultEvent | null>(null);
+  const existingEventSelected = Boolean(selectedEvent);
+  const lastGateTypeRef = useRef(selectedEvent?.gateType);
+  const eventTypeWatch = watch("eventType");
+  const gateTypeWatch = watch("gateType");
 
-    useEffect(() => {
-        if (selectedEvent) {
-            setValue('name', selectedEvent.name)
-            setValue('description', selectedEvent.description)
-            setValue('probability', selectedEvent.probability)
-            setValue('eventType', selectedEvent.eventType)
-            setValue('gateType', selectedEvent.gateType)
-            setValue('sequenceProbability', selectedEvent.sequenceProbability)
-        } else {
-            reset()
-        }
-    }, [selectedEvent])
+  useEffect(() => {
+    if (selectedEvent) {
+      setValue("name", selectedEvent.name);
+      setValue("description", selectedEvent.description);
+      setValue("probability", selectedEvent.probability);
+      setValue("eventType", selectedEvent.eventType);
+      setValue("gateType", selectedEvent.gateType);
+      setValue("sequenceProbability", selectedEvent.sequenceProbability);
+    } else {
+      reset();
+    }
+  }, [selectedEvent]);
 
-    return (
-        <div className={classes.divForm}>
-            <Typography variant="subtitle1" gutterBottom>Event:</Typography>
-            {eventReusing &&
-            <>
-                <ControlledAutocomplete
-                    control={control}
-                    name="existingEvent"
-                    options={faultEvents}
-                    onChangeCallback={(data: any) => setSelectedEvent(data)}
-                    getOptionLabel={(option) => option.name}
-                    renderInput={(params) => <TextField {...params} label="Event" variant="outlined"/>}
-                    defaultValue={null}
-                />
-                <Typography variant="subtitle1" className={classes.newEventTitle}>Create new Event:</Typography>
-            </>}
+  return (
+    <div className={classes.divForm}>
+      <Typography variant="subtitle1" gutterBottom>
+        Event:
+      </Typography>
+      {eventReusing && (
+        <>
+          <ControlledAutocomplete
+            control={control}
+            name="existingEvent"
+            options={faultEvents}
+            onChangeCallback={(data: any) => setSelectedEvent(data)}
+            getOptionLabel={(option) => option.name}
+            renderInput={(params) => <TextField {...params} label="Event" variant="outlined" />}
+            defaultValue={null}
+          />
+          <Typography variant="subtitle1" className={classes.newEventTitle}>
+            Create new Event:
+          </Typography>
+        </>
+      )}
 
-            <FormControl disabled={existingEventSelected} className={classes.formControl}>
-                <InputLabel id="event-type-select-label">Type</InputLabel>
-                <Controller
-                    render={({ field  }) => {
-                        const _onChnage = field.onChange;
-                        field.onChange = (e) => {
-                            if (e.target.value !== EventType.INTERMEDIATE && e.target.value !== EventType.CONDITIONING) {
-                                lastGateTypeRef.current = gateTypeWatch;
-                                setValue('gateType', null);
-                            } else
-                                setValue('gateType', lastGateTypeRef.current ? lastGateTypeRef.current : GateType.OR)
-                            _onChnage(e);
-                        }
-                        return <Select {...field}
-                                disabled={existingEventSelected} labelId="event-type-select-label" label="Type">
-                            {
-                                Object.values(EventType).map(value =>
-                                    <MenuItem key={value} value={value}>{value}</MenuItem>)
-                            }
-                        </Select>;
-                    }}
-                    name="eventType"
-                    control={control}
-                    defaultValue={EventType.INTERMEDIATE}
-                />
-            </FormControl>
+      <FormControl disabled={existingEventSelected} className={classes.formControl}>
+        <InputLabel id="event-type-select-label">Type</InputLabel>
+        <Controller
+          render={({ field }) => {
+            const _onChnage = field.onChange;
+            field.onChange = (e) => {
+              if (e.target.value !== EventType.INTERMEDIATE && e.target.value !== EventType.CONDITIONING) {
+                lastGateTypeRef.current = gateTypeWatch;
+                setValue("gateType", null);
+              } else setValue("gateType", lastGateTypeRef.current ? lastGateTypeRef.current : GateType.OR);
+              _onChnage(e);
+            };
+            return (
+              <Select {...field} disabled={existingEventSelected} labelId="event-type-select-label" label="Type">
+                {Object.values(EventType).map((value) => (
+                  <MenuItem key={value} value={value}>
+                    {value}
+                  </MenuItem>
+                ))}
+              </Select>
+            );
+          }}
+          name="eventType"
+          control={control}
+          defaultValue={EventType.INTERMEDIATE}
+        />
+      </FormControl>
 
-             {/*TODO: sort out default value UI bug*/}
-            <TextField
-                margin="dense"
-                autoComplete="off"
-                id="name"
-                label="Event Name" fullWidth // fix "An element does not have an autocomplete attribute" generated by chrome when label is "name".
-                disabled={existingEventSelected}
-                {...register('name')}
+      {/*TODO: sort out default value UI bug*/}
+      <TextField
+        margin="dense"
+        autoComplete="off"
+        id="name"
+        label="Event Name"
+        fullWidth // fix "An element does not have an autocomplete attribute" generated by chrome when label is "name".
+        disabled={existingEventSelected}
+        {...register("name")}
+      />
+
+      {/*TODO: sort out default value UI bug*/}
+      <TextField
+        margin="dense"
+        label="Description"
+        fullWidth
+        min={0}
+        max={1}
+        step={1}
+        error={!!errors.description}
+        helperText={errors.description?.message}
+        defaultValue=""
+        disabled={existingEventSelected}
+        {...register("description")}
+      />
+
+      {eventTypeWatch !== EventType.INTERMEDIATE && (
+        <TextField
+          label="Probability"
+          type="number"
+          min={0}
+          max={1}
+          step={0.01}
+          inputProps={{ min: 0, max: 1, step: 0.01 }}
+          error={!!errors.probability}
+          helperText={errors.probability?.message}
+          className={classes.probability}
+          defaultValue=""
+          {...register("probability")}
+        />
+      )}
+      {(gateTypeWatch === GateType.PRIORITY_AND || !gateTypeWatch) &&
+        eventTypeWatch === EventType.INTERMEDIATE &&
+        gateTypeWatch === GateType.PRIORITY_AND && (
+          /* TODO: sort out default value UI bug */
+          // TODO: The form cannot be submitted if the gate is not priority and
+          <TextField
+            label="Sequence Probability"
+            type="number"
+            min={0}
+            max={1}
+            step={0.01}
+            inputProps={{ min: 0, max: 1, step: 0.01 }}
+            error={!!errors.sequenceProbability}
+            helperText={errors.sequenceProbability?.message}
+            className={classes.sequenceProbability}
+            defaultValue=""
+            {...register("sequenceProbability")}
+          />
+        )}
+
+      {(eventTypeWatch === EventType.INTERMEDIATE || !eventTypeWatch) && (
+        <div className={classes.formControlDiv}>
+          <FormControl className={classes.formControl}>
+            <InputLabel id="gate-type-select-label">Gate Type</InputLabel>
+            <Controller
+              render={({ field }) => {
+                return (
+                  <Select
+                    {...field}
+                    disabled={existingEventSelected}
+                    labelId="gate-type-select-label"
+                    label="Gate Type"
+                    error={!!errors.gateType}
+                  >
+                    {gateTypeValues()
+                      .filter((value) => value[0])
+                      .map((value) => {
+                        const [enabled, optionValue] = value;
+                        return (
+                          <MenuItem key={optionValue} value={optionValue} disabled={!enabled}>
+                            {optionValue}
+                          </MenuItem>
+                        );
+                      })}
+                  </Select>
+                );
+              }}
+              name="gateType"
+              control={control}
+              defaultValue={GateType.OR}
             />
-
-             {/*TODO: sort out default value UI bug*/}
-            <TextField margin="dense"
-                       label="Description" fullWidth
-                       min={0} max={1} step={1}
-                       error={!!errors.description} helperText={errors.description?.message}
-                       defaultValue="" disabled={existingEventSelected} {...register("description")}/>
-
-            { eventTypeWatch !== EventType.INTERMEDIATE && <TextField label="Probability"
-                       type="number"
-                       min={0} max={1} step={0.01}
-                       inputProps={{ min:0, max:1, step: 0.01 }}
-                       error={!!errors.probability} helperText={errors.probability?.message}
-                       className={classes.probability}
-                       defaultValue="" {...register("probability")}/>
-            }
-            {((gateTypeWatch === GateType.PRIORITY_AND || !gateTypeWatch) && (eventTypeWatch === EventType.INTERMEDIATE && gateTypeWatch === GateType.PRIORITY_AND)) &&
-                /* TODO: sort out default value UI bug */
-                // TODO: The form cannot be submitted if the gate is not priority and
-                <TextField label="Sequence Probability"
-                           type="number"
-                           min={0} max={1} step={0.01}
-                           inputProps={{ min:0, max:1, step: 0.01 }}
-                           error={!!errors.sequenceProbability} helperText={errors.sequenceProbability?.message}
-                           className={classes.sequenceProbability}
-                           defaultValue="" {...register("sequenceProbability")}/>
-              }
-
-            {(eventTypeWatch === EventType.INTERMEDIATE || !eventTypeWatch) &&
-            <div className={classes.formControlDiv}>
-                <FormControl className={classes.formControl}>
-                    <InputLabel id="gate-type-select-label">Gate Type</InputLabel>
-                    <Controller
-                        render={({field}) => {
-                            return <Select {...field} disabled={existingEventSelected}  labelId="gate-type-select-label" label="Gate Type" error={!!errors.gateType}>
-                                {
-                                    gateTypeValues().filter(value => value[0]).map(value => {
-                                        const [enabled, optionValue] = value
-                                        return <MenuItem key={optionValue} value={optionValue}
-                                                         disabled={!enabled}>{optionValue}</MenuItem>
-                                    })
-                                }
-                            </Select>
-                        }}
-                        name="gateType"
-                        control={control}
-                        defaultValue={GateType.OR}/>
-                </FormControl>
-            </div>}
+          </FormControl>
         </div>
-    );
-}
+      )}
+    </div>
+  );
+};
 
 export default FaultEventCreation;
