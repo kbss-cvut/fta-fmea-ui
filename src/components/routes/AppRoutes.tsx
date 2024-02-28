@@ -72,17 +72,8 @@ const AppRoutes = () => {
                                 </PrivateRoute>
                             }
                         />
-
                         <Route
-                            path={ROUTES.DASHBOARD}
-                            element={
-                                <PrivateRoute path={ROUTES.DASHBOARD} exact>
-                                    <Dashboard />
-                                </PrivateRoute>
-                            }
-                        />
-                        <Route
-                            path={ROUTES.SYSTEM}
+                            path={ROUTES.SYSTEMS}
                             element={
                                 <PrivateRoute>
                                     <SystemsOverview />
@@ -91,7 +82,7 @@ const AppRoutes = () => {
                         />
 
                         <Route
-                            path={ROUTES.SYSTEM + ROUTE_PARAMS.SYSTEM_FRAGMENT}
+                            path={ROUTES.SYSTEMS + ROUTE_PARAMS.SYSTEM_FRAGMENT}
                             element={
                                 <PrivateRoute exact>
                                     <SystemDashboard />
@@ -135,7 +126,7 @@ const AppRoutes = () => {
                             }
                         />
 
-                        <Route path='*' element={<Navigate to={ROUTES.DASHBOARD} replace />} />
+                        <Route path='*' element={<Navigate to={ROUTES.SYSTEMS} replace />} />
                     </Routes>
                 </Navigation>
             </BrowserRouter>

@@ -1,5 +1,5 @@
 import { Box, Typography, useTheme } from '@mui/material';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import ArticleIcon from '@mui/icons-material/Article';
@@ -17,7 +17,7 @@ const menuItems = [
         title: 'Systems',
         hint: 'Single-line item',
         icon: <SettingsIcon />,
-        route: ROUTES.SYSTEM,
+        route: ROUTES.SYSTEMS,
     },
     {
         title: 'Fault trees',
@@ -40,6 +40,12 @@ const SidePanel: FC<SidePanelProps> = ({ topPanelHeight, width }) => {
     const { classes } = useStyles();
 
     const [hoveredItemIndex, setHoveredItemIndex] = useState<number | undefined>();
+
+    useEffect(() => {
+        setHoveredItemIndex(getActiveItem());
+    }, [location.pathname]);
+
+    const getActiveItem = () => menuItems.findIndex((item) => location.pathname.includes(item.route));
 
     const handleMenuItemClick = (route: string) => {
         navigate(route);
@@ -68,9 +74,6 @@ const SidePanel: FC<SidePanelProps> = ({ topPanelHeight, width }) => {
                             <Box display='flex' flexDirection='column'>
                                 <Typography className={classes.title} style={{ color: titleColor }}>
                                     {item.title}
-                                </Typography>
-                                <Typography className={classes.hint} color={theme.sidePanel.colors.hint}>
-                                    {item.hint}
                                 </Typography>
                             </Box>
                         </Box>

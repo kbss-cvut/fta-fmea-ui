@@ -57,7 +57,7 @@ const DashboardFailureModesTableList = () => {
         <React.Fragment>
             <ImageList className={classes.gridList} cols={6}>
                 {tables.map((mode) => {
-                    const routePath = ROUTES.FMEA + extractFragment(mode.iri);
+                    const routePath = ROUTES.FMEA + `/${extractFragment(mode.iri)}`;
                     return (
                         <ImageListItem key={mode.iri} className={classes.gridListTile}>
                             <Card className={classes.card}>

@@ -18,8 +18,9 @@ const calculateDynamicHeight = () => {
 
 const Navigation: FC<SideNavigationProps> = ({ children }) => {
     const location = useLocation();
-    const shouldHideSidePanel = location.pathname.includes(ROUTES.LOGIN) || location.pathname.includes(ROUTES.REGISTER);
-    const shouldHideTopPanel = location.pathname.includes(ROUTES.LOGIN) || location.pathname.includes(ROUTES.REGISTER);
+    const path = location.pathname;
+    const shouldHideSidePanel = path.includes(ROUTES.LOGIN) || path.includes(ROUTES.REGISTER) || path.includes('instance');
+    const shouldHideTopPanel = path.includes(ROUTES.LOGIN) || path.includes(ROUTES.REGISTER);
 
     const [dynamicHeight, setDynamicHeight] = useState(() => calculateDynamicHeight());
 

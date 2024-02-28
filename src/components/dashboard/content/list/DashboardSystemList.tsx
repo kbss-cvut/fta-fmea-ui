@@ -53,7 +53,7 @@ const DashboardSystemList = () => {
         <React.Fragment>
             <ImageList className={classes.gridList} cols={6}>
                 {systems.map((system) => {
-                    const routePath = ROUTES.SYSTEM + extractFragment(system.iri);
+                    const routePath = ROUTES.SYSTEMS + `/${extractFragment(system.iri)}`;
                     return (
                         <ImageListItem key={system.iri} className={classes.gridListTile}>
                             <Card className={classes.card}>

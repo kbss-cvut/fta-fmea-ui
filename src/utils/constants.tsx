@@ -13,7 +13,7 @@ export const ROUTES = {
     LOGOUT: "/logout",
 
     DASHBOARD: "/",
-    SYSTEM: "/system",
+    SYSTEMS: "/systems",
     FTA: "/fta",
     FMEA: "/fmea",
 }
