@@ -30,10 +30,10 @@ const Event = joint.dia.Element.define(
         fontSize: 16,
         fontFamily: "sans-serif",
         fill: "#333333",
-        textAnchor: "middle",
+        textAnchor: 'start',
         textVerticalAnchor: "middle",
-        refX: "20%",
-        refY: "110%",
+        refX: "60%",
+        refY: "70%",
       },
       probabilityRequirementLabel: {
         fontSize: 16,
@@ -84,7 +84,7 @@ export const IntermediateEvent = Event.define(
         fillOpacity: 0.2,
         strokeWidth: 2,
         refX: "50%",
-        refY: "100%",
+        refY: "120%",
         fillRule: "nonzero",
         cursor: "pointer",
       },
@@ -138,15 +138,14 @@ export const IntermediateEvent = Event.define(
   },
   {
     attributes: {
-      gateType: {
-        set: function (type) {
-          const data = this.model.gateTypes[type];
-          return { d: data ? data + " M 0 -30 0 -40" : "M 0 0 0 0" };
-        },
-      },
-    },
-  },
-);
+        gateType: {
+            set: function (type) {
+                const data = this.model.gateTypes[type];
+                return {d: data ? data + ' M 0 -30 0 -60' : 'M 0 0 0 0'};
+            }
+        }
+    }
+});
 
 export const ExternalEvent = Event.define(
   "fta.ExternalEvent",
