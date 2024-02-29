@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import DashboardContentProvider from "@hooks/DashboardContentProvider";
-import { Box, Button, Divider, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import DashboardFailureModesTableList from "@components/dashboard/content/list/DashboardFailureModesTableList";
 import FailureModesTableAggregateDialog from "@components/dialog/failureModesTable/aggregate/FailureModesTableAggregateDialog";
+import OverviewContainer from "../../components/layout/OverviewContainer";
 
 const FmeaOverview = () => {
   const [createFmeaAggregateDialogOpen, setCreateFmeaAggregateDialogOpen] = useState<boolean>(false);
@@ -13,7 +14,7 @@ const FmeaOverview = () => {
 
   return (
     <DashboardContentProvider>
-      <Box marginTop={3} marginLeft={2} marginRight={2}>
+      <OverviewContainer>
         {/* TODO: Add to sep. component */}
         <Box display="flex" flexDirection="row" justifyContent="space-between">
           <Typography variant="h5">Fault Trees</Typography>
@@ -27,7 +28,7 @@ const FmeaOverview = () => {
           open={createFmeaAggregateDialogOpen}
           onClose={() => setCreateFmeaAggregateDialogOpen(false)}
         />
-      </Box>
+      </OverviewContainer>
     </DashboardContentProvider>
   );
 };

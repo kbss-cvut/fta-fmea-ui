@@ -3,6 +3,7 @@ import DashboardSystemList from "@components/dashboard/content/list/DashboardSys
 import DashboardContentProvider from "@hooks/DashboardContentProvider";
 import { Typography, Button, Box } from "@mui/material";
 import SystemDialog from "@components/dialog/system/SystemDialog";
+import OverviewContainer from "../../components/layout/OverviewContainer";
 
 const SystemsOverview = () => {
   const [createSystemDialogOpen, setCreateSystemDialogOpen] = useState<boolean>(false);
@@ -13,7 +14,7 @@ const SystemsOverview = () => {
 
   return (
     <DashboardContentProvider>
-      <Box marginTop={3} marginLeft={2} marginRight={2}>
+      <OverviewContainer>
         {/* TODO: Add to sep. component */}
         <Box display="flex" flexDirection="row" justifyContent="space-between">
           <Typography variant="h5">Systems</Typography>
@@ -24,7 +25,7 @@ const SystemsOverview = () => {
 
         <DashboardSystemList />
         <SystemDialog open={createSystemDialogOpen} handleCloseDialog={() => setCreateSystemDialogOpen(false)} />
-      </Box>
+      </OverviewContainer>
     </DashboardContentProvider>
   );
 };

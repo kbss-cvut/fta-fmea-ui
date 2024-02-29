@@ -15,19 +15,16 @@ interface SidePanelProps {
 const menuItems = [
   {
     title: "Systems",
-    hint: "Single-line item",
     icon: <SettingsIcon />,
     route: ROUTES.SYSTEMS,
   },
   {
     title: "Fault trees",
-    hint: "Single-line item",
     icon: <AccountTreeIcon />,
     route: ROUTES.FTA,
   },
   {
     title: "FMEA worksheets",
-    hint: "Single-line item",
     icon: <ArticleIcon />,
     route: ROUTES.FMEA,
   },

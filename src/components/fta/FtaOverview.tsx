@@ -3,6 +3,7 @@ import DashboardFaultTreeList from "@components/dashboard/content/list/Dashboard
 import DashboardContentProvider from "@hooks/DashboardContentProvider";
 import { Typography, Box, Button } from "@mui/material";
 import FaultTreeDialog from "@components/dialog/faultTree/FaultTreeDialog";
+import OverviewContainer from "../../components/layout/OverviewContainer";
 
 const FtaOverview = () => {
   const [createFaultTreeDialogOpen, setCreateFaultTreeDialogOpen] = useState<boolean>(false);
@@ -13,7 +14,7 @@ const FtaOverview = () => {
 
   return (
     <DashboardContentProvider>
-      <Box marginTop={3} marginLeft={2} marginRight={2}>
+      <OverviewContainer>
         {/* TODO: Add to sep. component */}
         <Box display="flex" flexDirection="row" justifyContent="space-between">
           <Typography variant="h5">Fault Trees</Typography>
@@ -27,7 +28,7 @@ const FtaOverview = () => {
           open={createFaultTreeDialogOpen}
           handleCloseDialog={() => setCreateFaultTreeDialogOpen(false)}
         />
-      </Box>
+      </OverviewContainer>
     </DashboardContentProvider>
   );
 };
