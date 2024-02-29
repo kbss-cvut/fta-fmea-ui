@@ -47,35 +47,32 @@ const DashboardFailureModesTableList = () => {
 
   const [renameDialogOpen, setRenameDialogOpen] = useState(false);
 
-    return (
-        <React.Fragment>
-            <ImageList className={classes.gridList} cols={6}>
-                {tables.map((mode) => {
-                    const routePath = ROUTES.FMEA + `/${extractFragment(mode.iri)}`;
-                    return (
-                        <ImageListItem key={mode.iri} className={classes.gridListTile}>
-                            <Card className={classes.card}>
-                                <CardHeader
-                                    action={
-                                        <IconButton
-                                            aria-label="settings"
-                                            onClick={(e) => handleContextMenu(e, mode)}
-                                            size="large">
-                                            <MoreVertIcon/>
-                                        </IconButton>
-                                    }
-                                    title={mode.name}
-                                />
-                                <CardActions disableSpacing>
-                                    <MaterialLink variant="button" component={RouterLink} to={routePath}>
-                                        Open
-                                    </MaterialLink>
-                                </CardActions>
-                            </Card>
-                        </ImageListItem>
-                    );
-                })}
-            </ImageList>
+  return (
+    <React.Fragment>
+      <ImageList className={classes.gridList} cols={6}>
+        {tables.map((mode) => {
+          const routePath = ROUTES.FMEA + `/${extractFragment(mode.iri)}`;
+          return (
+            <ImageListItem key={mode.iri} className={classes.gridListTile}>
+              <Card className={classes.card}>
+                <CardHeader
+                  action={
+                    <IconButton aria-label="settings" onClick={(e) => handleContextMenu(e, mode)} size="large">
+                      <MoreVertIcon />
+                    </IconButton>
+                  }
+                  title={mode.name}
+                />
+                <CardActions disableSpacing>
+                  <MaterialLink variant="button" component={RouterLink} to={routePath}>
+                    Open
+                  </MaterialLink>
+                </CardActions>
+              </Card>
+            </ImageListItem>
+          );
+        })}
+      </ImageList>
 
       <FailureModeTableContextMenu
         anchorPosition={contextMenuAnchor}

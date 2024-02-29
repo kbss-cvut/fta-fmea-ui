@@ -50,40 +50,37 @@ const DashboardFaultTreeList = () => {
 
   const [editDialogOpen, setEditDialogOpen] = useState(false);
 
-    return (
-        <React.Fragment>
-            <ImageList className={classes.gridList} cols={6}>
-                {faultTrees.map((tree) => {
-                    const routePath = ROUTES.FTA + `/${extractFragment(tree.iri)}`;
-                    return (
-                        <ImageListItem key={tree.iri} className={classes.gridListTile}>
-                            <Card className={classes.card}>
-                                <CardHeader 
-                                    classes={{content: classes.cardTitle}}
-                                    action={
-                                        <IconButton
-                                            aria-label="settings"
-                                            onClick={(e) => handleContextMenu(e, tree)}
-                                            size="large">
-                                            <MoreVertIcon/>
-                                        </IconButton>
-                                    }
-                                    title={
-                                        <Tooltip title={tree.name}>
-                                            <Typography variant="h5">{tree.name}</Typography>
-                                        </Tooltip>
-                                    }
-                                />
-                                <CardActions disableSpacing>
-                                    <MaterialLink variant="button" component={RouterLink} to={routePath}>
-                                        Open
-                                    </MaterialLink>
-                                </CardActions>
-                            </Card>
-                        </ImageListItem>
-                    );
-                })}
-            </ImageList>
+  return (
+    <React.Fragment>
+      <ImageList className={classes.gridList} cols={6}>
+        {faultTrees.map((tree) => {
+          const routePath = ROUTES.FTA + `/${extractFragment(tree.iri)}`;
+          return (
+            <ImageListItem key={tree.iri} className={classes.gridListTile}>
+              <Card className={classes.card}>
+                <CardHeader
+                  classes={{ content: classes.cardTitle }}
+                  action={
+                    <IconButton aria-label="settings" onClick={(e) => handleContextMenu(e, tree)} size="large">
+                      <MoreVertIcon />
+                    </IconButton>
+                  }
+                  title={
+                    <Tooltip title={tree.name}>
+                      <Typography variant="h5">{tree.name}</Typography>
+                    </Tooltip>
+                  }
+                />
+                <CardActions disableSpacing>
+                  <MaterialLink variant="button" component={RouterLink} to={routePath}>
+                    Open
+                  </MaterialLink>
+                </CardActions>
+              </Card>
+            </ImageListItem>
+          );
+        })}
+      </ImageList>
 
       <FaultTreeContextMenu
         anchorPosition={contextMenuAnchor}

@@ -33,26 +33,41 @@ const DashboardContent = () => {
     setCreateFmeaAggregateDialogOpen(true);
   };
 
-    return (
-        <React.Fragment>
-            <SpeedDial
-                ariaLabel="SpeedDial Dashboard"
-                className={classes.speedDial}
-                icon={<SpeedDialIcon/>}
-                onClose={() => setSpeedDialOpen(false)}
-                onOpen={() => setSpeedDialOpen(true)}
-                open={speedDialOpen}
-            >
-                <SpeedDialAction key="speed-dial-action-new-table-aggregate" icon={<TableChartIcon/>} tooltipOpen
-                                 tooltipTitle={"Aggregated FMEA"} title={"Aggregated FMEA"}
-                                 onClick={handleNewFmeaAggregate}/>
-                <SpeedDialAction key="speed-dial-action-new-tree" icon={<NatureIcon/>} tooltipOpen
-                                 tooltipTitle={"Fault Tree"} title={"Fault Tree"}
-                                 onClick={handleNewFaultTree}/>
-                <SpeedDialAction key="speed-dial-action-new-system" icon={<FlightIcon/>} tooltipOpen
-                                 tooltipTitle={"System"} title={"System"}
-                                 onClick={handleNewSystem}/>
-            </SpeedDial>
+  return (
+    <React.Fragment>
+      <SpeedDial
+        ariaLabel="SpeedDial Dashboard"
+        className={classes.speedDial}
+        icon={<SpeedDialIcon />}
+        onClose={() => setSpeedDialOpen(false)}
+        onOpen={() => setSpeedDialOpen(true)}
+        open={speedDialOpen}
+      >
+        <SpeedDialAction
+          key="speed-dial-action-new-table-aggregate"
+          icon={<TableChartIcon />}
+          tooltipOpen
+          tooltipTitle={"Aggregated FMEA"}
+          title={"Aggregated FMEA"}
+          onClick={handleNewFmeaAggregate}
+        />
+        <SpeedDialAction
+          key="speed-dial-action-new-tree"
+          icon={<NatureIcon />}
+          tooltipOpen
+          tooltipTitle={"Fault Tree"}
+          title={"Fault Tree"}
+          onClick={handleNewFaultTree}
+        />
+        <SpeedDialAction
+          key="speed-dial-action-new-system"
+          icon={<FlightIcon />}
+          tooltipOpen
+          tooltipTitle={"System"}
+          title={"System"}
+          onClick={handleNewSystem}
+        />
+      </SpeedDial>
 
       <FaultTreeDialog open={createFaultTreeDialogOpen} handleCloseDialog={() => setCreateFaultTreeDialogOpen(false)} />
       <SystemDialog open={createSystemDialogOpen} handleCloseDialog={() => setCreateSystemDialogOpen(false)} />

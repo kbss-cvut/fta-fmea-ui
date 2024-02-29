@@ -24,7 +24,7 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
   const [loggedUser] = useLoggedUser();
   const { classes } = useStyles();
   const history = useNavigate();
-  const { i18n } = useTranslation()
+  const { i18n } = useTranslation();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);

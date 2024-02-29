@@ -50,40 +50,37 @@ const DashboardSystemList = () => {
 
   const [editDialogOpen, setEditDialogOpen] = useState(false);
 
-    return (
-        <React.Fragment>
-            <ImageList className={classes.gridList} cols={6}>
-                {systems.map((system) => {
-                    const routePath = ROUTES.SYSTEMS + `/${extractFragment(system.iri)}`;
-                    return (
-                        <ImageListItem key={system.iri} className={classes.gridListTile}>
-                            <Card className={classes.card}>
-                                <CardHeader
-                                    classes={{content: classes.cardTitle}}
-                                    action={
-                                        <IconButton
-                                            aria-label="settings"
-                                            onClick={(e) => handleContextMenu(e, system)}
-                                            size="large">
-                                            <MoreVertIcon/>
-                                        </IconButton>
-                                    }
-                                    title={
-                                        <Tooltip title={system.name}>
-                                            <Typography variant="h5">{system.name}</Typography>
-                                        </Tooltip>
-                                    }
-                                />
-                                <CardActions disableSpacing>
-                                    <MaterialLink variant="button" component={RouterLink} to={routePath}>
-                                        Open
-                                    </MaterialLink>
-                                </CardActions>
-                            </Card>
-                        </ImageListItem>
-                    );
-                })}
-            </ImageList>
+  return (
+    <React.Fragment>
+      <ImageList className={classes.gridList} cols={6}>
+        {systems.map((system) => {
+          const routePath = ROUTES.SYSTEMS + `/${extractFragment(system.iri)}`;
+          return (
+            <ImageListItem key={system.iri} className={classes.gridListTile}>
+              <Card className={classes.card}>
+                <CardHeader
+                  classes={{ content: classes.cardTitle }}
+                  action={
+                    <IconButton aria-label="settings" onClick={(e) => handleContextMenu(e, system)} size="large">
+                      <MoreVertIcon />
+                    </IconButton>
+                  }
+                  title={
+                    <Tooltip title={system.name}>
+                      <Typography variant="h5">{system.name}</Typography>
+                    </Tooltip>
+                  }
+                />
+                <CardActions disableSpacing>
+                  <MaterialLink variant="button" component={RouterLink} to={routePath}>
+                    Open
+                  </MaterialLink>
+                </CardActions>
+              </Card>
+            </ImageListItem>
+          );
+        })}
+      </ImageList>
 
       <SystemContextMenu
         anchorPosition={contextMenuAnchor}
