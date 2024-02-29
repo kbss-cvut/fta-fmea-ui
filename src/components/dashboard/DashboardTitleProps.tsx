@@ -1,3 +1,3 @@
 export interface DashboardTitleProps {
-    setAppBarName: (string) => void,
+  setAppBarName: (string) => void;
 }

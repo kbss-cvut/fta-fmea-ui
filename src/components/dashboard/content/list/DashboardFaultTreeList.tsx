@@ -1,53 +1,54 @@
 import {
-    Card,
-    CardActions,
-    CardHeader,
-    ImageList,
-    ImageListItem,
-    IconButton,
-    Link as MaterialLink,
-    Tooltip,
-    Typography
+  Card,
+  CardActions,
+  CardHeader,
+  ImageList,
+  ImageListItem,
+  IconButton,
+  Link as MaterialLink,
+  Tooltip,
+  Typography,
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import * as React from "react";
-import {useFaultTrees} from "@hooks/useFaultTrees";
+import { useFaultTrees } from "@hooks/useFaultTrees";
 import useStyles from "./DashboardList.styles";
-import {useState} from "react";
-import {FaultTree} from "@models/faultTreeModel";
-import {useConfirmDialog} from "@hooks/useConfirmDialog";
+import { useState } from "react";
+import { FaultTree } from "@models/faultTreeModel";
+import { useConfirmDialog } from "@hooks/useConfirmDialog";
 import FaultTreeContextMenu from "@components/editor/faultTree/menu/faultTree/FaultTreeContextMenu";
 import FaultTreeEditDialog from "@components/dialog/faultTree/FaultTreeEditDialog";
-import {Link as RouterLink} from "react-router-dom";
-import {extractFragment} from "@services/utils/uriIdentifierUtils";
-import {ROUTES} from "@utils/constants";
-import {contextMenuDefaultAnchor, ElementContextMenuAnchor} from "@utils/contextMenu";
+import { Link as RouterLink } from "react-router-dom";
+import { extractFragment } from "@services/utils/uriIdentifierUtils";
+import { ROUTES } from "@utils/constants";
+import { contextMenuDefaultAnchor, ElementContextMenuAnchor } from "@utils/contextMenu";
 
 const DashboardFaultTreeList = () => {
-    const { classes } = useStyles();
-    const [faultTrees, , , removeTree] = useFaultTrees();
+  const { classes } = useStyles();
+  const [faultTrees, , , removeTree] = useFaultTrees();
 
-    const [contextMenuSelectedTree, setContextMenuSelectedTree] = useState<FaultTree>(null)
-    const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefaultAnchor)
+  const [contextMenuSelectedTree, setContextMenuSelectedTree] = useState<FaultTree>(null);
+  const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefaultAnchor);
 
-    const handleContextMenu = (evt, faultTree: FaultTree) => {
-        setContextMenuSelectedTree(faultTree);
-        setContextMenuAnchor({mouseX: evt.pageX, mouseY: evt.pageY,})
-    }
+  const handleContextMenu = (evt, faultTree: FaultTree) => {
+    setContextMenuSelectedTree(faultTree);
+    setContextMenuAnchor({ mouseX: evt.pageX, mouseY: evt.pageY });
+  };
 
-    const [showConfirmDialog] = useConfirmDialog();
+  const [showConfirmDialog] = useConfirmDialog();
 
-    const handleDelete = (treeToDelete: FaultTree) => {
-        showConfirmDialog({
-            title: 'Delete Fault Tree',
-            explanation: 'Deleting fault tree will delete the whole tree structure. Events will remain. Proceed to delete the tree?',
-            onConfirm: () => {
-                removeTree(treeToDelete);
-            },
-        })
-    }
+  const handleDelete = (treeToDelete: FaultTree) => {
+    showConfirmDialog({
+      title: "Delete Fault Tree",
+      explanation:
+        "Deleting fault tree will delete the whole tree structure. Events will remain. Proceed to delete the tree?",
+      onConfirm: () => {
+        removeTree(treeToDelete);
+      },
+    });
+  };
 
-    const [editDialogOpen, setEditDialogOpen] = useState(false)
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
 
     return (
         <React.Fragment>
@@ -84,17 +85,20 @@ const DashboardFaultTreeList = () => {
                 })}
             </ImageList>
 
-            <FaultTreeContextMenu
-                anchorPosition={contextMenuAnchor}
-                onEditClick={() => setEditDialogOpen(true)}
-                onDelete={() => handleDelete(contextMenuSelectedTree)}
-                onClose={() => setContextMenuAnchor(contextMenuDefaultAnchor)}/>
+      <FaultTreeContextMenu
+        anchorPosition={contextMenuAnchor}
+        onEditClick={() => setEditDialogOpen(true)}
+        onDelete={() => handleDelete(contextMenuSelectedTree)}
+        onClose={() => setContextMenuAnchor(contextMenuDefaultAnchor)}
+      />
 
-            <FaultTreeEditDialog open={editDialogOpen}
-                                 handleCloseDialog={() => setEditDialogOpen(false)}
-                                 faultTree={contextMenuSelectedTree}/>
-        </React.Fragment>
-    );
-}
+      <FaultTreeEditDialog
+        open={editDialogOpen}
+        handleCloseDialog={() => setEditDialogOpen(false)}
+        faultTree={contextMenuSelectedTree}
+      />
+    </React.Fragment>
+  );
+};
 
 export default DashboardFaultTreeList;

@@ -1,5 +1,5 @@
 import * as React from "react";
-import {createTheme} from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 
 declare module '@mui/material/styles' {
     interface Theme {
@@ -52,9 +52,9 @@ declare module '@mui/material/styles' {
 }
 
 const createCustomMuiTheme = (options) => {
-    return createTheme({
-        ...options,
-    });
-}
+  return createTheme({
+    ...options,
+  });
+};
 
 export default createCustomMuiTheme;

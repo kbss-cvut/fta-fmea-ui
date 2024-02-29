@@ -1,7 +1,7 @@
-import {getLoggedUser} from "@hooks/useLoggedUser";
+import { getLoggedUser } from "@hooks/useLoggedUser";
 
 export const authHeaders = () => {
-    return {
-        Authorization: `Bearer ${getLoggedUser().token}`
-    }
-}
+  return {
+    Authorization: `Bearer ${getLoggedUser().token}`,
+  };
+};
