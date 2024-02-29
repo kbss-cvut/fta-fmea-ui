@@ -88,7 +88,7 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
 
   return (
     <div>
-      <MaterialAppBar position="fixed">
+      <MaterialAppBar position="fixed" elevation={0}>
         <Toolbar>
           {showBackButton && (
             <IconButton edge="start" className={classes.menuButton} color="inherit" onClick={goBack} size="large">
