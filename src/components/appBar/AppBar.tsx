@@ -16,7 +16,7 @@ import LanguageIcon from "@mui/icons-material/Language";
 
 interface Props {
   title: string;
-  topPanelHeight: number;
+  topPanelHeight?: number;
   showBackButton?: boolean;
 }
 

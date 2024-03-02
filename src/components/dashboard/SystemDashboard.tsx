@@ -19,9 +19,7 @@ const SystemDashboard = () => {
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
       <AppBar title={appBarTitle} showBackButton />
-      <Toolbar />
 
       <CurrentSystemProvider systemIri={systemIri}>
         <Editor setAppBarName={setAppBarTitle} />
