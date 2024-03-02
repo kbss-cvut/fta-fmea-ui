@@ -1,6 +1,5 @@
 import * as React from "react";
 import Login from "@components/login/Login";
-import Dashboard from "@components/dashboard/Dashboard";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Logout from "@components/Logout";
 import PublicRoute from "@components/routes/PublicRoute";
@@ -18,6 +17,7 @@ import Navigation from "../navigation/Navigation";
 import SystemsOverview from "../systems/SystemsOverview";
 import FtaOverview from "../fta/FtaOverview";
 import FmeaOverview from "../fmea/FmeaOverview";
+import FhaOverview from "../fha/FhaOverview";
 
 export const appHistory = createHashHistory();
 
@@ -122,6 +122,15 @@ const AppRoutes = () => {
               element={
                 <PrivateRoute path={ROUTES.FMEA + ROUTE_PARAMS.FMEA_FRAGMENT} exact>
                   <FailureModesTableDashboard />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path={ROUTES.FHA}
+              element={
+                <PrivateRoute>
+                  <FhaOverview />
                 </PrivateRoute>
               }
             />

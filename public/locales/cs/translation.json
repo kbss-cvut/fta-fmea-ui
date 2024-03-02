@@ -1,5 +1,35 @@
 {
-  "main": {
-    "appBarHeader": "Řídicí panel"
+  "categories": {
+    "systems": "Systémy",
+    "trees": "Poruchové stromy",
+    "worksheets": "Pracovní listy FMEA",
+    "tables": "FHA tabulky"
+  },
+  "create": {
+    "system": "Nový systém",
+    "tree": "Nový strom poruch",
+    "worksheet": "Nový pracovní list FMEA"
+  },
+  "newSystemModal": {
+    "title": "Vytvořit systém",
+    "namePlaceholder": "Název systému",
+    "create": "Vytvořit"
+  },
+  "newFtaModal": {
+    "title": "Vytvořit Strom Poruch",
+    "namePlaceholder": "Název stromu poruch",
+    "eventPlaceholder": "Událost",
+    "create": "Vytvořit novou událost",
+    "type": "Typ",
+    "name": "Název události",
+    "description": "Popis",
+    "probability": "Pravděpodobnost",
+    "gateType": "Typ brány"
+  },
+  "newFmeaModal": {
+    "title": "FMEA Agregáty",
+    "namePlaceholder": "Název FMEA",
+    "effects": "Vyberte efekty",
+    "create": "Vytvořit"
   }
 }

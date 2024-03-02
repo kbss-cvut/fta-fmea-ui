@@ -13,6 +13,7 @@ import { ROUTES } from "@utils/constants";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useTranslation } from "react-i18next";
 import LanguageIcon from "@mui/icons-material/Language";
+import { PRIMARY_LANGUAGE, SECONDARY_LANGUAGE, SELECTED_LANGUAGE_KEY } from "../../utils/constants";
 
 interface Props {
   title: string;
@@ -79,10 +80,12 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
   const [changePasswordDialogOpen, setChangePasswordDialogOpen] = useState(false);
 
   const toggleLanguage = () => {
-    if (i18n.resolvedLanguage === "en") {
-      i18n.changeLanguage("cs");
+    if (i18n.resolvedLanguage === PRIMARY_LANGUAGE) {
+      i18n.changeLanguage(SECONDARY_LANGUAGE);
+      localStorage.setItem(SELECTED_LANGUAGE_KEY, SECONDARY_LANGUAGE);
     } else {
-      i18n.changeLanguage("en");
+      i18n.changeLanguage(PRIMARY_LANGUAGE);
+      localStorage.setItem(SELECTED_LANGUAGE_KEY, PRIMARY_LANGUAGE);
     }
   };
 

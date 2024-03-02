@@ -4,8 +4,11 @@ import DashboardContentProvider from "@hooks/DashboardContentProvider";
 import { Typography, Box, Button } from "@mui/material";
 import FaultTreeDialog from "@components/dialog/faultTree/FaultTreeDialog";
 import OverviewContainer from "../../components/layout/OverviewContainer";
+import { useTranslation } from "react-i18next";
 
 const FtaOverview = () => {
+  const { t } = useTranslation();
+
   const [createFaultTreeDialogOpen, setCreateFaultTreeDialogOpen] = useState<boolean>(false);
 
   const handleDialogOpen = () => {
@@ -17,9 +20,9 @@ const FtaOverview = () => {
       <OverviewContainer>
         {/* TODO: Add to sep. component */}
         <Box display="flex" flexDirection="row" justifyContent="space-between">
-          <Typography variant="h5">Fault Trees</Typography>
+          <Typography variant="h5">{t("categories.trees")}</Typography>
           <Button variant="contained" onClick={handleDialogOpen}>
-            New Fault tree
+            {t("create.tree")}
           </Button>
         </Box>
 

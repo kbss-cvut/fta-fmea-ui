@@ -7,6 +7,8 @@ import { SnackbarProvider } from "@hooks/useSnackbar";
 import { ConfirmDialogProvider } from "@hooks/useConfirmDialog";
 import { ENVVariable } from "@utils/constants";
 import { Suspense } from "react";
+import { useTranslation } from "react-i18next";
+import { SELECTED_LANGUAGE_KEY, PRIMARY_LANGUAGE } from "./utils/constants";
 
 declare module "@mui/material/styles" {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -14,6 +16,14 @@ declare module "@mui/material/styles" {
 }
 
 const App = () => {
+  const { i18n } = useTranslation();
+  const storedLanguage = localStorage.getItem(SELECTED_LANGUAGE_KEY);
+
+  useEffect(() => {
+    if (storedLanguage) i18n.changeLanguage(storedLanguage);
+    else i18n.changeLanguage(PRIMARY_LANGUAGE);
+  }, [storedLanguage]);
+
   useEffect(() => {
     const changeAppTitle = () => {
       document.querySelector("title").textContent = ENVVariable.TITLE;

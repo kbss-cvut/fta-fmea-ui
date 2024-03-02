@@ -4,8 +4,11 @@ import { Box, Button, Typography } from "@mui/material";
 import DashboardFailureModesTableList from "@components/dashboard/content/list/DashboardFailureModesTableList";
 import FailureModesTableAggregateDialog from "@components/dialog/failureModesTable/aggregate/FailureModesTableAggregateDialog";
 import OverviewContainer from "../../components/layout/OverviewContainer";
+import { useTranslation } from "react-i18next";
 
 const FmeaOverview = () => {
+  const { t } = useTranslation();
+
   const [createFmeaAggregateDialogOpen, setCreateFmeaAggregateDialogOpen] = useState<boolean>(false);
 
   const handleDialogOpen = () => {
@@ -17,9 +20,9 @@ const FmeaOverview = () => {
       <OverviewContainer>
         {/* TODO: Add to sep. component */}
         <Box display="flex" flexDirection="row" justifyContent="space-between">
-          <Typography variant="h5">Fault Trees</Typography>
+          <Typography variant="h5">{t("categories.worksheets")}</Typography>
           <Button variant="contained" onClick={handleDialogOpen}>
-            New fmea worksheet
+            {t("create.worksheet")}
           </Button>
         </Box>
 
