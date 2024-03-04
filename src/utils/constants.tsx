@@ -49,6 +49,8 @@ export const ROUTE_PARAMS = {
   FMEA_FRAGMENT: "/:fmeaFragment",
 };
 
+export const SIDE_PANEL_STATE_KEY = "isSidePanelCollapsed";
+
 export const SVG_PAN_ZOOM_OPTIONS = {
   center: false,
   zoomEnabled: true,

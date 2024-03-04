@@ -6,10 +6,16 @@ import ArticleIcon from "@mui/icons-material/Article";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ROUTES } from "@utils/constants";
 import useStyles from "./SidePanel.styles";
+import MenuOpenIcon from "@mui/icons-material/MenuOpen";
+import MenuIcon from "@mui/icons-material/Menu";
 
 interface SidePanelProps {
   topPanelHeight: number;
   width: number;
+  collapsedWidth: number;
+  isCollapsed: boolean;
+  toggleSidePanel: () => void;
+  showAnimation: boolean;
 }
 
 const menuItems = [
@@ -30,7 +36,14 @@ const menuItems = [
   },
 ];
 
-const SidePanel: FC<SidePanelProps> = ({ topPanelHeight, width }) => {
+const SidePanel: FC<SidePanelProps> = ({
+  topPanelHeight,
+  width,
+  collapsedWidth,
+  isCollapsed,
+  toggleSidePanel,
+  showAnimation,
+}) => {
   const location = useLocation();
   const navigate = useNavigate();
   const theme = useTheme();
@@ -49,7 +62,11 @@ const SidePanel: FC<SidePanelProps> = ({ topPanelHeight, width }) => {
   };
 
   return (
-    <Box className={classes.container} width={width}>
+    <Box
+      className={classes.container}
+      width={isCollapsed ? collapsedWidth : width}
+      style={{ transition: showAnimation ? "width 0.3s" : "none" }}
+    >
       <Box style={{ marginTop: topPanelHeight }}>
         {menuItems.map((item, index) => {
           const isHighLighted = index === hoveredItemIndex || location.pathname.includes(item.route);
@@ -68,7 +85,7 @@ const SidePanel: FC<SidePanelProps> = ({ topPanelHeight, width }) => {
               <Box className={classes.iconContainer} style={{ color: iconColor }}>
                 {item.icon}
               </Box>
-              <Box display="flex" flexDirection="column">
+              <Box className={classes.titleContainer}>
                 <Typography className={classes.title} style={{ color: titleColor }}>
                   {item.title}
                 </Typography>
@@ -76,6 +93,9 @@ const SidePanel: FC<SidePanelProps> = ({ topPanelHeight, width }) => {
             </Box>
           );
         })}
+        <Box className={classes.toggleContainer} onClick={toggleSidePanel}>
+          <Box className={classes.toggleIconBox}>{isCollapsed ? <MenuIcon /> : <MenuOpenIcon />}</Box>
+        </Box>
       </Box>
     </Box>
   );
