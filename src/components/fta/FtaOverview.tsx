@@ -18,7 +18,6 @@ const FtaOverview = () => {
   return (
     <DashboardContentProvider>
       <OverviewContainer>
-        {/* TODO: Add to sep. component */}
         <Box display="flex" flexDirection="row" justifyContent="space-between">
           <Typography variant="h5">{t("categories.trees")}</Typography>
           <Button variant="contained" onClick={handleDialogOpen}>
