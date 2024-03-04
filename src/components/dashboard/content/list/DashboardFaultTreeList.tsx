@@ -54,7 +54,7 @@ const DashboardFaultTreeList = () => {
     <React.Fragment>
       <ImageList className={classes.gridList} cols={6}>
         {faultTrees.map((tree) => {
-          const routePath = ROUTES.FTA + extractFragment(tree.iri);
+          const routePath = ROUTES.FTA + `/${extractFragment(tree.iri)}`;
           return (
             <ImageListItem key={tree.iri} className={classes.gridListTile}>
               <Card className={classes.card}>

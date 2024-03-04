@@ -16,10 +16,11 @@ import LanguageIcon from "@mui/icons-material/Language";
 
 interface Props {
   title: string;
+  topPanelHeight?: number;
   showBackButton?: boolean;
 }
 
-const AppBar = ({ title, showBackButton = false }: Props) => {
+const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
   const [loggedUser] = useLoggedUser();
   const { classes } = useStyles();
   const history = useNavigate();
@@ -87,7 +88,7 @@ const AppBar = ({ title, showBackButton = false }: Props) => {
 
   return (
     <div>
-      <MaterialAppBar position="fixed">
+      <MaterialAppBar position="fixed" elevation={0}>
         <Toolbar>
           {showBackButton && (
             <IconButton edge="start" className={classes.menuButton} color="inherit" onClick={goBack} size="large">

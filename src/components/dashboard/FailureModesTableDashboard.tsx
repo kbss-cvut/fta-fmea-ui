@@ -29,9 +29,7 @@ const FailureModesTableDashboard = () => {
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
       <AppBar title={appBarTitle} showBackButton />
-      <Toolbar />
 
       <CurrentFailureModesTableProvider tableIri={tableIri}>
         <FailureModeTable setAppBarName={setAppBarTitle} />

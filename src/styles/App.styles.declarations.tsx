@@ -14,6 +14,16 @@ declare module "@mui/material/styles" {
       };
       fontSize: number;
     };
+    sidePanel?: {
+      colors?: {
+        icon?: string;
+        iconActive?: string;
+        text?: string;
+        textActive?: string;
+        hint?: string;
+        hover?: string;
+      };
+    };
   }
   // allow configuration using `createMuiTheme`
   interface DeprecatedThemeOptions {
@@ -27,6 +37,16 @@ declare module "@mui/material/styles" {
         strokeColor?: React.CSSProperties["color"];
       };
       fontSize: number;
+    };
+    sidePanel?: {
+      colors?: {
+        icon?: string;
+        iconActive?: string;
+        text?: string;
+        textActive?: string;
+        hint?: string;
+        hover?: string;
+      };
     };
   }
 }

@@ -38,15 +38,15 @@ export const ROUTES = {
   LOGOUT: "/logout",
 
   DASHBOARD: "/",
-  SYSTEM: "/system/",
-  FTA: "/fta/",
-  FMEA: "/fmea/",
+  SYSTEMS: "/systems",
+  FTA: "/fta",
+  FMEA: "/fmea",
 };
 
 export const ROUTE_PARAMS = {
-  SYSTEM_FRAGMENT: ":systemFragment",
-  FTA_FRAGMENT: ":treeFragment",
-  FMEA_FRAGMENT: ":fmeaFragment",
+  SYSTEM_FRAGMENT: "/:systemFragment",
+  FTA_FRAGMENT: "/:treeFragment",
+  FMEA_FRAGMENT: "/:fmeaFragment",
 };
 
 export const SVG_PAN_ZOOM_OPTIONS = {
