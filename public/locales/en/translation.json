@@ -20,10 +20,10 @@
     "namePlaceholder": "Fault Tree name",
     "eventPlaceholder": "Event",
     "create": "Create new Event",
-    "type": "Type",
+    "type": "FTA event type",
     "name": "Event name",
     "description": "Description",
-    "probability": "Probability",
+    "probability": "Failure rate",
     "gateType": "Gate type"
   },
   "newFmeaModal": {

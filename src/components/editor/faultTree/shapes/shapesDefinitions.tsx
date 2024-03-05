@@ -30,7 +30,7 @@ const Event = joint.dia.Element.define(
         fontSize: 16,
         fontFamily: "sans-serif",
         fill: "#333333",
-        textAnchor: 'start',
+        textAnchor: "start",
         textVerticalAnchor: "middle",
         refX: "60%",
         refY: "70%",
@@ -138,14 +138,15 @@ export const IntermediateEvent = Event.define(
   },
   {
     attributes: {
-        gateType: {
-            set: function (type) {
-                const data = this.model.gateTypes[type];
-                return {d: data ? data + ' M 0 -30 0 -60' : 'M 0 0 0 0'};
-            }
-        }
-    }
-});
+      gateType: {
+        set: function (type) {
+          const data = this.model.gateTypes[type];
+          return { d: data ? data + " M 0 -30 0 -60" : "M 0 0 0 0" };
+        },
+      },
+    },
+  },
+);
 
 export const ExternalEvent = Event.define(
   "fta.ExternalEvent",

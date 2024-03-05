@@ -13,7 +13,7 @@ import { ROUTES } from "@utils/constants";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useTranslation } from "react-i18next";
 import LanguageIcon from "@mui/icons-material/Language";
-import { PRIMARY_LANGUAGE, SECONDARY_LANGUAGE, SELECTED_LANGUAGE_KEY } from "../../utils/constants";
+import { PRIMARY_LANGUAGE, SECONDARY_LANGUAGE, SELECTED_LANGUAGE_KEY } from "@utils/constants";
 
 interface Props {
   title: string;

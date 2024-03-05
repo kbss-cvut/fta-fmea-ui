@@ -16,18 +16,18 @@
     "create": "Vytvořit"
   },
   "newFtaModal": {
-    "title": "Vytvořit Strom Poruch",
+    "title": "Vytvořit strom poruch",
     "namePlaceholder": "Název stromu poruch",
     "eventPlaceholder": "Událost",
     "create": "Vytvořit novou událost",
-    "type": "Typ",
+    "type": "Typ FTA události",
     "name": "Název události",
     "description": "Popis",
-    "probability": "Pravděpodobnost",
-    "gateType": "Typ brány"
+    "probability": "Intenzita poruch",
+    "gateType": "Typ hradla"
   },
   "newFmeaModal": {
-    "title": "FMEA Agregáty",
+    "title": "FMEA agregáty",
     "namePlaceholder": "Název FMEA",
     "effects": "Vyberte efekty",
     "create": "Vytvořit"
