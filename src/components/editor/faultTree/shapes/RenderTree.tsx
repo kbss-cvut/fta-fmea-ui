@@ -7,13 +7,25 @@ import { flatten } from "lodash";
 import { has } from "lodash";
 import { JOINTJS_NODE_MODEL } from "@components/editor/faultTree/shapes/constants";
 
-const renderLink = (container, source, target) => {
+const renderLink = (container, source, target, shouldHighlight) => {
   // @ts-ignore
   const link = Link.create(source, target);
+  if (shouldHighlight) {
+    link.attr("line/stroke", "red");
+  }
+
   link.addTo(container);
 };
 
-const renderTree = (container, node, parentShape = null) => {
+const highlightCheck = (path, iri) => {
+  const flattenedPath = path.flat(Infinity); // Flatten the nested arrays
+  const iriArray = flattenedPath.map((item) => item?.iri);
+  return iriArray.includes(iri);
+};
+
+const renderTree = (container, node, parentShape = null, pathsToHighlight) => {
+  const shouldHighlight = pathsToHighlight ? highlightCheck(pathsToHighlight, node.iri) : false;
+
   // render node shape
   let nodeShape = createShape(node);
   nodeShape.addTo(container);
@@ -28,6 +40,9 @@ const renderTree = (container, node, parentShape = null) => {
   if (has(node, "probabilityRequirement")) {
     nodeShape.attr(["probabilityRequirementLabel", "text"], node.probability.toExponential(2));
   }
+  if (shouldHighlight) {
+    nodeShape.attr("body/stroke", "red");
+  }
   // @ts-ignore
   nodeShape.set(JOINTJS_NODE_MODEL.faultEventIri, node.iri);
   const r = node.rectangle;
@@ -38,7 +53,7 @@ const renderTree = (container, node, parentShape = null) => {
   }
   // Render link
   if (parentShape) {
-    renderLink(container, parentShape, nodeShape);
+    renderLink(container, parentShape, nodeShape, shouldHighlight);
   }
 
   // render children
@@ -46,7 +61,7 @@ const renderTree = (container, node, parentShape = null) => {
   const sequence = sequenceListToArray(node.childrenSequence);
   faultEventService.eventChildrenSorted(flatten([node.children]), sequence);
   const childNodes = faultEventService.eventChildrenSorted(flatten([node.children]), sequence);
-  if (childNodes) childNodes.forEach((n) => renderTree(container, n, nodeShape));
+  if (childNodes) childNodes.forEach((n) => renderTree(container, n, nodeShape, pathsToHighlight));
 };
 
 export default renderTree;

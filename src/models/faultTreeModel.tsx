@@ -14,5 +14,5 @@ export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, EVENT_CONTEXT, S
 export interface FaultTree extends AbstractModel {
   name: string;
   manifestingEvent: FaultEvent;
-  faultEventScenarios: FaultEventScenario;
+  faultEventScenarios: FaultEventScenario[];
 }

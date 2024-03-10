@@ -2,6 +2,8 @@ import { Divider, Button, IconButton, Typography } from "@mui/material";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
 import TableChartIcon from "@mui/icons-material/TableChart";
+import RouteIcon from "@mui/icons-material/Route";
+import Tooltip from "@mui/material/Tooltip";
 import * as React from "react";
 
 export interface Props {
@@ -36,7 +38,13 @@ const DiagramOptions = ({
             <TableChartIcon />
           </IconButton>
         )}
-        {onCutSetAnalysis && <Button onClick={onCutSetAnalysis}>cutsets</Button>}
+        {onCutSetAnalysis && (
+          <Tooltip title="Cutset">
+            <IconButton color="primary" onClick={onCutSetAnalysis} size="large">
+              <RouteIcon />
+            </IconButton>
+          </Tooltip>
+        )}
       </div>
       <Divider />
     </React.Fragment>
