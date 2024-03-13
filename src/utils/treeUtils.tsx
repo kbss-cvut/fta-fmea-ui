@@ -58,6 +58,5 @@ export const findNodeByIri = (node, targetIri) => {
     }
   }
 
-  // If the target IRI is not found in the current node or its children, return an empty array
   return [];
 };

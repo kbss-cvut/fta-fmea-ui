@@ -37,6 +37,7 @@ interface Props {
   refreshTree: () => void;
   setHighlightedElement: (element: any) => void;
   faultEventScenarios: FaultEventScenario[];
+  showPath: boolean;
 }
 
 const EditorCanvas = ({
@@ -53,6 +54,7 @@ const EditorCanvas = ({
   refreshTree,
   setHighlightedElement,
   faultEventScenarios,
+  showPath,
 }: Props) => {
   const { classes } = useStyles();
 
@@ -73,7 +75,7 @@ const EditorCanvas = ({
 
     faultEventScenarios.forEach((scenario) => {
       if (Array.isArray(scenario?.scenarioParts)) {
-        scenario.scenarioParts.forEach((sp) => targetsIri.push(sp.iri));
+        scenario.scenarioParts.forEach((scenarioPart) => targetsIri.push(scenarioPart.iri));
       } else {
         targetsIri.push(scenario?.scenarioParts?.iri);
       }
@@ -212,8 +214,8 @@ const EditorCanvas = ({
 
       const listOfPaths = [];
 
-      if (targets.length > 0) {
-        targets.forEach((t) => listOfPaths.push(findNodeByIri(rootEvent, t)));
+      if (targets.length > 0 && showPath) {
+        targets.forEach((target) => listOfPaths.push(findNodeByIri(rootEvent, target)));
       }
 
       renderTree(container, rootEvent, null, listOfPaths);

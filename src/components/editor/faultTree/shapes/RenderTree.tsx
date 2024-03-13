@@ -18,7 +18,7 @@ const renderLink = (container, source, target, shouldHighlight) => {
 };
 
 const highlightCheck = (path, iri) => {
-  const flattenedPath = path.flat(Infinity); // Flatten the nested arrays
+  const flattenedPath = path.flat(Infinity);
   const iriArray = flattenedPath.map((item) => item?.iri);
   return iriArray.includes(iri);
 };

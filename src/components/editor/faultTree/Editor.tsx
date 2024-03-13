@@ -212,7 +212,8 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
         onNodeMove={handleMoveEvent}
         setHighlightedElement={setHighlightedElementView}
         refreshTree={refreshTree}
-        faultEventScenarios={showPath ? faultEventScenarios : []}
+        faultEventScenarios={faultEventScenarios}
+        showPath={showPath}
       />
 
       <FaultEventContextMenu
