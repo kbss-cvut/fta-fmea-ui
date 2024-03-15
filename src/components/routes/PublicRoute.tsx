@@ -22,7 +22,7 @@ const PublicRoute = ({ children, restricted, ...rest }) => {
   console.log("Public route");
 
   if (loggedUser && loggedUser.authenticated && restricted) {
-    return <Navigate to={ROUTES.DASHBOARD} />;
+    return <Navigate to={ROUTES.SYSTEMS} />;
   }
 
   return children;

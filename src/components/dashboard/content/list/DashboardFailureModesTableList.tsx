@@ -1,9 +1,7 @@
 import {
-  Button,
   Card,
   CardActions,
   CardHeader,
-  Grid,
   ImageList,
   ImageListItem,
   IconButton,
@@ -16,14 +14,10 @@ import useStyles from "@components/dashboard/content/list/DashboardList.styles";
 import { ROUTES } from "@utils/constants";
 import { extractFragment } from "@services/utils/uriIdentifierUtils";
 import { Link as RouterLink } from "react-router-dom";
-import { System } from "@models/systemModel";
 import { useConfirmDialog } from "@hooks/useConfirmDialog";
 import { useState } from "react";
 import { contextMenuDefaultAnchor, ElementContextMenuAnchor } from "@utils/contextMenu";
-import { FailureMode } from "@models/failureModeModel";
-import SystemContextMenu from "@components/editor/system/menu/SystemContextMenu";
 import FailureModeTableContextMenu from "@components/editor/failureMode/menu/FailureModeTableContextMenu";
-import SystemEditDialog from "@components/dialog/system/SystemEditDialog";
 import FailureModesTableRenameDialog from "@components/dialog/failureModesTable/rename/FailureModesTableRenameDialog";
 import { FailureModesTable } from "@models/failureModesTableModel";
 
@@ -57,7 +51,7 @@ const DashboardFailureModesTableList = () => {
     <React.Fragment>
       <ImageList className={classes.gridList} cols={6}>
         {tables.map((mode) => {
-          const routePath = ROUTES.FMEA + extractFragment(mode.iri);
+          const routePath = ROUTES.FMEA + `/${extractFragment(mode.iri)}`;
           return (
             <ImageListItem key={mode.iri} className={classes.gridListTile}>
               <Card className={classes.card}>
