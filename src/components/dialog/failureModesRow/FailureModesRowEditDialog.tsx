@@ -174,13 +174,13 @@ const FailureModesRowEditDialog = ({ open, handleCloseDialog, rowRpn, onSuccess,
         {/*        id="failure-modes-multiselect"*/}
         {/*        value={selectedFailureMode}*/}
         {/*        onChange={handleChange}*/}
-        {/*        renderValue={(selected: FailureMode) => selected["http://onto.fel.cvut.cz/ontologies/fta-fmea-application/hasName"]}*/}
+        {/*        renderValue={(selected: FailureMode) => selected["http://onto.fel.cvut.cz/ontologies/fta-fmea-application/name"]}*/}
         {/*    >*/}
         {/*        {*/}
         {/*            failureModes.map((failureMode) =>*/}
         {/*                //@ts-ignore*/}
         {/*                <MenuItem key={failureMode["@id"]} value={failureMode} >*/}
-        {/*                    <ListItemText primary={failureMode["http://onto.fel.cvut.cz/ontologies/fta-fmea-application/hasName"] } />*/}
+        {/*                    <ListItemText primary={failureMode["http://onto.fel.cvut.cz/ontologies/fta-fmea-application/name"] } />*/}
         {/*                </MenuItem>*/}
         {/*            )}*/}
         {/*    </Select>*/}

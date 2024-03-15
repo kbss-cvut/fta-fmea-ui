@@ -4,9 +4,9 @@ import { AbstractModel, AbstractUpdateModel, CONTEXT as ABSTRACT_CONTEXT } from 
 import { CONTEXT as RPN_CONTEXT, RiskPriorityNumber } from "@models/rpnModel";
 
 const ctx = {
-  finalEffect: VocabularyUtils.PREFIX + "hasFinalEffect",
-  localEffect: VocabularyUtils.PREFIX + "hasLocalEffect",
-  effects: VocabularyUtils.PREFIX + "hasEffect",
+  finalEffect: VocabularyUtils.PREFIX + "has-final-effect",
+  localEffect: VocabularyUtils.PREFIX + "has-local-effect",
+  effects: VocabularyUtils.PREFIX + "has-effect",
 };
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, EVENT_CONTEXT, RPN_CONTEXT);

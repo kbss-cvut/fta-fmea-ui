@@ -2,7 +2,7 @@ import VocabularyUtils from "@utils/VocabularyUtils";
 import { AbstractModel, CONTEXT as ABSTRACT_CONTEXT } from "@models/abstractModel";
 
 const ctx = {
-  name: VocabularyUtils.PREFIX + "hasName",
+  name: VocabularyUtils.PREFIX + "name",
   iri: VocabularyUtils.PREFIX + "iri",
 };
 

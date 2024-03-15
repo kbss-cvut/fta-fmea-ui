@@ -4,17 +4,17 @@ import { FailureMode, CONTEXT as FAILURE_MODE_CONTEXT } from "@models/failureMod
 import { Rectangle, CONTEXT as RECTANGLE_CONTEXT, PREFIX as DIAGRAM_PREFIX } from "@models/utils/Rectangle";
 
 const ctx = {
-  name: VocabularyUtils.PREFIX + "hasName",
-  description: VocabularyUtils.PREFIX + "hasDescription",
+  name: VocabularyUtils.PREFIX + "name",
+  description: VocabularyUtils.PREFIX + "description",
   takenAction: VocabularyUtils.PREFIX + "isPreventedBy",
-  gateType: VocabularyUtils.PREFIX + "hasGateType",
-  eventType: VocabularyUtils.PREFIX + "hasFaultEventType",
-  rpn: VocabularyUtils.PREFIX + "hasRPN",
-  probability: VocabularyUtils.PREFIX + "hasProbability",
-  children: VocabularyUtils.PREFIX + "hasChildren",
-  failureMode: VocabularyUtils.PREFIX + "hasFailureMode",
-  sequenceProbability: VocabularyUtils.PREFIX + "hasSequenceProbability",
-  childrenSequence: VocabularyUtils.PREFIX + "hasChildrenSequence",
+  gateType: VocabularyUtils.PREFIX + "gate-type",
+  eventType: VocabularyUtils.PREFIX + "fault-event-type",
+  rpn: VocabularyUtils.PREFIX + "has-rpn",
+  probability: VocabularyUtils.PREFIX + "probability",
+  children: VocabularyUtils.PREFIX + "has-child",
+  failureMode: VocabularyUtils.PREFIX + "has-failure-mode",
+  sequenceProbability: VocabularyUtils.PREFIX + "sequence-probability",
+  childrenSequence: VocabularyUtils.PREFIX + "has-child-sequence",
   rectangle: DIAGRAM_PREFIX + "has-rectangle",
 };
 

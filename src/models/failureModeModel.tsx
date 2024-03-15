@@ -12,9 +12,9 @@ import {
 import { Behavior } from "@models/behaviorModel";
 
 const ctx = {
-  effects: VocabularyUtils.PREFIX + "hasEffect",
-  mitigation: VocabularyUtils.PREFIX + "isMitigatedBy",
-  failureModeType: VocabularyUtils.PREFIX + "hasFailureModeType",
+  effects: VocabularyUtils.PREFIX + "has-effect",
+  mitigation: VocabularyUtils.PREFIX + "is-mitigated-by",
+  failureModeType: VocabularyUtils.PREFIX + "failure-mode-type",
 };
 
 export const CONTEXT = Object.assign(

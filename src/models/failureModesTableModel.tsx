@@ -5,9 +5,9 @@ import { FaultTree, CONTEXT as FAULT_TREE_CONTEXT } from "./faultTreeModel";
 import { FailureMode, CONTEXT as FAILURE_MODES_CONTEXT } from "@models/failureModeModel";
 
 const ctx = {
-  name: VocabularyUtils.PREFIX + "hasName",
-  tree: VocabularyUtils.PREFIX + "isDerivedFrom",
-  rows: VocabularyUtils.PREFIX + "hasRow",
+  name: VocabularyUtils.PREFIX + "name",
+  tree: VocabularyUtils.PREFIX + "is-derived-from",
+  rows: VocabularyUtils.PREFIX + "has-row",
 };
 
 export const CONTEXT = Object.assign(
