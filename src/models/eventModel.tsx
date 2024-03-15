@@ -6,7 +6,6 @@ import { Rectangle, CONTEXT as RECTANGLE_CONTEXT, PREFIX as DIAGRAM_PREFIX } fro
 const ctx = {
   name: VocabularyUtils.PREFIX + "name",
   description: VocabularyUtils.PREFIX + "description",
-  takenAction: VocabularyUtils.PREFIX + "isPreventedBy",
   gateType: VocabularyUtils.PREFIX + "gate-type",
   eventType: VocabularyUtils.PREFIX + "fault-event-type",
   rpn: VocabularyUtils.PREFIX + "has-rpn",

@@ -10,7 +10,6 @@ const ctx = {
   functions: VocabularyUtils.PREFIX + "has-function",
   failureModes: VocabularyUtils.PREFIX + "has-failure-mode",
   linkedComponent: VocabularyUtils.PREFIX + "is-part-of",
-  system: VocabularyUtils.PREFIX + "belongsTo",
 };
 
 export const CONTEXT = Object.assign({}, ctx, FUNCTION_CONTEXT, FAILURE_MODE_CONTEXT, ABSTRACT_CONTEXT);
