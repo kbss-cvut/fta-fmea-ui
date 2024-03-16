@@ -15,6 +15,8 @@ import { SVG_PAN_ZOOM_OPTIONS } from "@utils/constants";
 import { saveSvgAsPng } from "save-svg-as-png";
 import renderTree from "@components/editor/faultTree/shapes/RenderTree";
 import { JOINTJS_NODE_MODEL } from "@components/editor/faultTree/shapes/constants";
+import { FaultEventScenario } from "@models/faultEventScenario";
+import { findNodeByIri } from "@utils/treeUtils";
 
 enum MOVE_NODE {
   DRAGGING = 0,
@@ -34,6 +36,8 @@ interface Props {
   onNodeMove: (element: any, evt: any) => void;
   refreshTree: () => void;
   setHighlightedElement: (element: any) => void;
+  faultEventScenarios: FaultEventScenario[];
+  showPath: boolean;
 }
 
 const EditorCanvas = ({
@@ -49,6 +53,8 @@ const EditorCanvas = ({
   onNodeMove,
   refreshTree,
   setHighlightedElement,
+  faultEventScenarios,
+  showPath,
 }: Props) => {
   const { classes } = useStyles();
 
@@ -60,8 +66,23 @@ const EditorCanvas = ({
   const [svgZoom, setSvgZoom] = useState(null);
   const [currentZoom, setCurrentZoom] = useState(1);
   const [isExportingImage, setIsExportingImage] = useState(false);
+  const [targets, setTargets] = useState<undefined | string[]>();
 
   let dragStartPosition = null;
+
+  useEffect(() => {
+    const targetsIri = [];
+
+    faultEventScenarios.forEach((scenario) => {
+      if (Array.isArray(scenario?.scenarioParts)) {
+        scenario.scenarioParts.forEach((scenarioPart) => targetsIri.push(scenarioPart.iri));
+      } else {
+        targetsIri.push(scenario?.scenarioParts?.iri);
+      }
+    });
+
+    setTargets(targetsIri);
+  }, [faultEventScenarios]);
 
   useEffect(() => {
     const canvasWidth = containerRef.current.clientWidth;
@@ -190,7 +211,14 @@ const EditorCanvas = ({
   useEffect(() => {
     if (container && rootEvent) {
       container.removeCells(container.getCells());
-      renderTree(container, rootEvent, null);
+
+      const listOfPaths = [];
+
+      if (targets.length > 0 && showPath) {
+        targets.forEach((target) => listOfPaths.push(findNodeByIri(rootEvent, target)));
+      }
+
+      renderTree(container, rootEvent, null, listOfPaths);
       layout(container);
     }
   }, [container, rootEvent]);

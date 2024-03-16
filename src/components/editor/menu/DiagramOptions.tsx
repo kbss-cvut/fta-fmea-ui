@@ -1,8 +1,11 @@
-import { Divider, Button, IconButton, Typography } from "@mui/material";
+import { Divider, IconButton, Typography } from "@mui/material";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
 import TableChartIcon from "@mui/icons-material/TableChart";
+import RouteIcon from "@mui/icons-material/Route";
+import Tooltip from "@mui/material/Tooltip";
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 
 export interface Props {
   onRestoreLayout: () => void;
@@ -19,6 +22,8 @@ const DiagramOptions = ({
   onCutSetAnalysis,
   tableConversionAllowed = false,
 }: Props) => {
+  const { t } = useTranslation();
+
   return (
     <React.Fragment>
       <Typography variant="h5" gutterBottom>
@@ -36,7 +41,13 @@ const DiagramOptions = ({
             <TableChartIcon />
           </IconButton>
         )}
-        {onCutSetAnalysis && <Button onClick={onCutSetAnalysis}>cutsets</Button>}
+        {onCutSetAnalysis && (
+          <Tooltip title={`${t("diagramSidePanel.cutsetToggleToolTip")}`}>
+            <IconButton color="primary" onClick={onCutSetAnalysis} size="large">
+              <RouteIcon />
+            </IconButton>
+          </Tooltip>
+        )}
       </div>
       <Divider />
     </React.Fragment>

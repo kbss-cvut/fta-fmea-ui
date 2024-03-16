@@ -38,3 +38,20 @@ export const findEventParentByIri = (childIri: string, root: FaultEvent): FaultE
 
   return undefined;
 };
+
+export const findNodeByIri = (node, targetIri) => {
+  if (node.iri === targetIri) {
+    return [node];
+  }
+
+  if (Array.isArray(node.children)) {
+    for (const childNode of node.children) {
+      const path = findNodeByIri(childNode, targetIri);
+      if (path.length > 0) {
+        return [node, ...path];
+      }
+    }
+  }
+
+  return [];
+};

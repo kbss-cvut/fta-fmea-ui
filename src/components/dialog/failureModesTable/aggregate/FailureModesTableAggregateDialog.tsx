@@ -15,6 +15,7 @@ import { schema } from "../FailureModesTableDialog.schema";
 import { FaultTreePathsAggregateProvider } from "@hooks/useFaultTreePathsAggregate";
 import FaultTreePathsAggregate from "../../faultTree/pathsAggregate/FaultTreePathsAggregate";
 import { useFailureModesTables } from "@hooks/useFailureModesTables";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   open: boolean;
@@ -22,6 +23,7 @@ interface Props {
 }
 
 const FailureModesTableAggregateDialog = ({ open, onClose }: Props) => {
+  const { t } = useTranslation();
   const [showSnackbar] = useSnackbar();
   const [, , , addTableAggregate] = useFailureModesTables();
 
@@ -64,13 +66,13 @@ const FailureModesTableAggregateDialog = ({ open, onClose }: Props) => {
     <div>
       <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title" maxWidth="md" fullWidth scroll="paper">
         <DialogTitle id="form-dialog-title" onClose={onClose}>
-          FMEA Aggregates
+          {t("newFmeaModal.title")}
         </DialogTitle>
         <DialogContent dividers>
           <TextField
             autoFocus
             margin="dense"
-            label="FMEA Name"
+            label={t("newFmeaModal.namePlaceholder")}
             name="fmeaName"
             type="text"
             fullWidth
@@ -84,7 +86,7 @@ const FailureModesTableAggregateDialog = ({ open, onClose }: Props) => {
         </DialogContent>
         <DialogActions>
           <Button disabled={isSubmitting} color="primary" onClick={handleSubmit(handleConversion)}>
-            Create
+            {t("newFmeaModal.create")}
           </Button>
         </DialogActions>
       </Dialog>

@@ -21,6 +21,7 @@ import * as joint from "jointjs";
 import { Rectangle } from "@models/utils/Rectangle";
 import { JOINTJS_NODE_MODEL } from "@components/editor/faultTree/shapes/constants";
 import { calculateCutSets } from "@services/faultTreeService";
+import { FaultEventScenario } from "@models/faultEventScenario";
 
 const Editor = ({ setAppBarName }: DashboardTitleProps) => {
   const history = useNavigate();
@@ -29,6 +30,8 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
 
   const [faultTree, refreshTree] = useCurrentFaultTree();
   const [rootEvent, setRootEvent] = useState<FaultEvent>();
+  const [faultEventScenarios, setFaultEventScenarios] = useState<FaultEventScenario[]>([]);
+  const [showPath, setShowPath] = useState<boolean>(false);
 
   const [highlightedElementView, setHighlightedElementView] = useState(null);
   const _localContext = useLocalContext({ rootEvent: rootEvent, highlightedElementView: highlightedElementView });
@@ -47,6 +50,9 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
     if (faultTree) {
       setAppBarName(faultTree.name);
       setRootEvent(faultTree.manifestingEvent);
+      if (faultTree.faultEventScenarios) {
+        setFaultEventScenarios(getScenariosWithHighestProbability(faultTree.faultEventScenarios));
+      }
 
       if (contextMenuSelectedEvent) {
         const sidebarEvent = findEventByIri(contextMenuSelectedEvent.iri, faultTree.manifestingEvent);
@@ -150,6 +156,7 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
   };
 
   const handleCutSetAnalysis = () => {
+    setShowPath(!showPath);
     calculateCutSets(faultTree.iri)
       .then((d) => {
         refreshTree();
@@ -171,6 +178,25 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
     event.preventDefault();
   };
 
+  const getScenariosWithHighestProbability = (list: FaultEventScenario[]): FaultEventScenario[] => {
+    if (list.length === 0) return [];
+
+    let highestProbability = list[0].probability;
+    let highestProbabilityScenarios: FaultEventScenario[] = [list[0]];
+
+    for (let i = 1; i < list.length; i++) {
+      const item = list[i];
+      if (item.probability > highestProbability) {
+        highestProbability = item.probability;
+        highestProbabilityScenarios = [item];
+      } else if (item.probability === highestProbability) {
+        highestProbabilityScenarios.push(item);
+      }
+    }
+
+    return highestProbabilityScenarios;
+  };
+
   return (
     <div onContextMenu={handleOnContextMenu}>
       <EditorCanvas
@@ -186,6 +212,8 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
         onNodeMove={handleMoveEvent}
         setHighlightedElement={setHighlightedElementView}
         refreshTree={refreshTree}
+        faultEventScenarios={faultEventScenarios}
+        showPath={showPath}
       />
 
       <FaultEventContextMenu

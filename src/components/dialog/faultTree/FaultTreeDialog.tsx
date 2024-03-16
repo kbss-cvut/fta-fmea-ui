@@ -14,8 +14,11 @@ import { FaultTree } from "@models/faultTreeModel";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema as eventSchema } from "@components/dialog/faultEvent/FaultEventCreation.schema";
 import { FaultEventsReuseProvider } from "@hooks/useReusableFaultEvents";
+import { useTranslation } from "react-i18next";
 
 const FaultTreeDialog = ({ open, handleCloseDialog }) => {
+  const { t } = useTranslation();
+
   const [, addFaultTree] = useFaultTrees();
   const [processing, setIsProcessing] = useState(false);
 
@@ -42,13 +45,13 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
     <div>
       <Dialog open={open} onClose={handleCloseDialog} aria-labelledby="form-dialog-title" maxWidth="md" fullWidth>
         <DialogTitle id="form-dialog-title" onClose={handleCloseDialog}>
-          Create Fault Tree
+          {t("newFtaModal.title")}
         </DialogTitle>
         <DialogContent dividers>
           <TextField
             autoFocus
             margin="dense"
-            label="Fault Tree Name"
+            label={t("newFtaModal.namePlaceholder")}
             name="faultTreeName"
             type="text"
             fullWidth
@@ -62,7 +65,7 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
         </DialogContent>
         <DialogActions>
           <Button disabled={processing} color="primary" onClick={handleSubmit(handleCreateFaultTree)}>
-            Create Fault Tree
+            {t("newFtaModal.create")}
           </Button>
         </DialogActions>
       </Dialog>
