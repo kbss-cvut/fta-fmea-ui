@@ -31,5 +31,8 @@
     "namePlaceholder": "FMEA Name",
     "effects": "Choose Effects",
     "create": "Create"
+  },
+  "diagramSidePanel": {
+    "cutsetToggleToolTip": "Switch to cutsets view"
   }
 }

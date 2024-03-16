@@ -31,5 +31,8 @@
     "namePlaceholder": "Název FMEA",
     "effects": "Vyberte efekty",
     "create": "Vytvořit"
+  },
+  "diagramSidePanel": {
+    "cutsetToggleToolTip": "Přepnout do pohledu řezu"
   }
 }
