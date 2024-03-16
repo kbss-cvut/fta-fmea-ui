@@ -6,15 +6,18 @@ import { Link } from "./shapesDefinitions";
 import { flatten } from "lodash";
 import { has } from "lodash";
 import { JOINTJS_NODE_MODEL } from "@components/editor/faultTree/shapes/constants";
+import { getNodeWidthForText } from "@utils/treeUtils";
 
 const renderLink = (container, source, target, shouldHighlight) => {
   // @ts-ignore
   const link = Link.create(source, target);
   if (shouldHighlight) {
     link.attr("line/stroke", "red");
+    link.addTo(container);
+    link.toFront();
+  } else {
+    link.addTo(container);
   }
-
-  link.addTo(container);
 };
 
 const highlightCheck = (path, iri) => {
@@ -33,6 +36,10 @@ const renderTree = (container, node, parentShape = null, pathsToHighlight) => {
     // @ts-ignore
     nodeShape.gate(node.gateType.toLowerCase());
   }
+
+  const width = getNodeWidthForText(node.description, 12, 100);
+  if (width > 100) nodeShape.prop("size", { width: width });
+
   nodeShape.attr(["label", "text"], node.name);
   if (has(node, "probability")) {
     nodeShape.attr(["probabilityLabel", "text"], node.probability.toExponential(2));
@@ -42,6 +49,9 @@ const renderTree = (container, node, parentShape = null, pathsToHighlight) => {
   }
   if (shouldHighlight) {
     nodeShape.attr("body/stroke", "red");
+    nodeShape.attr("body/fill", "red");
+    nodeShape.attr("gate/stroke", "red");
+    nodeShape.attr("gate/fill", "red");
   }
   // @ts-ignore
   nodeShape.set(JOINTJS_NODE_MODEL.faultEventIri, node.iri);
