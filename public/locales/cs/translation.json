@@ -1,5 +1,5 @@
 {
-  "main": {
-    "appBarHeader": "Řídicí panel"
+  "diagramSidePanel": {
+    "cutsetToggleToolTip": "Přepnout do pohledu řezu"
   }
 }

@@ -11,7 +11,7 @@ const renderLink = (container, source, target, shouldHighlight) => {
   // @ts-ignore
   const link = Link.create(source, target);
   if (shouldHighlight) {
-    link.attr("line/stroke", "red");
+    link.attr("line/stroke", "orange");
   }
 
   link.addTo(container);
@@ -41,7 +41,7 @@ const renderTree = (container, node, parentShape = null, pathsToHighlight) => {
     nodeShape.attr(["probabilityRequirementLabel", "text"], node.probability.toExponential(2));
   }
   if (shouldHighlight) {
-    nodeShape.attr("body/stroke", "red");
+    nodeShape.attr("body/stroke", "orange");
   }
   // @ts-ignore
   nodeShape.set(JOINTJS_NODE_MODEL.faultEventIri, node.iri);

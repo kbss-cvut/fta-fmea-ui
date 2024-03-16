@@ -1,5 +1,5 @@
 {
-  "main": {
-    "appBarHeader": "Dashboard"
+  "diagramSidePanel": {
+    "cutsetToggleToolTip": "Switch to cutsets view"
   }
 }
