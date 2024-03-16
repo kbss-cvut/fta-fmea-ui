@@ -10,8 +10,11 @@ import { DialogActions } from "@components/materialui/dialog/DialogActions";
 import { useSystems } from "@hooks/useSystems";
 import { System } from "@models/systemModel";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useTranslation } from "react-i18next";
 
 const SystemDialog = ({ open, handleCloseDialog }) => {
+  const { t } = useTranslation();
+
   const [, addSystem] = useSystems();
   const [processing, setIsProcessing] = useState(false);
 
@@ -39,13 +42,13 @@ const SystemDialog = ({ open, handleCloseDialog }) => {
     <div>
       <Dialog open={open} onClose={handleCloseDialog} aria-labelledby="form-dialog-title" maxWidth="md" fullWidth>
         <DialogTitle id="form-dialog-title" onClose={handleCloseDialog}>
-          Create System
+          {t("newSystemModal.title")}
         </DialogTitle>
         <DialogContent dividers>
           <TextField
             autoFocus
             margin="dense"
-            label="System Name"
+            label={t("newSystemModal.namePlaceholder")}
             name="systemName"
             type="text"
             fullWidth
@@ -56,7 +59,7 @@ const SystemDialog = ({ open, handleCloseDialog }) => {
         </DialogContent>
         <DialogActions>
           <Button disabled={processing} color="primary" onClick={handleSubmit(handleCreateSystem)}>
-            Create System
+            {t("newSystemModal.create")}
           </Button>
         </DialogActions>
       </Dialog>

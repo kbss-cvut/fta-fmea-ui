@@ -1,5 +1,35 @@
 {
-  "main": {
-    "appBarHeader": "Dashboard"
+  "categories": {
+    "systems": "Systems",
+    "trees": "Fault trees",
+    "worksheets": "FMEA worksheets",
+    "tables": "FHA tables"
+  },
+  "create": {
+    "system": "New system",
+    "tree": "New Fault tree",
+    "worksheet": "New FMEA worksheet"
+  },
+  "newSystemModal": {
+    "title": "Create System",
+    "namePlaceholder": "System name",
+    "create": "Create"
+  },
+  "newFtaModal": {
+    "title": "Create Fault Tree",
+    "namePlaceholder": "Fault Tree name",
+    "eventPlaceholder": "Event",
+    "create": "Create new Event",
+    "type": "FTA event type",
+    "name": "Event name",
+    "description": "Description",
+    "probability": "Failure rate",
+    "gateType": "Gate type"
+  },
+  "newFmeaModal": {
+    "title": "FMEA Aggregates",
+    "namePlaceholder": "FMEA Name",
+    "effects": "Choose Effects",
+    "create": "Create"
   }
 }
