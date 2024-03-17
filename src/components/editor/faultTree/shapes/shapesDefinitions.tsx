@@ -1,11 +1,10 @@
 import * as joint from "jointjs";
+import { LABEL_FONT_SIZE } from "./constants";
 
 const MAIN_EVENT_BODY_COLOR = "#183e4b";
 const MAIN_GATE_COLOR = "#057dcd";
 const BASIC_GATE_COLOR = "#4c956c";
 const EXTERNAL_GATE_COLOR = "#ffa600";
-
-const LABEL_FONT_SIZE = 12;
 
 const Event = joint.dia.Element.define(
   "fta.Event",
@@ -128,7 +127,7 @@ export const IntermediateEvent = Event.define(
       },
     ],
     gateTypes: {
-      or: "M -20 0 C -20 -15 -10 -30 0 -30 C 10 -30 20 -15 20 0 C 10 -6 -10 -6 -20 0",
+      or: "M -20 0 C -20 -15 -10 -30 0 -30 C 10 -30 20 -15 20 0 C 10 -6 -10 -6 -20 0 M 0 -30",
       xor: "M -20 0 C -20 -15 -10 -30 0 -30 C 10 -30 20 -15 20 0 C 10 -6 -10 -6 -20 0 M -20 0 0 -30 M 0 -30 20 0",
       and: "M -20 0 C -20 -25 -10 -30 0 -30 C 10 -30 20 -25 20 0 Z",
       priority_and: "M -20 0 C -20 -25 -10 -30 0 -30 C 10 -30 20 -25 20 0 Z M -20 0 0 -30 20 0",
@@ -148,7 +147,8 @@ export const IntermediateEvent = Event.define(
       gateType: {
         set: function (type) {
           const data = this.model.gateTypes[type];
-          return { d: data ? data + " M 0 -30 0 -60" : "M 0 0 0 0" };
+          const verticalLine = type === "or" || type === "xor" ? " M 0 -4 V 15" : " M 0 1 V 15";
+          return { d: data ? data + " M 0 -30 0 -60" + verticalLine : "M 0 0 0 0" };
         },
       },
     },
@@ -404,7 +404,7 @@ export const Link = joint.dia.Link.define(
   },
   {
     create: function (event1, event2) {
-      return new this({
+      const link = new this({
         z: 1,
         source: {
           id: event1.id,
@@ -412,9 +412,8 @@ export const Link = joint.dia.Link.define(
           anchor: {
             name: "bottom",
             args: {
-              dy: 0, // Will add a vertical line under gate if needed
+              dy: 1,
             },
-            y: "120%",
           },
         },
         target: {
@@ -422,6 +421,8 @@ export const Link = joint.dia.Link.define(
           selector: "body",
         },
       });
+
+      return link;
     },
   },
 );
