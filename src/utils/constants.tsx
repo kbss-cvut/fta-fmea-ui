@@ -41,6 +41,7 @@ export const ROUTES = {
   SYSTEMS: "/systems",
   FTA: "/fta",
   FMEA: "/fmea",
+  FHA: "/fha",
 };
 
 export const ROUTE_PARAMS = {
@@ -48,6 +49,8 @@ export const ROUTE_PARAMS = {
   FTA_FRAGMENT: "/:treeFragment",
   FMEA_FRAGMENT: "/:fmeaFragment",
 };
+
+export const SIDE_PANEL_STATE_KEY = "isSidePanelCollapsed";
 
 export const SVG_PAN_ZOOM_OPTIONS = {
   center: false,
@@ -59,3 +62,7 @@ export const SVG_PAN_ZOOM_OPTIONS = {
   maxZoom: 2.5,
   zoomScaleSensitivity: 0.5,
 };
+
+export const SELECTED_LANGUAGE_KEY = "default-fta-language";
+export const PRIMARY_LANGUAGE = "en";
+export const SECONDARY_LANGUAGE = "cs";

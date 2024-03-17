@@ -40,18 +40,13 @@ export const findEventParentByIri = (childIri: string, root: FaultEvent): FaultE
 };
 
 export const findNodeByIri = (node, targetIri) => {
-  // If the current node matches the target IRI, return it
   if (node.iri === targetIri) {
     return [node];
   }
 
-  // If the current node has children and it is an array, recursively search each child
   if (Array.isArray(node.children)) {
     for (const childNode of node.children) {
-      // Recursively search for the target IRI in the child node
       const path = findNodeByIri(childNode, targetIri);
-
-      // If the target IRI is found in the child node, prepend the current node to the path and return it
       if (path.length > 0) {
         return [node, ...path];
       }

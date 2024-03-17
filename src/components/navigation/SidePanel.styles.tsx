@@ -37,6 +37,25 @@ const useStyles = makeStyles()((theme: Theme) => ({
     letterSpacing: 0.25,
     userSelect: "none",
   },
+  toggleContainer: {
+    display: "flex",
+    flexDirection: "row",
+    cursor: "pointer",
+  },
+  toggleIconBox: {
+    height: 24,
+    width: 24,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: 16,
+    marginRight: 16,
+  },
+  titleContainer: {
+    display: "flex",
+    flexDirection: "column",
+    whiteSpace: "nowrap",
+  },
 }));
 
 export default useStyles;
