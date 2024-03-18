@@ -34,3 +34,21 @@ ls ${SOURCE_DIR}/*-config.ttl | while read REPO_CONFIG_FILE; do
 	    echo "INFO: Repository $REPO_NAME already exists. Skipping initialization..."
 	fi
 done
+
+
+DATA_DIR=/root/graphdb-import
+REPO_NAME=fta-fmea
+
+ls ${DATA_DIR}/*.ttl | while read DATA_FILE; do
+        CONTEXT=`$SCRIPT_DIR/get-rdf-subject-by-type.py $DATA_FILE 'http://www.w3.org/2002/07/owl#Ontology' | sed 's/[<>]//g'`
+
+        echo "INFO: Deploying data ${DATA_FILE} into ${CONTEXT}."
+        $SCRIPT_DIR/rdf4j-deploy-context.sh -R -C 'text/turtle' -s http://localhost:7200 -r ${REPO_NAME} -c ${CONTEXT} ${DATA_FILE}
+done
+
+ls ${DATA_DIR}/*.trig | while read DATA_FILE; do
+
+        echo "INFO: Deploying data from file ${DATA_FILE}."
+        $SCRIPT_DIR/rdf4j-deploy-context.sh -C 'application/trig' -s http://localhost:7200 -r ${REPO_NAME} ${DATA_FILE}
+done
+
