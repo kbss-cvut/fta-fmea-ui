@@ -7,7 +7,7 @@ import PrivateRoute from "@components/routes/PrivateRoute";
 import Register from "@components/register/Register";
 import { createHashHistory } from "history";
 import { LoggedUserProvider } from "@hooks/useLoggedUser";
-import { ROUTE_PARAMS, ROUTES } from "@utils/constants";
+import { ROUTE_PARAMS, ROUTES, ENVVariable } from "@utils/constants";
 import FaultTreeDashboard from "@components/dashboard/FaultTreeDashboard";
 import SystemDashboard from "@components/dashboard/SystemDashboard";
 import FailureModesTableDashboard from "@components/dashboard/FailureModesTableDashboard";
@@ -24,11 +24,11 @@ export const appHistory = createHashHistory();
 const AppRoutes = () => {
   return (
     <LoggedUserProvider>
-      <BrowserRouter /*history={appHistory}*/>
+      <BrowserRouter basename={ENVVariable.CONTEXT} /*history={appHistory}*/>
         <Navigation>
           <Routes>
             {/*TODO: revisit routing, this is hotfix to support react-router v6*/}
-            {import.meta.env.VITE_ADMIN_REGISTRATION_ONLY === "true" ? (
+            {ENVVariable.ADMIN_REGISTRATION_ONLY === "true" ? (
               <Route
                 path={ROUTES.REGISTER}
                 element={
