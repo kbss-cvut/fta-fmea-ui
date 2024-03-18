@@ -4,9 +4,9 @@ import { AbstractModel, CONTEXT as ABSTRACT_CONTEXT } from "@models/abstractMode
 import { FaultEventScenario, CONTEXT as SCENARIO_CONTEXT } from "@models/faultEventScenario";
 
 const ctx = {
-  manifestingEvent: VocabularyUtils.PREFIX + "isManifestedBy",
+  manifestingEvent: VocabularyUtils.PREFIX + "is-manifested-by",
   faultEventScenarios: VocabularyUtils.PREFIX + "has-scenario",
-  name: VocabularyUtils.PREFIX + "hasName",
+  name: VocabularyUtils.PREFIX + "name",
 };
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, EVENT_CONTEXT, SCENARIO_CONTEXT);

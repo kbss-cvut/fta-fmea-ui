@@ -3,7 +3,7 @@ import { FaultEvent } from "./eventModel";
 import VocabularyUtils from "../utils/VocabularyUtils";
 
 const ctx = {
-  probability: VocabularyUtils.PREFIX + "hasProbability",
+  probability: VocabularyUtils.PREFIX + "probability",
   scenarioParts: VocabularyUtils.PREFIX + "has-part",
 };
 

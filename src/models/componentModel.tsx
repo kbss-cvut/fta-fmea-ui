@@ -6,11 +6,10 @@ import { AbstractModel, AbstractUpdateModel, CONTEXT as ABSTRACT_CONTEXT } from 
 import { FAILURE_MODE_CONTEXT, FUNCTION_CONTEXT } from "@models/modelsContext";
 
 const ctx = {
-  name: VocabularyUtils.PREFIX + "hasName",
-  functions: VocabularyUtils.PREFIX + "hasFunction",
-  failureModes: VocabularyUtils.PREFIX + "hasFailureMode",
-  linkedComponent: VocabularyUtils.PREFIX + "isPartOf",
-  system: VocabularyUtils.PREFIX + "belongsTo",
+  name: VocabularyUtils.PREFIX + "name",
+  functions: VocabularyUtils.PREFIX + "has-function",
+  failureModes: VocabularyUtils.PREFIX + "has-failure-mode",
+  linkedComponent: VocabularyUtils.PREFIX + "is-part-of",
 };
 
 export const CONTEXT = Object.assign({}, ctx, FUNCTION_CONTEXT, FAILURE_MODE_CONTEXT, ABSTRACT_CONTEXT);

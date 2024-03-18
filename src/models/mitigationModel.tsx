@@ -3,7 +3,7 @@ import { CONTEXT as ABSTRACT_CONTEXT } from "@models/abstractModel";
 import { Behavior, CONTEXT as BEHAVIOR_CONTEXT } from "@models/behaviorModel";
 
 const ctx = {
-  description: VocabularyUtils.PREFIX + "hasDescription",
+  description: VocabularyUtils.PREFIX + "description",
 };
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, BEHAVIOR_CONTEXT);

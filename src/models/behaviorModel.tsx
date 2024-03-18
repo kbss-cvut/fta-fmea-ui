@@ -3,12 +3,12 @@ import { AbstractModel } from "./abstractModel";
 import { Component } from "@models/componentModel";
 
 export const CONTEXT = {
-  name: VocabularyUtils.PREFIX + "hasName",
-  requiredBehaviors: VocabularyUtils.PREFIX + "requires",
-  childBehaviors: VocabularyUtils.PREFIX + "hasChildBehavior",
-  behaviorType: VocabularyUtils.PREFIX + "hasBehaviorType",
-  component: VocabularyUtils.PREFIX + "hasComponent",
-  impairedBehavior: VocabularyUtils.PREFIX + "impairs",
+  name: VocabularyUtils.PREFIX + "name",
+  requiredBehaviors: VocabularyUtils.PREFIX + "has-required",
+  childBehaviors: VocabularyUtils.PREFIX + "has-child-behavior",
+  behaviorType: VocabularyUtils.PREFIX + "behavior-type",
+  component: VocabularyUtils.PREFIX + "has-component",
+  impairedBehavior: VocabularyUtils.PREFIX + "is-impairing",
 };
 
 export interface Behavior extends AbstractModel {
