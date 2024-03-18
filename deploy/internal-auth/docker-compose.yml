@@ -1,8 +1,8 @@
-version: '3.9'
+version: "3.9"
 
 # Provide access to fta-fmea-ui that runs locally in dev mode
 x-access-for-local-development: &local-dev-env
-    cors.allowedOrigins: "http://localhost:5173,http://localhost:4173"
+  cors.allowedOrigins: "http://localhost:5173,http://localhost:4173"
 
 services:
   nginx:
@@ -47,6 +47,7 @@ services:
       server.servlet.context-path: "/fta-fmea"
 
   db-server:
+    image: ${RECORD_SET_NAME:-fta-fmea}-db-server
     build:
       context: ../shared/db-server
     environment:
