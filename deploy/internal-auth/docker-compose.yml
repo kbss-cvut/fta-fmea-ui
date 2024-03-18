@@ -25,8 +25,9 @@ services:
   fta-fmea:
     image: ghcr.io/kbss-cvut/fta-fmea-ui:latest
     environment:
-      API_URL: "${PUBLIC_ORIGIN:-http://localhost:${INTERNAL_HOST_PORT:-1235}}${FTA_FMEA_ROOT_PATH:-/fta-fmea}/services/fta-fmea-server"
-      ADMIN_REGISTRATION_ONLY: ${ADMIN_REGISTRATION_ONLY:-false}
+      FTA_FMEA_API_URL: "${PUBLIC_ORIGIN:-http://localhost:${INTERNAL_HOST_PORT:-1235}}${FTA_FMEA_ROOT_PATH:-/fta-fmea}/services/fta-fmea-server"
+      FTA_FMEA_ADMIN_REGISTRATION_ONLY: ${ADMIN_REGISTRATION_ONLY:-false}
+      FTA_FMEA_CONTEXT: "/fta-fmea"
     expose:
       - "80"
     depends_on:
