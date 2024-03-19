@@ -24,7 +24,7 @@ export const appHistory = createHashHistory();
 const AppRoutes = () => {
   return (
     <LoggedUserProvider>
-      <BrowserRouter basename={ENVVariable.CONTEXT} /*history={appHistory}*/>
+      <BrowserRouter basename={ENVVariable.BASENAME} /*history={appHistory}*/>
         <Navigation>
           <Routes>
             {/*TODO: revisit routing, this is hotfix to support react-router v6*/}
