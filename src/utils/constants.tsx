@@ -20,7 +20,7 @@ const getEnv = (name: string, defaultValue?: string): string => {
 
 export const ENVVariable = {
   API_URL: getEnv("FTA_FMEA_API_URL", "http://localhost:9999"),
-  CONTEXT: getEnv("FTA_FMEA_CONTEXT", ""),
+  BASENAME: getEnv("FTA_FMEA_BASENAME", ""),
   ADMIN_REGISTRATION_ONLY: getEnv("FTA_FMEA_ADMIN_REGISTRATION_ONLY", "false"),
   TITLE: getEnv("FTA_FMEA_TITLE", "FTA/FMEA"),
 };
