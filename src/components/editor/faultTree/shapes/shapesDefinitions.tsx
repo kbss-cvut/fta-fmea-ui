@@ -5,6 +5,8 @@ const MAIN_EVENT_BODY_COLOR = "#183e4b";
 const MAIN_GATE_COLOR = "#057dcd";
 const BASIC_GATE_COLOR = "#4c956c";
 const EXTERNAL_GATE_COLOR = "#ffa600";
+const FILL_OPACITY = 0.4
+const STROKE_COLOR = "#000000"
 
 const Event = joint.dia.Element.define(
   "fta.Event",
@@ -84,9 +86,9 @@ export const IntermediateEvent = Event.define(
         fill: MAIN_EVENT_BODY_COLOR,
       },
       gate: {
-        stroke: MAIN_GATE_COLOR,
+        stroke: STROKE_COLOR,
         fill: MAIN_GATE_COLOR,
-        fillOpacity: 0.2,
+        fillOpacity: FILL_OPACITY,
         strokeWidth: 2,
         refX: "50%",
         refY: "120%",
@@ -181,10 +183,10 @@ export const ExternalEvent = Event.define(
         refY2: -20,
       },
       gate: {
-        d: "M -15 -16 L 0 -30 L 15 -16 L 15 0 L -15 0 Z M 0 -30 L 0 -60",
-        stroke: EXTERNAL_GATE_COLOR,
+        d: "M -15 -16 L 0 -30 L 15 -16 L 15 0 L -15 0 Z M 0 -30 L 0 -59",
+        stroke: STROKE_COLOR,
         fill: EXTERNAL_GATE_COLOR,
-        fillOpacity: 0.2,
+        fillOpacity: FILL_OPACITY,
         strokeWidth: 2,
         refX: "50%",
         refY: "120%",
@@ -295,10 +297,10 @@ export const BasicEvent = Event.define(
         refY2: -20,
       },
       gate: {
-        d: "M 0.0001 0 A 15 15 0 1 0 0 0 M 0 -30 L 0 -60",
-        stroke: BASIC_GATE_COLOR,
+        d: "M 0.0001 0 A 15 15 0 1 0 0 0 M 0 -30 L 0 -59",
+        stroke: "black",
         fill: BASIC_GATE_COLOR,
-        fillOpacity: 0.2,
+        fillOpacity: FILL_OPACITY,
         strokeWidth: 2,
         refX: "50%",
         refY: "120%",

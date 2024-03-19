@@ -69,7 +69,7 @@ const Navigation: FC<SideNavigationProps> = ({ children }) => {
           showAnimation={showAnimation}
         />
       )}
-      {!shouldHideTopPanel && <AppBar title="" topPanelHeight={TOP_PANEL_HEIGHT} />}
+      {!shouldHideTopPanel && <AppBar title="" topPanelHeight={TOP_PANEL_HEIGHT} showBackButton={path.includes("instance")} />}
       <Box
         className={classes.childrenContainer}
         style={{ marginLeft: mgLeft, marginTop: mgTop, transition: showAnimation ? "margin-left 0.3s" : "none" }}
