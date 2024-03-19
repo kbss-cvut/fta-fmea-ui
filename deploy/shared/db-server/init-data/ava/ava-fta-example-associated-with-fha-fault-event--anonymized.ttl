@@ -11,7 +11,6 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix seq: <http://krizik.felk.cvut.cz/ontologies/2008/6/sequences.owl#> .
 
-
 <http://onto.fel.cvut.cz/ontologies/ava-fta-example-associated-with-fha-fault-event--anonymized> a owl:Ontology .
 
 <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance720425674> a diag:rectangle;
@@ -52,7 +51,7 @@
     <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance820186229>,
     <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance621415126>,
     <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-650995087>;
-  :has-child-sequence <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/FaultEvent/instance1811035853-SEQ_0>;
+  :has-child-sequence <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_0>;
   :description ""@cs;
   :gate-type "OR"@cs;
   :name "FC 1.1. Tlak v kabině fault event"@cs;
@@ -97,3 +96,18 @@
   a :fault-tree;
   :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853>;
   :name "FC 1.1. Tlak v kabině fault event"@cs .
+
+<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_2>
+  seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance621415126>;
+  seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_3> .
+
+<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_3>
+  seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1369205353>;
+  seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_4> .
+
+<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_4>
+  seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-650995087> .
+
+<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_1>
+  seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance820186229>;
+  seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_2> .
