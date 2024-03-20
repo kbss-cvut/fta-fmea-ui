@@ -1,4 +1,12 @@
 import * as joint from "jointjs";
+import { LABEL_FONT_SIZE } from "./constants";
+
+const MAIN_EVENT_BODY_COLOR = "#183e4b";
+const MAIN_GATE_COLOR = "#057dcd";
+const BASIC_GATE_COLOR = "#4c956c";
+const EXTERNAL_GATE_COLOR = "#ffa600";
+const FILL_OPACITY = 0.4
+const STROKE_COLOR = "#000000"
 
 const Event = joint.dia.Element.define(
   "fta.Event",
@@ -13,6 +21,7 @@ const Event = joint.dia.Element.define(
         fillOpacity: 0.2,
       },
       label: {
+        fontSize: LABEL_FONT_SIZE,
         textWrap: {
           height: -20,
           width: -20,
@@ -20,7 +29,6 @@ const Event = joint.dia.Element.define(
         },
         refX: "50%",
         refY: "50%",
-        fontSize: 16,
         fontFamily: "sans-serif",
         fill: "#333333",
         textAnchor: "middle",
@@ -74,14 +82,13 @@ export const IntermediateEvent = Event.define(
       body: {
         refWidth: "100%",
         refHeight: -40,
-        stroke: "#3c4260",
-        fill: "#3c4260",
+        stroke: MAIN_EVENT_BODY_COLOR,
+        fill: MAIN_EVENT_BODY_COLOR,
       },
       gate: {
-        gateType: "or",
-        stroke: "#7c68fc",
-        fill: "#7c68fc",
-        fillOpacity: 0.2,
+        stroke: STROKE_COLOR,
+        fill: MAIN_GATE_COLOR,
+        fillOpacity: FILL_OPACITY,
         strokeWidth: 2,
         refX: "50%",
         refY: "120%",
@@ -89,6 +96,7 @@ export const IntermediateEvent = Event.define(
         cursor: "pointer",
       },
       label: {
+        fontSize: LABEL_FONT_SIZE,
         textWrap: {
           height: -40,
           width: -10,
@@ -121,7 +129,7 @@ export const IntermediateEvent = Event.define(
       },
     ],
     gateTypes: {
-      or: "M -20 0 C -20 -15 -10 -30 0 -30 C 10 -30 20 -15 20 0 C 10 -6 -10 -6 -20 0",
+      or: "M -20 0 C -20 -15 -10 -30 0 -30 C 10 -30 20 -15 20 0 C 10 -6 -10 -6 -20 0 M 0 -30",
       xor: "M -20 0 C -20 -15 -10 -30 0 -30 C 10 -30 20 -15 20 0 C 10 -6 -10 -6 -20 0 M -20 0 0 -30 M 0 -30 20 0",
       and: "M -20 0 C -20 -25 -10 -30 0 -30 C 10 -30 20 -25 20 0 Z",
       priority_and: "M -20 0 C -20 -25 -10 -30 0 -30 C 10 -30 20 -25 20 0 Z M -20 0 0 -30 20 0",
@@ -141,7 +149,8 @@ export const IntermediateEvent = Event.define(
       gateType: {
         set: function (type) {
           const data = this.model.gateTypes[type];
-          return { d: data ? data + " M 0 -30 0 -60" : "M 0 0 0 0" };
+          const verticalLine = type === "or" || type === "xor" ? " M 0 -4 V 15" : " M 0 1 V 15";
+          return { d: data ? data + " M 0 -30 0 -60" + verticalLine : "M 0 0 0 0" };
         },
       },
     },
@@ -152,7 +161,7 @@ export const ExternalEvent = Event.define(
   "fta.ExternalEvent",
   {
     size: {
-      width: 80,
+      width: 100,
       height: 100,
     },
     attrs: {
@@ -160,16 +169,36 @@ export const ExternalEvent = Event.define(
         title: "External Event",
       },
       body: {
-        refD: "M 0 0 10 -10 20 0 20 40 0 40 Z",
-        stroke: "#fe854f",
-        fill: "#fe854f",
+        refWidth: "100%",
+        refHeight: -40,
+        stroke: MAIN_EVENT_BODY_COLOR,
+        fill: MAIN_EVENT_BODY_COLOR,
+      },
+      label: {
+        fontSize: LABEL_FONT_SIZE,
+        textWrap: {
+          height: -40,
+          width: -10,
+        },
+        refY2: -20,
+      },
+      gate: {
+        d: "M -15 -16 L 0 -30 L 15 -16 L 15 0 L -15 0 Z M 0 -30 L 0 -59",
+        stroke: STROKE_COLOR,
+        fill: EXTERNAL_GATE_COLOR,
+        fillOpacity: FILL_OPACITY,
+        strokeWidth: 2,
+        refX: "50%",
+        refY: "120%",
+        fillRule: "nonzero",
+        cursor: "pointer",
       },
     },
   },
   {
     markup: [
       {
-        tagName: "path",
+        tagName: "rect",
         selector: "body",
       },
       {
@@ -184,6 +213,10 @@ export const ExternalEvent = Event.define(
         tagName: "text",
         selector: "probabilityRequirementLabel",
       },
+      {
+        tagName: "path",
+        selector: "gate",
+      },
     ],
   },
 );
@@ -192,24 +225,33 @@ export const UndevelopedEvent = Event.define(
   "fta.UndevelopedEvent",
   {
     size: {
-      width: 140,
-      height: 80,
+      width: 100,
+      height: 100,
     },
     attrs: {
       root: {
         title: "Undeveloped Event",
       },
       body: {
-        refD: "M -1 0 0 1 1 0 0 -1 Z",
-        stroke: "#feb663",
-        fill: "#feb663",
+        refWidth: "100%",
+        refHeight: -40,
+        stroke: "#fe854f",
+        fill: "#fe854f",
+      },
+      label: {
+        fontSize: LABEL_FONT_SIZE,
+        textWrap: {
+          height: -40,
+          width: -10,
+        },
+        refY2: -20,
       },
     },
   },
   {
     markup: [
       {
-        tagName: "path",
+        tagName: "rect",
         selector: "body",
       },
       {
@@ -232,8 +274,8 @@ export const BasicEvent = Event.define(
   "fta.BasicEvent",
   {
     size: {
-      width: 80,
-      height: 80,
+      width: 100,
+      height: 100,
     },
     z: 3,
     attrs: {
@@ -241,18 +283,36 @@ export const BasicEvent = Event.define(
         title: "Basic Event",
       },
       body: {
-        refCx: "50%",
-        refCy: "50%",
-        refR: "50%",
-        stroke: "#30d0c6",
-        fill: "#30d0c6",
+        refWidth: "100%",
+        refHeight: -40,
+        stroke: MAIN_EVENT_BODY_COLOR,
+        fill: MAIN_EVENT_BODY_COLOR,
+      },
+      label: {
+        fontSize: LABEL_FONT_SIZE,
+        textWrap: {
+          height: -40,
+          width: -10,
+        },
+        refY2: -20,
+      },
+      gate: {
+        d: "M 0.0001 0 A 15 15 0 1 0 0 0 M 0 -30 L 0 -59",
+        stroke: "black",
+        fill: BASIC_GATE_COLOR,
+        fillOpacity: FILL_OPACITY,
+        strokeWidth: 2,
+        refX: "50%",
+        refY: "120%",
+        fillRule: "nonzero",
+        cursor: "pointer",
       },
     },
   },
   {
     markup: [
       {
-        tagName: "circle",
+        tagName: "rect",
         selector: "body",
       },
       {
@@ -266,6 +326,10 @@ export const BasicEvent = Event.define(
       {
         tagName: "text",
         selector: "probabilityRequirementLabel",
+      },
+      {
+        tagName: "path",
+        selector: "gate",
       },
     ],
   },
@@ -342,17 +406,25 @@ export const Link = joint.dia.Link.define(
   },
   {
     create: function (event1, event2) {
-      return new this({
+      const link = new this({
         z: 1,
         source: {
           id: event1.id,
           selector: event1.get("type") === "fta.IntermediateEvent" ? "gate" : "body",
+          anchor: {
+            name: "bottom",
+            args: {
+              dy: 1,
+            },
+          },
         },
         target: {
           id: event2.id,
           selector: "body",
         },
       });
+
+      return link;
     },
   },
 );

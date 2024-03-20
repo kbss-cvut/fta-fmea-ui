@@ -55,3 +55,16 @@ export const findNodeByIri = (node, targetIri) => {
 
   return [];
 };
+
+export const getNodeWidthForText = (text, fontSize, containerHeight) => {
+  const tempTextElement = document.createElement("span");
+  tempTextElement.style.fontSize = `${fontSize}px`;
+  tempTextElement.innerText = text;
+  document.body.appendChild(tempTextElement);
+  const width = tempTextElement.offsetWidth;
+  document.body.removeChild(tempTextElement);
+  const maxHeight = containerHeight;
+  const maxWidth = Math.sqrt((2 * maxHeight * width) / Math.PI);
+  const finalWidth = Math.min(width, maxWidth);
+  return finalWidth;
+};
