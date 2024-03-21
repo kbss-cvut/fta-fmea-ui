@@ -108,6 +108,10 @@
 <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_4>
   seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-650995087> .
 
+<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_0>
+  seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-741532472>;
+  seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_1> .
+
 <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_1>
   seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance820186229>;
   seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_2> .
