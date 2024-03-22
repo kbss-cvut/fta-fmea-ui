@@ -19,7 +19,8 @@ export default class JsonLdUtils {
     input: JsonLdInput,
     context: JsonLdContext,
   ): Promise<T> {
-    return compact<T>(input, context).then((res) => JsonLdUtils.resolveReferences<T>(res));
+    let map = new Map<string, Referenced>();
+    return compact<T>(input, context).then((res) => JsonLdUtils.resolveReferences<T>(res, map));
   }
 
   /**
@@ -65,38 +66,56 @@ export default class JsonLdUtils {
    * Replaces JSON-LD references to nodes (i.e., nodes with a single attribute - iri) with existing nodes encountered
    * in the specified input.
    * @param input JSON-LD compaction result to be processed
+   * @param idMap Map of already processed nodes (id -> node) to replace references with. Optional
    */
-  public static resolveReferences<T extends JsonLdDictionary>(input: JsonLdDictionary): T {
-    const idMap = new Map<string, object>();
+  public static resolveReferences<T extends JsonLdDictionary>(
+    input: JsonLdDictionary,
+    idMap: Map<string, Referenced> = new Map<string, Referenced>(),
+  ): T {
     JsonLdUtils.processNode(input, idMap);
+    // replace references
+    idMap.forEach((r) => {
+      r.references.forEach((callback) => callback(r.entity));
+    });
     return input as T;
   }
 
-  private static processNode(node: object, idMap: Map<string, object>) {
+  /**
+   * Finds all entities and associates them with callbacks to replace references
+   * @param node
+   * @param idMap
+   * @private
+   */
+  private static processNode(node: object, idMap: Map<string, Referenced>) {
     if (!node.hasOwnProperty("iri")) {
       return;
     }
     // @ts-ignore
-    idMap.set(node.iri, node);
+    const nodeReferenced = JsonLdUtils.getReferenced(node.iri, idMap);
+    nodeReferenced.entity = node;
     Object.getOwnPropertyNames(node)
       .sort()
       .forEach((p) => {
         const val = node[p];
         if (Array.isArray(val)) {
           for (let i = 0, len = val.length; i < len; i++) {
-            if (typeof val[i] === "object") {
-              const reference = JsonLdUtils.getReferencedNodeIfExists(val[i], idMap);
-              if (reference) {
-                val[i] = reference;
+            if (typeof val[i] === "object" && val[i].hasOwnProperty("iri")) {
+              const referenced = JsonLdUtils.getReferenced(val[i].iri, idMap);
+              if (JsonLdUtils.isReference(val[i])) {
+                referenced.references.push((o) => {
+                  val[i] = o;
+                });
               } else {
                 JsonLdUtils.processNode(val[i], idMap);
               }
             }
           }
-        } else if (typeof val === "object") {
-          const reference = JsonLdUtils.getReferencedNodeIfExists(val, idMap);
-          if (reference) {
-            node[p] = reference;
+        } else if (typeof val === "object" && val.hasOwnProperty("iri")) {
+          const referenced = JsonLdUtils.getReferenced(val.iri, idMap);
+          if (JsonLdUtils.isReference(val)) {
+            referenced.references.push((o) => {
+              node[p] = o;
+            });
           } else {
             JsonLdUtils.processNode(val, idMap);
           }
@@ -104,13 +123,18 @@ export default class JsonLdUtils {
       });
   }
 
-  private static getReferencedNodeIfExists(node: any, idMap: Map<string, object>): object | undefined {
-    const valProps = Object.getOwnPropertyNames(node);
-    if (valProps.length === 1 && valProps[0] === "iri" && idMap.has(node.iri)) {
-      return idMap.get(node.iri);
-    } else {
-      return undefined;
+  private static getReferenced(iri: string, idMap: Map<string, Referenced>): Referenced {
+    let referenced = idMap.get(iri);
+    if (!referenced) {
+      referenced = { entity: null, references: [] };
+      idMap.set(iri, referenced);
     }
+    return referenced;
+  }
+
+  private static isReference(node: any) {
+    const valProps = Object.getOwnPropertyNames(node);
+    return valProps.length === 1 && valProps[0] === "iri";
   }
 
   /**
@@ -119,4 +143,9 @@ export default class JsonLdUtils {
   public static generateBlankNodeId(): string {
     return "_:" + Math.random().toString(36).substring(8);
   }
+}
+
+interface Referenced {
+  entity: object;
+  references: Array<(val: object) => void>;
 }
