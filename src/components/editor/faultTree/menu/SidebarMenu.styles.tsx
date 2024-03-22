@@ -4,7 +4,11 @@ import { makeStyles } from "tss-react/mui";
 const useStyles = makeStyles()((theme: Theme) => ({
   paper: {
     height: "100%",
-    padding: theme.spacing(1),
+    borderRadius: 0,
+    padding: 0,
+  },
+  sideMenuContainer: {
+    width: 400,
   },
 }));
 

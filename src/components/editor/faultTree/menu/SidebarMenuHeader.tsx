@@ -2,6 +2,7 @@ import * as React from "react";
 import DiagramOptions, { Props as DiagramOptionsProps } from "../../menu/DiagramOptions";
 import FaultTreeFailureModesTable from "./failureModesTable/FaultTreeFailureModesTable";
 import { useCurrentFaultTreeTable } from "@hooks/useCurrentFaultTreeTable";
+import { Box } from "@mui/material";
 
 const SidebarMenuHeader = ({
   onConvertToTable,
@@ -12,7 +13,7 @@ const SidebarMenuHeader = ({
   const table = useCurrentFaultTreeTable();
 
   return (
-    <React.Fragment>
+    <Box padding={2}>
       <DiagramOptions
         onExportDiagram={onExportDiagram}
         onConvertToTable={onConvertToTable}
@@ -22,7 +23,7 @@ const SidebarMenuHeader = ({
       />
 
       <FaultTreeFailureModesTable table={table} />
-    </React.Fragment>
+    </Box>
   );
 };
 
