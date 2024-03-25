@@ -22,4 +22,7 @@ export default defineConfig({
       "@models": "/src/models",
     },
   },
+  test: {
+    environment: "jsdom",
+  },
 });
