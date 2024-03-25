@@ -1,0 +1,320 @@
+{
+  "@context": {
+    "faultEventScenarios": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/has-scenario",
+    "upperBound": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/to",
+    "probability": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/probability",
+    "description": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/description",
+    "scenarioParts": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/has-part",
+    "bringsAboutSituations": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/is-bringing-about",
+    "eventType": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type",
+    "requirement": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/has-requirement",
+    "uri": "@id",
+    "failureRate": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/has-failure-rate",
+    "childrenSequence": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/has-child-sequence",
+    "children": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/has-child",
+    "name": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/name",
+    "x": "http://onto.fel.cvut.cz/ontologies/diagram/x",
+    "width": "http://onto.fel.cvut.cz/ontologies/diagram/width",
+    "prediction": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/has-prediction",
+    "y": "http://onto.fel.cvut.cz/ontologies/diagram/y",
+    "rectangle": "http://onto.fel.cvut.cz/ontologies/diagram/has-rectangle",
+    "gateType": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/gate-type",
+    "manifestingEvent": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/is-manifested-by",
+    "triggeredBySituations": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/is-triggered-by",
+    "value": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/value",
+    "height": "http://onto.fel.cvut.cz/ontologies/diagram/height",
+    "supertypes": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/is-derived-from"
+  },
+  "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance1443295929",
+  "@type": ["http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree"],
+  "name": "FC 1.1. Tlak v kabině fault event",
+  "manifestingEvent": {
+    "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853",
+    "@type": [
+      "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/event",
+      "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event"
+    ],
+    "gateType": "OR",
+    "name": "FC 1.1. Tlak v kabině fault event",
+    "eventType": "INTERMEDIATE",
+    "description": "",
+    "rectangle": {
+      "uri": "http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance720425674",
+      "@type": ["http://onto.fel.cvut.cz/ontologies/diagram/rectangle"],
+      "y": 10.0,
+      "x": 380.0,
+      "width": 100.0,
+      "height": 100.0
+    },
+    "childrenSequence": {
+      "@list": [
+        {
+          "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-741532472"
+        },
+        {
+          "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance820186229"
+        },
+        {
+          "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance621415126"
+        },
+        {
+          "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1369205353"
+        },
+        {
+          "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-650995087"
+        }
+      ]
+    },
+    "bringsAboutSituations": [],
+    "children": [
+      {
+        "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-741532472",
+        "@type": [
+          "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/event",
+          "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event"
+        ],
+        "name": "21-30-00 - Pressurization control",
+        "eventType": "BASIC",
+        "description": "",
+        "probability": 1.667e-5,
+        "rectangle": {
+          "uri": "http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance-439695733",
+          "@type": ["http://onto.fel.cvut.cz/ontologies/diagram/rectangle"],
+          "y": 190.0,
+          "x": 110.0,
+          "width": 80.0,
+          "height": 80.0
+        },
+        "childrenSequence": {
+          "@list": []
+        },
+        "bringsAboutSituations": [],
+        "children": [],
+        "triggeredBySituations": []
+      },
+      {
+        "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance820186229",
+        "@type": [
+          "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/event",
+          "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event"
+        ],
+        "name": "21-30-01 (pn-11) - Regulator Failure",
+        "eventType": "BASIC",
+        "description": "",
+        "probability": 1.6667e-5,
+        "rectangle": {
+          "uri": "http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance-421231482",
+          "@type": ["http://onto.fel.cvut.cz/ontologies/diagram/rectangle"],
+          "y": 190.0,
+          "x": 260.0,
+          "width": 80.0,
+          "height": 80.0
+        },
+        "childrenSequence": {
+          "@list": []
+        },
+        "bringsAboutSituations": [],
+        "children": [],
+        "supertypes": [
+          {
+            "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-2004562549",
+            "@type": [
+              "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/event",
+              "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type"
+            ],
+            "name": "pn-11 fails",
+            "failureRate": {
+              "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-598535435",
+              "@type": ["http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate"],
+              "prediction": {
+                "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance143740879",
+                "@type": [
+                  "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/analysis-product",
+                  "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate"
+                ],
+                "value": 0.005
+              }
+            },
+            "triggeredBySituations": [],
+            "bringsAboutSituations": []
+          }
+        ],
+        "triggeredBySituations": []
+      },
+      {
+        "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-650995087",
+        "@type": [
+          "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/event",
+          "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event"
+        ],
+        "name": "21-30-03 (pn-13) - Control and safety valve Failure",
+        "eventType": "BASIC",
+        "description": "",
+        "probability": 1.667e-5,
+        "rectangle": {
+          "uri": "http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance1945453232",
+          "@type": ["http://onto.fel.cvut.cz/ontologies/diagram/rectangle"],
+          "y": 180.0,
+          "x": 550.0,
+          "width": 80.0,
+          "height": 80.0
+        },
+        "childrenSequence": {
+          "@list": []
+        },
+        "bringsAboutSituations": [],
+        "children": [],
+        "supertypes": [
+          {
+            "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-747419011",
+            "@type": [
+              "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/event",
+              "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type"
+            ],
+            "name": "pn-13 fails",
+            "failureRate": {
+              "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance923379609",
+              "@type": ["http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate"],
+              "prediction": {
+                "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-1465258761",
+                "@type": [
+                  "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/analysis-product",
+                  "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate"
+                ],
+                "value": 0.005
+              }
+            },
+            "triggeredBySituations": [],
+            "bringsAboutSituations": []
+          }
+        ],
+        "triggeredBySituations": []
+      },
+      {
+        "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance621415126",
+        "@type": [
+          "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/event",
+          "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event"
+        ],
+        "name": "21-30-02 (pn-12) - Control valve Failure",
+        "eventType": "BASIC",
+        "description": "",
+        "probability": 1.25e-5,
+        "rectangle": {
+          "uri": "http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance429145967",
+          "@type": ["http://onto.fel.cvut.cz/ontologies/diagram/rectangle"],
+          "y": 190.0,
+          "x": 380.0,
+          "width": 100.0,
+          "height": 100.0
+        },
+        "childrenSequence": {
+          "@list": []
+        },
+        "bringsAboutSituations": [],
+        "children": [],
+        "supertypes": [
+          {
+            "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-147780273",
+            "@type": [
+              "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/event",
+              "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type"
+            ],
+            "name": "pn-12 fails",
+            "failureRate": {
+              "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance319961958",
+              "@type": ["http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate"],
+              "prediction": {
+                "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-1463970910",
+                "@type": [
+                  "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/analysis-product",
+                  "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate"
+                ],
+                "value": 0.006
+              }
+            },
+            "triggeredBySituations": [],
+            "bringsAboutSituations": []
+          }
+        ],
+        "triggeredBySituations": []
+      }
+    ],
+    "supertypes": [
+      {
+        "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance833438683",
+        "@type": [
+          "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/event",
+          "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type"
+        ],
+        "name": "FC_1.1. Tlak v kabině fault event",
+        "failureRate": {
+          "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance1752675736",
+          "@type": ["http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate"],
+          "requirement": {
+            "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-requirement/instance-1318429931",
+            "@type": ["http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-requirement"],
+            "upperBound": 4.0e-4
+          }
+        },
+        "triggeredBySituations": [],
+        "bringsAboutSituations": []
+      }
+    ],
+    "triggeredBySituations": []
+  },
+  "faultEventScenarios": [
+    {
+      "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type/instance12968493",
+      "@type": [
+        "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/analysis-product",
+        "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type"
+      ],
+      "probability": 1.6667e-5,
+      "scenarioParts": [
+        {
+          "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance820186229"
+        }
+      ]
+    },
+    {
+      "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type/instance689303151",
+      "@type": [
+        "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/analysis-product",
+        "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type"
+      ],
+      "probability": 1.25e-5,
+      "scenarioParts": [
+        {
+          "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance621415126"
+        }
+      ]
+    },
+    {
+      "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type/instance1811543272",
+      "@type": [
+        "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/analysis-product",
+        "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type"
+      ],
+      "probability": 1.667e-5,
+      "scenarioParts": [
+        {
+          "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-650995087"
+        }
+      ]
+    },
+    {
+      "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type/instance531890995",
+      "@type": [
+        "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/analysis-product",
+        "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type"
+      ],
+      "probability": 1.667e-5,
+      "scenarioParts": [
+        {
+          "uri": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-741532472"
+        }
+      ]
+    }
+  ]
+}
