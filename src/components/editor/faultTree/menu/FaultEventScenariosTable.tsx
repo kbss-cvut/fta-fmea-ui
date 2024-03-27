@@ -4,6 +4,8 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { FaultEventScenario } from "../../../../models/faultEventScenario";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
 import useStyles from "./FaultEventScenariosTable.styles";
+import { asArray } from "@utils/treeUtils";
+import { useTranslation } from "react-i18next";
 
 interface FaultEventScenariosTableProps {
   scenarios: FaultEventScenario[];
@@ -18,16 +20,8 @@ interface TableRow {
 const getScenarioTableRow = (item: FaultEventScenario) => {
   const cutsetsStrings = [];
 
-  // Check if scenarioParts is an array
-  if (Array.isArray(item.scenarioParts)) {
-    for (const scenarioPart of item.scenarioParts) {
-      const parts = scenarioPart.iri.split("/");
-      const lastPart = parts[parts.length - 1];
-      cutsetsStrings.push(lastPart);
-    }
-  } else {
-    // scenarioParts is an object
-    const parts = item.scenarioParts.iri.split("/");
+  for (const scenarioPart of asArray(item.scenarioParts)) {
+    const parts = scenarioPart.iri.split("/");
     const lastPart = parts[parts.length - 1];
     cutsetsStrings.push(lastPart);
   }
@@ -41,6 +35,7 @@ const getScenarioTableRow = (item: FaultEventScenario) => {
 };
 const FaultEventScenariosTable: FC<FaultEventScenariosTableProps> = ({ scenarios, onScenarioSelect }) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const { classes } = useStyles();
   const sortedList = scenarios.sort((a, b) => b.probability - a.probability);
 
@@ -67,8 +62,8 @@ const FaultEventScenariosTable: FC<FaultEventScenariosTableProps> = ({ scenarios
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Cutset</TableCell>
-              <TableCell>Probability</TableCell>
+              <TableCell>{`${t("faultEventScenariosTable.cutset")}`}</TableCell>
+              <TableCell>{`${t("faultEventScenariosTable.probability")}`}</TableCell>
             </TableRow>
           </TableHead>
         </Table>
