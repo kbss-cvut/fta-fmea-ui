@@ -11,8 +11,8 @@ const SidebarMenu = ({ children, className }: Props) => {
   const { classes } = useStyles();
 
   return (
-    <div className={className}>
-      <Paper className={classes.paper} elevation={3}>
+    <div className={classes.sideMenuContainer}>
+      <Paper className={classes.paper} elevation={1}>
         {children}
       </Paper>
     </div>

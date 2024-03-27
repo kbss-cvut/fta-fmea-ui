@@ -5,8 +5,8 @@ const MAIN_EVENT_BODY_COLOR = "#183e4b";
 const MAIN_GATE_COLOR = "#057dcd";
 const BASIC_GATE_COLOR = "#4c956c";
 const EXTERNAL_GATE_COLOR = "#ffa600";
-const FILL_OPACITY = 0.4
-const STROKE_COLOR = "#000000"
+const FILL_OPACITY = 0.4;
+const STROKE_COLOR = "#000000";
 
 const Event = joint.dia.Element.define(
   "fta.Event",
