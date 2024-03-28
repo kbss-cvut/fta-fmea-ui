@@ -11,7 +11,6 @@ interface FaultEventScenariosTableProps {
   scenarios: FaultEventScenario[];
   onScenarioSelect: (scenario: FaultEventScenario) => void;
 }
-
 interface TableRow {
   cutsets: string[];
   probability: number;
@@ -21,9 +20,7 @@ const getScenarioTableRow = (item: FaultEventScenario) => {
   const cutsetsStrings = [];
 
   for (const scenarioPart of asArray(item.scenarioParts)) {
-    const parts = scenarioPart.iri.split("/");
-    const lastPart = parts[parts.length - 1];
-    cutsetsStrings.push(lastPart);
+    cutsetsStrings.push(scenarioPart.name);
   }
 
   const row: TableRow = {
