@@ -68,3 +68,13 @@ export const getNodeWidthForText = (text, fontSize, containerHeight) => {
   const finalWidth = Math.min(width, maxWidth);
   return finalWidth;
 };
+
+export const asArray = (objectOrArray) => {
+  if (!objectOrArray) {
+    return [];
+  }
+  if (Array.isArray(objectOrArray)) {
+    return objectOrArray;
+  }
+  return [objectOrArray];
+};

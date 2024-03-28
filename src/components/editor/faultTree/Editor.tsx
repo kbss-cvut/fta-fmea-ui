@@ -32,8 +32,9 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
   const [rootEvent, setRootEvent] = useState<FaultEvent>();
   const [faultEventScenarios, setFaultEventScenarios] = useState<FaultEventScenario[]>([]);
   const [showPath, setShowPath] = useState<boolean>(false);
-
+  const [showTable, setShowTable] = useState<boolean>(false);
   const [highlightedElementView, setHighlightedElementView] = useState(null);
+
   const _localContext = useLocalContext({ rootEvent: rootEvent, highlightedElementView: highlightedElementView });
 
   const getRootEvent = (): FaultEvent => {
@@ -157,6 +158,7 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
 
   const handleCutSetAnalysis = () => {
     setShowPath(!showPath);
+    setShowTable(!showTable);
     calculateCutSets(faultTree.iri)
       .then((d) => {
         refreshTree();
@@ -186,6 +188,11 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
     return [result]
   };
 
+  const handleOnScenarioSelect = (scenario: FaultEventScenario) => {
+    setFaultEventScenarios([scenario]);
+    refreshTree();
+  };
+
   return (
     <div onContextMenu={handleOnContextMenu}>
       <EditorCanvas
@@ -202,7 +209,10 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
         setHighlightedElement={setHighlightedElementView}
         refreshTree={refreshTree}
         faultEventScenarios={faultEventScenarios}
+        possibleFaultEventScenarios={faultTree?.faultEventScenarios ? faultTree?.faultEventScenarios : []}
         showPath={showPath}
+        showTable={showTable}
+        onScenarioSelect={(scenario: FaultEventScenario) => handleOnScenarioSelect(scenario)}
       />
 
       <FaultEventContextMenu

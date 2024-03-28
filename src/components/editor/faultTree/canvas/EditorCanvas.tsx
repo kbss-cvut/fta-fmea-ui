@@ -17,6 +17,7 @@ import renderTree from "@components/editor/faultTree/shapes/RenderTree";
 import { JOINTJS_NODE_MODEL } from "@components/editor/faultTree/shapes/constants";
 import { FaultEventScenario } from "@models/faultEventScenario";
 import { findNodeByIri } from "@utils/treeUtils";
+import FaultEventScenariosTable from "../menu/FaultEventScenariosTable";
 
 enum MOVE_NODE {
   DRAGGING = 0,
@@ -38,6 +39,9 @@ interface Props {
   setHighlightedElement: (element: any) => void;
   faultEventScenarios: FaultEventScenario[];
   showPath: boolean;
+  showTable: boolean;
+  possibleFaultEventScenarios: FaultEventScenario[];
+  onScenarioSelect: (scenario: FaultEventScenario) => void;
 }
 
 const EditorCanvas = ({
@@ -55,6 +59,9 @@ const EditorCanvas = ({
   setHighlightedElement,
   faultEventScenarios,
   showPath,
+  showTable,
+  possibleFaultEventScenarios,
+  onScenarioSelect,
 }: Props) => {
   const { classes } = useStyles();
 
@@ -221,7 +228,7 @@ const EditorCanvas = ({
       renderTree(container, rootEvent, null, listOfPaths);
       layout(container);
     }
-  }, [container, rootEvent]);
+  }, [container, rootEvent, faultEventScenarios]);
 
   return (
     <div className={classes.root}>
@@ -235,11 +242,16 @@ const EditorCanvas = ({
             onCutSetAnalysis={onCutSetAnalysis}
           />
         </CurrentFaultTreeTableProvider>
-        <FaultEventMenu
-          shapeToolData={sidebarSelectedEvent}
-          onEventUpdated={onEventUpdated}
-          refreshTree={refreshTree}
-        />
+        {!showTable && (
+          <FaultEventMenu
+            shapeToolData={sidebarSelectedEvent}
+            onEventUpdated={onEventUpdated}
+            refreshTree={refreshTree}
+          />
+        )}
+        {showTable && (
+          <FaultEventScenariosTable scenarios={possibleFaultEventScenarios} onScenarioSelect={onScenarioSelect} />
+        )}
       </SidebarMenu>
     </div>
   );

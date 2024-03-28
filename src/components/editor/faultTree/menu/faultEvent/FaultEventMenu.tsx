@@ -8,6 +8,7 @@ import { EventFailureModeProvider, useEventFailureMode } from "../../../../../ho
 import EventFailureModeList from "../failureMode/EventFailureModeList";
 import { FailureMode } from "../../../../../models/failureModeModel";
 import FailureModeShowDialog from "../../../../dialog/failureMode/show/FailureModeShowDialog";
+import { Box } from "@mui/material";
 
 interface Props {
   shapeToolData?: FaultEvent;
@@ -27,7 +28,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree }: Props) =
   };
 
   return (
-    <React.Fragment>
+    <Box paddingLeft={2} marginRight={2}>
       <Typography variant="h5" gutterBottom>
         Edit Event
       </Typography>
@@ -58,7 +59,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree }: Props) =
           />
         </EventFailureModeProvider>
       )}
-    </React.Fragment>
+    </Box>
   );
 };
 

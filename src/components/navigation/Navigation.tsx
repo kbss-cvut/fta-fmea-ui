@@ -53,6 +53,7 @@ const Navigation: FC<SideNavigationProps> = ({ children }) => {
   const shouldHideSidePanel =
     path.includes(ROUTES.LOGIN) || path.includes(ROUTES.REGISTER) || path.includes("instance");
   const shouldHideTopPanel = path.includes(ROUTES.LOGIN) || path.includes(ROUTES.REGISTER);
+  const overflow = path.includes("instance") ? "hidden" : "auto";
 
   const mgTop = shouldHideTopPanel ? 0 : TOP_PANEL_HEIGHT;
   const mgLeft = shouldHideSidePanel ? 0 : isCollapsed ? SIDE_PANEL_COLLAPSED_WIDTH : SIDE_PANEL_WIDTH;
@@ -69,12 +70,14 @@ const Navigation: FC<SideNavigationProps> = ({ children }) => {
           showAnimation={showAnimation}
         />
       )}
-      {!shouldHideTopPanel && <AppBar title="" topPanelHeight={TOP_PANEL_HEIGHT} showBackButton={path.includes("instance")} />}
+      {!shouldHideTopPanel && (
+        <AppBar title="" topPanelHeight={TOP_PANEL_HEIGHT} showBackButton={path.includes("instance")} />
+      )}
       <Box
         className={classes.childrenContainer}
         style={{ marginLeft: mgLeft, marginTop: mgTop, transition: showAnimation ? "margin-left 0.3s" : "none" }}
       >
-        <Box height={dynamicHeight} overflow="auto">
+        <Box height={dynamicHeight} overflow={overflow}>
           {children}
         </Box>
       </Box>
