@@ -52,7 +52,7 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
       setAppBarName(faultTree.name);
       setRootEvent(faultTree.manifestingEvent);
       if (faultTree.faultEventScenarios) {
-        setFaultEventScenarios(getScenarioWithHighestProbability(faultTree.faultEventScenarios));
+        setFaultEventScenarios([getScenarioWithHighestProbability(faultTree.faultEventScenarios)]);
       }
 
       if (contextMenuSelectedEvent) {
@@ -185,7 +185,7 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
     const result = list.reduce((maxItem, currentItem) => {
       return currentItem.probability > maxItem.probability ? currentItem : maxItem;
     });
-    return [result]
+    return result
   };
 
   const handleOnScenarioSelect = (scenario: FaultEventScenario) => {
