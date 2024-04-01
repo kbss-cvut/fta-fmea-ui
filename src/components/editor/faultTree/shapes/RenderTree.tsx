@@ -51,7 +51,7 @@ const renderTree = (container, node, parentShape = null, pathsToHighlight) => {
     nodeShape.attr(["probabilityLabel", "text"], node.probability.toExponential(2));
   }
   if (has(node, "probabilityRequirement")) {
-    nodeShape.attr(["probabilityRequirementLabel", "text"], node.probability.toExponential(2));
+    nodeShape.attr(["probabilityRequirementLabel", "text"], node.probabilityRequirement.toExponential(2));
   }
   if (shouldHighlight) {
     nodeShape.attr("body/stroke", ERROR_PATH_COLOR);

@@ -26,14 +26,19 @@ export const findAll = async (): Promise<FaultTree[]> => {
   }
 };
 
-export const find = async (faultTreeUri: string): Promise<FaultTree> => {
+export const find = async (faultTreeUri: string): Promise<{ result: FaultTree; reqProb?: any }> => {
   try {
     const fragment = extractFragment(faultTreeUri);
     const response = await axiosClient.get<FaultTree[]>(`/faultTrees/${fragment}`, {
       headers: authHeaders(),
     });
 
-    return JsonLdUtils.compactAndResolveReferences<FaultTree>(response.data, CONTEXT);
+    let reqProb;
+    if (response.data?.manifestingEvent?.supertypes[0]?.failureRate?.requirement?.upperBound !== undefined) {
+      reqProb = response.data.manifestingEvent.supertypes[0].failureRate.requirement.upperBound;
+    }
+    const result = await JsonLdUtils.compactAndResolveReferences<FaultTree>(response.data, CONTEXT);
+    return { result, reqProb };
   } catch (e) {
     console.log("Fault Tree Service - Failed to call /find");
     const defaultMessage = "Failed to find fault tree";
@@ -186,10 +191,9 @@ export const getTreePathsAggregate = async (): Promise<[FaultEvent[]]> => {
 export const calculateCutSets = async (faultTreeUri: string) => {
   try {
     const fragment = extractFragment(faultTreeUri);
-    const response = await axiosClient.put(`/faultTrees/${fragment}/cutsets`, null, {
+    const response = await axiosClient.put(`/faultTrees/${fragment}/evaluate`, null, {
       headers: authHeaders(),
     });
-
     return response;
   } catch (e) {
     console.log("Fault Tree Service - Failed to call /cutsets");
