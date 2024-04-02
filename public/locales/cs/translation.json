@@ -38,5 +38,35 @@
   "faultEventScenariosTable": {
     "cutset": "Řez",
     "probability": "Pravděpodobnost"
+  },
+  "eventDescription": {
+    "fhaBasedFailureRate": {
+      "title": "Chybovost založená na FHA",
+      "description": "Chybovost vypočtená na základě počtu výskytů hlavních událostí během provozu letadla pro každý typ letadla zvlášť."
+    },
+    "calculatedFailureRate": {
+      "title": "Vypočítaná míra selhání",
+      "description": "Míra selhání vypočtená uvnitř zobrazeného FTA na základě základních událostí a propojovacích bran."
+    },
+    "requiredFailureRate": {
+      "title": "Požadovaná míra selhání",
+      "description": "Požadovaná míra selhání na základě závažnosti hlavní události podle MIL-STD-882."
+    },
+    "severity": {
+      "title": "Závažnost",
+      "description": "Závažnost má kategorie 1-4 na základě MIL-STD-882."
+    },
+    "predictedFailureRate": {
+      "title": "Předpokládaná míra selhání",
+      "description": "Míra selhání předpovězená dodavatelem nebo AVA během návrhové fáze, která je součástí vstupního tabulkového listu SNS pro každý typ letadla."
+    },
+    "operationalFailureRate": {
+      "title": "Provozní míra selhání",
+      "description": "Míra selhání spočítaná na základě počtu výskytů selhání komponent během provozu letadla napříč všemi typy letadel. Každá konkrétní komponenta má definované jedinečné číslo SNS."
+    },
+    "manuallyDefinedFailureRate": {
+      "title": "Ručně definovaná míra selhání",
+      "description": "Míra selhání ručně nastavená týmem AVA na základě zkušeností a inženýrského posouzení."
+    }
   }
 }
