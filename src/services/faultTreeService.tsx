@@ -32,10 +32,10 @@ export const find = async (faultTreeUri: string): Promise<{ result: FaultTree; r
     const response = await axiosClient.get<FaultTree[]>(`/faultTrees/${fragment}`, {
       headers: authHeaders(),
     });
-
     let reqProb;
-    if (response.data?.manifestingEvent?.supertypes[0]?.failureRate?.requirement?.upperBound !== undefined) {
-      reqProb = response.data.manifestingEvent.supertypes[0].failureRate.requirement.upperBound;
+    const upperBound = response.data?.manifestingEvent?.supertypes?.[0]?.failureRate?.requirement?.upperBound;
+    if (upperBound !== undefined || upperBound !== null) {
+      reqProb = upperBound;
     }
     const result = await JsonLdUtils.compactAndResolveReferences<FaultTree>(response.data, CONTEXT);
     return { result, reqProb };
@@ -117,7 +117,7 @@ export const getTreePaths = async (faultTreeIri: string): Promise<[FaultEvent[]]
 
     const parseData = async (data) => {
       return Promise.all(
-        data.map((row) => JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(row, EVENT_CONTEXT)),
+        data.map((row) => JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(row, EVENT_CONTEXT))
       );
     };
 
@@ -132,7 +132,7 @@ export const getTreePaths = async (faultTreeIri: string): Promise<[FaultEvent[]]
 
 export const createFailureModesTable = async (
   faultTreeIri: string,
-  failureModesTable: CreateFailureModesTable,
+  failureModesTable: CreateFailureModesTable
 ): Promise<FailureModesTable> => {
   try {
     const createRequest = Object.assign({ "@type": [VocabularyUtils.FAILURE_MODES_TABLE] }, failureModesTable, {
@@ -175,7 +175,7 @@ export const getTreePathsAggregate = async (): Promise<[FaultEvent[]]> => {
 
     const parseData = async (data) => {
       return Promise.all(
-        data.map((row) => JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(row, EVENT_CONTEXT)),
+        data.map((row) => JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(row, EVENT_CONTEXT))
       );
     };
 
