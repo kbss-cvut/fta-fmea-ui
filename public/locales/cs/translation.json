@@ -41,8 +41,8 @@
   },
   "eventDescription": {
     "fhaBasedFailureRate": {
-      "title": "Chybovost založená na FHA",
-      "description": "Chybovost vypočtená na základě počtu výskytů hlavních událostí během provozu letadla pro každý typ letadla zvlášť."
+      "title": "Intenzita poruch založená na FHA",
+      "description": "Intenzita poruch vypočtená na základě počtu výskytů vrcholových událostí během provozu letadla pro každý typ letadla zvlášť."
     },
     "calculatedFailureRate": {
       "title": "Vypočítaná míra selhání",

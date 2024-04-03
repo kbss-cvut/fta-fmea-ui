@@ -32,10 +32,10 @@ export const find = async (faultTreeUri: string): Promise<{ result: FaultTree; r
     const response = await axiosClient.get<FaultTree[]>(`/faultTrees/${fragment}`, {
       headers: authHeaders(),
     });
-
     let reqProb;
-    if (response.data?.manifestingEvent?.supertypes[0]?.failureRate?.requirement?.upperBound !== undefined) {
-      reqProb = response.data.manifestingEvent.supertypes[0].failureRate.requirement.upperBound;
+    const upperBound = response.data?.manifestingEvent?.supertypes?.[0]?.failureRate?.requirement?.upperBound;
+    if (upperBound !== undefined || upperBound !== null) {
+      reqProb = upperBound;
     }
     const result = await JsonLdUtils.compactAndResolveReferences<FaultTree>(response.data, CONTEXT);
     return { result, reqProb };
