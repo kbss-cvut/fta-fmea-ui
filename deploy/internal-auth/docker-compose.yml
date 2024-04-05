@@ -58,6 +58,8 @@ services:
     environment:
       <<: *local-dev-env
       REPOSITORY_URL: ${REPOSITORY_URL:-http://db-server:7200/repositories/fta-fmea}
+      REPOSITORY_USERNAME: ${REPOSITORY_USERNAME:-}
+      REPOSITORY_PASSWORD: ${REPOSITORY_PASSWORD:-}
       server.servlet.context-path: "/fta-fmea"
 
   db-server:
