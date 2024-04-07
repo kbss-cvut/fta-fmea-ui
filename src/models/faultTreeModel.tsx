@@ -15,5 +15,4 @@ export interface FaultTree extends AbstractModel {
   name: string;
   manifestingEvent: FaultEvent;
   faultEventScenarios: FaultEventScenario[];
-  supertypes: any[];
 }

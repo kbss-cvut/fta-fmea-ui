@@ -15,6 +15,7 @@ const ctx = {
   sequenceProbability: VocabularyUtils.PREFIX + "sequence-probability",
   childrenSequence: VocabularyUtils.PREFIX + "has-child-sequence",
   rectangle: DIAGRAM_PREFIX + "has-rectangle",
+  supertypes: VocabularyUtils.PREFIX + "is-derived-from"
 };
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, FAILURE_MODE_CONTEXT, RECTANGLE_CONTEXT);

@@ -6,6 +6,7 @@ import * as faultTreeService from "@services/faultTreeService";
 import { axiosSource } from "@services/utils/axiosUtils";
 import { ChildrenProps } from "@utils/hookUtils";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
+import _NS_FTA_FMEA from "../utils/VocabularyUtils"
 
 type faultTreeContextType = [FaultTree, () => void, number];
 
@@ -27,9 +28,14 @@ export const CurrentFaultTreeProvider = ({ faultTreeIri, children }: Props) => {
 
   const fetchFaultTree = async () => {
     try {
-      const { result, reqProb } = await faultTreeService.find(faultTreeIri);
+      const result = await faultTreeService.find(faultTreeIri);
       _setFaultTree(result);
-      if (reqProb) setRootReqProb(reqProb);
+      if (result.manifestingEvent.supertypes) {        
+        const failureRate = result.manifestingEvent?.supertypes[`${_NS_FTA_FMEA.PREFIX + "has-failure-rate"}`]
+        const requirement = failureRate[_NS_FTA_FMEA.PREFIX + "has-requirement"]
+        const reqProb = requirement[_NS_FTA_FMEA.PREFIX + "to"]
+        if (reqProb) setRootReqProb(reqProb);
+      }
     } catch (error) {
       showSnackbar(error.message || "Failed to fetch fault tree", SnackbarType.ERROR);
     }
