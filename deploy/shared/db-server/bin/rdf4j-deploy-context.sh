@@ -68,29 +68,60 @@ echo "INFO: *** DEPLOYING ***"
 [ ! -z "$REPOSITORY" ] && echo "INFO:    - repository $REPOSITORY"
 echo "INFO:    - graph $GRAPH"
 echo "INFO:    - files $FILES"
+if ['$CONTENT_TYPE' = 'application/trig'] ; then
+	echo "processing trig files"
 
-if [ "$APPEND" = false ] ; then
-   echo "INFO: *** CLEARING THE GRAPH ***"
-   TEMP_FILE=`mktemp`
-   QUERY_PARAMS="context=$GRAPH"
-   if [ ! "$GRAPH" ]; then QUERY_PARAMS= ;  fi
-   curl $REPOSITORY_URL/statements?$QUERY_PARAMS -v -X DELETE &> $TEMP_FILE
-   cat $TEMP_FILE | grep "HTTP/1.1 204" &>/dev/null && echo 'INFO:  clearing graph was sucessfull'  
-   cat $TEMP_FILE | grep "HTTP/1.1 204" &>/dev/null || ( echo 'ERROR:  clearing graph failed. Output of the process : '; cat $TEMP_FILE )
-fi 
+	if [ "$APPEND" = false ] ; then
+		echo "INFO: replacing data in  repo -- sending $FILES";
+		for FILE in $FILES
+		do
+		   echo echo "INFO: *** REPLACING DATA IN $REPOSITORY with data in $FILE ***"
+		   TEMP_FILE=`mktemp`
+		   QUERY_PARAMS="context=$GRAPH"
+		   if [ ! "$GRAPH" ]; then QUERY_PARAMS= ;  fi
 
-echo "INFO: *** SENDING DATA ***"
-for FILE in $FILES
-do
-   echo INFO: " -- sending $FILE";
-   TEMP_FILE=`mktemp`
-   QUERY_PARAMS="context=$GRAPH"
-   if [ ! "$GRAPH" ]; then QUERY_PARAMS= ;  fi
-  
-   curl -X POST -H "Content-Type: $CONTENT_TYPE" --data-binary "@$FILE" -o - -v "$REPOSITORY_URL/statements?$QUERY_PARAMS" 2> $TEMP_FILE
-   cat $TEMP_FILE | grep "HTTP/1.1 204" &>/dev/null && echo 'INFO:  sending data was sucessfull'  
-   cat $TEMP_FILE | grep "HTTP/1.1 204" &>/dev/null || ( echo 'ERROR:  sending data failed. Output of the process : '; cat $TEMP_FILE )
-done;
+		   curl -X PUT -H "Content-Type: $CONTENT_TYPE" --data-binary "@$FILE" -o - -v "$REPOSITORY_URL/statements?$QUERY_PARAMS" 2> $TEMP_FILE
+		   cat $TEMP_FILE | grep "HTTP/1.1 204" &>/dev/null && echo 'INFO:  sending data was sucessfull'
+		   cat $TEMP_FILE | grep "HTTP/1.1 204" &>/dev/null || ( echo 'ERROR:  sending data failed. Output of the process : '; cat $TEMP_FILE )
+		done;
+	else
+	  echo "INFO: *** SENDING DATA ***"
+		for FILE in $FILES
+		do
+		   echo INFO: " -- sending $FILE";
+		   TEMP_FILE=`mktemp`
+		   QUERY_PARAMS="context=$GRAPH"
+		   if [ ! "$GRAPH" ]; then QUERY_PARAMS= ;  fi
+
+		   curl -X POST -H "Content-Type: $CONTENT_TYPE" --data-binary "@$FILE" -o - -v "$REPOSITORY_URL/statements?$QUERY_PARAMS" 2> $TEMP_FILE
+		   cat $TEMP_FILE | grep "HTTP/1.1 204" &>/dev/null && echo 'INFO:  sending data was sucessfull'
+		   cat $TEMP_FILE | grep "HTTP/1.1 204" &>/dev/null || ( echo 'ERROR:  sending data failed. Output of the process : '; cat $TEMP_FILE )
+		done;
+	fi
+else
+	if [ "$APPEND" = false ] ; then
+	   echo "INFO: replacing data in  repo -- sending $FILE";
+	   TEMP_FILE=`mktemp`
+	   QUERY_PARAMS="context=$GRAPH"
+	   if [ ! "$GRAPH" ]; then QUERY_PARAMS= ;  fi
+	   curl $REPOSITORY_URL/statements?$QUERY_PARAMS -v -X DELETE &> $TEMP_FILE
+	   cat $TEMP_FILE | grep "HTTP/1.1 204" &>/dev/null && echo 'INFO:  clearing graph was sucessfull'
+	   cat $TEMP_FILE | grep "HTTP/1.1 204" &>/dev/null || ( echo 'ERROR:  clearing graph failed. Output of the process : '; cat $TEMP_FILE )
+	fi
+
+	echo "INFO: *** SENDING DATA ***"
+	for FILE in $FILES
+	do
+	   echo INFO: " -- sending $FILE";
+	   TEMP_FILE=`mktemp`
+	   QUERY_PARAMS="context=$GRAPH"
+	   if [ ! "$GRAPH" ]; then QUERY_PARAMS= ;  fi
+
+	   curl -X POST -H "Content-Type: $CONTENT_TYPE" --data-binary "@$FILE" -o - -v "$REPOSITORY_URL/statements?$QUERY_PARAMS" 2> $TEMP_FILE
+	   cat $TEMP_FILE | grep "HTTP/1.1 204" &>/dev/null && echo 'INFO:  sending data was sucessfull'
+	   cat $TEMP_FILE | grep "HTTP/1.1 204" &>/dev/null || ( echo 'ERROR:  sending data failed. Output of the process : '; cat $TEMP_FILE )
+	done;
+fi
 
 echo "INFO: *** CHECKING ***"
 TEMP_FILE=`mktemp`
