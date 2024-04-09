@@ -15,7 +15,16 @@ const ctx = {
   sequenceProbability: VocabularyUtils.PREFIX + "sequence-probability",
   childrenSequence: VocabularyUtils.PREFIX + "has-child-sequence",
   rectangle: DIAGRAM_PREFIX + "has-rectangle",
-  supertypes: VocabularyUtils.PREFIX + "is-derived-from"
+  supertypes: VocabularyUtils.PREFIX + "is-derived-from",
+  hasFailureRate: {
+    "@id": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/has-failure-rate",
+  },
+  requirement: {
+    "@id": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/has-requirement",
+  },
+  upperBound: {
+    "@id": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/to",
+  },
 };
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, FAILURE_MODE_CONTEXT, RECTANGLE_CONTEXT);
@@ -41,6 +50,16 @@ export interface FaultEvent extends AbstractModel {
   rectangle?: Rectangle;
   probabilityRequirement?: number;
   iri?: string;
+  supertypes?: {
+    hasFailureRate?: {
+      iri?: string;
+      requirement?: {
+        iri?: string;
+        types?: string;
+        upperBound?: number;
+      };
+    };
+  };
 }
 
 export enum GateType {

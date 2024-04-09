@@ -30,10 +30,8 @@ export const CurrentFaultTreeProvider = ({ faultTreeIri, children }: Props) => {
     try {
       const result = await faultTreeService.find(faultTreeIri);
       _setFaultTree(result);
-      if (result.manifestingEvent.supertypes) {        
-        const failureRate = result.manifestingEvent?.supertypes[`${_NS_FTA_FMEA.PREFIX + "has-failure-rate"}`]
-        const requirement = failureRate[_NS_FTA_FMEA.PREFIX + "has-requirement"]
-        const reqProb = requirement[_NS_FTA_FMEA.PREFIX + "to"]
+      if (result.manifestingEvent.supertypes) {     
+        const reqProb = result.manifestingEvent.supertypes.hasFailureRate.requirement.upperBound
         if (reqProb) setRootReqProb(reqProb);
       }
     } catch (error) {
