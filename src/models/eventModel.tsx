@@ -17,13 +17,13 @@ const ctx = {
   rectangle: DIAGRAM_PREFIX + "has-rectangle",
   supertypes: VocabularyUtils.PREFIX + "is-derived-from",
   hasFailureRate: {
-    "@id": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/has-failure-rate",
+    "@id": VocabularyUtils.PREFIX + "has-failure-rate",
   },
   requirement: {
-    "@id": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/has-requirement",
+    "@id": VocabularyUtils.PREFIX + "has-requirement",
   },
   upperBound: {
-    "@id": "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/to",
+    "@id": VocabularyUtils.PREFIX + "to",
   },
 };
 
