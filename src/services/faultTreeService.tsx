@@ -111,7 +111,7 @@ export const getTreePaths = async (faultTreeIri: string): Promise<[FaultEvent[]]
 
     const parseData = async (data) => {
       return Promise.all(
-        data.map((row) => JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(row, EVENT_CONTEXT))
+        data.map((row) => JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(row, EVENT_CONTEXT)),
       );
     };
 
@@ -126,7 +126,7 @@ export const getTreePaths = async (faultTreeIri: string): Promise<[FaultEvent[]]
 
 export const createFailureModesTable = async (
   faultTreeIri: string,
-  failureModesTable: CreateFailureModesTable
+  failureModesTable: CreateFailureModesTable,
 ): Promise<FailureModesTable> => {
   try {
     const createRequest = Object.assign({ "@type": [VocabularyUtils.FAILURE_MODES_TABLE] }, failureModesTable, {
@@ -169,7 +169,7 @@ export const getTreePathsAggregate = async (): Promise<[FaultEvent[]]> => {
 
     const parseData = async (data) => {
       return Promise.all(
-        data.map((row) => JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(row, EVENT_CONTEXT))
+        data.map((row) => JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(row, EVENT_CONTEXT)),
       );
     };
 
