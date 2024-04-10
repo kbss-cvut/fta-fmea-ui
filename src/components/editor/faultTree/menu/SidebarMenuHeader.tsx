@@ -9,6 +9,7 @@ const SidebarMenuHeader = ({
   onExportDiagram,
   onRestoreLayout,
   onCutSetAnalysis,
+  rendering,
 }: DiagramOptionsProps) => {
   const table = useCurrentFaultTreeTable();
 
@@ -20,6 +21,7 @@ const SidebarMenuHeader = ({
         onRestoreLayout={onRestoreLayout}
         onCutSetAnalysis={onCutSetAnalysis}
         tableConversionAllowed={!table}
+        rendering={rendering}
       />
 
       <FaultTreeFailureModesTable table={table} />
