@@ -16,15 +16,9 @@ const ctx = {
   childrenSequence: VocabularyUtils.PREFIX + "has-child-sequence",
   rectangle: DIAGRAM_PREFIX + "has-rectangle",
   supertypes: VocabularyUtils.PREFIX + "is-derived-from",
-  hasFailureRate: {
-    "@id": VocabularyUtils.PREFIX + "has-failure-rate",
-  },
-  requirement: {
-    "@id": VocabularyUtils.PREFIX + "has-requirement",
-  },
-  upperBound: {
-    "@id": VocabularyUtils.PREFIX + "to",
-  },
+  hasFailureRate: VocabularyUtils.PREFIX + "has-failure-rate",
+  requirement: VocabularyUtils.PREFIX + "has-requirement",
+  upperBound: VocabularyUtils.PREFIX + "to",
 };
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, FAILURE_MODE_CONTEXT, RECTANGLE_CONTEXT);

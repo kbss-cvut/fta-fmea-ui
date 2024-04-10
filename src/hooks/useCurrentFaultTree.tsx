@@ -1,12 +1,11 @@
 import * as React from "react";
 import { createContext, useContext, useEffect, useState } from "react";
-
 import { FaultTree } from "@models/faultTreeModel";
 import * as faultTreeService from "@services/faultTreeService";
 import { axiosSource } from "@services/utils/axiosUtils";
 import { ChildrenProps } from "@utils/hookUtils";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
-import _NS_FTA_FMEA from "../utils/VocabularyUtils"
+
 
 type faultTreeContextType = [FaultTree, () => void, number];
 
@@ -31,7 +30,7 @@ export const CurrentFaultTreeProvider = ({ faultTreeIri, children }: Props) => {
       const result = await faultTreeService.find(faultTreeIri);
       _setFaultTree(result);
       if (result.manifestingEvent.supertypes) {     
-        const reqProb = result.manifestingEvent.supertypes.hasFailureRate.requirement.upperBound
+        const reqProb = result.manifestingEvent.supertypes?.hasFailureRate?.requirement?.upperBound
         if (reqProb) setRootReqProb(reqProb);
       }
     } catch (error) {
