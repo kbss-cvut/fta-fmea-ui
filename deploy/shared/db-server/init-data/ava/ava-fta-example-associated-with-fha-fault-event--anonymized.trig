@@ -10,9 +10,8 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix seq: <http://krizik.felk.cvut.cz/ontologies/2008/6/sequences.owl#> .
+
 <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance1443295929> {
-
-
   <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance720425674> a diag:rectangle;
     diag:y 0.0E0;
     diag:height 1.0E2;
@@ -50,12 +49,13 @@
     :has-child <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-741532472>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance820186229>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance621415126>,
-      <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-650995087>;
+      <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-650995087>,
+      <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1204570762>;
     :has-child-sequence <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_0>;
     :description ""@cs;
     :gate-type "OR"@cs;
     :name "FC 1.1. Tlak v kabině fault event"@cs;
-    :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance833438683> .
+    :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance730041011> .
 
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-741532472>
     a :fault-event, :event;
@@ -72,7 +72,7 @@
     :description ""@cs;
     :name "21-30-01 (pn-11) - Regulator Failure"@cs;
     :probability 1.6667E-5;
-    :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-2004562549> .
+    :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1025504463> .
 
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance621415126>
     a :fault-event, :event;
@@ -81,7 +81,7 @@
     :description ""@cs;
     :name "21-30-02 (pn-12) - Control valve Failure"@cs;
     :probability 1.25E-5;
-    :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-147780273> .
+    :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance2071074861> .
 
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-650995087>
     a :fault-event, :event;
@@ -90,13 +90,28 @@
     :description ""@cs;
     :name "21-30-03 (pn-13) - Control and safety valve Failure"@cs;
     :probability 1.667E-5;
-    :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-747419011> .
+    :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-409709365> .
 
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance1443295929>
     a :fault-tree;
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853>;
     :name "FC 1.1. Tlak v kabině fault event"@cs .
 
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1204570762>
+    a :fault-event;
+    diag:has-rectangle <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance1338098093>;
+    :fault-event-type "EXTERNAL"@cs;
+    :description ""@cs;
+    :name "FC_1.3. Tlak v kabině fault event"@cs;
+    :probability 1.0E-1;
+	:is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance965534494>.
+  
+  <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance1338098093> a diag:rectangle;
+    diag:y 1.8E2;
+    diag:height 1.0E2;
+    diag:x 6.9E2;
+    diag:width 1.0E2 .
+  
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_2>
     seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance621415126>;
     seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_3> .
@@ -106,7 +121,8 @@
     seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_4> .
 
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_4>
-    seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-650995087> .
+    seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-650995087>;
+    seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_5> .
 
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_0>
     seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-741532472>;
@@ -115,4 +131,25 @@
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_1>
     seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance820186229>;
     seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_2> .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_5>
+    seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1204570762> .
+}
+
+<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance22467827479333998578> {
+  <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance-1583426105> a diag:rectangle .
+  
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance22467827479333998578>
+    a :fault-tree;
+    :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1768303591>;
+    :name "FC_1.3. Tlak v kabině fault event"@cs .
+  
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1768303591>
+    a :fault-event;
+    diag:has-rectangle <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance-1583426105>;
+    :fault-event-type "INTERMEDIATE"@cs;
+    :description ""@cs;
+    :gate-type "OR"@cs;
+    :name "FC_1.3. Tlak v kabině fault event"@cs;
+	:is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance965534494>
 }
