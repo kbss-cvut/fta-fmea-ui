@@ -57,8 +57,7 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
       setRootEvent(updatedRootEvent);
 
       if (faultTree.faultEventScenarios) {
-        const result = getScenariosWithHighestProbability(faultTree.faultEventScenarios);
-        setFaultEventScenarios(result);
+        setFaultEventScenarios([getScenarioWithHighestProbability(faultTree.faultEventScenarios)]);
       }
 
       if (contextMenuSelectedEvent) {
@@ -186,23 +185,12 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
     event.preventDefault();
   };
 
-  const getScenariosWithHighestProbability = (list: FaultEventScenario[]): FaultEventScenario[] => {
-    if (list.length === 0) return [];
-
-    let highestProbability = list[0].probability;
-    let highestProbabilityScenarios: FaultEventScenario[] = [list[0]];
-
-    for (let i = 1; i < list.length; i++) {
-      const item = list[i];
-      if (item.probability > highestProbability) {
-        highestProbability = item.probability;
-        highestProbabilityScenarios = [item];
-      } else if (item.probability === highestProbability) {
-        highestProbabilityScenarios.push(item);
-      }
-    }
-
-    return highestProbabilityScenarios;
+  const getScenarioWithHighestProbability = (list) => {
+    if (list.length === 0) return null;
+    const result = list.reduce((maxItem, currentItem) => {
+      return currentItem.probability > maxItem.probability ? currentItem : maxItem;
+    });
+    return result
   };
 
   const handleOnScenarioSelect = (scenario: FaultEventScenario) => {

@@ -1,11 +1,11 @@
 import * as React from "react";
 import { createContext, useContext, useEffect, useState } from "react";
-
 import { FaultTree } from "@models/faultTreeModel";
 import * as faultTreeService from "@services/faultTreeService";
 import { axiosSource } from "@services/utils/axiosUtils";
 import { ChildrenProps } from "@utils/hookUtils";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
+
 
 type faultTreeContextType = [FaultTree, () => void, number];
 
@@ -27,9 +27,12 @@ export const CurrentFaultTreeProvider = ({ faultTreeIri, children }: Props) => {
 
   const fetchFaultTree = async () => {
     try {
-      const { result, reqProb } = await faultTreeService.find(faultTreeIri);
+      const result = await faultTreeService.find(faultTreeIri);
       _setFaultTree(result);
-      if (reqProb) setRootReqProb(reqProb);
+      if (result.manifestingEvent.supertypes) {     
+        const reqProb = result.manifestingEvent.supertypes?.hasFailureRate?.requirement?.upperBound
+        if (reqProb) setRootReqProb(reqProb);
+      }
     } catch (error) {
       showSnackbar(error.message || "Failed to fetch fault tree", SnackbarType.ERROR);
     }

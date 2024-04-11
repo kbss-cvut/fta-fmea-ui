@@ -25,7 +25,6 @@ const Event = joint.dia.Element.define(
         textWrap: {
           height: -20,
           width: -20,
-          ellipsis: true,
         },
         refX: "50%",
         refY: "50%",
