@@ -38,5 +38,35 @@
   "faultEventScenariosTable": {
     "cutset": "Řez",
     "probability": "Pravděpodobnost"
+  },
+  "eventDescription": {
+    "fhaBasedFailureRate": {
+      "title": "Intenzita poruch založená na FHA",
+      "description": "Intenzita poruch vypočtená na základě počtu výskytů vrcholových událostí během provozu letadla pro každý typ letadla zvlášť."
+    },
+    "calculatedFailureRate": {
+      "title": "Vypočtená intenzita poruch",
+      "description": "Intenzita poruch vypočtená v rámci zobrazeného FTA na základě základních událostí a propojovacích logických hradel."
+    },
+    "requiredFailureRate": {
+      "title": "Požadovaná intenzita poruch",
+      "description": "Regulatorní požadavek na intenzitu poruch na základě závažnosti vrcholové události podle MIL-STD-882."
+    },
+    "severity": {
+      "title": "Závažnost",
+      "description": "Závažnost má kategorie 1-4 na základě MIL-STD-882."
+    },
+    "predictedFailureRate": {
+      "title": "Predikovaná intenzita poruch",
+      "description": "Intenzita poruch predikovaná dodavatelem nebo AVA během fáze návrhu, která je součástí vstupní tabulky SNS pro každý typ letadla."
+    },
+    "operationalFailureRate": {
+      "title": "Provozní intenzita poruch",
+      "description": "Intenzita poruch vypočtená na základě počtu výskytů selhání komponenty během provozu letadla napříč všemi typy letadel. Každá specifická komponenta má definované jedinečné číslo SNS."
+    },
+    "manuallyDefinedFailureRate": {
+      "title": "Manuálně definovaná intenzita poruch",
+      "description": "Intenzita poruch nastavená manuálně týmem AVA na základě zkušeného inženýrského úsudku."
+    }
   }
 }

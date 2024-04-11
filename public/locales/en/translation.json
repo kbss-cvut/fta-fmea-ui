@@ -38,5 +38,35 @@
   "faultEventScenariosTable": {
     "cutset": "Cutset",
     "probability": "Probability"
+  },
+  "eventDescription": {
+    "fhaBasedFailureRate": {
+      "title": "FHA based failure rate",
+      "description": "Failure rate calculated based on the quantity of occurrences of top events during the aircraft operation for each aircraft type separately."
+    },
+    "calculatedFailureRate": {
+      "title": "Calculated failure rate",
+      "description": "Failure rate calculated inside displayed FTA based on basic events and interconnecting gates."
+    },
+    "requiredFailureRate": {
+      "title": "Required failure rate",
+      "description": "Failure rate regulatory requirement based on the severity of the top event according to MIL-STD-882."
+    },
+    "severity": {
+      "title": "Severity",
+      "description": "Severity has categories 1-4 based on MIL-STD-882."
+    },
+    "predictedFailureRate": {
+      "title": "Predicted failure rate",
+      "description": "Failure rate predicted by supplier or AVA during the design phase that is part of the input SNS spreadsheet for every aircraft type."
+    },
+    "operationalFailureRate": {
+      "title": "Operational failure rate",
+      "description": "Failure rate calculated based on the quantity of occurrences of component failures during the aircraft operation across all aircraft types. Each specific component has a defined unique SNS number."
+    },
+    "manuallyDefinedFailureRate": {
+      "title": "Manually defined failure rate",
+      "description": "Failure rate manually set by AVA team based on experienced engineering judgment."
+    }
   }
 }

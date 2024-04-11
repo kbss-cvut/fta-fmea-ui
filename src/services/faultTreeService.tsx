@@ -32,6 +32,7 @@ export const find = async (faultTreeUri: string): Promise<FaultTree> => {
     const response = await axiosClient.get<FaultTree[]>(`/faultTrees/${fragment}`, {
       headers: authHeaders(),
     });
+    
     return JsonLdUtils.compactAndResolveReferences<FaultTree>(response.data, CONTEXT);
   } catch (e) {
     console.log("Fault Tree Service - Failed to call /find");
