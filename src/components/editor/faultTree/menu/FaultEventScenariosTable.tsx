@@ -88,7 +88,7 @@ const FaultEventScenariosTable: FC<FaultEventScenariosTableProps> = ({ scenarios
                         return <Typography style={{ fontSize: 14 }}>{cutset}</Typography>;
                       })}
                     </TableCell>
-                    <TableCell>{sortedTableRow.probability}</TableCell>
+                    <TableCell>{sortedTableRow.probability.toExponential(2)}</TableCell>
                   </TableRow>
                 );
               })}

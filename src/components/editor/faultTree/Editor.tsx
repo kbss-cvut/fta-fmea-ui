@@ -28,7 +28,7 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
   const [showSnackbar] = useSnackbar();
   const [requestConfirmation] = useConfirmDialog();
 
-  const [faultTree, refreshTree] = useCurrentFaultTree();
+  const [faultTree, refreshTree, rootReqProb] = useCurrentFaultTree();
   const [rootEvent, setRootEvent] = useState<FaultEvent>();
   const [faultEventScenarios, setFaultEventScenarios] = useState<FaultEventScenario[]>([]);
   const [showPath, setShowPath] = useState<boolean>(false);
@@ -49,8 +49,13 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
 
   useEffect(() => {
     if (faultTree) {
+      const updatedRootEvent = rootReqProb
+        ? { ...faultTree.manifestingEvent, probabilityRequirement: rootReqProb }
+        : faultTree.manifestingEvent;
+
       setAppBarName(faultTree.name);
-      setRootEvent(faultTree.manifestingEvent);
+      setRootEvent(updatedRootEvent);
+
       if (faultTree.faultEventScenarios) {
         setFaultEventScenarios([getScenarioWithHighestProbability(faultTree.faultEventScenarios)]);
       }
@@ -65,7 +70,7 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
         setSidebarSelectedEvent(sidebarEvent);
       }
     }
-  }, [faultTree]);
+  }, [faultTree, rootReqProb]);
 
   useEffect(() => {
     if (highlightedElementView) {
