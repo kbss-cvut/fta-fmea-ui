@@ -47,8 +47,7 @@ const DiagramOptions = ({
         {onCutSetAnalysis && (
           <Tooltip title={`${t("diagramSidePanel.cutsetToggleToolTip")}`}>
             <IconButton color="primary" onClick={onCutSetAnalysis} size="large">
-              {rendering && <CircularProgress size={24} />}
-              {!rendering && <RouteIcon />}
+              {rendering ? <CircularProgress size={24} /> : <RouteIcon />}
             </IconButton>
           </Tooltip>
         )}
