@@ -1,5 +1,4 @@
-import * as React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import EditorCanvas from "./canvas/EditorCanvas";
 import { findEventByIri } from "@utils/treeUtils";
@@ -28,7 +27,7 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
   const [showSnackbar] = useSnackbar();
   const [requestConfirmation] = useConfirmDialog();
 
-  const [faultTree, refreshTree, rootReqProb] = useCurrentFaultTree();
+  const [faultTree, refreshTree] = useCurrentFaultTree();
   const [rootEvent, setRootEvent] = useState<FaultEvent>();
   const [faultEventScenarios, setFaultEventScenarios] = useState<FaultEventScenario[]>([]);
   const [showPath, setShowPath] = useState<boolean>(false);
@@ -49,6 +48,7 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
 
   useEffect(() => {
     if (faultTree) {
+      const rootReqProb = faultTree.manifestingEvent.supertypes?.hasFailureRate?.requirement?.upperBound;
       const updatedRootEvent = rootReqProb
         ? { ...faultTree.manifestingEvent, probabilityRequirement: rootReqProb }
         : faultTree.manifestingEvent;
@@ -70,7 +70,7 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
         setSidebarSelectedEvent(sidebarEvent);
       }
     }
-  }, [faultTree, rootReqProb]);
+  }, [faultTree]);
 
   useEffect(() => {
     if (highlightedElementView) {
@@ -190,7 +190,7 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
     const result = list.reduce((maxItem, currentItem) => {
       return currentItem.probability > maxItem.probability ? currentItem : maxItem;
     });
-    return result
+    return result;
   };
 
   const handleOnScenarioSelect = (scenario: FaultEventScenario) => {
