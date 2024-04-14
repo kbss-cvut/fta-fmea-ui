@@ -78,6 +78,10 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
     }
   }, [highlightedElementView]);
 
+  useEffect(() => {
+    refreshTree();
+  }, [location.pathname]);
+
   const [contextMenuSelectedEvent, setContextMenuSelectedEvent] = useState<FaultEvent>(null);
   const [sidebarSelectedEvent, setSidebarSelectedEvent] = useState<FaultEvent>(null);
 
@@ -198,27 +202,47 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
     refreshTree();
   };
 
+  const redirectToInstance = (navigateFrom: string) => {
+    if (faultTree?.manifestingEvent?.children) {
+      let map: { [name: string]: string } = {};
+      const children = faultTree?.manifestingEvent?.children;
+      for (let i = 0; i < children.length; i++) {
+        const node = children[i];
+        const nodeKey = node.iri;
+        const nodeValue = node?.references?.isPartOf;
+        if (nodeKey && nodeValue) {
+          map[nodeKey] = nodeValue;
+        }
+      }
+      const redirectTo = map[navigateFrom].split("/").pop();
+      history(`/fta/${redirectTo}`);
+    }
+  };
+
   return (
     <div onContextMenu={handleOnContextMenu}>
-      <EditorCanvas
-        treeName={faultTree?.name}
-        rootEvent={rootEvent}
-        onEventUpdated={handleEventUpdate}
-        sidebarSelectedEvent={sidebarSelectedEvent}
-        onElementContextMenu={handleContextMenu}
-        onElementPointerClick={handleElementPointerClick}
-        onBlankPointerClick={handleBlankPointerClick}
-        onCutSetAnalysis={handleCutSetAnalysis}
-        onConvertToTable={() => setFailureModesTableOpen(true)}
-        onNodeMove={handleMoveEvent}
-        setHighlightedElement={setHighlightedElementView}
-        refreshTree={refreshTree}
-        faultEventScenarios={faultEventScenarios}
-        possibleFaultEventScenarios={faultTree?.faultEventScenarios ? faultTree?.faultEventScenarios : []}
-        showPath={showPath}
-        showTable={showTable}
-        onScenarioSelect={(scenario: FaultEventScenario) => handleOnScenarioSelect(scenario)}
-      />
+      {faultTree && (
+        <EditorCanvas
+          treeName={faultTree?.name}
+          rootEvent={rootEvent}
+          onEventUpdated={handleEventUpdate}
+          sidebarSelectedEvent={sidebarSelectedEvent}
+          onElementContextMenu={handleContextMenu}
+          onElementPointerClick={handleElementPointerClick}
+          onBlankPointerClick={handleBlankPointerClick}
+          onCutSetAnalysis={handleCutSetAnalysis}
+          onConvertToTable={() => setFailureModesTableOpen(true)}
+          onNodeMove={handleMoveEvent}
+          setHighlightedElement={setHighlightedElementView}
+          refreshTree={refreshTree}
+          faultEventScenarios={faultEventScenarios}
+          possibleFaultEventScenarios={faultTree?.faultEventScenarios ? faultTree?.faultEventScenarios : []}
+          showPath={showPath}
+          showTable={showTable}
+          onScenarioSelect={(scenario: FaultEventScenario) => handleOnScenarioSelect(scenario)}
+          redirectToInstance={redirectToInstance}
+        />
+      )}
 
       <FaultEventContextMenu
         eventType={contextMenuSelectedEvent?.eventType}

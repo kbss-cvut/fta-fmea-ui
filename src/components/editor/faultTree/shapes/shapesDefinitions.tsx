@@ -1,12 +1,13 @@
 import * as joint from "jointjs";
 import { LABEL_FONT_SIZE } from "./constants";
 
-const MAIN_EVENT_BODY_COLOR = "#183e4b";
+const MAIN_EVENT_BODY_COLOR = "#000000";
 const MAIN_GATE_COLOR = "#057dcd";
 const BASIC_GATE_COLOR = "#4c956c";
 const EXTERNAL_GATE_COLOR = "#ffa600";
 const FILL_OPACITY = 0.4;
 const STROKE_COLOR = "#000000";
+const DEFAULT_EVENT_HEIGHT = 110;
 
 const Event = joint.dia.Element.define(
   "fta.Event",
@@ -32,6 +33,7 @@ const Event = joint.dia.Element.define(
         fill: "#333333",
         textAnchor: "middle",
         textVerticalAnchor: "middle",
+        cursor: "pointer",
       },
       probabilityLabel: {
         fontSize: 16,
@@ -40,7 +42,7 @@ const Event = joint.dia.Element.define(
         textAnchor: "start",
         textVerticalAnchor: "middle",
         refX: "60%",
-        refY: "70%",
+        refY: "73%",
       },
       probabilityRequirementLabel: {
         fontSize: 16,
@@ -72,7 +74,7 @@ export const IntermediateEvent = Event.define(
   {
     size: {
       width: 100,
-      height: 100,
+      height: DEFAULT_EVENT_HEIGHT,
     },
     attrs: {
       root: {
@@ -90,7 +92,7 @@ export const IntermediateEvent = Event.define(
         fillOpacity: FILL_OPACITY,
         strokeWidth: 2,
         refX: "50%",
-        refY: "120%",
+        refY: "117%",
         fillRule: "nonzero",
         cursor: "pointer",
       },
@@ -161,7 +163,7 @@ export const ExternalEvent = Event.define(
   {
     size: {
       width: 100,
-      height: 100,
+      height: DEFAULT_EVENT_HEIGHT,
     },
     attrs: {
       root: {
@@ -188,9 +190,14 @@ export const ExternalEvent = Event.define(
         fillOpacity: FILL_OPACITY,
         strokeWidth: 2,
         refX: "50%",
-        refY: "120%",
+        refY: "117%",
         fillRule: "nonzero",
         cursor: "pointer",
+      },
+      icon: {
+        d: "M3.9 7c0-1.71 1.39-3.1 3.1-3.1h4V2H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 8h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V12h4c2.76 0 5-2.24 5-5s-2.24-5-5-5",
+        stroke: "none",
+        fill: MAIN_EVENT_BODY_COLOR,
       },
     },
   },
@@ -216,6 +223,10 @@ export const ExternalEvent = Event.define(
         tagName: "path",
         selector: "gate",
       },
+      {
+        tagName: "path",
+        selector: "icon",
+      },
     ],
   },
 );
@@ -225,7 +236,7 @@ export const UndevelopedEvent = Event.define(
   {
     size: {
       width: 100,
-      height: 100,
+      height: DEFAULT_EVENT_HEIGHT,
     },
     attrs: {
       root: {
@@ -274,7 +285,7 @@ export const BasicEvent = Event.define(
   {
     size: {
       width: 100,
-      height: 100,
+      height: DEFAULT_EVENT_HEIGHT,
     },
     z: 3,
     attrs: {
@@ -302,7 +313,7 @@ export const BasicEvent = Event.define(
         fillOpacity: FILL_OPACITY,
         strokeWidth: 2,
         refX: "50%",
-        refY: "120%",
+        refY: "117%",
         fillRule: "nonzero",
         cursor: "pointer",
       },

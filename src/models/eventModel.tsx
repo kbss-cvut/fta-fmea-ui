@@ -19,6 +19,9 @@ const ctx = {
   hasFailureRate: VocabularyUtils.PREFIX + "has-failure-rate",
   requirement: VocabularyUtils.PREFIX + "has-requirement",
   upperBound: VocabularyUtils.PREFIX + "to",
+  references: VocabularyUtils.PREFIX + "is-reference-to",
+  isPartOf: VocabularyUtils.PREFIX + "is-part-of",
+  isReference: VocabularyUtils.PREFIX + "is-reference",
 };
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, FAILURE_MODE_CONTEXT, RECTANGLE_CONTEXT);
@@ -44,6 +47,9 @@ export interface FaultEvent extends AbstractModel {
   rectangle?: Rectangle;
   probabilityRequirement?: number;
   iri?: string;
+  references?: {
+    isPartOf?: string;
+  };
   supertypes?: {
     hasFailureRate?: {
       iri?: string;
