@@ -6,6 +6,7 @@ import RouteIcon from "@mui/icons-material/Route";
 import Tooltip from "@mui/material/Tooltip";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export interface Props {
   onRestoreLayout: () => void;
@@ -13,6 +14,7 @@ export interface Props {
   onConvertToTable?: () => void;
   onCutSetAnalysis?: () => void;
   tableConversionAllowed?: boolean;
+  rendering?: boolean;
 }
 
 const DiagramOptions = ({
@@ -21,6 +23,7 @@ const DiagramOptions = ({
   onConvertToTable,
   onCutSetAnalysis,
   tableConversionAllowed = false,
+  rendering,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -44,7 +47,7 @@ const DiagramOptions = ({
         {onCutSetAnalysis && (
           <Tooltip title={`${t("diagramSidePanel.cutsetToggleToolTip")}`}>
             <IconButton color="primary" onClick={onCutSetAnalysis} size="large">
-              <RouteIcon />
+              {rendering ? <CircularProgress size={24} /> : <RouteIcon />}
             </IconButton>
           </Tooltip>
         )}

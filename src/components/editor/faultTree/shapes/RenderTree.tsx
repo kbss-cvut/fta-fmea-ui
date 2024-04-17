@@ -31,9 +31,8 @@ const highlightCheck = (path, iri) => {
   return iriArray.includes(iri);
 };
 
-const renderTree = (container, node, parentShape = null, pathsToHighlight) => {
+const renderTree = async (container, node, parentShape = null, pathsToHighlight) => {
   const shouldHighlight = pathsToHighlight ? highlightCheck(pathsToHighlight, node.iri) : false;
-
   // render node shape
   let nodeShape = createShape(node);
   nodeShape.addTo(container);
@@ -77,7 +76,9 @@ const renderTree = (container, node, parentShape = null, pathsToHighlight) => {
   const sequence = sequenceListToArray(node.childrenSequence);
   faultEventService.eventChildrenSorted(flatten([node.children]), sequence);
   const childNodes = faultEventService.eventChildrenSorted(flatten([node.children]), sequence);
-  if (childNodes) childNodes.forEach((n) => renderTree(container, n, nodeShape, pathsToHighlight));
+  if (childNodes) {
+    await Promise.all(childNodes.map(n => renderTree(container, n, nodeShape, pathsToHighlight)));
+  }
 };
 
 export default renderTree;

@@ -74,6 +74,7 @@ const EditorCanvas = ({
   const [currentZoom, setCurrentZoom] = useState(1);
   const [isExportingImage, setIsExportingImage] = useState(false);
   const [targets, setTargets] = useState<undefined | string[]>();
+  const [rendering, setRendering] = useState<boolean>(false)
 
   let dragStartPosition = null;
 
@@ -216,18 +217,24 @@ const EditorCanvas = ({
   };
 
   useEffect(() => {
-    if (container && rootEvent) {
-      container.removeCells(container.getCells());
-
-      const listOfPaths = [];
-
-      if (targets.length > 0 && showPath) {
-        targets.forEach((target) => listOfPaths.push(findNodeByIri(rootEvent, target)));
+    const renderAndLayout = async () => {
+      if (container && rootEvent) {
+        setRendering(true)
+        container.removeCells(container.getCells());
+  
+        const listOfPaths = [];
+  
+        if (targets.length > 0 && showPath) {
+          targets.forEach((target) => listOfPaths.push(findNodeByIri(rootEvent, target)));
+        }
+  
+        await renderTree(container, rootEvent, null, listOfPaths);
+        layout(container);
+        setRendering(false)
       }
-
-      renderTree(container, rootEvent, null, listOfPaths);
-      layout(container);
-    }
+    };
+  
+    renderAndLayout();
   }, [container, rootEvent, faultEventScenarios]);
 
   return (
@@ -240,6 +247,7 @@ const EditorCanvas = ({
             onConvertToTable={onConvertToTable}
             onRestoreLayout={() => layout(container)}
             onCutSetAnalysis={onCutSetAnalysis}
+            rendering={rendering}
           />
         </CurrentFaultTreeTableProvider>
         {!showTable && (
