@@ -24,6 +24,12 @@ declare module "@mui/material/styles" {
         hover?: string;
       };
     };
+    dashboard?: {
+      colors?: {
+        active?: string;
+        activeIcon?: string;
+      };
+    };
   }
   // allow configuration using `createMuiTheme`
   interface DeprecatedThemeOptions {
@@ -46,6 +52,12 @@ declare module "@mui/material/styles" {
         textActive?: string;
         hint?: string;
         hover?: string;
+      };
+    };
+    dashboard?: {
+      colors?: {
+        active?: string;
+        activeIcon?: string;
       };
     };
   }

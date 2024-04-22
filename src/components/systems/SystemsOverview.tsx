@@ -5,6 +5,7 @@ import { Typography, Button, Box } from "@mui/material";
 import SystemDialog from "@components/dialog/system/SystemDialog";
 import OverviewContainer from "../../components/layout/OverviewContainer";
 import { useTranslation } from "react-i18next";
+import SystemOverview from "../dashboard/content/list/SystemOverview";
 
 const SystemsOverview = () => {
   const { t } = useTranslation();
@@ -25,7 +26,7 @@ const SystemsOverview = () => {
           </Button>
         </Box>
 
-        <DashboardSystemList />
+        <SystemOverview />
         <SystemDialog open={createSystemDialogOpen} handleCloseDialog={() => setCreateSystemDialogOpen(false)} />
       </OverviewContainer>
     </DashboardContentProvider>
