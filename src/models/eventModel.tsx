@@ -19,6 +19,10 @@ const ctx = {
   hasFailureRate: VocabularyUtils.PREFIX + "has-failure-rate",
   requirement: VocabularyUtils.PREFIX + "has-requirement",
   upperBound: VocabularyUtils.PREFIX + "to",
+  criticality: VocabularyUtils.PREFIX + "criticality",
+  hasPrediction: VocabularyUtils.PREFIX + "has-prediction",
+  value: VocabularyUtils.PREFIX + "value",
+  behavior: VocabularyUtils.PREFIX + "behavior",
 };
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, FAILURE_MODE_CONTEXT, RECTANGLE_CONTEXT);
