@@ -80,5 +80,15 @@
     "lastEditor": "Poslední editor",
     "status": "Stav",
     "edit": "Upravit"
+  },
+  "faultEventMenu": {
+    "criticality": "Kritičnost",
+    "fhaBasedFailureRate": "Intenzita poruch založená na FHA",
+    "predictedFailureRate": "Predikovaná intenzita poruch",
+    "ataSystem": "ATA systém",
+    "partNumber": "Číslo součásti",
+    "stock": "Zásoba",
+    "quantity": "Množství"
+
   }
 }
