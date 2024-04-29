@@ -14,7 +14,8 @@
       "@services/*": ["./src/services/*"],
       "@styles/*": ["./src/styles/*"],
       "@utils/*": ["./src/utils/*"],
-      "@hooks/*": ["./src/hooks/*"]
+      "@hooks/*": ["./src/hooks/*"],
+      "@oidc/*": ["./src/misc/oidc/*"]
     },
     "lib": ["es2017", "dom", "dom.iterable"],
     "types": ["vite/client"]

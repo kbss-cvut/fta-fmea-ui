@@ -18,6 +18,8 @@ import SystemsOverview from "../systems/SystemsOverview";
 import FtaOverview from "../fta/FtaOverview";
 import FmeaOverview from "../fmea/FmeaOverview";
 import FhaOverview from "../fha/FhaOverview";
+import OidcSignInCallback from "@oidc/OidcSignInCallback";
+import OidcSilentCallback from "@oidc/OidcSilentCallback";
 
 export const appHistory = createHashHistory();
 
@@ -134,6 +136,9 @@ const AppRoutes = () => {
                 </PrivateRoute>
               }
             />
+
+            <Route path={ROUTES.OIDC_SIGNIN_CALLBACK} element={<OidcSignInCallback />} />
+            <Route path={ROUTES.OIDC_SILENT_CALLBACK} element={<OidcSilentCallback />} />
 
             <Route path="*" element={<Navigate to={ROUTES.SYSTEMS} replace />} />
           </Routes>

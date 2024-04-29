@@ -23,6 +23,9 @@ export const ENVVariable = {
   BASENAME: getEnv("FTA_FMEA_BASENAME", ""),
   ADMIN_REGISTRATION_ONLY: getEnv("FTA_FMEA_ADMIN_REGISTRATION_ONLY", "false"),
   TITLE: getEnv("FTA_FMEA_TITLE", "FTA/FMEA"),
+  AUTHENTICATION: getEnv("FTA_FMEA_AUTHENTICATION", "internal"),
+  AUTH_SERVER_URL: getEnv("FTA_FMEA_AUTH_SERVER_URL", ""),
+  AUTH_CLIENT_ID: getEnv("FTA_FMEA_AUTH_CLIENT_ID", ""),
 };
 
 export const JSONLD = "application/ld+json";
@@ -36,6 +39,8 @@ export const ROUTES = {
   ADMINISTRATION: "/administration",
   LOGIN: "/login",
   LOGOUT: "/logout",
+  OIDC_SIGNIN_CALLBACK: "/oidc-signin-callback",
+  OIDC_SILENT_CALLBACK: "/oidc-silent-callback",
 
   DASHBOARD: "/",
   SYSTEMS: "/systems",
@@ -66,3 +71,8 @@ export const SVG_PAN_ZOOM_OPTIONS = {
 export const SELECTED_LANGUAGE_KEY = "default-fta-language";
 export const PRIMARY_LANGUAGE = "en";
 export const SECONDARY_LANGUAGE = "cs";
+
+export const ROLE = {
+  ADMIN: "Admin",
+  DOCTOR: "Regular User",
+};

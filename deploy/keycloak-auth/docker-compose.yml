@@ -1,0 +1,132 @@
+version: "3.9"
+
+# Provide access to fta-fmea-ui that runs locally in dev mode
+x-access-for-local-development: &local-dev-env
+  cors.allowedOrigins: "http://localhost:4173,http://localhost:5173"
+
+# Provide logging to Java application (e.g. fta-fmea-server)
+x-logging-java-application: &logging-java
+  LOGGING_LEVEL_ROOT: "debug"
+
+# Expose port to access db-server directly, bypassing nginx
+x-access-db-server-development-port: &db-server-dev-port
+  ports:
+    - "127.0.0.1:${DB_SERVER_DEV_PORT:-7205}:7200"
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: ${RECORD_SET_NAME:-ff}-nginx
+    ports:
+      - "127.0.0.1:${INTERNAL_HOST_PORT:-1235}:80"
+    restart: always
+    depends_on:
+      - fta-fmea
+      - fta-fmea-server
+      - db-server
+    environment:
+      NGINX_ENVSUBST_OUTPUT_DIR: /etc/nginx
+      APP_ORIGIN: "${PUBLIC_ORIGIN:-http://localhost:${INTERNAL_HOST_PORT:-1235}}"
+      APP_ROOT_PATH: "${APP_ROOT_PATH:-}"
+      FTA_FMEA_PATH: "${FTA_FMEA_PATH:-/fta-fmea}"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/templates/nginx.conf.template:ro
+      - ../shared/nginx/error.html:/usr/share/nginx/html/error.html:ro
+
+  fta-fmea:
+    image: ghcr.io/kbss-cvut/fta-fmea-ui:latest
+    container_name: ${RECORD_SET_NAME:-ff}-fta-fmea
+    expose:
+      - "80"
+    depends_on:
+      - fta-fmea-server
+    environment:
+      FTA_FMEA_API_URL: "${PUBLIC_ORIGIN:-http://localhost:${INTERNAL_HOST_PORT:-1235}}${APP_ROOT_PATH:-}/services/fta-fmea-server"
+      FTA_FMEA_BASENAME: "${APP_ROOT_PATH:-}${FTA_FMEA_PATH:-/fta-fmea}"
+      FTA_FMEA_ADMIN_REGISTRATION_ONLY: ${ADMIN_REGISTRATION_ONLY:-false}
+      FTA_FMEA_AUTHENTICATION: "oidc"
+      FTA_FMEA_AUTH_SERVER_URL: "${PUBLIC_ORIGIN:-http://localhost:${INTERNAL_HOST_PORT:-1235}}${APP_ROOT_PATH:-}/services/auth/realms/fta-fmea"
+      FTA_FMEA_AUTH_CLIENT_ID: "fta-fmea"
+
+  fta-fmea-server:
+    image: ghcr.io/kbss-cvut/fta-fmea:latest
+    container_name: ${RECORD_SET_NAME:-ff}-fta-fmea-server
+    expose:
+      - "9999"
+    depends_on:
+      - db-server
+    restart: always
+    environment:
+      <<: *local-dev-env
+      REPOSITORY_URL: ${REPOSITORY_URL:-http://db-server:7200/repositories/fta-fmea}
+      server.servlet.context-path: "/fta-fmea"
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI: "${PUBLIC_ORIGIN:-http://localhost:${INTERNAL_HOST_PORT:-1235}}${APP_ROOT_PATH:-}/services/auth/realms/fta-fmea"
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWKSETURI: "http://auth-server:8080/realms/fta-fmea/protocol/openid-connect/certs"
+      SERVER_MAXHTTPREQUESTHEADERSIZE: "40KB"
+
+  db-server:
+    <<: *db-server-dev-port
+    image: ${RECORD_SET_NAME:-ff}-db-server
+    container_name: ${RECORD_SET_NAME:-ff}-db-server
+    build:
+      context: ../shared/db-server
+    environment:
+      GDB_JAVA_OPTS: "-Dgraphdb.external-url=${PUBLIC_ORIGIN:-http://localhost:${INTERNAL_HOST_PORT:-1235}}${APP_ROOT_PATH:-}/services/db-server"
+    expose:
+      - "7200"
+    restart: always
+    volumes:
+      - ../shared/db-server/init-data:/root/graphdb-import:ro
+      - db-server:/opt/graphdb/home
+
+  auth-server-db:
+    image: postgres:13
+    container_name: ${RECORD_SET_NAME:-rm}-auth-server-db
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+    volumes:
+      - auth-server-db:/var/lib/postgresql/data
+
+  auth-server:
+    image: ghcr.io/kbss-cvut/keycloak-graphdb-user-replicator/keycloak-graphdb:latest
+    container_name: ${RECORD_SET_NAME:-rm}-auth-server
+    command:
+      - start --import-realm --features="token-exchange,admin-fine-grained-authz"
+    environment:
+      KC_IMPORT: realm-export.json
+      KC_HOSTNAME_URL: "${PUBLIC_ORIGIN:-http://localhost:${INTERNAL_HOST_PORT:-1235}}${APP_ROOT_PATH:-}/services/auth/"
+      KC_HOSTNAME_ADMIN_URL: "${PUBLIC_ORIGIN:-http://localhost:${INTERNAL_HOST_PORT:-1235}}${APP_ROOT_PATH:-}/services/auth/"
+      KC_HOSTNAME_STRICT_BACKCHANNEL: false
+      KC_HTTP_ENABLED: true
+      KEYCLOAK_ADMIN: ${KC_ADMIN_USER}
+      KEYCLOAK_ADMIN_PASSWORD: ${KC_ADMIN_PASSWORD}
+      DB_VENDOR: POSTGRES
+      DB_ADDR: auth-server-db
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: keycloak
+      DB_SCHEMA: "public"
+      DB_SERVER_URL: "http://db-server:7200"
+      DB_SERVER_REPOSITORY_ID: "record-manager-app"
+      REPOSITORY_LANGUAGE: "en"
+      VOCABULARY_USER_TYPE: "http://onto.fel.cvut.cz/ontologies/record-manager/user"
+      VOCABULARY_USER_FIRST_NAME: "http://xmlns.com/foaf/0.1/firstName"
+      VOCABULARY_USER_LAST_NAME: "http://xmlns.com/foaf/0.1/lastName"
+      VOCABULARY_USER_USERNAME: "http://xmlns.com/foaf/0.1/accountName"
+      VOCABULARY_USER_EMAIL: "http://xmlns.com/foaf/0.1/mbox"
+      ADD_ACCOUNTS: false
+      REALM_ID: "fta-fmea-tool"
+    expose:
+      - "8080"
+    volumes:
+      - auth-server:/opt/keycloak/data
+      - ./keycloak:/opt/keycloak/data/import
+    depends_on:
+      - auth-server-db
+
+volumes:
+  db-server:
+  auth-server:
+  auth-server-db:

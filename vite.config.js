@@ -20,6 +20,7 @@ export default defineConfig({
       "@utils": "/src/utils",
       "@services": "/src/services",
       "@models": "/src/models",
+      "@oidc": "/src/misc/oidc",
     },
   },
   test: {
