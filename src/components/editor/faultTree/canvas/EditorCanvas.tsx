@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import * as React from "react";
 import useStyles from "../../EditorCanvas.styles";
-import FaultEventShape from "../shapes/FaultEventShape";
 import * as joint from "jointjs";
 import * as dagre from "dagre";
 import * as graphlib from "graphlib";
@@ -42,6 +41,7 @@ interface Props {
   showTable: boolean;
   possibleFaultEventScenarios: FaultEventScenario[];
   onScenarioSelect: (scenario: FaultEventScenario) => void;
+  redirectToInstance: (navigateFrom: string) => void;
 }
 
 const EditorCanvas = ({
@@ -62,6 +62,7 @@ const EditorCanvas = ({
   showTable,
   possibleFaultEventScenarios,
   onScenarioSelect,
+  redirectToInstance,
 }: Props) => {
   const { classes } = useStyles();
 
@@ -115,14 +116,15 @@ const EditorCanvas = ({
     const diagramZoom = svgPanZoom("#jointjs-container > svg", {
       ...SVG_PAN_ZOOM_OPTIONS,
       onZoom: setCurrentZoom,
+      dblClickZoomEnabled: false,
     });
     setSvgZoom(diagramZoom);
 
     paper.on({
-      "element:contextmenu": (elementView, evt) => {
+      "element:contextmenu": (elementView: joint.dia.ElementView, evt: joint.dia.Event) => {
         onElementContextMenu(elementView, evt);
       },
-      "element:pointerclick": (elementView, evt) => {
+      "element:pointerclick": (elementView: joint.dia.ElementView, evt: joint.dia.Event) => {
         onElementPointerClick(elementView, evt);
       },
       "element:pointermove": (elementView: joint.dia.ElementView, evt: joint.dia.Event, x: number, y: number) => {
@@ -130,6 +132,13 @@ const EditorCanvas = ({
       },
       "element:pointerup": (elementView: joint.dia.ElementView, evt: joint.dia.Event, x: number, y: number) => {
         handleNodeMove(MOVE_NODE.RELEASING, elementView, evt, x, y);
+      },
+      "element:pointerdblclick": (elementView: joint.dia.ElementView) => {
+        const navigateFrom = elementView?.model.attributes["custom/faultEventIri"];
+        redirectToInstance(navigateFrom);
+        setTimeout(() => {
+          diagramZoom.reset();
+        }, 100);
       },
       "blank:pointerclick": () => onBlankPointerClick(),
       "blank:pointerdown": () => diagramZoom.enablePan(),
@@ -221,19 +230,19 @@ const EditorCanvas = ({
       if (container && rootEvent) {
         setRendering(true)
         container.removeCells(container.getCells());
-  
+
         const listOfPaths = [];
-  
+
         if (targets.length > 0 && showPath) {
           targets.forEach((target) => listOfPaths.push(findNodeByIri(rootEvent, target)));
         }
-  
+
         await renderTree(container, rootEvent, null, listOfPaths);
         layout(container);
         setRendering(false)
       }
     };
-  
+
     renderAndLayout();
   }, [container, rootEvent, faultEventScenarios]);
 
