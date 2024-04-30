@@ -74,7 +74,7 @@
     "aircraftType": "Typ letadla",
     "ata": "ATA",
     "calculatedFailureRate": "Vypočtená intenzita poruch",
-    "fhaBasedFailureRate": "Intenzita poruch založená na FHA,
+    "fhaBasedFailureRate": "Intenzita poruch založená na FHA",
     "requiredFailureRate": "Požadovaná intenzita poruch",
     "lastModified": "Poslední úprava",
     "lastEditor": "Poslední editor",
