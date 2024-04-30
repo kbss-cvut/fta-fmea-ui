@@ -68,5 +68,17 @@
       "title": "Manually defined failure rate",
       "description": "Failure rate manually set by AVA team based on experienced engineering judgment."
     }
+  },
+  "faultTreeOverviewTable": {
+    "name": "Name",
+    "aircraftType": "Aircraft type",
+    "ata": "ATA",
+    "calculatedFailureRate": "Calculated failure rate",
+    "fhaBasedFailureRate": "FHA based failure rate",
+    "requiredFailureRate": "Required failure rate",
+    "lastModified": "Last modified",
+    "lastEditor": "Last editor",
+    "status": "Status",
+    "edit": "Edit"
   }
 }

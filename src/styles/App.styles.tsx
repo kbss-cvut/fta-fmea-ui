@@ -24,4 +24,10 @@ export const appTheme = createCustomMuiTheme({
       hover: "#1976d21f",
     },
   },
+  dashboard: {
+    colors: {
+      active: "#3386D7",
+      activeIcon: "#FFFFFF",
+    },
+  },
 });

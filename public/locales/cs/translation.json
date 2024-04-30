@@ -68,5 +68,17 @@
       "title": "Manuálně definovaná intenzita poruch",
       "description": "Intenzita poruch nastavená manuálně týmem AVA na základě zkušeného inženýrského úsudku."
     }
+  },
+  "faultTreeOverviewTable": {
+    "name": "Jméno",
+    "aircraftType": "Typ letadla",
+    "ata": "ATA",
+    "calculatedFailureRate": "Vypočtená int. poruch",
+    "fhaBasedFailureRate": "Založená int. poruch",
+    "requiredFailureRate": "Požadovaná int. poruch",
+    "lastModified": "Poslední úprava",
+    "lastEditor": "Poslední editor",
+    "status": "Stav",
+    "edit": "Upravit"
   }
 }

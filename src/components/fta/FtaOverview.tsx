@@ -5,6 +5,7 @@ import { Typography, Box, Button } from "@mui/material";
 import FaultTreeDialog from "@components/dialog/faultTree/FaultTreeDialog";
 import OverviewContainer from "../../components/layout/OverviewContainer";
 import { useTranslation } from "react-i18next";
+import FaultTreeOverview from "../dashboard/content/list/FaultTreeOverview";
 
 const FtaOverview = () => {
   const { t } = useTranslation();
@@ -25,7 +26,7 @@ const FtaOverview = () => {
           </Button>
         </Box>
 
-        <DashboardFaultTreeList />
+        <FaultTreeOverview />
         <FaultTreeDialog
           open={createFaultTreeDialogOpen}
           handleCloseDialog={() => setCreateFaultTreeDialogOpen(false)}
