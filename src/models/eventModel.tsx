@@ -19,6 +19,15 @@ const ctx = {
   hasFailureRate: VocabularyUtils.PREFIX + "has-failure-rate",
   requirement: VocabularyUtils.PREFIX + "has-requirement",
   upperBound: VocabularyUtils.PREFIX + "to",
+  criticality: VocabularyUtils.PREFIX + "criticality",
+  prediction: VocabularyUtils.PREFIX + "has-prediction",
+  value: VocabularyUtils.PREFIX + "value",
+  ataCode: VocabularyUtils.PREFIX + "ata-code",
+  partNumber: VocabularyUtils.PREFIX + "part-number",
+  stock: VocabularyUtils.PREFIX + "stock",
+  behavior: VocabularyUtils.PREFIX + "is-manifestation-of",
+  item: VocabularyUtils.PREFIX + "has-component",
+  quantity: VocabularyUtils.PREFIX + "quantity",
   references: VocabularyUtils.PREFIX + "is-reference-to",
   isPartOf: VocabularyUtils.PREFIX + "is-part-of",
   isReference: VocabularyUtils.PREFIX + "is-reference",
@@ -51,6 +60,16 @@ export interface FaultEvent extends AbstractModel {
     isPartOf?: string;
   };
   supertypes?: {
+    criticality?: number;
+    superTypes?: any;
+    behavior?: {
+      item?: {
+        quantity?: number;
+        supertypes?: {
+          ataCode?: string;
+        };
+      };
+    };
     hasFailureRate?: {
       iri?: string;
       requirement?: {

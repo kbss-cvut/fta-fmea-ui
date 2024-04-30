@@ -80,5 +80,14 @@
     "lastEditor": "Last editor",
     "status": "Status",
     "edit": "Edit"
+  },
+  "faultEventMenu": {
+    "criticality": "Criticality",
+    "fhaBasedFailureRate": "FHA based failure rate",
+    "predictedFailureRate": "Predicted failure rate",
+    "ataSystem": "ATA System",
+    "partNumber": "Part number",
+    "stock": "Stock",
+    "quantity": "Quantity"
   }
 }
