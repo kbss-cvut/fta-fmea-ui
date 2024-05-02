@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <title>Main Dashboard</title>
+    <style>
+        body {
+            font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+            color: #ededed;
+            margin: 0;
+            padding: 0;
+            background-image: url("./images/background.jpg");
+            background-size: cover;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+            width: 70%;
+        }
+
+        li {
+            margin-bottom: 20px;
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 24px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .glass-container {
+            background: rgba(255, 255, 255, 0.13);
+            border-radius: 16px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10.5px);
+            -webkit-backdrop-filter: blur(10.5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .apps-container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+        }
+
+        .app {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .app img {
+            height: 200px;
+            width: 400px;
+            padding: 1rem;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="glass-container">
+    <h1>Main Dashboard</h1>
+
+    <ul class="apps-container">
+        <li>
+            <a href="./fta-fmea/" class="app">
+                <img src="./images/fta-fmea-ui.png" alt="fault tree analysis">
+                <span>FTA/FMEA Tool</span>
+            </a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
+
