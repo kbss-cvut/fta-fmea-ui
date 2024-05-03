@@ -38,16 +38,22 @@ done
 
 
 DATA_DIR=/root/graphdb-import
-cd $DATA_DIR
+cd /
 
-for DIR in */; do
-    REPO_NAME="${DIR%/}"
+for DIR in ${DATA_DIR}/*/; do
+    REPO_NAME="`basename ${DIR}`"
 
-    echo "Deploying data to $REPO_NAME ..."
+    echo "INFO: Updating data in repository $REPO_NAME ..."
 
-    ls ${DATA_DIR}/${REPO_NAME}/*/*.trig | while read DATA_FILE; do
+    find ${DATA_DIR}/${REPO_NAME} -name '*.trig' | while read DATA_FILE; do
 
-	echo "INFO: Deploying data from file ${DATA_FILE}."
+	echo "INFO: Replacing contexts with data from file ${DATA_FILE}."
 	$SCRIPT_DIR/rdf4j-deploy-context.sh -C 'application/trig' -s http://localhost:7200 -r ${REPO_NAME} ${DATA_FILE}
+    done
+
+    find ${DATA_DIR}/${REPO_NAME} -name '*.ru' | while read UPDATE_QUERY_FILE; do
+
+	echo "INFO: Running update query from file ${UPDATE_QUERY_FILE}."
+        $SCRIPT_DIR/rdf4j-sparql-update.sh -s http://localhost:7200 -r ${REPO_NAME} -q ${UPDATE_QUERY_FILE}
     done
 done
