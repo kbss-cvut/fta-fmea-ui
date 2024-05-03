@@ -1,10 +1,11 @@
 const _NS_FTA_FMEA = "http://onto.fel.cvut.cz/ontologies/fta-fmea-application/";
+const _NS_FOAF = "http://xmlns.com/foaf/0.1/";
 const DC_TERMS = "http://purl.org/dc/terms/";
 
 export default {
   PREFIX: _NS_FTA_FMEA,
   DC_TERMS: DC_TERMS,
-  USER: _NS_FTA_FMEA + "user",
+  USER: _NS_FOAF + "Person",
   COMPONENT: _NS_FTA_FMEA + "component",
   MITIGATION: _NS_FTA_FMEA + "mitigation",
   FUNCTION: _NS_FTA_FMEA + "function",
