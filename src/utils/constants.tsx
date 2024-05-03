@@ -74,5 +74,5 @@ export const SECONDARY_LANGUAGE = "cs";
 
 export const ROLE = {
   ADMIN: "Admin",
-  DOCTOR: "Regular User",
+  REGULAR_USER: "Regular User",
 };
