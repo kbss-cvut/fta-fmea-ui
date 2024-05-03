@@ -38,13 +38,7 @@ const App = () => {
         <ThemeProvider theme={appTheme}>
           <SnackbarProvider>
             <ConfirmDialogProvider>
-              {isUsingOidcAuth() ? (
-                <OidcAuthWrapper>
-                  <AppRoutes />
-                </OidcAuthWrapper>
-              ) : (
-                <AppRoutes />
-              )}
+              <AppRoutes />
             </ConfirmDialogProvider>
           </SnackbarProvider>
         </ThemeProvider>
