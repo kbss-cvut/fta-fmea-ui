@@ -78,3 +78,9 @@ export const ROLE = {
   ADMIN: "Admin",
   REGULAR_USER: "Regular User",
 };
+
+export const HttpHeaders = {
+  AUTHORIZATION: "Authorization",
+  CONTENT_DISPOSITION: "content-disposition",
+  LINK: "link",
+};
