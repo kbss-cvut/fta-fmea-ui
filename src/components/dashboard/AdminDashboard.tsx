@@ -17,7 +17,6 @@ const AdminDashboard = () => {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar title={appBarTitle} showBackButton />
       <Toolbar />
       <Grid alignItems="flex-start">
         <Container maxWidth="xs" style={{ margin: "0px" }}>

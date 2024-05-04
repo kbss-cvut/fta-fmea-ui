@@ -1,8 +1,6 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
-import AppBar from "../appBar/AppBar";
-import { CssBaseline, Fab } from "@mui/material";
-import Toolbar from "@mui/material/Toolbar";
+import { Fab } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import useStyles from "./Dashboard.styles";
 import { composeFragment } from "@services/utils/uriIdentifierUtils";
@@ -29,10 +27,8 @@ const FailureModesTableDashboard = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar title={appBarTitle} showBackButton />
-
       <CurrentFailureModesTableProvider tableIri={tableIri}>
-        <FailureModeTable setAppBarName={setAppBarTitle} />
+        <FailureModeTable />
       </CurrentFailureModesTableProvider>
 
       <Fab color="primary" aria-label="export" className={classes.fab} onClick={handleExport}>

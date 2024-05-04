@@ -30,6 +30,9 @@ declare module "@mui/material/styles" {
         activeIcon?: string;
       };
     };
+    button?: {
+      primary?: string;
+    };
   }
   // allow configuration using `createMuiTheme`
   interface DeprecatedThemeOptions {
@@ -59,6 +62,9 @@ declare module "@mui/material/styles" {
         active?: string;
         activeIcon?: string;
       };
+    };
+    button?: {
+      primary?: string;
     };
   }
 }

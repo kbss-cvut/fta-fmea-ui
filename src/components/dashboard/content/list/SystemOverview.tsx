@@ -1,12 +1,6 @@
-import { Box } from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import * as React from "react";
-import useStyles from "./DashboardList.styles";
 import { useState, useEffect } from "react";
 import { useConfirmDialog } from "@hooks/useConfirmDialog";
-import { Link as RouterLink } from "react-router-dom";
-import { extractFragment } from "@services/utils/uriIdentifierUtils";
-import { ROUTES } from "@utils/constants";
 import { useSystems } from "@hooks/useSystems";
 import { System } from "@models/systemModel";
 import SystemEditDialog from "@components/dialog/system/SystemEditDialog";
@@ -16,14 +10,20 @@ import OverviewTypeToggler from "./OverviewTypeToggler";
 import { ViewType } from "./types";
 import FaultTreeAndSystemOverviewTable from "./FaultTreeAndSystemOverviewTable";
 import FaultTreeAndSystemOverviewCardsList from "./FaultTreeAndSystemOverviewCardsList";
+import { useTranslation } from "react-i18next";
+import { Button, Box } from "@mui/material";
+import SystemDialog from "@components/dialog/system/SystemDialog";
 
 const SystemOverview = () => {
-  const { classes } = useStyles();
+  const { t } = useTranslation();
+  const [showConfirmDialog] = useConfirmDialog();
   const [systems, , , removeSystem] = useSystems();
 
   const [selectedView, setSelectedView] = useState<ViewType>("table");
   const [contextMenuSelectedSystem, setContextMenuSelectedSystem] = useState<System>(null);
   const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefaultAnchor);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [createSystemDialogOpen, setCreateSystemDialogOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const storedView = localStorage.getItem("selectedView") as ViewType;
@@ -43,7 +43,9 @@ const SystemOverview = () => {
     setContextMenuAnchor({ mouseX: evt.pageX, mouseY: evt.pageY });
   };
 
-  const [showConfirmDialog] = useConfirmDialog();
+  const handleDialogOpen = () => {
+    setCreateSystemDialogOpen(true);
+  };
 
   const handleDelete = (systemToDelete: System) => {
     showConfirmDialog({
@@ -56,11 +58,14 @@ const SystemOverview = () => {
     });
   };
 
-  const [editDialogOpen, setEditDialogOpen] = useState(false);
-
   return (
     <Box flexDirection="column">
-      <OverviewTypeToggler selectedView={selectedView} toggleView={toggleView} />
+      <Box display="flex" flexDirection="row-reverse">
+        <OverviewTypeToggler selectedView={selectedView} toggleView={toggleView} />
+        <Button variant="contained" onClick={handleDialogOpen}>
+          {t("create.system")}
+        </Button>
+      </Box>
 
       {selectedView === "table" ? (
         <FaultTreeAndSystemOverviewTable systems={systems} handleSystemContextMenu={handleContextMenu} />
@@ -80,6 +85,7 @@ const SystemOverview = () => {
         handleCloseDialog={() => setEditDialogOpen(false)}
         system={contextMenuSelectedSystem}
       />
+      <SystemDialog open={createSystemDialogOpen} handleCloseDialog={() => setCreateSystemDialogOpen(false)} />
     </Box>
   );
 };

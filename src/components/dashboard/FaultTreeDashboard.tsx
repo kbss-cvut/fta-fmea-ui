@@ -15,14 +15,10 @@ const FaultTreeDashboard = () => {
   const { treeFragment } = useParams();
   const treeIri = composeFragment(treeFragment);
 
-  const [appBarTitle, setAppBarTitle] = useState("Fault Tree");
-
   return (
     <div className={classes.root}>
-      <AppBar title={appBarTitle} showBackButton />
-
       <CurrentFaultTreeProvider faultTreeIri={treeIri}>
-        <Editor setAppBarName={setAppBarTitle} />
+        <Editor />
       </CurrentFaultTreeProvider>
     </div>
   );

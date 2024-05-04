@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import useStyles from "./FailureModeTable.styles";
-import { DashboardTitleProps } from "../../dashboard/DashboardTitleProps";
 import { useCurrentFailureModesTable } from "@hooks/useCurrentFailureModesTable";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
@@ -10,21 +9,18 @@ import { EditRowRpn } from "@models/failureModesRowModel";
 import { Mitigation } from "@models/mitigationModel";
 import { FailureMode } from "@models/failureModeModel";
 
-const FailureModeTable = ({ setAppBarName }: DashboardTitleProps) => {
+const FailureModeTable = () => {
   const { classes } = useStyles();
 
   const [tableData, refreshTable] = useCurrentFailureModesTable();
-
   const [tableColumns, setTableColumns] = useState([]);
   const [tableRows, setTableRows] = useState([]);
-
   const [selectedRpnRow, setSelectedRpnRow] = useState(null);
   const [selectedMitigation, setSelectedMitigation] = useState(null);
   const [failureModes, setFailureModes] = useState<FailureMode[]>([]);
+
   useEffect(() => {
     if (tableData) {
-      setAppBarName(tableData?.name);
-
       (tableData.columns as any[]).push({
         field: "",
         headerName: "Edit",

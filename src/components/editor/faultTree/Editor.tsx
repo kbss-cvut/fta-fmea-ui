@@ -11,7 +11,6 @@ import { useConfirmDialog } from "@hooks/useConfirmDialog";
 import FaultEventDialog from "../../dialog/faultEvent/FaultEventDialog";
 import { FaultEvent } from "@models/eventModel";
 import { contextMenuDefaultAnchor, ElementContextMenuAnchor } from "@utils/contextMenu";
-import { DashboardTitleProps } from "@components/dashboard/DashboardTitleProps";
 import FailureModesTableDialog from "@components/dialog/failureModesTable/FailureModesTableDialog";
 import { ROUTES } from "@utils/constants";
 import { extractFragment } from "@services/utils/uriIdentifierUtils";
@@ -21,11 +20,13 @@ import { Rectangle } from "@models/utils/Rectangle";
 import { JOINTJS_NODE_MODEL } from "@components/editor/faultTree/shapes/constants";
 import { calculateCutSets } from "@services/faultTreeService";
 import { FaultEventScenario } from "@models/faultEventScenario";
+import { useAppBarTitle } from "../../../contexts/AppBarTitleContext";
 
-const Editor = ({ setAppBarName }: DashboardTitleProps) => {
+const Editor = () => {
   const history = useNavigate();
   const [showSnackbar] = useSnackbar();
   const [requestConfirmation] = useConfirmDialog();
+  const { setAppBarTitle } = useAppBarTitle();
 
   const [faultTree, refreshTree] = useCurrentFaultTree();
   const [rootEvent, setRootEvent] = useState<FaultEvent>();
@@ -53,7 +54,7 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
         ? { ...faultTree.manifestingEvent, probabilityRequirement: rootReqProb }
         : faultTree.manifestingEvent;
 
-      setAppBarName(faultTree.name);
+      setAppBarTitle(faultTree.name);
       setRootEvent(updatedRootEvent);
 
       if (faultTree.faultEventScenarios) {

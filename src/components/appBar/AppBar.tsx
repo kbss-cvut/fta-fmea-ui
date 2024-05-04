@@ -14,6 +14,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useTranslation } from "react-i18next";
 import LanguageIcon from "@mui/icons-material/Language";
 import { PRIMARY_LANGUAGE, SECONDARY_LANGUAGE, SELECTED_LANGUAGE_KEY } from "@utils/constants";
+import { useAppBarTitle } from "../../contexts/AppBarTitleContext";
 
 interface Props {
   title: string;
@@ -26,6 +27,7 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
   const { classes } = useStyles();
   const history = useNavigate();
   const { i18n } = useTranslation();
+  const { appBarTitle } = useAppBarTitle();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
@@ -54,8 +56,7 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
   };
 
   const goBack = () => {
-    if (history.length > 2) history(-1);
-    else history(ROUTES.DASHBOARD);
+    history(-1);
   };
 
   const menuId = "user-account-menu";
@@ -100,7 +101,7 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
           )}
 
           <Typography className={classes.title} variant="h6" noWrap>
-            {title}
+            {appBarTitle}
           </Typography>
 
           <div className={classes.languageToggler} onClick={toggleLanguage}>
