@@ -4,7 +4,7 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { FaultEventScenario } from "../../../../models/faultEventScenario";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
 import useStyles from "./FaultEventScenariosTable.styles";
-import { asArray } from "@utils/treeUtils";
+import { asArray } from "@utils/utils";
 import { useTranslation } from "react-i18next";
 
 interface FaultEventScenariosTableProps {

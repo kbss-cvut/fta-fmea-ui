@@ -47,3 +47,13 @@ const transformReferences = <Type extends AbstractModel>(b: Type, transformer: <
   }
   return bCopy;
 };
+
+export const asArray = (objectOrArray) => {
+  if (!objectOrArray) {
+    return [];
+  }
+  if (Array.isArray(objectOrArray)) {
+    return objectOrArray;
+  }
+  return [objectOrArray];
+};
