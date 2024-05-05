@@ -9,8 +9,8 @@ import EventFailureModeList from "../failureMode/EventFailureModeList";
 import { FailureMode } from "../../../../../models/failureModeModel";
 import FailureModeShowDialog from "../../../../dialog/failureMode/show/FailureModeShowDialog";
 import useStyles from "@components/editor/faultTree/menu/faultEvent/FaultEventMenu.styles";
-import { asArray } from "@utils/treeUtils";
 import { useTranslation } from "react-i18next";
+import { asArray } from "@utils/utils";
 
 interface Props {
   shapeToolData?: FaultEvent;
@@ -45,7 +45,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree }: Props) =
       setCriticality(undefined);
     }
 
-    const types = asArray(shapeToolData?.supertypes?.supertypes)
+    const types = asArray(shapeToolData?.supertypes?.supertypes);
 
     const filteredFailureRate = types.filter((type) => type.hasFailureRate);
 
@@ -55,7 +55,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree }: Props) =
       setPredictedFailureRate(undefined);
     }
 
-    const superTypes = asArray(shapeToolData?.supertypes?.behavior?.item?.supertypes)
+    const superTypes = asArray(shapeToolData?.supertypes?.behavior?.item?.supertypes);
 
     const filteredAtaCode = superTypes.filter((sType) => sType?.ataCode);
     const filteredPartNumber = superTypes.filter((sType) => sType?.partNumber);
@@ -81,7 +81,6 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree }: Props) =
       setQuantity(undefined);
     }
   }, [shapeToolData]);
-
 
   return (
     <Box paddingLeft={2} marginRight={2}>
