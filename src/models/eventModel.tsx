@@ -31,6 +31,9 @@ const ctx = {
   references: VocabularyUtils.PREFIX + "is-reference-to",
   isPartOf: VocabularyUtils.PREFIX + "is-part-of",
   isReference: VocabularyUtils.PREFIX + "is-reference",
+  system: VocabularyUtils.PREFIX + "is-artifact-of",
+  subSystem: VocabularyUtils.PREFIX + "is-performed-by",
+  requiredFailureRate: VocabularyUtils.PREFIX + "required-failure-rate"
 };
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, FAILURE_MODE_CONTEXT, RECTANGLE_CONTEXT);

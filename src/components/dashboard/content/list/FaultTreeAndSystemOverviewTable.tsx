@@ -9,7 +9,7 @@ import { ROUTES } from "@utils/constants";
 import { extractFragment } from "@services/utils/uriIdentifierUtils";
 import { System } from "@models/systemModel";
 
-const tableHeadCells = [
+const faultTreeTableHeadCells = [
   "faultTreeOverviewTable.name",
   "faultTreeOverviewTable.aircraftType",
   "faultTreeOverviewTable.ata",
@@ -20,6 +20,8 @@ const tableHeadCells = [
   "faultTreeOverviewTable.lastEditor",
   "faultTreeOverviewTable.status",
 ];
+
+const systemTableHeadCells = ["faultTreeOverviewTable.name"];
 
 interface FaultTreeOverviewTableProps {
   faultTrees?: FaultTree[];
@@ -44,14 +46,24 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
-              {tableHeadCells.map((headCell, index) => {
-                const styling = index === 0 ? classes.firstColumn : classes.tableHeaderCell;
-                return (
-                  <TableCell key={index} className={styling}>
-                    {t(headCell)}
-                  </TableCell>
-                );
-              })}
+              {faultTrees &&
+                faultTreeTableHeadCells.map((headCell, index) => {
+                  const styling = index === 0 ? classes.firstColumn : classes.tableHeaderCell;
+                  return (
+                    <TableCell key={index} className={styling}>
+                      {t(headCell)}
+                    </TableCell>
+                  );
+                })}
+              {systems &&
+                systemTableHeadCells.map((headCell, index) => {
+                  const styling = index === 0 ? classes.systemFirstColumn : classes.tableHeaderCell;
+                  return (
+                    <TableCell key={index} className={styling}>
+                      {t(headCell)}
+                    </TableCell>
+                  );
+                })}
               <TableCell className={classes.emptyCell} />
             </TableRow>
           </TableHead>
@@ -67,7 +79,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
                     <TableCell className={classes.tableCell}></TableCell>
                     <TableCell className={classes.tableCell}></TableCell>
                     <TableCell className={classes.tableCell}></TableCell>
-                    <TableCell className={classes.tableCell}></TableCell>
+                    <TableCell className={classes.tableCell}>{faultTree.requiredFailureRate}</TableCell>
                     <TableCell className={classes.tableCell}></TableCell>
                     <TableCell className={classes.tableCell}></TableCell>
                     <TableCell className={classes.tableCell}>{/* <DoneIcon /> */}</TableCell>
@@ -90,15 +102,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
                 const routePath = ROUTES.SYSTEMS + `/${extractFragment(system.iri)}`;
                 return (
                   <TableRow key={rowIndex} className={classes.noBorder}>
-                    <TableCell className={classes.firstColumn}>{system.name}</TableCell>
-                    <TableCell className={classes.tableCell}></TableCell>
-                    <TableCell className={classes.tableCell}></TableCell>
-                    <TableCell className={classes.tableCell}></TableCell>
-                    <TableCell className={classes.tableCell}></TableCell>
-                    <TableCell className={classes.tableCell}></TableCell>
-                    <TableCell className={classes.tableCell}></TableCell>
-                    <TableCell className={classes.tableCell}></TableCell>
-                    <TableCell className={classes.tableCell}>{/* <DoneIcon /> */}</TableCell>
+                    <TableCell className={classes.systemFirstColumn}>{system.name}</TableCell>
                     <TableCell className={classes.tableCell}>
                       <Box className={classes.rowOptionsContainer}>
                         <Button variant="contained" className={classes.editButton} onClick={() => navigate(routePath)}>

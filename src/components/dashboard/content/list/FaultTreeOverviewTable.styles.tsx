@@ -1,6 +1,15 @@
 import { makeStyles } from "tss-react/mui";
 import { Theme } from "@mui/material";
 
+const commonCellStyle: React.CSSProperties = {
+  padding: 4,
+  overflow: "hidden",
+  textAlign: "left",
+  verticalAlign: "middle",
+  maxWidth: 72,
+  fontWeight: "bold",
+};
+
 const useStyles = makeStyles()((theme: Theme) => ({
   tableContainer: {
     flex: 1,
@@ -48,12 +57,10 @@ const useStyles = makeStyles()((theme: Theme) => ({
   },
   firstColumn: {
     width: "15%",
-    padding: 4,
-    overflow: "hidden",
-    textAlign: "left",
-    verticalAlign: "middle",
-    maxWidth: 72,
-    fontWeight: "bold",
+    ...commonCellStyle
+  },
+  systemFirstColumn: {
+    ...commonCellStyle
   },
 }));
 
