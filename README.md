@@ -3,7 +3,7 @@
 This tool provides two types of reliability analyses - `Fault Tree Analysis (FTA)` and `Failure Modes and Effects
 Analysis (FMEA)`.
 It is primarily focused on FTA, which offers possibilities for system partonomy definition,
-[FTA construction](./doc/fta-construction-algorithm.md) and an automatic conversion of the trees to FMEA tables given the unified ontological model. A detailed description of its features is described in [user manual](./doc/user-manual.md).
+[FTA construction](./doc/fta-construction-algorithm.md) and automatic conversion of the trees to FMEA tables given the unified ontological model. A detailed description of its features is described in [user manual](./doc/user-manual.md).
 
 This repository contains the frontend of the tool. The backend is written in Java and is developed separately (its repository can be found [here](https://github.com/kbss-cvut/fta-fmea)).
 A live demo of the tool is available [here](https://kbss.felk.cvut.cz/fta-fmea-demo/).
@@ -36,7 +36,7 @@ There are two flags which need to be set:
 
 To develop the tool, the easiest way to run it is as follows:
 1. Run the complete tool as described in [Running complete tool in Docker](#running-complete-tool-in-docker)
-2. Run frontend of the tool that connects to just started docker services:
+2. Run frontend of the tool that connects to just-started docker services:
 ```shell script
 npm install
 npm run dev
@@ -61,7 +61,7 @@ This hook runs Prettier code formatting before every commit.
 
 #### Pre-commit troubleshooting
 
-If you experience issues on pre-commit using the GUI and that you are using a node version manager, such as nvm, add the following script:
+If you experience issues on pre-commit using the GUI and you are using a node version manager, such as nvm, add the following script:
 
 ```
 # ~/.config/husky/init.sh
