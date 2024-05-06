@@ -77,7 +77,7 @@ const renderTree = async (container, node, parentShape = null, pathsToHighlight)
   faultEventService.eventChildrenSorted(flatten([node.children]), sequence);
   const childNodes = faultEventService.eventChildrenSorted(flatten([node.children]), sequence);
   if (childNodes) {
-    await Promise.all(childNodes.map(n => renderTree(container, n, nodeShape, pathsToHighlight)));
+    await Promise.all(childNodes.map((n) => renderTree(container, n, nodeShape, pathsToHighlight)));
   }
 };
 

@@ -30,4 +30,7 @@ export const appTheme = createCustomMuiTheme({
       activeIcon: "#FFFFFF",
     },
   },
+  button: {
+    primary: "#1774d1",
+  },
 });

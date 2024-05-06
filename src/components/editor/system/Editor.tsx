@@ -2,7 +2,6 @@ import * as React from "react";
 import { useEffect, useState } from "react";
 import { flatten, findIndex } from "lodash";
 import { useConfirmDialog } from "@hooks/useConfirmDialog";
-
 import { useCurrentSystem } from "@hooks/useCurrentSystem";
 import { Component } from "@models/componentModel";
 import EditorCanvas from "./canvas/EditorCanvas";
@@ -12,13 +11,14 @@ import { contextMenuDefaultAnchor, ElementContextMenuAnchor } from "@utils/conte
 import ComponentDialog from "@components/dialog/component/ComponentDialog";
 import * as componentService from "@services/componentService";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
-import { DashboardTitleProps } from "@components/dashboard/DashboardTitleProps";
 import * as joint from "jointjs";
 import { FTABoundary } from "@components/editor/faultTree/shapes/shapesDefinitions";
+import { useAppBarTitle } from "../../../contexts/AppBarTitleContext";
 
-const Editor = ({ setAppBarName }: DashboardTitleProps) => {
+const Editor = () => {
   const [requestConfirmation] = useConfirmDialog();
   const [showSnackbar] = useSnackbar();
+  const { setAppBarTitle } = useAppBarTitle();
 
   const [system, addComponent, updateComponent, removeComponent, fetchSystem] = useCurrentSystem();
 
@@ -27,7 +27,7 @@ const Editor = ({ setAppBarName }: DashboardTitleProps) => {
   const [mergeableComponents, setMergeableComponents] = useState(false);
 
   useEffect(() => {
-    setAppBarName(system?.name);
+    setAppBarTitle(system?.name);
   });
   useEffect(() => {
     if (highlightedElementView) {

@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import { ViewType } from "./types";
@@ -19,15 +19,20 @@ const OverviewTypeToggler: FC<FaultTreeOverviewTogglerProps> = ({ selectedView, 
 
   return (
     <Box className={classes.togglerContainer}>
-      {["card", "table"].map((viewType: ViewType) => (
-        <Box
-          key={viewType}
-          className={selectedView === viewType ? classes.iconContainerSelected : classes.iconContainer}
-          onClick={() => handleToggleView(viewType)}
-        >
-          {viewType === "card" ? <ViewModuleIcon /> : <ViewListIcon />}
-        </Box>
-      ))}
+      {["card", "table"].map((viewType: ViewType) => {
+        const isDisabled = viewType === selectedView;
+        return (
+          <Button
+            disabled={isDisabled}
+            variant="contained"
+            key={viewType}
+            className={classes.iconContainer}
+            onClick={() => handleToggleView(viewType)}
+          >
+            {viewType === "card" ? <ViewModuleIcon /> : <ViewListIcon />}
+          </Button>
+        );
+      })}
     </Box>
   );
 };

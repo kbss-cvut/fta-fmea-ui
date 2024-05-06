@@ -6,6 +6,7 @@ import { ROUTES } from "@utils/constants";
 import AppBar from "../appBar/AppBar";
 import { SIDE_PANEL_STATE_KEY } from "../../utils/constants";
 import useStyles from "./Navigation.styles";
+import { AppBarTitleProvider } from "../../contexts/AppBarTitleContext";
 
 interface SideNavigationProps {
   children?: React.ReactNode;
@@ -59,29 +60,31 @@ const Navigation: FC<SideNavigationProps> = ({ children }) => {
   const mgLeft = shouldHideSidePanel ? 0 : isCollapsed ? SIDE_PANEL_COLLAPSED_WIDTH : SIDE_PANEL_WIDTH;
 
   return (
-    <Box className={classes.container}>
-      {!shouldHideSidePanel && (
-        <SidePanel
-          topPanelHeight={TOP_PANEL_HEIGHT}
-          width={SIDE_PANEL_WIDTH}
-          collapsedWidth={SIDE_PANEL_COLLAPSED_WIDTH}
-          isCollapsed={isCollapsed}
-          toggleSidePanel={toggleSidePanel}
-          showAnimation={showAnimation}
-        />
-      )}
-      {!shouldHideTopPanel && (
-        <AppBar title="" topPanelHeight={TOP_PANEL_HEIGHT} showBackButton={path.includes("instance")} />
-      )}
-      <Box
-        className={classes.childrenContainer}
-        style={{ marginLeft: mgLeft, marginTop: mgTop, transition: showAnimation ? "margin-left 0.3s" : "none" }}
-      >
-        <Box height={dynamicHeight} overflow={overflow}>
-          {children}
+    <AppBarTitleProvider>
+      <Box className={classes.container}>
+        {!shouldHideSidePanel && (
+          <SidePanel
+            topPanelHeight={TOP_PANEL_HEIGHT}
+            width={SIDE_PANEL_WIDTH}
+            collapsedWidth={SIDE_PANEL_COLLAPSED_WIDTH}
+            isCollapsed={isCollapsed}
+            toggleSidePanel={toggleSidePanel}
+            showAnimation={showAnimation}
+          />
+        )}
+        {!shouldHideTopPanel && (
+          <AppBar title="" topPanelHeight={TOP_PANEL_HEIGHT} showBackButton={path.includes("instance")} />
+        )}
+        <Box
+          className={classes.childrenContainer}
+          style={{ marginLeft: mgLeft, marginTop: mgTop, transition: showAnimation ? "margin-left 0.3s" : "none" }}
+        >
+          <Box height={dynamicHeight} overflow={overflow}>
+            {children}
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </AppBarTitleProvider>
   );
 };
 

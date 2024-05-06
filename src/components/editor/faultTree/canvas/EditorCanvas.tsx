@@ -75,7 +75,7 @@ const EditorCanvas = ({
   const [currentZoom, setCurrentZoom] = useState(1);
   const [isExportingImage, setIsExportingImage] = useState(false);
   const [targets, setTargets] = useState<undefined | string[]>();
-  const [rendering, setRendering] = useState<boolean>(false)
+  const [rendering, setRendering] = useState<boolean>(false);
 
   let dragStartPosition = null;
 
@@ -228,7 +228,7 @@ const EditorCanvas = ({
   useEffect(() => {
     const renderAndLayout = async () => {
       if (container && rootEvent) {
-        setRendering(true)
+        setRendering(true);
         container.removeCells(container.getCells());
 
         const listOfPaths = [];
@@ -239,7 +239,7 @@ const EditorCanvas = ({
 
         await renderTree(container, rootEvent, null, listOfPaths);
         layout(container);
-        setRendering(false)
+        setRendering(false);
       }
     };
 

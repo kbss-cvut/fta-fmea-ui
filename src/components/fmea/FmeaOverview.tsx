@@ -18,8 +18,7 @@ const FmeaOverview = () => {
   return (
     <DashboardContentProvider>
       <OverviewContainer>
-        <Box display="flex" flexDirection="row" justifyContent="space-between">
-          <Typography variant="h5">{t("categories.worksheets")}</Typography>
+        <Box display="flex" flexDirection="row-reverse">
           <Button variant="contained" onClick={handleDialogOpen}>
             {t("create.worksheet")}
           </Button>
