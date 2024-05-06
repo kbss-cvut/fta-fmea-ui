@@ -62,38 +62,40 @@ FILES=$@
 
 REPOSITORY_URL=${REPOSITORY_URL:-$RDF4J_SERVER/repositories/$REPOSITORY}
 
+echo "INFO: *** PROVIDING REPOSITORY INFO ***"
+TEMP_FILE=`mktemp`
+REPOSITORY_SIZE=`curl $REPOSITORY_URL/size  2> $TEMP_FILE`
+echo "INFO:  - old size of the repository is $REPOSITORY_SIZE"
+
 echo "INFO: *** DEPLOYING ***"
 [ ! -z "$REPOSITORY_URL" ] && echo "INFO:    - repository url: $REPOSITORY_URL"
-[ ! -z "$RDF4J_SERVER" ] && echo "INFO:  destination server:  $RDF4J_SERVER"
-[ ! -z "$REPOSITORY" ] && echo "INFO:    - repository $REPOSITORY"
-echo "INFO:    - graph $GRAPH"
-echo "INFO:    - files $FILES"
+[ ! -z "$GRAPH" ] &&  echo "INFO:    - graph: $GRAPH"
+echo "INFO:    - files: $FILES"
+echo "INFO:    - method: $(if [ "$APPEND" = false ]; then echo "replace-data"; else echo "append-data"; fi)"
 
-if [ "$APPEND" = false ] ; then
-   echo "INFO: *** CLEARING THE GRAPH ***"
-   TEMP_FILE=`mktemp`
-   QUERY_PARAMS="context=$GRAPH"
-   if [ ! "$GRAPH" ]; then QUERY_PARAMS= ;  fi
-   curl $REPOSITORY_URL/statements?$QUERY_PARAMS -v -X DELETE &> $TEMP_FILE
-   cat $TEMP_FILE | grep "HTTP/1.1 204" &>/dev/null && echo 'INFO:  clearing graph was sucessfull'  
-   cat $TEMP_FILE | grep "HTTP/1.1 204" &>/dev/null || ( echo 'ERROR:  clearing graph failed. Output of the process : '; cat $TEMP_FILE )
-fi 
 
 echo "INFO: *** SENDING DATA ***"
 for FILE in $FILES
 do
    echo INFO: " -- sending $FILE";
    TEMP_FILE=`mktemp`
+
    QUERY_PARAMS="context=$GRAPH"
-   if [ ! "$GRAPH" ]; then QUERY_PARAMS= ;  fi
-  
-   curl -X POST -H "Content-Type: $CONTENT_TYPE" --data-binary "@$FILE" -o - -v "$REPOSITORY_URL/statements?$QUERY_PARAMS" 2> $TEMP_FILE
-   cat $TEMP_FILE | grep "HTTP/1.1 204" &>/dev/null && echo 'INFO:  sending data was sucessfull'  
+   if [ -z "$GRAPH" ]; then
+       QUERY_PARAMS=""
+   fi
+
+   HTTP_METHOD="POST"
+   if [ "$APPEND" = false ]; then
+       HTTP_METHOD="PUT"
+   fi
+
+   curl -X $HTTP_METHOD -H "Content-Type: $CONTENT_TYPE" --data-binary "@$FILE" -o - -v "$REPOSITORY_URL/statements?$QUERY_PARAMS" 2> $TEMP_FILE
+   cat $TEMP_FILE | grep "HTTP/1.1 204" &>/dev/null && echo 'INFO:  sending data was sucessfull'
    cat $TEMP_FILE | grep "HTTP/1.1 204" &>/dev/null || ( echo 'ERROR:  sending data failed. Output of the process : '; cat $TEMP_FILE )
 done;
 
-echo "INFO: *** CHECKING ***"
+echo "INFO: *** VALIDATING RESULT ***"
 TEMP_FILE=`mktemp`
-GRAPH_SIZE=`curl $REPOSITORY_URL/size 2> $TEMP_FILE`
-echo "INFO:  size of the new graph is $GRAPH_SIZE"
-
+REPOSITORY_SIZE=`curl $REPOSITORY_URL/size  2> $TEMP_FILE`
+echo "INFO:  - new size of the repository is $REPOSITORY_SIZE"
