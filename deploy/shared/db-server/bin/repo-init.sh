@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #
-# Initializes Record Manager GraphDB repositories if it does not already exist
+# Initializes GraphDB repositories (the repositories are created if they do not exist yet and some of the data are replaced)
 #
 
 SOURCE_DIR=$1
@@ -48,7 +48,7 @@ for DIR in ${DATA_DIR}/*/; do
     find ${DATA_DIR}/${REPO_NAME} -name '*.trig' | while read DATA_FILE; do
 
 	echo "INFO: Replacing contexts with data from file ${DATA_FILE}."
-	$SCRIPT_DIR/rdf4j-deploy-context.sh -C 'application/trig' -s http://localhost:7200 -r ${REPO_NAME} ${DATA_FILE}
+	$SCRIPT_DIR/rdf4j-deploy-context.sh -R -C 'application/trig' -s http://localhost:7200 -r ${REPO_NAME} ${DATA_FILE}
     done
 
     find ${DATA_DIR}/${REPO_NAME} -name '*.ru' | while read UPDATE_QUERY_FILE; do
