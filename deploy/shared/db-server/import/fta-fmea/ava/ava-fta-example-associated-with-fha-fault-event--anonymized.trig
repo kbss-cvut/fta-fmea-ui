@@ -95,7 +95,11 @@
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance1443295929>
     a :fault-tree;
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853>;
-    :name "FC 1.1. Tlak v kabině fault event"@cs .
+    :name "FC 1.1. Tlak v kabině fault event"@cs ;
+    dc-terms:creator <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/user/test-user-1>;
+    dc-terms:created "2024-04-01T10:45:00.000Z"^^xsd:dateTime ;
+    fta:editor <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/user/test-user-2> ;
+    fta:modified "2024-04-05T13:14:00.000Z"^^xsd:dateTime .
 
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1204570762>
     a :fault-event;
@@ -142,7 +146,9 @@
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance22467827479333998578>
     a :fault-tree;
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1768303591>;
-    :name "FC_1.3. Tlak v kabině fault event"@cs .
+    :name "FC_1.3. Tlak v kabině fault event"@cs ;
+    dc-terms:creator <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/user/test-user-2> ;
+    dc-terms:created "2024-04-05T13:17:00.000Z"^^xsd:dateTime .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1768303591>
     a :fault-event;
