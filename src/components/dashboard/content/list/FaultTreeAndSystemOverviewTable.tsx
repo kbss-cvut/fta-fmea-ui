@@ -28,6 +28,7 @@ interface FaultTreeOverviewTableProps {
   systems?: System[];
   handleFaultTreeContextMenu?: (evt: any, faultTree: FaultTree) => void;
   handleSystemContextMenu?: (evt: any, system: System) => void;
+  selectedSystem?: string;
 }
 
 const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
@@ -35,6 +36,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
   systems,
   handleFaultTreeContextMenu,
   handleSystemContextMenu,
+  selectedSystem,
 }) => {
   const navigate = useNavigate();
   const { classes } = useStyles();

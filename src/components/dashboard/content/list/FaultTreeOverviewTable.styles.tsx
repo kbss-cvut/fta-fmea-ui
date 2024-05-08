@@ -57,10 +57,10 @@ const useStyles = makeStyles()((theme: Theme) => ({
   },
   firstColumn: {
     width: "15%",
-    ...commonCellStyle
+    ...commonCellStyle,
   },
   systemFirstColumn: {
-    ...commonCellStyle
+    ...commonCellStyle,
   },
 }));
 

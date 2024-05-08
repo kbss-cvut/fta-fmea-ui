@@ -32,6 +32,7 @@ declare module "@mui/material/styles" {
     };
     button?: {
       primary?: string;
+      secondary?: string;
     };
   }
   // allow configuration using `createMuiTheme`
@@ -65,6 +66,7 @@ declare module "@mui/material/styles" {
     };
     button?: {
       primary?: string;
+      secondary?: string;
     };
   }
 }

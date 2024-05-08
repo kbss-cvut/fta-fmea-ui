@@ -66,3 +66,5 @@ export const SVG_PAN_ZOOM_OPTIONS = {
 export const SELECTED_LANGUAGE_KEY = "default-fta-language";
 export const PRIMARY_LANGUAGE = "en";
 export const SECONDARY_LANGUAGE = "cs";
+export const SELECTED_SYSTEM = "fta-selected-system";
+export const SELECTED_VIEW = "fta-selected-view";

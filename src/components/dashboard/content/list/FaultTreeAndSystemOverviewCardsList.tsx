@@ -17,6 +17,7 @@ interface FaultTreeOverviewCardsListProps {
   systems?: System[];
   handleFaultTreeContextMenu?: (evt: any, faultTree: FaultTree) => void;
   handleSystemContextMenu?: (evt: any, system: System) => void;
+  selectedSystem;
 }
 
 interface CardProps {
@@ -32,6 +33,7 @@ const FaultTreeAndSystemOverviewCardsList: FC<FaultTreeOverviewCardsListProps> =
   systems,
   handleFaultTreeContextMenu,
   handleSystemContextMenu,
+  selectedSystem,
 }) => {
   const { classes } = useStyles();
   const { t } = useTranslation();
