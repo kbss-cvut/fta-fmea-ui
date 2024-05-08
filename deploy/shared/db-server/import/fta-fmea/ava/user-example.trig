@@ -1,0 +1,11 @@
+@prefix fta: <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+<http://context-with-users> {
+
+	<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/user/test-user-1> a foaf:Person;
+		fta:username "test-user-1".
+		
+	<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/user/test-user-2> a foaf:Person;
+		fta:username "test-user-2".
+}
