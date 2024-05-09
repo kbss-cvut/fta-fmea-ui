@@ -1,4 +1,5 @@
 import { AbstractModel } from "@models/abstractModel";
+import { System } from "@models/systemModel";
 
 export const getCircularReplacer = () => {
   const seen = new WeakSet();
@@ -56,4 +57,23 @@ export const asArray = (objectOrArray) => {
     return objectOrArray;
   }
   return [objectOrArray];
+};
+
+export const getModifiedSystemsList = (systems: System[], selected: string | null) => {
+  if (!systems) return [];
+  if (!selected) return systems;
+
+  const selectedSystemIndex = systems.findIndex((system) => system.name === selected);
+
+  if (selectedSystemIndex !== -1) {
+    const selectedSystem = systems[selectedSystemIndex];
+    const updatedSystems = [
+      selectedSystem,
+      ...systems.slice(0, selectedSystemIndex),
+      ...systems.slice(selectedSystemIndex + 1),
+    ];
+    return updatedSystems;
+  } else {
+    return systems;
+  }
 };

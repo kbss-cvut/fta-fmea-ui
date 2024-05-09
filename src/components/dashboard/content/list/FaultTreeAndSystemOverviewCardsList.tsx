@@ -8,6 +8,7 @@ import { ROUTES } from "@utils/constants";
 import { extractFragment } from "@services/utils/uriIdentifierUtils";
 import { useNavigate } from "react-router-dom";
 import { System } from "@models/systemModel";
+import { getModifiedSystemsList } from "@utils/utils";
 
 const borderDefault = "1px solid #E0E0E0";
 const borderHover = "1px solid #60A3D9";
@@ -17,7 +18,7 @@ interface FaultTreeOverviewCardsListProps {
   systems?: System[];
   handleFaultTreeContextMenu?: (evt: any, faultTree: FaultTree) => void;
   handleSystemContextMenu?: (evt: any, system: System) => void;
-  selectedSystem;
+  selectedSystem: string | null;
 }
 
 interface CardProps {
@@ -40,6 +41,8 @@ const FaultTreeAndSystemOverviewCardsList: FC<FaultTreeOverviewCardsListProps> =
   const navigate = useNavigate();
 
   const [hoveredIndex, setHoveredIndex] = useState(null);
+
+  const modifiedSystemsList = getModifiedSystemsList(systems, selectedSystem);
 
   const Card: FC<CardProps> = ({ name, onRedirect, onOpenMenu, border, index }) => {
     return (
@@ -83,7 +86,7 @@ const FaultTreeAndSystemOverviewCardsList: FC<FaultTreeOverviewCardsListProps> =
             );
           })}
         {systems &&
-          systems.map((system, index) => {
+          modifiedSystemsList.map((system, index) => {
             const border = hoveredIndex === index ? borderHover : borderDefault;
             const routePath = ROUTES.SYSTEMS + `/${extractFragment(system.iri)}`;
             return (

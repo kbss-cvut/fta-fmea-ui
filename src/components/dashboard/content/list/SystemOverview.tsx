@@ -82,9 +82,17 @@ const SystemOverview = () => {
       </Box>
 
       {selectedView === "table" ? (
-        <FaultTreeAndSystemOverviewTable systems={systems} handleSystemContextMenu={handleContextMenu} />
+        <FaultTreeAndSystemOverviewTable
+          selectedSystem={selectedSystem}
+          systems={systems}
+          handleSystemContextMenu={handleContextMenu}
+        />
       ) : (
-        <FaultTreeAndSystemOverviewCardsList systems={systems} handleSystemContextMenu={handleContextMenu} />
+        <FaultTreeAndSystemOverviewCardsList
+          selectedSystem={selectedSystem}
+          systems={systems}
+          handleSystemContextMenu={handleContextMenu}
+        />
       )}
 
       <SystemContextMenu
