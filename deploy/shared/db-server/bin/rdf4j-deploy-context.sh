@@ -19,7 +19,7 @@ function print_usage() {
           echo -e "\t$0 -R -C <CONTENT_TYPE> -s <RDF4J_SERVER> -r <REPO_ID> -c <GRAPH_IRI> <FILES>"
           echo -e "\t$0 -R -C <CONTENT_TYPE> -u <RDF4J_REPOSITORY_URL> -c <GRAPH_IRI> <FILES>"
           echo "Examples: "
-          echo -e "\tEXAMPLE-1 (append context): $0 -s http://onto.mondis.cz/openrdf-RDF4J -r ontomind_owlim -c http://onto.mondis.cz/resource/mdr-1.0-SNAPSHOT-temporary mdr.owl" 
+          echo -e "\tEXAMPLE-1 (append context): $0 -s http://onto.mondis.cz/openrdf-RDF4J -r ontomind_owlim -c http://onto.mondis.cz/resource/mdr-1.0-SNAPSHOT-temporary mdr.owl"
           echo -e "\tEXAMPLE-2 (replace context): $0 -R -C 'text/turtle' -s http://onto.fel.cvut.cz/rdf4j-server -r test -c http://vfn.cz/ontologies/fertility-saving-study study-model.ttl"
 	  echo -e "\tEXAMPLE-3 (replace repository): $0 -R -C 'text/x-nquads' -s http://onto.fel.cvut.cz/rdf4j-server -r test fss-study-formgen.ng"
           echo -e "\tEXAMPLE-4 (use of repository url): $0 -R -C 'text/turtle' -u http://onto.fel.cvut.cz/rdf4j-server/repositories/test -c http://vfn.cz/ontologies/fertility-saving-study study-model.ttl"
@@ -51,7 +51,7 @@ while getopts "h:s:r:u:c:RC:" arg; do
           GRAPH=$(perl -MURI::Escape -e 'print uri_escape($ARGV[0]);' "<$OPTARG>")
           ;;
 	R)
-	  APPEND=false 
+	  APPEND=false
 	  ;;
 	C)
 	  CONTENT_TYPE=$OPTARG
@@ -66,15 +66,15 @@ REPOSITORY_URL=${REPOSITORY_URL:-$RDF4J_SERVER/repositories/$REPOSITORY}
 
 
 function get_contexts_from_trig_file() {
-  FILE=$1 
+  FILE=$1
   grep '\S\S*\s\s*{\s*' ${FILE} | sed 's/\s*{\s*//' |  sort -u
 }
 
 function encode() {
-  while read GRAPH; do 
+  while read GRAPH; do
     perl -MURI::Escape -e "print uri_escape(q($GRAPH));"
-    echo 
-  done 
+    echo
+  done
 }
 
 echo "INFO: *** RUNNING DEPLOY WITH PARAMETERS ***"
