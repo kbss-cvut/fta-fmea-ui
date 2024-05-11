@@ -82,7 +82,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
                   <TableRow key={rowIndex} className={classes.noBorder}>
                     <TableCell className={classes.firstColumn}>{faultTree.name}</TableCell>
                     <TableCell className={classes.tableCell}>{faultTree?.system?.name}</TableCell>
-                    <TableCell className={classes.tableCell}></TableCell>
+                    <TableCell className={classes.tableCell}>{faultTree?.subSystem?.name}</TableCell>
                     <TableCell className={classes.tableCell}>{faultTree?.calculatedFailureRate}</TableCell>
                     <TableCell className={classes.tableCell}>{faultTree?.fhaBasedFailureRate}</TableCell>
                     <TableCell className={classes.tableCell}>{faultTree?.requiredFailureRate}</TableCell>

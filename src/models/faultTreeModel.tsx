@@ -25,6 +25,9 @@ export interface FaultTree extends AbstractModel {
     username?: string;
   };
   modified?: {
-    ["@value"]: string;
+    ["@value"]?: string;
+  };
+  subSystem?: {
+    name?: string;
   };
 }
