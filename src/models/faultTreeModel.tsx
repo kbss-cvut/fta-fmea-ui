@@ -16,4 +16,15 @@ export interface FaultTree extends AbstractModel {
   manifestingEvent: FaultEvent;
   faultEventScenarios: FaultEventScenario[];
   requiredFailureRate: number;
+  system?: {
+    name?: string;
+  };
+  calculatedFailureRate?: number;
+  fhaBasedFailureRate?: number;
+  editor?: {
+    username?: string;
+  };
+  modified?: {
+    ["@value"]: string;
+  };
 }

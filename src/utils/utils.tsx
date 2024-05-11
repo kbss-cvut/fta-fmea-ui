@@ -78,3 +78,19 @@ export const getModifiedSystemsList = (systems: System[], selected: string | nul
 
 export const getModifiedFaultTreesList = (faultTrees: FaultTree[], selected: string | null) =>
   getModifiedList(faultTrees, selected);
+
+export const formatDate = (dateString: string) => {
+  if (!dateString) return "-";
+
+  const date = new Date(dateString);
+  const options = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit",
+  };
+
+  return date.toLocaleString("en-US", options);
+};
