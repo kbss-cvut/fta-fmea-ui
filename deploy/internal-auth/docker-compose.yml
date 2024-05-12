@@ -74,7 +74,7 @@ services:
       - "7200"
     restart: always
     volumes:
-      - ../shared/db-server/import:/root/graphdb-import:ro
+      - ${INIT_DATA_DIR:-../shared/db-server/import}:/root/graphdb-import:ro
       - db-server:/opt/graphdb/home
 
 volumes:
