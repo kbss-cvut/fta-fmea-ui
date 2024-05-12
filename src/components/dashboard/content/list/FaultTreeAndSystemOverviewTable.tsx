@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@utils/constants";
 import { extractFragment } from "@services/utils/uriIdentifierUtils";
 import { System } from "@models/systemModel";
-import { getModifiedSystemsList } from "@utils/utils";
+import { getModifiedSystemsList, getModifiedFaultTreesList } from "@utils/utils";
 
 const faultTreeTableHeadCells = [
   "faultTreeOverviewTable.name",
@@ -44,6 +44,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
   const { t } = useTranslation();
 
   const modifiedSystemsList = getModifiedSystemsList(systems, selectedSystem);
+  const modifiedFaultTreesList = getModifiedFaultTreesList(faultTrees, selectedSystem);
 
   return (
     <Box className={classes.tableContainer}>
@@ -75,7 +76,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
           <TableBody>
             {/* Will be changed and refactored in the future task with more data */}
             {faultTrees &&
-              faultTrees.map((faultTree, rowIndex) => {
+              modifiedFaultTreesList.map((faultTree, rowIndex) => {
                 const routePath = ROUTES.FTA + `/${extractFragment(faultTree.iri)}`;
                 return (
                   <TableRow key={rowIndex} className={classes.noBorder}>
