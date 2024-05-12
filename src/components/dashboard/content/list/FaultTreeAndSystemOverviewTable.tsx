@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@utils/constants";
 import { extractFragment } from "@services/utils/uriIdentifierUtils";
 import { System } from "@models/systemModel";
-import { getModifiedSystemsList, getModifiedFaultTreesList } from "@utils/utils";
+import { getModifiedSystemsList, getModifiedFaultTreesList, formatDate } from "@utils/utils";
 
 const faultTreeTableHeadCells = [
   "faultTreeOverviewTable.name",
@@ -81,13 +81,13 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
                 return (
                   <TableRow key={rowIndex} className={classes.noBorder}>
                     <TableCell className={classes.firstColumn}>{faultTree.name}</TableCell>
-                    <TableCell className={classes.tableCell}></TableCell>
-                    <TableCell className={classes.tableCell}></TableCell>
-                    <TableCell className={classes.tableCell}></TableCell>
-                    <TableCell className={classes.tableCell}></TableCell>
-                    <TableCell className={classes.tableCell}>{faultTree.requiredFailureRate}</TableCell>
-                    <TableCell className={classes.tableCell}></TableCell>
-                    <TableCell className={classes.tableCell}></TableCell>
+                    <TableCell className={classes.tableCell}>{faultTree?.system?.name}</TableCell>
+                    <TableCell className={classes.tableCell}>{faultTree?.subSystem?.name}</TableCell>
+                    <TableCell className={classes.tableCell}>{faultTree?.calculatedFailureRate}</TableCell>
+                    <TableCell className={classes.tableCell}>{faultTree?.fhaBasedFailureRate}</TableCell>
+                    <TableCell className={classes.tableCell}>{faultTree?.requiredFailureRate}</TableCell>
+                    <TableCell className={classes.tableCell}>{formatDate(faultTree?.modified?.["@value"])}</TableCell>
+                    <TableCell className={classes.tableCell}>{faultTree?.editor?.username}</TableCell>
                     <TableCell className={classes.tableCell}>{/* <DoneIcon /> */}</TableCell>
                     <TableCell className={classes.tableCell}>
                       <Box className={classes.rowOptionsContainer}>

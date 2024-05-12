@@ -34,6 +34,14 @@ const ctx = {
   system: VocabularyUtils.PREFIX + "is-artifact-of",
   subSystem: VocabularyUtils.PREFIX + "is-performed-by",
   requiredFailureRate: VocabularyUtils.PREFIX + "required-failure-rate",
+  calculatedFailureRate: VocabularyUtils.PREFIX + "calculated-failure-rate",
+  components: VocabularyUtils.PREFIX + "components",
+  creator: VocabularyUtils.DC_TERMS + "creator",
+  created: VocabularyUtils.DC_TERMS + "created",
+  modified: VocabularyUtils.DC_TERMS + "modified",
+  fhaBasedFailureRate: VocabularyUtils.PREFIX + "fha-based-failure-rate",
+  editor: VocabularyUtils.PREFIX + "editor",
+  username: VocabularyUtils.PREFIX + "username",
 };
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, FAILURE_MODE_CONTEXT, RECTANGLE_CONTEXT);
