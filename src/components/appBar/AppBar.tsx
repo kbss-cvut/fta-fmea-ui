@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import useStyles from "@components/appBar/AppBar.styles";
 import { AccountCircle } from "@mui/icons-material";
-import { Menu, MenuItem, AppBar as MaterialAppBar } from "@mui/material";
+import { Menu, MenuItem, AppBar as MaterialAppBar, Box, FormControl, InputLabel, TextField } from "@mui/material";
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ChangePasswordDialog from "@components/dialog/password/ChangePasswordDialog";
@@ -13,8 +13,12 @@ import { ROUTES } from "@utils/constants";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useTranslation } from "react-i18next";
 import LanguageIcon from "@mui/icons-material/Language";
-import { PRIMARY_LANGUAGE, SECONDARY_LANGUAGE, SELECTED_LANGUAGE_KEY } from "@utils/constants";
+import { PRIMARY_LANGUAGE, SECONDARY_LANGUAGE, SELECTED_LANGUAGE_KEY, SELECTED_SYSTEM } from "@utils/constants";
 import { useAppBarTitle } from "../../contexts/AppBarTitleContext";
+import * as systemService from "@services/systemService";
+import { System } from "@models/systemModel";
+import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
+import { axiosSource } from "@services/utils/axiosUtils";
 
 interface Props {
   title: string;
@@ -27,10 +31,28 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
   const { classes } = useStyles();
   const history = useNavigate();
   const { i18n } = useTranslation();
+  const { t } = useTranslation();
   const { appBarTitle } = useAppBarTitle();
+  const [showSnackbar] = useSnackbar();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [selectedSystem, setSelectedSystem] = useState<string>(() => sessionStorage.getItem(SELECTED_SYSTEM) || "");
+  const [systems, setSystems] = useState<System[]>([]);
+
   const isMenuOpen = Boolean(anchorEl);
+
+  React.useEffect(() => {
+    const fetchSystems = async () => {
+      systemService
+        .findAll()
+        .then((value) => setSystems(value))
+        .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
+    };
+
+    fetchSystems();
+
+    return () => axiosSource.cancel("SystemsProvider - unmounting");
+  }, []);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -90,6 +112,13 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
     }
   };
 
+  const handleSystemChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    const value = event.target.value as string;
+    setSelectedSystem(value);
+    sessionStorage.setItem(SELECTED_SYSTEM, value);
+    window.dispatchEvent(new Event("storage"));
+  };
+
   return (
     <div>
       <MaterialAppBar position="fixed" elevation={0}>
@@ -103,6 +132,31 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
           <Typography className={classes.title} variant="h6" noWrap>
             {appBarTitle}
           </Typography>
+
+          <Box className={classes.textfieldContainer}>
+            <FormControl fullWidth>
+              {!selectedSystem && (
+                <InputLabel className={classes.inputLabel}>{t("appBar.selectSystemPlaceholder")}</InputLabel>
+              )}
+              {systems && (
+                <TextField
+                  select
+                  InputLabelProps={{ shrink: false }}
+                  className={classes.textfieldSelect}
+                  value={selectedSystem}
+                  onChange={handleSystemChange}
+                >
+                  {systems.map((s, i) => {
+                    return (
+                      <MenuItem key={`${s.name}-${i}`} value={s.name}>
+                        {s.name}
+                      </MenuItem>
+                    );
+                  })}
+                </TextField>
+              )}
+            </FormControl>
+          </Box>
 
           <div className={classes.languageToggler} onClick={toggleLanguage}>
             <LanguageIcon className={classes.languageIcon} />

@@ -13,6 +13,7 @@ import FaultTreeAndSystemOverviewCardsList from "./FaultTreeAndSystemOverviewCar
 import { useTranslation } from "react-i18next";
 import { Button, Box } from "@mui/material";
 import SystemDialog from "@components/dialog/system/SystemDialog";
+import { SELECTED_SYSTEM } from "@utils/constants";
 
 const SystemOverview = () => {
   const { t } = useTranslation();
@@ -24,12 +25,25 @@ const SystemOverview = () => {
   const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefaultAnchor);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [createSystemDialogOpen, setCreateSystemDialogOpen] = useState<boolean>(false);
+  const [selectedSystem, setSelectedSystem] = useState<string | null>(sessionStorage.getItem(SELECTED_SYSTEM));
 
   useEffect(() => {
     const storedView = localStorage.getItem("selectedView") as ViewType;
     if (storedView) {
       setSelectedView(storedView);
     }
+    const handleStorageChange = () => {
+      const system = sessionStorage.getItem(SELECTED_SYSTEM);
+      if (system) {
+        setSelectedSystem(system);
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
   }, []);
 
   const toggleView = (viewType: ViewType) => {
@@ -68,9 +82,17 @@ const SystemOverview = () => {
       </Box>
 
       {selectedView === "table" ? (
-        <FaultTreeAndSystemOverviewTable systems={systems} handleSystemContextMenu={handleContextMenu} />
+        <FaultTreeAndSystemOverviewTable
+          selectedSystem={selectedSystem}
+          systems={systems}
+          handleSystemContextMenu={handleContextMenu}
+        />
       ) : (
-        <FaultTreeAndSystemOverviewCardsList systems={systems} handleSystemContextMenu={handleContextMenu} />
+        <FaultTreeAndSystemOverviewCardsList
+          selectedSystem={selectedSystem}
+          systems={systems}
+          handleSystemContextMenu={handleContextMenu}
+        />
       )}
 
       <SystemContextMenu

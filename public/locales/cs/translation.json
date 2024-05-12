@@ -89,6 +89,8 @@
     "partNumber": "Číslo součásti",
     "stock": "Zásoba",
     "quantity": "Množství"
-
+  },
+  "appBar": {
+    "selectSystemPlaceholder": "Vyberte systém"
   }
 }

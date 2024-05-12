@@ -1,4 +1,6 @@
 import { AbstractModel } from "@models/abstractModel";
+import { FaultTree } from "@models/faultTreeModel";
+import { System } from "@models/systemModel";
 
 export const getCircularReplacer = () => {
   const seen = new WeakSet();
@@ -57,3 +59,22 @@ export const asArray = (objectOrArray) => {
   }
   return [objectOrArray];
 };
+
+const getModifiedList = <T extends { name: string }>(items: T[], selected: string | null): T[] => {
+  if (!items) return [];
+
+  const selectedIndex = items.findIndex((item) => item.name === selected);
+
+  if (selectedIndex !== -1) {
+    const selectedItem = items[selectedIndex];
+    return [selectedItem, ...items.slice(0, selectedIndex), ...items.slice(selectedIndex + 1)];
+  } else {
+    return items;
+  }
+};
+
+export const getModifiedSystemsList = (systems: System[], selected: string | null) =>
+  getModifiedList(systems, selected);
+
+export const getModifiedFaultTreesList = (faultTrees: FaultTree[], selected: string | null) =>
+  getModifiedList(faultTrees, selected);

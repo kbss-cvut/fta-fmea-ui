@@ -32,5 +32,6 @@ export const appTheme = createCustomMuiTheme({
   },
   button: {
     primary: "#1774d1",
+    secondary: "#FFFFFF",
   },
 });

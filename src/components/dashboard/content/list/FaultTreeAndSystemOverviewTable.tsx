@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@utils/constants";
 import { extractFragment } from "@services/utils/uriIdentifierUtils";
 import { System } from "@models/systemModel";
+import { getModifiedSystemsList, getModifiedFaultTreesList } from "@utils/utils";
 
 const faultTreeTableHeadCells = [
   "faultTreeOverviewTable.name",
@@ -28,6 +29,7 @@ interface FaultTreeOverviewTableProps {
   systems?: System[];
   handleFaultTreeContextMenu?: (evt: any, faultTree: FaultTree) => void;
   handleSystemContextMenu?: (evt: any, system: System) => void;
+  selectedSystem?: string;
 }
 
 const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
@@ -35,10 +37,14 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
   systems,
   handleFaultTreeContextMenu,
   handleSystemContextMenu,
+  selectedSystem,
 }) => {
   const navigate = useNavigate();
   const { classes } = useStyles();
   const { t } = useTranslation();
+
+  const modifiedSystemsList = getModifiedSystemsList(systems, selectedSystem);
+  const modifiedFaultTreesList = getModifiedFaultTreesList(faultTrees, selectedSystem);
 
   return (
     <Box className={classes.tableContainer}>
@@ -70,7 +76,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
           <TableBody>
             {/* Will be changed and refactored in the future task with more data */}
             {faultTrees &&
-              faultTrees.map((faultTree, rowIndex) => {
+              modifiedFaultTreesList.map((faultTree, rowIndex) => {
                 const routePath = ROUTES.FTA + `/${extractFragment(faultTree.iri)}`;
                 return (
                   <TableRow key={rowIndex} className={classes.noBorder}>
@@ -98,7 +104,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
                 );
               })}
             {systems &&
-              systems.map((system, rowIndex) => {
+              modifiedSystemsList.map((system, rowIndex) => {
                 const routePath = ROUTES.SYSTEMS + `/${extractFragment(system.iri)}`;
                 return (
                   <TableRow key={rowIndex} className={classes.noBorder}>

@@ -89,5 +89,8 @@
     "partNumber": "Part number",
     "stock": "Stock",
     "quantity": "Quantity"
+  },
+  "appBar": {
+    "selectSystemPlaceholder": "Select system"
   }
 }
