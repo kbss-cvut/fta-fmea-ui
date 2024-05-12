@@ -10,8 +10,8 @@ x-logging-java-application: &logging-java
 
 # Expose port to access db-server directly, bypassing nginx
 x-access-db-server-development-port: &db-server-dev-port
-    ports:
-      - "127.0.0.1:${DB_SERVER_DEV_PORT:-7205}:7200"
+  ports:
+    - "127.0.0.1:${DB_SERVER_DEV_PORT:-7205}:7200"
 
 services:
   nginx:
