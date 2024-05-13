@@ -1,9 +1,12 @@
 import axios from "axios";
 import { appHistory } from "@components/routes/AppRoutes";
-import { ENVVariable, ROUTES } from "@utils/constants";
+import { ENVVariable, HttpHeaders, ROUTES } from "@utils/constants";
+import { isUsingOidcAuth } from "@utils/OidcUtils";
+import { getOidcToken } from "@utils/SecurityUtils";
 
 const axiosClient = axios.create({
   baseURL: ENVVariable.API_URL,
+  withCredentials: true,
 });
 
 axiosClient.interceptors.response.use(
@@ -20,14 +23,16 @@ axiosClient.interceptors.response.use(
 
 export const axiosSource = axios.CancelToken.source();
 
-axios.interceptors.request.use(
-  (request) => {
-    request.cancelToken = axiosSource.token;
-    return request;
-  },
-  (error) => {
-    return Promise.reject(error);
-  },
-);
+axiosClient.interceptors.request.use((reqConfig) => {
+  if (!isUsingOidcAuth()) {
+    return reqConfig;
+  }
+  if (!reqConfig.headers) {
+    // @ts-ignore
+    reqConfig.headers = {};
+  }
+  reqConfig.headers[HttpHeaders.AUTHORIZATION] = `Bearer ${getOidcToken().access_token}`;
+  return reqConfig;
+});
 
 export default axiosClient;

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useEffect } from "react";
-import { ThemeProvider, Theme, StyledEngineProvider } from "@mui/material/styles";
+import { ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
 import AppRoutes from "@components/routes/AppRoutes";
 import { appTheme } from "@styles/App.styles";
 import { SnackbarProvider } from "@hooks/useSnackbar";
@@ -8,6 +8,8 @@ import { ConfirmDialogProvider } from "@hooks/useConfirmDialog";
 import { ENVVariable, SELECTED_LANGUAGE_KEY, PRIMARY_LANGUAGE } from "@utils/constants";
 import { Suspense } from "react";
 import { useTranslation } from "react-i18next";
+import { isUsingOidcAuth } from "@utils/OidcUtils";
+import OidcAuthWrapper from "@oidc/OidcAuthWrapper";
 
 declare module "@mui/material/styles" {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface

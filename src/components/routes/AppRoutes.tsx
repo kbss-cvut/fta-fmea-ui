@@ -1,9 +1,7 @@
 import * as React from "react";
 import Login from "@components/login/Login";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Logout from "@components/Logout";
-import PublicRoute from "@components/routes/PublicRoute";
-import PrivateRoute from "@components/routes/PrivateRoute";
 import Register from "@components/register/Register";
 import { createHashHistory } from "history";
 import { LoggedUserProvider } from "@hooks/useLoggedUser";
@@ -12,130 +10,106 @@ import FaultTreeDashboard from "@components/dashboard/FaultTreeDashboard";
 import SystemDashboard from "@components/dashboard/SystemDashboard";
 import FailureModesTableDashboard from "@components/dashboard/FailureModesTableDashboard";
 import AdminDashboard from "@components/dashboard/AdminDashboard";
-import AdminRoute from "@components/routes/AdminRoute";
 import Navigation from "../navigation/Navigation";
 import SystemsOverview from "../systems/SystemsOverview";
 import FtaOverview from "../fta/FtaOverview";
 import FmeaOverview from "../fmea/FmeaOverview";
 import FhaOverview from "../fha/FhaOverview";
+import OidcSignInCallback from "@oidc/OidcSignInCallback";
+import OidcSilentCallback from "@oidc/OidcSilentCallback";
+import { isUsingOidcAuth } from "@utils/OidcUtils";
+import OidcAuthWrapper from "@oidc/OidcAuthWrapper";
+import PublicRoute from "@components/routes/PublicRoute";
+import PrivateRoute from "@components/routes/PrivateRoute";
+import AdminRoute from "@components/routes/AdminRoute";
 
 export const appHistory = createHashHistory();
 
 const AppRoutes = () => {
+  const routes = [
+    {
+      path: ROUTES.REGISTER,
+      element: <Register />,
+    },
+    {
+      path: ROUTES.LOGIN,
+      element: <Login />,
+    },
+    { path: ROUTES.ADMINISTRATION, element: <AdminDashboard /> },
+    {
+      path: ROUTES.LOGOUT,
+      element: <Logout />,
+    },
+    {
+      path: ROUTES.SYSTEMS,
+      element: <SystemsOverview />,
+    },
+    {
+      path: ROUTES.SYSTEMS + ROUTE_PARAMS.SYSTEM_FRAGMENT,
+      element: <SystemDashboard />,
+    },
+    {
+      path: ROUTES.FTA,
+      element: <FtaOverview />,
+    },
+    {
+      path: ROUTES.FTA + ROUTE_PARAMS.FTA_FRAGMENT,
+      element: <FaultTreeDashboard />,
+    },
+    {
+      path: ROUTES.FMEA,
+      element: <FmeaOverview />,
+    },
+    {
+      path: ROUTES.FMEA + ROUTE_PARAMS.FMEA_FRAGMENT,
+      element: <FailureModesTableDashboard />,
+    },
+    {
+      path: ROUTES.FHA,
+      element: <FhaOverview />,
+    },
+    {
+      path: "/*",
+      element: <SystemsOverview />,
+    },
+  ];
+
+  const getElement = (path, element) => {
+    switch (path) {
+      case ROUTES.LOGIN:
+        return <PublicRoute restricted={true}>{element}</PublicRoute>;
+      case ROUTES.ADMINISTRATION:
+        return <AdminRoute>{element}</AdminRoute>;
+      case ROUTES.REGISTER:
+        return ENVVariable.ADMIN_REGISTRATION_ONLY === "true" ? (
+          <AdminRoute>
+            <Register />
+          </AdminRoute>
+        ) : (
+          <PublicRoute restricted={true}>
+            <Register />
+          </PublicRoute>
+        );
+      default:
+        return <PrivateRoute>{element}</PrivateRoute>;
+    }
+  };
+
   return (
     <LoggedUserProvider>
       <BrowserRouter basename={ENVVariable.BASENAME} /*history={appHistory}*/>
         <Navigation>
           <Routes>
-            {/*TODO: revisit routing, this is hotfix to support react-router v6*/}
-            {ENVVariable.ADMIN_REGISTRATION_ONLY === "true" ? (
-              <Route
-                path={ROUTES.REGISTER}
-                element={
-                  <AdminRoute>
-                    <Register />
-                  </AdminRoute>
-                }
-              />
-            ) : (
-              <Route
-                path={ROUTES.REGISTER}
-                element={
-                  <PublicRoute restricted={true}>
-                    <Register />
-                  </PublicRoute>
-                }
-              />
-            )}
-            <Route
-              path={ROUTES.LOGIN}
-              element={
-                <PublicRoute path={ROUTES.LOGIN} restricted={true} exact>
-                  <Login />
-                </PublicRoute>
-              }
-            />
-            <Route
-              path={ROUTES.ADMINISTRATION}
-              element={
-                <AdminRoute>
-                  <AdminDashboard />
-                </AdminRoute>
-              }
-            />
+            <Route path={ROUTES.OIDC_SIGNIN_CALLBACK} element={<OidcSignInCallback />} />
+            <Route path={ROUTES.OIDC_SILENT_CALLBACK} element={<OidcSilentCallback />} />
 
-            <Route
-              path={ROUTES.LOGOUT}
-              element={
-                <PrivateRoute path={ROUTES.LOGOUT} exact>
-                  <Logout />
-                </PrivateRoute>
+            {routes.map((r) => {
+              if (isUsingOidcAuth()) {
+                return <Route path={r.path} element={<OidcAuthWrapper>{r.element}</OidcAuthWrapper>} />;
+              } else {
+                return <Route key={r.path} path={r.path} element={getElement(r.path, r.element)} />;
               }
-            />
-            <Route
-              path={ROUTES.SYSTEMS}
-              element={
-                <PrivateRoute>
-                  <SystemsOverview />
-                </PrivateRoute>
-              }
-            />
-
-            <Route
-              path={ROUTES.SYSTEMS + ROUTE_PARAMS.SYSTEM_FRAGMENT}
-              element={
-                <PrivateRoute exact>
-                  <SystemDashboard />
-                </PrivateRoute>
-              }
-            />
-
-            <Route
-              path={ROUTES.FTA}
-              element={
-                <PrivateRoute>
-                  <FtaOverview />
-                </PrivateRoute>
-              }
-            />
-
-            <Route
-              path={ROUTES.FTA + ROUTE_PARAMS.FTA_FRAGMENT}
-              element={
-                <PrivateRoute path={ROUTES.FTA + ROUTE_PARAMS.FTA_FRAGMENT} component={FaultTreeDashboard} exact>
-                  <FaultTreeDashboard />
-                </PrivateRoute>
-              }
-            />
-
-            <Route
-              path={ROUTES.FMEA}
-              element={
-                <PrivateRoute>
-                  <FmeaOverview />
-                </PrivateRoute>
-              }
-            />
-
-            <Route
-              path={ROUTES.FMEA + ROUTE_PARAMS.FMEA_FRAGMENT}
-              element={
-                <PrivateRoute path={ROUTES.FMEA + ROUTE_PARAMS.FMEA_FRAGMENT} exact>
-                  <FailureModesTableDashboard />
-                </PrivateRoute>
-              }
-            />
-
-            <Route
-              path={ROUTES.FHA}
-              element={
-                <PrivateRoute>
-                  <FhaOverview />
-                </PrivateRoute>
-              }
-            />
-
-            <Route path="*" element={<Navigate to={ROUTES.SYSTEMS} replace />} />
+            })}
           </Routes>
         </Navigation>
       </BrowserRouter>
