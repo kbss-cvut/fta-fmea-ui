@@ -13,12 +13,12 @@ import * as componentService from "@services/componentService";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 import * as joint from "jointjs";
 import { FTABoundary } from "@components/editor/faultTree/shapes/shapesDefinitions";
-import { useAppBarTitle } from "../../../contexts/AppBarTitleContext";
+import { useAppBar } from "../../../contexts/AppBarContext";
 
 const Editor = () => {
   const [requestConfirmation] = useConfirmDialog();
   const [showSnackbar] = useSnackbar();
-  const { setAppBarTitle } = useAppBarTitle();
+  const { setAppBarTitle } = useAppBar();
 
   const [system, addComponent, updateComponent, removeComponent, fetchSystem] = useCurrentSystem();
 

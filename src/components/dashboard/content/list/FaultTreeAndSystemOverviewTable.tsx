@@ -1,11 +1,11 @@
 import React, { FC } from "react";
-import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button } from "@mui/material";
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, useTheme } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useTranslation } from "react-i18next";
 import useStyles from "./FaultTreeOverviewTable.styles";
 import { FaultTree } from "@models/faultTreeModel";
 import { useNavigate } from "react-router-dom";
-import { ROUTES } from "@utils/constants";
+import { ROUTES, SELECTED_SYSTEM } from "@utils/constants";
 import { extractFragment } from "@services/utils/uriIdentifierUtils";
 import { System } from "@models/systemModel";
 import { getModifiedSystemsList, getModifiedFaultTreesList, formatDate } from "@utils/utils";
@@ -42,9 +42,17 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
   const navigate = useNavigate();
   const { classes } = useStyles();
   const { t } = useTranslation();
+  const theme = useTheme();
 
   const modifiedSystemsList = getModifiedSystemsList(systems, selectedSystem);
   const modifiedFaultTreesList = getModifiedFaultTreesList(faultTrees, selectedSystem);
+
+  const redirectToPath = (routePath: string, systemName?: string) => {
+    if (systemName) {
+      sessionStorage.setItem(SELECTED_SYSTEM, systemName);
+    }
+    navigate(routePath);
+  };
 
   return (
     <Box className={classes.tableContainer}>
@@ -91,7 +99,11 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
                     <TableCell className={classes.tableCell}>{/* <DoneIcon /> */}</TableCell>
                     <TableCell className={classes.tableCell}>
                       <Box className={classes.rowOptionsContainer}>
-                        <Button variant="contained" className={classes.editButton} onClick={() => navigate(routePath)}>
+                        <Button
+                          variant="contained"
+                          className={classes.editButton}
+                          onClick={() => redirectToPath(routePath, faultTree.system.name)}
+                        >
                           {t("faultTreeOverviewTable.edit")}
                         </Button>
                         <MoreVertIcon
@@ -106,12 +118,17 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
             {systems &&
               modifiedSystemsList.map((system, rowIndex) => {
                 const routePath = ROUTES.SYSTEMS + `/${extractFragment(system.iri)}`;
+                const bgColor = system.name === selectedSystem ? theme.sidePanel.colors.hover : "transparent";
                 return (
-                  <TableRow key={rowIndex} className={classes.noBorder}>
+                  <TableRow key={rowIndex} className={classes.noBorder} style={{ backgroundColor: bgColor }}>
                     <TableCell className={classes.systemFirstColumn}>{system.name}</TableCell>
                     <TableCell className={classes.tableCell}>
                       <Box className={classes.rowOptionsContainer}>
-                        <Button variant="contained" className={classes.editButton} onClick={() => navigate(routePath)}>
+                        <Button
+                          variant="contained"
+                          className={classes.editButton}
+                          onClick={() => redirectToPath(routePath)}
+                        >
                           {t("faultTreeOverviewTable.edit")}
                         </Button>
                         <MoreVertIcon

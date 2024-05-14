@@ -71,7 +71,7 @@
   },
   "faultTreeOverviewTable": {
     "name": "Jméno",
-    "aircraftType": "Typ letadla",
+    "aircraftType": "Typ systému",
     "ata": "ATA",
     "calculatedFailureRate": "Vypočtená intenzita poruch",
     "fhaBasedFailureRate": "Intenzita poruch založená na FHA",
@@ -92,5 +92,9 @@
   },
   "appBar": {
     "selectSystemPlaceholder": "Vyberte systém"
+  },
+  "common": {
+    "defaultErrorMsg": "Došlo k neočekávané chybě",
+    "delete": "Smazat"
   }
 }

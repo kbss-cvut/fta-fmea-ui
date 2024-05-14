@@ -71,7 +71,7 @@
   },
   "faultTreeOverviewTable": {
     "name": "Name",
-    "aircraftType": "Aircraft type",
+    "aircraftType": "System type",
     "ata": "ATA",
     "calculatedFailureRate": "Calculated failure rate",
     "fhaBasedFailureRate": "FHA based failure rate",
@@ -92,5 +92,9 @@
   },
   "appBar": {
     "selectSystemPlaceholder": "Select system"
+  },
+  "common": {
+    "defaultErrorMsg": "Unexpected error occurred",
+    "delete": "Delete"
   }
 }

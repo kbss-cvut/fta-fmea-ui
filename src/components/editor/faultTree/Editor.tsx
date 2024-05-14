@@ -20,13 +20,13 @@ import { Rectangle } from "@models/utils/Rectangle";
 import { JOINTJS_NODE_MODEL } from "@components/editor/faultTree/shapes/constants";
 import { calculateCutSets } from "@services/faultTreeService";
 import { FaultEventScenario } from "@models/faultEventScenario";
-import { useAppBarTitle } from "../../../contexts/AppBarTitleContext";
+import { useAppBar } from "../../../contexts/AppBarContext";
 
 const Editor = () => {
   const history = useNavigate();
   const [showSnackbar] = useSnackbar();
   const [requestConfirmation] = useConfirmDialog();
-  const { setAppBarTitle } = useAppBarTitle();
+  const { setAppBarTitle } = useAppBar();
 
   const [faultTree, refreshTree] = useCurrentFaultTree();
   const [rootEvent, setRootEvent] = useState<FaultEvent>();
