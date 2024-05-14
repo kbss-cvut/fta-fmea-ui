@@ -58,8 +58,10 @@ services:
     restart: always
     environment:
       <<: *local-dev-env
+      appContext: "${PUBLIC_ORIGIN:-http://localhost:${INTERNAL_HOST_PORT:-1235}}${APP_ROOT_PATH:-}${FTA_FMEA_PATH:-/fta-fmea}"
       REPOSITORY_URL: ${REPOSITORY_URL:-http://db-server:7200/repositories/fta-fmea}
       server.servlet.context-path: "/fta-fmea"
+      SECURITY_PROVIDER: oidc
       SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI: "${PUBLIC_ORIGIN:-http://localhost:${INTERNAL_HOST_PORT:-1235}}${APP_ROOT_PATH:-}/services/auth/realms/fta-fmea"
       SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_JWKSETURI: "http://auth-server:8080/realms/fta-fmea/protocol/openid-connect/certs"
       SERVER_MAXHTTPREQUESTHEADERSIZE: "40KB"
