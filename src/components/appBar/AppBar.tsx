@@ -1,10 +1,20 @@
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import * as React from "react";
+import { useEffect } from "react";
 import useStyles from "@components/appBar/AppBar.styles";
 import { AccountCircle } from "@mui/icons-material";
-import { Menu, MenuItem, AppBar as MaterialAppBar, Box, FormControl, InputLabel, TextField } from "@mui/material";
+import {
+  Menu,
+  MenuItem,
+  AppBar as MaterialAppBar,
+  Box,
+  FormControl,
+  InputLabel,
+  TextField,
+  IconButton,
+  Typography,
+  Toolbar,
+  Tooltip,
+} from "@mui/material";
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ChangePasswordDialog from "@components/dialog/password/ChangePasswordDialog";
@@ -14,11 +24,9 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useTranslation } from "react-i18next";
 import LanguageIcon from "@mui/icons-material/Language";
 import { PRIMARY_LANGUAGE, SECONDARY_LANGUAGE, SELECTED_LANGUAGE_KEY, SELECTED_SYSTEM } from "@utils/constants";
-import { useAppBarTitle } from "../../contexts/AppBarTitleContext";
-import * as systemService from "@services/systemService";
-import { System } from "@models/systemModel";
-import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
-import { axiosSource } from "@services/utils/axiosUtils";
+import { useAppBar } from "../../contexts/AppBarContext";
+import { useLocation } from "react-router-dom";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 interface Props {
   title: string;
@@ -30,29 +38,20 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
   const [loggedUser] = useLoggedUser();
   const { classes } = useStyles();
   const history = useNavigate();
-  const { i18n } = useTranslation();
-  const { t } = useTranslation();
-  const { appBarTitle } = useAppBarTitle();
-  const [showSnackbar] = useSnackbar();
+  const { i18n, t } = useTranslation();
+  const location = useLocation();
+  const { appBarTitle, systemsList } = useAppBar();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selectedSystem, setSelectedSystem] = useState<string>(() => sessionStorage.getItem(SELECTED_SYSTEM) || "");
-  const [systems, setSystems] = useState<System[]>([]);
+  const [changePasswordDialogOpen, setChangePasswordDialogOpen] = useState(false);
 
   const isMenuOpen = Boolean(anchorEl);
 
-  React.useEffect(() => {
-    const fetchSystems = async () => {
-      systemService
-        .findAll()
-        .then((value) => setSystems(value))
-        .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
-    };
-
-    fetchSystems();
-
-    return () => axiosSource.cancel("SystemsProvider - unmounting");
-  }, []);
+  useEffect(() => {
+    const currentItem = sessionStorage.getItem(SELECTED_SYSTEM);
+    if (selectedSystem !== currentItem) setSelectedSystem(currentItem);
+  }, [location.pathname]);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -100,8 +99,6 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
     </Menu>
   );
 
-  const [changePasswordDialogOpen, setChangePasswordDialogOpen] = useState(false);
-
   const toggleLanguage = () => {
     if (i18n.resolvedLanguage === PRIMARY_LANGUAGE) {
       i18n.changeLanguage(SECONDARY_LANGUAGE);
@@ -138,22 +135,35 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
               {!selectedSystem && (
                 <InputLabel className={classes.inputLabel}>{t("appBar.selectSystemPlaceholder")}</InputLabel>
               )}
-              {systems && (
-                <TextField
-                  select
-                  InputLabelProps={{ shrink: false }}
-                  className={classes.textfieldSelect}
-                  value={selectedSystem}
-                  onChange={handleSystemChange}
-                >
-                  {systems.map((s, i) => {
-                    return (
-                      <MenuItem key={`${s.name}-${i}`} value={s.name}>
-                        {s.name}
-                      </MenuItem>
-                    );
-                  })}
-                </TextField>
+              {systemsList && (
+                <Box className={classes.dropdownContainer}>
+                  <TextField
+                    select
+                    InputLabelProps={{ shrink: false }}
+                    className={classes.textfieldSelect}
+                    value={selectedSystem}
+                    onChange={handleSystemChange}
+                  >
+                    {systemsList.map((s, i) => {
+                      return (
+                        <MenuItem key={`${s.name}-${i}`} value={s.name}>
+                          {s.name}
+                        </MenuItem>
+                      );
+                    })}
+                  </TextField>
+                  <Box className={classes.tooltipContainer}>
+                    {selectedSystem && (
+                      <Tooltip
+                        title={t("common.delete")}
+                        className={classes.tooltip}
+                        onClick={() => setSelectedSystem("")}
+                      >
+                        <CancelIcon />
+                      </Tooltip>
+                    )}
+                  </Box>
+                </Box>
               )}
             </FormControl>
           </Box>

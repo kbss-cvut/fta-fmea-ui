@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { Box, Grid, Typography, Button } from "@mui/material";
+import { Box, Grid, Typography, Button, useTheme } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import useStyles from "./FaultTreeOverviewCardsList.styles";
 import { useTranslation } from "react-i18next";
@@ -39,17 +39,19 @@ const FaultTreeAndSystemOverviewCardsList: FC<FaultTreeOverviewCardsListProps> =
   const { classes } = useStyles();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const theme = useTheme();
 
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const modifiedSystemsList = getModifiedSystemsList(systems, selectedSystem);
 
   const Card: FC<CardProps> = ({ name, onRedirect, onOpenMenu, border, index }) => {
+    const bgColor = name === selectedSystem ? theme.sidePanel.colors.hover : "transparent";
     return (
       <Grid item xs={12} sm={12} md={6} lg={4}>
         <Box
           className={classes.cardContainer}
-          style={{ border: border }}
+          style={{ border: border, backgroundColor: bgColor }}
           onMouseEnter={() => setHoveredIndex(index)}
           onMouseLeave={() => setHoveredIndex(null)}
         >

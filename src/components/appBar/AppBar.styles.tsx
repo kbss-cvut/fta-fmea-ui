@@ -28,8 +28,8 @@ const useStyles = makeStyles()((theme: Theme) => ({
     minWidth: 120,
   },
   textfieldSelect: {
+    marginRight: 8,
     minWidth: 160,
-    marginRight: 16,
     "& .MuiSelect-icon": {
       color: theme.button.secondary,
     },
@@ -63,6 +63,18 @@ const useStyles = makeStyles()((theme: Theme) => ({
     transform: "translateY(-50%)",
     left: 12,
     pointerEvents: "none",
+  },
+  dropdownContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  tooltipContainer: {
+    height: 24,
+    width: 24,
+  },
+  tooltip: {
+    cursor: "pointer",
   },
 }));
 
