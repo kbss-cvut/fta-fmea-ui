@@ -57,6 +57,7 @@ services:
     restart: always
     environment:
       <<: *local-dev-env
+      appContext: "${PUBLIC_ORIGIN:-http://localhost:${INTERNAL_HOST_PORT:-1235}}${APP_ROOT_PATH:-}${FTA_FMEA_PATH:-/fta-fmea}"
       REPOSITORY_URL: ${REPOSITORY_URL:-http://db-server:7200/repositories/fta-fmea}
       REPOSITORY_USERNAME: ${REPOSITORY_USERNAME:-}
       REPOSITORY_PASSWORD: ${REPOSITORY_PASSWORD:-}
