@@ -1,5 +1,4 @@
-import * as React from "react";
-
+import React, { useEffect } from "react";
 import { Button, Dialog, TextField } from "@mui/material";
 import { DialogTitle } from "@components/materialui/dialog/DialogTitle";
 import { DialogContent } from "@components/materialui/dialog/DialogContent";
@@ -22,6 +21,7 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
 
   const [, addFaultTree] = useFaultTrees();
   const [processing, setIsProcessing] = useState(false);
+  const [systemName, setSystemName] = useState(sessionStorage.getItem(SELECTED_SYSTEM));
 
   const useFormMethods = useForm({ resolver: yupResolver(schema.concat(eventSchema)) });
   const { handleSubmit, register } = useFormMethods;
@@ -43,35 +43,34 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
   };
 
   return (
-    <div>
-      <Dialog open={open} onClose={handleCloseDialog} aria-labelledby="form-dialog-title" maxWidth="md" fullWidth>
-        <DialogTitle id="form-dialog-title" onClose={handleCloseDialog}>
-          {t("newFtaModal.title")}
-        </DialogTitle>
-        <DialogContent dividers>
-          <TextField
-            autoFocus
-            defaultValue={sessionStorage.getItem(SELECTED_SYSTEM) ? sessionStorage.getItem(SELECTED_SYSTEM) : null}
-            margin="dense"
-            label={t("newFtaModal.namePlaceholder")}
-            name="faultTreeName"
-            type="text"
-            fullWidth
-            error={!!useFormMethods.formState.errors.faultTreeName}
-            {...register("faultTreeName")}
-            helperText={useFormMethods.formState.errors.faultTreeName?.message}
-          />
-          <FaultEventsReuseProvider>
-            <FaultEventCreation useFormMethods={useFormMethods} eventReusing />
-          </FaultEventsReuseProvider>
-        </DialogContent>
-        <DialogActions>
-          <Button disabled={processing} color="primary" onClick={handleSubmit(handleCreateFaultTree)}>
-            {t("newFtaModal.create")}
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+    <Dialog open={open} onClose={handleCloseDialog} aria-labelledby="form-dialog-title" maxWidth="md" fullWidth>
+      <DialogTitle id="form-dialog-title" onClose={handleCloseDialog}>
+        {t("newFtaModal.title")}
+      </DialogTitle>
+      <DialogContent dividers>
+        <TextField
+          autoFocus
+          value={systemName}
+          disabled={true}
+          margin="dense"
+          label={t("newFtaModal.namePlaceholder")}
+          name="faultTreeName"
+          type="text"
+          fullWidth
+          error={!!useFormMethods.formState.errors.faultTreeName}
+          {...register("faultTreeName")}
+          helperText={useFormMethods.formState.errors.faultTreeName?.message}
+        />
+        <FaultEventsReuseProvider>
+          <FaultEventCreation useFormMethods={useFormMethods} eventReusing />
+        </FaultEventsReuseProvider>
+      </DialogContent>
+      <DialogActions>
+        <Button disabled={processing} color="primary" onClick={handleSubmit(handleCreateFaultTree)}>
+          {t("newFtaModal.create")}
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 

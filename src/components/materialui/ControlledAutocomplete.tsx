@@ -71,11 +71,11 @@ const ControlledAutocomplete = ({
     return (
       <Grid container alignItems="center" justifyContent="space-between">
         <Grid item>
-          <Typography>{t("noEvents")}</Typography>
+          <Typography>{t("newFtaModal.noEvents")}</Typography>
         </Grid>
         <Grid item>
           <Link href="#" onClick={handleOnClick}>
-            {t("createEvent")}
+            {t("newFtaModal.createEvent")}
           </Link>
         </Grid>
       </Grid>
@@ -87,7 +87,6 @@ const ControlledAutocomplete = ({
       render={({ field: { onChange, onBlur, value, ref }, ...props }) => (
         <Autocomplete
           fullWidth
-          disablePortal
           options={_options}
           getOptionLabel={getOptionLabel}
           renderOption={renderOption}

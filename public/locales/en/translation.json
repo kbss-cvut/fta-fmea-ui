@@ -17,11 +17,11 @@
   },
   "newFtaModal": {
     "title": "Create Fault Tree",
-    "namePlaceholder": "Fault Tree name",
+    "namePlaceholder": "System",
     "eventPlaceholder": "Event",
     "create": "Create Fault Tree",
     "createEvent": "Create New Event",
-    "noEvents": "No events found",
+    "noEvents": "No results matched your query.",
     "type": "FTA event type",
     "name": "Event name",
     "description": "Description",

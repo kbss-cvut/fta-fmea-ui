@@ -17,10 +17,10 @@
   },
   "newFtaModal": {
     "title": "Vytvořit strom poruch",
-    "namePlaceholder": "Název stromu poruch",
+    "namePlaceholder": "Systém",
     "eventPlaceholder": "Událost",
     "create": "Vytvořit strom poruch",
-    "noEvents": "Žádné události nenalezeny",
+    "noEvents": "Vašemu dotazu neodpovídají žádné výsledky.",
     "createEvent": "Vytvořit novou událost",
     "type": "Typ FTA události",
     "name": "Název události",
