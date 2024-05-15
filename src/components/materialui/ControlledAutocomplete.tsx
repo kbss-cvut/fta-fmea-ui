@@ -1,7 +1,8 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { Controller } from "react-hook-form";
-import { Autocomplete } from "@mui/material";
+import { Autocomplete, Grid, Link, Typography } from "@mui/material";
 import { simplifyReferences } from "@utils/utils";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   name: string;
@@ -10,6 +11,8 @@ interface Props {
   renderInput;
   control;
   onChangeCallback?;
+  onInputChangeCallback?;
+  onCreateEventClick?;
   renderOption?: any;
   defaultValue?: any;
   useSafeOptions?: boolean;
@@ -46,6 +49,8 @@ const ControlledAutocomplete = ({
   getOptionLabel,
   control,
   onChangeCallback,
+  onInputChangeCallback,
+  onCreateEventClick,
   renderOption,
   defaultValue,
   useSafeOptions = false,
@@ -54,6 +59,28 @@ const ControlledAutocomplete = ({
 }: Props) => {
   // TODO - refactor use SafeAutocomplete instead of the implementation here
   const [_options, _defaultValue, getOptionValue] = prepareOptions(useSafeOptions, options, defaultValue);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { t } = useTranslation();
+
+  const handleOnClick = (e) => {
+    onCreateEventClick(e);
+    setMenuOpen(false);
+  };
+
+  const renderNoOptions = () => {
+    return (
+      <Grid container alignItems="center" justifyContent="space-between">
+        <Grid item>
+          <Typography>{t("noEvents")}</Typography>
+        </Grid>
+        <Grid item>
+          <Link href="#" onClick={handleOnClick}>
+            {t("createEvent")}
+          </Link>
+        </Grid>
+      </Grid>
+    );
+  };
 
   return (
     <Controller
@@ -74,9 +101,15 @@ const ControlledAutocomplete = ({
           onBlur={onBlur}
           value={value}
           ref={ref}
+          onInputChange={(e, inputValue) => {
+            onInputChangeCallback(inputValue);
+          }}
+          open={menuOpen}
+          onClose={() => setMenuOpen(false)}
+          onOpen={() => setMenuOpen(true)}
+          noOptionsText={renderNoOptions()}
         />
       )}
-      // onChange={([, data]) => data}
       defaultValue={_defaultValue}
       name={name}
       control={control}

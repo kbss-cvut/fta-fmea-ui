@@ -21,6 +21,7 @@ export default defineConfig({
       "@services": "/src/services",
       "@models": "/src/models",
       "@oidc": "/src/misc/oidc",
+      "@contexts": "/src/contexts",
     },
   },
   test: {
