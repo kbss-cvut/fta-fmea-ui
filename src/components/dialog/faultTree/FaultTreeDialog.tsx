@@ -15,6 +15,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { schema as eventSchema } from "@components/dialog/faultEvent/FaultEventCreation.schema";
 import { FaultEventsReuseProvider } from "@hooks/useReusableFaultEvents";
 import { useTranslation } from "react-i18next";
+import { SELECTED_SYSTEM } from "@utils/constants";
 
 const FaultTreeDialog = ({ open, handleCloseDialog }) => {
   const { t } = useTranslation();
@@ -50,6 +51,8 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
         <DialogContent dividers>
           <TextField
             autoFocus
+            defaultValue={sessionStorage.getItem(SELECTED_SYSTEM) ? sessionStorage.getItem(SELECTED_SYSTEM) : null}
+            disabled={!!sessionStorage.getItem(SELECTED_SYSTEM)}
             margin="dense"
             label={t("newFtaModal.namePlaceholder")}
             name="faultTreeName"
