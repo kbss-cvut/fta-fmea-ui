@@ -57,8 +57,6 @@ const FaultEventCreation = ({ useFormMethods, eventReusing }: Props) => {
   };
 
   const handleOnCreateEventClick = (e: MouseEvent) => {
-    // e.preventDefault();
-    // e.stopPropagation();
     setShowCreateEvent(true);
   };
 
