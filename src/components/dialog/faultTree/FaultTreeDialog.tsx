@@ -52,7 +52,6 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
           <TextField
             autoFocus
             defaultValue={sessionStorage.getItem(SELECTED_SYSTEM) ? sessionStorage.getItem(SELECTED_SYSTEM) : null}
-            disabled={!!sessionStorage.getItem(SELECTED_SYSTEM)}
             margin="dense"
             label={t("newFtaModal.namePlaceholder")}
             name="faultTreeName"
