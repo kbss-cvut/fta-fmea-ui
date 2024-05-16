@@ -15,9 +15,11 @@ import { schema as eventSchema } from "@components/dialog/faultEvent/FaultEventC
 import { FaultEventsReuseProvider } from "@hooks/useReusableFaultEvents";
 import { useTranslation } from "react-i18next";
 import { SELECTED_SYSTEM } from "@utils/constants";
+import useStyles from "@components/dialog/faultTree/FaultTreeDialog.styles";
 
 const FaultTreeDialog = ({ open, handleCloseDialog }) => {
   const { t } = useTranslation();
+  const { classes } = useStyles();
 
   const [, addFaultTree] = useFaultTrees();
   const [processing, setIsProcessing] = useState(false);
@@ -25,6 +27,10 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
 
   const useFormMethods = useForm({ resolver: yupResolver(schema.concat(eventSchema)) });
   const { handleSubmit, register } = useFormMethods;
+
+  useEffect(() => {
+    setSystemName(sessionStorage.getItem(SELECTED_SYSTEM));
+  }, [sessionStorage.getItem(SELECTED_SYSTEM)]);
 
   const handleCreateFaultTree = async (values: any) => {
     setIsProcessing(true);
@@ -49,9 +55,9 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
       </DialogTitle>
       <DialogContent dividers>
         <TextField
-          autoFocus
+          className={classes.readOnly}
           value={systemName}
-          disabled={true}
+          aria-readonly={true}
           margin="dense"
           label={t("newFtaModal.namePlaceholder")}
           name="faultTreeName"

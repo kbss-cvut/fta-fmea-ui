@@ -116,6 +116,12 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
     window.dispatchEvent(new Event("storage"));
   };
 
+  const handleSystemDelete = () => {
+    setSelectedSystem("");
+    sessionStorage.setItem(SELECTED_SYSTEM, "");
+    window.dispatchEvent(new Event("storage"));
+  };
+
   return (
     <div>
       <MaterialAppBar position="fixed" elevation={0}>
@@ -154,11 +160,7 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
                   </TextField>
                   <Box className={classes.tooltipContainer}>
                     {selectedSystem && (
-                      <Tooltip
-                        title={t("common.delete")}
-                        className={classes.tooltip}
-                        onClick={() => setSelectedSystem("")}
-                      >
+                      <Tooltip title={t("common.delete")} className={classes.tooltip} onClick={handleSystemDelete}>
                         <CancelIcon />
                       </Tooltip>
                     )}
