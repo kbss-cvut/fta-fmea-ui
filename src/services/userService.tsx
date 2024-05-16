@@ -8,7 +8,7 @@ import {
 } from "@models/userModel";
 import axiosClient from "@services/utils/axiosUtils";
 import VocabularyUtils from "@utils/VocabularyUtils";
-import { JSONLD } from "@utils/constants";
+import { JSONLD, AUTH } from "@utils/constants";
 import { authHeaders } from "@services/utils/authUtils";
 import { handleServerError } from "@services/utils/responseUtils";
 
@@ -30,7 +30,9 @@ export const register = async (loginRequest: UserRegisterRequest): Promise<UserR
 
 export const login = async (loginRequest: UserLoginRequest): Promise<UserLoginResponse> => {
   try {
-    const response = await axiosClient.post<UserLoginResponse>("/auth/signin", loginRequest);
+    const response = await axiosClient.post<UserLoginResponse>("/auth/signin", loginRequest, {
+      headers: { "Content-type": AUTH },
+    });
 
     return response.data;
   } catch (e) {
