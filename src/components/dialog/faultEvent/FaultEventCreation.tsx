@@ -11,11 +11,11 @@ import { useTranslation } from "react-i18next";
 
 interface Props {
   useFormMethods: any;
-  eventReusing: boolean;
+  isRootEvent: boolean;
 }
 
 // TODO: remove ts-ignores and migrate to higher version of react-hook-form
-const FaultEventCreation = ({ useFormMethods, eventReusing }: Props) => {
+const FaultEventCreation = ({ useFormMethods, isRootEvent }: Props) => {
   const { classes } = useStyles();
   const { t } = useTranslation();
 
@@ -67,32 +67,30 @@ const FaultEventCreation = ({ useFormMethods, eventReusing }: Props) => {
           {`${t("newFtaModal.eventPlaceholder")}:`}
         </Typography>
 
-        {eventReusing && (
-          <ControlledAutocomplete
-            control={control}
-            name="existingEvent"
-            options={faultEvents}
-            onChangeCallback={(data: any) => setSelectedEvent(data)}
-            onInputChangeCallback={handleFilterOptions}
-            onCreateEventClick={handleOnCreateEventClick}
-            getOptionLabel={(option) => option.name}
-            renderInput={(params) => (
-              <TextField {...params} label={t("newFtaModal.eventPlaceholder")} variant="outlined" />
-            )}
-            defaultValue={null}
-          />
-        )}
+        <ControlledAutocomplete
+          control={control}
+          name="event"
+          options={faultEvents}
+          onChangeCallback={(data: any) => setSelectedEvent(data)}
+          onInputChangeCallback={handleFilterOptions}
+          onCreateEventClick={handleOnCreateEventClick}
+          getOptionLabel={(option) => option.name}
+          renderInput={(params) => (
+            <TextField {...params} label={t("newFtaModal.eventPlaceholder")} variant="outlined" {...register("name")} />
+          )}
+          defaultValue={null}
+        />
       </>
     );
   }
 
-  function renderCreateEventForm() {
+  function renderEventForm() {
     if (!showCreateEvent) {
       return;
     }
     return (
       <>
-        {!selectedEvent && filteredOptions.length === 0 && (
+        {!selectedEvent && filteredOptions.length === 0 && !isRootEvent && (
           <>
             <FormControl disabled={existingEventSelected} className={classes.formControl}>
               <InputLabel id="event-type-select-label">{t("newFtaModal.type")}</InputLabel>
@@ -126,17 +124,6 @@ const FaultEventCreation = ({ useFormMethods, eventReusing }: Props) => {
                 defaultValue={EventType.INTERMEDIATE}
               />
             </FormControl>
-
-            {/*TODO: sort out default value UI bug*/}
-            <TextField
-              margin="dense"
-              autoComplete="off"
-              id="name"
-              label={t("newFtaModal.name")}
-              fullWidth
-              disabled={existingEventSelected}
-              {...register("name")}
-            />
 
             {/*TODO: sort out default value UI bug*/}
             <TextField
@@ -224,7 +211,7 @@ const FaultEventCreation = ({ useFormMethods, eventReusing }: Props) => {
   return (
     <div className={classes.divForm}>
       {renderEventSelect()}
-      {renderCreateEventForm()}
+      {renderEventForm()}
     </div>
   );
 };

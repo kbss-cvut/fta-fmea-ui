@@ -6,6 +6,7 @@ const useStyles = makeStyles()((theme: Theme) => {
     readOnly: {
       opacity: "50%",
       border: "none",
+      pointerEvents: "none",
       "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
         borderColor: "rgba(0, 0, 0, 0.6)",
         borderWidth: 0.5,

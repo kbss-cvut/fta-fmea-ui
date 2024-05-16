@@ -11,7 +11,7 @@ import FaultEventCreation from "@components/dialog/faultEvent/FaultEventCreation
 import { useFaultTrees } from "@hooks/useFaultTrees";
 import { FaultTree } from "@models/faultTreeModel";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { schema as eventSchema } from "@components/dialog/faultEvent/FaultEventCreation.schema";
+import { rootEventSchema } from "@components/dialog/faultEvent/FaultEventCreation.schema";
 import { FaultEventsReuseProvider } from "@hooks/useReusableFaultEvents";
 import { useTranslation } from "react-i18next";
 import { SELECTED_SYSTEM } from "@utils/constants";
@@ -25,7 +25,7 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
   const [processing, setIsProcessing] = useState(false);
   const [systemName, setSystemName] = useState(sessionStorage.getItem(SELECTED_SYSTEM));
 
-  const useFormMethods = useForm({ resolver: yupResolver(schema.concat(eventSchema)) });
+  const useFormMethods = useForm({ resolver: yupResolver(schema.concat(rootEventSchema)) });
   const { handleSubmit, register } = useFormMethods;
 
   useEffect(() => {
@@ -37,8 +37,10 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
 
     const rootEvent = eventFromHookFormValues(values);
 
+    // TODO: Add full system from System Context Provider
     const faultTree = {
-      name: values.faultTreeName,
+      name: values.name,
+      system: { name: systemName },
       manifestingEvent: rootEvent,
     } as FaultTree;
 
@@ -65,10 +67,10 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
           fullWidth
           error={!!useFormMethods.formState.errors.faultTreeName}
           {...register("faultTreeName")}
-          helperText={useFormMethods.formState.errors.faultTreeName?.message}
+          helperText={!!useFormMethods.formState.errors.faultTreeName && t("newFtaModal.noSystemError")}
         />
         <FaultEventsReuseProvider>
-          <FaultEventCreation useFormMethods={useFormMethods} eventReusing />
+          <FaultEventCreation useFormMethods={useFormMethods} isRootEvent={true} />
         </FaultEventsReuseProvider>
       </DialogContent>
       <DialogActions>

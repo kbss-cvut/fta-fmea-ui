@@ -26,7 +26,8 @@
     "name": "Event name",
     "description": "Description",
     "probability": "Failure rate",
-    "gateType": "Gate type"
+    "gateType": "Gate type",
+    "noSystemError": "Select the System from the Navbar"
   },
   "newFmeaModal": {
     "title": "FMEA Aggregates",

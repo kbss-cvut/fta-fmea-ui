@@ -35,3 +35,7 @@ export const schema = Yup.object().shape({
     .min(0, "Sequence probability cannot be lower than 0")
     .max(1, "Sequence probability cannot be greater than 1"),
 });
+
+export const rootEventSchema = Yup.object().shape({
+  name: Yup.string().min(1, "Must be at least 1 character long").required("Event is mandatory"),
+});
