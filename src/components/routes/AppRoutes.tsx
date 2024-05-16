@@ -98,20 +98,29 @@ const AppRoutes = () => {
   return (
     <LoggedUserProvider>
       <BrowserRouter basename={ENVVariable.BASENAME} /*history={appHistory}*/>
-        <Navigation>
-          <Routes>
-            <Route path={ROUTES.OIDC_SIGNIN_CALLBACK} element={<OidcSignInCallback />} />
-            <Route path={ROUTES.OIDC_SILENT_CALLBACK} element={<OidcSilentCallback />} />
+        <Routes>
+          <Route path={ROUTES.OIDC_SIGNIN_CALLBACK} element={<OidcSignInCallback />} />
+          <Route path={ROUTES.OIDC_SILENT_CALLBACK} element={<OidcSilentCallback />} />
 
-            {routes.map((r) => {
-              if (isUsingOidcAuth()) {
-                return <Route path={r.path} element={<OidcAuthWrapper>{r.element}</OidcAuthWrapper>} />;
-              } else {
-                return <Route key={r.path} path={r.path} element={getElement(r.path, r.element)} />;
-              }
-            })}
-          </Routes>
-        </Navigation>
+          {routes.map((r) => {
+            if (isUsingOidcAuth()) {
+              return (
+                <Route
+                  path={r.path}
+                  element={
+                    <OidcAuthWrapper>
+                      <Navigation>{r.element}</Navigation>
+                    </OidcAuthWrapper>
+                  }
+                />
+              );
+            } else {
+              return (
+                <Route key={r.path} path={r.path} element={<Navigation>{getElement(r.path, r.element)}</Navigation>} />
+              );
+            }
+          })}
+        </Routes>
       </BrowserRouter>
     </LoggedUserProvider>
   );
