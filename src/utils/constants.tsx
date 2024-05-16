@@ -29,6 +29,7 @@ export const ENVVariable = {
 };
 
 export const JSONLD = "application/ld+json";
+export const AUTH = "multipart/form-data";
 
 export const STORAGE_KEYS = {
   USER: "loggedUser",
