@@ -103,7 +103,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
                         <Button
                           variant="contained"
                           className={classes.editButton}
-                          onClick={() => redirectToPath(routePath, faultTree.system.name)}
+                          onClick={() => redirectToPath(routePath, faultTree?.system?.name)}
                         >
                           {t("faultTreeOverviewTable.edit")}
                         </Button>

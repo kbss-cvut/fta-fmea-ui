@@ -6,6 +6,10 @@ const useStyles = makeStyles()((theme: Theme) => ({
     fontWeight: "500",
     color: "#00000080",
   },
+  labelRow: {
+    display: "flex",
+    flexDirection: "row",
+  },
 }));
 
 export default useStyles;

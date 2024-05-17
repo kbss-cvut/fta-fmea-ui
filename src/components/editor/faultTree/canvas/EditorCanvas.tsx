@@ -264,6 +264,7 @@ const EditorCanvas = ({
             shapeToolData={sidebarSelectedEvent}
             onEventUpdated={onEventUpdated}
             refreshTree={refreshTree}
+            rootIri={rootEvent?.iri}
           />
         )}
         {showTable && (
