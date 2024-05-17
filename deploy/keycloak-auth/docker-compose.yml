@@ -78,7 +78,7 @@ services:
       - "7200"
     restart: always
     volumes:
-      - ../shared/db-server/init-data:/root/graphdb-import:ro
+      - ../shared/db-server/import:/root/graphdb-import:ro
       - db-server:/opt/graphdb/home
 
   auth-server-db:
@@ -111,15 +111,15 @@ services:
       DB_PASSWORD: keycloak
       DB_SCHEMA: "public"
       DB_SERVER_URL: "http://db-server:7200"
-      DB_SERVER_REPOSITORY_ID: "record-manager-app"
+      DB_SERVER_REPOSITORY_ID: "fta-fmea"
       REPOSITORY_LANGUAGE: "en"
-      VOCABULARY_USER_TYPE: "http://onto.fel.cvut.cz/ontologies/record-manager/user"
+      VOCABULARY_USER_TYPE: "http://xmlns.com/foaf/0.1/Person"
       VOCABULARY_USER_FIRST_NAME: "http://xmlns.com/foaf/0.1/firstName"
       VOCABULARY_USER_LAST_NAME: "http://xmlns.com/foaf/0.1/lastName"
       VOCABULARY_USER_USERNAME: "http://xmlns.com/foaf/0.1/accountName"
       VOCABULARY_USER_EMAIL: "http://xmlns.com/foaf/0.1/mbox"
       ADD_ACCOUNTS: false
-      REALM_ID: "fta-fmea-tool"
+      REALM_ID: "fta-fmea"
     expose:
       - "8080"
     volumes:
