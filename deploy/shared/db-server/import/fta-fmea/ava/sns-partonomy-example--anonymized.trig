@@ -1918,7 +1918,8 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-830482748>;
     :name "Filter element"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "2a"@cs .
+    :stock "stock-2";
+    :schematic-designation "2a" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1061356481>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-937219359>,
@@ -1966,7 +1967,8 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1061356481>;
     :name "Control and safety valve"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "Cd5"@cs .
+    :stock "stock-3";
+    :schematic-designation "Cd5" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance163017286>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1557205961>;
@@ -1997,7 +1999,8 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-658897705>;
     :name "Expansion joint"@cs;
     :quantity "2"^^xsd:int;
-    :schematic-designation "Ca2"@cs, "Ca20"@cs .
+    :stock "stock-0";
+    :schematic-designation "Ca2", "Ca20" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance159998674>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance311271894>;
@@ -2005,7 +2008,8 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1061356481>;
     :name "Regulator"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "Cd1"@cs .
+    :stock "stock-5";
+    :schematic-designation "Cd1" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance551771>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1558137296>;
@@ -2028,7 +2032,8 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1061356481>;
     :name "Control valve"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "Cd3"@cs .
+    :stock "stock-4";
+    :schematic-designation "Cd3" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance559072742>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance999467077>;
@@ -2036,7 +2041,8 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-658897705>;
     :name "Air flow limiter"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "Ca14"@cs .
+    :stock "stock-1";
+    :schematic-designation "Ca14" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-969306560>
     :has-part-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1061356481>,
@@ -4301,24 +4307,7 @@
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1910687428>
     :is-manifestation-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1977758075> .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance1735079856>
-    :stock "stock-2"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance7561977>
-    :stock "stock-5"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-932600415>
-    :stock "stock-3"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance2047499009>
-    :stock "stock-1"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance881715849>
-    :stock "stock-0"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-43154555>
-    :stock "stock-4"@cs .
+
 }
 
 <http://context-with-ata-sns-partonomy-of--acm1> {
