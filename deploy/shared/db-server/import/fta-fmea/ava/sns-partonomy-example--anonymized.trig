@@ -12,136 +12,6 @@
 @prefix seq: <http://krizik.felk.cvut.cz/ontologies/2008/6/sequences.owl#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 
-<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance1443295929> {
-  <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance720425674> a diag:rectangle;
-    diag:y 0.0E0;
-    diag:height 1.0E2;
-    diag:x 2.8E2;
-    diag:width 1.0E2 .
-  
-  <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance-439695733> a diag:rectangle;
-    diag:y 1.9E2;
-    diag:height 8.0E1;
-    diag:x 1.1E2;
-    diag:width 8.0E1 .
-  
-  <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance-421231482> a diag:rectangle;
-    diag:y 1.9E2;
-    diag:height 8.0E1;
-    diag:x 2.6E2;
-    diag:width 8.0E1 .
-  
-  <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance429145967> a diag:rectangle;
-    diag:y 1.8E2;
-    diag:height 8.0E1;
-    diag:x 3.9E2;
-    diag:width 8.0E1 .
-  
-  <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance1945453232> a diag:rectangle;
-    diag:y 1.8E2;
-    diag:height 8.0E1;
-    diag:x 5.5E2;
-    diag:width 8.0E1 .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853>
-    a :fault-event, :event;
-    diag:has-rectangle <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance720425674>;
-    :fault-event-type "INTERMEDIATE"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-741532472>
-    a :fault-event, :event;
-    diag:has-rectangle <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance-439695733>;
-    :fault-event-type "BASIC"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance820186229>
-    a :fault-event, :event;
-    diag:has-rectangle <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance-421231482>;
-    :fault-event-type "BASIC"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance621415126>
-    a :fault-event, :event;
-    diag:has-rectangle <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance429145967>;
-    :fault-event-type "BASIC"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-650995087>
-    a :fault-event, :event;
-    diag:has-rectangle <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance1945453232>;
-    :fault-event-type "BASIC"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance1443295929>
-    a :fault-tree;
-    :has-scenario <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type/instance254339362>,
-      <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type/instance339929426>,
-      <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type/instance1697015416>,
-      <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type/instance-565130254>,
-      <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type/instance879464893> .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1204570762>
-    a :fault-event;
-    diag:has-rectangle <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance1338098093>;
-    :fault-event-type "EXTERNAL"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance1338098093> a diag:rectangle;
-    diag:y 1.8E2;
-    diag:height 1.0E2;
-    diag:x 6.9E2;
-    diag:width 1.0E2 .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type/instance254339362>
-    a :fault-event-scenario-type;
-    :has-part <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance820186229> .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type/instance339929426>
-    a :fault-event-scenario-type;
-    :has-part <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1204570762> .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type/instance1697015416>
-    a :fault-event-scenario-type;
-    :has-part <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-741532472> .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type/instance-565130254>
-    a :fault-event-scenario-type;
-    :has-part <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance621415126> .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type/instance879464893>
-    a :fault-event-scenario-type;
-    :has-part <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-650995087> .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_2>
-    seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance621415126>;
-    seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_3> .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_3>
-    seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1369205353>;
-    seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_4> .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_4>
-    seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-650995087>;
-    seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_5> .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_0>
-    seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-741532472>;
-    seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_1> .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_1>
-    seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance820186229>;
-    seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_2> .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_5>
-    seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1204570762> .
-}
-
-<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance22467827479333998578> {
-  <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance-1583426105> a diag:rectangle .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance22467827479333998578>
-    a :fault-tree .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1768303591>
-    a :fault-event;
-    diag:has-rectangle <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance-1583426105>;
-    :fault-event-type "INTERMEDIATE"@cs .
-}
 
 <http://context-with-ata-sns-partonomy-of--acm1> {
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance360155541>
@@ -453,593 +323,593 @@
 <http://context-with-general-ATA-SNS-partonomy> {
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance819579082>
     a :ata-system;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance935835891>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance819579082> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance410014156>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance819579082> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-634975277>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-232463833>
     a :ata-system;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1724392677>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-232463833> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-467446990>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-232463833> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1896505248>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance252337775>
     a :ata-system;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1791523309>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance252337775> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-722203640>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance252337775> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1549443209>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance585687270>
     a :ata-system;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1381065206>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance585687270> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-651593535>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance585687270> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-149503570>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-586668207>
     a :ata-system;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1343252598>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-586668207> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1146480567>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-586668207> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1864419774>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance1798048435>
     a :ata-system;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance205949613>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance1798048435> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance2016671068>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance1798048435> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1543309475>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance1574134076>
     a :ata-system;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance890705022>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance1574134076> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1016511837>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance1574134076> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1746835360>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance745594841>
     a :ata-system;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance379547023>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance745594841> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1902301118>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance745594841> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1467785226>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance1448071199>
     a :ata-system;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1038281970>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance1448071199> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1049014593>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance1448071199> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance51607433>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-1142191030>
     a :ata-system;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance232438913>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-1142191030> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-846626989>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-1142191030> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-523868029>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance628057022>
     a :ata-system;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1216699837>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance628057022> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-543787999>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance628057022> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance771897842>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance894563983>
     a :ata-system;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance202149845>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance894563983> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1663238237>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance894563983> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1033935702>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-190116538>
     a :ata-system;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance323323363>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-190116538> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1399072591>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-190116538> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1110781195>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-773478968>
     a :ata-system;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-898369578>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-773478968> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-900905786>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-773478968> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-326713737>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-1907971017>
     a :ata-system;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-381220629>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-1907971017> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-777586498>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-1907971017> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1295295515>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-1400709825> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1466407006>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-1907971017> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1461681610>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance1526992149> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance2041200548>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-1907971017> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1103060453>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-202390455> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1113514673>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-1907971017> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1529495563>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance239121967> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1164779336>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-1907971017> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance2025772814>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance168816265> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-805223488>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-1907971017> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1808500646>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance656265402> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-294396561>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance1448071199> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-644153017>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-586668207> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1346896084>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-586668207> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance2065081589>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-774792090>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance252337775> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1651387842>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-1142191030> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1929963169>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-1907971017> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-2098526416>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-1907971017> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-559204626>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance22331132> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance2042327453>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance585687270> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-388116780>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance745594841> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-46108466>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance580756090>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance12112865>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance585687270> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance891808586>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance894563983> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1751787901>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance1074812370> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1234649683>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-1907971017> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance804181601>
     a :ata-system;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance650444496>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-259254011>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance1798048435> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1251624873>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance1798048435> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1696233056>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance2042134183>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance894563983> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-658039722>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1209595685>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance819579082> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1968500030>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance819579082> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1874594912>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1297330040>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-190116538> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1067172579>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-232463833> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1651029697>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-232463833> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance90233910>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance1574134076> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1386657327>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance1574134076> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1255423883>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance744077359>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-773478968> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1639606576>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-773478968> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-2030527494>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance146588133>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1263743650>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance498166154>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance745594841> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-995661925>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance1448071199> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-132780823>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1674263380>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-1907971017> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1249097369>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance505546089> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-2006662175>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-1321973052> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-401560335>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance628057022> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1425972621>
     a :function;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance628057022> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1340852324>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-655445588>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-1907971017> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance720503402>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-1556744275> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-23630258>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-1907971017> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-564117211>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-190116538> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-2062053529>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-1142191030> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1086400732>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance147165645>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-1907971017> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1821597803>
     a :fault-event-type;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-2123349218> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1691931815>
     a :failure-mode;
-    :has-type-category "ROLE"@cs;
+    :has-type-category "ROLE";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance252337775> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance-655700953>
     a :ata-system;
-    :has-type-category "ROLE"@cs .
+    :has-type-category "ROLE" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-1556744275>
     a :failure-rate;
@@ -1466,35 +1336,35 @@
 <http://context-with-independent-items> {
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1940998199>
     a :function;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-504406190> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-504406190>
     a :reusable-system;
-    :has-type-category "KIND"@cs .
+    :has-type-category "KIND" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance128373210>
     a :fault-event-type;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance757974020> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1544468137>
     a :function;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance1735079856> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance1735079856>
     a :reusable-system;
-    :has-type-category "KIND"@cs .
+    :has-type-category "KIND" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-854852118>
     a :function;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance7561977> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance7561977>
     a :reusable-system;
-    :has-type-category "KIND"@cs .
+    :has-type-category "KIND" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-429646261>
     a :failure-rate-estimate;
@@ -1505,30 +1375,30 @@
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance726998537>
     a :reusable-system;
-    :has-type-category "KIND"@cs .
+    :has-type-category "KIND" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance516302219>
     a :function;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance726998537> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance52504618>
     a :fault-event-type;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-2045406992> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-751544437>
     a :function;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-1245068824> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-1245068824>
     a :reusable-system;
-    :has-type-category "KIND"@cs .
+    :has-type-category "KIND" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1811343322>
     a :fault-event-type;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-1012046966> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-1012046966>
@@ -1537,16 +1407,16 @@
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-470700924>
     a :failure-mode;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance726998537> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance112845169>
     a :reusable-system;
-    :has-type-category "KIND"@cs .
+    :has-type-category "KIND" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1712430198>
     a :fault-event-type;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-1501026178> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-1501026178>
@@ -1555,60 +1425,60 @@
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance951425346>
     a :failure-mode;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-764366725> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance720345097>
     a :function;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-764366725> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-764366725>
     a :reusable-system;
-    :has-type-category "KIND"@cs .
+    :has-type-category "KIND" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-932600415>
     a :reusable-system;
-    :has-type-category "KIND"@cs .
+    :has-type-category "KIND" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1516402496>
     a :failure-mode;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-504406190> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-492477134>
     a :fault-event-type;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-1026731843> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance236042079>
     a :failure-mode;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance112845169> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1332503215>
     a :function;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance112845169> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-2002538833>
     a :fault-event-type;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-999129488> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1490479604>
     a :failure-mode;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-932600415> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1943807630>
     a :function;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-932600415> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-2073967891>
     a :fault-event-type;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance934578169> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-1867057215>
@@ -1617,78 +1487,78 @@
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1254662942>
     a :fault-event-type;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance1447653863> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance138397962>
     a :reusable-system;
-    :has-type-category "KIND"@cs .
+    :has-type-category "KIND" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1620922571>
     a :failure-mode;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance2047499009> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-2236363>
     a :function;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance2047499009> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance2047499009>
     a :reusable-system;
-    :has-type-category "KIND"@cs .
+    :has-type-category "KIND" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1240133490>
     a :failure-mode;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-161945269> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance2047061560>
     a :function;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-161945269> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1505840276>
     a :fault-event-type;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance1337454540> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-161945269>
     a :reusable-system;
-    :has-type-category "KIND"@cs .
+    :has-type-category "KIND" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1114294451>
     a :failure-mode;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance881715849> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance21360244>
     a :function;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance881715849> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance912448265>
     a :fault-event-type;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-1278931597> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance881715849>
     a :reusable-system;
-    :has-type-category "KIND"@cs .
+    :has-type-category "KIND" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance2107853222>
     a :function;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance138397962> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1710970770>
     a :failure-mode;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance138397962> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-561186659>
     a :fault-event-type;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance759227259> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance934578169>
@@ -1697,12 +1567,12 @@
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance452402232>
     a :failure-mode;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance7561977> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1614446502>
     a :fault-event-type;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance519161677> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-496400960>
@@ -1711,35 +1581,35 @@
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-1502001570>
     a :reusable-system;
-    :has-type-category "KIND"@cs .
+    :has-type-category "KIND" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance2021720406>
     a :fault-event-type;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-496400960> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance363801371>
     a :failure-mode;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-1245068824> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-43154555>
     a :reusable-system;
-    :has-type-category "KIND"@cs .
+    :has-type-category "KIND" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1622148079>
     a :function;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-43154555> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1977758075>
     a :failure-mode;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-43154555> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1910687428>
     a :fault-event-type;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance2092527582> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance220236658>
@@ -1779,7 +1649,7 @@
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1032583503>
     a :function;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-1502001570> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance1541317767>
@@ -1804,7 +1674,7 @@
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1953775521>
     a :failure-mode;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance1735079856> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-1278931597>
@@ -1813,7 +1683,7 @@
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-2017057164>
     a :failure-mode;
-    :has-type-category "KIND"@cs;
+    :has-type-category "KIND";
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-1502001570> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-1678872759>
@@ -1851,64 +1721,22 @@
     :has-prediction <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance220236658> .
 }
 
-{
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/user/instance211914657> a
-      :user .
-}
-
-<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance10046202631379005157> {
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1105488449>
-    a :fault-event;
-    diag:has-rectangle <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance451419293>;
-    :fault-event-type "INTERMEDIATE"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance451419293> a diag:rectangle .
-}
-
-<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance10054247680522007027> {
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance10054247680522007027>
-    a :fault-tree .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-1482768990>
-    a :fault-event;
-    diag:has-rectangle <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance-801388990>;
-    :fault-event-type "INTERMEDIATE"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance-801388990> a diag:rectangle .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance936733276>
-    a :fault-event;
-    diag:has-rectangle <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance-693534323>;
-    :fault-event-type "INTERMEDIATE"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance-693534323> a diag:rectangle .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-1482768990-SEQ_0>
-    seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance936733276> .
-}
-
-<http://context-with-users> {
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/user/test-user-1> a foaf:Person .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/user/test-user-2> a foaf:Person .
-}
-
 <http://context-with-ata-sns-partonomy-of--acm1> {
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-907552943>
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance559072742>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-02 Air flow limiter "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance773539349>
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1061356481>;
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance360155541>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.1. Tlak v kabině failure"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1063835168>
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-397122061>;
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1671630670>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-30-02 Control valve"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-151322047>
@@ -1918,7 +1746,8 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-830482748>;
     :name "Filter element"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "2a"@cs .
+    :stock "stock-2";
+    :schematic-designation "2a" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1061356481>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-937219359>,
@@ -1937,7 +1766,7 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-830482748>;
     :name "Washer"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "v TP pozice 1c"@cs .
+    :schematic-designation "v TP pozice 1c" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-830482748>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-229115823>;
@@ -1950,7 +1779,7 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-658897705>;
     :name "Filter"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "Ca15"@cs .
+    :schematic-designation "Ca15" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1715702686>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1393314535>;
@@ -1958,7 +1787,7 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-151322047>;
     :name "Gasket as part of filter elmnt or seprtly"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "v TP pozice 2b"@cs .
+    :schematic-designation "v TP pozice 2b" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1653894865>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1990980262>;
@@ -1966,7 +1795,8 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1061356481>;
     :name "Control and safety valve"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "Cd5"@cs .
+    :stock "stock-3";
+    :schematic-designation "Cd5" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance163017286>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1557205961>;
@@ -1981,7 +1811,7 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-830482748>;
     :name "Nut self-locking"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "v TP pozice 1d"@cs .
+    :schematic-designation "v TP pozice 1d" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance416203996>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance253165227>;
@@ -1989,7 +1819,7 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-830482748>;
     :name "Gasket is not part of elmnt"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "v TP pozice 1b"@cs .
+    :schematic-designation "v TP pozice 1b" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance307546237>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-34196369>;
@@ -1997,7 +1827,8 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-658897705>;
     :name "Expansion joint"@cs;
     :quantity "2"^^xsd:int;
-    :schematic-designation "Ca2"@cs, "Ca20"@cs .
+    :stock "stock-0";
+    :schematic-designation "Ca2", "Ca20" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance159998674>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance311271894>;
@@ -2005,7 +1836,8 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1061356481>;
     :name "Regulator"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "Cd1"@cs .
+    :stock "stock-5";
+    :schematic-designation "Cd1" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance551771>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1558137296>;
@@ -2020,7 +1852,7 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-830482748>;
     :name "V-band clamp"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "v TP pozice 1e"@cs .
+    :schematic-designation "v TP pozice 1e" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-397122061>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1063835168>;
@@ -2028,7 +1860,8 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1061356481>;
     :name "Control valve"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "Cd3"@cs .
+    :stock "stock-4";
+    :schematic-designation "Cd3" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance559072742>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance999467077>;
@@ -2036,7 +1869,8 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-658897705>;
     :name "Air flow limiter"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "Ca14"@cs .
+    :stock "stock-1";
+    :schematic-designation "Ca14" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-969306560>
     :has-part-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1061356481>,
@@ -2057,148 +1891,148 @@
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-289256347>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-805627681>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-Filter element"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-937219359>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance-921443529>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.4. Tlak v kabině failure"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-2017571939>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-2140642810>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-Washer"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance389527534>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance653829124>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.3. Tlak v kabině failure"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1393314535>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1102847940>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-Filter element-Gasket as part of filter elmnt or seprtly"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1990980262>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1283918919>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-30-03 Control and safety valve"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-820897410>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1180657882>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-Nut self-locking"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance253165227>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-814074696>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-Gasket is not part of elmnt"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1557205961>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance532312110>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-30-03-Gasket"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-34196369>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance184033946>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-01 Expansion joint"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1328013473>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance651121262>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.5. Tlak v kabině failure"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance311271894>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance586401371>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-30-01 Regulator"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1777597993>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance11399630>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.2. Tlak v kabině failure"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1558137296>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance2071072846>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-30-02-Gasket"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-246750437>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-125516843>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-V-band clamp"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-229115823>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1390545173>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03 Filter"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1315394055>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance1916334670>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.6. Tlak v kabině failure"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance999467077>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1331233416>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-02 Air flow limiter"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance76103648>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-Filter element "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-753455770>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "1.1 Regulace tlaku v kabině"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1559877758>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-Washer "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1490391099>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-Filter element-Gasket as part of filter elmnt or seprtly "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-2126965553>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-30-03 Control and safety valve "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance957251510>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-Nut self-locking "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1237206943>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-Gasket is not part of elmnt "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-944858734>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-30-03-Gasket "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance165014983>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-01 Expansion joint "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-303382636>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-30-01 Regulator "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-709004757>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-30-02-Gasket "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance599104701>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-V-band clamp "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1863763931>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03 Filter "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1991698380>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-30-02 Control valve "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance360155541>
@@ -2395,356 +2229,356 @@
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance410014156>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-634975277>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-01 Expansion joint"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance935835891> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-467446990>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1896505248>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-02 Air flow limiter"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1724392677> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-722203640>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1549443209>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03 Filter"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1791523309> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-651593535>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-149503570>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-Filter element"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1381065206> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1146480567>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1864419774>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-Filter element-Gasket as part of filter elmnt or seprtly"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1343252598> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance2016671068>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1543309475>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-Gasket is not part of elmnt"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance205949613> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1016511837>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1746835360>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-V-band clamp"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance890705022> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1902301118>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1467785226>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-Washer"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance379547023> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1049014593>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance51607433>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-Nut self-locking"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1038281970> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-846626989>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-523868029>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-30-01 Regulator"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance232438913> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-543787999>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance771897842>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-30-02 Control valve"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1216699837> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1663238237>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1033935702>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-30-02-Gasket"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance202149845> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1399072591>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1110781195>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-30-03 Control and safety valve"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance323323363> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-900905786>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-326713737>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-30-03-Gasket"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-898369578> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-777586498>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1295295515>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.2. Tlak v kabině"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-381220629> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1466407006>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1461681610>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.4. Tlak v kabině"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-381220629> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance2041200548>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1103060453>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.3. Tlak v kabině"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-381220629> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1113514673>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1529495563>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.1. Tlak v kabině"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-381220629> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1164779336>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance2025772814>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.6. Tlak v kabině"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-381220629> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-805223488>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1808500646>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.5. Tlak v kabině"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-381220629> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-644153017>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance2065081589>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-Filter element-Gasket as part of filter elmnt or seprtly"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1346896084> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1929963169>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-559204626>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.6. Tlak v kabině"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-2098526416> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance12112865>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance580756090>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-Filter element"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance2042327453> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1234649683>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1751787901>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.1. Tlak v kabině"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-2098526416> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-259254011>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance650444496>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-Gasket is not part of elmnt"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1251624873> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance2042134183>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-658039722>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-30-02-Gasket"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance891808586> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1209595685>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1874594912>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-01 Expansion joint"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1968500030> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1067172579>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1696233056>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-02 Air flow limiter"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1651029697> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance90233910>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1255423883>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-V-band clamp"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1386657327> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1639606576>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-2030527494>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-30-03-Gasket"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance744077359> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance498166154>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance146588133>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-Washer"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-388116780> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-995661925>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-132780823>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-Nut self-locking"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-294396561> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1674263380>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1249097369>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.2. Tlak v kabině"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-2098526416> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-401560335>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1340852324>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-30-02 Control valve"@cs;
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1425972621> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-655445588>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance720503402>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.3. Tlak v kabině"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-23630258>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-2006662175>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.5. Tlak v kabině"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-564117211>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1263743650>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-30-03 Control and safety valve"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-2062053529>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1086400732>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-30-01 Regulator"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance147165645>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1821597803>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.4. Tlak v kabině"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1691931815>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-46108466>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03 Filter"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance935835891>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-01 Expansion joint "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1724392677>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-02 Air flow limiter "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1791523309>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03 Filter "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1381065206>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-Filter element "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1343252598>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-Filter element-Gasket as part of filter elmnt or seprtly "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance205949613>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-Gasket is not part of elmnt "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance890705022>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-V-band clamp "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance379547023>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-Washer "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1038281970>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-Nut self-locking "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance232438913>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-30-01 Regulator "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1216699837>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-30-02 Control valve "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance202149845>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-30-02-Gasket "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance323323363>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-30-03 Control and safety valve "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-898369578>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-30-03-Gasket "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-381220629>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "1.1 Regulace tlaku v kabině"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-294396561>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-Nut self-locking "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1346896084>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-Filter element-Gasket as part of filter elmnt or seprtly "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-774792090>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03 Filter "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1651387842>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-30-01 Regulator "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-2098526416>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "1.1 Regulace tlaku v kabině"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance2042327453>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-Filter element "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-388116780>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-Washer "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance891808586>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-30-02-Gasket "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1251624873>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-Gasket is not part of elmnt "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1968500030>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-01 Expansion joint "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1297330040>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-30-03 Control and safety valve "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1651029697>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-02 Air flow limiter "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1386657327>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-V-band clamp "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance744077359>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-30-03-Gasket "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1425972621>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-30-02 Control valve "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-634975277>
@@ -2886,7 +2720,7 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1257887458>;
     :name "Nut self-locking"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "v TP pozice 1d"@cs .
+    :schematic-designation "v TP pozice 1d" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1257887458>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-2112200574>;
@@ -2899,7 +2733,7 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1966820685>;
     :name "Filter"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "Ca15"@cs .
+    :schematic-designation "Ca15" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance1478457396>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1968708059>;
@@ -2907,7 +2741,7 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1311053700>;
     :name "Regulator"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "Cd1"@cs .
+    :schematic-designation "Cd1" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1311053700>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1743395097>,
@@ -2929,7 +2763,7 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1257887458>;
     :name "Washer"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "v TP pozice 1c"@cs .
+    :schematic-designation "v TP pozice 1c" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance777182177>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1784865885>;
@@ -2938,7 +2772,7 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1257887458>;
     :name "Filter element"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "2a"@cs .
+    :schematic-designation "2a" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-437901851>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-679254928>;
@@ -2953,7 +2787,7 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1966820685>;
     :name "Air flow limiter"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "Ca14"@cs .
+    :schematic-designation "Ca14" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-2096795169>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1478044760>;
@@ -2962,7 +2796,7 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1311053700>;
     :name "Control and safety valve"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "Cd5"@cs .
+    :schematic-designation "Cd5" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance1267074096>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-2121684926>;
@@ -2970,7 +2804,7 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1257887458>;
     :name "V-band clamp"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "v TP pozice 1e"@cs .
+    :schematic-designation "v TP pozice 1e" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1749649260>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-646340930>;
@@ -2978,7 +2812,7 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1257887458>;
     :name "Gasket is not part of elmnt"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "v TP pozice 1b"@cs .
+    :schematic-designation "v TP pozice 1b" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance65772725>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-321532111>;
@@ -2986,7 +2820,7 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1966820685>;
     :name "Expansion joint"@cs;
     :quantity "2"^^xsd:int;
-    :schematic-designation "Ca2"@cs, "Ca20"@cs .
+    :schematic-designation "Ca2", "Ca20" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-615691490>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1528420758>;
@@ -2995,7 +2829,7 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1311053700>;
     :name "Control valve"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "Cd3"@cs .
+    :schematic-designation "Cd3" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance1821629922>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1320964766>;
@@ -3003,7 +2837,7 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance777182177>;
     :name "Gasket as part of filter elmnt or seprtly"@cs;
     :quantity "1"^^xsd:int;
-    :schematic-designation "v TP pozice 2b"@cs .
+    :schematic-designation "v TP pozice 2b" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance1055916804>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1889214097>;
@@ -3031,162 +2865,162 @@
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1743395097>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance2135244306>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.6. Tlak v kabině failure"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-2112200574>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance137171415>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03 Filter"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1784865885>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1234202425>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-Filter element"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance632193843>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1414959396>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-02 Air flow limiter"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-2121684926>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-778303158>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-V-band clamp"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-646340930>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance282926285>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-Gasket is not part of elmnt"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-321532111>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1184242151>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-01 Expansion joint"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1140450275>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1019816528>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-Washer"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1729948782>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance-2108057169>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.1. Tlak v kabině failure"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1478044760>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-926287169>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-30-03 Control and safety valve"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-679254928>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1127670258>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-30-02-Gasket"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1155927783>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance781762503>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-Nut self-locking"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1416935368>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance817485118>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.5. Tlak v kabině failure"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1528420758>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance294584053>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-30-02 Control valve"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1320964766>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance694231305>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-10-03-Filter element-Gasket as part of filter elmnt or seprtly"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1968708059>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1240431299>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-30-01 Regulator"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-2053854705>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance1798370202>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.3. Tlak v kabině failure"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1299277549>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance-372714159>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.4. Tlak v kabině failure"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1889214097>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1350132077>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode of 21-30-03-Gasket"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-823320347>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance1587324925>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Failure Mode - FC_1.2. Tlak v kabině failure"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1384665236>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-Nut self-locking "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance963743097>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03 Filter "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-38541009>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-30-01 Regulator "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1766233519>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "1.1 Regulace tlaku v kabině"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1929776113>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-Washer "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-117209959>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-Filter element "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance621858352>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-30-02-Gasket "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1199022137>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-02 Air flow limiter "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1575962615>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-30-03 Control and safety valve "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-715845205>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-V-band clamp "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance427303152>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-Gasket is not part of elmnt "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1716786147>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-01 Expansion joint "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1833317932>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-30-02 Control valve "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-521426367>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-10-03-Filter element-Gasket as part of filter elmnt or seprtly "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1668333045>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of 21-30-03-Gasket "@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance2135244306>
@@ -3255,210 +3089,210 @@
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1516402496>;
     :has-function <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1940998199>;
     :name "Nut self-locking"@cs;
-    :part-number "pn-12"@cs .
+    :part-number "pn-12" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance1735079856>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1953775521>;
     :has-function <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1544468137>;
     :name "Filter"@cs;
-    :part-number "pn-2"@cs .
+    :part-number "pn-2" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance7561977>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance452402232>;
     :has-function <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-854852118>;
     :name "Regulator"@cs;
-    :part-number "pn-0"@cs .
+    :part-number "pn-0" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance726998537>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-470700924>;
     :has-function <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance516302219>;
     :name "Washer"@cs;
-    :part-number "pn-10"@cs .
+    :part-number "pn-10" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-1245068824>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance363801371>;
     :has-function <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-751544437>;
     :name "Gasket"@cs;
-    :part-number "pn-6"@cs .
+    :part-number "pn-6" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance112845169>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance236042079>;
     :has-function <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1332503215>;
     :name "Gasket as part of filter elmnt or seprtly"@cs;
-    :part-number "pn-11"@cs .
+    :part-number "pn-11" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-764366725>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance951425346>;
     :has-function <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance720345097>;
     :name "Gasket is not part of elmnt"@cs;
-    :part-number "pn-1"@cs .
+    :part-number "pn-1" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-932600415>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1490479604>;
     :has-function <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1943807630>;
     :name "Control and safety valve"@cs;
-    :part-number "pn-9"@cs .
+    :part-number "pn-9" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance138397962>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1710970770>;
     :has-function <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance2107853222>;
     :name "Gasket"@cs;
-    :part-number "pn-7"@cs .
+    :part-number "pn-7" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance2047499009>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1620922571>;
     :has-function <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-2236363>;
     :name "Air flow limiter"@cs;
-    :part-number "pn-4"@cs .
+    :part-number "pn-4" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-161945269>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1240133490>;
     :has-function <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance2047061560>;
     :name "V-band clamp"@cs;
-    :part-number "pn-8"@cs .
+    :part-number "pn-8" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance881715849>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1114294451>;
     :has-function <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance21360244>;
     :name "Expansion joint"@cs;
-    :part-number "pn-3"@cs .
+    :part-number "pn-3" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-1502001570>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-2017057164>;
     :has-function <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1032583503>;
     :name "Filter element"@cs;
-    :part-number "pn-5"@cs .
+    :part-number "pn-5" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-43154555>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1977758075>;
     :has-function <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1622148079>;
     :name "Control valve"@cs;
-    :part-number "pn-13"@cs .
+    :part-number "pn-13" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-470700924>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1811343322>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Washer(pn-10) failure mode"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance951425346>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1712430198>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Gasket is not part of elmnt(pn-1) failure mode"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1516402496>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-492477134>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Nut self-locking(pn-12) failure mode"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance236042079>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-2002538833>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Gasket as part of filter elmnt or seprtly(pn-11) failure mode"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1490479604>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-2073967891>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Control and safety valve(pn-9) failure mode"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1620922571>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1254662942>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Air flow limiter(pn-4) failure mode"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1240133490>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1505840276>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "V-band clamp(pn-8) failure mode"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1114294451>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance912448265>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Expansion joint(pn-3) failure mode"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1710970770>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-561186659>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Gasket(pn-7) failure mode"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance452402232>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1614446502>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Regulator(pn-0) failure mode"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance363801371>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance2021720406>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Gasket(pn-6) failure mode"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1977758075>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1910687428>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Control valve(pn-13) failure mode"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1953775521>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance52504618>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Filter(pn-2) failure mode"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-2017057164>
     :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance128373210>;
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Filter element(pn-5) failure mode"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1940998199>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of Nut self-locking(pn-12)"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1544468137>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of Filter(pn-2)"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-854852118>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of Regulator(pn-0)"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance516302219>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of Washer(pn-10)"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-751544437>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of Gasket(pn-6)"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance720345097>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of Gasket is not part of elmnt(pn-1)"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1332503215>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of Gasket as part of filter elmnt or seprtly(pn-11)"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1943807630>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of Control and safety valve(pn-9)"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-2236363>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of Air flow limiter(pn-4)"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance2047061560>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of V-band clamp(pn-8)"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance21360244>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of Expansion joint(pn-3)"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance2107853222>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of Gasket(pn-7)"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1622148079>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of Control valve(pn-13)"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1032583503>
-    :behavior-type "AtomicBehavior"@cs;
+    :behavior-type "AtomicBehavior";
     :name "Function of Filter element(pn-5)"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance128373210>
@@ -3507,138 +3341,30 @@
     :name "Failure of pn-13"@cs .
 }
 
-<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance1443295929> {
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853>
-    :has-child <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-741532472>,
-      <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance820186229>,
-      <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance621415126>,
-      <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-650995087>,
-      <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1204570762>;
-    :has-child-sequence <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_0>;
-    :description ""@cs;
-    :gate-type "OR"@cs;
-    :name "FC_1.1. Tlak v kabině failure"@cs;
-    :probability 1.0005625498722481E-1 .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance1443295929>
-    :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853>;
-    :name "FC 1.1. Tlak v kabině fault event"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-741532472>
-    :description ""@cs;
-    :name "21-30-00 - Pressurization control"@cs;
-    :probability 1.667E-5 .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance820186229>
-    :description ""@cs;
-    :name "Failure of 21-30-01 Regulator"@cs;
-    :probability 1.6667E-5 .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance621415126>
-    :description ""@cs;
-    :name "Failure of 21-30-02 Control valve"@cs;
-    :probability 1.25E-5 .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-650995087>
-    :description ""@cs;
-    :name "Failure of 21-30-03 Control and safety valve"@cs;
-    :probability 1.667E-5 .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1204570762>
-    :description ""@cs;
-    :name "FC_1.3. Tlak v kabině failure"@cs;
-    :probability 1.0E-1 .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type/instance254339362>
-    :probability 1.6667E-5 .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type/instance339929426>
-    :probability 1.0E-1 .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type/instance1697015416>
-    :probability 1.667E-5 .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type/instance-565130254>
-    :probability 1.25E-5 .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-scenario-type/instance879464893>
-    :probability 1.667E-5 .
-}
-
-<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance10054247680522007027> {
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-1482768990>
-    :has-child <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance936733276>;
-    :has-child-sequence <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-1482768990-SEQ_0>;
-    :description ""@cs;
-    :gate-type "OR"@cs;
-    :name "fta1-root"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance10054247680522007027>
-    :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-1482768990>;
-    :name "fta1-test1"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance936733276>
-    :description ""@cs;
-    :gate-type "OR"@cs;
-    :name "e1"@cs .
-}
-
-<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance22467827479333998578> {
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance22467827479333998578>
-    :is-manifested-by <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1768303591>;
-    :name "FC_1.3. Tlak v kabině fault event"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1768303591>
-    :description ""@cs;
-    :gate-type "OR"@cs;
-    :name "FC_1.3. Tlak v kabině failure"@cs .
-}
-
-<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance10046202631379005157> {
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1105488449>
-    :description ""@cs;
-    :gate-type "OR"@cs;
-    :name "ft1-root"@cs .
-}
-
-{
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/user/instance211914657> :password
-      "$2a$10$B37AF9wYO/d4hJIqW5OyzO1PJAyYcYZAzrMdGW.twfCGyNAOBs9J6"@cs;
-    :username "user"@cs .
-}
-
-<http://context-with-users> {
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/user/test-user-1> :username
-      "test-user-1" .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/user/test-user-2> :username
-      "test-user-2" .
-}
-
 <http://context-with-general-ATA-SNS-partonomy> {
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-655445588>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-2098526416>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-23630258>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-2098526416>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-564117211>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1297330040>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-2062053529>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1651387842>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance147165645>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-2098526416>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1691931815>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-774792090>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-634975277>
     :is-manifestation-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance410014156> .
@@ -3761,222 +3487,222 @@
     :is-manifestation-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance147165645> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance410014156>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-467446990>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-722203640>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-651593535>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1146480567>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance2016671068>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1016511837>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1902301118>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1049014593>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-846626989>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-543787999>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1663238237>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1399072591>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-900905786>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-777586498>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1466407006>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance2041200548>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1113514673>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1164779336>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-805223488>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-644153017>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1929963169>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance12112865>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1234649683>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-259254011>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance2042134183>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1209595685>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1067172579>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance90233910>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1639606576>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance498166154>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-995661925>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1674263380>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-401560335>
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
 }
 
 <http://context-with-ata-sns-partonomy-of--acm2> {
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1743395097>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1766233519>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1929963169>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-2112200574>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance963743097>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1691931815>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1953775521>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1784865885>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-117209959>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance12112865>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-2017057164>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance632193843>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1199022137>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1067172579>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1620922571>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-2121684926>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-715845205>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance90233910>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1240133490>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-646340930>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance427303152>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-259254011>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance951425346>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-321532111>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1716786147>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1209595685>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1114294451>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1140450275>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1929776113>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance498166154>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-470700924>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1729948782>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1766233519>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1234649683>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1478044760>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1575962615>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-564117211>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1490479604>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-679254928>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance621858352>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance2042134183>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance363801371>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1155927783>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1384665236>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-995661925>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1516402496>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1416935368>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1766233519>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-23630258>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1528420758>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1833317932>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-401560335>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1977758075>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1320964766>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-521426367>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-644153017>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance236042079>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1968708059>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-38541009>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-2062053529>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance452402232>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-2053854705>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1766233519>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-655445588>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1299277549>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1766233519>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance147165645>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1889214097>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1668333045>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1639606576>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1710970770>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-823320347>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1766233519>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1674263380>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1384665236>
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-294396561>,
@@ -4206,59 +3932,59 @@
 <http://context-with-independent-items> {
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-470700924>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance516302219>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance951425346>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance720345097>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1516402496>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1940998199>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance236042079>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1332503215>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1490479604>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1943807630>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1620922571>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-2236363>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1240133490>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance2047061560>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1114294451>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance21360244>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1710970770>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance2107853222>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance452402232>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-854852118>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance363801371>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-751544437>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1977758075>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1622148079>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1953775521>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1544468137>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-2017057164>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1032583503>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance128373210>
     :is-manifestation-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-2017057164> .
@@ -4301,24 +4027,7 @@
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1910687428>
     :is-manifestation-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1977758075> .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance1735079856>
-    :stock "stock-2"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance7561977>
-    :stock "stock-5"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-932600415>
-    :stock "stock-3"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance2047499009>
-    :stock "stock-1"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance881715849>
-    :stock "stock-0"@cs .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/reusable-system/instance-43154555>
-    :stock "stock-4"@cs .
+
 }
 
 <http://context-with-ata-sns-partonomy-of--acm1> {
@@ -4326,115 +4035,115 @@
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance76103648>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-651593535>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-2017057164>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-937219359>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-753455770>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1466407006>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-2017571939>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1559877758>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1902301118>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-470700924>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance389527534>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-753455770>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance2041200548>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1393314535>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1490391099>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1146480567>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance236042079>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1990980262>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-2126965553>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1399072591>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1490479604>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-820897410>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance957251510>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1049014593>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1516402496>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance253165227>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1237206943>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance2016671068>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance951425346>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1557205961>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-944858734>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-900905786>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1710970770>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-34196369>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance165014983>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance410014156>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1114294451>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1328013473>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-753455770>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-805223488>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance311271894>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-303382636>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-846626989>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance452402232>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1777597993>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-753455770>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-777586498>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1558137296>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-709004757>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1663238237>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance363801371>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-246750437>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance599104701>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1016511837>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1240133490>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-229115823>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1863763931>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-722203640>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1953775521>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1315394055>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-753455770>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1164779336>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance999467077>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-907552943>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-467446990>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1620922571>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance773539349>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-753455770>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1113514673>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1063835168>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1991698380>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-543787999>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1977758075>;
-    :failure-mode-type "FailureMode"@cs .
+    :failure-mode-type "FailureMode" .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance360155541>
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1529495563>;
@@ -4659,44 +4368,4 @@
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1896505248>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1254662942>;
     :is-manifestation-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance999467077> .
-}
-
-<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance1443295929> {
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853>
-    :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance360155541> .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance820186229>
-    :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance586401371> .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance621415126>
-    :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1671630670> .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-650995087>
-    :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1283918919> .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1204570762>
-    :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance653829124> .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance1443295929>
-    dc-terms:creator <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/user/test-user-1>;
-    dc-terms:created "2024-04-01T10:45:00.000Z"^^xsd:dateTime;
-    :editor <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/user/test-user-2>;
-    :modified "2024-04-05T13:14:00.000Z"^^xsd:dateTime .
-}
-
-<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance22467827479333998578> {
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1768303591>
-    :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance653829124> .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance22467827479333998578>
-    dc-terms:creator <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/user/test-user-2>;
-    dc-terms:created "2024-04-05T13:17:00.000Z"^^xsd:dateTime .
-}
-
-<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance10054247680522007027> {
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance10054247680522007027>
-    dc-terms:creator <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/user/instance211914657>;
-    dc-terms:created "2024-04-26T22:45:06.806Z"^^xsd:dateTime;
-    :editor <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/user/instance211914657>;
-    dc-terms:modified "2024-04-29T09:43:35.167Z"^^xsd:dateTime .
 }
