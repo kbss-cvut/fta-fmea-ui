@@ -13,31 +13,37 @@
 
 <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance1443295929> {
   <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance720425674> a diag:rectangle;
-    diag:y 0.0E0;
+    diag:y 2E1;
+    diag:height 1.0E2;
+    diag:x 5E2;
+    diag:width 1.0E2 .
+
+  <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/intermediate-event-rect> a diag:rectangle;
+    diag:y 2.2E2;
     diag:height 1.0E2;
     diag:x 2.8E2;
     diag:width 1.0E2 .
 
   <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance-439695733> a diag:rectangle;
-    diag:y 1.9E2;
+    diag:y 4.2E2;
     diag:height 8.0E1;
     diag:x 1.1E2;
     diag:width 8.0E1 .
 
   <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance-421231482> a diag:rectangle;
-    diag:y 1.9E2;
+    diag:y 4.2E2;
     diag:height 8.0E1;
     diag:x 2.6E2;
     diag:width 8.0E1 .
 
   <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance429145967> a diag:rectangle;
-    diag:y 1.8E2;
+    diag:y 4.2E2;
     diag:height 8.0E1;
     diag:x 3.9E2;
     diag:width 8.0E1 .
 
   <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance1945453232> a diag:rectangle;
-    diag:y 1.8E2;
+    diag:y 4.2E2;
     diag:height 8.0E1;
     diag:x 5.5E2;
     diag:width 8.0E1 .
@@ -45,22 +51,34 @@
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853>
     a :fault-event, :event;
     diag:has-rectangle <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance720425674>;
-    :fault-event-type "INTERMEDIATE"@cs;
-    :has-child <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-741532472>,
-      <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance820186229>,
-      <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance621415126>,
-      <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-650995087>,
-      <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1204570762>;
+    :fault-event-type "INTERMEDIATE";
+    :has-child <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/intermediate-event>,
+      <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/basic-event>,
+      <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/external-event>;
     :has-child-sequence <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_0>;
     :description ""@cs;
-    :gate-type "OR"@cs;
+    :gate-type "AND";
     :name "FC_1.1. Tlak v kabině failure"@cs;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance360155541> .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/intermediate-event>
+      a :fault-event, :event;
+      diag:has-rectangle <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/intermediate-event-rect>;
+      :fault-event-type "INTERMEDIATE";
+      :has-child <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-741532472>,
+        <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance820186229>,
+        <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance621415126>,
+        <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-650995087>,
+        <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1204570762>;
+      :has-child-sequence <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/intermediate-event-SEQ_0>;
+      :description ""@cs;
+      :gate-type "OR";
+      :name "Intermediate Event"@cs; .
 
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-741532472>
     a :fault-event, :event;
     diag:has-rectangle <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance-439695733>;
-    :fault-event-type "BASIC"@cs;
+    :fault-event-type "BASIC";
     :description ""@cs;
     :name "21-30-00 - Pressurization control"@cs;
     :probability 1.667E-5 .
@@ -68,7 +86,7 @@
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance820186229>
     a :fault-event, :event;
     diag:has-rectangle <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance-421231482>;
-    :fault-event-type "BASIC"@cs;
+    :fault-event-type "BASIC";
     :description ""@cs;
     :name "Failure of 21-30-01 Regulator"@cs;
     :probability 1.6667E-5;
@@ -77,7 +95,7 @@
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance621415126>
     a :fault-event, :event;
     diag:has-rectangle <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance429145967>;
-    :fault-event-type "BASIC"@cs;
+    :fault-event-type "BASIC";
     :description ""@cs;
     :name "Failure of 21-30-02 Control valve"@cs;
     :probability 1.25E-5;
@@ -86,7 +104,7 @@
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-650995087>
     a :fault-event, :event;
     diag:has-rectangle <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance1945453232>;
-    :fault-event-type "BASIC"@cs;
+    :fault-event-type "BASIC";
     :description ""@cs;
     :name "Failure of 21-30-03 Control and safety valve"@cs;
     :probability 1.667E-5;
@@ -104,39 +122,75 @@
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1204570762>
     a :fault-event;
     diag:has-rectangle <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance1338098093>;
-    :fault-event-type "EXTERNAL"@cs;
+    :fault-event-type "EXTERNAL";
     :description ""@cs;
     :name "FC_1.3. Tlak v kabině failure"@cs;
     :probability 1.0E-1;
 	:is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance653829124>.
   
   <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance1338098093> a diag:rectangle;
-    diag:y 1.8E2;
+    diag:y 4.2E2;
     diag:height 1.0E2;
     diag:x 6.9E2;
     diag:width 1.0E2 .
-  
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_2>
-    seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance621415126>;
-    seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_3> .
 
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_3>
-    seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1369205353>;
-    seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_4> .
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/basic-event>
+    a :fault-event;
+    diag:has-rectangle <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/basic-event-rect>;
+    :fault-event-type "BASIC";
+    :description ""@cs;
+    :name "basic event"@cs;
+    :probability 1.0E-1 .
 
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_4>
-    seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-650995087>;
-    seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_5> .
+  <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/basic-event-rect> a diag:rectangle;
+    diag:y 2.2E2;
+    diag:height 1.0E2;
+    diag:x 8.3E2;
+    diag:width 1.0E2 .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/external-event>
+    a :fault-event;
+    diag:has-rectangle <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/external-event-rect>;
+    :fault-event-type "EXTERNAL";
+    :description ""@cs;
+    :name "external event"@cs;
+    :probability 1.0E-1 .
+
+  <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/external-event-rect> a diag:rectangle;
+    diag:y 2.2E2;
+    diag:height 1.0E2;
+    diag:x 9.7E2;
+    diag:width 1.0E2 .
+
 
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_0>
-    seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-741532472>;
+    seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/intermediate-event>;
     seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_1> .
 
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_1>
-    seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance820186229>;
-    seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_2> .
+    seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/basic-event>;
+    seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_2>.
 
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_5>
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1811035853-SEQ_2>
+    seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/external-event>.
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/intermediate-event-SEQ_2>
+    seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance621415126>;
+    seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/intermediate-event-SEQ_3> .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/intermediate-event-SEQ_3>
+    seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-650995087>;
+    seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/intermediate-event-SEQ_4> .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/intermediate-event-SEQ_0>
+    seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance-741532472>;
+    seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/intermediate-event-SEQ_1> .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/intermediate-event-SEQ_1>
+    seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance820186229>;
+    seq1:hasNext <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/intermediate-event-SEQ_2> .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/intermediate-event-SEQ_4>
     seq:hasContents <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1204570762> .
 }
 
@@ -153,9 +207,9 @@
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance1768303591>
     a :fault-event;
     diag:has-rectangle <http://onto.fel.cvut.cz/ontologies/diagram/rectangle/instance-1583426105>;
-    :fault-event-type "INTERMEDIATE"@cs;
+    :fault-event-type "INTERMEDIATE";
     :description ""@cs;
-    :gate-type "OR"@cs;
+    :gate-type "OR";
     :name "FC_1.3. Tlak v kabině failure"@cs;
 	:is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance653829124>
 }
