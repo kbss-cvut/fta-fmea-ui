@@ -7,7 +7,7 @@ import { axiosSource } from "@services/utils/axiosUtils";
 import { ChildrenProps } from "@utils/hookUtils";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 import { filter, findIndex } from "lodash";
-import { useLoggedUser } from "./useLoggedUser";
+import { useUserAuth } from "@hooks/useUserAuth";
 
 type systemContextType = [
   System[],
@@ -26,7 +26,7 @@ export const useSystems = () => {
 export const SystemsProvider = ({ children }: ChildrenProps) => {
   const [_systems, _setSystems] = useState<System[]>([]);
   const [showSnackbar] = useSnackbar();
-  const [loggedUser] = useLoggedUser();
+  const loggedUser = useUserAuth();
 
   useEffect(() => {
     const fetchSystems = async () => {
@@ -36,7 +36,7 @@ export const SystemsProvider = ({ children }: ChildrenProps) => {
         .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
     };
 
-    if (loggedUser.authenticated) fetchSystems();
+    if (loggedUser) fetchSystems();
 
     return () => axiosSource.cancel("SystemsProvider - unmounting");
   }, []);

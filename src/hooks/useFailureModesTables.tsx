@@ -7,7 +7,7 @@ import * as failureModesTableService from "@services/failureModesTableService";
 import { SnackbarType, useSnackbar } from "./useSnackbar";
 import { filter, findIndex } from "lodash";
 import { FailureModesTable, UpdateFailureModesTable } from "@models/failureModesTableModel";
-import { useLoggedUser } from "./useLoggedUser";
+import { useUserAuth } from "@hooks/useUserAuth";
 
 type failureModesTableContextType = [
   FailureModesTable[],
@@ -26,7 +26,7 @@ export const useFailureModesTables = () => {
 export const FailureModesTablesProvider = ({ children }: ChildrenProps) => {
   const [_tables, _setTables] = useState<FailureModesTable[]>([]);
   const [showSnackbar] = useSnackbar();
-  const [loggedUser] = useLoggedUser();
+  const loggedUser = useUserAuth();
 
   useEffect(() => {
     const fetchTables = async () => {
@@ -36,7 +36,7 @@ export const FailureModesTablesProvider = ({ children }: ChildrenProps) => {
         .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
     };
 
-    if (loggedUser.authenticated) fetchTables();
+    if (loggedUser) fetchTables();
     return () => axiosSource.cancel("FailureModesTablesProvider - unmounting");
   }, []);
 

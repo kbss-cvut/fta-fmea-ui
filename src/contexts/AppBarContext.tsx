@@ -6,7 +6,7 @@ import { System } from "@models/systemModel";
 import * as systemService from "@services/systemService";
 import { useSnackbar } from "@hooks/useSnackbar";
 import { axiosSource } from "@services/utils/axiosUtils";
-import { useLoggedUser } from "@hooks/useLoggedUser";
+import { useUserAuth } from "@hooks/useUserAuth";
 
 interface AppBarTitleContextType {
   appBarTitle: string;
@@ -43,7 +43,7 @@ export const AppBarProvider = ({ children }: AppBarTitleProviderProps) => {
   const location = useLocation();
   const { t } = useTranslation();
   const [showSnackbar] = useSnackbar();
-  const [loggedUser] = useLoggedUser();
+  const loggedUser = useUserAuth();
   const errorMessage = t("common.defaultErrorMsg");
 
   useEffect(() => {
@@ -65,10 +65,10 @@ export const AppBarProvider = ({ children }: AppBarTitleProviderProps) => {
         .catch((reason) => showSnackbar(reason, errorMessage));
     };
 
-    if (loggedUser.authenticated) fetchSystems();
+    if (loggedUser) fetchSystems();
 
     return () => axiosSource.cancel("SystemsProvider - unmounting");
-  }, []);
+  }, [useUserAuth]);
 
   const getTitleFromPathname = (pathname: string): string => {
     const parts = pathname.split("/");
