@@ -106,6 +106,7 @@ const AppRoutes = () => {
             if (isUsingOidcAuth()) {
               return (
                 <Route
+                  key={r.path}
                   path={r.path}
                   element={
                     <OidcAuthWrapper>
