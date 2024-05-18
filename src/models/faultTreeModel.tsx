@@ -24,9 +24,8 @@ export interface FaultTree extends AbstractModel {
   editor?: {
     username?: string;
   };
-  modified?: {
-    ["@value"]?: string;
-  };
+  modified?: string;
+  created?: string;
   subSystem?: {
     name?: string;
   };
