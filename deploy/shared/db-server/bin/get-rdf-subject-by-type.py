@@ -3,6 +3,7 @@
 import sys
 from rdflib import Graph, URIRef
 
+
 def log(message):
     print("ERROR: " + message, file=sys.stderr)
 
