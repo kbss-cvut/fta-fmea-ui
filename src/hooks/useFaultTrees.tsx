@@ -7,6 +7,7 @@ import { axiosSource } from "@services/utils/axiosUtils";
 import { ChildrenProps } from "@utils/hookUtils";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 import { filter, findIndex } from "lodash";
+import { useLoggedUser } from "./useLoggedUser";
 
 type faultTreeContextType = [
   FaultTree[],
@@ -25,6 +26,7 @@ export const useFaultTrees = () => {
 export const FaultTreesProvider = ({ children }: ChildrenProps) => {
   const [_faultTrees, _setFaultTrees] = useState<FaultTree[]>([]);
   const [showSnackbar] = useSnackbar();
+  const [loggedUser] = useLoggedUser();
 
   useEffect(() => {
     const fetchFaultTrees = async () => {
@@ -34,7 +36,7 @@ export const FaultTreesProvider = ({ children }: ChildrenProps) => {
         .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
     };
 
-    fetchFaultTrees();
+    if (loggedUser.authenticated) fetchFaultTrees();
 
     return () => axiosSource.cancel("FaultTreesProvider - unmounting");
   }, []);

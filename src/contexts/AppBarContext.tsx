@@ -65,7 +65,7 @@ export const AppBarProvider = ({ children }: AppBarTitleProviderProps) => {
         .catch((reason) => showSnackbar(reason, errorMessage));
     };
 
-    if (loggedUser) fetchSystems();
+    if (loggedUser.authenticated) fetchSystems();
 
     return () => axiosSource.cancel("SystemsProvider - unmounting");
   }, []);

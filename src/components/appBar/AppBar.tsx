@@ -141,7 +141,7 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
                     select
                     InputLabelProps={{ shrink: false }}
                     className={classes.textfieldSelect}
-                    value={selectedSystem}
+                    value={selectedSystem || ""}
                     onChange={handleSystemChange}
                   >
                     {systemsList.map((s, i) => {
