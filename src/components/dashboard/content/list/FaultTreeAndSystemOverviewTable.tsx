@@ -18,8 +18,9 @@ const faultTreeTableHeadCells = [
   "faultTreeOverviewTable.fhaBasedFailureRate",
   "faultTreeOverviewTable.requiredFailureRate",
   "faultTreeOverviewTable.lastModified",
+  "faultTreeOverviewTable.created",
   "faultTreeOverviewTable.lastEditor",
-  "faultTreeOverviewTable.status",
+  // "faultTreeOverviewTable.status", Unused
 ];
 
 const systemTableHeadCells = ["faultTreeOverviewTable.name"];
@@ -97,7 +98,6 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
                     <TableCell className={classes.tableCell}>{formatDate(faultTree?.modified)}</TableCell>
                     <TableCell className={classes.tableCell}>{formatDate(faultTree?.created)}</TableCell>
                     <TableCell className={classes.tableCell}>{faultTree?.editor?.username}</TableCell>
-                    <TableCell className={classes.tableCell}>{/* <DoneIcon /> */}</TableCell>
                     <TableCell className={classes.tableCell}>
                       <Box className={classes.rowOptionsContainer}>
                         <Button
