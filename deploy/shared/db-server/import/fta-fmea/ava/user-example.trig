@@ -4,8 +4,8 @@
 <http://context-with-users> {
 
 	<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/user/test-user-1> a foaf:Person;
-		fta:username "test-user-1".
+		foaf:accountName "test-user-1".
 		
 	<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/user/test-user-2> a foaf:Person;
-		fta:username "test-user-2".
+		foaf:accountName "test-user-2".
 }
