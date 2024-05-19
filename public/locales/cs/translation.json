@@ -17,14 +17,17 @@
   },
   "newFtaModal": {
     "title": "Vytvořit strom poruch",
-    "namePlaceholder": "Název stromu poruch",
+    "namePlaceholder": "Systém",
     "eventPlaceholder": "Událost",
-    "create": "Vytvořit novou událost",
+    "create": "Vytvořit strom poruch",
+    "noEvents": "Vašemu dotazu neodpovídají žádné výsledky.",
+    "createEvent": "Vytvořit novou událost",
     "type": "Typ FTA události",
     "name": "Název události",
     "description": "Popis",
     "probability": "Intenzita poruch",
-    "gateType": "Typ hradla"
+    "gateType": "Typ hradla",
+    "noSystemError": "Na panelu Navigační panel vyberte možnost Systém"
   },
   "newFmeaModal": {
     "title": "FMEA agregáty",

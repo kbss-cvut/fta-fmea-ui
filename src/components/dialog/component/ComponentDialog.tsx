@@ -6,7 +6,7 @@ import { DialogContent } from "@components/materialui/dialog/DialogContent";
 import { DialogActions } from "@components/materialui/dialog/DialogActions";
 import * as componentService from "@services/componentService";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Component } from "@models/componentModel";
 import { schema } from "./Component.schema";

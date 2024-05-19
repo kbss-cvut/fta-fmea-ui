@@ -100,21 +100,23 @@ export const updateEventRectangle = async (
 
 export const eventFromHookFormValues = (values: any): FaultEvent => {
   let faultEvent;
+
+  faultEvent = {
+    eventType: values.eventType ? values.eventType : EventType.INTERMEDIATE,
+    name: values.name,
+    description: values.description,
+    probability: values.probability,
+    sequenceProbability: values.sequenceProbability,
+    "@type": [VocabularyUtils.FAULT_EVENT],
+  } as FaultEvent;
+
   if (values.existingEvent) {
     console.log(`Using existing event -${values.existingEvent.iri}`);
-    faultEvent = values.existingEvent;
-  } else {
-    faultEvent = {
-      eventType: values.eventType,
-      name: values.name,
-      description: values.description,
-      probability: values.probability,
-      sequenceProbability: values.sequenceProbability,
-      "@type": [VocabularyUtils.FAULT_EVENT],
-    } as FaultEvent;
-
-    faultEvent.gateType = faultEvent.eventType === EventType.INTERMEDIATE ? values.gateType : null;
+    faultEvent.name = values.existingEvent.name;
+    faultEvent.supertypes = [values.existingEvent];
   }
+
+  faultEvent.gateType = faultEvent.eventType === EventType.INTERMEDIATE ? values.gateType : null;
 
   return faultEvent;
 };
