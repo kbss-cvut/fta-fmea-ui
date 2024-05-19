@@ -3,6 +3,8 @@ import { AbstractModel, CONTEXT as ABSTRACT_CONTEXT } from "@models/abstractMode
 import { FailureMode, CONTEXT as FAILURE_MODE_CONTEXT } from "@models/failureModeModel";
 import { Rectangle, CONTEXT as RECTANGLE_CONTEXT, PREFIX as DIAGRAM_PREFIX } from "@models/utils/Rectangle";
 
+const XMLSchemaDateTime = "http://www.w3.org/2001/XMLSchema#dateTime";
+
 const ctx = {
   name: VocabularyUtils.PREFIX + "name",
   description: VocabularyUtils.PREFIX + "description",
@@ -37,8 +39,14 @@ const ctx = {
   calculatedFailureRate: VocabularyUtils.PREFIX + "calculated-failure-rate",
   components: VocabularyUtils.PREFIX + "components",
   creator: VocabularyUtils.DC_TERMS + "creator",
-  created: VocabularyUtils.DC_TERMS + "created",
-  modified: VocabularyUtils.DC_TERMS + "modified",
+  created: {
+    "@id": VocabularyUtils.DC_TERMS + "created",
+    "@type": XMLSchemaDateTime,
+  },
+  modified: {
+    "@id": VocabularyUtils.DC_TERMS + "modified",
+    "@type": XMLSchemaDateTime,
+  },
   fhaBasedFailureRate: VocabularyUtils.PREFIX + "fha-based-failure-rate",
   editor: VocabularyUtils.PREFIX + "editor",
   username: VocabularyUtils.PREFIX + "username",
