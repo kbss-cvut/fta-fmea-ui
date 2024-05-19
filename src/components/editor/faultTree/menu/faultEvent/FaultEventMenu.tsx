@@ -83,34 +83,34 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
     }
   }, [shapeToolData]);
 
-  console.log("shapeToolData", shapeToolData);
-
   return (
     <Box paddingLeft={2} marginRight={2}>
-      {/* <FaultEventShapeToolPane data={shapeToolData} onEventUpdated={onEventUpdated} refreshTree={refreshTree} /> */}
+      <FaultEventShapeToolPane data={shapeToolData} onEventUpdated={onEventUpdated} refreshTree={refreshTree} />
 
       {/* ROOT NODE */}
       {shapeToolData && shapeToolData.iri === rootIri && (
         <>
           <Box className={classes.labelRow}>
-            <Typography>
-              <span className={classes.label}>Calculated failure rate</span>{" "}
-              {shapeToolData?.probability.toExponential(2)}
-            </Typography>
+            {shapeToolData?.probability && (
+              <Typography>
+                <span className={classes.label}>Calculated failure rate:</span>
+                {shapeToolData?.probability.toExponential(2)}
+              </Typography>
+            )}
           </Box>
           <Box className={classes.labelRow}>
             <Typography>
-              <span className={classes.label}>Based failure rate</span>{" "}
+              <span className={classes.label}>Based failure rate:</span>
               {shapeToolData?.supertypes?.supertypes?.hasFailureRate?.estimate?.value.toExponential(2)}
             </Typography>
           </Box>
           <Box className={classes.labelRow}>
             <Typography>
-              <span className={classes.label}>Required failure rate</span>{" "}
+              <span className={classes.label}>Required failure rate:</span>
               {shapeToolData?.probabilityRequirement.toExponential(2)}
             </Typography>
           </Box>
-          <Divider />
+          <Divider className={classes.divider} />
         </>
       )}
 
@@ -119,7 +119,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
         <>
           <Box className={classes.labelRow}>
             <Typography>
-              <span className={classes.label}>Calculated failure rate</span>{" "}
+              <span className={classes.label}>Calculated failure rate</span>
               {shapeToolData?.probability.toExponential(2)}
             </Typography>
           </Box>
@@ -135,7 +135,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
               {shapeToolData?.supertypes?.hasFailureRate?.requirement?.upperBound.toExponential(2)}
             </Typography>
           </Box>
-          <Divider />
+          <Divider className={classes.divider} />
         </>
       )}
 
@@ -144,10 +144,12 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
         <Box style={{ display: "flex", flexDirection: "row" }}></Box>
       )}
 
+      {/* EXTERNAL NODE */}
       {shapeToolData && shapeToolData.eventType === EventType.EXTERNAL && !shapeToolData.isReference && (
         <Box className={classes.labelRow}>
           <Typography>
-            <span className={classes.label}>Manually defined failure rate</span> {shapeToolData?.probability}
+            <span className={classes.label}>Manually defined failure rate</span>{" "}
+            {shapeToolData?.probability.toExponential(2)}
           </Typography>
           <Divider />
         </Box>
