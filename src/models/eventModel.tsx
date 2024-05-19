@@ -50,6 +50,7 @@ const ctx = {
   fhaBasedFailureRate: VocabularyUtils.PREFIX + "fha-based-failure-rate",
   editor: VocabularyUtils.PREFIX + "editor",
   username: VocabularyUtils.PREFIX + "username",
+  estimate: VocabularyUtils.PREFIX + "has-estimate",
 };
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, FAILURE_MODE_CONTEXT, RECTANGLE_CONTEXT);
@@ -75,12 +76,19 @@ export interface FaultEvent extends AbstractModel {
   rectangle?: Rectangle;
   probabilityRequirement?: number;
   iri?: string;
+  isReference?: boolean;
   references?: {
     isPartOf?: string;
   };
   supertypes?: {
     criticality?: number;
-    superTypes?: any;
+    supertypes?: {
+      hasFailureRate?: {
+        estimate?: {
+          value?: number;
+        };
+      };
+    };
     behavior?: {
       item?: {
         quantity?: number;

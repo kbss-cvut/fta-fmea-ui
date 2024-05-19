@@ -16,9 +16,10 @@ interface Props {
   shapeToolData?: FaultEvent;
   onEventUpdated: (faultEvent: FaultEvent) => void;
   refreshTree: () => void;
+  rootIri?: string;
 }
 
-const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree }: Props) => {
+const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }: Props) => {
   const { t } = useTranslation();
   const { classes } = useStyles();
   const [failureModeDialogOpen, setFailureModeDialogOpen] = useState(false);
@@ -82,17 +83,99 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree }: Props) =
     }
   }, [shapeToolData]);
 
+  const basedFailureRate = shapeToolData?.supertypes?.supertypes?.hasFailureRate?.estimate?.value;
+  const requiredFailureRate = shapeToolData?.supertypes?.hasFailureRate?.requirement?.upperBound;
+
   return (
     <Box paddingLeft={2} marginRight={2}>
-      <Typography variant="h5" gutterBottom>
-        Edit Event
-      </Typography>
       <FaultEventShapeToolPane data={shapeToolData} onEventUpdated={onEventUpdated} refreshTree={refreshTree} />
-      <Divider />
+
+      {/* TODO: Finish for other nodes. Will be refactored. */}
+
+      {/* ROOT NODE */}
+      {shapeToolData && shapeToolData.iri === rootIri && (
+        <>
+          {shapeToolData?.probability && (
+            <Box className={classes.labelRow}>
+              <Typography>
+                <span className={classes.label}>Calculated failure rate:</span>
+                {shapeToolData?.probability.toExponential(2)}
+              </Typography>
+            </Box>
+          )}
+          {basedFailureRate && (
+            <Box className={classes.labelRow}>
+              <Typography>
+                <span className={classes.label}>Based failure rate:</span>
+                {basedFailureRate.toExponential(2)}
+              </Typography>
+            </Box>
+          )}
+          {shapeToolData?.probabilityRequirement && (
+            <Box className={classes.labelRow}>
+              <Typography>
+                <span className={classes.label}>Required failure rate:</span>
+                {shapeToolData?.probabilityRequirement.toExponential(2)}
+              </Typography>
+            </Box>
+          )}
+          <Divider className={classes.divider} />
+        </>
+      )}
+
+      {/* EXTERNAL NODE  */}
+      {shapeToolData && shapeToolData.eventType === EventType.EXTERNAL && shapeToolData.isReference && (
+        <>
+          {shapeToolData?.probability && (
+            <Box className={classes.labelRow}>
+              <Typography>
+                <span className={classes.label}>Calculated failure rate</span>
+                {shapeToolData?.probability.toExponential(2)}
+              </Typography>
+            </Box>
+          )}
+
+          {basedFailureRate && (
+            <Box className={classes.labelRow}>
+              <Typography>
+                <span className={classes.label}>Based failure rate</span>
+                {shapeToolData?.supertypes?.supertypes?.hasFailureRate?.estimate?.value.toExponential(2)}
+              </Typography>
+            </Box>
+          )}
+          {requiredFailureRate && (
+            <Box className={classes.labelRow}>
+              <Typography>
+                <span className={classes.label}>Required failure rate</span>
+                {shapeToolData?.supertypes?.hasFailureRate?.requirement?.upperBound.toExponential(2)}
+              </Typography>
+            </Box>
+          )}
+          <Divider className={classes.divider} />
+        </>
+      )}
+
+      {/* INTERMEDIATE NODE */}
+      {shapeToolData && shapeToolData.eventType === EventType.INTERMEDIATE && (
+        <Box style={{ display: "flex", flexDirection: "row" }}></Box>
+      )}
+
+      {/* EXTERNAL NODE */}
+      {shapeToolData && shapeToolData.eventType === EventType.EXTERNAL && !shapeToolData.isReference && (
+        <Box className={classes.labelRow}>
+          {shapeToolData?.probability && (
+            <Typography>
+              <span className={classes.label}>Manually defined failure rate</span>
+              {shapeToolData?.probability.toExponential(2)}
+            </Typography>
+          )}
+          <Divider className={classes.divider} />
+        </Box>
+      )}
 
       {shapeToolData && (
         <EventFailureModeProvider eventIri={shapeToolData?.iri}>
-          <Box style={{ marginTop: 16, marginBottom: 16 }}>
+          <Box>
             {criticality && (
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.criticality")}:</span> {criticality}
@@ -131,9 +214,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree }: Props) =
               </Typography>
             )}
           </Box>
-          <Typography variant="h5" gutterBottom>
-            Failure Mode
-          </Typography>
+
           <EventFailureModeList onFailureModeClick={handleFailureModeClicked} />
 
           <Button color="primary" onClick={() => setFailureModeDialogOpen(true)}>
