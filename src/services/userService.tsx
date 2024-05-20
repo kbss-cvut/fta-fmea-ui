@@ -33,12 +33,14 @@ export const login = async (loginRequest: UserLoginRequest): Promise<UserLoginRe
     const response = await axiosClient.post<UserLoginResponse>("/auth/signin", loginRequest, {
       headers: { "Content-type": AUTH },
     });
-
-    return response.data;
+    if (response.data.success || response.data.loggedIn) {
+      return response.data;
+    }
+    return Promise.reject(response.data.errorMessage);
   } catch (e) {
     console.log("Failed to call /login");
     const defaultMessage = "Login failed";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return Promise.reject(handleServerError(e, defaultMessage));
   }
 };
 
