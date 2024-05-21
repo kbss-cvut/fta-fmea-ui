@@ -58,12 +58,12 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
           aria-readonly={true}
           margin="dense"
           label={t("newFtaModal.namePlaceholder")}
-          name="faultTreeName"
+          name="systemName"
           type="text"
           fullWidth
-          error={!!useFormMethods.formState.errors.faultTreeName}
-          {...register("faultTreeName")}
-          helperText={!!useFormMethods.formState.errors.faultTreeName && t("newFtaModal.noSystemError")}
+          error={!!useFormMethods.formState.errors.systemName}
+          {...register("systemName")}
+          helperText={!!useFormMethods.formState.errors.systemName && t("newFtaModal.noSystemError")}
         />
         <FaultEventsReuseProvider systemUri={selectedSystem?.iri}>
           <FaultEventCreation useFormMethods={useFormMethods} isRootEvent={true} />
