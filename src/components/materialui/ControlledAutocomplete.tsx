@@ -21,7 +21,7 @@ interface Props {
 }
 
 const prepareOptions = (useSafeOptions, inputOptions, defaultOption) => {
-  let options = inputOptions;
+  let options = inputOptions ? inputOptions : [];
   let defaultValue = defaultOption;
   let getOptionValue = (option) => option;
 
