@@ -94,12 +94,10 @@ const FaultTreeOverview = () => {
         handleCloseDialog={() => setEditDialogOpen(false)}
         faultTree={contextMenuSelectedTree}
       />
-      <FaultEventsReuseProvider>
-        <FaultTreeDialog
-          open={createFaultTreeDialogOpen}
-          handleCloseDialog={() => setCreateFaultTreeDialogOpen(false)}
-        />
-      </FaultEventsReuseProvider>
+      <FaultTreeDialog
+        open={createFaultTreeDialogOpen}
+        handleCloseDialog={() => setCreateFaultTreeDialogOpen(false)}
+      />
     </Box>
   );
 };
