@@ -38,7 +38,7 @@ export const FaultTreesProvider = ({ children }: ChildrenProps) => {
 
     if (loggedUser) fetchFaultTrees();
     return () => axiosSource.cancel("FaultTreesProvider - unmounting");
-  }, []);
+  }, [loggedUser]);
 
   const addFaultTree = async (faultTree: FaultTree) => {
     faultTreeService
