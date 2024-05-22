@@ -18,15 +18,18 @@ export interface FaultTree extends AbstractModel {
   requiredFailureRate: number;
   system?: {
     name?: string;
+    iri?: string;
   };
   calculatedFailureRate?: number;
   fhaBasedFailureRate?: number;
   editor?: {
     username?: string;
+    iri?: string;
   };
   modified?: string;
   created?: string;
   subSystem?: {
     name?: string;
+    iri?: string;
   };
 }
