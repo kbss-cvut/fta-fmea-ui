@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import DashboardContentProvider from "@hooks/DashboardContentProvider";
 import { Box, Button, Typography } from "@mui/material";
 import DashboardFailureModesTableList from "@components/dashboard/content/list/DashboardFailureModesTableList";
 import FailureModesTableAggregateDialog from "@components/dialog/failureModesTable/aggregate/FailureModesTableAggregateDialog";
@@ -16,21 +15,19 @@ const FmeaOverview = () => {
   };
 
   return (
-    <DashboardContentProvider>
-      <OverviewContainer>
-        <Box display="flex" flexDirection="row-reverse">
-          <Button variant="contained" onClick={handleDialogOpen}>
-            {t("create.worksheet")}
-          </Button>
-        </Box>
+    <OverviewContainer>
+      <Box display="flex" flexDirection="row-reverse">
+        <Button variant="contained" onClick={handleDialogOpen}>
+          {t("create.worksheet")}
+        </Button>
+      </Box>
 
-        <DashboardFailureModesTableList />
-        <FailureModesTableAggregateDialog
-          open={createFmeaAggregateDialogOpen}
-          onClose={() => setCreateFmeaAggregateDialogOpen(false)}
-        />
-      </OverviewContainer>
-    </DashboardContentProvider>
+      <DashboardFailureModesTableList />
+      <FailureModesTableAggregateDialog
+        open={createFmeaAggregateDialogOpen}
+        onClose={() => setCreateFmeaAggregateDialogOpen(false)}
+      />
+    </OverviewContainer>
   );
 };
 
