@@ -33,6 +33,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
   const [partNumber, setPartNumber] = useState<string | undefined>(undefined);
   const [stock, setStock] = useState<string | undefined>(undefined);
   const [quantity, setQuantity] = useState<number | undefined>(undefined);
+  const [schematicDescription, setSchematicDescription] = useState<string | undefined>(undefined);
 
   const handleFailureModeClicked = (failureMode: FailureMode) => {
     setFailureModeOverview(failureMode);
@@ -68,18 +69,28 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
       setAtaSystem(undefined);
     }
 
-    if (filteredPartNumber.length === 1 && filteredPartNumber[0].partNumber && filteredPartNumber[0].stock) {
+    if (filteredPartNumber.length === 1 && filteredPartNumber[0].partNumber) {
       setPartNumber(filteredPartNumber[0].partNumber);
-      setStock(filteredPartNumber[0].stock);
     } else {
       setPartNumber(undefined);
-      setStock(undefined);
     }
 
     if (shapeToolData?.supertypes?.behavior?.item?.quantity) {
       setQuantity(shapeToolData?.supertypes?.behavior?.item?.quantity);
     } else {
       setQuantity(undefined);
+    }
+
+    if (shapeToolData?.supertypes?.behavior?.item?.stock) {
+      setStock(shapeToolData?.supertypes?.behavior?.item?.stock);
+    } else {
+      setStock(undefined);
+    }
+
+    if (shapeToolData?.supertypes?.behavior?.item?.schematicDescription) {
+      setSchematicDescription(shapeToolData?.supertypes?.behavior?.item?.schematicDescription);
+    } else {
+      setSchematicDescription(undefined);
     }
   }, [shapeToolData]);
 
@@ -88,7 +99,8 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
 
   return (
     <Box paddingLeft={2} marginRight={2}>
-      <FaultEventShapeToolPane data={shapeToolData} onEventUpdated={onEventUpdated} refreshTree={refreshTree} />
+      {/* Hidden to prevent app crush after root node select (Bug with UI). Will be fixed in next PR */}
+      {/* <FaultEventShapeToolPane data={shapeToolData} onEventUpdated={onEventUpdated} refreshTree={refreshTree} /> */}
 
       {/* TODO: Finish for other nodes. Will be refactored. */}
 
@@ -211,6 +223,12 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
             {quantity && (
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.quantity")}:</span> {quantity}
+              </Typography>
+            )}
+            {schematicDescription && (
+              <Typography>
+                <span className={classes.label}>{t("faultEventMenu.schematicDescription")}:</span>{" "}
+                {schematicDescription}
               </Typography>
             )}
           </Box>

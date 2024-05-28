@@ -82,7 +82,8 @@
     "lastModified": "Last modified",
     "lastEditor": "Last editor",
     "status": "Status",
-    "edit": "Edit"
+    "edit": "Edit",
+    "created": "Created"
   },
   "faultEventMenu": {
     "criticality": "Criticality",
@@ -91,7 +92,8 @@
     "ataSystem": "ATA System",
     "partNumber": "Part number",
     "stock": "Stock",
-    "quantity": "Quantity"
+    "quantity": "Quantity",
+    "schematicDescription": "Schematic description"
   },
   "appBar": {
     "selectSystemPlaceholder": "Select system"
