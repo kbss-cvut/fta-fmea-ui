@@ -93,7 +93,7 @@
     "partNumber": "Číslo součásti",
     "stock": "Zásoba",
     "quantity": "Množství",
-    "schematicDescription": "Schematický popis"
+    "schematicDesignation": "Schématické označení"
   },
   "appBar": {
     "selectSystemPlaceholder": "Vyberte systém"

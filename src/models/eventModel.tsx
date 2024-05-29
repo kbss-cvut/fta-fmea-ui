@@ -51,7 +51,7 @@ const ctx = {
   editor: VocabularyUtils.PREFIX + "editor",
   username: VocabularyUtils.PREFIX + "username",
   estimate: VocabularyUtils.PREFIX + "has-estimate",
-  schematicDescription: VocabularyUtils.PREFIX + "schematic-designation",
+  schematicDesignation: VocabularyUtils.PREFIX + "schematic-designation",
 };
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, FAILURE_MODE_CONTEXT, RECTANGLE_CONTEXT);
@@ -97,7 +97,7 @@ export interface FaultEvent extends AbstractModel {
           ataCode?: string;
         };
         stock?: string;
-        schematicDescription?: string;
+        schematicDesignation?: string;
       };
     };
     hasFailureRate?: {

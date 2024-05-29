@@ -93,7 +93,7 @@
     "partNumber": "Part number",
     "stock": "Stock",
     "quantity": "Quantity",
-    "schematicDescription": "Schematic description"
+    "schematicDesignation": "Schematic designation"
   },
   "appBar": {
     "selectSystemPlaceholder": "Select system"

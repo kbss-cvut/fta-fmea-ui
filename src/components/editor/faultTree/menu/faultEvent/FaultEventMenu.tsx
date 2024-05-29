@@ -33,7 +33,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
   const [partNumber, setPartNumber] = useState<string | undefined>(undefined);
   const [stock, setStock] = useState<string | undefined>(undefined);
   const [quantity, setQuantity] = useState<number | undefined>(undefined);
-  const [schematicDescription, setSchematicDescription] = useState<string | undefined>(undefined);
+  const [schematicDesignation, setSchematicDesignation] = useState<string | undefined>(undefined);
 
   const handleFailureModeClicked = (failureMode: FailureMode) => {
     setFailureModeOverview(failureMode);
@@ -87,10 +87,10 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
       setStock(undefined);
     }
 
-    if (shapeToolData?.supertypes?.behavior?.item?.schematicDescription) {
-      setSchematicDescription(shapeToolData?.supertypes?.behavior?.item?.schematicDescription);
+    if (shapeToolData?.supertypes?.behavior?.item?.schematicDesignation) {
+      setSchematicDesignation(shapeToolData?.supertypes?.behavior?.item?.schematicDesignation);
     } else {
-      setSchematicDescription(undefined);
+      setSchematicDesignation(undefined);
     }
   }, [shapeToolData]);
 
@@ -99,8 +99,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
 
   return (
     <Box paddingLeft={2} marginRight={2}>
-      {/* Hidden to prevent app crush after root node select (Bug with UI). Will be fixed in next PR */}
-      {/* <FaultEventShapeToolPane data={shapeToolData} onEventUpdated={onEventUpdated} refreshTree={refreshTree} /> */}
+      <FaultEventShapeToolPane data={shapeToolData} onEventUpdated={onEventUpdated} refreshTree={refreshTree} />
 
       {/* TODO: Finish for other nodes. Will be refactored. */}
 
@@ -225,10 +224,10 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
                 <span className={classes.label}>{t("faultEventMenu.quantity")}:</span> {quantity}
               </Typography>
             )}
-            {schematicDescription && (
+            {schematicDesignation && (
               <Typography>
-                <span className={classes.label}>{t("faultEventMenu.schematicDescription")}:</span>{" "}
-                {schematicDescription}
+                <span className={classes.label}>{t("faultEventMenu.schematicDesignation")}:</span>{" "}
+                {schematicDesignation}
               </Typography>
             )}
           </Box>
