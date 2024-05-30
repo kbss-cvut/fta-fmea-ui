@@ -33,6 +33,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
   const [partNumber, setPartNumber] = useState<string | undefined>(undefined);
   const [stock, setStock] = useState<string | undefined>(undefined);
   const [quantity, setQuantity] = useState<number | undefined>(undefined);
+  const [schematicDesignation, setSchematicDesignation] = useState<string | undefined>(undefined);
 
   const handleFailureModeClicked = (failureMode: FailureMode) => {
     setFailureModeOverview(failureMode);
@@ -68,18 +69,28 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
       setAtaSystem(undefined);
     }
 
-    if (filteredPartNumber.length === 1 && filteredPartNumber[0].partNumber && filteredPartNumber[0].stock) {
+    if (filteredPartNumber.length === 1 && filteredPartNumber[0].partNumber) {
       setPartNumber(filteredPartNumber[0].partNumber);
-      setStock(filteredPartNumber[0].stock);
     } else {
       setPartNumber(undefined);
-      setStock(undefined);
     }
 
     if (shapeToolData?.supertypes?.behavior?.item?.quantity) {
       setQuantity(shapeToolData?.supertypes?.behavior?.item?.quantity);
     } else {
       setQuantity(undefined);
+    }
+
+    if (shapeToolData?.supertypes?.behavior?.item?.stock) {
+      setStock(shapeToolData?.supertypes?.behavior?.item?.stock);
+    } else {
+      setStock(undefined);
+    }
+
+    if (shapeToolData?.supertypes?.behavior?.item?.schematicDesignation) {
+      setSchematicDesignation(shapeToolData?.supertypes?.behavior?.item?.schematicDesignation);
+    } else {
+      setSchematicDesignation(undefined);
     }
   }, [shapeToolData]);
 
@@ -211,6 +222,12 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
             {quantity && (
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.quantity")}:</span> {quantity}
+              </Typography>
+            )}
+            {schematicDesignation && (
+              <Typography>
+                <span className={classes.label}>{t("faultEventMenu.schematicDesignation")}:</span>{" "}
+                {schematicDesignation}
               </Typography>
             )}
           </Box>

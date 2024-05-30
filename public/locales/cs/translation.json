@@ -82,7 +82,8 @@
     "lastModified": "Poslední úprava",
     "lastEditor": "Poslední editor",
     "status": "Stav",
-    "edit": "Upravit"
+    "edit": "Upravit",
+    "created": "Vytvořeno"
   },
   "faultEventMenu": {
     "criticality": "Kritičnost",
@@ -91,7 +92,8 @@
     "ataSystem": "ATA systém",
     "partNumber": "Číslo součásti",
     "stock": "Zásoba",
-    "quantity": "Množství"
+    "quantity": "Množství",
+    "schematicDesignation": "Schématické označení"
   },
   "appBar": {
     "selectSystemPlaceholder": "Vyberte systém"
