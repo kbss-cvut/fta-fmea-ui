@@ -17,6 +17,8 @@ import { JOINTJS_NODE_MODEL } from "@components/editor/faultTree/shapes/constant
 import { FaultEventScenario } from "@models/faultEventScenario";
 import { findNodeByIri } from "@utils/treeUtils";
 import FaultEventScenariosTable from "../menu/FaultEventScenariosTable";
+import { Box, TextField, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 enum MOVE_NODE {
   DRAGGING = 0,
@@ -65,6 +67,7 @@ const EditorCanvas = ({
   redirectToInstance,
 }: Props) => {
   const { classes } = useStyles();
+  const { t } = useTranslation();
 
   const containerRef = useRef(null);
 
@@ -258,6 +261,10 @@ const EditorCanvas = ({
             onCutSetAnalysis={onCutSetAnalysis}
             rendering={rendering}
           />
+          <Box padding={2} display="flex" alignItems="center">
+            <Typography noWrap sx={{ flex: 3 }}>{t("diagramSidePanel.minimumOperationalHours")}</Typography>
+            <TextField type="number" size="small" sx={{ flex: 2 }} />
+          </Box>
         </CurrentFaultTreeTableProvider>
         {!showTable && (
           <FaultEventMenu
