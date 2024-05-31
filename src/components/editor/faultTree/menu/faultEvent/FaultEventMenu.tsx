@@ -99,7 +99,8 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
 
   return (
     <Box paddingLeft={2} marginRight={2}>
-      <FaultEventShapeToolPane data={shapeToolData} onEventUpdated={onEventUpdated} refreshTree={refreshTree} />
+      {/* Hidden to prevent app crush after root node select (Bug with UI).Related to issue #331. Will be fixed in next PR */}
+      {/*<FaultEventShapeToolPane data={shapeToolData} onEventUpdated={onEventUpdated} refreshTree={refreshTree} />*/}
 
       {/* TODO: Finish for other nodes. Will be refactored. */}
 
