@@ -36,7 +36,8 @@
     "create": "Vytvořit"
   },
   "diagramSidePanel": {
-    "cutsetToggleToolTip": "Přepnout do pohledu řezu"
+    "cutsetToggleToolTip": "Přepnout do pohledu řezu",
+    "minimumOperationalHours": "Min. provozní doba"
   },
   "faultEventScenariosTable": {
     "cutset": "Řez",

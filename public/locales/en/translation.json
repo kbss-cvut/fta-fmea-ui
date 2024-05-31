@@ -36,7 +36,8 @@
     "create": "Create"
   },
   "diagramSidePanel": {
-    "cutsetToggleToolTip": "Switch to cutsets view"
+    "cutsetToggleToolTip": "Switch to cutsets view",
+    "minimumOperationalHours": "Min. operational hours"
   },
   "faultEventScenariosTable": {
     "cutset": "Cutset",
