@@ -43,7 +43,7 @@ export const ROUTES = {
   OIDC_SIGNIN_CALLBACK: "/oidc-signin-callback",
   OIDC_SILENT_CALLBACK: "/oidc-silent-callback",
 
-  DASHBOARD: "/",
+  ROOT: "/",
   SYSTEMS: "/systems",
   FTA: "/fta",
   FMEA: "/fmea",
