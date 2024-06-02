@@ -90,6 +90,7 @@
     :description ""@cs;
     :name "Failure of 21-30-01 Regulator"@cs;
     :probability 1.6667E-5;
+    :has-selected-estimation <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-1431606056> ;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance586401371> .
 
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance621415126>
@@ -108,6 +109,7 @@
     :description ""@cs;
     :name "Failure of 21-30-03 Control and safety valve"@cs;
     :probability 1.667E-5;
+    :has-selected-estimation <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-1072457191> ;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance1283918919> .
 
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-tree/instance1443295929>
