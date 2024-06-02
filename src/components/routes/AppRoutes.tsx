@@ -1,6 +1,6 @@
 import * as React from "react";
 import Login from "@components/login/Login";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Logout from "@components/Logout";
 import Register from "@components/register/Register";
 import { createHashHistory } from "history";
@@ -68,10 +68,6 @@ const AppRoutes = () => {
       path: ROUTES.FHA,
       element: <FhaOverview />,
     },
-    {
-      path: "/*",
-      element: <SystemsOverview />,
-    },
   ];
 
   const getElement = (path, element) => {
@@ -101,6 +97,7 @@ const AppRoutes = () => {
         <Routes>
           <Route path={ROUTES.OIDC_SIGNIN_CALLBACK} element={<OidcSignInCallback />} />
           <Route path={ROUTES.OIDC_SILENT_CALLBACK} element={<OidcSilentCallback />} />
+          <Route path={ROUTES.ROOT} element={<Navigate to={ROUTES.SYSTEMS} />} />
 
           {routes.map((r) => {
             if (isUsingOidcAuth()) {

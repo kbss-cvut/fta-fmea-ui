@@ -7,11 +7,7 @@ import { ROUTES } from "@utils/constants";
 const Element = ({ component: Component, loggedUser, restricted, ...props }) => {
   return (
     <>
-      {loggedUser && loggedUser.authenticated && restricted ? (
-        <Navigate to={ROUTES.DASHBOARD} />
-      ) : (
-        <Component {...props} />
-      )}
+      {loggedUser && loggedUser.authenticated && restricted ? <Navigate to={ROUTES.ROOT} /> : <Component {...props} />}
     </>
   );
 };
