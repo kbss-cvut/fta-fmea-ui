@@ -206,7 +206,14 @@ const Editor = () => {
   const redirectToInstance = (navigateFrom: string) => {
     if (faultTree?.manifestingEvent?.children) {
       let map: { [name: string]: string } = {};
-      const children = faultTree?.manifestingEvent?.children;
+      let children = faultTree?.manifestingEvent?.children;
+      if (faultTree?.manifestingEvent?.children.length > 0) {
+        faultTree?.manifestingEvent?.children.map((child) => {
+          if (child.children) {
+            children = [...children, ...child.children];
+          }
+        });
+      }
       for (let i = 0; i < children.length; i++) {
         const node = children[i];
         const nodeKey = node.iri;
