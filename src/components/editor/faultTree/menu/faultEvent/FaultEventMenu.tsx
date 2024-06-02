@@ -88,7 +88,11 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
     }
 
     if (shapeToolData?.supertypes?.behavior?.item?.schematicDesignation) {
-      setSchematicDesignation(shapeToolData?.supertypes?.behavior?.item?.schematicDesignation);
+      if (Array.isArray(shapeToolData?.supertypes?.behavior?.item?.schematicDesignation)) {
+        setSchematicDesignation(shapeToolData?.supertypes?.behavior?.item?.schematicDesignation.join(" "));
+      } else {
+        setSchematicDesignation(shapeToolData?.supertypes?.behavior?.item?.schematicDesignation);
+      }
     } else {
       setSchematicDesignation(undefined);
     }
@@ -118,7 +122,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
           {basedFailureRate && (
             <Box className={classes.labelRow}>
               <Typography>
-                <span className={classes.label}>Based failure rate:</span>
+                <span className={classes.label}>FHA based failure rate:</span>
                 {basedFailureRate.toExponential(2)}
               </Typography>
             </Box>
@@ -227,7 +231,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
             )}
             {schematicDesignation && (
               <Typography>
-                <span className={classes.label}>{t("faultEventMenu.schematicDesignation")}:</span>{" "}
+                <span className={classes.label}>{t("faultEventMenu.schematicDesignation")}:</span>
                 {schematicDesignation}
               </Typography>
             )}
