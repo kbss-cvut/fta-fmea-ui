@@ -39,8 +39,7 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
 
     // TODO: Add full system from System Context Provider
     const faultTree = {
-      name: values.name,
-      system: { name: systemName },
+      name: values.faultTreeName,
       manifestingEvent: rootEvent,
     } as FaultTree;
 
