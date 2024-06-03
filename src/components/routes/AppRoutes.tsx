@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { createHashHistory } from "history";
 import { ROUTE_PARAMS, ROUTES, ENVVariable } from "@utils/constants";
 import Login from "@components/login/Login";
