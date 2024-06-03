@@ -8,8 +8,7 @@ import { ConfirmDialogProvider } from "@hooks/useConfirmDialog";
 import { ENVVariable, SELECTED_LANGUAGE_KEY, PRIMARY_LANGUAGE } from "@utils/constants";
 import { Suspense } from "react";
 import { useTranslation } from "react-i18next";
-import { isUsingOidcAuth } from "@utils/OidcUtils";
-import OidcAuthWrapper from "@oidc/OidcAuthWrapper";
+import { InternalUserProvider } from "@hooks/useInternalLoggedUser";
 
 declare module "@mui/material/styles" {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -35,13 +34,15 @@ const App = () => {
   return (
     <Suspense fallback="...loading">
       <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={appTheme}>
-          <SnackbarProvider>
-            <ConfirmDialogProvider>
-              <AppRoutes />
-            </ConfirmDialogProvider>
-          </SnackbarProvider>
-        </ThemeProvider>
+        <InternalUserProvider>
+          <ThemeProvider theme={appTheme}>
+            <SnackbarProvider>
+              <ConfirmDialogProvider>
+                <AppRoutes />
+              </ConfirmDialogProvider>
+            </SnackbarProvider>
+          </ThemeProvider>
+        </InternalUserProvider>
       </StyledEngineProvider>
     </Suspense>
   );

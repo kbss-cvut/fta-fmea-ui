@@ -18,7 +18,7 @@ import {
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ChangePasswordDialog from "@components/dialog/password/ChangePasswordDialog";
-import { getLoggedUser, useLoggedUser } from "@hooks/useLoggedUser";
+import { getLoggedUser, useInternalLoggedUser } from "@hooks/useInternalLoggedUser";
 import { ROUTES } from "@utils/constants";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useTranslation } from "react-i18next";
@@ -35,7 +35,7 @@ interface Props {
 }
 
 const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
-  const [loggedUser] = useLoggedUser();
+  const [loggedUser] = useInternalLoggedUser();
   const { classes } = useStyles();
   const history = useNavigate();
   const { i18n, t } = useTranslation();

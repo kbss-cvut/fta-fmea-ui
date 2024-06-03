@@ -1,12 +1,12 @@
 import * as React from "react";
 import { useContext, useEffect } from "react";
 import { User } from "@models/userModel";
-import { useLoggedUser } from "@hooks/useLoggedUser";
+import { useInternalLoggedUser } from "@hooks/useInternalLoggedUser";
 import { isUsingOidcAuth } from "@utils/OidcUtils";
 import { AuthContext } from "@oidc/OidcAuthWrapper";
 
 const Logout = () => {
-  const [_, setLoggedUser] = useLoggedUser();
+  const [_, setLoggedUser] = useInternalLoggedUser();
   const authCtx = useContext(AuthContext);
   useEffect(() => {
     if (isUsingOidcAuth()) {

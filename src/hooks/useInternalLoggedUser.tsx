@@ -8,7 +8,7 @@ type userContextType = [User, (user: User) => void];
 
 export const loggedUserContext = createContext<userContextType>(null!);
 
-export const useLoggedUser = () => {
+export const useInternalLoggedUser = () => {
   const [loggedUser, setLoggedUser] = useContext(loggedUserContext);
   return [loggedUser, setLoggedUser] as const;
 };
@@ -26,7 +26,7 @@ export const getLoggedUser = (): User => {
   return JSON.parse(item);
 };
 
-export const LoggedUserProvider = ({ children }: ChildrenProps) => {
+export const InternalUserProvider = ({ children }: ChildrenProps) => {
   const [_user, _setLoggedUser] = useState<User>(getLoggedUser());
 
   const setLoggedUser = async (user: User) => {

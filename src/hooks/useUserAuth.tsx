@@ -1,14 +1,14 @@
 import { useContext } from "react";
 import { AuthContext } from "@oidc/OidcAuthWrapper";
-import { useLoggedUser } from "@hooks/useLoggedUser";
+import { useInternalLoggedUser } from "@hooks/useInternalLoggedUser";
 import { isUsingOidcAuth } from "@utils/OidcUtils";
 
 export const useUserAuth = () => {
   const oidcAuthContext = useContext(AuthContext);
-  const [loggedUser] = useLoggedUser();
+  const [loggedUser] = useInternalLoggedUser();
 
   if (isUsingOidcAuth()) {
     return oidcAuthContext.user !== null;
   }
-  return loggedUser.authenticated;
+  return loggedUser;
 };

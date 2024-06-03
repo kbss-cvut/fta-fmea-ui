@@ -6,7 +6,7 @@ import { useState } from "react";
 import useStyles from "@components/login/Login.styles";
 import * as userService from "@services/userService";
 import { Link as RouterLink } from "react-router-dom";
-import { useLoggedUser } from "@hooks/useLoggedUser";
+import { useInternalLoggedUser } from "@hooks/useInternalLoggedUser";
 import { useForm } from "react-hook-form";
 import { schema } from "@components/login/Login.schema";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
@@ -16,7 +16,7 @@ import { ENVVariable, ROUTES } from "@utils/constants";
 const Login = () => {
   const { classes } = useStyles();
 
-  const [_, setLoggedUser] = useLoggedUser();
+  const [_, setLoggedUser] = useInternalLoggedUser();
   const [showSnackbar] = useSnackbar();
 
   const {

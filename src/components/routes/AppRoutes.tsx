@@ -1,11 +1,10 @@
 import * as React from "react";
+import { BrowserRouter, Route } from "react-router-dom";
+import { createHashHistory } from "history";
+import { ROUTE_PARAMS, ROUTES, ENVVariable } from "@utils/constants";
 import Login from "@components/login/Login";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Logout from "@components/Logout";
 import Register from "@components/register/Register";
-import { createHashHistory } from "history";
-import { LoggedUserProvider } from "@hooks/useLoggedUser";
-import { ROUTE_PARAMS, ROUTES, ENVVariable } from "@utils/constants";
 import FaultTreeDashboard from "@components/dashboard/FaultTreeDashboard";
 import SystemDashboard from "@components/dashboard/SystemDashboard";
 import FailureModesTableDashboard from "@components/dashboard/FailureModesTableDashboard";
@@ -91,39 +90,39 @@ const AppRoutes = () => {
           </PublicRoute>
         );
       default:
-        return <PrivateRoute>{element}</PrivateRoute>;
+        return (
+          <Navigation>
+            <PrivateRoute>{element}</PrivateRoute>
+          </Navigation>
+        );
     }
   };
 
   return (
-    <LoggedUserProvider>
-      <BrowserRouter basename={ENVVariable.BASENAME} /*history={appHistory}*/>
-        <Routes>
-          <Route path={ROUTES.OIDC_SIGNIN_CALLBACK} element={<OidcSignInCallback />} />
-          <Route path={ROUTES.OIDC_SILENT_CALLBACK} element={<OidcSilentCallback />} />
+    <BrowserRouter basename={ENVVariable.BASENAME} /*history={appHistory}*/>
+      <Routes>
+        <Route path={ROUTES.OIDC_SIGNIN_CALLBACK} element={<OidcSignInCallback />} />
+        <Route path={ROUTES.OIDC_SILENT_CALLBACK} element={<OidcSilentCallback />} />
 
-          {routes.map((r) => {
-            if (isUsingOidcAuth()) {
-              return (
-                <Route
-                  key={r.path}
-                  path={r.path}
-                  element={
-                    <OidcAuthWrapper>
-                      <Navigation>{r.element}</Navigation>
-                    </OidcAuthWrapper>
-                  }
-                />
-              );
-            } else {
-              return (
-                <Route key={r.path} path={r.path} element={<Navigation>{getElement(r.path, r.element)}</Navigation>} />
-              );
-            }
-          })}
-        </Routes>
-      </BrowserRouter>
-    </LoggedUserProvider>
+        {routes.map((r) => {
+          if (isUsingOidcAuth()) {
+            return (
+              <Route
+                key={r.path}
+                path={r.path}
+                element={
+                  <OidcAuthWrapper>
+                    <Navigation>{r.element}</Navigation>
+                  </OidcAuthWrapper>
+                }
+              />
+            );
+          } else {
+            return <Route key={r.path} path={r.path} element={getElement(r.path, r.element)} />;
+          }
+        })}
+      </Routes>
+    </BrowserRouter>
   );
 };
 

@@ -1,6 +1,6 @@
 import { Navigate, Route } from "react-router-dom";
 import * as React from "react";
-import { useLoggedUser } from "@hooks/useLoggedUser";
+import { useInternalLoggedUser } from "@hooks/useInternalLoggedUser";
 import { ROUTES } from "@utils/constants";
 
 // TODO: Fix temporary hack to support react-router v6
@@ -17,7 +17,7 @@ const Element = ({ component: Component, loggedUser, restricted, ...props }) => 
 };
 
 const PublicRoute = ({ children, restricted, ...rest }) => {
-  const [loggedUser] = useLoggedUser();
+  const [loggedUser] = useInternalLoggedUser();
 
   console.log("Public route");
 

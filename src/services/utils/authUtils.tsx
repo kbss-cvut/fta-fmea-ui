@@ -1,4 +1,4 @@
-import { getLoggedUser } from "@hooks/useLoggedUser";
+import { getLoggedUser } from "@hooks/useInternalLoggedUser";
 
 export const authHeaders = () => {
   return {
