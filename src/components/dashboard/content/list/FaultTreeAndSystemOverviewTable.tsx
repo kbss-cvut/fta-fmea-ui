@@ -5,10 +5,11 @@ import { useTranslation } from "react-i18next";
 import useStyles from "./FaultTreeOverviewTable.styles";
 import { FaultTree } from "@models/faultTreeModel";
 import { useNavigate } from "react-router-dom";
-import { ROUTES, SELECTED_SYSTEM } from "@utils/constants";
+import {ROUTES} from "@utils/constants";
 import { extractFragment } from "@services/utils/uriIdentifierUtils";
 import { System } from "@models/systemModel";
 import { getModifiedSystemsList, getModifiedFaultTreesList, formatDate } from "@utils/utils";
+import {useSelectedSystem} from "@hooks/useSelectedSystem";
 
 const faultTreeTableHeadCells = [
   "faultTreeOverviewTable.name",
@@ -45,13 +46,12 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
   const { t } = useTranslation();
   const theme = useTheme();
 
+  const [, setSelectedSystem] = useSelectedSystem();
   const modifiedSystemsList = getModifiedSystemsList(systems, selectedSystem);
   const modifiedFaultTreesList = getModifiedFaultTreesList(faultTrees, selectedSystem);
 
-  const redirectToPath = (routePath: string, systemName?: string) => {
-    if (systemName) {
-      sessionStorage.setItem(SELECTED_SYSTEM, systemName);
-    }
+  const redirectToPath = (routePath: string, system ) => {
+    setSelectedSystem(system);
     navigate(routePath);
   };
 
@@ -103,7 +103,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
                         <Button
                           variant="contained"
                           className={classes.editButton}
-                          onClick={() => redirectToPath(routePath, faultTree?.system?.name)}
+                          onClick={() => redirectToPath(routePath, faultTree?.system)}
                         >
                           {t("faultTreeOverviewTable.edit")}
                         </Button>
@@ -128,7 +128,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
                         <Button
                           variant="contained"
                           className={classes.editButton}
-                          onClick={() => redirectToPath(routePath)}
+                          onClick={() => redirectToPath(routePath, system)}
                         >
                           {t("faultTreeOverviewTable.edit")}
                         </Button>

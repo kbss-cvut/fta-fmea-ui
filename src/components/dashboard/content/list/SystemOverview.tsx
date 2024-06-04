@@ -13,7 +13,7 @@ import FaultTreeAndSystemOverviewCardsList from "./FaultTreeAndSystemOverviewCar
 import { useTranslation } from "react-i18next";
 import { Button, Box } from "@mui/material";
 import SystemDialog from "@components/dialog/system/SystemDialog";
-import { SELECTED_SYSTEM } from "@utils/constants";
+import {useSelectedSystem} from "@hooks/useSelectedSystem";
 
 const SystemOverview = () => {
   const { t } = useTranslation();
@@ -25,25 +25,13 @@ const SystemOverview = () => {
   const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefaultAnchor);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [createSystemDialogOpen, setCreateSystemDialogOpen] = useState<boolean>(false);
-  const [selectedSystem, setSelectedSystem] = useState<string | null>(sessionStorage.getItem(SELECTED_SYSTEM));
+  const [selectedSystem, setSelectedSystem] = useSelectedSystem();
 
   useEffect(() => {
     const storedView = localStorage.getItem("selectedView") as ViewType;
     if (storedView) {
       setSelectedView(storedView);
     }
-    const handleStorageChange = () => {
-      const system = sessionStorage.getItem(SELECTED_SYSTEM);
-      if (system) {
-        setSelectedSystem(system);
-      }
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
   }, []);
 
   const toggleView = (viewType: ViewType) => {
@@ -83,13 +71,13 @@ const SystemOverview = () => {
 
       {selectedView === "table" ? (
         <FaultTreeAndSystemOverviewTable
-          selectedSystem={selectedSystem}
+          selectedSystem={selectedSystem?.iri}
           systems={systems}
           handleSystemContextMenu={handleContextMenu}
         />
       ) : (
         <FaultTreeAndSystemOverviewCardsList
-          selectedSystem={selectedSystem}
+          selectedSystem={selectedSystem?.iri}
           systems={systems}
           handleSystemContextMenu={handleContextMenu}
         />

@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useEffect } from "react";
 import useStyles from "@components/appBar/AppBar.styles";
 import { AccountCircle } from "@mui/icons-material";
 import {
@@ -23,10 +22,11 @@ import { ROUTES } from "@utils/constants";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useTranslation } from "react-i18next";
 import LanguageIcon from "@mui/icons-material/Language";
-import { PRIMARY_LANGUAGE, SECONDARY_LANGUAGE, SELECTED_LANGUAGE_KEY, SELECTED_SYSTEM } from "@utils/constants";
+import { PRIMARY_LANGUAGE, SECONDARY_LANGUAGE, SELECTED_LANGUAGE_KEY } from "@utils/constants";
 import { useAppBar } from "../../contexts/AppBarContext";
 import { useLocation } from "react-router-dom";
 import CancelIcon from "@mui/icons-material/Cancel";
+import {useSelectedSystem} from "@hooks/useSelectedSystem";
 
 interface Props {
   title: string;
@@ -43,15 +43,10 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
   const { appBarTitle, systemsList } = useAppBar();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [selectedSystem, setSelectedSystem] = useState<string>(() => sessionStorage.getItem(SELECTED_SYSTEM) || "");
+  const [selectedSystem, setSelectedSystem] = useSelectedSystem();
   const [changePasswordDialogOpen, setChangePasswordDialogOpen] = useState(false);
 
   const isMenuOpen = Boolean(anchorEl);
-
-  useEffect(() => {
-    const currentItem = sessionStorage.getItem(SELECTED_SYSTEM);
-    if (selectedSystem !== currentItem) setSelectedSystem(currentItem);
-  }, [location.pathname]);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -109,17 +104,14 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
     }
   };
 
-  const handleSystemChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleSystemChange = (event : React.ChangeEvent<{ value: unknown }>) => {
     const value = event.target.value as string;
-    setSelectedSystem(value);
-    sessionStorage.setItem(SELECTED_SYSTEM, value);
-    window.dispatchEvent(new Event("storage"));
+    const selectedSystem = value ? systemsList.find((s) => s.iri == value) : null;
+    setSelectedSystem(selectedSystem);
   };
 
   const handleSystemDelete = () => {
-    setSelectedSystem("");
-    sessionStorage.setItem(SELECTED_SYSTEM, "");
-    window.dispatchEvent(new Event("storage"));
+    setSelectedSystem(null);
   };
 
   return (
@@ -147,12 +139,12 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
                     select
                     InputLabelProps={{ shrink: false }}
                     className={classes.textfieldSelect}
-                    value={selectedSystem || ""}
+                    value={selectedSystem ? selectedSystem.iri : ""}
                     onChange={handleSystemChange}
                   >
                     {systemsList.map((s, i) => {
                       return (
-                        <MenuItem key={`${s.name}-${i}`} value={s.name}>
+                        <MenuItem key={`${s.iri}`} value={s.iri}>
                           {s.name}
                         </MenuItem>
                       );

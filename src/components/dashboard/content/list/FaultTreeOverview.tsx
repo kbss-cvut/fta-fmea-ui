@@ -12,8 +12,8 @@ import FaultTreeEditDialog from "@components/dialog/faultTree/FaultTreeEditDialo
 import FaultTreeDialog from "@components/dialog/faultTree/FaultTreeDialog";
 import { Box, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { SELECTED_SYSTEM, SELECTED_VIEW } from "@utils/constants";
-import { FaultEventsReuseProvider } from "@hooks/useReusableFaultEvents";
+import { SELECTED_VIEW } from "@utils/constants";
+import {useSelectedSystem} from "@hooks/useSelectedSystem";
 
 const FaultTreeOverview = () => {
   const { t } = useTranslation();
@@ -25,25 +25,13 @@ const FaultTreeOverview = () => {
   const [contextMenuSelectedTree, setContextMenuSelectedTree] = useState<FaultTree>(null);
   const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefaultAnchor);
   const [createFaultTreeDialogOpen, setCreateFaultTreeDialogOpen] = useState<boolean>(false);
-  const [selectedSystem, setSelectedSystem] = useState<string | null>(sessionStorage.getItem(SELECTED_SYSTEM));
+  const [selectedSystem] = useSelectedSystem();
 
   useEffect(() => {
     const storedView = localStorage.getItem(SELECTED_VIEW) as ViewType;
     if (storedView) {
       setSelectedView(storedView);
     }
-    const handleStorageChange = () => {
-      const system = sessionStorage.getItem(SELECTED_SYSTEM);
-      if (system) {
-        setSelectedSystem(system);
-      }
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
   }, []);
 
   const toggleView = (viewType: ViewType) => {
@@ -83,13 +71,13 @@ const FaultTreeOverview = () => {
 
       {selectedView === "table" ? (
         <FaultTreeAndSystemOverviewTable
-          selectedSystem={selectedSystem}
+          selectedSystem={selectedSystem?.iri}
           faultTrees={faultTrees}
           handleFaultTreeContextMenu={handleContextMenu}
         />
       ) : (
         <FaultTreeAndSystemOverviewCardsList
-          selectedSystem={selectedSystem}
+          selectedSystem={selectedSystem?.iri}
           faultTrees={faultTrees}
           handleFaultTreeContextMenu={handleContextMenu}
         />
