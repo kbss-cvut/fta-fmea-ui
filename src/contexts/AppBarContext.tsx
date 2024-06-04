@@ -68,7 +68,7 @@ export const AppBarProvider = ({ children }: AppBarTitleProviderProps) => {
     if (loggedUser) fetchSystems();
 
     return () => axiosSource.cancel("SystemsProvider - unmounting");
-  }, [useUserAuth]);
+  }, [loggedUser]);
 
   const getTitleFromPathname = (pathname: string): string => {
     const parts = pathname.split("/");
