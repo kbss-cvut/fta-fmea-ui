@@ -39,7 +39,7 @@ export const SystemsProvider = ({ children }: ChildrenProps) => {
     if (loggedUser) fetchSystems();
 
     return () => axiosSource.cancel("SystemsProvider - unmounting");
-  }, []);
+  }, [loggedUser]);
 
   const addSystem = async (system: System) => {
     systemService
