@@ -63,7 +63,7 @@ export const asArray = (objectOrArray) => {
 const getModifiedList = <T extends { name: string }>(items: T[], selected: string | null): T[] => {
   if (!items) return [];
 
-  const selectedIndex = items.findIndex((item) => item.name === selected);
+  const selectedIndex = items.findIndex((item) => item.iri === selected);
 
   if (selectedIndex !== -1) {
     const selectedItem = items[selectedIndex];
@@ -76,8 +76,12 @@ const getModifiedList = <T extends { name: string }>(items: T[], selected: strin
 export const getModifiedSystemsList = (systems: System[], selected: string | null) =>
   getModifiedList(systems, selected);
 
-export const getModifiedFaultTreesList = (faultTrees: FaultTree[], selected: string | null) =>
-  getModifiedList(faultTrees, selected);
+export const getModifiedFaultTreesList = (faultTrees: FaultTree[], selected: string | null) => {
+  if(!faultTrees || !selected)
+    return faultTrees;
+  return faultTrees.filter(f => f?.system?.iri == selected);
+}
+
 
 export const formatDate = (dateString: string) => {
   if (!dateString) return "-";
