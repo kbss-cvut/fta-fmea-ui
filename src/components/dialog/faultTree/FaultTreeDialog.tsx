@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button, Dialog, TextField } from "@mui/material";
 import { DialogTitle } from "@components/materialui/dialog/DialogTitle";
 import { DialogContent } from "@components/materialui/dialog/DialogContent";
@@ -12,7 +12,7 @@ import { useFaultTrees } from "@hooks/useFaultTrees";
 import { FaultTree } from "@models/faultTreeModel";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { rootEventSchema } from "@components/dialog/faultEvent/FaultEventCreation.schema";
-import { FaultEventsReuseProvider } from "@hooks/useReusableFaultEvents";
+import { ReusableFaultEventsProvider } from "@hooks/useReusableFaultEvents";
 import { useTranslation } from "react-i18next";
 import useStyles from "@components/dialog/faultTree/FaultTreeDialog.styles";
 import {useSelectedSystem} from "@hooks/useSelectedSystem";
@@ -35,7 +35,8 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
 
     // TODO: Add full system from System Context Provider
     const faultTree = {
-      name: values.faultTreeName,
+      name: rootEvent.name,
+      system: selectedSystem,
       manifestingEvent: rootEvent,
     } as FaultTree;
 
@@ -64,9 +65,9 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
           {...register("faultTreeName")}
           helperText={!!useFormMethods.formState.errors.faultTreeName && t("newFtaModal.noSystemError")}
         />
-        <FaultEventsReuseProvider>
+        <ReusableFaultEventsProvider systemUri={selectedSystem?.iri}>
           <FaultEventCreation useFormMethods={useFormMethods} isRootEvent={true} />
-        </FaultEventsReuseProvider>
+        </ReusableFaultEventsProvider>
       </DialogContent>
       <DialogActions>
         <Button disabled={processing} color="primary" onClick={handleSubmit(handleCreateFaultTree)}>

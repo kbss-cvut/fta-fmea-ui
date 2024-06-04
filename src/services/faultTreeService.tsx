@@ -88,16 +88,31 @@ export const remove = async (faultTreeIri: string): Promise<void> => {
   }
 };
 
-export const getReusableEvents = async (faultTreeIri: string): Promise<FaultEvent[]> => {
+export const getRootReusableEvents = async (systemIri: string): Promise<FaultEvent[]> => {
   try {
-    const fragment = extractFragment(faultTreeIri);
-    const response = await axiosClient.get(`/faultTrees/${fragment}/reusableEvents`, {
+    const fragment = extractFragment(systemIri);
+    const response = await axiosClient.get(`/faultEvents/top-fault-events/${fragment}`, {
       headers: authHeaders(),
     });
 
     return JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(response.data, EVENT_CONTEXT);
   } catch (e) {
-    console.log("Fault Tree Service - Failed to call /getReusableEvents");
+    console.log("Fault Tree Service - Failed to call /getRootReusableEvents");
+    const defaultMessage = "Failed to find reusable fault events";
+    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+  }
+};
+
+export const getAllReusableEvents = async (systemIri: string, faultTreeIri: string): Promise<FaultEvent[]> => {
+  try {
+    const fragment = extractFragment(systemIri);
+    const response = await axiosClient.get(`/faultEvents/all-fault-events/${fragment}`, {
+      headers: authHeaders(),
+    });
+
+    return JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(response.data, EVENT_CONTEXT);
+  } catch (e) {
+    console.log("Fault Tree Service - Failed to call /getAllReusableEvents");
     const defaultMessage = "Failed to find reusable fault events";
     return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
   }
