@@ -21,7 +21,7 @@ interface Props extends ChildrenProps {
   systemUri?: string;
 }
 
-export const FaultEventsReuseProvider = ({ children, treeUri, systemUri }: Props) => {
+export const ReusableFaultEventsProvider = ({ children, treeUri, systemUri }: Props) => {
   const [_faultEvents, _setFaultEvents] = useState<FaultEvent[]>([]);
   const [showSnackbar] = useSnackbar();
 
@@ -37,7 +37,7 @@ export const FaultEventsReuseProvider = ({ children, treeUri, systemUri }: Props
     };
 
     fetchFaultEvents();
-    return () => axiosSource.cancel("FaultEventsReuseProvider - unmounting");
+    return () => axiosSource.cancel("ReusableFaultEventsProvider - unmounting");
   }, []);
 
   return <faultEventsContext.Provider value={_faultEvents}>{children}</faultEventsContext.Provider>;
