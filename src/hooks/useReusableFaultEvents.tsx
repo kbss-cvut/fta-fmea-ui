@@ -4,7 +4,6 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { FaultEvent } from "@models/eventModel";
 import { axiosSource } from "@services/utils/axiosUtils";
 import { ChildrenProps } from "@utils/hookUtils";
-import * as faultEventService from "@services/faultEventService";
 import * as faultTreeService from "@services/faultTreeService";
 import { SnackbarType, useSnackbar } from "./useSnackbar";
 

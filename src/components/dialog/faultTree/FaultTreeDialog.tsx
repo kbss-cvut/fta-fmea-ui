@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button, Dialog, TextField } from "@mui/material";
 import { DialogTitle } from "@components/materialui/dialog/DialogTitle";
 import { DialogContent } from "@components/materialui/dialog/DialogContent";
