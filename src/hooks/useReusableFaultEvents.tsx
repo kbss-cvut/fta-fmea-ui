@@ -27,6 +27,9 @@ export const FaultEventsReuseProvider = ({ children, treeUri, systemUri }: Props
 
   useEffect(() => {
     const fetchFaultEvents = async () => {
+      if(!systemUri)
+        return;
+
       const eventsPromise = treeUri
         ? faultTreeService.getAllReusableEvents(systemUri, treeUri)
         : faultTreeService.getRootReusableEvents(systemUri);
