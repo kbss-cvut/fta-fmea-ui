@@ -35,7 +35,8 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
 
     // TODO: Add full system from System Context Provider
     const faultTree = {
-      name: values.faultTreeName,
+      name: rootEvent.name,
+      system: selectedSystem,
       manifestingEvent: rootEvent,
     } as FaultTree;
 
@@ -64,7 +65,7 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
           {...register("faultTreeName")}
           helperText={!!useFormMethods.formState.errors.faultTreeName && t("newFtaModal.noSystemError")}
         />
-        <FaultEventsReuseProvider>
+        <FaultEventsReuseProvider systemUri={selectedSystem?.iri}>
           <FaultEventCreation useFormMethods={useFormMethods} isRootEvent={true} />
         </FaultEventsReuseProvider>
       </DialogContent>
