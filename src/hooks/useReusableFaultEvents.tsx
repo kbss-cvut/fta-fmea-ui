@@ -18,16 +18,18 @@ export const useReusableFaultEvents = () => {
 
 interface Props extends ChildrenProps {
   treeUri?: string;
+  systemUri?: string;
 }
 
-export const FaultEventsReuseProvider = ({ children, treeUri }: Props) => {
+export const FaultEventsReuseProvider = ({ children, treeUri, systemUri }: Props) => {
   const [_faultEvents, _setFaultEvents] = useState<FaultEvent[]>([]);
   const [showSnackbar] = useSnackbar();
 
   useEffect(() => {
     const fetchFaultEvents = async () => {
-      const eventsPromise = treeUri ? faultTreeService.getReusableEvents(treeUri) : faultEventService.findAll();
-
+      const eventsPromise = treeUri
+        ? faultTreeService.getAllReusableEvents(systemUri, treeUri)
+        : faultTreeService.getRootReusableEvents(systemUri);
       eventsPromise.then((value) => _setFaultEvents(value)).catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
     };
 
