@@ -14,8 +14,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { rootEventSchema } from "@components/dialog/faultEvent/FaultEventCreation.schema";
 import { FaultEventsReuseProvider } from "@hooks/useReusableFaultEvents";
 import { useTranslation } from "react-i18next";
-import { SELECTED_SYSTEM } from "@utils/constants";
 import useStyles from "@components/dialog/faultTree/FaultTreeDialog.styles";
+import {useSelectedSystem} from "@hooks/useSelectedSystem";
 
 const FaultTreeDialog = ({ open, handleCloseDialog }) => {
   const { t } = useTranslation();
@@ -23,14 +23,10 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
 
   const [, addFaultTree] = useFaultTrees();
   const [processing, setIsProcessing] = useState(false);
-  const [systemName, setSystemName] = useState(sessionStorage.getItem(SELECTED_SYSTEM));
+  const [selectedSystem] = useSelectedSystem();
 
   const useFormMethods = useForm({ resolver: yupResolver(schema.concat(rootEventSchema)) });
   const { handleSubmit, register } = useFormMethods;
-
-  useEffect(() => {
-    setSystemName(sessionStorage.getItem(SELECTED_SYSTEM));
-  }, [sessionStorage.getItem(SELECTED_SYSTEM)]);
 
   const handleCreateFaultTree = async (values: any) => {
     setIsProcessing(true);
@@ -57,7 +53,7 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
       <DialogContent dividers>
         <TextField
           className={classes.readOnly}
-          value={systemName}
+          value={selectedSystem?.name}
           aria-readonly={true}
           margin="dense"
           label={t("newFtaModal.namePlaceholder")}
