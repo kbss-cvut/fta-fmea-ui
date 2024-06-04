@@ -14,7 +14,6 @@ import { Box, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { SELECTED_VIEW } from "@utils/constants";
 import {useSelectedSystem} from "@hooks/useSelectedSystem";
-import {ReusableFaultEventsProvider} from "@hooks/useReusableFaultEvents";
 
 const FaultTreeOverview = () => {
   const { t } = useTranslation();
@@ -95,12 +94,10 @@ const FaultTreeOverview = () => {
         handleCloseDialog={() => setEditDialogOpen(false)}
         faultTree={contextMenuSelectedTree}
       />
-      <ReusableFaultEventsProvider>
-        <FaultTreeDialog
-          open={createFaultTreeDialogOpen}
-          handleCloseDialog={() => setCreateFaultTreeDialogOpen(false)}
-        />
-      </ReusableFaultEventsProvider>
+      <FaultTreeDialog
+        open={createFaultTreeDialogOpen}
+        handleCloseDialog={() => setCreateFaultTreeDialogOpen(false)}
+      />
     </Box>
   );
 };
