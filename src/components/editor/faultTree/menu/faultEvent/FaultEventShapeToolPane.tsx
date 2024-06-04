@@ -13,6 +13,7 @@ import { FaultEvent, GateType } from "@models/eventModel";
 import FaultEventChildrenReorderList from "@components/editor/faultTree/menu/faultEvent/reorder/FaultEventChildrenReorderList";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 import useStyles from "@components/editor/faultTree/menu/faultEvent/FaultEventShapeToolPane.styles";
+import { FaultEventsReuseProvider } from "@hooks/useReusableFaultEvents";
 
 interface Props {
   data?: FaultEvent;
@@ -52,7 +53,11 @@ const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) =
       onEventUpdated(dataClone);
     };
 
-    editorPane = <FaultEventCreation useFormMethods={useFormMethods} eventReusing={false} />;
+    editorPane = (
+      <FaultEventsReuseProvider>
+        <FaultEventCreation useFormMethods={useFormMethods} isRootEvent={true}/>
+      </FaultEventsReuseProvider>
+    );
   } else {
     defaultValues = {};
     useFormMethods = useForm();

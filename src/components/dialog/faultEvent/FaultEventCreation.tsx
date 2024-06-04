@@ -111,8 +111,8 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent }: Props) => {
                       labelId="event-type-select-label"
                       label={t("newFtaModal.type")}
                     >
-                      {Object.values(EventType).map((value) => (
-                        <MenuItem key={value} value={value}>
+                      {Object.values(EventType).map((value, index) => (
+                        <MenuItem key={index} value={value}>
                           {value}
                         </MenuItem>
                       ))}
