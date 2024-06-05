@@ -54,6 +54,16 @@ const renderTree = async (container, node, parentShape = null, pathsToHighlight)
   if (width > DEFAULT_NODE_SHAPE_SIZE) nodeShape.prop("size", { width: width });
 
   nodeShape.attr(["label", "text"], node.name);
+
+  // For now it seems impossible to detect when operational failure rate was selected.
+  // "has" function from lodash can only check property existence with direct path. So we can't show "(o)" in front of "probability"
+
+  // if (has(node, "probability")) {
+  //   nodeShape.attr(
+  //     ["probabilityLabel", "text"],
+  //     `${has(node, "selectedEstimate") ? "(p)" : "(m)"}${node.probability.toExponential(2)}`,
+  //   );
+  // }
   if (has(node, "probability")) {
     nodeShape.attr(["probabilityLabel", "text"], node.probability.toExponential(2));
   }
