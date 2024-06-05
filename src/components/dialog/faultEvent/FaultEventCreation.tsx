@@ -168,20 +168,18 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent }: Props) => {
             />
 
             {/* Probability field */}
-            {eventTypeWatch !== EventType.INTERMEDIATE && (
-              <TextField
-                label={t("newFtaModal.probability")}
-                type="number"
-                min={0}
-                max={1}
-                step={0.01}
-                error={!!errors.probability}
-                helperText={errors.probability?.message}
-                className={classes.probability}
-                defaultValue=""
-                {...register("probability")}
-              />
-            )}
+            <TextField
+              label={t("newFtaModal.probability")}
+              type="number"
+              min={0}
+              max={1}
+              step={0.01}
+              error={!!errors.probability}
+              helperText={errors.probability?.message}
+              className={classes.probability}
+              defaultValue=""
+              {...register("probability")}
+            />
 
             {(gateTypeWatch === GateType.PRIORITY_AND || !gateTypeWatch) &&
               eventTypeWatch === EventType.INTERMEDIATE &&
