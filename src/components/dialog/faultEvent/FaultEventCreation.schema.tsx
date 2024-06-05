@@ -38,4 +38,5 @@ export const schema = Yup.object().shape({
 
 export const rootEventSchema = Yup.object().shape({
   name: Yup.string().min(1, "Must be at least 1 character long").required("Event is mandatory"),
+  gateType: Yup.string().nullable().default(GateType.OR),
 });
