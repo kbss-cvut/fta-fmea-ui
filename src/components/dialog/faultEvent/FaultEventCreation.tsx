@@ -80,6 +80,38 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent }: Props) => {
           )}
           defaultValue={null}
         />
+
+        {(eventTypeWatch === EventType.INTERMEDIATE || !eventTypeWatch) && (
+          <div className={classes.formControlDiv}>
+            <FormControl className={classes.formControl}>
+              <InputLabel id="gate-type-select-label">{t("newFtaModal.gateType")}</InputLabel>
+              <Controller
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    labelId="gate-type-select-label"
+                    label={t("newFtaModal.gateType")}
+                    error={!!errors.gateType}
+                  >
+                    {gateTypeValues()
+                      .filter((value) => value[0])
+                      .map((value) => {
+                        const [enabled, optionValue] = value;
+                        return (
+                          <MenuItem key={optionValue} value={optionValue} disabled={!enabled}>
+                            {optionValue}
+                          </MenuItem>
+                        );
+                      })}
+                  </Select>
+                )}
+                name="gateType"
+                control={control}
+                defaultValue={GateType.OR}
+              />
+            </FormControl>
+          </div>
+        )}
       </>
     );
   }
@@ -169,39 +201,6 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent }: Props) => {
                   {...register("sequenceProbability")}
                 />
               )}
-
-            {(eventTypeWatch === EventType.INTERMEDIATE || !eventTypeWatch) && (
-              <div className={classes.formControlDiv}>
-                <FormControl className={classes.formControl}>
-                  <InputLabel id="gate-type-select-label">{t("newFtaModal.gateType")}</InputLabel>
-                  <Controller
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        disabled={existingEventSelected}
-                        labelId="gate-type-select-label"
-                        label={t("newFtaModal.gateType")}
-                        error={!!errors.gateType}
-                      >
-                        {gateTypeValues()
-                          .filter((value) => value[0])
-                          .map((value) => {
-                            const [enabled, optionValue] = value;
-                            return (
-                              <MenuItem key={optionValue} value={optionValue} disabled={!enabled}>
-                                {optionValue}
-                              </MenuItem>
-                            );
-                          })}
-                      </Select>
-                    )}
-                    name="gateType"
-                    control={control}
-                    defaultValue={GateType.OR}
-                  />
-                </FormControl>
-              </div>
-            )}
           </>
         )}
       </>
