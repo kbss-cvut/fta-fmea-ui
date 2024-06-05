@@ -11,11 +11,11 @@ import FaultEventCreation from "@components/dialog/faultEvent/FaultEventCreation
 import { useFaultTrees } from "@hooks/useFaultTrees";
 import { FaultTree } from "@models/faultTreeModel";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { rootEventSchema } from "@components/dialog/faultEvent/FaultEventCreation.schema";
+import { eventSchema } from "@components/dialog/faultEvent/FaultEventCreation.schema";
 import { ReusableFaultEventsProvider } from "@hooks/useReusableFaultEvents";
 import { useTranslation } from "react-i18next";
 import useStyles from "@components/dialog/faultTree/FaultTreeDialog.styles";
-import {useSelectedSystem} from "@hooks/useSelectedSystem";
+import { useSelectedSystem } from "@hooks/useSelectedSystem";
 
 const FaultTreeDialog = ({ open, handleCloseDialog }) => {
   const { t } = useTranslation();
@@ -25,7 +25,7 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
   const [processing, setIsProcessing] = useState(false);
   const [selectedSystem] = useSelectedSystem();
 
-  const useFormMethods = useForm({ resolver: yupResolver(schema.concat(rootEventSchema)) });
+  const useFormMethods = useForm({ resolver: yupResolver(schema.concat(eventSchema)) });
   const { handleSubmit, register } = useFormMethods;
 
   const handleCreateFaultTree = async (values: any) => {

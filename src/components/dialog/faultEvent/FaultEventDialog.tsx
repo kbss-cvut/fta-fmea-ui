@@ -8,12 +8,12 @@ import * as faultEventService from "@services/faultEventService";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 import FaultEventCreation from "./FaultEventCreation";
 import { useForm } from "react-hook-form";
-import { schema } from "./FaultEventCreation.schema";
+import { eventSchema } from "./FaultEventCreation.schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { eventFromHookFormValues } from "@services/faultEventService";
 import { ReusableFaultEventsProvider } from "@hooks/useReusableFaultEvents";
 import { FaultEvent } from "@models/eventModel";
-import {useSelectedSystem} from "@hooks/useSelectedSystem";
+import { useSelectedSystem } from "@hooks/useSelectedSystem";
 
 interface Props {
   open: boolean;
@@ -27,7 +27,7 @@ const FaultEventDialog = ({ open, eventIri, treeUri, onCreated, onClose }: Props
   const [showSnackbar] = useSnackbar();
 
   const [selectedSystem] = useSelectedSystem();
-  const useFormMethods = useForm({ resolver: yupResolver(schema) });
+  const useFormMethods = useForm({ resolver: yupResolver(eventSchema) });
   const { handleSubmit, formState } = useFormMethods;
   const { isSubmitting } = formState;
 
@@ -51,7 +51,7 @@ const FaultEventDialog = ({ open, eventIri, treeUri, onCreated, onClose }: Props
         </DialogTitle>
         <DialogContent dividers>
           <ReusableFaultEventsProvider treeUri={treeUri} systemUri={selectedSystem?.iri}>
-            <FaultEventCreation useFormMethods={useFormMethods} eventReusing={true} />
+            <FaultEventCreation useFormMethods={useFormMethods} isRootEvent={false} />
           </ReusableFaultEventsProvider>
         </DialogContent>
         <DialogActions>
