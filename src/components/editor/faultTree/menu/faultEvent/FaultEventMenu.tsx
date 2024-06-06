@@ -89,7 +89,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
 
     if (shapeToolData?.supertypes?.behavior?.item?.schematicDesignation) {
       if (Array.isArray(shapeToolData?.supertypes?.behavior?.item?.schematicDesignation)) {
-        setSchematicDesignation(shapeToolData?.supertypes?.behavior?.item?.schematicDesignation.join(" "));
+        setSchematicDesignation(shapeToolData?.supertypes?.behavior?.item?.schematicDesignation.join(", "));
       } else {
         setSchematicDesignation(shapeToolData?.supertypes?.behavior?.item?.schematicDesignation);
       }
@@ -110,14 +110,6 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
       {/* ROOT NODE */}
       {shapeToolData && shapeToolData.iri === rootIri && (
         <>
-          {shapeToolData?.probability && (
-            <Box className={classes.labelRow}>
-              <Typography>
-                <span className={classes.label}>Calculated failure rate:</span>
-                {shapeToolData?.probability.toExponential(2)}
-              </Typography>
-            </Box>
-          )}
           {basedFailureRate && (
             <Box className={classes.labelRow}>
               <Typography>
