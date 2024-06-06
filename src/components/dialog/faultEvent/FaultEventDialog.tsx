@@ -8,7 +8,7 @@ import * as faultEventService from "@services/faultEventService";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 import FaultEventCreation from "./FaultEventCreation";
 import { useForm } from "react-hook-form";
-import { eventSchema } from "./FaultEventCreation.schema";
+import { faultEventSchema } from "./FaultEventCreation.schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { eventFromHookFormValues } from "@services/faultEventService";
 import { ReusableFaultEventsProvider } from "@hooks/useReusableFaultEvents";
@@ -27,7 +27,7 @@ const FaultEventDialog = ({ open, eventIri, treeUri, onCreated, onClose }: Props
   const [showSnackbar] = useSnackbar();
 
   const [selectedSystem] = useSelectedSystem();
-  const useFormMethods = useForm({ resolver: yupResolver(eventSchema) });
+  const useFormMethods = useForm({ resolver: yupResolver(faultEventSchema) });
   const { handleSubmit, formState } = useFormMethods;
   const { isSubmitting } = formState;
 
