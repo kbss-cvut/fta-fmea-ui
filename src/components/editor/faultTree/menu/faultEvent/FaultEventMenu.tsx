@@ -11,6 +11,8 @@ import FailureModeShowDialog from "../../../../dialog/failureMode/show/FailureMo
 import useStyles from "@components/editor/faultTree/menu/faultEvent/FaultEventMenu.styles";
 import { useTranslation } from "react-i18next";
 import { asArray } from "@utils/utils";
+import { ReusableFaultEventsProvider } from "@hooks/useReusableFaultEvents";
+import { useSelectedSystem } from "@hooks/useSelectedSystem";
 
 interface Props {
   shapeToolData?: FaultEvent;
@@ -34,6 +36,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
   const [stock, setStock] = useState<string | undefined>(undefined);
   const [quantity, setQuantity] = useState<number | undefined>(undefined);
   const [schematicDesignation, setSchematicDesignation] = useState<string | undefined>(undefined);
+  const [selectedSystem] = useSelectedSystem();
 
   const handleFailureModeClicked = (failureMode: FailureMode) => {
     setFailureModeOverview(failureMode);
@@ -103,7 +106,9 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
 
   return (
     <Box paddingLeft={2} marginRight={2}>
-      <FaultEventShapeToolPane data={shapeToolData} onEventUpdated={onEventUpdated} refreshTree={refreshTree} />
+      <ReusableFaultEventsProvider systemUri={selectedSystem?.iri}>
+        <FaultEventShapeToolPane data={shapeToolData} onEventUpdated={onEventUpdated} refreshTree={refreshTree} />
+      </ReusableFaultEventsProvider>
 
       {/* TODO: Finish for other nodes. Will be refactored. */}
 
