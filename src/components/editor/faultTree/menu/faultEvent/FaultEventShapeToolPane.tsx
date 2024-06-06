@@ -13,7 +13,6 @@ import { FaultEvent, GateType } from "@models/eventModel";
 import FaultEventChildrenReorderList from "@components/editor/faultTree/menu/faultEvent/reorder/FaultEventChildrenReorderList";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 import useStyles from "@components/editor/faultTree/menu/faultEvent/FaultEventShapeToolPane.styles";
-import { ReusableFaultEventsProvider } from "@hooks/useReusableFaultEvents";
 
 interface Props {
   data?: FaultEvent;
@@ -26,7 +25,7 @@ const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) =
   const [showSnackbar] = useSnackbar();
 
   let editorPane;
-  let updateFunction;
+  let updateEvent;
   let useFormMethods;
   let defaultValues;
 
@@ -44,7 +43,7 @@ const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) =
       resolver: yupResolver(eventSchema),
     });
 
-    updateFunction = async (values: any) => {
+    updateEvent = async (values: any) => {
       let dataClone = cloneDeep(data);
 
       const updatedFaultEvent = deepOmit(faultEventService.eventFromHookFormValues(values), "@type");
@@ -53,11 +52,7 @@ const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) =
       onEventUpdated(dataClone);
     };
 
-    editorPane = (
-      <ReusableFaultEventsProvider>
-        <FaultEventCreation useFormMethods={useFormMethods} isRootEvent={true}/>
-      </ReusableFaultEventsProvider>
-    );
+    editorPane = <FaultEventCreation useFormMethods={useFormMethods} isRootEvent={true} eventValue={data} />;
   } else {
     defaultValues = {};
     useFormMethods = useForm();
@@ -93,7 +88,7 @@ const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) =
     <React.Fragment>
       {editorPane}
       {isDirty && (
-        <Button disabled={isSubmitting || !eventSelected} color="primary" onClick={handleSubmit(updateFunction)}>
+        <Button disabled={isSubmitting || !eventSelected} color="primary" onClick={handleSubmit(updateEvent)}>
           Save
         </Button>
       )}

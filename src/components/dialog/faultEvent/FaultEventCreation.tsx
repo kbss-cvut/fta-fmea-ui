@@ -12,10 +12,11 @@ import { useTranslation } from "react-i18next";
 interface Props {
   useFormMethods: any;
   isRootEvent: boolean;
+  eventValue?: FaultEvent;
 }
 
 // TODO: remove ts-ignores and migrate to higher version of react-hook-form
-const FaultEventCreation = ({ useFormMethods, isRootEvent }: Props) => {
+const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue }: Props) => {
   const { classes } = useStyles();
   const { t } = useTranslation();
 
@@ -78,7 +79,7 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent }: Props) => {
           renderInput={(params) => (
             <TextField {...params} label={t("newFtaModal.eventPlaceholder")} variant="outlined" {...register("name")} />
           )}
-          defaultValue={null}
+          defaultValue={eventValue ? eventValue : null}
         />
 
         <div className={classes.formControlDiv}>
