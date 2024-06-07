@@ -103,9 +103,9 @@ export const getRootReusableEvents = async (systemIri: string): Promise<FaultEve
   }
 };
 
-export const getAllReusableEvents = async (systemIri: string, faultTreeIri: string): Promise<FaultEvent[]> => {
+export const getAllReusableEvents = async (faultTreeIri: string): Promise<FaultEvent[]> => {
   try {
-    const fragment = extractFragment(systemIri);
+    const fragment = extractFragment(faultTreeIri);
     const response = await axiosClient.get(`/faultEvents/all-fault-events/${fragment}`, {
       headers: authHeaders(),
     });
