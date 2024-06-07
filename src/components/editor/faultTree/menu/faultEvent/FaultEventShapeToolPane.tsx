@@ -52,7 +52,9 @@ const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) =
       onEventUpdated(dataClone);
     };
 
-    editorPane = <FaultEventCreation useFormMethods={useFormMethods} isRootEvent={true} eventValue={data} />;
+    editorPane = (
+      <FaultEventCreation useFormMethods={useFormMethods} isRootEvent={false} eventValue={data} isEditedEvent={true} />
+    );
   } else {
     defaultValues = {};
     useFormMethods = useForm();

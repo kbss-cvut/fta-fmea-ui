@@ -13,10 +13,11 @@ interface Props {
   useFormMethods: any;
   isRootEvent: boolean;
   eventValue?: FaultEvent;
+  isEditedEvent?: boolean;
 }
 
 // TODO: remove ts-ignores and migrate to higher version of react-hook-form
-const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue }: Props) => {
+const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedEvent = false }: Props) => {
   const { classes } = useStyles();
   const { t } = useTranslation();
 
@@ -82,35 +83,72 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue }: Props) 
           defaultValue={eventValue ? eventValue : null}
         />
 
-        <div className={classes.formControlDiv}>
-          <FormControl className={classes.formControl}>
-            <InputLabel id="gate-type-select-label">{t("newFtaModal.gateType")}</InputLabel>
+        {!selectedEvent && !isRootEvent && (
+          <FormControl disabled={existingEventSelected} className={classes.formControl}>
+            <InputLabel id="event-type-select-label">{t("newFtaModal.type")}</InputLabel>
             <Controller
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  labelId="gate-type-select-label"
-                  label={t("newFtaModal.gateType")}
-                  error={!!errors.gateType}
-                >
-                  {gateTypeValues()
-                    .filter((value) => value[0])
-                    .map((value) => {
-                      const [enabled, optionValue] = value;
-                      return (
-                        <MenuItem key={optionValue} value={optionValue} disabled={!enabled}>
-                          {optionValue}
-                        </MenuItem>
-                      );
-                    })}
-                </Select>
-              )}
-              name="gateType"
+              render={({ field }) => {
+                const _onChange = field.onChange;
+                field.onChange = (e) => {
+                  if (e.target.value !== EventType.INTERMEDIATE && e.target.value !== EventType.CONDITIONING) {
+                    lastGateTypeRef.current = gateTypeWatch;
+                    setValue("gateType", null);
+                  } else setValue("gateType", lastGateTypeRef.current ? lastGateTypeRef.current : GateType.OR);
+                  _onChange(e);
+                };
+                return (
+                  <Select
+                    {...field}
+                    disabled={existingEventSelected}
+                    labelId="event-type-select-label"
+                    label={t("newFtaModal.type")}
+                  >
+                    {Object.values(EventType).map((value, index) => (
+                      <MenuItem key={index} value={value}>
+                        {value}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                );
+              }}
+              name="eventType"
               control={control}
-              defaultValue={GateType.OR}
+              defaultValue={EventType.INTERMEDIATE}
             />
           </FormControl>
-        </div>
+        )}
+
+        {eventTypeWatch === EventType.INTERMEDIATE && (
+          <div className={classes.formControlDiv}>
+            <FormControl className={classes.formControl}>
+              <InputLabel id="gate-type-select-label">{t("newFtaModal.gateType")}</InputLabel>
+              <Controller
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    labelId="gate-type-select-label"
+                    label={t("newFtaModal.gateType")}
+                    error={!!errors.gateType}
+                  >
+                    {gateTypeValues()
+                      .filter((value) => value[0])
+                      .map((value) => {
+                        const [enabled, optionValue] = value;
+                        return (
+                          <MenuItem key={optionValue} value={optionValue} disabled={!enabled}>
+                            {optionValue}
+                          </MenuItem>
+                        );
+                      })}
+                  </Select>
+                )}
+                name="gateType"
+                control={control}
+                defaultValue={GateType.OR}
+              />
+            </FormControl>
+          </div>
+        )}
       </>
     );
   }
@@ -121,41 +159,8 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue }: Props) 
     }
     return (
       <>
-        {!selectedEvent && filteredOptions.length === 0 && !isRootEvent && (
+        {eventTypeWatch !== EventType.INTERMEDIATE && !isRootEvent && isEditedEvent && (
           <>
-            <FormControl disabled={existingEventSelected} className={classes.formControl}>
-              <InputLabel id="event-type-select-label">{t("newFtaModal.type")}</InputLabel>
-              <Controller
-                render={({ field }) => {
-                  const _onChange = field.onChange;
-                  field.onChange = (e) => {
-                    if (e.target.value !== EventType.INTERMEDIATE && e.target.value !== EventType.CONDITIONING) {
-                      lastGateTypeRef.current = gateTypeWatch;
-                      setValue("gateType", null);
-                    } else setValue("gateType", lastGateTypeRef.current ? lastGateTypeRef.current : GateType.OR);
-                    _onChange(e);
-                  };
-                  return (
-                    <Select
-                      {...field}
-                      disabled={existingEventSelected}
-                      labelId="event-type-select-label"
-                      label={t("newFtaModal.type")}
-                    >
-                      {Object.values(EventType).map((value, index) => (
-                        <MenuItem key={index} value={value}>
-                          {value}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  );
-                }}
-                name="eventType"
-                control={control}
-                defaultValue={EventType.INTERMEDIATE}
-              />
-            </FormControl>
-
             {/*TODO: sort out default value UI bug*/}
             <TextField
               margin="dense"
