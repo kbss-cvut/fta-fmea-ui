@@ -63,6 +63,11 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedE
   };
 
   function renderEventSelect() {
+    const supertype =
+      Array.isArray(eventValue?.supertypes) && eventValue.supertypes.length > 0 ? eventValue.supertypes[0] : null;
+
+    const eventVal = supertype ? supertype : eventValue;
+    const defaultValue = eventVal ? { name: eventVal.name, iri: eventVal.iri } : null;
     return (
       <>
         <Typography variant="subtitle1" gutterBottom>
@@ -80,7 +85,7 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedE
           renderInput={(params) => (
             <TextField {...params} label={t("newFtaModal.eventPlaceholder")} variant="outlined" {...register("name")} />
           )}
-          defaultValue={eventValue ? eventValue : null}
+          defaultValue={defaultValue}
         />
 
         {!selectedEvent && !isRootEvent && (
