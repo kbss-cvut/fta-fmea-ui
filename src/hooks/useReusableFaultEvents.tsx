@@ -26,18 +26,17 @@ export const ReusableFaultEventsProvider = ({ children, treeUri, systemUri }: Pr
 
   useEffect(() => {
     const fetchFaultEvents = async () => {
-      if(!systemUri)
-        return;
+      if (!systemUri && !treeUri) return;
 
       const eventsPromise = treeUri
-        ? faultTreeService.getAllReusableEvents(systemUri, treeUri)
+        ? faultTreeService.getAllReusableEvents(treeUri)
         : faultTreeService.getRootReusableEvents(systemUri);
       eventsPromise.then((value) => _setFaultEvents(value)).catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
     };
 
     fetchFaultEvents();
     return () => axiosSource.cancel("ReusableFaultEventsProvider - unmounting");
-  }, []);
+  }, [treeUri, systemUri]);
 
   return <faultEventsContext.Provider value={_faultEvents}>{children}</faultEventsContext.Provider>;
 };

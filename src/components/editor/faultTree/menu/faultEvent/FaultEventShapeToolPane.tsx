@@ -13,6 +13,8 @@ import { FaultEvent, GateType } from "@models/eventModel";
 import FaultEventChildrenReorderList from "@components/editor/faultTree/menu/faultEvent/reorder/FaultEventChildrenReorderList";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 import useStyles from "@components/editor/faultTree/menu/faultEvent/FaultEventShapeToolPane.styles";
+import { ReusableFaultEventsProvider } from "@hooks/useReusableFaultEvents";
+import { useCurrentFaultTree } from "@hooks/useCurrentFaultTree";
 
 interface Props {
   data?: FaultEvent;
@@ -23,6 +25,7 @@ interface Props {
 const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) => {
   const { classes } = useStyles();
   const [showSnackbar] = useSnackbar();
+  const [faultTree] = useCurrentFaultTree();
 
   let editorPane;
   let updateEvent;
@@ -58,7 +61,14 @@ const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) =
     };
 
     editorPane = (
-      <FaultEventCreation useFormMethods={useFormMethods} isRootEvent={false} eventValue={data} isEditedEvent={true} />
+      <ReusableFaultEventsProvider treeUri={faultTree?.iri}>
+        <FaultEventCreation
+          useFormMethods={useFormMethods}
+          isRootEvent={false}
+          eventValue={data}
+          isEditedEvent={true}
+        />
+      </ReusableFaultEventsProvider>
     );
   } else {
     defaultValues = {};
