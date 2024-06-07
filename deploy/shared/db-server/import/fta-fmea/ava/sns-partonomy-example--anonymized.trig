@@ -499,7 +499,8 @@
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-523868029>
     a :fault-event-type;
-    :has-type-category "ROLE" .
+    :has-type-category "ROLE" ;
+    :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance519161333> .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/ata-system/instance628057022>
     a :ata-system;
@@ -1710,7 +1711,18 @@
     a :failure-rate-estimate;
     :is-based-on <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-general-estimation-method/instance1420775803>;
     :value 1.6666666666666667E-5 .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance519161333>
+    a :failure-rate;
+    :has-estimate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-1431606333> .
+
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-1431606333>
+    a :failure-rate-estimate;
+    :is-based-on <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-general-estimation-method/instance1420775803>;
+    :value 1.21E-5 .
   
+
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance715489130>
     a :failure-rate-estimate;
     :is-based-on <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-general-estimation-method/instance1420775803>;

@@ -90,7 +90,7 @@
     :description ""@cs;
     :name "Failure of 21-30-01 Regulator"@cs;
     :probability 1.6667E-5;
-    :has-selected-estimation <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-1431606056> ;
+    :has-selected-estimation <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-1431606333> ;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance586401371> .
 
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event/instance621415126>
