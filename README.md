@@ -19,7 +19,7 @@ npm run preview
 
 ## Running complete tool in Docker
 
-1. Change the working directory using `cd ./deploy/no-proxy`
+1. Change the working directory using `cd ./deploy/internal-auth`
 2. Run `docker-compose up -d` to start the application.
 3. The application should be accessible at `http:/localhost:8080/`
 
