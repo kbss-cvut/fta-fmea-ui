@@ -53,7 +53,7 @@ const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) =
 
       const updatedFaultEvent = deepOmit(faultEventService.eventFromHookFormValues(values), "@type");
       dataClone = merge(dataClone, updatedFaultEvent);
-
+      dataClone.supertypes = updatedFaultEvent.supertypes;
       onEventUpdated(dataClone);
     };
 
