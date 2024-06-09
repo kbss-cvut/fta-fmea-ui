@@ -6,12 +6,16 @@ import { Rectangle, CONTEXT as RECTANGLE_CONTEXT, PREFIX as DIAGRAM_PREFIX } fro
 const XMLSchemaDateTime = "http://www.w3.org/2001/XMLSchema#dateTime";
 
 const ctx = {
+  xsd: "http://www.w3.org/2001/XMLSchema#",
   name: VocabularyUtils.PREFIX + "name",
   description: VocabularyUtils.PREFIX + "description",
   gateType: VocabularyUtils.PREFIX + "gate-type",
   eventType: VocabularyUtils.PREFIX + "fault-event-type",
   rpn: VocabularyUtils.PREFIX + "has-rpn",
-  probability: VocabularyUtils.PREFIX + "probability",
+  probability: {
+    "@id": VocabularyUtils.PREFIX + "probability",
+    "@type": "xsd:double",
+  },
   children: VocabularyUtils.PREFIX + "has-child",
   failureMode: VocabularyUtils.PREFIX + "has-failure-mode",
   sequenceProbability: VocabularyUtils.PREFIX + "sequence-probability",
