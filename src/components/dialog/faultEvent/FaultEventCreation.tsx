@@ -41,11 +41,7 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedE
   useEffect(() => {
     if (selectedEvent) {
       setValue("name", selectedEvent.name);
-      setValue("description", selectedEvent.description);
-      setValue("probability", selectedEvent.probability);
-      setValue("eventType", selectedEvent.eventType);
-      setValue("gateType", selectedEvent.gateType);
-      setValue("sequenceProbability", selectedEvent.sequenceProbability);
+      setValue("existingEvent", selectedEvent.iri ? selectedEvent : null);
     } else {
       reset();
     }
