@@ -143,6 +143,18 @@ const Editor = () => {
   };
 
   const handleEventUpdate = (eventToUpdate: FaultEvent) => {
+    if (eventToUpdate.supertypes) {
+      if (Array.isArray(eventToUpdate.supertypes) && eventToUpdate.supertypes.length > 0) {
+        eventToUpdate.supertypes = eventToUpdate.supertypes.map((t) => ({ types: t.types, iri: t.iri, name: t.name }));
+      } else {
+        eventToUpdate.supertypes = {
+          types: eventToUpdate.supertypes.types,
+          iri: eventToUpdate.supertypes.iri,
+          name: eventToUpdate.supertypes.name,
+        };
+      }
+    }
+
     faultEventService
       .update(eventToUpdate)
       .then((value) => refreshTree())
