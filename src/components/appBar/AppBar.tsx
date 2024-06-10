@@ -40,8 +40,9 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
   const { classes } = useStyles();
   const history = useNavigate();
   const { i18n, t } = useTranslation();
-  const location = useLocation();
   const { appBarTitle, systemsList } = useAppBar();
+  const location = useLocation();
+  const path = location.pathname;
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selectedSystem, setSelectedSystem] = useSelectedSystem();
@@ -143,6 +144,7 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
                     className={classes.textfieldSelect}
                     value={selectedSystem ? selectedSystem.iri : ""}
                     onChange={handleSystemChange}
+                    disabled={path.includes("instance")}
                   >
                     {systemsList.map((s, i) => {
                       return (
