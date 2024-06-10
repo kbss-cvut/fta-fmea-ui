@@ -40,11 +40,6 @@ const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) =
       probability: data.probability ? data.probability : 0.01,
       gateType: data.gateType ? data.gateType : null,
       sequenceProbability: data.sequenceProbability,
-      existingEvent: Array.isArray(data.supertypes)
-        ? data.supertypes.length > 0
-          ? data.supertypes[0]
-          : null
-        : data.supertypes,
     };
 
     useFormMethods = useForm({
