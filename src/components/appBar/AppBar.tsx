@@ -26,7 +26,8 @@ import { PRIMARY_LANGUAGE, SECONDARY_LANGUAGE, SELECTED_LANGUAGE_KEY } from "@ut
 import { useAppBar } from "../../contexts/AppBarContext";
 import { useLocation } from "react-router-dom";
 import CancelIcon from "@mui/icons-material/Cancel";
-import {useSelectedSystem} from "@hooks/useSelectedSystem";
+import { useSelectedSystem } from "@hooks/useSelectedSystem";
+import { isUsingOidcAuth } from "@utils/OidcUtils";
 
 interface Props {
   title: string;
@@ -89,7 +90,8 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
       {loggedUser.roles && loggedUser.roles.indexOf("ROLE_ADMIN") >= 0 && (
         <MenuItem onClick={navigateToAdmin}>Administration</MenuItem>
       )}
-      <MenuItem onClick={handleChangePasswordDialogOpen}>Change Password</MenuItem>
+      {!isUsingOidcAuth() && <MenuItem onClick={handleChangePasswordDialogOpen}>Change Password</MenuItem>}
+
       <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
   );
@@ -104,7 +106,7 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
     }
   };
 
-  const handleSystemChange = (event : React.ChangeEvent<{ value: unknown }>) => {
+  const handleSystemChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     const value = event.target.value as string;
     const selectedSystem = value ? systemsList.find((s) => s.iri == value) : null;
     setSelectedSystem(selectedSystem);
