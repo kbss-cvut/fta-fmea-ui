@@ -8,6 +8,7 @@ import { useReusableFaultEvents } from "@hooks/useReusableFaultEvents";
 import ControlledAutocomplete from "@components/materialui/ControlledAutocomplete";
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { asArray } from "@utils/utils";
 
 interface Props {
   useFormMethods: any;
@@ -59,6 +60,8 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedE
   };
 
   function renderEventSelect() {
+    const eventVal = asArray(eventValue?.supertypes)?.[0] || eventValue;
+    const defaultValue = eventVal ? { name: eventVal.name, iri: eventVal.iri } : null;
     return (
       <>
         <Typography variant="subtitle1" gutterBottom>
@@ -76,7 +79,7 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedE
           renderInput={(params) => (
             <TextField {...params} label={t("newFtaModal.eventPlaceholder")} variant="outlined" {...register("name")} />
           )}
-          defaultValue={eventValue ? eventValue : null}
+          defaultValue={defaultValue}
         />
 
         {!selectedEvent && !isRootEvent && (
