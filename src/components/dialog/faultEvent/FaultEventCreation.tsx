@@ -162,52 +162,55 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedE
     }
     return (
       <>
-        {eventTypeWatch !== EventType.INTERMEDIATE && !isRootEvent && isEditedEvent && (
-          <>
-            {/*TODO: sort out default value UI bug*/}
-            <TextField
-              margin="dense"
-              label={t("newFtaModal.description")}
-              fullWidth
-              error={!!errors.description}
-              helperText={errors.description?.message}
-              defaultValue=""
-              disabled={existingEventSelected}
-              {...register("description")}
-            />
+        {eventTypeWatch !== EventType.INTERMEDIATE &&
+          eventTypeWatch !== EventType.EXTERNAL &&
+          !isRootEvent &&
+          isEditedEvent && (
+            <>
+              {/*TODO: sort out default value UI bug*/}
+              <TextField
+                margin="dense"
+                label={t("newFtaModal.description")}
+                fullWidth
+                error={!!errors.description}
+                helperText={errors.description?.message}
+                defaultValue=""
+                disabled={existingEventSelected}
+                {...register("description")}
+              />
 
-            {/* Probability field */}
-            <TextField
-              label={t("newFtaModal.probability")}
-              type="number"
-              min={0}
-              max={1}
-              step={0.01}
-              error={!!errors.probability}
-              helperText={errors.probability?.message}
-              className={classes.probability}
-              defaultValue=""
-              {...register("probability")}
-            />
+              {/* Probability field */}
+              <TextField
+                label={t("newFtaModal.probability")}
+                type="number"
+                min={0}
+                max={1}
+                step={0.01}
+                error={!!errors.probability}
+                helperText={errors.probability?.message}
+                className={classes.probability}
+                defaultValue=""
+                {...register("probability")}
+              />
 
-            {(gateTypeWatch === GateType.PRIORITY_AND || !gateTypeWatch) &&
-              eventTypeWatch === EventType.INTERMEDIATE &&
-              gateTypeWatch === GateType.PRIORITY_AND && (
-                <TextField
-                  label="Sequence Probability"
-                  type="number"
-                  min={0}
-                  max={1}
-                  step={0.01}
-                  error={!!errors.sequenceProbability}
-                  helperText={errors.sequenceProbability?.message}
-                  className={classes.sequenceProbability}
-                  defaultValue=""
-                  {...register("sequenceProbability")}
-                />
-              )}
-          </>
-        )}
+              {(gateTypeWatch === GateType.PRIORITY_AND || !gateTypeWatch) &&
+                eventTypeWatch === EventType.INTERMEDIATE &&
+                gateTypeWatch === GateType.PRIORITY_AND && (
+                  <TextField
+                    label="Sequence Probability"
+                    type="number"
+                    min={0}
+                    max={1}
+                    step={0.01}
+                    error={!!errors.sequenceProbability}
+                    helperText={errors.sequenceProbability?.message}
+                    className={classes.sequenceProbability}
+                    defaultValue=""
+                    {...register("sequenceProbability")}
+                  />
+                )}
+            </>
+          )}
       </>
     );
   }
