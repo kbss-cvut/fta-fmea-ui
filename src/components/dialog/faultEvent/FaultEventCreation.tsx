@@ -8,6 +8,7 @@ import { useReusableFaultEvents } from "@hooks/useReusableFaultEvents";
 import ControlledAutocomplete from "@components/materialui/ControlledAutocomplete";
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { asArray } from "@utils/utils";
 
 interface Props {
   useFormMethods: any;
@@ -63,10 +64,7 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedE
   };
 
   function renderEventSelect() {
-    const supertype =
-      Array.isArray(eventValue?.supertypes) && eventValue.supertypes.length > 0 ? eventValue.supertypes[0] : null;
-
-    const eventVal = supertype ? supertype : eventValue;
+    const eventVal = asArray(eventValue?.supertypes)?.[0] || eventValue;
     const defaultValue = eventVal ? { name: eventVal.name, iri: eventVal.iri } : null;
     return (
       <>
