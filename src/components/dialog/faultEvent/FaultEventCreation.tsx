@@ -32,6 +32,7 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedE
   } = useFormMethods;
 
   const faultEvents = useReusableFaultEvents();
+  const [newEvent, setNewEvent] = useState<String | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<FaultEvent | null>(null);
   const [showCreateEvent, setShowCreateEvent] = useState(false);
   const existingEventSelected = Boolean(selectedEvent);
@@ -52,10 +53,12 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedE
 
   const handleFilterOptions = (inputValue) => {
     const filtered = faultEvents.filter((option) => option.name.toLowerCase().includes(inputValue.toLowerCase()));
+    setNewEvent(inputValue);
     setFilteredOptions(filtered);
   };
 
   const handleOnCreateEventClick = (e: MouseEvent) => {
+    setSelectedEvent({ name: newEvent });
     setShowCreateEvent(true);
   };
 
