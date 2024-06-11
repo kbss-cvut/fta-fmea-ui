@@ -1,6 +1,7 @@
 import { AbstractModel } from "@models/abstractModel";
 import { FaultTree } from "@models/faultTreeModel";
 import { System } from "@models/systemModel";
+import { FaultEvent } from "@models/eventModel";
 
 export const getCircularReplacer = () => {
   const seen = new WeakSet();
@@ -77,11 +78,9 @@ export const getModifiedSystemsList = (systems: System[], selected: string | nul
   getModifiedList(systems, selected);
 
 export const getModifiedFaultTreesList = (faultTrees: FaultTree[], selected: string | null) => {
-  if(!faultTrees || !selected)
-    return faultTrees;
-  return faultTrees.filter(f => f?.system?.iri == selected);
-}
-
+  if (!faultTrees || !selected) return faultTrees;
+  return faultTrees.filter((f) => f?.system?.iri == selected);
+};
 
 export const formatDate = (dateString: string) => {
   if (!dateString) return "-";
@@ -97,4 +96,20 @@ export const formatDate = (dateString: string) => {
   };
 
   return date.toLocaleString("en-US", options);
+};
+
+/**
+ * Updates the eventType of events in an array if a specific substring is found in its IRI.
+ *
+ * @param {Array<FaultEvent>} events - The array of event objects to be processed.
+ * @param {string} substring - The substring to search for within the specified key's value.
+ * @param {string} newValue - The new value to set for eventType if the substring is found.
+ * @returns {Array<FaultEvent>} A new array of event objects with updated eventType values where applicable.
+ *
+ */
+export const updateEventsType = (events: FaultEvent[], substring: string, newValue: string) => {
+  return events.map((event) => ({
+    ...event,
+    eventType: event.iri.includes(substring) ? newValue : event.eventType,
+  }));
 };

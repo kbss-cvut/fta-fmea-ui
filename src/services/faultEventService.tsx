@@ -114,6 +114,7 @@ export const eventFromHookFormValues = (values: any): FaultEvent => {
     console.log(`Using existing event -${values.existingEvent.iri}`);
     faultEvent.name = values.existingEvent.name;
     faultEvent.supertypes = [values.existingEvent];
+    faultEvent.eventType = values.existingEvent.eventType;
   }
 
   faultEvent.gateType = faultEvent.eventType === EventType.INTERMEDIATE ? values.gateType : null;

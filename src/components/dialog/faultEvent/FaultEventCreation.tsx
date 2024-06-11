@@ -8,7 +8,7 @@ import { useReusableFaultEvents } from "@hooks/useReusableFaultEvents";
 import ControlledAutocomplete from "@components/materialui/ControlledAutocomplete";
 import { MouseEvent, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { asArray } from "@utils/utils";
+import { asArray, updateEventsType } from "@utils/utils";
 
 interface Props {
   useFormMethods: any;
@@ -50,6 +50,7 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedE
   }, [selectedEvent]);
 
   const [filteredOptions, setFilteredOptions] = useState([{}]);
+  const updatedFHAEventTypes = updateEventsType(faultEvents, "fha-fault-event", EventType.EXTERNAL);
 
   const handleFilterOptions = (inputValue) => {
     const filtered = faultEvents.filter((option) => option.name.toLowerCase().includes(inputValue.toLowerCase()));
@@ -74,7 +75,7 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedE
         <ControlledAutocomplete
           control={control}
           name="event"
-          options={faultEvents}
+          options={isRootEvent ? faultEvents : updatedFHAEventTypes}
           onChangeCallback={(data: any) => setSelectedEvent(data)}
           onInputChangeCallback={handleFilterOptions}
           onCreateEventClick={handleOnCreateEventClick}
@@ -86,7 +87,7 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedE
           defaultValue={defaultValue}
         />
 
-        {!selectedEvent && !isRootEvent && (
+        {!selectedEvent && !isRootEvent && eventTypeWatch !== EventType.EXTERNAL && (
           <FormControl disabled={existingEventSelected} className={classes.formControl}>
             <InputLabel id="event-type-select-label">{t("newFtaModal.type")}</InputLabel>
             <Controller
@@ -120,7 +121,13 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedE
             />
           </FormControl>
         )}
+      </>
+    );
+  }
 
+  function renderEventForm() {
+    return (
+      <>
         {eventTypeWatch === EventType.INTERMEDIATE && (
           <div className={classes.formControlDiv}>
             <FormControl className={classes.formControl}>
@@ -152,16 +159,7 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedE
             </FormControl>
           </div>
         )}
-      </>
-    );
-  }
 
-  function renderEventForm() {
-    if (!showCreateEvent) {
-      return;
-    }
-    return (
-      <>
         {eventTypeWatch !== EventType.INTERMEDIATE &&
           eventTypeWatch !== EventType.EXTERNAL &&
           !isRootEvent &&
