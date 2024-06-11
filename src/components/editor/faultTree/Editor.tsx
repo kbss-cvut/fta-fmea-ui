@@ -181,7 +181,7 @@ const Editor = () => {
   const handleCutSetAnalysis = () => {
     setShowPath(!showPath);
     setShowTable(!showTable);
-    calculateCutSets(faultTree.iri)
+    calculateCutSets(faultTree.iri, faultTree.operationalDataFilter)
       .then((d) => {
         refreshTree();
       })
