@@ -21,6 +21,7 @@ import { JOINTJS_NODE_MODEL } from "@components/editor/faultTree/shapes/constant
 import { calculateCutSets } from "@services/faultTreeService";
 import { FaultEventScenario } from "@models/faultEventScenario";
 import { useAppBar } from "../../../contexts/AppBarContext";
+import { asArray } from "@utils/utils";
 
 const Editor = () => {
   const history = useNavigate();
@@ -58,7 +59,7 @@ const Editor = () => {
       setRootEvent(updatedRootEvent);
 
       if (faultTree.faultEventScenarios) {
-        setFaultEventScenarios([getScenarioWithHighestProbability(faultTree.faultEventScenarios)]);
+        setFaultEventScenarios([getScenarioWithHighestProbability(asArray(faultTree.faultEventScenarios))]);
       }
 
       if (contextMenuSelectedEvent) {
@@ -256,7 +257,7 @@ const Editor = () => {
           setHighlightedElement={setHighlightedElementView}
           refreshTree={refreshTree}
           faultEventScenarios={faultEventScenarios}
-          possibleFaultEventScenarios={faultTree?.faultEventScenarios ? faultTree?.faultEventScenarios : []}
+          possibleFaultEventScenarios={asArray(faultTree?.faultEventScenarios)}
           showPath={showPath}
           showTable={showTable}
           onScenarioSelect={(scenario: FaultEventScenario) => handleOnScenarioSelect(scenario)}
