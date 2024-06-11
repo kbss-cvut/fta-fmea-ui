@@ -3,6 +3,7 @@ import { authHeaders } from "@services/utils/authUtils";
 import axiosClient from "@services/utils/axiosUtils";
 import { CONTEXT, FaultTree } from "@models/faultTreeModel";
 import { CONTEXT as EVENT_CONTEXT, FaultEvent } from "@models/eventModel";
+import { CONTEXT as FILTER_CONTEXT, OperationalDataFilter } from "@models/operationalDataFilterModel";
 import VocabularyUtils from "@utils/VocabularyUtils";
 import { extractFragment } from "@services/utils/uriIdentifierUtils";
 import {
@@ -198,10 +199,12 @@ export const getTreePathsAggregate = async (): Promise<[FaultEvent[]]> => {
   }
 };
 
-export const calculateCutSets = async (faultTreeUri: string) => {
+export const calculateCutSets = async (faultTreeUri: string, operationalDataFilter: OperationalDataFilter) => {
   try {
     const fragment = extractFragment(faultTreeUri);
-    const response = await axiosClient.put(`/faultTrees/${fragment}/evaluate`, null, {
+    const filter = Object.assign({}, operationalDataFilter, { "@context": FILTER_CONTEXT });
+
+    const response = await axiosClient.put(`/faultTrees/${fragment}/evaluate`, filter, {
       headers: authHeaders(),
     });
     return response;

@@ -16,4 +16,5 @@ export default {
   SYSTEM: _NS_FTA_FMEA + "system",
   FAILURE_MODES_TABLE: _NS_FTA_FMEA + "failure-modes-table",
   FAILURE_MODES_ROW: _NS_FTA_FMEA + "failure-modes-row",
+  OPERATIONAL_DATA_FILTER: _NS_FTA_FMEA + "operational-data-filter",
 };
