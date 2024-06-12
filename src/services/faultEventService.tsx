@@ -27,7 +27,7 @@ export const findAll = async (): Promise<FaultEvent[]> => {
 
 export const update = async (faultEvent: FaultEvent): Promise<void> => {
   try {
-    const updateRequest = Object.assign({}, faultEvent, { "@context": EVENT_CONTEXT });
+    const updateRequest = simplifyReferencesOfReferences(Object.assign({}, faultEvent, { "@context": EVENT_CONTEXT }));
 
     await axiosClient.put("/faultEvents", updateRequest, {
       headers: authHeaders(),
