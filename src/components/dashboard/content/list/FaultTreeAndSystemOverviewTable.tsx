@@ -5,11 +5,11 @@ import { useTranslation } from "react-i18next";
 import useStyles from "./FaultTreeOverviewTable.styles";
 import { FaultTree } from "@models/faultTreeModel";
 import { useNavigate } from "react-router-dom";
-import {ROUTES} from "@utils/constants";
+import { ROUTES } from "@utils/constants";
 import { extractFragment } from "@services/utils/uriIdentifierUtils";
 import { System } from "@models/systemModel";
 import { getModifiedSystemsList, getModifiedFaultTreesList, formatDate } from "@utils/utils";
-import {useSelectedSystem} from "@hooks/useSelectedSystem";
+import { useSelectedSystem } from "@hooks/useSelectedSystem";
 
 const faultTreeTableHeadCells = [
   "faultTreeOverviewTable.name",
@@ -50,8 +50,9 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
   const modifiedSystemsList = getModifiedSystemsList(systems, selectedSystem);
   const modifiedFaultTreesList = getModifiedFaultTreesList(faultTrees, selectedSystem);
 
-  const redirectToPath = (routePath: string, system ) => {
-    setSelectedSystem(system);
+  const redirectToPath = (routePath: string, system: System) => {
+    // TODO: Add selected system again (commenting as workaround to provide operational hours)
+    // setSelectedSystem(system);
     navigate(routePath);
   };
 
