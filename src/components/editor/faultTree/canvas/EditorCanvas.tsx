@@ -19,6 +19,7 @@ import { findNodeByIri } from "@utils/treeUtils";
 import FaultEventScenariosTable from "../menu/FaultEventScenariosTable";
 import { Box, TextField, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { useSelectedSystem } from "@hooks/useSelectedSystem";
 
 enum MOVE_NODE {
   DRAGGING = 0,
@@ -79,6 +80,11 @@ const EditorCanvas = ({
   const [isExportingImage, setIsExportingImage] = useState(false);
   const [targets, setTargets] = useState<undefined | string[]>();
   const [rendering, setRendering] = useState<boolean>(false);
+  const [selectedSystem] = useSelectedSystem();
+  const [minOperationalHours, setMinOperationalHours] = useState(
+    selectedSystem?.operationalDataFilter?.minOperationalHours || 0,
+  );
+  const [inputColor, setInputColor] = useState("initial");
 
   let dragStartPosition = null;
 
@@ -249,6 +255,16 @@ const EditorCanvas = ({
     renderAndLayout();
   }, [container, rootEvent, faultEventScenarios]);
 
+  const handleMinOperationalHoursChange = (event) => {
+    const newValue = event.target.value;
+    setMinOperationalHours(newValue);
+    if (newValue != selectedSystem?.operationalDataFilter?.minOperationalHours) {
+      setInputColor("red");
+    } else {
+      setInputColor("initial");
+    }
+  };
+
   return (
     <div className={classes.root}>
       <div id="jointjs-container" className={classes.konvaContainer} ref={containerRef}></div>
@@ -262,8 +278,16 @@ const EditorCanvas = ({
             rendering={rendering}
           />
           <Box padding={2} display="flex" alignItems="center">
-            <Typography noWrap sx={{ flex: 3 }}>{t("diagramSidePanel.minimumOperationalHours")}</Typography>
-            <TextField type="number" size="small" sx={{ flex: 2 }} />
+            <Typography noWrap sx={{ flex: 3 }}>
+              {t("diagramSidePanel.minimumOperationalHours")}
+            </Typography>
+            <TextField
+              type="number"
+              size="small"
+              sx={{ flex: 2, input: { color: inputColor } }}
+              value={minOperationalHours}
+              onChange={handleMinOperationalHoursChange}
+            />
           </Box>
         </CurrentFaultTreeTableProvider>
         {!showTable && (
