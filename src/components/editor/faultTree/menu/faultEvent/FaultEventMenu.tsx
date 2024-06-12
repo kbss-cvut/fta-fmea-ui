@@ -28,13 +28,12 @@ enum RadioButtonType {
   Operational = "Operational",
 }
 
-enum ManualFailureRateType {
+enum NodeTypeWithManualFailureRate {
   Sns = "Sns",
   External = "External",
 }
 
 const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }: Props) => {
-  if (shapeToolData) console.log("shapeToolData", shapeToolData);
   const { t } = useTranslation();
   const { classes } = useStyles();
   const [failureModeDialogOpen, setFailureModeDialogOpen] = useState(false);
@@ -62,14 +61,14 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
   const [snsOperationalIri, setSnsOperationalIri] = useState<string | undefined>(undefined);
   const [snsPredictedIri, setSnsPredictedIri] = useState<string | undefined>(undefined);
 
-  const handleManuallyDefinedFailureRateChange = (event, type: ManualFailureRateType) => {
+  const handleManuallyDefinedFailureRateChange = (event, type: NodeTypeWithManualFailureRate) => {
     const inputValue = event.target.value;
     const regex = /^[0-9]*\.?[0-9]*$/;
     if (regex.test(inputValue)) {
-      if (type === ManualFailureRateType.Sns) {
+      if (type === NodeTypeWithManualFailureRate.Sns) {
         setSnsManuallyDefinedFailureRate(inputValue);
       }
-      if (type === ManualFailureRateType.External) {
+      if (type === NodeTypeWithManualFailureRate.External) {
         setExternalManuallyDefinedFailureRate(inputValue);
       }
     }
@@ -214,15 +213,15 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
   const basedFailureRate = shapeToolData?.supertypes?.supertypes?.hasFailureRate?.estimate?.value;
   const requiredFailureRate = shapeToolData?.supertypes?.hasFailureRate?.requirement?.upperBound;
 
-  const FailureRateBox = ({ value, label, rate, selected, classes }) => (
+  const FailureRateBox = ({ value, label, rate, selected }) => (
     <Box display="flex" flexDirection="row" alignItems="center">
       <FormControlLabel
         value={value}
-        control={<Radio className={classes.black} />}
+        control={<Radio className={classes.selected} />}
         label={`${label}:`}
-        className={selected ? classes.black : classes.grey}
+        className={selected ? classes.selected : classes.notSelected}
       />
-      <Typography className={selected ? classes.black : classes.grey}>{rate}</Typography>
+      <Typography className={selected ? classes.selected : classes.notSelected}>{rate}</Typography>
     </Box>
   );
 
@@ -319,7 +318,6 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
                     label={t("faultEventMenu.predictedFailureRate")}
                     rate={snsPredictedFailureRate}
                     selected={selectedRadioButton === RadioButtonType.Predicted}
-                    classes={classes}
                   />
                 )}
                 {snsOperationalFailureRate && (
@@ -328,22 +326,23 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
                     label={t("faultEventMenu.operationalFailureRate")}
                     rate={snsOperationalFailureRate}
                     selected={selectedRadioButton === RadioButtonType.Operational}
-                    classes={classes}
                   />
                 )}
                 <Box display={"flex"} flexDirection={"row"} alignItems="center">
                   <FormControlLabel
                     value={RadioButtonType.Manual}
-                    control={<Radio className={classes.black} />}
+                    control={<Radio className={classes.selected} />}
                     label={`${t("faultEventMenu.manuallyDefinedFailureRate")}:`}
-                    className={selectedRadioButton === RadioButtonType.Manual ? classes.black : classes.grey}
+                    className={selectedRadioButton === RadioButtonType.Manual ? classes.selected : classes.notSelected}
                   />
                   <TextField
                     className={classes.numberInput}
                     InputLabelProps={{ shrink: false }}
                     variant="outlined"
                     value={snsManuallyDefinedFailureRate || ""}
-                    onChange={(event) => handleManuallyDefinedFailureRateChange(event, ManualFailureRateType.Sns)}
+                    onChange={(event) =>
+                      handleManuallyDefinedFailureRateChange(event, NodeTypeWithManualFailureRate.Sns)
+                    }
                     inputProps={{ inputMode: "decimal" }}
                     disabled={selectedRadioButton !== RadioButtonType.Manual}
                     onBlur={handleManualFailureRateUpdate}
@@ -364,7 +363,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
             InputLabelProps={{ shrink: false }}
             variant="outlined"
             value={externalManuallyDefinedFailureRate || ""}
-            onChange={(event) => handleManuallyDefinedFailureRateChange(event, ManualFailureRateType.External)}
+            onChange={(event) => handleManuallyDefinedFailureRateChange(event, NodeTypeWithManualFailureRate.External)}
             inputProps={{ inputMode: "decimal" }}
             onBlur={handleManualFailureRateUpdate}
           />
@@ -378,37 +377,37 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
             {criticality && (
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.criticality")}:</span>
-                <span className={classes.grey}>{criticality}</span>
+                <span className={classes.selected}>{criticality}</span>
               </Typography>
             )}
             {ataSystem && (
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.ataSystem")}:</span>
-                <span className={classes.grey}>{ataSystem}</span>
+                <span className={classes.selected}>{ataSystem}</span>
               </Typography>
             )}
             {partNumber && (
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.partNumber")}:</span>
-                <span className={classes.grey}>{partNumber}</span>
+                <span className={classes.selected}>{partNumber}</span>
               </Typography>
             )}
             {stock && (
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.stock")}:</span>
-                <span className={classes.grey}>{stock}</span>
+                <span className={classes.selected}>{stock}</span>
               </Typography>
             )}
             {quantity && (
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.quantity")}:</span>
-                <span className={classes.grey}>{quantity}</span>
+                <span className={classes.selected}>{quantity}</span>
               </Typography>
             )}
             {schematicDesignation && (
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.schematicDesignation")}:</span>
-                <span className={classes.grey}>{schematicDesignation}</span>
+                <span className={classes.selected}>{schematicDesignation}</span>
               </Typography>
             )}
           </Box>

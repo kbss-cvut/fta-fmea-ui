@@ -18,13 +18,13 @@ const useStyles = makeStyles()((theme: Theme) => ({
     color: "black",
     fontSize: 16,
   },
-  black: {
+  selected: {
     color: "black",
     "&.Mui-checked": {
       color: "black",
     },
   },
-  grey: {
+  notSelected: {
     color: "grey",
   },
   divider: {
