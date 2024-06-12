@@ -17,9 +17,11 @@ import { JOINTJS_NODE_MODEL } from "@components/editor/faultTree/shapes/constant
 import { FaultEventScenario } from "@models/faultEventScenario";
 import { findNodeByIri } from "@utils/treeUtils";
 import FaultEventScenariosTable from "../menu/FaultEventScenariosTable";
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, TextField, Typography, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useSelectedSystem } from "@hooks/useSelectedSystem";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import PlayArrow from "@mui/icons-material/PlayArrow";
 
 enum MOVE_NODE {
   DRAGGING = 0,
@@ -81,9 +83,9 @@ const EditorCanvas = ({
   const [targets, setTargets] = useState<undefined | string[]>();
   const [rendering, setRendering] = useState<boolean>(false);
   const [selectedSystem] = useSelectedSystem();
-  const [minOperationalHours, setMinOperationalHours] = useState(
-    selectedSystem?.operationalDataFilter?.minOperationalHours || 0,
-  );
+
+  const initialMinOperationalHours = selectedSystem?.operationalDataFilter?.minOperationalHours || 0;
+  const [minOperationalHours, setMinOperationalHours] = useState(initialMinOperationalHours);
   const [inputColor, setInputColor] = useState("initial");
 
   let dragStartPosition = null;
@@ -265,6 +267,11 @@ const EditorCanvas = ({
     }
   };
 
+  const handleReset = () => {
+    setMinOperationalHours(initialMinOperationalHours);
+    setInputColor("initial");
+  };
+
   return (
     <div className={classes.root}>
       <div id="jointjs-container" className={classes.konvaContainer} ref={containerRef}></div>
@@ -288,6 +295,12 @@ const EditorCanvas = ({
               value={minOperationalHours}
               onChange={handleMinOperationalHoursChange}
             />
+            <IconButton aria-label="restore layout" size="large" onClick={handleReset}>
+              <RestartAltIcon />
+            </IconButton>
+            <IconButton aria-label="restore layout" size="large">
+              <PlayArrow />
+            </IconButton>
           </Box>
         </CurrentFaultTreeTableProvider>
         {!showTable && (
