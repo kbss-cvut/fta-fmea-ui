@@ -35,6 +35,16 @@ interface Props {
   showBackButton?: boolean;
 }
 
+const shouldDropdownBeDisabled = (url: string) => {
+  const pathParts = url.split("/");
+  const routes = [ROUTES.FTA.substring(1), ROUTES.SYSTEMS.substring(1)];
+
+  return routes.some((route) => {
+    const index = pathParts.indexOf(route);
+    return index !== -1 && pathParts[index + 1] !== undefined;
+  });
+};
+
 const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
   const [loggedUser] = useLoggedUser();
   const { classes } = useStyles();
@@ -42,7 +52,7 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
   const { i18n, t } = useTranslation();
   const { appBarTitle, systemsList } = useAppBar();
   const location = useLocation();
-  const path = location.pathname;
+  const dropdownDisabled = shouldDropdownBeDisabled(location.pathname);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selectedSystem, setSelectedSystem] = useSelectedSystem();
@@ -144,7 +154,7 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
                     className={classes.textfieldSelect}
                     value={selectedSystem ? selectedSystem.iri : ""}
                     onChange={handleSystemChange}
-                    disabled={path.includes("instance")}
+                    disabled={dropdownDisabled}
                   >
                     {systemsList.map((s, i) => {
                       return (
