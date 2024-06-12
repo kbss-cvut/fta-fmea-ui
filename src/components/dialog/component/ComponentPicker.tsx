@@ -44,6 +44,7 @@ const ComponentPicker = ({ selectedComponent, onComponentSelected }: Props) => {
         name={"component"}
         fullWidth
         options={components}
+        getOptionKey={(option) => option.iri}
         getOptionLabel={(option) => option.name}
         onChangeCallback={(value: Component) => onComponentSelected(value)}
         renderInput={(params) => <TextField {...params} label="Select Component" variant="outlined" />}

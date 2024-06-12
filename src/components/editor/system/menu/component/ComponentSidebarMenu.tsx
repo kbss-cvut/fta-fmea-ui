@@ -97,6 +97,7 @@ const ComponentSidebarMenu = ({ component, onComponentUpdated, systemComponents 
             name="linkedComponent"
             options={allowedComponents}
             onChangeCallback={handleLinkedComponentChange}
+            getOptionKey={(option) => option.iri}
             getOptionLabel={(option) => option.name}
             renderInput={(params) => <TextField {...params} label="Linked Component" variant="outlined" />}
             defaultValue={null}

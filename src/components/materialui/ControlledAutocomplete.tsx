@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 interface Props {
   name: string;
   options: any[];
+  getOptionKey: (any) => string;
   getOptionLabel: (any) => string;
   renderInput;
   control;
@@ -46,6 +47,7 @@ const ControlledAutocomplete = ({
   options = [],
   name,
   renderInput,
+  getOptionKey,
   getOptionLabel,
   control,
   onChangeCallback,
@@ -88,6 +90,7 @@ const ControlledAutocomplete = ({
         <Autocomplete
           fullWidth
           options={_options}
+          getOptionKey={getOptionKey}
           getOptionLabel={getOptionLabel}
           renderOption={renderOption}
           renderInput={renderInput}
