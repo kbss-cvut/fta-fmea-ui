@@ -94,7 +94,11 @@
     "partNumber": "Part number",
     "stock": "Stock",
     "quantity": "Quantity",
-    "schematicDesignation": "Schematic designation"
+    "schematicDesignation": "Schematic designation",
+    "requiredFailureRate": "Required failure rate",
+    "calculatedFailureRate": "Calculated failure rate",
+    "operationalFailureRate": "Operational failure rate",
+    "manuallyDefinedFailureRate": "Manually defined failure rate"
   },
   "appBar": {
     "selectSystemPlaceholder": "Select system"
