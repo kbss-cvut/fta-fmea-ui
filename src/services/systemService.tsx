@@ -7,6 +7,7 @@ import { extractFragment } from "@services/utils/uriIdentifierUtils";
 import { deepOmit } from "@utils/lodashUtils";
 import { handleServerError } from "@services/utils/responseUtils";
 import { FailureMode } from "@models/failureModeModel";
+import { OperationalDataFilter, CONTEXT as FILTER_CONTEXT } from "@models/operationalDataFilterModel";
 
 export const findAll = async (): Promise<System[]> => {
   try {
@@ -66,6 +67,26 @@ export const rename = async (system: System): Promise<System> => {
   } catch (e) {
     console.log("System Service - Failed to call /update");
     const defaultMessage = "Failed to update system";
+    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+  }
+};
+
+export const updateFilter = async (
+  systemUri: string,
+  operationDataFilter: OperationalDataFilter,
+): Promise<OperationalDataFilter> => {
+  try {
+    const systemFragment = extractFragment(systemUri);
+    const updateRequest = Object.assign({}, operationDataFilter, { "@context": FILTER_CONTEXT });
+
+    const response = await axiosClient.put(`/operational-data-filter/system/${systemFragment}`, updateRequest, {
+      headers: authHeaders(),
+    });
+
+    return JsonLdUtils.compactAndResolveReferences<OperationalDataFilter>(response.data, FILTER_CONTEXT);
+  } catch (e) {
+    console.log("System Service - Failed to call /operational-data-filter/system/${systemFragment}");
+    const defaultMessage = "Failed to operational data filter";
     return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
   }
 };
