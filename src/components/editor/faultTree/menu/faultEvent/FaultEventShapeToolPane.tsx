@@ -53,6 +53,7 @@ const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) =
       dataClone = merge(dataClone, updatedFaultEvent);
       dataClone.supertypes = updatedFaultEvent.supertypes;
       onEventUpdated(dataClone);
+      refreshTree();
     };
 
     editorPane = (

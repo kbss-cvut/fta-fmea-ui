@@ -161,11 +161,8 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
     }
 
     if (shapeToolData?.supertypes?.behavior?.item?.schematicDesignation) {
-      if (Array.isArray(shapeToolData?.supertypes?.behavior?.item?.schematicDesignation)) {
-        setSchematicDesignation(shapeToolData?.supertypes?.behavior?.item?.schematicDesignation.join(", "));
-      } else {
-        setSchematicDesignation(shapeToolData?.supertypes?.behavior?.item?.schematicDesignation);
-      }
+      const schematicDesignations = asArray(shapeToolData?.supertypes?.behavior?.item?.schematicDesignation);
+      setSchematicDesignation(schematicDesignations.join(", "));
     } else {
       setSchematicDesignation(undefined);
     }
