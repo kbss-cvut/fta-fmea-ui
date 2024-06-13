@@ -15,6 +15,7 @@ import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 import useStyles from "@components/editor/faultTree/menu/faultEvent/FaultEventShapeToolPane.styles";
 import { ReusableFaultEventsProvider } from "@hooks/useReusableFaultEvents";
 import { useCurrentFaultTree } from "@hooks/useCurrentFaultTree";
+import { asArray } from "@utils/utils";
 
 interface Props {
   data?: FaultEvent;
@@ -33,6 +34,7 @@ const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) =
   let defaultValues;
 
   if (data) {
+    const safeSupertype = asArray(data.supertypes).map((t) => ({ name: t.name, iri: t.iri, types: t.types }))?.[0];
     defaultValues = {
       eventType: data.eventType,
       name: data.name,
@@ -40,6 +42,7 @@ const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) =
       probability: data.probability ? data.probability : 0.01,
       gateType: data.gateType ? data.gateType : null,
       sequenceProbability: data.sequenceProbability,
+      existingEvent: safeSupertype,
     };
 
     useFormMethods = useForm({

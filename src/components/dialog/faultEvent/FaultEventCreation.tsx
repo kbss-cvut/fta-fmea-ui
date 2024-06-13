@@ -78,6 +78,7 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedE
           onChangeCallback={(data: any) => setSelectedEvent(data)}
           onInputChangeCallback={handleFilterOptions}
           onCreateEventClick={handleOnCreateEventClick}
+          getOptionKey={(option) => option.iri}
           getOptionLabel={(option) => option.name}
           renderInput={(params) => (
             <TextField {...params} label={t("newFtaModal.eventPlaceholder")} variant="outlined" {...register("name")} />
