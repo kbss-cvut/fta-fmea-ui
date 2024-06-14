@@ -24,7 +24,7 @@ const faultTreeTableHeadCells = [
   // "faultTreeOverviewTable.status", Unused
 ];
 
-const systemTableHeadCells = ["faultTreeOverviewTable.name"];
+const systemTableHeadCells = ["faultTreeOverviewTable.name", "faultTreeOverviewTable.operationalHours"];
 
 interface FaultTreeOverviewTableProps {
   faultTrees?: FaultTree[];
@@ -77,7 +77,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
                     </TableCell>
                   );
                 })}
-              <TableCell className={classes.emptyCell} />
+              {/*<TableCell className={classes.emptyCell} />*/}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -117,10 +117,13 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
             {systems &&
               modifiedSystemsList.map((system, rowIndex) => {
                 const routePath = ROUTES.SYSTEMS + `/${extractFragment(system.iri)}`;
-                const bgColor = system.name === selectedSystem.name ? theme.sidePanel.colors.hover : "transparent";
+                const bgColor = system.name === selectedSystem?.name ? theme.sidePanel.colors.hover : "transparent";
                 return (
                   <TableRow key={rowIndex} className={classes.noBorder} style={{ backgroundColor: bgColor }}>
                     <TableCell className={classes.systemFirstColumn}>{system.name}</TableCell>
+                    <TableCell className={classes.tableCell}>
+                      {system.operationalDataFilter.minOperationalHours}
+                    </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Box className={classes.rowOptionsContainer}>
                         <Button
