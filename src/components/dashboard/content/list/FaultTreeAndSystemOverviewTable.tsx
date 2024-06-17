@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@utils/constants";
 import { extractFragment } from "@services/utils/uriIdentifierUtils";
 import { System } from "@models/systemModel";
-import { getModifiedSystemsList, getModifiedFaultTreesList, formatDate } from "@utils/utils";
+import { getFilteredFaultTreesBySystem, getReorderedSystemsListbySystem, formatDate } from "@utils/utils";
 import { useSelectedSystem } from "@hooks/useSelectedSystem";
 
 const faultTreeTableHeadCells = [
@@ -45,11 +45,11 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
   const theme = useTheme();
 
   const [selectedSystem, setSelectedSystem] = useSelectedSystem();
-  const modifiedSystemsList = getModifiedSystemsList(systems, selectedSystem);
-  const modifiedFaultTreesList = getModifiedFaultTreesList(faultTrees, selectedSystem);
+  const modifiedSystemsList = getReorderedSystemsListbySystem(systems, selectedSystem);
+  const modifiedFaultTreesList = getFilteredFaultTreesBySystem(faultTrees, selectedSystem);
 
   const redirectToPath = (routePath: string, system) => {
-    setSelectedSystem(selectedSystem);
+    setSelectedSystem(system);
     navigate(routePath);
   };
 
@@ -116,7 +116,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
             {systems &&
               modifiedSystemsList.map((system, rowIndex) => {
                 const routePath = ROUTES.SYSTEMS + `/${extractFragment(system.iri)}`;
-                const bgColor = system.name === selectedSystem?.name ? theme.sidePanel.colors.hover : "transparent";
+                const bgColor = system?.iri === selectedSystem?.iri ? theme.sidePanel.colors.hover : "transparent";
                 return (
                   <TableRow key={rowIndex} className={classes.noBorder} style={{ backgroundColor: bgColor }}>
                     <TableCell className={classes.systemFirstColumn}>{system.name}</TableCell>

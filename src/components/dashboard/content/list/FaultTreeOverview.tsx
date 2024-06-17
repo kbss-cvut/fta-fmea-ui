@@ -13,7 +13,7 @@ import FaultTreeDialog from "@components/dialog/faultTree/FaultTreeDialog";
 import { Box, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { SELECTED_VIEW } from "@utils/constants";
-import {useSelectedSystem} from "@hooks/useSelectedSystem";
+import { useSelectedSystem } from "@hooks/useSelectedSystem";
 
 const FaultTreeOverview = () => {
   const { t } = useTranslation();
@@ -71,13 +71,13 @@ const FaultTreeOverview = () => {
 
       {selectedView === "table" ? (
         <FaultTreeAndSystemOverviewTable
-          selectedSystem={selectedSystem?.iri}
+          selectedSystem={selectedSystem}
           faultTrees={faultTrees}
           handleFaultTreeContextMenu={handleContextMenu}
         />
       ) : (
         <FaultTreeAndSystemOverviewCardsList
-          selectedSystem={selectedSystem?.iri}
+          selectedSystem={selectedSystem}
           faultTrees={faultTrees}
           handleFaultTreeContextMenu={handleContextMenu}
         />
@@ -94,10 +94,7 @@ const FaultTreeOverview = () => {
         handleCloseDialog={() => setEditDialogOpen(false)}
         faultTree={contextMenuSelectedTree}
       />
-      <FaultTreeDialog
-        open={createFaultTreeDialogOpen}
-        handleCloseDialog={() => setCreateFaultTreeDialogOpen(false)}
-      />
+      <FaultTreeDialog open={createFaultTreeDialogOpen} handleCloseDialog={() => setCreateFaultTreeDialogOpen(false)} />
     </Box>
   );
 };

@@ -61,10 +61,19 @@ export const asArray = (objectOrArray) => {
   return [objectOrArray];
 };
 
-const getModifiedList = <T extends { name: string }>(items: T[], selected: System): T[] => {
+/**
+ * Return reordered list of entities so that selected entity will become first,
+ * while order of the remaining entities won't change.
+ * In case there is no selected entity specified, return the original list.
+ * Entities are identified by attribute `iri`.
+ *
+ * @param items List of items.
+ * @param selected Selected item or null.
+ */
+const getReorderedEntities = <E extends { iri?: string }>(items: E[], selected: E | null): E[] => {
   if (!items) return [];
 
-  const selectedIndex = items.findIndex((item) => item.iri === selected);
+  const selectedIndex = items.findIndex((item) => item?.iri && item.iri === selected?.iri);
 
   if (selectedIndex !== -1) {
     const selectedItem = items[selectedIndex];
@@ -74,12 +83,23 @@ const getModifiedList = <T extends { name: string }>(items: T[], selected: Syste
   }
 };
 
-export const getModifiedSystemsList = (systems: System[], selected: System) => getModifiedList(systems, selected);
+/**
+ * Reorders a list of systems so that the selected system becomes first.
+ *
+ * @param systems List of systems.
+ * @param selected Selected system.
+ */
+export const getReorderedSystemsListbySystem = (systems: System[], selected: System): System[] =>
+  getReorderedEntities(systems, selected);
 
-export const getModifiedFaultTreesList = (faultTrees: FaultTree[], selected: System) => {
-  if (!faultTrees || !selected) return faultTrees;
-  return faultTrees.filter((f) => f?.system?.iri == selected.iri);
-};
+/**
+ * Filters a list of fault trees to include only those associated with the selected system.
+ *
+ * @param faultTrees List of fault trees.
+ * @param selected Selected system.
+ */
+export const getFilteredFaultTreesBySystem = (faultTrees: FaultTree[], selected: System): FaultTree[] =>
+  faultTrees?.filter((faultTree) => faultTree?.system?.iri === selected.iri) || [];
 
 export const formatDate = (dateString: string) => {
   if (!dateString) return "-";
