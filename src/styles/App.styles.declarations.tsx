@@ -39,44 +39,6 @@ declare module "@mui/material/styles" {
       grey: string;
     };
   }
-  // allow configuration using `createMuiTheme`
-  interface DeprecatedThemeOptions {
-    appDrawer?: {
-      width?: React.CSSProperties["width"];
-    };
-    editor?: {
-      shape?: {
-        padding?: number;
-        strokeWidth?: number;
-        strokeColor?: React.CSSProperties["color"];
-      };
-      fontSize: number;
-    };
-    sidePanel?: {
-      colors?: {
-        icon?: string;
-        iconActive?: string;
-        text?: string;
-        textActive?: string;
-        hint?: string;
-        hover?: string;
-      };
-    };
-    dashboard?: {
-      colors?: {
-        active?: string;
-        activeIcon?: string;
-      };
-    };
-    button?: {
-      primary?: string;
-      secondary?: string;
-    };
-    main?: {
-      black: string;
-      grey: string;
-    };
-  }
 }
 
 const createCustomMuiTheme = (options) => {
