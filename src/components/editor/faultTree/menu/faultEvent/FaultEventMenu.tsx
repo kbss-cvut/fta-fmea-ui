@@ -377,37 +377,37 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
             {criticality && (
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.criticality")}:</span>
-                <span className={classes.selected}>{criticality}</span>
+                <span className={classes.notEditable}>{criticality}</span>
               </Typography>
             )}
             {ataSystem && (
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.ataSystem")}:</span>
-                <span className={classes.selected}>{ataSystem}</span>
+                <span className={classes.notEditable}>{ataSystem}</span>
               </Typography>
             )}
             {partNumber && (
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.partNumber")}:</span>
-                <span className={classes.selected}>{partNumber}</span>
+                <span className={classes.notEditable}>{partNumber}</span>
               </Typography>
             )}
             {stock && (
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.stock")}:</span>
-                <span className={classes.selected}>{stock}</span>
+                <span className={classes.notEditable}>{stock}</span>
               </Typography>
             )}
             {quantity && (
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.quantity")}:</span>
-                <span className={classes.selected}>{quantity}</span>
+                <span className={classes.notEditable}>{quantity}</span>
               </Typography>
             )}
             {schematicDesignation && (
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.schematicDesignation")}:</span>
-                <span className={classes.selected}>{schematicDesignation}</span>
+                <span className={classes.notEditable}>{schematicDesignation}</span>
               </Typography>
             )}
           </Box>

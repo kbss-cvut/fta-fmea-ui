@@ -14,10 +14,6 @@ const useStyles = makeStyles()((theme: Theme) => ({
     flexDirection: "row",
     alignItems: "center",
   },
-  selectableLabel: {
-    color: "black",
-    fontSize: 16,
-  },
   selected: {
     color: "black",
     "&.Mui-checked": {
@@ -25,6 +21,15 @@ const useStyles = makeStyles()((theme: Theme) => ({
     },
   },
   notSelected: {
+    color: "grey",
+    "&.Mui-checked": {
+      color: "grey",
+    },
+  },
+  editable: {
+    color: "black",
+  },
+  notEditable: {
     color: "grey",
   },
   divider: {

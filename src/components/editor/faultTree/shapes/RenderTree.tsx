@@ -55,18 +55,28 @@ const renderTree = async (container, node, parentShape = null, pathsToHighlight)
 
   nodeShape.attr(["label", "text"], node.name);
 
-  // For now it seems impossible to detect when operational failure rate was selected.
-  // "has" function from lodash can only check property existence with direct path. So we can't show "(o)" in front of "probability"
+  if (node?.selectedEstimate) {
+    const iriOfSelectedValue = node.selectedEstimate.iri;
+    const { predictionIri, operationalIri } = node.supertypes.supertypes.reduce(
+      (acc, item) => {
+        if (item?.hasFailureRate?.prediction?.iri) acc.predictionIri = item.hasFailureRate.prediction.iri;
+        if (item?.hasFailureRate?.estimate?.iri) acc.operationalIri = item.hasFailureRate.estimate.iri;
+        return acc;
+      },
+      { predictionIri: "", operationalIri: "" },
+    );
 
-  // if (has(node, "probability")) {
-  //   nodeShape.attr(
-  //     ["probabilityLabel", "text"],
-  //     `${has(node, "selectedEstimate") ? "(p)" : "(m)"}${node.probability.toExponential(2)}`,
-  //   );
-  // }
-  if (has(node, "probability")) {
-    nodeShape.attr(["probabilityLabel", "text"], node.probability.toExponential(2));
+    if (iriOfSelectedValue === predictionIri) {
+      nodeShape.attr(["probabilityLabel", "text"], `(P) ${node.probability.toExponential(2)}`);
+    } else if (iriOfSelectedValue === operationalIri) {
+      nodeShape.attr(["probabilityLabel", "text"], `(O) ${node.probability.toExponential(2)}`);
+    }
+  } else {
+    if (node.eventType !== EventType.INTERMEDIATE) {
+      nodeShape.attr(["probabilityLabel", "text"], `(M) ${node.probability.toExponential(2)}`);
+    }
   }
+
   if (has(node, "probabilityRequirement")) {
     nodeShape.attr(["probabilityRequirementLabel", "text"], node.probabilityRequirement.toExponential(2));
   }
