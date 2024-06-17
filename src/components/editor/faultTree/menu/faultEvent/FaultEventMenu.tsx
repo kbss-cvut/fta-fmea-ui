@@ -228,15 +228,20 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
 
   return (
     <Box paddingLeft={2} marginRight={2}>
-      <ReusableFaultEventsProvider systemUri={selectedSystem?.iri}>
-        <FaultEventShapeToolPane data={shapeToolData} onEventUpdated={onEventUpdated} refreshTree={refreshTree} />
-      </ReusableFaultEventsProvider>
-
+      {shapeToolData && shapeToolData.iri !== rootIri && (
+        <ReusableFaultEventsProvider systemUri={selectedSystem?.iri}>
+          <FaultEventShapeToolPane data={shapeToolData} onEventUpdated={onEventUpdated} refreshTree={refreshTree} />
+        </ReusableFaultEventsProvider>
+      )}
       {/* TODO: Finish for other nodes. Will be refactored. */}
 
       {/* ROOT NODE */}
       {shapeToolData && shapeToolData.iri === rootIri && (
         <>
+          <Typography>
+            <span className={classes.label}>Event name:</span>
+            {shapeToolData.name}
+          </Typography>
           {basedFailureRate && (
             <Box className={classes.labelRow}>
               <Typography>
