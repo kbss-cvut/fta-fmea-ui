@@ -34,4 +34,8 @@ export const appTheme = createCustomMuiTheme({
     primary: "#1774d1",
     secondary: "#FFFFFF",
   },
+  main: {
+    black: "#000000",
+    grey: "#808080",
+  },
 });

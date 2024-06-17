@@ -6,31 +6,31 @@ const useStyles = makeStyles()((theme: Theme) => ({
     fontWeight: "500",
     marginRight: 8,
     fontSize: 16,
-    color: "black",
+    color: theme.main.black,
   },
   labelRow: {
-    color: "grey",
+    color: theme.main.grey,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
   },
   selected: {
-    color: "black",
+    color: theme.main.black,
     "&.Mui-checked": {
-      color: "black",
+      color: theme.main.black,
     },
   },
   notSelected: {
-    color: "grey",
+    color: theme.main.grey,
     "&.Mui-checked": {
-      color: "grey",
+      color: theme.main.grey,
     },
   },
   editable: {
-    color: "black",
+    color: theme.main.black,
   },
   notEditable: {
-    color: "grey",
+    color: theme.main.grey,
   },
   divider: {
     marginTop: 8,
@@ -38,7 +38,7 @@ const useStyles = makeStyles()((theme: Theme) => ({
   },
   numberInput: {
     "& .MuiInputBase-input": {
-      color: "black",
+      color: theme.main.black,
       padding: "8px 12px",
     },
   },

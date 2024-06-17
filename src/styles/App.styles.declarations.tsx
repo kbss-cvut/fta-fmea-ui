@@ -34,6 +34,10 @@ declare module "@mui/material/styles" {
       primary?: string;
       secondary?: string;
     };
+    main?: {
+      black: string;
+      grey: string;
+    };
   }
   // allow configuration using `createMuiTheme`
   interface DeprecatedThemeOptions {
@@ -67,6 +71,10 @@ declare module "@mui/material/styles" {
     button?: {
       primary?: string;
       secondary?: string;
+    };
+    main?: {
+      black: string;
+      grey: string;
     };
   }
 }
