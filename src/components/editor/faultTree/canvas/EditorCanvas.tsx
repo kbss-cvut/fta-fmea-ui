@@ -19,9 +19,10 @@ import { findNodeByIri } from "@utils/treeUtils";
 import FaultEventScenariosTable from "../menu/FaultEventScenariosTable";
 import { Box, TextField, Typography, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { useSelectedSystem } from "@hooks/useSelectedSystem";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import PlayArrow from "@mui/icons-material/PlayArrow";
+import { useCurrentFaultTree } from "@hooks/useCurrentFaultTree";
+import { useFaultTrees } from "@hooks/useFaultTrees";
 
 enum MOVE_NODE {
   DRAGGING = 0,
@@ -82,10 +83,10 @@ const EditorCanvas = ({
   const [isExportingImage, setIsExportingImage] = useState(false);
   const [targets, setTargets] = useState<undefined | string[]>();
   const [rendering, setRendering] = useState<boolean>(false);
-  const [selectedSystem] = useSelectedSystem();
-
-  const initialMinOperationalHours = selectedSystem?.operationalDataFilter?.minOperationalHours || 0;
-  const [minOperationalHours, setMinOperationalHours] = useState(initialMinOperationalHours);
+  const [faultTree] = useCurrentFaultTree();
+  const initialMinOperationalHours = faultTree?.operationalDataFilter?.minOperationalHours || 0;
+  const [, , updateTree] = useFaultTrees();
+  const [updatedMinOperationalHours, setUpdatedMinOperationalHours] = useState(initialMinOperationalHours);
   const [inputColor, setInputColor] = useState("initial");
 
   let dragStartPosition = null;
@@ -257,10 +258,21 @@ const EditorCanvas = ({
     renderAndLayout();
   }, [container, rootEvent, faultEventScenarios]);
 
+  useEffect(() => {
+    setUpdatedMinOperationalHours((prevState) => {
+      const newMinOperationalHours = faultTree?.operationalDataFilter?.minOperationalHours;
+
+      if (prevState !== newMinOperationalHours) {
+        return newMinOperationalHours;
+      }
+      return prevState;
+    });
+  }, [faultTree]);
+
   const handleMinOperationalHoursChange = (event) => {
     const newValue = event.target.value;
-    setMinOperationalHours(newValue);
-    if (newValue != selectedSystem?.operationalDataFilter?.minOperationalHours) {
+    setUpdatedMinOperationalHours(newValue);
+    if (newValue !== faultTree?.operationalDataFilter?.minOperationalHours) {
       setInputColor("red");
     } else {
       setInputColor("initial");
@@ -268,7 +280,15 @@ const EditorCanvas = ({
   };
 
   const handleReset = () => {
-    setMinOperationalHours(initialMinOperationalHours);
+    setUpdatedMinOperationalHours(initialMinOperationalHours);
+    setInputColor("initial");
+  };
+
+  const handleSetNewDefaultOperationalHours = () => {
+    updateTree({
+      ...faultTree,
+      operationalDataFilter: { ...faultTree.operationalDataFilter, minOperationalHours: updatedMinOperationalHours },
+    });
     setInputColor("initial");
   };
 
@@ -292,13 +312,13 @@ const EditorCanvas = ({
               type="number"
               size="small"
               sx={{ flex: 2, input: { color: inputColor } }}
-              value={minOperationalHours}
+              value={updatedMinOperationalHours}
               onChange={handleMinOperationalHoursChange}
             />
             <IconButton aria-label="restore layout" size="large" onClick={handleReset}>
               <RestartAltIcon />
             </IconButton>
-            <IconButton aria-label="restore layout" size="large">
+            <IconButton aria-label="restore layout" size="large" onClick={handleSetNewDefaultOperationalHours}>
               <PlayArrow />
             </IconButton>
           </Box>
