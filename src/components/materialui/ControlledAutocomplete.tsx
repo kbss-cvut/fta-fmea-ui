@@ -19,6 +19,7 @@ interface Props {
   useSafeOptions?: boolean;
   fullWidth?: boolean;
   clearOnBlur?: boolean;
+  disabled?: boolean;
 }
 
 const prepareOptions = (useSafeOptions, inputOptions, defaultOption) => {
@@ -58,6 +59,7 @@ const ControlledAutocomplete = ({
   useSafeOptions = false,
   fullWidth = false,
   clearOnBlur = false,
+  disabled = false,
 }: Props) => {
   // TODO - refactor use SafeAutocomplete instead of the implementation here
   const [_options, _defaultValue, getOptionValue] = prepareOptions(useSafeOptions, options, defaultValue);
@@ -110,6 +112,7 @@ const ControlledAutocomplete = ({
           onClose={() => setMenuOpen(false)}
           onOpen={() => setMenuOpen(true)}
           noOptionsText={renderNoOptions()}
+          disabled={disabled}
         />
       )}
       defaultValue={_defaultValue}
