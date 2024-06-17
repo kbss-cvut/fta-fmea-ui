@@ -84,7 +84,8 @@
     "lastEditor": "Poslední editor",
     "status": "Stav",
     "edit": "Upravit",
-    "created": "Vytvořeno"
+    "created": "Vytvořeno",
+    "operationalHours": "Provozní Doba"
   },
   "faultEventMenu": {
     "criticality": "Kritičnost",
