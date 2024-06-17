@@ -222,7 +222,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
         label={`${label}:`}
         className={selected ? classes.selected : classes.notSelected}
       />
-      <Typography className={selected ? classes.selected : classes.notSelected}>{rate}</Typography>
+      <Typography className={classes.notEditableValue}>{rate}</Typography>
     </Box>
   );
 

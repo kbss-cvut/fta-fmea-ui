@@ -26,11 +26,8 @@ const useStyles = makeStyles()((theme: Theme) => ({
       color: theme.main.grey,
     },
   },
-  editable: {
+  editableValue: {
     color: theme.main.black,
-  },
-  notEditable: {
-    color: theme.main.grey,
   },
   notEditableValue: {
     color: theme.main.grey,
