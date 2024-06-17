@@ -77,7 +77,6 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
                     </TableCell>
                   );
                 })}
-              {/*<TableCell className={classes.emptyCell} />*/}
             </TableRow>
           </TableHead>
           <TableBody>
