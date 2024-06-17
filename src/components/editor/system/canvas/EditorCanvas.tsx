@@ -15,7 +15,7 @@ import { SystemLink } from "@components/editor/system/shapes/shapesDefinitions";
 import svgPanZoom from "svg-pan-zoom";
 import { SVG_PAN_ZOOM_OPTIONS } from "@utils/constants";
 import { saveSvgAsPng } from "save-svg-as-png";
-import { Box, IconButton, TextField, Typography } from "@mui/material";
+import { Box, IconButton, TextField, Typography, useTheme } from "@mui/material";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import PlayArrow from "@mui/icons-material/PlayArrow";
 import { useTranslation } from "react-i18next";
@@ -45,6 +45,7 @@ const EditorCanvas = ({
   setHighlightedElement,
 }: Props) => {
   const { classes } = useStyles();
+  const theme = useTheme();
   const { t } = useTranslation();
 
   const containerRef = useRef(null);
@@ -59,7 +60,7 @@ const EditorCanvas = ({
   const [systems, , updateSystem, , triggerFetch] = useSystems();
   const initialMinOperationalHours = selectedSystem?.operationalDataFilter?.minOperationalHours || 0;
   const [updatedMinOperationalHours, setUpdatedMinOperationalHours] = useState(initialMinOperationalHours);
-  const [inputColor, setInputColor] = useState("initial");
+  const [inputColor, setInputColor] = useState("");
 
   useEffect(() => {
     const canvasWidth = containerRef.current.clientWidth;
@@ -215,15 +216,15 @@ const EditorCanvas = ({
     const newValue = event.target.value;
     setUpdatedMinOperationalHours(newValue);
     if (newValue !== selectedSystem?.operationalDataFilter?.minOperationalHours) {
-      setInputColor("red");
+      setInputColor(theme.notSynchronized.color);
     } else {
-      setInputColor("initial");
+      setInputColor(theme.synchronized.color);
     }
   };
 
   const handleReset = () => {
     setUpdatedMinOperationalHours(initialMinOperationalHours);
-    setInputColor("initial");
+    setInputColor(theme.synchronized.color);
   };
 
   const handleSetNewDefaultOperationalHours = () => {
@@ -240,7 +241,7 @@ const EditorCanvas = ({
             minOperationalHours: updatedMinOperationalHours,
           },
         });
-        setInputColor("initial");
+        setInputColor(theme.synchronized.color);
       })
       .catch(() => {
         triggerFetch();
@@ -251,7 +252,7 @@ const EditorCanvas = ({
             minOperationalHours: updatedMinOperationalHours,
           },
         });
-        setInputColor("initial");
+        setInputColor(theme.synchronized.color);
       });
   };
 

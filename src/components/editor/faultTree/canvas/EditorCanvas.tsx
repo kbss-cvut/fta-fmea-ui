@@ -17,7 +17,7 @@ import { JOINTJS_NODE_MODEL } from "@components/editor/faultTree/shapes/constant
 import { FaultEventScenario } from "@models/faultEventScenario";
 import { findNodeByIri } from "@utils/treeUtils";
 import FaultEventScenariosTable from "../menu/FaultEventScenariosTable";
-import { Box, TextField, Typography, IconButton } from "@mui/material";
+import { Box, TextField, Typography, IconButton, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import PlayArrow from "@mui/icons-material/PlayArrow";
@@ -71,6 +71,7 @@ const EditorCanvas = ({
   redirectToInstance,
 }: Props) => {
   const { classes } = useStyles();
+  const theme = useTheme();
   const { t } = useTranslation();
 
   const containerRef = useRef(null);
@@ -87,7 +88,7 @@ const EditorCanvas = ({
   const initialMinOperationalHours = faultTree?.operationalDataFilter?.minOperationalHours || 0;
   const [, , updateTree] = useFaultTrees();
   const [updatedMinOperationalHours, setUpdatedMinOperationalHours] = useState(initialMinOperationalHours);
-  const [inputColor, setInputColor] = useState("initial");
+  const [inputColor, setInputColor] = useState("");
 
   let dragStartPosition = null;
 
@@ -273,15 +274,15 @@ const EditorCanvas = ({
     const newValue = event.target.value;
     setUpdatedMinOperationalHours(newValue);
     if (newValue !== faultTree?.operationalDataFilter?.minOperationalHours) {
-      setInputColor("red");
+      setInputColor(theme.notSynchronized.color);
     } else {
-      setInputColor("initial");
+      setInputColor(theme.synchronized.color);
     }
   };
 
   const handleReset = () => {
     setUpdatedMinOperationalHours(initialMinOperationalHours);
-    setInputColor("initial");
+    setInputColor(theme.synchronized.color);
   };
 
   const handleSetNewDefaultOperationalHours = () => {
@@ -289,7 +290,7 @@ const EditorCanvas = ({
       ...faultTree,
       operationalDataFilter: { ...faultTree.operationalDataFilter, minOperationalHours: updatedMinOperationalHours },
     });
-    setInputColor("initial");
+    setInputColor(theme.synchronized.color);
   };
 
   return (
