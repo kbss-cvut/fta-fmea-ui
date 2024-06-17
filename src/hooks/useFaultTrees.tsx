@@ -12,8 +12,8 @@ import { useUserAuth } from "@hooks/useUserAuth";
 type faultTreeContextType = [
   FaultTree[],
   (faultTree: FaultTree) => void,
-  (faultTreeToDelete: FaultTree) => void,
   (faultTreeToUpdate: FaultTree) => void,
+  (faultTreeToDelete: FaultTree) => void,
 ];
 
 export const faultTreesContext = createContext<faultTreeContextType>(null!);
