@@ -32,6 +32,9 @@ const useStyles = makeStyles()((theme: Theme) => ({
   notEditable: {
     color: theme.main.grey,
   },
+  notEditableValue: {
+    color: theme.main.grey,
+  },
   divider: {
     marginTop: 8,
     marginBottom: 8,

@@ -1,4 +1,4 @@
-import { Button, Divider, Paper, Typography, Box } from "@mui/material";
+import { Button, Divider, Typography, Box, useTheme } from "@mui/material";
 import FaultEventShapeToolPane from "./FaultEventShapeToolPane";
 import { EventType, FaultEvent } from "../../../../../models/eventModel";
 import * as React from "react";
@@ -36,6 +36,7 @@ enum NodeTypeWithManualFailureRate {
 const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }: Props) => {
   const { t } = useTranslation();
   const { classes } = useStyles();
+  const theme = useTheme();
   const [failureModeDialogOpen, setFailureModeDialogOpen] = useState(false);
 
   const [failureModeOverviewDialogOpen, setFailureModeOverviewDialogOpen] = useState(false);
@@ -217,7 +218,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
     <Box display="flex" flexDirection="row" alignItems="center">
       <FormControlLabel
         value={value}
-        control={<Radio className={classes.selected} />}
+        control={<Radio style={{ color: theme.main.black }} />}
         label={`${label}:`}
         className={selected ? classes.selected : classes.notSelected}
       />
@@ -331,7 +332,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
                 <Box display={"flex"} flexDirection={"row"} alignItems="center">
                   <FormControlLabel
                     value={RadioButtonType.Manual}
-                    control={<Radio className={classes.selected} />}
+                    control={<Radio style={{ color: theme.main.black }} />}
                     label={`${t("faultEventMenu.manuallyDefinedFailureRate")}:`}
                     className={selectedRadioButton === RadioButtonType.Manual ? classes.selected : classes.notSelected}
                   />
@@ -377,37 +378,37 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
             {criticality && (
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.criticality")}:</span>
-                <span className={classes.notEditable}>{criticality}</span>
+                <span className={classes.notEditableValue}>{criticality}</span>
               </Typography>
             )}
             {ataSystem && (
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.ataSystem")}:</span>
-                <span className={classes.notEditable}>{ataSystem}</span>
+                <span className={classes.notEditableValue}>{ataSystem}</span>
               </Typography>
             )}
             {partNumber && (
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.partNumber")}:</span>
-                <span className={classes.notEditable}>{partNumber}</span>
+                <span className={classes.notEditableValue}>{partNumber}</span>
               </Typography>
             )}
             {stock && (
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.stock")}:</span>
-                <span className={classes.notEditable}>{stock}</span>
+                <span className={classes.notEditableValue}>{stock}</span>
               </Typography>
             )}
             {quantity && (
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.quantity")}:</span>
-                <span className={classes.notEditable}>{quantity}</span>
+                <span className={classes.notEditableValue}>{quantity}</span>
               </Typography>
             )}
             {schematicDesignation && (
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.schematicDesignation")}:</span>
-                <span className={classes.notEditable}>{schematicDesignation}</span>
+                <span className={classes.notEditableValue}>{schematicDesignation}</span>
               </Typography>
             )}
           </Box>
