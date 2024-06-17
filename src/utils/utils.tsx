@@ -61,10 +61,19 @@ export const asArray = (objectOrArray) => {
   return [objectOrArray];
 };
 
-const getModifiedList = <T extends { name: string }>(items: T[], selected: string | null): T[] => {
+/**
+ * Return reordered list of entities so that selected entity will become first,
+ * while order of the remaining entities won't change.
+ * In case there is no selected entity specified, return the original list.
+ * Entities are identified by attribute `iri`.
+ *
+ * @param items List of items.
+ * @param selected Selected item or null.
+ */
+const getReorderedEntityList = <E extends { iri?: string }>(items: E[], selected: E | null): E[] => {
   if (!items) return [];
 
-  const selectedIndex = items.findIndex((item) => item.iri === selected);
+  const selectedIndex = items.findIndex((item) => item?.iri && item.iri === selected?.iri);
 
   if (selectedIndex !== -1) {
     const selectedItem = items[selectedIndex];
@@ -74,12 +83,12 @@ const getModifiedList = <T extends { name: string }>(items: T[], selected: strin
   }
 };
 
-export const getModifiedSystemsList = (systems: System[], selected: string | null) =>
-  getModifiedList(systems, selected);
+export const getReorderedSystemsList = (systems: System[], selected: System) =>
+  getReorderedEntityList(systems, selected);
 
-export const getModifiedFaultTreesList = (faultTrees: FaultTree[], selected: string | null) => {
+export const getFilteredFaultTreesList = (faultTrees: FaultTree[], selected: System) => {
   if (!faultTrees || !selected) return faultTrees;
-  return faultTrees.filter((f) => f?.system?.iri == selected);
+  return faultTrees.filter((f) => f?.system?.iri == selected.iri);
 };
 
 export const formatDate = (dateString: string) => {
