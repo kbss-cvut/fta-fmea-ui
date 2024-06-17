@@ -9,7 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as faultEventService from "@services/faultEventService";
 import { sequenceListToArray } from "@services/faultEventService";
 import { deepOmit } from "@utils/lodashUtils";
-import { FaultEvent, GateType } from "@models/eventModel";
+import { EventType, FaultEvent, GateType } from "@models/eventModel";
 import FaultEventChildrenReorderList from "@components/editor/faultTree/menu/faultEvent/reorder/FaultEventChildrenReorderList";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 import useStyles from "@components/editor/faultTree/menu/faultEvent/FaultEventShapeToolPane.styles";
@@ -27,6 +27,8 @@ const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) =
   const { classes } = useStyles();
   const [showSnackbar] = useSnackbar();
   const [faultTree] = useCurrentFaultTree();
+
+  const [disabled, setDisabled] = useState<boolean>(false);
 
   let editorPane;
   let updateEvent;
@@ -66,6 +68,7 @@ const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) =
           isRootEvent={false}
           eventValue={data}
           isEditedEvent={true}
+          disabled={disabled}
         />
       </ReusableFaultEventsProvider>
     );
@@ -90,6 +93,10 @@ const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) =
       const sorted = faultEventService.eventChildrenSorted(data.children, sequence);
       setEventChildren(sorted);
     }
+  }, [data]);
+
+  useEffect(() => {
+    setDisabled(data ? data.eventType === EventType.INTERMEDIATE || data.isReference : false);
   }, [data]);
 
   const [eventChildren, setEventChildren] = useState<FaultEvent[] | null>(null);

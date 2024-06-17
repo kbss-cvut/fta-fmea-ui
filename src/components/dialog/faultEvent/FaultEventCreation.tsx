@@ -15,10 +15,11 @@ interface Props {
   isRootEvent: boolean;
   eventValue?: FaultEvent;
   isEditedEvent?: boolean;
+  disabled?: boolean;
 }
 
 // TODO: remove ts-ignores and migrate to higher version of react-hook-form
-const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedEvent = false }: Props) => {
+const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedEvent = false, disabled }: Props) => {
   const { classes } = useStyles();
   const { t } = useTranslation();
 
@@ -85,6 +86,7 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedE
             <TextField {...params} label={t("newFtaModal.eventPlaceholder")} variant="outlined" {...register("name")} />
           )}
           defaultValue={defaultValue}
+          disabled={disabled}
         />
 
         {!selectedEvent && !isRootEvent && eventTypeWatch !== EventType.EXTERNAL && (
@@ -103,7 +105,7 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedE
                 return (
                   <Select
                     {...field}
-                    disabled={existingEventSelected}
+                    disabled={existingEventSelected || disabled}
                     labelId="event-type-select-label"
                     label={t("newFtaModal.type")}
                   >
@@ -139,6 +141,7 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedE
                     labelId="gate-type-select-label"
                     label={t("newFtaModal.gateType")}
                     error={!!errors.gateType}
+                    disabled={disabled}
                   >
                     {gateTypeValues()
                       .filter((value) => value[0])
