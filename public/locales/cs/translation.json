@@ -85,7 +85,7 @@
     "status": "Stav",
     "edit": "Upravit",
     "created": "Vytvořeno",
-    "operationalHours": "Provozní Doba"
+    "operationalHours": "Doba provozu"
   },
   "faultEventMenu": {
     "criticality": "Kritičnost",
