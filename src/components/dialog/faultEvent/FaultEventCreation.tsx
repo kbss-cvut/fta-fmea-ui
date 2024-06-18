@@ -194,22 +194,18 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedE
                 {...register("probability")}
               />
 
-              {(gateTypeWatch === GateType.PRIORITY_AND || !gateTypeWatch) &&
-                eventTypeWatch === EventType.INTERMEDIATE &&
-                gateTypeWatch === GateType.PRIORITY_AND && (
-                  <TextField
-                    label="Sequence Probability"
-                    type="number"
-                    min={0}
-                    max={1}
-                    step={0.01}
-                    error={!!errors.sequenceProbability}
-                    helperText={errors.sequenceProbability?.message}
-                    className={classes.sequenceProbability}
-                    defaultValue=""
-                    {...register("sequenceProbability")}
-                  />
-                )}
+              <TextField
+                label="Sequence Probability"
+                type="number"
+                min={0}
+                max={1}
+                step={0.01}
+                error={!!errors.sequenceProbability}
+                helperText={errors.sequenceProbability?.message}
+                className={classes.sequenceProbability}
+                defaultValue=""
+                {...register("sequenceProbability")}
+              />
             </>
           )}
       </>
