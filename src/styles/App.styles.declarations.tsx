@@ -38,11 +38,12 @@ declare module "@mui/material/styles" {
     main?: {
       black: string;
       grey: string;
-    notSynchronized?: {
-      color: COLOR;
-    };
-    synchronized?: {
-      color: COLOR;
+      notSynchronized?: {
+        color: COLOR;
+      };
+      synchronized?: {
+        color: COLOR;
+      };
     };
   }
   // allow configuration using `createMuiTheme`
