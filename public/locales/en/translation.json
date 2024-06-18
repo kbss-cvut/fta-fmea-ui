@@ -84,7 +84,8 @@
     "lastEditor": "Last editor",
     "status": "Status",
     "edit": "Edit",
-    "created": "Created"
+    "created": "Created",
+    "operationalHours": "Operational Hours"
   },
   "faultEventMenu": {
     "criticality": "Criticality",

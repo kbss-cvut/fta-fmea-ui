@@ -15,6 +15,13 @@ import { SystemLink } from "@components/editor/system/shapes/shapesDefinitions";
 import svgPanZoom from "svg-pan-zoom";
 import { SVG_PAN_ZOOM_OPTIONS } from "@utils/constants";
 import { saveSvgAsPng } from "save-svg-as-png";
+import { Box, IconButton, TextField, Typography, useTheme } from "@mui/material";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import PlayArrow from "@mui/icons-material/PlayArrow";
+import { useTranslation } from "react-i18next";
+import { useSelectedSystem } from "@hooks/useSelectedSystem";
+import { updateFilter } from "@services/systemService";
+import { useSystems } from "@hooks/useSystems";
 
 interface Props {
   system: System;
@@ -38,6 +45,8 @@ const EditorCanvas = ({
   setHighlightedElement,
 }: Props) => {
   const { classes } = useStyles();
+  const theme = useTheme();
+  const { t } = useTranslation();
 
   const containerRef = useRef(null);
 
@@ -47,6 +56,11 @@ const EditorCanvas = ({
   const [svgZoom, setSvgZoom] = useState(null);
   const [currentZoom, setCurrentZoom] = useState(1);
   const [isExportingImage, setIsExportingImage] = useState(false);
+  const [selectedSystem, setSelectedSystem] = useSelectedSystem();
+  const [systems, , updateSystem, , triggerFetch] = useSystems();
+  const initialMinOperationalHours = selectedSystem?.operationalDataFilter?.minOperationalHours || 0;
+  const [updatedMinOperationalHours, setUpdatedMinOperationalHours] = useState(initialMinOperationalHours);
+  const [inputColor, setInputColor] = useState("");
 
   useEffect(() => {
     const canvasWidth = containerRef.current.clientWidth;
@@ -105,6 +119,17 @@ const EditorCanvas = ({
       setIsExportingImage(false);
     }
   }, [isExportingImage]);
+
+  useEffect(() => {
+    setUpdatedMinOperationalHours((prevState) => {
+      const newMinOperationalHours = selectedSystem?.operationalDataFilter?.minOperationalHours;
+
+      if (prevState !== newMinOperationalHours) {
+        return newMinOperationalHours;
+      }
+      return prevState;
+    });
+  }, [selectedSystem]);
 
   const [componentShapesMap, setComponentShapesMap] = useState<Map<string, any>>(new Map());
   const [componentLinksMap, setComponentLinksMap] = useState<Map<string, string>>(new Map());
@@ -187,6 +212,50 @@ const EditorCanvas = ({
     }
   };
 
+  const handleMinOperationalHoursChange = (event) => {
+    const newValue = event.target.value;
+    setUpdatedMinOperationalHours(newValue);
+    if (newValue !== selectedSystem?.operationalDataFilter?.minOperationalHours) {
+      setInputColor(theme.notSynchronized.color);
+    } else {
+      setInputColor(theme.synchronized.color);
+    }
+  };
+
+  const handleReset = () => {
+    setUpdatedMinOperationalHours(initialMinOperationalHours);
+    setInputColor(theme.synchronized.color);
+  };
+
+  const handleSetNewDefaultOperationalHours = () => {
+    updateFilter(system?.iri, {
+      ...selectedSystem.operationalDataFilter,
+      minOperationalHours: updatedMinOperationalHours,
+    })
+      .then(() => {
+        triggerFetch();
+        setSelectedSystem({
+          ...selectedSystem,
+          operationalDataFilter: {
+            ...selectedSystem.operationalDataFilter,
+            minOperationalHours: updatedMinOperationalHours,
+          },
+        });
+        setInputColor(theme.synchronized.color);
+      })
+      .catch(() => {
+        triggerFetch();
+        setSelectedSystem({
+          ...selectedSystem,
+          operationalDataFilter: {
+            ...selectedSystem.operationalDataFilter,
+            minOperationalHours: updatedMinOperationalHours,
+          },
+        });
+        setInputColor(theme.synchronized.color);
+      });
+  };
+
   return (
     <div className={classes.root}>
       <div id="jointjs-system-container" className={classes.konvaContainer} ref={containerRef}>
@@ -204,6 +273,24 @@ const EditorCanvas = ({
       </div>
       <SidebarMenu className={classes.sidebar}>
         <DiagramOptions onRestoreLayout={() => layout(container)} onExportDiagram={handleDiagramExport} />
+        <Box padding={2} display="flex" alignItems="center">
+          <Typography noWrap sx={{ flex: 3 }}>
+            {t("diagramSidePanel.minimumOperationalHours")}
+          </Typography>
+          <TextField
+            type="number"
+            size="small"
+            sx={{ flex: 2, input: { color: inputColor } }}
+            value={updatedMinOperationalHours}
+            onChange={handleMinOperationalHoursChange}
+          />
+          <IconButton aria-label="restore layout" size="large" onClick={handleReset}>
+            <RestartAltIcon />
+          </IconButton>
+          <IconButton aria-label="restore layout" size="large" onClick={handleSetNewDefaultOperationalHours}>
+            <PlayArrow />
+          </IconButton>
+        </Box>
         {system && (
           <ComponentSidebarMenu
             component={sidebarSelectedComponent}

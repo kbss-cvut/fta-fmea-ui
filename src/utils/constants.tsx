@@ -85,3 +85,9 @@ export const HttpHeaders = {
   CONTENT_DISPOSITION: "content-disposition",
   LINK: "link",
 };
+
+type RGB = `rgb(${number}, ${number}, ${number})`;
+type RGBA = `rgba(${number}, ${number}, ${number}, ${number})`;
+type HEX = `#${string}`;
+
+export type COLOR = RGB | RGBA | HEX;

@@ -17,8 +17,12 @@ import { JOINTJS_NODE_MODEL } from "@components/editor/faultTree/shapes/constant
 import { FaultEventScenario } from "@models/faultEventScenario";
 import { findNodeByIri } from "@utils/treeUtils";
 import FaultEventScenariosTable from "../menu/FaultEventScenariosTable";
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, TextField, Typography, IconButton, useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import PlayArrow from "@mui/icons-material/PlayArrow";
+import { useCurrentFaultTree } from "@hooks/useCurrentFaultTree";
+import { useFaultTrees } from "@hooks/useFaultTrees";
 
 enum MOVE_NODE {
   DRAGGING = 0,
@@ -67,6 +71,7 @@ const EditorCanvas = ({
   redirectToInstance,
 }: Props) => {
   const { classes } = useStyles();
+  const theme = useTheme();
   const { t } = useTranslation();
 
   const containerRef = useRef(null);
@@ -79,6 +84,11 @@ const EditorCanvas = ({
   const [isExportingImage, setIsExportingImage] = useState(false);
   const [targets, setTargets] = useState<undefined | string[]>();
   const [rendering, setRendering] = useState<boolean>(false);
+  const [faultTree] = useCurrentFaultTree();
+  const initialMinOperationalHours = faultTree?.operationalDataFilter?.minOperationalHours || 0;
+  const [, , updateTree] = useFaultTrees();
+  const [updatedMinOperationalHours, setUpdatedMinOperationalHours] = useState(initialMinOperationalHours);
+  const [inputColor, setInputColor] = useState("");
 
   let dragStartPosition = null;
 
@@ -249,6 +259,40 @@ const EditorCanvas = ({
     renderAndLayout();
   }, [container, rootEvent, faultEventScenarios]);
 
+  useEffect(() => {
+    setUpdatedMinOperationalHours((prevState) => {
+      const newMinOperationalHours = faultTree?.operationalDataFilter?.minOperationalHours;
+
+      if (prevState !== newMinOperationalHours) {
+        return newMinOperationalHours;
+      }
+      return prevState;
+    });
+  }, [faultTree]);
+
+  const handleMinOperationalHoursChange = (event) => {
+    const newValue = event.target.value;
+    setUpdatedMinOperationalHours(newValue);
+    if (newValue !== faultTree?.operationalDataFilter?.minOperationalHours) {
+      setInputColor(theme.notSynchronized.color);
+    } else {
+      setInputColor(theme.synchronized.color);
+    }
+  };
+
+  const handleReset = () => {
+    setUpdatedMinOperationalHours(initialMinOperationalHours);
+    setInputColor(theme.synchronized.color);
+  };
+
+  const handleSetNewDefaultOperationalHours = () => {
+    updateTree({
+      ...faultTree,
+      operationalDataFilter: { ...faultTree.operationalDataFilter, minOperationalHours: updatedMinOperationalHours },
+    });
+    setInputColor(theme.synchronized.color);
+  };
+
   return (
     <div className={classes.root}>
       <div id="jointjs-container" className={classes.konvaContainer} ref={containerRef}></div>
@@ -262,8 +306,22 @@ const EditorCanvas = ({
             rendering={rendering}
           />
           <Box padding={2} display="flex" alignItems="center">
-            <Typography noWrap sx={{ flex: 3 }}>{t("diagramSidePanel.minimumOperationalHours")}</Typography>
-            <TextField type="number" size="small" sx={{ flex: 2 }} />
+            <Typography noWrap sx={{ flex: 3 }}>
+              {t("diagramSidePanel.minimumOperationalHours")}
+            </Typography>
+            <TextField
+              type="number"
+              size="small"
+              sx={{ flex: 2, input: { color: inputColor } }}
+              value={updatedMinOperationalHours}
+              onChange={handleMinOperationalHoursChange}
+            />
+            <IconButton aria-label="restore layout" size="large" onClick={handleReset}>
+              <RestartAltIcon />
+            </IconButton>
+            <IconButton aria-label="restore layout" size="large" onClick={handleSetNewDefaultOperationalHours}>
+              <PlayArrow />
+            </IconButton>
           </Box>
         </CurrentFaultTreeTableProvider>
         {!showTable && (

@@ -13,7 +13,7 @@ import FaultTreeAndSystemOverviewCardsList from "./FaultTreeAndSystemOverviewCar
 import { useTranslation } from "react-i18next";
 import { Button, Box } from "@mui/material";
 import SystemDialog from "@components/dialog/system/SystemDialog";
-import {useSelectedSystem} from "@hooks/useSelectedSystem";
+import { useSelectedSystem } from "@hooks/useSelectedSystem";
 
 const SystemOverview = () => {
   const { t } = useTranslation();
@@ -70,11 +70,7 @@ const SystemOverview = () => {
       </Box>
 
       {selectedView === "table" ? (
-        <FaultTreeAndSystemOverviewTable
-          selectedSystem={selectedSystem?.iri}
-          systems={systems}
-          handleSystemContextMenu={handleContextMenu}
-        />
+        <FaultTreeAndSystemOverviewTable systems={systems} handleSystemContextMenu={handleContextMenu} />
       ) : (
         <FaultTreeAndSystemOverviewCardsList
           selectedSystem={selectedSystem?.iri}

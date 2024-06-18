@@ -3,6 +3,7 @@ import { FaultEvent, CONTEXT as EVENT_CONTEXT } from "@models/eventModel";
 import { AbstractModel, CONTEXT as ABSTRACT_CONTEXT } from "@models/abstractModel";
 import { FaultEventScenario, CONTEXT as SCENARIO_CONTEXT } from "@models/faultEventScenario";
 import { OperationalDataFilter, CONTEXT as FILTER_CONTEXT } from "@models/operationalDataFilterModel";
+import { System } from "@models/systemModel";
 
 const ctx = {
   manifestingEvent: VocabularyUtils.PREFIX + "is-manifested-by",
@@ -18,9 +19,7 @@ export interface FaultTree extends AbstractModel {
   manifestingEvent: FaultEvent;
   faultEventScenarios: FaultEventScenario[];
   requiredFailureRate: number;
-  system?: {
-    name?: string;
-  };
+  system?: System;
   calculatedFailureRate?: number;
   fhaBasedFailureRate?: number;
   editor?: {

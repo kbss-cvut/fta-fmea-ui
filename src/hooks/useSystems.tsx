@@ -14,32 +14,37 @@ type systemContextType = [
   (systemToCreate: System) => void,
   (systemToDelete: System) => void,
   (systemToUpdate: System) => void,
+  () => void,
 ];
 
 export const systemContext = createContext<systemContextType>(null!);
 
 export const useSystems = () => {
-  const [systems, addSystem, updateSystem, removeSystem] = useContext(systemContext);
-  return [systems, addSystem, updateSystem, removeSystem] as const;
+  const [systems, addSystem, updateSystem, removeSystem, triggerFetch] = useContext(systemContext);
+  return [systems, addSystem, updateSystem, removeSystem, triggerFetch] as const;
 };
 
 export const SystemsProvider = ({ children }: ChildrenProps) => {
   const [_systems, _setSystems] = useState<System[]>([]);
   const [showSnackbar] = useSnackbar();
   const loggedUser = useUserAuth();
+  const [shouldFetchSystems, setShouldFetchSystems] = useState(true);
 
   useEffect(() => {
     const fetchSystems = async () => {
       systemService
         .findAll()
-        .then((value) => _setSystems(value))
+        .then((value) => {
+          _setSystems(value);
+          setShouldFetchSystems(false);
+        })
         .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
     };
 
-    if (loggedUser) fetchSystems();
+    if (loggedUser && shouldFetchSystems) fetchSystems();
 
     return () => axiosSource.cancel("SystemsProvider - unmounting");
-  }, [loggedUser]);
+  }, [loggedUser, shouldFetchSystems]);
 
   const addSystem = async (system: System) => {
     systemService
@@ -76,8 +81,10 @@ export const SystemsProvider = ({ children }: ChildrenProps) => {
       .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
   };
 
+  const triggerFetch = () => setShouldFetchSystems(true);
+
   return (
-    <systemContext.Provider value={[_systems, addSystem, updateSystem, removeSystem]}>
+    <systemContext.Provider value={[_systems, addSystem, updateSystem, removeSystem, triggerFetch]}>
       {children}
     </systemContext.Provider>
   );

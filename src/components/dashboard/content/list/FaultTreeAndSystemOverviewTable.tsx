@@ -5,11 +5,11 @@ import { useTranslation } from "react-i18next";
 import useStyles from "./FaultTreeOverviewTable.styles";
 import { FaultTree } from "@models/faultTreeModel";
 import { useNavigate } from "react-router-dom";
-import {ROUTES} from "@utils/constants";
+import { ROUTES } from "@utils/constants";
 import { extractFragment } from "@services/utils/uriIdentifierUtils";
 import { System } from "@models/systemModel";
 import { getModifiedSystemsList, getModifiedFaultTreesList, formatDate } from "@utils/utils";
-import {useSelectedSystem} from "@hooks/useSelectedSystem";
+import { useSelectedSystem } from "@hooks/useSelectedSystem";
 
 const faultTreeTableHeadCells = [
   "faultTreeOverviewTable.name",
@@ -24,14 +24,13 @@ const faultTreeTableHeadCells = [
   // "faultTreeOverviewTable.status", Unused
 ];
 
-const systemTableHeadCells = ["faultTreeOverviewTable.name"];
+const systemTableHeadCells = ["faultTreeOverviewTable.name", "faultTreeOverviewTable.operationalHours"];
 
 interface FaultTreeOverviewTableProps {
   faultTrees?: FaultTree[];
   systems?: System[];
   handleFaultTreeContextMenu?: (evt: any, faultTree: FaultTree) => void;
   handleSystemContextMenu?: (evt: any, system: System) => void;
-  selectedSystem?: string;
 }
 
 const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
@@ -39,19 +38,18 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
   systems,
   handleFaultTreeContextMenu,
   handleSystemContextMenu,
-  selectedSystem,
 }) => {
   const navigate = useNavigate();
   const { classes } = useStyles();
   const { t } = useTranslation();
   const theme = useTheme();
 
-  const [, setSelectedSystem] = useSelectedSystem();
+  const [selectedSystem, setSelectedSystem] = useSelectedSystem();
   const modifiedSystemsList = getModifiedSystemsList(systems, selectedSystem);
   const modifiedFaultTreesList = getModifiedFaultTreesList(faultTrees, selectedSystem);
 
-  const redirectToPath = (routePath: string, system ) => {
-    setSelectedSystem(system);
+  const redirectToPath = (routePath: string, system) => {
+    setSelectedSystem(selectedSystem);
     navigate(routePath);
   };
 
@@ -79,7 +77,6 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
                     </TableCell>
                   );
                 })}
-              <TableCell className={classes.emptyCell} />
             </TableRow>
           </TableHead>
           <TableBody>
@@ -119,10 +116,13 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
             {systems &&
               modifiedSystemsList.map((system, rowIndex) => {
                 const routePath = ROUTES.SYSTEMS + `/${extractFragment(system.iri)}`;
-                const bgColor = system.name === selectedSystem ? theme.sidePanel.colors.hover : "transparent";
+                const bgColor = system.name === selectedSystem?.name ? theme.sidePanel.colors.hover : "transparent";
                 return (
                   <TableRow key={rowIndex} className={classes.noBorder} style={{ backgroundColor: bgColor }}>
                     <TableCell className={classes.systemFirstColumn}>{system.name}</TableCell>
+                    <TableCell className={classes.tableCell}>
+                      {system.operationalDataFilter.minOperationalHours}
+                    </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Box className={classes.rowOptionsContainer}>
                         <Button
