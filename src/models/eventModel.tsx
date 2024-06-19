@@ -92,6 +92,9 @@ export interface FaultEvent extends AbstractModel {
     value?: number;
   };
   supertypes?: {
+    iri?: string;
+    types?: string[];
+    name?: string;
     criticality?: number;
     supertypes?: {
       iri?: string;
