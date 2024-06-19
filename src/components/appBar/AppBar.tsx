@@ -26,7 +26,7 @@ import { PRIMARY_LANGUAGE, SECONDARY_LANGUAGE, SELECTED_LANGUAGE_KEY } from "@ut
 import { useAppBar } from "../../contexts/AppBarContext";
 import { useLocation } from "react-router-dom";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { useSelectedSystem } from "@hooks/useSelectedSystem";
+import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 import { isUsingOidcAuth } from "@utils/OidcUtils";
 
 interface Props {
@@ -55,7 +55,7 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
   const dropdownDisabled = shouldDropdownBeDisabled(location.pathname);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [selectedSystem, setSelectedSystem] = useSelectedSystem();
+  const [selectedSystem, setSelectedSystem] = useSelectedSystemSummaries();
   const [changePasswordDialogOpen, setChangePasswordDialogOpen] = useState(false);
 
   const isMenuOpen = Boolean(anchorEl);

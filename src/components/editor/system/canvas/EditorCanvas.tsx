@@ -19,7 +19,7 @@ import { Box, IconButton, TextField, Typography, useTheme } from "@mui/material"
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import PlayArrow from "@mui/icons-material/PlayArrow";
 import { useTranslation } from "react-i18next";
-import { useSelectedSystem } from "@hooks/useSelectedSystem";
+import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 import { updateFilter } from "@services/systemService";
 import { useSystems } from "@hooks/useSystems";
 
@@ -56,7 +56,7 @@ const EditorCanvas = ({
   const [svgZoom, setSvgZoom] = useState(null);
   const [currentZoom, setCurrentZoom] = useState(1);
   const [isExportingImage, setIsExportingImage] = useState(false);
-  const [selectedSystem, setSelectedSystem] = useSelectedSystem();
+  const [selectedSystem, setSelectedSystem] = useSelectedSystemSummaries();
   const [systems, , updateSystem, , triggerFetch] = useSystems();
   const initialMinOperationalHours = selectedSystem?.operationalDataFilter?.minOperationalHours || 0;
   const [updatedMinOperationalHours, setUpdatedMinOperationalHours] = useState(initialMinOperationalHours);

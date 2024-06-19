@@ -13,7 +13,7 @@ import FaultTreeAndSystemOverviewCardsList from "./FaultTreeAndSystemOverviewCar
 import { useTranslation } from "react-i18next";
 import { Button, Box } from "@mui/material";
 import SystemDialog from "@components/dialog/system/SystemDialog";
-import { useSelectedSystem } from "@hooks/useSelectedSystem";
+import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 
 const SystemOverview = () => {
   const { t } = useTranslation();
@@ -25,7 +25,7 @@ const SystemOverview = () => {
   const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefaultAnchor);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [createSystemDialogOpen, setCreateSystemDialogOpen] = useState<boolean>(false);
-  const [selectedSystem, setSelectedSystem] = useSelectedSystem();
+  const [selectedSystem, setSelectedSystem] = useSelectedSystemSummaries();
 
   useEffect(() => {
     const storedView = localStorage.getItem("selectedView") as ViewType;
