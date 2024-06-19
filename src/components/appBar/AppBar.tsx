@@ -152,7 +152,11 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
                     select
                     InputLabelProps={{ shrink: false }}
                     className={classes.textfieldSelect}
-                    value={selectedSystem ? selectedSystem.iri : ""}
+                    value={
+                      selectedSystem?.iri && systemsList.some((s) => s.iri === selectedSystem.iri)
+                        ? selectedSystem.iri
+                        : ""
+                    }
                     onChange={handleSystemChange}
                     disabled={dropdownDisabled}
                   >
