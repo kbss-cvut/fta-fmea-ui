@@ -99,7 +99,7 @@ export const getReorderedSystemsListbySystem = (systems: System[], selected: Sys
  * @param selected Selected system.
  */
 export const getFilteredFaultTreesBySystem = (faultTrees: FaultTree[], selected: System): FaultTree[] =>
-  faultTrees?.filter((faultTree) => faultTree?.system?.iri === selected.iri) || [];
+  selected?.iri ? faultTrees?.filter((faultTree) => faultTree?.system?.iri === selected.iri) : faultTrees;
 
 export const formatDate = (dateString: string) => {
   if (!dateString) return "-";
