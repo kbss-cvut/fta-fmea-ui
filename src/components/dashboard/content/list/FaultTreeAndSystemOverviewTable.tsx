@@ -48,7 +48,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
   const modifiedSystemsList = getReorderedSystemsListbySystem(systems, selectedSystem);
   const modifiedFaultTreesList = getFilteredFaultTreesBySystem(faultTrees, selectedSystem);
 
-  const redirectToPath = (routePath: string, system) => {
+  const redirectToPath = (routePath: string, system: System) => {
     setSelectedSystem(system);
     navigate(routePath);
   };
