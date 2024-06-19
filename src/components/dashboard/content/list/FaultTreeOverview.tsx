@@ -18,7 +18,7 @@ import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 const FaultTreeOverview = () => {
   const { t } = useTranslation();
   const [showConfirmDialog] = useConfirmDialog();
-  const [faultTrees, , , removeTree] = useFaultTrees();
+  const [faultTrees, , , removeTree, triggerFetch] = useFaultTrees();
 
   const [selectedView, setSelectedView] = useState<ViewType>("table");
   const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
@@ -32,6 +32,10 @@ const FaultTreeOverview = () => {
     if (storedView) {
       setSelectedView(storedView);
     }
+  }, []);
+
+  useEffect(() => {
+    triggerFetch();
   }, []);
 
   const toggleView = (viewType: ViewType) => {

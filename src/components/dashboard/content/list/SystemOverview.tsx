@@ -18,7 +18,7 @@ import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 const SystemOverview = () => {
   const { t } = useTranslation();
   const [showConfirmDialog] = useConfirmDialog();
-  const [systems, , , removeSystem] = useSystems();
+  const [systems, , , removeSystem, triggerFetch] = useSystems();
 
   const [selectedView, setSelectedView] = useState<ViewType>("table");
   const [contextMenuSelectedSystem, setContextMenuSelectedSystem] = useState<System>(null);
@@ -32,6 +32,10 @@ const SystemOverview = () => {
     if (storedView) {
       setSelectedView(storedView);
     }
+  }, []);
+
+  useEffect(() => {
+    triggerFetch();
   }, []);
 
   const toggleView = (viewType: ViewType) => {
