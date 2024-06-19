@@ -17,7 +17,7 @@ import { SVG_PAN_ZOOM_OPTIONS } from "@utils/constants";
 import { saveSvgAsPng } from "save-svg-as-png";
 import { Box, IconButton, TextField, Typography, useTheme } from "@mui/material";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
-import PlayArrow from "@mui/icons-material/PlayArrow";
+import CheckIcon from "@mui/icons-material/Check";
 import { useTranslation } from "react-i18next";
 import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 import { updateFilter } from "@services/systemService";
@@ -57,9 +57,9 @@ const EditorCanvas = ({
   const [currentZoom, setCurrentZoom] = useState(1);
   const [isExportingImage, setIsExportingImage] = useState(false);
   const [selectedSystem, setSelectedSystem] = useSelectedSystemSummaries();
-  const [systems, , updateSystem, , triggerFetch] = useSystems();
-  const initialMinOperationalHours = selectedSystem?.operationalDataFilter?.minOperationalHours || 0;
-  const [updatedMinOperationalHours, setUpdatedMinOperationalHours] = useState(initialMinOperationalHours);
+  const [, , , , triggerFetch] = useSystems();
+  const globalOperationalHours = selectedSystem?.globalOperationalDataFilter?.minOperationalHours || 0;
+  const [updatedMinOperationalHours, setUpdatedMinOperationalHours] = useState(globalOperationalHours);
   const [inputColor, setInputColor] = useState("");
 
   useEffect(() => {
@@ -215,22 +215,17 @@ const EditorCanvas = ({
   const handleMinOperationalHoursChange = (event) => {
     const newValue = event.target.value;
     setUpdatedMinOperationalHours(newValue);
-    if (newValue !== selectedSystem?.operationalDataFilter?.minOperationalHours) {
+    if (newValue !== globalOperationalHours) {
       setInputColor(theme.notSynchronized.color);
     } else {
       setInputColor(theme.synchronized.color);
     }
   };
 
-  const handleReset = () => {
-    setUpdatedMinOperationalHours(initialMinOperationalHours);
-    setInputColor(theme.synchronized.color);
-  };
-
-  const handleSetNewDefaultOperationalHours = () => {
+  const handleSetNewDefaultOperationalHours = (resetGlobalValue = false) => {
     updateFilter(system?.iri, {
       ...selectedSystem.operationalDataFilter,
-      minOperationalHours: updatedMinOperationalHours,
+      minOperationalHours: resetGlobalValue ? globalOperationalHours : updatedMinOperationalHours,
     })
       .then(() => {
         triggerFetch();
@@ -238,7 +233,7 @@ const EditorCanvas = ({
           ...selectedSystem,
           operationalDataFilter: {
             ...selectedSystem.operationalDataFilter,
-            minOperationalHours: updatedMinOperationalHours,
+            minOperationalHours: resetGlobalValue ? globalOperationalHours : updatedMinOperationalHours,
           },
         });
         setInputColor(theme.synchronized.color);
@@ -249,7 +244,7 @@ const EditorCanvas = ({
           ...selectedSystem,
           operationalDataFilter: {
             ...selectedSystem.operationalDataFilter,
-            minOperationalHours: updatedMinOperationalHours,
+            minOperationalHours: resetGlobalValue ? globalOperationalHours : updatedMinOperationalHours,
           },
         });
         setInputColor(theme.synchronized.color);
@@ -284,11 +279,19 @@ const EditorCanvas = ({
             value={updatedMinOperationalHours}
             onChange={handleMinOperationalHoursChange}
           />
-          <IconButton aria-label="restore layout" size="large" onClick={handleReset}>
+          <IconButton
+            aria-label="restore layout"
+            size="large"
+            onClick={() => handleSetNewDefaultOperationalHours(true)}
+          >
             <RestartAltIcon />
           </IconButton>
-          <IconButton aria-label="restore layout" size="large" onClick={handleSetNewDefaultOperationalHours}>
-            <PlayArrow />
+          <IconButton
+            aria-label="restore layout"
+            size="large"
+            onClick={() => handleSetNewDefaultOperationalHours(false)}
+          >
+            <CheckIcon />
           </IconButton>
         </Box>
         {system && (
