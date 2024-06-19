@@ -35,7 +35,7 @@ interface Props {
   showBackButton?: boolean;
 }
 
-const shouldSystemChangeBeDisabled = (url: string) => {
+const shouldSystemSwitchBeDisabled = (url: string) => {
   const pathParts = url.split("/");
   const routes = [ROUTES.FTA.substring(1), ROUTES.SYSTEMS.substring(1)];
 
@@ -52,7 +52,7 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
   const { i18n, t } = useTranslation();
   const { appBarTitle, systemsList } = useAppBar();
   const location = useLocation();
-  const disabled = shouldSystemChangeBeDisabled(location.pathname);
+  const isGlobalSystemSwitchDisabled = shouldSystemSwitchBeDisabled(location.pathname);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selectedSystem, setSelectedSystem] = useSelectedSystemSummaries();
@@ -158,7 +158,7 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
                         : ""
                     }
                     onChange={handleSystemChange}
-                    disabled={disabled}
+                    disabled={isGlobalSystemSwitchDisabled}
                   >
                     {systemsList.map((s, i) => {
                       return (
@@ -169,7 +169,7 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
                     })}
                   </TextField>
                   <Box className={classes.tooltipContainer}>
-                    {selectedSystem && !disabled && (
+                    {selectedSystem && !isGlobalSystemSwitchDisabled && (
                       <Tooltip title={t("common.delete")} className={classes.tooltip} onClick={handleSystemDelete}>
                         <CancelIcon />
                       </Tooltip>

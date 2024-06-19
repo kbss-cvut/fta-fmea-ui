@@ -83,7 +83,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
       onEventUpdated({
         ...shapeToolData,
         selectedEstimate: { iri: snsPredictedIri, value: snsPredictedFailureRate },
-        probability: Number(snsPredictedFailureRate),
+        probability: snsPredictedFailureRate,
       });
     }
     if (event.target.value === RadioButtonType.Operational) {
@@ -91,16 +91,16 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
       onEventUpdated({
         ...shapeToolData,
         selectedEstimate: { iri: snsOperationalIri, value: snsOperationalFailureRate },
-        probability: Number(snsOperationalFailureRate),
+        probability: snsOperationalFailureRate,
       });
     }
   };
 
   const handleManualFailureRateUpdate = (eventType: EventType) => {
     if (eventType === EventType.EXTERNAL) {
-      onEventUpdated({ ...shapeToolData, probability: Number(externalManuallyDefinedFailureRate) });
+      onEventUpdated({ ...shapeToolData, probability: externalManuallyDefinedFailureRate });
     } else {
-      onEventUpdated({ ...shapeToolData, probability: Number(snsManuallyDefinedFailureRate) });
+      onEventUpdated({ ...shapeToolData, probability: snsManuallyDefinedFailureRate });
     }
   };
 
