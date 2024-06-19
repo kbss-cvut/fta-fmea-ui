@@ -8,7 +8,7 @@ import { ROUTES } from "@utils/constants";
 import { extractFragment } from "@services/utils/uriIdentifierUtils";
 import { useNavigate } from "react-router-dom";
 import { System } from "@models/systemModel";
-import { getModifiedSystemsList } from "@utils/utils";
+import { getReorderedSystemsListbySystem } from "@utils/utils";
 
 const borderDefault = "1px solid #E0E0E0";
 const borderHover = "1px solid #60A3D9";
@@ -18,7 +18,7 @@ interface FaultTreeOverviewCardsListProps {
   systems?: System[];
   handleFaultTreeContextMenu?: (evt: any, faultTree: FaultTree) => void;
   handleSystemContextMenu?: (evt: any, system: System) => void;
-  selectedSystem: string | null;
+  selectedSystem: System | null;
 }
 
 interface CardProps {
@@ -27,6 +27,7 @@ interface CardProps {
   onOpenMenu: (e: any) => void;
   border: string;
   index: number;
+  systemIri?: string;
 }
 
 const FaultTreeAndSystemOverviewCardsList: FC<FaultTreeOverviewCardsListProps> = ({
@@ -43,10 +44,10 @@ const FaultTreeAndSystemOverviewCardsList: FC<FaultTreeOverviewCardsListProps> =
 
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
-  const modifiedSystemsList = getModifiedSystemsList(systems, selectedSystem);
+  const modifiedSystemsList = getReorderedSystemsListbySystem(systems, selectedSystem);
 
-  const Card: FC<CardProps> = ({ name, onRedirect, onOpenMenu, border, index }) => {
-    const bgColor = name === selectedSystem ? theme.sidePanel.colors.hover : "transparent";
+  const Card: FC<CardProps> = ({ name, onRedirect, onOpenMenu, border, index, systemIri }) => {
+    const bgColor = systemIri === selectedSystem.iri ? theme.sidePanel.colors.hover : "transparent";
     return (
       <Grid item xs={12} sm={12} md={6} lg={4}>
         <Box
@@ -81,6 +82,7 @@ const FaultTreeAndSystemOverviewCardsList: FC<FaultTreeOverviewCardsListProps> =
                 key={`faultTree-card-${index}`}
                 index={index}
                 name={faultTree.name}
+                systemIri={faultTree?.system?.iri}
                 onRedirect={() => navigate(routePath)}
                 onOpenMenu={(e: any) => handleFaultTreeContextMenu(e, faultTree)}
                 border={border}
@@ -96,6 +98,7 @@ const FaultTreeAndSystemOverviewCardsList: FC<FaultTreeOverviewCardsListProps> =
                 key={`system-card-${index}`}
                 index={index}
                 name={system.name}
+                systemIri={system.iri}
                 onRedirect={() => navigate(routePath)}
                 onOpenMenu={(e: any) => handleSystemContextMenu(e, system)}
                 border={border}

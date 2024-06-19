@@ -73,7 +73,7 @@ const SystemOverview = () => {
         <FaultTreeAndSystemOverviewTable systems={systems} handleSystemContextMenu={handleContextMenu} />
       ) : (
         <FaultTreeAndSystemOverviewCardsList
-          selectedSystem={selectedSystem?.iri}
+          selectedSystem={selectedSystem}
           systems={systems}
           handleSystemContextMenu={handleContextMenu}
         />

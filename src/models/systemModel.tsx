@@ -14,6 +14,7 @@ export const CONTEXT = Object.assign({}, ctx, COMPONENT_CONTEXT, ABSTRACT_CONTEX
 
 export interface System extends AbstractModel {
   name: string;
+  iri?: string;
   components?: Component[];
   globalOperationalDataFilter: OperationalDataFilter;
   operationalDataFilter: OperationalDataFilter;
