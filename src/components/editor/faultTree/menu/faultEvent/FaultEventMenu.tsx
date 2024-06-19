@@ -83,7 +83,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
       onEventUpdated({
         ...shapeToolData,
         selectedEstimate: { iri: snsPredictedIri, value: snsPredictedFailureRate },
-        probability: snsPredictedFailureRate,
+        probability: Number(snsPredictedFailureRate),
       });
     }
     if (event.target.value === RadioButtonType.Operational) {
@@ -91,13 +91,17 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
       onEventUpdated({
         ...shapeToolData,
         selectedEstimate: { iri: snsOperationalIri, value: snsOperationalFailureRate },
-        probability: snsOperationalFailureRate,
+        probability: Number(snsOperationalFailureRate),
       });
     }
   };
 
-  const handleManualFailureRateUpdate = () => {
-    onEventUpdated({ ...shapeToolData, probability: snsManuallyDefinedFailureRate });
+  const handleManualFailureRateUpdate = (eventType: EventType) => {
+    if (eventType === EventType.EXTERNAL) {
+      onEventUpdated({ ...shapeToolData, probability: Number(externalManuallyDefinedFailureRate) });
+    } else {
+      onEventUpdated({ ...shapeToolData, probability: Number(snsManuallyDefinedFailureRate) });
+    }
   };
 
   const handleFailureModeClicked = (failureMode: FailureMode) => {
@@ -346,7 +350,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
                     }
                     inputProps={{ inputMode: "decimal" }}
                     disabled={selectedRadioButton !== RadioButtonType.Manual}
-                    onBlur={handleManualFailureRateUpdate}
+                    onBlur={() => handleManualFailureRateUpdate(EventType.BASIC)}
                   />
                 </Box>
               </RadioGroup>
@@ -366,7 +370,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
             value={externalManuallyDefinedFailureRate || ""}
             onChange={(event) => handleManuallyDefinedFailureRateChange(event, NodeTypeWithManualFailureRate.External)}
             inputProps={{ inputMode: "decimal" }}
-            onBlur={handleManualFailureRateUpdate}
+            onBlur={() => handleManualFailureRateUpdate(EventType.EXTERNAL)}
           />
           <Divider className={classes.divider} />
         </Box>
