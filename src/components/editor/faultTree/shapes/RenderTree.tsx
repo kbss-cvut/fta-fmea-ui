@@ -66,13 +66,13 @@ const renderTree = async (container, node, parentShape = null, pathsToHighlight)
       { predictionIri: "", operationalIri: "" },
     );
 
-    if (iriOfSelectedValue === predictionIri) {
+    if (iriOfSelectedValue === predictionIri && node.probability) {
       nodeShape.attr(["probabilityLabel", "text"], `(P) ${node.probability.toExponential(2)}`);
-    } else if (iriOfSelectedValue === operationalIri) {
+    } else if (iriOfSelectedValue === operationalIri && node.probability) {
       nodeShape.attr(["probabilityLabel", "text"], `(O) ${node.probability.toExponential(2)}`);
     }
   } else {
-    if (node.eventType !== EventType.INTERMEDIATE) {
+    if (node.eventType !== EventType.INTERMEDIATE && node.probability) {
       nodeShape.attr(["probabilityLabel", "text"], `(M) ${node.probability.toExponential(2)}`);
     }
   }
