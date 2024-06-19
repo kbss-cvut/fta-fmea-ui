@@ -15,7 +15,7 @@ import { faultEventSchema } from "@components/dialog/faultEvent/FaultEventCreati
 import { ReusableFaultEventsProvider } from "@hooks/useReusableFaultEvents";
 import { useTranslation } from "react-i18next";
 import useStyles from "@components/dialog/faultTree/FaultTreeDialog.styles";
-import { useSelectedSystem } from "@hooks/useSelectedSystem";
+import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 
 const FaultTreeDialog = ({ open, handleCloseDialog }) => {
   const { t } = useTranslation();
@@ -23,7 +23,7 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
 
   const [, addFaultTree] = useFaultTrees();
   const [processing, setIsProcessing] = useState(false);
-  const [selectedSystem] = useSelectedSystem();
+  const [selectedSystem] = useSelectedSystemSummaries();
 
   const useFormMethods = useForm({ resolver: yupResolver(schema.concat(faultEventSchema)) });
   const { handleSubmit, register } = useFormMethods;

@@ -12,7 +12,7 @@ import useStyles from "@components/editor/faultTree/menu/faultEvent/FaultEventMe
 import { useTranslation } from "react-i18next";
 import { asArray } from "@utils/utils";
 import { ReusableFaultEventsProvider } from "@hooks/useReusableFaultEvents";
-import { useSelectedSystem } from "@hooks/useSelectedSystem";
+import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 import { Radio, RadioGroup, FormControlLabel, FormControl, TextField } from "@mui/material";
 
 interface Props {
@@ -49,7 +49,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
   const [stock, setStock] = useState<string | undefined>(undefined);
   const [quantity, setQuantity] = useState<number | undefined>(undefined);
   const [schematicDesignation, setSchematicDesignation] = useState<string | undefined>(undefined);
-  const [selectedSystem] = useSelectedSystem();
+  const [selectedSystem] = useSelectedSystemSummaries();
 
   const [snsOperationalFailureRate, setSnsOperationalFailureRate] = useState<number | undefined>(undefined);
   const [snsPredictedFailureRate, setSnsPredictedFailureRate] = useState<number | undefined>(undefined);

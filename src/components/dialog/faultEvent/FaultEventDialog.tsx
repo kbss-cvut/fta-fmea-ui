@@ -13,7 +13,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { eventFromHookFormValues } from "@services/faultEventService";
 import { ReusableFaultEventsProvider } from "@hooks/useReusableFaultEvents";
 import { FaultEvent } from "@models/eventModel";
-import { useSelectedSystem } from "@hooks/useSelectedSystem";
+import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 
 interface Props {
   open: boolean;
@@ -26,7 +26,7 @@ interface Props {
 const FaultEventDialog = ({ open, eventIri, treeUri, onCreated, onClose }: Props) => {
   const [showSnackbar] = useSnackbar();
 
-  const [selectedSystem] = useSelectedSystem();
+  const [selectedSystem] = useSelectedSystemSummaries();
   const useFormMethods = useForm({ resolver: yupResolver(faultEventSchema) });
   const { handleSubmit, formState } = useFormMethods;
   const { isSubmitting } = formState;

@@ -13,25 +13,29 @@ import FaultTreeDialog from "@components/dialog/faultTree/FaultTreeDialog";
 import { Box, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { SELECTED_VIEW } from "@utils/constants";
-import { useSelectedSystem } from "@hooks/useSelectedSystem";
+import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 
 const FaultTreeOverview = () => {
   const { t } = useTranslation();
   const [showConfirmDialog] = useConfirmDialog();
-  const [faultTrees, , , removeTree] = useFaultTrees();
+  const [faultTrees, , , removeTree, triggerFetch] = useFaultTrees();
 
   const [selectedView, setSelectedView] = useState<ViewType>("table");
   const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
   const [contextMenuSelectedTree, setContextMenuSelectedTree] = useState<FaultTree>(null);
   const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefaultAnchor);
   const [createFaultTreeDialogOpen, setCreateFaultTreeDialogOpen] = useState<boolean>(false);
-  const [selectedSystem] = useSelectedSystem();
+  const [selectedSystem] = useSelectedSystemSummaries();
 
   useEffect(() => {
     const storedView = localStorage.getItem(SELECTED_VIEW) as ViewType;
     if (storedView) {
       setSelectedView(storedView);
     }
+  }, []);
+
+  useEffect(() => {
+    triggerFetch();
   }, []);
 
   const toggleView = (viewType: ViewType) => {

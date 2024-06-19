@@ -9,7 +9,7 @@ import { ROUTES } from "@utils/constants";
 import { extractFragment } from "@services/utils/uriIdentifierUtils";
 import { System } from "@models/systemModel";
 import { getFilteredFaultTreesBySystem, getReorderedSystemsListbySystem, formatDate } from "@utils/utils";
-import { useSelectedSystem } from "@hooks/useSelectedSystem";
+import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 
 const faultTreeTableHeadCells = [
   "faultTreeOverviewTable.name",
@@ -44,7 +44,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
   const { t } = useTranslation();
   const theme = useTheme();
 
-  const [selectedSystem, setSelectedSystem] = useSelectedSystem();
+  const [selectedSystem, setSelectedSystem] = useSelectedSystemSummaries();
   const modifiedSystemsList = getReorderedSystemsListbySystem(systems, selectedSystem);
   const modifiedFaultTreesList = getFilteredFaultTreesBySystem(faultTrees, selectedSystem);
 

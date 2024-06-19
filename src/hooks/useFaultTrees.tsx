@@ -14,17 +14,19 @@ type faultTreeContextType = [
   (faultTree: FaultTree) => void,
   (faultTreeToUpdate: FaultTree) => void,
   (faultTreeToDelete: FaultTree) => void,
+  () => void,
 ];
 
 export const faultTreesContext = createContext<faultTreeContextType>(null!);
 
 export const useFaultTrees = () => {
-  const [faultTrees, addFaultTree, updateTree, removeTree] = useContext(faultTreesContext);
-  return [faultTrees, addFaultTree, updateTree, removeTree] as const;
+  const [faultTrees, addFaultTree, updateTree, removeTree, triggerFetch] = useContext(faultTreesContext);
+  return [faultTrees, addFaultTree, updateTree, removeTree, triggerFetch] as const;
 };
 
 export const FaultTreesProvider = ({ children }: ChildrenProps) => {
   const [_faultTrees, _setFaultTrees] = useState<FaultTree[]>([]);
+  const [shouldFetchTrees, setShouldFetchTrees] = useState(true);
   const [showSnackbar] = useSnackbar();
   const loggedUser = useUserAuth();
 
@@ -32,13 +34,16 @@ export const FaultTreesProvider = ({ children }: ChildrenProps) => {
     const fetchFaultTrees = async () => {
       faultTreeService
         .findAll()
-        .then((value) => _setFaultTrees(value))
+        .then((value) => {
+          _setFaultTrees(value);
+          setShouldFetchTrees(false);
+        })
         .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
     };
 
     if (loggedUser) fetchFaultTrees();
     return () => axiosSource.cancel("FaultTreesProvider - unmounting");
-  }, [loggedUser]);
+  }, [loggedUser, shouldFetchTrees]);
 
   const addFaultTree = async (faultTree: FaultTree) => {
     faultTreeService
@@ -75,8 +80,10 @@ export const FaultTreesProvider = ({ children }: ChildrenProps) => {
       .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
   };
 
+  const triggerFetch = () => setShouldFetchTrees(true);
+
   return (
-    <faultTreesContext.Provider value={[_faultTrees, addFaultTree, updateTree, removeTree]}>
+    <faultTreesContext.Provider value={[_faultTrees, addFaultTree, updateTree, removeTree, triggerFetch]}>
       {children}
     </faultTreesContext.Provider>
   );

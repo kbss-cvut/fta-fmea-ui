@@ -3,11 +3,10 @@ import { ChildrenProps } from "../utils/hookUtils";
 import { FaultTreesProvider } from "./useFaultTrees";
 import { FailureModesTablesProvider } from "./useFailureModesTables";
 import { SystemsProvider } from "@hooks/useSystems";
-import {SelectedSystemProvider} from "@hooks/useSelectedSystem";
+import { SelectedSystemProvider } from "@hooks/useSelectedSystemSummaries";
 
 const DashboardContentProvider = ({ children }: ChildrenProps) => {
   return (
-
     <FaultTreesProvider>
       <SystemsProvider>
         <SelectedSystemProvider>

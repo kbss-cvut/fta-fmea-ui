@@ -13,25 +13,29 @@ import FaultTreeAndSystemOverviewCardsList from "./FaultTreeAndSystemOverviewCar
 import { useTranslation } from "react-i18next";
 import { Button, Box } from "@mui/material";
 import SystemDialog from "@components/dialog/system/SystemDialog";
-import { useSelectedSystem } from "@hooks/useSelectedSystem";
+import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 
 const SystemOverview = () => {
   const { t } = useTranslation();
   const [showConfirmDialog] = useConfirmDialog();
-  const [systems, , , removeSystem] = useSystems();
+  const [systems, , , removeSystem, triggerFetch] = useSystems();
 
   const [selectedView, setSelectedView] = useState<ViewType>("table");
   const [contextMenuSelectedSystem, setContextMenuSelectedSystem] = useState<System>(null);
   const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefaultAnchor);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [createSystemDialogOpen, setCreateSystemDialogOpen] = useState<boolean>(false);
-  const [selectedSystem, setSelectedSystem] = useSelectedSystem();
+  const [selectedSystem, setSelectedSystem] = useSelectedSystemSummaries();
 
   useEffect(() => {
     const storedView = localStorage.getItem("selectedView") as ViewType;
     if (storedView) {
       setSelectedView(storedView);
     }
+  }, []);
+
+  useEffect(() => {
+    triggerFetch();
   }, []);
 
   const toggleView = (viewType: ViewType) => {
