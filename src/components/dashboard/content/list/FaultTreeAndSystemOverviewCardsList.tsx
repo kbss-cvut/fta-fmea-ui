@@ -47,7 +47,7 @@ const FaultTreeAndSystemOverviewCardsList: FC<FaultTreeOverviewCardsListProps> =
   const modifiedSystemsList = getReorderedSystemsListbySystem(systems, selectedSystem);
 
   const Card: FC<CardProps> = ({ name, onRedirect, onOpenMenu, border, index, systemIri }) => {
-    const bgColor = systemIri === selectedSystem.iri ? theme.sidePanel.colors.hover : "transparent";
+    const bgColor = systemIri === selectedSystem?.iri ? theme.sidePanel.colors.hover : "transparent";
     return (
       <Grid item xs={12} sm={12} md={6} lg={4}>
         <Box
