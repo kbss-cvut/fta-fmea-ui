@@ -23,6 +23,8 @@ import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import PlayArrow from "@mui/icons-material/PlayArrow";
 import { useCurrentFaultTree } from "@hooks/useCurrentFaultTree";
 import { useFaultTrees } from "@hooks/useFaultTrees";
+import { calculateCutSets } from "@services/faultTreeService";
+import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 
 enum MOVE_NODE {
   DRAGGING = 0,
@@ -89,6 +91,7 @@ const EditorCanvas = ({
   const [, , updateTree] = useFaultTrees();
   const [updatedMinOperationalHours, setUpdatedMinOperationalHours] = useState(initialMinOperationalHours);
   const [inputColor, setInputColor] = useState("");
+  const [showSnackbar] = useSnackbar();
 
   let dragStartPosition = null;
 
@@ -286,10 +289,14 @@ const EditorCanvas = ({
   };
 
   const handleSetNewDefaultOperationalHours = () => {
-    updateTree({
-      ...faultTree,
-      operationalDataFilter: { ...faultTree.operationalDataFilter, minOperationalHours: updatedMinOperationalHours },
-    });
+    calculateCutSets(faultTree.iri, faultTree.operationalDataFilter)
+      .then((d) => {
+        refreshTree();
+      })
+      .catch((reason) => {
+        showSnackbar(reason, SnackbarType.ERROR);
+      });
+
     setInputColor(theme.synchronized.color);
   };
 
