@@ -74,6 +74,8 @@ const renderTree = async (container, node, parentShape = null, pathsToHighlight)
   } else {
     if (node.eventType !== EventType.INTERMEDIATE && node.probability) {
       nodeShape.attr(["probabilityLabel", "text"], `(M) ${node.probability.toExponential(2)}`);
+    } else if (node.eventType === EventType.INTERMEDIATE && node.probability) {
+      nodeShape.attr(["probabilityLabel", "text"], `(C) ${node.probability.toExponential(2)}`);
     }
   }
 
