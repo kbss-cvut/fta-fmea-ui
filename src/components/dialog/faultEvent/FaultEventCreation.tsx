@@ -16,10 +16,18 @@ interface Props {
   eventValue?: FaultEvent;
   isEditedEvent?: boolean;
   disabled?: boolean;
+  isSimplified?: boolean;
 }
 
 // TODO: remove ts-ignores and migrate to higher version of react-hook-form
-const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedEvent = false, disabled }: Props) => {
+const FaultEventCreation = ({
+  useFormMethods,
+  isRootEvent,
+  eventValue,
+  isEditedEvent = false,
+  disabled,
+  isSimplified, // Hides props that are needed only for creation
+}: Props) => {
   const { classes } = useStyles();
   const { t } = useTranslation();
 
@@ -181,18 +189,20 @@ const FaultEventCreation = ({ useFormMethods, isRootEvent, eventValue, isEditedE
               />
 
               {/* Probability field */}
-              <TextField
-                label={t("newFtaModal.probability")}
-                type="number"
-                min={0}
-                max={1}
-                step={0.01}
-                error={!!errors.probability}
-                helperText={errors.probability?.message}
-                className={classes.probability}
-                defaultValue=""
-                {...register("probability")}
-              />
+              {!isSimplified && eventTypeWatch === EventType.BASIC && (
+                <TextField
+                  label={t("newFtaModal.probability")}
+                  type="number"
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  error={!!errors.probability}
+                  helperText={errors.probability?.message}
+                  className={classes.probability}
+                  defaultValue=""
+                  {...register("probability")}
+                />
+              )}
 
               {(gateTypeWatch === GateType.PRIORITY_AND || !gateTypeWatch) &&
                 eventTypeWatch === EventType.INTERMEDIATE &&
