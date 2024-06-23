@@ -51,15 +51,16 @@ const transformReferences = <Type extends AbstractModel>(b: Type, transformer: <
   return bCopy;
 };
 
-export const asArray = (objectOrArray) => {
-  if (!objectOrArray) {
-    return [];
-  }
-  if (Array.isArray(objectOrArray)) {
-    return objectOrArray;
-  }
-  return [objectOrArray];
-};
+/**
+ * Ensures that the specified argument is returned as an array at all conditions.
+ *
+ * If the argument is a single element, it is returned as a single-element array.
+ * @param arr Input to sanitize
+ */
+
+export function asArray<T>(arr: T[] | T | undefined | null): T[] {
+  return arr ? (Array.isArray(arr) ? arr : [arr]) : [];
+}
 
 /**
  * Return reordered list of entities so that selected entity will become first,
