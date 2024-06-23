@@ -67,6 +67,7 @@ const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) =
           eventValue={data}
           isEditedEvent={true}
           disabled={data ? data.eventType === EventType.INTERMEDIATE || data.isReference : false}
+          isSimplified={true}
         />
       </ReusableFaultEventsProvider>
     );
