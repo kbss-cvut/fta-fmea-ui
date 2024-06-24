@@ -63,18 +63,24 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
                 faultTreeTableHeadCells.map((headCell, index) => {
                   const styling = index === 0 ? classes.firstColumn : classes.tableHeaderCell;
                   return (
-                    <TableCell key={index} className={styling}>
-                      {t(headCell)}
-                    </TableCell>
+                    <>
+                      <TableCell key={index} className={styling}>
+                        {t(headCell)}
+                      </TableCell>
+                      {faultTreeTableHeadCells.length - 1 === index && <TableCell></TableCell>}
+                    </>
                   );
                 })}
               {systems &&
                 systemTableHeadCells.map((headCell, index) => {
                   const styling = index === 0 ? classes.systemFirstColumn : classes.tableHeaderCell;
                   return (
-                    <TableCell key={index} className={styling}>
-                      {t(headCell)}
-                    </TableCell>
+                    <>
+                      <TableCell key={index} className={styling}>
+                        {t(headCell)}
+                      </TableCell>
+                      {systemTableHeadCells.length - 1 === index && <TableCell></TableCell>}
+                    </>
                   );
                 })}
             </TableRow>
