@@ -16,7 +16,7 @@ interface Props {
   eventValue?: FaultEvent;
   isEditedEvent?: boolean;
   disabled?: boolean;
-  isSimplified?: boolean;
+  isEditMode?: boolean;
 }
 
 // TODO: remove ts-ignores and migrate to higher version of react-hook-form
@@ -26,7 +26,7 @@ const FaultEventCreation = ({
   eventValue,
   isEditedEvent = false,
   disabled,
-  isSimplified, // Hides props that are needed only for creation
+  isEditMode,
 }: Props) => {
   const { classes } = useStyles();
   const { t } = useTranslation();
@@ -189,7 +189,7 @@ const FaultEventCreation = ({
               />
 
               {/* Probability field */}
-              {!isSimplified && eventTypeWatch === EventType.BASIC && (
+              {!isEditMode && eventTypeWatch === EventType.BASIC && (
                 <TextField
                   label={t("newFtaModal.probability")}
                   type="number"
