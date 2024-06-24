@@ -97,15 +97,14 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
   };
 
   const handleManualFailureRateUpdate = (eventType: EventType) => {
-    if (eventType === EventType.EXTERNAL) {
-      onEventUpdated({
-        ...shapeToolData,
-        probability: externalManuallyDefinedFailureRate,
-        selectedEstimate: undefined,
-      });
-    } else {
-      onEventUpdated({ ...shapeToolData, probability: snsManuallyDefinedFailureRate, selectedEstimate: undefined });
-    }
+    const probability =
+      eventType === EventType.EXTERNAL ? externalManuallyDefinedFailureRate : snsManuallyDefinedFailureRate;
+
+    onEventUpdated({
+      ...shapeToolData,
+      probability,
+      selectedEstimate: undefined,
+    });
   };
 
   const handleFailureModeClicked = (failureMode: FailureMode) => {
