@@ -289,7 +289,10 @@ const EditorCanvas = ({
   };
 
   const handleSetNewDefaultOperationalHours = () => {
-    calculateCutSets(faultTree.iri, faultTree.operationalDataFilter)
+    const newOperationalDataFilter = Object.assign({}, faultTree.operationalDataFilter);
+    newOperationalDataFilter.minOperationalHours =
+      updatedMinOperationalHours || faultTree.operationalDataFilter.minOperationalHours;
+    calculateCutSets(faultTree.iri, newOperationalDataFilter)
       .then((d) => {
         refreshTree();
       })
