@@ -86,6 +86,11 @@ export const HttpHeaders = {
   LINK: "link",
 };
 
+export const Status = {
+  OK: "ok",
+  outOfSync: "outOfSync",
+};
+
 type RGB = `rgb(${number}, ${number}, ${number})`;
 type RGBA = `rgba(${number}, ${number}, ${number}, ${number})`;
 type HEX = `#${string}`;
