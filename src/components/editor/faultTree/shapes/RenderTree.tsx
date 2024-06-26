@@ -12,6 +12,7 @@ import {
   LABEL_FONT_SIZE,
 } from "@components/editor/faultTree/shapes/constants";
 import { getNodeWidthForText } from "@utils/treeUtils";
+import { Status } from "@utils/constants";
 
 const referenceIcon =
   "M3.9 7c0-1.71 1.39-3.1 3.1-3.1h4V2H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 8h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V12h4c2.76 0 5-2.24 5-5s-2.24-5-5-5";
@@ -34,7 +35,7 @@ const highlightCheck = (path, iri) => {
   return iriArray.includes(iri);
 };
 
-const renderTree = async (container, node, parentShape = null, pathsToHighlight) => {
+const renderTree = async (container, node, parentShape = null, pathsToHighlight, status = null) => {
   const shouldHighlight = pathsToHighlight ? highlightCheck(pathsToHighlight, node.iri) : false;
 
   // render node shape
@@ -54,7 +55,8 @@ const renderTree = async (container, node, parentShape = null, pathsToHighlight)
   if (width > DEFAULT_NODE_SHAPE_SIZE) nodeShape.prop("size", { width: width });
 
   nodeShape.attr(["label", "text"], node.name);
-
+  const _status = node.status || status;
+  if (_status && _status !== Status.OK) nodeShape.attr(["probabilityLabel", "fill"], "red");
   if (node?.selectedEstimate) {
     const iriOfSelectedValue = node.selectedEstimate.iri;
     const { predictionIri, operationalIri } = node.supertypes.supertypes.reduce(

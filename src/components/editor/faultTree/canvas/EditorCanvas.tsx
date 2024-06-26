@@ -253,7 +253,7 @@ const EditorCanvas = ({
           targets.forEach((target) => listOfPaths.push(findNodeByIri(rootEvent, target)));
         }
 
-        await renderTree(container, rootEvent, null, listOfPaths);
+        await renderTree(container, rootEvent, null, listOfPaths, faultTree?.status);
         layout(container);
         setRendering(false);
       }
