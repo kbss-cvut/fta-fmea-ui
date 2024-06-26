@@ -198,7 +198,8 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
       } else if (iriOfSelectedValue === operationalIri) {
         setSelectedRadioButton(RadioButtonType.Operational);
       }
-      setSnsManuallyDefinedFailureRate(shapeToolData?.probability);
+      setSnsManuallyDefinedFailureRate(undefined);
+      setExternalManuallyDefinedFailureRate(undefined);
     } else {
       // NO SELECTED ESTIMATE => MANUAL IS SELECTED
       setSelectedRadioButton(RadioButtonType.Manual);
