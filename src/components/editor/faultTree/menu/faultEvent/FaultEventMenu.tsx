@@ -33,6 +33,18 @@ enum NodeTypeWithManualFailureRate {
   External = "External",
 }
 
+const getFailureRateIris = (supertypes) => {
+  const value = asArray(supertypes);
+  return value.reduce(
+    (acc, item) => {
+      if (item?.hasFailureRate?.prediction?.iri) acc.predictionIri = item.hasFailureRate.prediction.iri;
+      if (item?.hasFailureRate?.estimate?.iri) acc.operationalIri = item.hasFailureRate.estimate.iri;
+      return acc;
+    },
+    { predictionIri: "", operationalIri: "" },
+  );
+};
+
 const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }: Props) => {
   const { t } = useTranslation();
   const { classes } = useStyles();
@@ -97,11 +109,14 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
   };
 
   const handleManualFailureRateUpdate = (eventType: EventType) => {
-    if (eventType === EventType.EXTERNAL) {
-      onEventUpdated({ ...shapeToolData, probability: externalManuallyDefinedFailureRate });
-    } else {
-      onEventUpdated({ ...shapeToolData, probability: snsManuallyDefinedFailureRate });
-    }
+    const probability =
+      eventType === EventType.EXTERNAL ? externalManuallyDefinedFailureRate : snsManuallyDefinedFailureRate;
+
+    onEventUpdated({
+      ...shapeToolData,
+      probability,
+      selectedEstimate: undefined,
+    });
   };
 
   const handleFailureModeClicked = (failureMode: FailureMode) => {
@@ -176,14 +191,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
     if (shapeToolData?.selectedEstimate) {
       // SELECTED ESTIMATE => PREDICTED OR OPERATIONAL IS SELECTED
       const iriOfSelectedValue = shapeToolData.selectedEstimate.iri;
-      const { predictionIri, operationalIri } = supertypes.reduce(
-        (acc, item) => {
-          if (item?.hasFailureRate?.prediction?.iri) acc.predictionIri = item.hasFailureRate.prediction.iri;
-          if (item?.hasFailureRate?.estimate?.iri) acc.operationalIri = item.hasFailureRate.estimate.iri;
-          return acc;
-        },
-        { predictionIri: "", operationalIri: "" },
-      );
+      const { predictionIri, operationalIri } = getFailureRateIris(supertypes);
 
       if (iriOfSelectedValue === predictionIri) {
         setSelectedRadioButton(RadioButtonType.Predicted);
@@ -218,7 +226,9 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
   const basedFailureRate = shapeToolData?.supertypes?.supertypes?.hasFailureRate?.estimate?.value;
   const requiredFailureRate = shapeToolData?.supertypes?.hasFailureRate?.requirement?.upperBound;
 
-  const FailureRateBox = ({ value, label, rate, selected }) => (
+  const { predictionIri, operationalIri } = getFailureRateIris(shapeToolData?.supertypes?.supertypes);
+
+  const FailureRateBox = ({ value, label, rate, selected, outdated }) => (
     <Box display="flex" flexDirection="row" alignItems="center">
       <FormControlLabel
         value={value}
@@ -226,9 +236,20 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
         label={`${label}:`}
         className={selected ? classes.selected : classes.notSelected}
       />
-      <Typography className={classes.notEditableValue}>{rate}</Typography>
+      <Typography className={outdated ? classes.outdated : classes.notEditableValue}>{rate}</Typography>
     </Box>
   );
+
+  const renderFailureRateBox = (rateType, rateValue, iri, selectedRadioButton, labelKey) => {
+    const rate =
+      shapeToolData.probability !== rateValue && shapeToolData?.selectedEstimate?.iri === iri
+        ? shapeToolData.probability
+        : rateValue;
+    const selected = selectedRadioButton === rateType;
+    const outdated = selected && shapeToolData.probability !== rateValue;
+
+    return <FailureRateBox value={rateType} label={t(labelKey)} rate={rate} selected={selected} outdated={outdated} />;
+  };
 
   return (
     <Box paddingLeft={2} marginRight={2}>
@@ -317,22 +338,23 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
           <Box className={classes.labelRow}>
             <FormControl>
               <RadioGroup value={selectedRadioButton} onChange={handleSnsBasicSelectedFailureRateChange}>
-                {snsPredictedFailureRate && (
-                  <FailureRateBox
-                    value={RadioButtonType.Predicted}
-                    label={t("faultEventMenu.predictedFailureRate")}
-                    rate={snsPredictedFailureRate}
-                    selected={selectedRadioButton === RadioButtonType.Predicted}
-                  />
-                )}
-                {snsOperationalFailureRate && (
-                  <FailureRateBox
-                    value={RadioButtonType.Operational}
-                    label={t("faultEventMenu.operationalFailureRate")}
-                    rate={snsOperationalFailureRate}
-                    selected={selectedRadioButton === RadioButtonType.Operational}
-                  />
-                )}
+                {snsPredictedFailureRate &&
+                  renderFailureRateBox(
+                    RadioButtonType.Predicted,
+                    snsPredictedFailureRate,
+                    predictionIri,
+                    selectedRadioButton,
+                    "faultEventMenu.predictedFailureRate",
+                  )}
+
+                {snsOperationalFailureRate &&
+                  renderFailureRateBox(
+                    RadioButtonType.Operational,
+                    snsOperationalFailureRate,
+                    operationalIri,
+                    selectedRadioButton,
+                    "faultEventMenu.operationalFailureRate",
+                  )}
                 <Box display={"flex"} flexDirection={"row"} alignItems="center">
                   <FormControlLabel
                     value={RadioButtonType.Manual}
