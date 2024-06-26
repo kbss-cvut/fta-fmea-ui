@@ -76,7 +76,7 @@
   "faultTreeOverviewTable": {
     "name": "Name",
     "aircraftType": "System type",
-    "ata": "ATA",
+    "sns": "SNS",
     "calculatedFailureRate": "Calculated failure rate",
     "fhaBasedFailureRate": "FHA based failure rate",
     "requiredFailureRate": "Required failure rate",

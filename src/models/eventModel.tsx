@@ -35,6 +35,7 @@ const ctx = {
   item: VocabularyUtils.PREFIX + "has-component",
   quantity: VocabularyUtils.PREFIX + "quantity",
   references: VocabularyUtils.PREFIX + "is-reference-to",
+  status: VocabularyUtils.PREFIX + "status",
   isPartOf: VocabularyUtils.PREFIX + "is-part-of",
   isReference: VocabularyUtils.PREFIX + "is-reference",
   system: VocabularyUtils.PREFIX + "is-artifact-of",
@@ -85,11 +86,11 @@ export interface FaultEvent extends AbstractModel {
   isReference?: boolean;
   references?: {
     isPartOf?: string;
+    probability: number;
+    status: string;
   };
   selectedEstimate?: {
     iri?: string;
-    types?: string[];
-    value?: number;
   };
   supertypes?: {
     iri?: string;

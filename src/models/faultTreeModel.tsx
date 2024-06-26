@@ -10,6 +10,7 @@ const ctx = {
   faultEventScenarios: VocabularyUtils.PREFIX + "has-scenario",
   operationalDataFilter: VocabularyUtils.PREFIX + "has-operational-data-filter",
   name: VocabularyUtils.PREFIX + "name",
+  status: VocabularyUtils.PREFIX + "status",
 };
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, EVENT_CONTEXT, SCENARIO_CONTEXT, FILTER_CONTEXT);
@@ -27,6 +28,7 @@ export interface FaultTree extends AbstractModel {
   };
   modified?: string;
   created?: string;
+  status?: string;
   subSystem?: {
     name?: string;
   };

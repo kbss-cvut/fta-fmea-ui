@@ -76,7 +76,7 @@
   "faultTreeOverviewTable": {
     "name": "Jméno",
     "aircraftType": "Typ systému",
-    "ata": "ATA",
+    "sns": "SNS",
     "calculatedFailureRate": "Vypočtená intenzita poruch",
     "fhaBasedFailureRate": "Intenzita poruch založená na FHA",
     "requiredFailureRate": "Požadovaná intenzita poruch",
