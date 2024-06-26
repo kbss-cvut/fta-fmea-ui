@@ -32,6 +32,12 @@ const useStyles = makeStyles()((theme: Theme) => ({
   notEditableValue: {
     color: theme.main.grey,
   },
+  outdated: {
+    color: "red",
+    "&.Mui-checked": {
+      color: theme.main.red,
+    },
+  },
   divider: {
     marginTop: 8,
     marginBottom: 8,

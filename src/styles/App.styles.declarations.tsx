@@ -38,6 +38,7 @@ declare module "@mui/material/styles" {
     main?: {
       black: string;
       grey: string;
+      red: string;
       notSynchronized?: {
         color: COLOR;
       };
