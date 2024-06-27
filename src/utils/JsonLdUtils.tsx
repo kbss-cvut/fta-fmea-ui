@@ -41,9 +41,16 @@ export default class JsonLdUtils {
     } else if (Array.isArray(input["@graph"]) && input["@graph"].length === 0) {
       return Promise.resolve([]);
     }
+
+    const map = new Map<string, object>();
+
     return compact(input, context)
       .then((res) => JsonLdUtils.loadArrayFromCompactedGraph<T>(res))
-      .then((arr) => arr.map((item) => JsonLdUtils.resolveReferences<T>(item)));
+      .then((arr) =>
+        arr.map((item) => {
+          return JsonLdUtils.resolveReferences<T>(item, map);
+        }),
+      );
   }
 
   /**
@@ -74,7 +81,11 @@ export default class JsonLdUtils {
   ): T {
     const _idMap = new Map<string, Referenced>();
     idMap.forEach((v, k) => _idMap.set(k, { entity: v, references: [] }));
-    return this._resolveReferences(input, _idMap);
+    const ret: T = this._resolveReferences(input, _idMap);
+    _idMap.forEach((v, k) => {
+      if (!idMap.has(k) && v.entity) idMap.set(k, v.entity);
+    });
+    return ret;
   }
 
   /**
