@@ -115,7 +115,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
                     <TableCell className={classes.firstColumn}>{faultTree.name}</TableCell>
                     <TableCell className={classes.tableCell}>{faultTree?.system?.name}</TableCell>
                     <TableCell className={classes.tableCell}>{faultTree?.subSystem?.name}</TableCell>
-                    <TableCell style={{ backgroundColor: statusColor }} className={classes.tableCell}>
+                    <TableCell style={{ color: statusColor }} className={classes.tableCell}>
                       {failureRate(faultTree?.calculatedFailureRate)}
                     </TableCell>
                     <TableCell className={classes.tableCell}>{failureRate(faultTree?.fhaBasedFailureRate)}</TableCell>
