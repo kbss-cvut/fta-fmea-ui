@@ -239,7 +239,11 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
         label={`${label}:`}
         className={selected ? classes.selected : classes.notSelected}
       />
-      <Typography className={outdated ? classes.outdated : classes.notEditableValue}>{rate}</Typography>
+      <Tooltip title={rate}>
+        <Typography className={outdated ? classes.outdated : classes.notEditableValue}>
+          {rate.toExponential(2)}
+        </Typography>
+      </Tooltip>
     </Box>
   );
 
