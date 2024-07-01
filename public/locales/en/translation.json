@@ -91,7 +91,7 @@
     "criticality": "Criticality",
     "fhaBasedFailureRate": "FHA based failure rate",
     "predictedFailureRate": "Predicted failure rate",
-    "ataSystem": "ATA System",
+    "ataSystem": "SNS System",
     "partNumber": "Part number",
     "stock": "Stock",
     "quantity": "Quantity",
