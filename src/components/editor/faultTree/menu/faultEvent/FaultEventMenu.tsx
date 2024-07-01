@@ -295,7 +295,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
             {shapeToolData.name}
           </Typography>
           {basedFailureRate && (
-            <Box className={classes.labelRow}>
+            <Box className={classes.eventPropertyRow}>
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.fhaBasedFailureRate")}:</span>
                 {basedFailureRate.toExponential(2)}
@@ -303,7 +303,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
             </Box>
           )}
           {shapeToolData?.probabilityRequirement && (
-            <Box className={classes.labelRow}>
+            <Box className={classes.eventPropertyRow}>
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.requiredFailureRate")}:</span>
                 {shapeToolData?.probabilityRequirement.toExponential(2)}
@@ -318,7 +318,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
       {shapeToolData && shapeToolData.eventType === EventType.EXTERNAL && shapeToolData.isReference && (
         <>
           {shapeToolData?.probability && (
-            <Box className={classes.labelRow}>
+            <Box className={classes.eventPropertyRow}>
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.calculatedFailureRate")}:</span>
                 {shapeToolData?.probability.toExponential(2)}
@@ -327,7 +327,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
           )}
 
           {basedFailureRate && (
-            <Box className={classes.labelRow}>
+            <Box className={classes.eventPropertyRow}>
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.fhaBasedFailureRate")}:</span>
                 {shapeToolData?.supertypes?.supertypes?.hasFailureRate?.estimate?.value.toExponential(2)}
@@ -335,7 +335,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
             </Box>
           )}
           {requiredFailureRate && (
-            <Box className={classes.labelRow}>
+            <Box className={classes.eventPropertyRow}>
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.requiredFailureRate")}:</span>
                 {shapeToolData?.supertypes?.hasFailureRate?.requirement?.upperBound.toExponential(2)}
@@ -350,7 +350,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
       {shapeToolData && shapeToolData.eventType === EventType.INTERMEDIATE && (
         <>
           {shapeToolData?.probability && (
-            <Box className={classes.labelRow}>
+            <Box className={classes.eventPropertyRow}>
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.calculatedFailureRate")}:</span>
                 {shapeToolData?.probability.toExponential(2)}
@@ -362,7 +362,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
       {/* BASIC EVENT */}
       {shapeToolData && shapeToolData.eventType === EventType.BASIC && (
         <>
-          <Box className={classes.labelRow}>
+          <Box className={classes.eventPropertyRow}>
             <FormControl>
               <RadioGroup value={selectedRadioButton} onChange={handleSnsBasicSelectedFailureRateChange}>
                 {snsPredictedFailureRate &&
@@ -410,7 +410,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
 
       {/* EXTERNAL NODE */}
       {shapeToolData && shapeToolData.eventType === EventType.EXTERNAL && !shapeToolData.isReference && (
-        <Box className={classes.labelRow}>
+        <Box className={classes.eventPropertyRow}>
           <Typography className={classes.label}>{`${t("faultEventMenu.manuallyDefinedFailureRate")}:`}</Typography>
           <TextField
             className={classes.numberInput}
