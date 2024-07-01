@@ -290,7 +290,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
       {/* ROOT NODE */}
       {shapeToolData && shapeToolData.iri === rootIri && (
         <>
-          <Typography>
+          <Typography className={classes.labelRow}>
             <span className={classes.label}>Event name:</span>
             {shapeToolData.name}
           </Typography>
