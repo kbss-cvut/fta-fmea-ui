@@ -91,7 +91,7 @@
     "criticality": "Kritičnost",
     "fhaBasedFailureRate": "Intenzita poruch založená na FHA",
     "predictedFailureRate": "Predikovaná intenzita poruch",
-    "ataSystem": "ATA systém",
+    "ataSystem": "SNS systém",
     "partNumber": "Číslo dílu",
     "stock": "Skladem",
     "quantity": "Počet",
