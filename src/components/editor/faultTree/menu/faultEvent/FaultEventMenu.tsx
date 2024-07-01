@@ -1,12 +1,12 @@
-import { Button, Divider, Typography, Box, useTheme } from "@mui/material";
+import { Button, Divider, Typography, Box, useTheme, Tooltip } from "@mui/material";
 import FaultEventShapeToolPane from "./FaultEventShapeToolPane";
-import { EventType, FaultEvent } from "../../../../../models/eventModel";
+import { EventType, FaultEvent } from "@models/eventModel";
 import * as React from "react";
 import FailureModeDialog from "../../../../dialog/failureMode/create/FailureModeDialog";
 import { useState, useEffect } from "react";
-import { EventFailureModeProvider } from "../../../../../hooks/useEventFailureMode";
+import { EventFailureModeProvider } from "@hooks/useEventFailureMode";
 import EventFailureModeList from "../failureMode/EventFailureModeList";
-import { FailureMode } from "../../../../../models/failureModeModel";
+import { FailureMode } from "@models/failureModeModel";
 import FailureModeShowDialog from "../../../../dialog/failureMode/show/FailureModeShowDialog";
 import useStyles from "@components/editor/faultTree/menu/faultEvent/FaultEventMenu.styles";
 import { useTranslation } from "react-i18next";
@@ -186,12 +186,10 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
       setSchematicDesignation(undefined);
     }
 
-    let supertypes: any = shapeToolData?.supertypes?.supertypes;
-
     if (shapeToolData?.selectedEstimate) {
       // SELECTED ESTIMATE => PREDICTED OR OPERATIONAL IS SELECTED
       const iriOfSelectedValue = shapeToolData.selectedEstimate.iri;
-      const { predictionIri, operationalIri } = getFailureRateIris(supertypes);
+      const { predictionIri, operationalIri } = getFailureRateIris(types);
 
       if (iriOfSelectedValue === predictionIri) {
         setSelectedRadioButton(RadioButtonType.Predicted);
@@ -209,9 +207,9 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
       }
     }
 
-    if (supertypes) {
-      for (let i = 0; i < supertypes.length; i++) {
-        const item = supertypes[i];
+    if (types) {
+      for (let i = 0; i < types.length; i++) {
+        const item = types[i];
         if (item?.hasFailureRate?.estimate?.value) {
           setSnsOperationalFailureRate(item?.hasFailureRate?.estimate?.value);
           setSnsOperationalIri(item?.hasFailureRate?.estimate?.iri);
