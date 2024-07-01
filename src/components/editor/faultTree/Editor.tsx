@@ -206,35 +206,26 @@ const Editor = () => {
 
   const redirectToInstance = (navigateFrom: string) => {
     if (faultTree?.manifestingEvent?.children) {
-      let map: { [name: string]: string } = {};
-
-      // Recursive function to traverse the tree and flatten children
-      const traverseChildren = (children) => {
-        let allChildren = [];
-        const traverse = (nodes) => {
-          for (let node of nodes) {
-            allChildren.push(node);
-            if (node.children) {
-              traverse(node.children);
+      // Recursive function to traverse the tree and find the desired key-value pair
+      const findNodeValue = (children) => {
+        for (let node of children) {
+          const nodeKey = node.iri;
+          const nodeValue = node?.references?.isPartOf;
+          if (nodeKey === navigateFrom && nodeValue) {
+            return nodeValue;
+          }
+          if (node.children) {
+            const result = findNodeValue(node.children);
+            if (result) {
+              return result;
             }
           }
-        };
-        traverse(children);
-        return allChildren;
+        }
+        return null;
       };
 
-      let allChildren = traverseChildren(faultTree?.manifestingEvent?.children);
-
-      for (let i = 0; i < allChildren.length; i++) {
-        const node = allChildren[i];
-        const nodeKey = node.iri;
-        const nodeValue = node?.references?.isPartOf;
-        if (nodeKey && nodeValue) {
-          map[nodeKey] = nodeValue;
-        }
-      }
-
-      const redirectTo = map[navigateFrom]?.split("/").pop();
+      const nodeValue = findNodeValue(faultTree?.manifestingEvent?.children);
+      const redirectTo = nodeValue?.split("/").pop();
       if (redirectTo) {
         history(`/fta/${redirectTo}`);
       } else {
