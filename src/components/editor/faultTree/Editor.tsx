@@ -207,24 +207,39 @@ const Editor = () => {
   const redirectToInstance = (navigateFrom: string) => {
     if (faultTree?.manifestingEvent?.children) {
       let map: { [name: string]: string } = {};
-      let children = faultTree?.manifestingEvent?.children;
-      if (faultTree?.manifestingEvent?.children.length > 0) {
-        faultTree?.manifestingEvent?.children.map((child) => {
-          if (child.children) {
-            children = [...children, ...child.children];
+
+      // Recursive function to traverse the tree and flatten children
+      const traverseChildren = (children) => {
+        let allChildren = [];
+        const traverse = (nodes) => {
+          for (let node of nodes) {
+            allChildren.push(node);
+            if (node.children) {
+              traverse(node.children);
+            }
           }
-        });
-      }
-      for (let i = 0; i < children.length; i++) {
-        const node = children[i];
+        };
+        traverse(children);
+        return allChildren;
+      };
+
+      let allChildren = traverseChildren(faultTree?.manifestingEvent?.children);
+
+      for (let i = 0; i < allChildren.length; i++) {
+        const node = allChildren[i];
         const nodeKey = node.iri;
         const nodeValue = node?.references?.isPartOf;
         if (nodeKey && nodeValue) {
           map[nodeKey] = nodeValue;
         }
       }
-      const redirectTo = map[navigateFrom].split("/").pop();
-      history(`/fta/${redirectTo}`);
+
+      const redirectTo = map[navigateFrom]?.split("/").pop();
+      if (redirectTo) {
+        history(`/fta/${redirectTo}`);
+      } else {
+        console.error("No matching node found for navigation.");
+      }
     }
   };
 
