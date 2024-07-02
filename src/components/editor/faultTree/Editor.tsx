@@ -204,36 +204,6 @@ const Editor = () => {
     refreshTree();
   };
 
-  const redirectToInstance = (navigateFrom: string) => {
-    if (faultTree?.manifestingEvent?.children) {
-      // Recursive function to traverse the tree and find the desired key-value pair
-      const findNodeValue = (children) => {
-        for (let node of children) {
-          const nodeKey = node.iri;
-          const nodeValue = node?.references?.isPartOf;
-          if (nodeKey === navigateFrom && nodeValue) {
-            return nodeValue;
-          }
-          if (node.children) {
-            const result = findNodeValue(node.children);
-            if (result) {
-              return result;
-            }
-          }
-        }
-        return null;
-      };
-
-      const nodeValue = findNodeValue(faultTree?.manifestingEvent?.children);
-      const redirectTo = nodeValue?.split("/").pop();
-      if (redirectTo) {
-        history(`/fta/${redirectTo}`);
-      } else {
-        console.error("No matching node found for navigation.");
-      }
-    }
-  };
-
   return (
     <div onContextMenu={handleOnContextMenu}>
       {faultTree && (
@@ -255,7 +225,6 @@ const Editor = () => {
           showPath={showPath}
           showTable={showTable}
           onScenarioSelect={(scenario: FaultEventScenario) => handleOnScenarioSelect(scenario)}
-          redirectToInstance={redirectToInstance}
         />
       )}
 
