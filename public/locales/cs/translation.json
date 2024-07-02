@@ -89,6 +89,7 @@
     "operationalHours": "Doba provozu"
   },
   "faultEventMenu": {
+    "eventName": "Název události",
     "criticality": "Kritičnost",
     "fhaBasedFailureRate": "Intenzita poruch založená na FHA",
     "predictedFailureRate": "Predikovaná intenzita poruch",
