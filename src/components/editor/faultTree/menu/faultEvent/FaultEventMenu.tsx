@@ -224,10 +224,6 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
 
   const basedFailureRate = shapeToolData?.supertypes?.supertypes?.hasFailureRate?.estimate?.value;
   const requiredFailureRate = shapeToolData?.supertypes?.hasFailureRate?.requirement?.upperBound;
-  const radioStyle = {
-    color: theme.main.black,
-    display: snsOperationalFailureRate || snsPredictedFailureRate ? "none" : undefined,
-  };
 
   const { predictionIri, operationalIri } = getFailureRateIris(shapeToolData?.supertypes?.supertypes);
 
@@ -365,9 +361,11 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
                 <Box display={"flex"} flexDirection={"row"} alignItems="center">
                   <FormControlLabel
                     value={RadioButtonType.Manual}
-                    control={<Radio style={radioStyle} />}
+                    control={snsOperationalFailureRate || snsPredictedFailureRate ? <Radio /> : <></>}
                     label={`${t("faultEventMenu.manuallyDefinedFailureRate")}:`}
                     className={selectedRadioButton === RadioButtonType.Manual ? classes.selected : classes.notSelected}
+                    // Compensate the removal of the radio button, 16px is the MUI <Box /> default left padding
+                    sx={snsOperationalFailureRate || snsPredictedFailureRate ? {} : { pl: "16px" }}
                   />
                   <TextField
                     className={classes.numberInput}
