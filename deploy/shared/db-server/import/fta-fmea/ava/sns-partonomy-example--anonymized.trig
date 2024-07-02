@@ -4381,3 +4381,105 @@
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fault-event-type/instance-1254662942>;
     :is-manifestation-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance999467077> .
 }
+
+
+<http://context-with-ata-sns-partonomy-of--acm1> {
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-147299840>
+    :has-estimate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-1382737527-1> .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-1382737527-1>
+    a :failure-rate-estimate;
+    :is-based-on <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-general-estimation-method/instance-470746674>;
+    :value 1.0E-2 .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance1279311480>
+    :has-estimate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance1019667682-1> .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance1019667682-1>
+    a :failure-rate-estimate;
+    :is-based-on <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-general-estimation-method/instance-470746674>;
+    :value 5.0E-2 .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance417285857>
+    :has-estimate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance241867623-1> .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance241867623-1>
+    a :failure-rate-estimate;
+    :is-based-on <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-general-estimation-method/instance-470746674>;
+    :value 4.0E-2 .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-984578847>
+    :has-estimate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-1000681101-1> .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-1000681101-1>
+    a :failure-rate-estimate;
+    :is-based-on <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-general-estimation-method/instance-470746674>;
+    :value 8.0E-2 .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance2021866650>
+    :has-estimate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-904738855-1> .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-904738855-1>
+    a :failure-rate-estimate;
+    :is-based-on <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-general-estimation-method/instance-470746674>;
+    :value 1.0E-2 .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-2145325212>
+    :has-estimate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance49035301-1> .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance49035301-1>
+    a :failure-rate-estimate;
+    :is-based-on <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-general-estimation-method/instance-470746674>;
+    :value 1.0E-2 .
+}
+
+
+<http://context-with-ata-sns-partonomy-of--acm2> {
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-9691619>
+    :has-estimate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance1071073619-1> .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance1071073619-1>
+    a :failure-rate-estimate;
+    :is-based-on <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-general-estimation-method/instance-470746674>;
+    :value 7.0E-2 .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance581015191>
+    :has-estimate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-728877612-1> .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-728877612-1>
+    a :failure-rate-estimate;
+    :is-based-on <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-general-estimation-method/instance-470746674>;
+    :value 1.0E-2 .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-1682721444>
+    :has-estimate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-1759246699-1> .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-1759246699-1>
+    a :failure-rate-estimate;
+    :is-based-on <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-general-estimation-method/instance-470746674>;
+    :value 6.0E-2 .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance1616687798>
+    :has-estimate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-1036524141-1> .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-1036524141-1>
+    a :failure-rate-estimate;
+    :is-based-on <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-general-estimation-method/instance-470746674>;
+    :value 7.0E-2 .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance13755662>
+    :has-estimate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-1473925872-1> .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-1473925872-1>
+    a :failure-rate-estimate;
+    :is-based-on <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-general-estimation-method/instance-470746674>;
+    :value 3.0E-2 .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance939307367>
+    :has-estimate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance1797128091-1> .
+
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance1797128091-1>
+    a :failure-rate-estimate;
+    :is-based-on <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-general-estimation-method/instance-470746674>;
+    :value 7.0E-2 .
+}
