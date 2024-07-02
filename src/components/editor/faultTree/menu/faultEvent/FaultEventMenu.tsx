@@ -222,7 +222,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
     }
   }, [shapeToolData]);
 
-  const basedFailureRate = shapeToolData?.supertypes?.supertypes?.hasFailureRate?.estimate?.value;
+  const basedFailureRate = shapeToolData?.supertypes?.hasFailureRate?.estimate?.value;
   const requiredFailureRate = shapeToolData?.supertypes?.hasFailureRate?.requirement?.upperBound;
 
   const { predictionIri, operationalIri } = getFailureRateIris(shapeToolData?.supertypes?.supertypes);
