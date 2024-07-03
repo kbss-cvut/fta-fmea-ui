@@ -1,6 +1,7 @@
 export const JOINTJS_NODE_MODEL = {
   faultEventIri: "custom/faultEventIri",
   hasPersistentPosition: "custom/has-persistent-position",
+  redirectTo: "custom/redirectTo",
 };
 
 export const ERROR_PATH_COLOR = "#ff7f50";

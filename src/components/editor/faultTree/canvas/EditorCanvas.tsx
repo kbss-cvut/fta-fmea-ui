@@ -25,6 +25,7 @@ import { useCurrentFaultTree } from "@hooks/useCurrentFaultTree";
 import { useFaultTrees } from "@hooks/useFaultTrees";
 import { calculateCutSets } from "@services/faultTreeService";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
+import { useNavigate } from "react-router-dom";
 
 enum MOVE_NODE {
   DRAGGING = 0,
@@ -49,7 +50,6 @@ interface Props {
   showTable: boolean;
   possibleFaultEventScenarios: FaultEventScenario[];
   onScenarioSelect: (scenario: FaultEventScenario) => void;
-  redirectToInstance: (navigateFrom: string) => void;
 }
 
 const EditorCanvas = ({
@@ -70,10 +70,10 @@ const EditorCanvas = ({
   showTable,
   possibleFaultEventScenarios,
   onScenarioSelect,
-  redirectToInstance,
 }: Props) => {
   const { classes } = useStyles();
   const theme = useTheme();
+  const history = useNavigate();
   const { t } = useTranslation();
 
   const containerRef = useRef(null);
@@ -150,11 +150,13 @@ const EditorCanvas = ({
         handleNodeMove(MOVE_NODE.RELEASING, elementView, evt, x, y);
       },
       "element:pointerdblclick": (elementView: joint.dia.ElementView) => {
-        const navigateFrom = elementView?.model.attributes["custom/faultEventIri"];
-        redirectToInstance(navigateFrom);
-        setTimeout(() => {
-          diagramZoom.reset();
-        }, 100);
+        if (elementView?.model.attributes[JOINTJS_NODE_MODEL.redirectTo]) {
+          const redirectTo = elementView?.model.attributes[JOINTJS_NODE_MODEL.redirectTo];
+          history(`/fta/${redirectTo}`);
+          setTimeout(() => {
+            diagramZoom.reset();
+          }, 100);
+        }
       },
       "blank:pointerclick": () => onBlankPointerClick(),
       "blank:pointerdown": () => diagramZoom.enablePan(),

@@ -204,30 +204,6 @@ const Editor = () => {
     refreshTree();
   };
 
-  const redirectToInstance = (navigateFrom: string) => {
-    if (faultTree?.manifestingEvent?.children) {
-      let map: { [name: string]: string } = {};
-      let children = faultTree?.manifestingEvent?.children;
-      if (faultTree?.manifestingEvent?.children.length > 0) {
-        faultTree?.manifestingEvent?.children.map((child) => {
-          if (child.children) {
-            children = [...children, ...child.children];
-          }
-        });
-      }
-      for (let i = 0; i < children.length; i++) {
-        const node = children[i];
-        const nodeKey = node.iri;
-        const nodeValue = node?.references?.isPartOf;
-        if (nodeKey && nodeValue) {
-          map[nodeKey] = nodeValue;
-        }
-      }
-      const redirectTo = map[navigateFrom].split("/").pop();
-      history(`/fta/${redirectTo}`);
-    }
-  };
-
   return (
     <div onContextMenu={handleOnContextMenu}>
       {faultTree && (
@@ -249,7 +225,6 @@ const Editor = () => {
           showPath={showPath}
           showTable={showTable}
           onScenarioSelect={(scenario: FaultEventScenario) => handleOnScenarioSelect(scenario)}
-          redirectToInstance={redirectToInstance}
         />
       )}
 
