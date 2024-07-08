@@ -89,6 +89,7 @@
     "operationalHours": "Operational Hours"
   },
   "faultEventMenu": {
+    "eventName": "Event name",
     "criticality": "Criticality",
     "fhaBasedFailureRate": "FHA based failure rate",
     "predictedFailureRate": "Predicted failure rate",

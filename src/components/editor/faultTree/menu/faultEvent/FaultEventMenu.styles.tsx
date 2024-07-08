@@ -8,7 +8,7 @@ const useStyles = makeStyles()((theme: Theme) => ({
     fontSize: 16,
     color: theme.main.black,
   },
-  labelRow: {
+  eventPropertyRow: {
     color: theme.main.grey,
     display: "flex",
     flexDirection: "row",
