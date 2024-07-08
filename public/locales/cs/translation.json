@@ -8,7 +8,8 @@
   "create": {
     "system": "Nový systém",
     "tree": "Nový strom poruch",
-    "worksheet": "Nový pracovní list FMEA"
+    "worksheet": "Nový pracovní list FMEA",
+    "systemRequired": "Výběr systému je vyžadován"
   },
   "newSystemModal": {
     "title": "Vytvořit systém",

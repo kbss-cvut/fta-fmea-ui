@@ -67,7 +67,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
 
   const [snsOperationalFailureRate, setSnsOperationalFailureRate] = useState<number | undefined>(undefined);
   const [snsPredictedFailureRate, setSnsPredictedFailureRate] = useState<number | undefined>(undefined);
-  const [snsManuallyDefinedFailureRate, setSnsManuallyDefinedFailureRate] = useState<number | undefined>(undefined);
+  const [basicManuallyDefinedFailureRate, setBasicManuallyDefinedFailureRate] = useState<number | undefined>(undefined);
   const [externalManuallyDefinedFailureRate, setExternalManuallyDefinedFailureRate] = useState<number | undefined>(
     undefined,
   );
@@ -98,7 +98,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
       if (shapeToolData.eventType === EventType.BASIC) {
         await onEventUpdated({
           ...shapeToolData,
-          probability: snsManuallyDefinedFailureRate,
+          probability: basicManuallyDefinedFailureRate,
           selectedEstimate: undefined,
         });
       } else {
@@ -121,7 +121,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
     const regex = /^[0-9]*\.?[0-9]*$/;
     if (regex.test(inputValue)) {
       if (type === NodeTypeWithManualFailureRate.Sns) {
-        setSnsManuallyDefinedFailureRate(inputValue);
+        setBasicManuallyDefinedFailureRate(inputValue);
       }
       if (type === NodeTypeWithManualFailureRate.External) {
         setExternalManuallyDefinedFailureRate(inputValue);
@@ -152,7 +152,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
     setSnsOperationalIri(undefined);
     setSnsPredictedIri(undefined);
     setExternalManuallyDefinedFailureRate(undefined);
-    setSnsManuallyDefinedFailureRate(undefined);
+    setBasicManuallyDefinedFailureRate(undefined);
     setSelectedRadioButton(RadioButtonType.Predicted);
 
     if (shapeToolData?.supertypes?.criticality) {
@@ -220,14 +220,14 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
         setSelectedRadioButton(RadioButtonType.Operational);
         setPreselectedSelectedRadioButton(RadioButtonType.Operational);
       }
-      setSnsManuallyDefinedFailureRate(undefined);
+      setBasicManuallyDefinedFailureRate(undefined);
       setExternalManuallyDefinedFailureRate(undefined);
     } else {
       // NO SELECTED ESTIMATE => MANUAL IS SELECTED
       setSelectedRadioButton(RadioButtonType.Manual);
       setPreselectedSelectedRadioButton(RadioButtonType.Manual);
       if (shapeToolData?.probability) {
-        setSnsManuallyDefinedFailureRate(shapeToolData.probability);
+        setBasicManuallyDefinedFailureRate(shapeToolData.probability);
         setExternalManuallyDefinedFailureRate(shapeToolData.probability);
       }
     }
@@ -394,7 +394,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
                     className={classes.numberInput}
                     InputLabelProps={{ shrink: false }}
                     variant="outlined"
-                    value={snsManuallyDefinedFailureRate || ""}
+                    value={basicManuallyDefinedFailureRate || ""}
                     onChange={(event) =>
                       handleManuallyDefinedFailureRateChange(event, NodeTypeWithManualFailureRate.Sns)
                     }
