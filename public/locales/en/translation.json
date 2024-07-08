@@ -8,7 +8,8 @@
   "create": {
     "system": "New system",
     "tree": "New Fault tree",
-    "worksheet": "New FMEA worksheet"
+    "worksheet": "New FMEA worksheet",
+    "systemRequired": "A system selection is required"
   },
   "newSystemModal": {
     "title": "Create System",

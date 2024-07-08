@@ -140,7 +140,7 @@ const EditorCanvas = ({
       "element:contextmenu": (elementView: joint.dia.ElementView, evt: joint.dia.Event) => {
         onElementContextMenu(elementView, evt);
       },
-      "element:pointerclick": (elementView: joint.dia.ElementView, evt: joint.dia.Event) => {
+      "element:pointerdown": (elementView: joint.dia.ElementView, evt: joint.dia.Event) => {
         onElementPointerClick(elementView, evt);
       },
       "element:pointermove": (elementView: joint.dia.ElementView, evt: joint.dia.Event, x: number, y: number) => {
