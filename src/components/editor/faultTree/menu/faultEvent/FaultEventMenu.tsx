@@ -50,6 +50,8 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
   const { classes } = useStyles();
   const theme = useTheme();
   const [failureModeDialogOpen, setFailureModeDialogOpen] = useState(false);
+  const [resetMenu, setResetMenu] = useState<boolean>(false);
+  const [showSaveAndRejectButton, setShowSaveAndRejectButton] = useState<boolean>(false);
 
   const [failureModeOverviewDialogOpen, setFailureModeOverviewDialogOpen] = useState(false);
   const [failureModeOverview, setFailureModeOverview] = useState<FailureMode | null>(null);
@@ -70,9 +72,49 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
     undefined,
   );
   const [selectedRadioButton, setSelectedRadioButton] = useState<string>(RadioButtonType.Predicted);
+  const [preselectedRadioButton, setPreselectedSelectedRadioButton] = useState<string | undefined>();
 
   const [snsOperationalIri, setSnsOperationalIri] = useState<string | undefined>(undefined);
   const [snsPredictedIri, setSnsPredictedIri] = useState<string | undefined>(undefined);
+
+  const handleOnSave = async () => {
+    if (selectedRadioButton === RadioButtonType.Predicted) {
+      // Updated when we switch to Pred. rate:
+      await onEventUpdated({
+        ...shapeToolData,
+        selectedEstimate: { iri: snsPredictedIri, value: snsPredictedFailureRate },
+        probability: snsPredictedFailureRate,
+      });
+    }
+    if (selectedRadioButton === RadioButtonType.Operational) {
+      // Updated when we switch to Oper. rate:
+      await onEventUpdated({
+        ...shapeToolData,
+        selectedEstimate: { iri: snsOperationalIri, value: snsOperationalFailureRate },
+        probability: snsOperationalFailureRate,
+      });
+    }
+    if (selectedRadioButton === RadioButtonType.Manual) {
+      if (shapeToolData.eventType === EventType.BASIC) {
+        await onEventUpdated({
+          ...shapeToolData,
+          probability: snsManuallyDefinedFailureRate,
+          selectedEstimate: undefined,
+        });
+      } else {
+        await onEventUpdated({
+          ...shapeToolData,
+          probability: externalManuallyDefinedFailureRate,
+          selectedEstimate: undefined,
+        });
+      }
+    }
+  };
+
+  const handleOnDiscard = () => {
+    setResetMenu(!resetMenu);
+    setShowSaveAndRejectButton(false);
+  };
 
   const handleManuallyDefinedFailureRateChange = (event, type: NodeTypeWithManualFailureRate) => {
     const inputValue = event.target.value;
@@ -84,39 +126,18 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
       if (type === NodeTypeWithManualFailureRate.External) {
         setExternalManuallyDefinedFailureRate(inputValue);
       }
+      setShowSaveAndRejectButton(true);
     }
   };
 
   const handleSnsBasicSelectedFailureRateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // TODO: Add handler for update with error
-    setSelectedRadioButton(event.target.value as RadioButtonType);
-    if (event.target.value === RadioButtonType.Predicted) {
-      // Updated when we switch to Pred. rate:
-      onEventUpdated({
-        ...shapeToolData,
-        selectedEstimate: { iri: snsPredictedIri, value: snsPredictedFailureRate },
-        probability: snsPredictedFailureRate,
-      });
+    if (event.target.value === preselectedRadioButton) {
+      setSelectedRadioButton(event.target.value as RadioButtonType);
+      setShowSaveAndRejectButton(false);
+    } else {
+      setSelectedRadioButton(event.target.value as RadioButtonType);
+      setShowSaveAndRejectButton(true);
     }
-    if (event.target.value === RadioButtonType.Operational) {
-      // Updated when we switch to Oper. rate:
-      onEventUpdated({
-        ...shapeToolData,
-        selectedEstimate: { iri: snsOperationalIri, value: snsOperationalFailureRate },
-        probability: snsOperationalFailureRate,
-      });
-    }
-  };
-
-  const handleManualFailureRateUpdate = (eventType: EventType) => {
-    const probability =
-      eventType === EventType.EXTERNAL ? externalManuallyDefinedFailureRate : snsManuallyDefinedFailureRate;
-
-    onEventUpdated({
-      ...shapeToolData,
-      probability,
-      selectedEstimate: undefined,
-    });
   };
 
   const handleFailureModeClicked = (failureMode: FailureMode) => {
@@ -131,6 +152,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
     setSnsOperationalIri(undefined);
     setSnsPredictedIri(undefined);
     setExternalManuallyDefinedFailureRate(undefined);
+    setSnsManuallyDefinedFailureRate(undefined);
     setSelectedRadioButton(RadioButtonType.Predicted);
 
     if (shapeToolData?.supertypes?.criticality) {
@@ -193,14 +215,17 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
 
       if (iriOfSelectedValue === predictionIri) {
         setSelectedRadioButton(RadioButtonType.Predicted);
+        setPreselectedSelectedRadioButton(RadioButtonType.Predicted);
       } else if (iriOfSelectedValue === operationalIri) {
         setSelectedRadioButton(RadioButtonType.Operational);
+        setPreselectedSelectedRadioButton(RadioButtonType.Operational);
       }
       setSnsManuallyDefinedFailureRate(undefined);
       setExternalManuallyDefinedFailureRate(undefined);
     } else {
       // NO SELECTED ESTIMATE => MANUAL IS SELECTED
       setSelectedRadioButton(RadioButtonType.Manual);
+      setPreselectedSelectedRadioButton(RadioButtonType.Manual);
       if (shapeToolData?.probability) {
         setSnsManuallyDefinedFailureRate(shapeToolData.probability);
         setExternalManuallyDefinedFailureRate(shapeToolData.probability);
@@ -220,11 +245,10 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
         }
       }
     }
-  }, [shapeToolData]);
+  }, [shapeToolData, resetMenu]);
 
   const basedFailureRate = shapeToolData?.supertypes?.hasFailureRate?.estimate?.value;
   const requiredFailureRate = shapeToolData?.supertypes?.hasFailureRate?.requirement?.upperBound;
-
   const { predictionIri, operationalIri } = getFailureRateIris(shapeToolData?.supertypes?.supertypes);
 
   const FailureRateBox = ({ value, label, rate, selected, outdated }) => (
@@ -349,7 +373,6 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
                     selectedRadioButton,
                     "faultEventMenu.predictedFailureRate",
                   )}
-
                 {snsOperationalFailureRate &&
                   renderFailureRateBox(
                     RadioButtonType.Operational,
@@ -377,7 +400,6 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
                     }
                     inputProps={{ inputMode: "decimal" }}
                     disabled={selectedRadioButton !== RadioButtonType.Manual}
-                    onBlur={() => handleManualFailureRateUpdate(EventType.BASIC)}
                   />
                 </Box>
               </RadioGroup>
@@ -397,9 +419,15 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
             value={externalManuallyDefinedFailureRate || ""}
             onChange={(event) => handleManuallyDefinedFailureRateChange(event, NodeTypeWithManualFailureRate.External)}
             inputProps={{ inputMode: "decimal" }}
-            onBlur={() => handleManualFailureRateUpdate(EventType.EXTERNAL)}
           />
           <Divider className={classes.divider} />
+        </Box>
+      )}
+
+      {showSaveAndRejectButton && (
+        <Box display="flex" flexDirection="row">
+          <Button onClick={handleOnSave}>{t("common.save")}</Button>
+          <Button onClick={handleOnDiscard}>{t("common.discard")}</Button>
         </Box>
       )}
 

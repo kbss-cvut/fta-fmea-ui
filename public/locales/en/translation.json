@@ -106,6 +106,8 @@
   },
   "common": {
     "defaultErrorMsg": "Unexpected error occurred",
-    "delete": "Delete"
+    "delete": "Delete",
+    "save": "Save",
+    "discard": "Discard"
   }
 }

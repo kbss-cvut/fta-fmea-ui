@@ -106,6 +106,8 @@
   },
   "common": {
     "defaultErrorMsg": "Došlo k neočekávané chybě",
-    "delete": "Smazat"
+    "delete": "Smazat",
+    "save": "Uložit",
+    "discard": "Zahodit"
   }
 }
