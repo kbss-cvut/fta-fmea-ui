@@ -59,9 +59,7 @@ const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) =
       refreshTree();
     };
 
-    const isDisabled =
-      data &&
-      ([EventType.INTERMEDIATE, EventType.BASIC, EventType.EXTERNAL].includes(data.eventType) || data.isReference);
+    const isDisabled = data && ([EventType.BASIC, EventType.EXTERNAL].includes(data.eventType) || data.isReference);
 
     editorPane = (
       <ReusableFaultEventsProvider treeUri={faultTree?.iri}>
