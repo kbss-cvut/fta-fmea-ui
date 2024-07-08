@@ -91,6 +91,7 @@ export interface FaultEvent extends AbstractModel {
   };
   selectedEstimate?: {
     iri?: string;
+    value?: any;
   };
   supertypes?: {
     iri?: string;
@@ -101,6 +102,11 @@ export interface FaultEvent extends AbstractModel {
       iri?: string;
       hasFailureRate?: {
         estimate?: {
+          iri?: string;
+          value?: number;
+        };
+        prediction?: {
+          iri?: string;
           value?: number;
         };
       };
@@ -110,12 +116,18 @@ export interface FaultEvent extends AbstractModel {
         quantity?: number;
         supertypes?: {
           ataCode?: string;
+          partNumber?: string;
+          name?: string;
         };
         stock?: string;
         schematicDesignation?: string;
       };
     };
     hasFailureRate?: {
+      estimate?: {
+        iri?: string;
+        value?: number;
+      };
       iri?: string;
       requirement?: {
         iri?: string;
