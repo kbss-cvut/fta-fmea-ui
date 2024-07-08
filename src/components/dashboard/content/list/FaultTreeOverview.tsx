@@ -14,6 +14,7 @@ import { Box, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { SELECTED_VIEW } from "@utils/constants";
 import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
+import Tooltip from "@mui/material/Tooltip";
 
 const FaultTreeOverview = () => {
   const { t } = useTranslation();
@@ -26,6 +27,7 @@ const FaultTreeOverview = () => {
   const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefaultAnchor);
   const [createFaultTreeDialogOpen, setCreateFaultTreeDialogOpen] = useState<boolean>(false);
   const [selectedSystem] = useSelectedSystemSummaries();
+  const isTreeCreationDisabled = !selectedSystem;
 
   useEffect(() => {
     const storedView = localStorage.getItem(SELECTED_VIEW) as ViewType;
@@ -68,9 +70,18 @@ const FaultTreeOverview = () => {
     <Box flexDirection="column">
       <Box display="flex" flexDirection="row-reverse">
         <OverviewTypeToggler selectedView={selectedView} toggleView={toggleView} />
-        <Button variant="contained" onClick={handleDialogOpen} sx={{ height: 36 }}>
-          {t("create.tree")}
-        </Button>
+        <Tooltip title={isTreeCreationDisabled ? t("create.systemRequired") : ""}>
+          <span>
+            <Button
+              variant="contained"
+              onClick={handleDialogOpen}
+              disabled={isTreeCreationDisabled}
+              sx={{ height: 36 }}
+            >
+              {t("create.tree")}
+            </Button>
+          </span>
+        </Tooltip>
       </Box>
 
       {selectedView === "table" ? (
