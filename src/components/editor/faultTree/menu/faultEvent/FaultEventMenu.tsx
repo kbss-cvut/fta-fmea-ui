@@ -1,4 +1,16 @@
-import { Button, Divider, Typography, Box, useTheme, Tooltip } from "@mui/material";
+import {
+  Button,
+  Divider,
+  Typography,
+  Box,
+  useTheme,
+  Tooltip,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  TextField,
+} from "@mui/material";
 import FaultEventShapeToolPane from "./FaultEventShapeToolPane";
 import { EventType, FaultEvent } from "@models/eventModel";
 import * as React from "react";
@@ -13,7 +25,7 @@ import { useTranslation } from "react-i18next";
 import { asArray } from "@utils/utils";
 import { ReusableFaultEventsProvider } from "@hooks/useReusableFaultEvents";
 import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
-import { Radio, RadioGroup, FormControlLabel, FormControl, TextField } from "@mui/material";
+import { useForm } from "react-hook-form";
 
 interface Props {
   shapeToolData?: FaultEvent;
@@ -47,6 +59,9 @@ const getFailureRateIris = (supertypes) => {
 
 const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }: Props) => {
   const { t } = useTranslation();
+  const formMethods = useForm();
+  const { formState, getValues } = formMethods;
+  const { isDirty } = formState;
   const { classes } = useStyles();
   const theme = useTheme();
   const [failureModeDialogOpen, setFailureModeDialogOpen] = useState(false);
@@ -78,40 +93,36 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
   const [snsPredictedIri, setSnsPredictedIri] = useState<string | undefined>(undefined);
 
   const handleOnSave = async () => {
-    if (selectedRadioButton === RadioButtonType.Predicted) {
-      // Updated when we switch to Pred. rate:
-      await onEventUpdated({
-        ...shapeToolData,
-        selectedEstimate: { iri: snsPredictedIri, value: snsPredictedFailureRate },
-        probability: snsPredictedFailureRate,
-      });
-    }
-    if (selectedRadioButton === RadioButtonType.Operational) {
-      // Updated when we switch to Oper. rate:
-      await onEventUpdated({
-        ...shapeToolData,
-        selectedEstimate: { iri: snsOperationalIri, value: snsOperationalFailureRate },
-        probability: snsOperationalFailureRate,
-      });
-    }
+    const values = getValues();
+    const { description } = values;
+    const updateEvent = async (data) => await onEventUpdated({ ...shapeToolData, ...data, description });
+
+    const eventTypeData = {
+      [RadioButtonType.Predicted]: { iri: snsPredictedIri, value: snsPredictedFailureRate },
+      [RadioButtonType.Operational]: { iri: snsOperationalIri, value: snsOperationalFailureRate },
+    };
+
+    const manualFailureRates = {
+      [EventType.BASIC]: basicManuallyDefinedFailureRate,
+      default: externalManuallyDefinedFailureRate,
+    };
+
     if (selectedRadioButton === RadioButtonType.Manual) {
-      if (shapeToolData.eventType === EventType.BASIC) {
-        await onEventUpdated({
-          ...shapeToolData,
-          probability: basicManuallyDefinedFailureRate,
-          selectedEstimate: undefined,
-        });
-      } else {
-        await onEventUpdated({
-          ...shapeToolData,
-          probability: externalManuallyDefinedFailureRate,
-          selectedEstimate: undefined,
-        });
-      }
+      await updateEvent({
+        probability: manualFailureRates[shapeToolData.eventType] || manualFailureRates.default,
+        selectedEstimate: undefined,
+      });
+    } else {
+      const { iri, value } = eventTypeData[selectedRadioButton];
+      await updateEvent({
+        selectedEstimate: { iri, value },
+        probability: value,
+      });
     }
   };
 
   const handleOnDiscard = () => {
+    formMethods.reset();
     setResetMenu(!resetMenu);
     setShowSaveAndRejectButton(false);
   };
@@ -146,106 +157,113 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
   };
 
   useEffect(() => {
-    // Clear values, after node was changed
-    setSnsPredictedFailureRate(undefined);
-    setSnsOperationalFailureRate(undefined);
-    setSnsOperationalIri(undefined);
-    setSnsPredictedIri(undefined);
-    setExternalManuallyDefinedFailureRate(undefined);
-    setBasicManuallyDefinedFailureRate(undefined);
-    setSelectedRadioButton(RadioButtonType.Predicted);
-
-    if (shapeToolData?.supertypes?.criticality) {
-      setCriticality(shapeToolData.supertypes.criticality);
-    } else {
-      setCriticality(undefined);
-    }
-
-    const types = asArray(shapeToolData?.supertypes?.supertypes);
-
-    const filteredFailureRate = types.filter((type) => type.hasFailureRate);
-
-    if (filteredFailureRate.length === 1 && filteredFailureRate[0].hasFailureRate?.prediction?.value) {
-      setPredictedFailureRate(filteredFailureRate[0].hasFailureRate?.prediction?.value);
-    } else {
-      setPredictedFailureRate(undefined);
-    }
-
-    const superTypes = asArray(shapeToolData?.supertypes?.behavior?.item?.supertypes);
-
-    const filteredAtaCode = superTypes.filter((sType) => sType?.ataCode);
-    const filteredPartNumber = superTypes.filter((sType) => sType?.partNumber);
-
-    if (filteredAtaCode.length === 1 && filteredAtaCode[0].ataCode && filteredAtaCode[0].name) {
-      const ataSystemString = `${filteredAtaCode[0].ataCode} ${filteredAtaCode[0].name}`;
-      setAtaSystem(ataSystemString);
-    } else {
-      setAtaSystem(undefined);
-    }
-
-    if (filteredPartNumber.length === 1 && filteredPartNumber[0].partNumber) {
-      setPartNumber(filteredPartNumber[0].partNumber);
-    } else {
-      setPartNumber(undefined);
-    }
-
-    if (shapeToolData?.supertypes?.behavior?.item?.quantity) {
-      setQuantity(shapeToolData?.supertypes?.behavior?.item?.quantity);
-    } else {
-      setQuantity(undefined);
-    }
-
-    if (shapeToolData?.supertypes?.behavior?.item?.stock) {
-      setStock(shapeToolData?.supertypes?.behavior?.item?.stock);
-    } else {
-      setStock(undefined);
-    }
-
-    if (shapeToolData?.supertypes?.behavior?.item?.schematicDesignation) {
-      const schematicDesignations = asArray(shapeToolData?.supertypes?.behavior?.item?.schematicDesignation);
-      setSchematicDesignation(schematicDesignations.join(", "));
-    } else {
-      setSchematicDesignation(undefined);
-    }
-
-    if (shapeToolData?.selectedEstimate) {
-      // SELECTED ESTIMATE => PREDICTED OR OPERATIONAL IS SELECTED
-      const iriOfSelectedValue = shapeToolData.selectedEstimate.iri;
-      const { predictionIri, operationalIri } = getFailureRateIris(types);
-
-      if (iriOfSelectedValue === predictionIri) {
-        setSelectedRadioButton(RadioButtonType.Predicted);
-        setPreselectedSelectedRadioButton(RadioButtonType.Predicted);
-      } else if (iriOfSelectedValue === operationalIri) {
-        setSelectedRadioButton(RadioButtonType.Operational);
-        setPreselectedSelectedRadioButton(RadioButtonType.Operational);
-      }
-      setBasicManuallyDefinedFailureRate(undefined);
+    const setInitialStates = () => {
+      setSnsPredictedFailureRate(undefined);
+      setSnsOperationalFailureRate(undefined);
+      setSnsOperationalIri(undefined);
+      setSnsPredictedIri(undefined);
       setExternalManuallyDefinedFailureRate(undefined);
-    } else {
-      // NO SELECTED ESTIMATE => MANUAL IS SELECTED
-      setSelectedRadioButton(RadioButtonType.Manual);
-      setPreselectedSelectedRadioButton(RadioButtonType.Manual);
-      if (shapeToolData?.probability) {
-        setBasicManuallyDefinedFailureRate(shapeToolData.probability);
-        setExternalManuallyDefinedFailureRate(shapeToolData.probability);
-      }
-    }
+      setBasicManuallyDefinedFailureRate(undefined);
+      setSelectedRadioButton(RadioButtonType.Predicted);
 
-    if (types) {
-      for (let i = 0; i < types.length; i++) {
-        const item = types[i];
-        if (item?.hasFailureRate?.estimate?.value) {
-          setSnsOperationalFailureRate(item?.hasFailureRate?.estimate?.value);
-          setSnsOperationalIri(item?.hasFailureRate?.estimate?.iri);
+      if (shapeToolData?.supertypes?.criticality) {
+        setCriticality(shapeToolData.supertypes.criticality);
+      } else {
+        setCriticality(undefined);
+      }
+
+      const types = asArray(shapeToolData?.supertypes?.supertypes);
+
+      const filteredFailureRate = types.filter((type) => type.hasFailureRate);
+
+      if (filteredFailureRate.length === 1 && filteredFailureRate[0].hasFailureRate?.prediction?.value) {
+        setPredictedFailureRate(filteredFailureRate[0].hasFailureRate?.prediction?.value);
+      } else {
+        setPredictedFailureRate(undefined);
+      }
+
+      const superTypes = asArray(shapeToolData?.supertypes?.behavior?.item?.supertypes);
+
+      const filteredAtaCode = superTypes.filter((sType) => sType?.ataCode);
+      const filteredPartNumber = superTypes.filter((sType) => sType?.partNumber);
+
+      if (filteredAtaCode.length === 1 && filteredAtaCode[0].ataCode && filteredAtaCode[0].name) {
+        const ataSystemString = `${filteredAtaCode[0].ataCode} ${filteredAtaCode[0].name}`;
+        setAtaSystem(ataSystemString);
+      } else {
+        setAtaSystem(undefined);
+      }
+
+      if (filteredPartNumber.length === 1 && filteredPartNumber[0].partNumber) {
+        setPartNumber(filteredPartNumber[0].partNumber);
+      } else {
+        setPartNumber(undefined);
+      }
+
+      if (shapeToolData?.supertypes?.behavior?.item?.quantity) {
+        setQuantity(shapeToolData?.supertypes?.behavior?.item?.quantity);
+      } else {
+        setQuantity(undefined);
+      }
+
+      if (shapeToolData?.supertypes?.behavior?.item?.stock) {
+        setStock(shapeToolData?.supertypes?.behavior?.item?.stock);
+      } else {
+        setStock(undefined);
+      }
+
+      if (shapeToolData?.supertypes?.behavior?.item?.schematicDesignation) {
+        const schematicDesignations = asArray(shapeToolData?.supertypes?.behavior?.item?.schematicDesignation);
+        setSchematicDesignation(schematicDesignations.join(", "));
+      } else {
+        setSchematicDesignation(undefined);
+      }
+
+      if (shapeToolData?.selectedEstimate) {
+        // SELECTED ESTIMATE => PREDICTED OR OPERATIONAL IS SELECTED
+        const iriOfSelectedValue = shapeToolData.selectedEstimate.iri;
+        const { predictionIri, operationalIri } = getFailureRateIris(types);
+
+        if (iriOfSelectedValue === predictionIri) {
+          setSelectedRadioButton(RadioButtonType.Predicted);
+          setPreselectedSelectedRadioButton(RadioButtonType.Predicted);
+        } else if (iriOfSelectedValue === operationalIri) {
+          setSelectedRadioButton(RadioButtonType.Operational);
+          setPreselectedSelectedRadioButton(RadioButtonType.Operational);
         }
-        if (item?.hasFailureRate?.prediction?.value) {
-          setSnsPredictedFailureRate(item?.hasFailureRate?.prediction?.value);
-          setSnsPredictedIri(item?.hasFailureRate?.prediction?.iri);
+        setBasicManuallyDefinedFailureRate(undefined);
+        setExternalManuallyDefinedFailureRate(undefined);
+      } else {
+        // NO SELECTED ESTIMATE => MANUAL IS SELECTED
+        setSelectedRadioButton(RadioButtonType.Manual);
+        setPreselectedSelectedRadioButton(RadioButtonType.Manual);
+        if (shapeToolData?.probability) {
+          setBasicManuallyDefinedFailureRate(shapeToolData.probability);
+          setExternalManuallyDefinedFailureRate(shapeToolData.probability);
         }
       }
-    }
+
+      if (types) {
+        for (let i = 0; i < types.length; i++) {
+          const item = types[i];
+          if (item?.hasFailureRate?.estimate?.value) {
+            setSnsOperationalFailureRate(item?.hasFailureRate?.estimate?.value);
+            setSnsOperationalIri(item?.hasFailureRate?.estimate?.iri);
+          }
+          if (item?.hasFailureRate?.prediction?.value) {
+            setSnsPredictedFailureRate(item?.hasFailureRate?.prediction?.value);
+            setSnsPredictedIri(item?.hasFailureRate?.prediction?.iri);
+          }
+        }
+      }
+    };
+
+    setInitialStates();
   }, [shapeToolData, resetMenu]);
+
+  useEffect(() => {
+    setShowSaveAndRejectButton(isDirty);
+  }, [isDirty]);
 
   const basedFailureRate = shapeToolData?.supertypes?.hasFailureRate?.estimate?.value;
   const requiredFailureRate = shapeToolData?.supertypes?.hasFailureRate?.requirement?.upperBound;
@@ -282,7 +300,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
     <Box paddingLeft={2} marginRight={2}>
       {shapeToolData && shapeToolData.iri !== rootIri && (
         <ReusableFaultEventsProvider systemUri={selectedSystem?.iri}>
-          <FaultEventShapeToolPane data={shapeToolData} onEventUpdated={onEventUpdated} refreshTree={refreshTree} />
+          <FaultEventShapeToolPane data={shapeToolData} refreshTree={refreshTree} formMethods={formMethods} />
         </ReusableFaultEventsProvider>
       )}
       {/* TODO: Finish for other nodes. Will be refactored. */}
