@@ -1,17 +1,9 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
-import { cloneDeep, merge } from "lodash";
-import { Button, Divider, Typography } from "@mui/material";
+import { useEffect } from "react";
+import { Divider, Typography } from "@mui/material";
 import FaultEventCreation from "../../../../dialog/faultEvent/FaultEventCreation";
-import { useForm } from "react-hook-form";
-import { schema as eventSchema } from "../../../../dialog/faultEvent/FaultEventCreation.schema";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as faultEventService from "@services/faultEventService";
-import { sequenceListToArray } from "@services/faultEventService";
-import { deepOmit } from "@utils/lodashUtils";
 import { EventType, FaultEvent, GateType } from "@models/eventModel";
 import FaultEventChildrenReorderList from "@components/editor/faultTree/menu/faultEvent/reorder/FaultEventChildrenReorderList";
-import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 import useStyles from "@components/editor/faultTree/menu/faultEvent/FaultEventShapeToolPane.styles";
 import { ReusableFaultEventsProvider } from "@hooks/useReusableFaultEvents";
 import { useCurrentFaultTree } from "@hooks/useCurrentFaultTree";
@@ -19,18 +11,15 @@ import { asArray } from "@utils/utils";
 
 interface Props {
   data?: FaultEvent;
-  onEventUpdated: (faultEvent: FaultEvent) => void;
   refreshTree: () => void;
+  formMethods: any;
 }
 
-const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) => {
+const FaultEventShapeToolPane = ({ data, refreshTree, formMethods }: Props) => {
   const { classes } = useStyles();
-  const [showSnackbar] = useSnackbar();
   const [faultTree] = useCurrentFaultTree();
 
   let editorPane;
-  let updateEvent;
-  let useFormMethods;
   let defaultValues;
 
   if (data) {
@@ -45,19 +34,9 @@ const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) =
       existingEvent: safeSupertype,
     };
 
-    useFormMethods = useForm({
-      resolver: yupResolver(eventSchema),
-    });
-
-    updateEvent = async (values: any) => {
-      let dataClone = cloneDeep(data);
-
-      const updatedFaultEvent = deepOmit(faultEventService.eventFromHookFormValues(values), "@type");
-      dataClone = merge(dataClone, updatedFaultEvent);
-      dataClone.supertypes = updatedFaultEvent.supertypes;
-      onEventUpdated(dataClone);
-      refreshTree();
-    };
+    useEffect(() => {
+      formMethods.reset(defaultValues);
+    }, [data]);
 
     const isDisabled =
       data &&
@@ -66,7 +45,7 @@ const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) =
     editorPane = (
       <ReusableFaultEventsProvider treeUri={faultTree?.iri}>
         <FaultEventCreation
-          useFormMethods={useFormMethods}
+          useFormMethods={formMethods}
           isRootEvent={false}
           eventValue={data}
           isEditedEvent={true}
@@ -77,7 +56,7 @@ const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) =
     );
   } else {
     defaultValues = {};
-    useFormMethods = useForm();
+    formMethods.reset(defaultValues);
     editorPane = (
       <Typography className={classes.emptyTitle} variant="subtitle1" align="left">
         No Event selected
@@ -85,40 +64,14 @@ const FaultEventShapeToolPane = ({ data, onEventUpdated, refreshTree }: Props) =
     );
   }
 
-  const eventSelected = Boolean(data);
-  const { handleSubmit, reset, formState } = useFormMethods;
-  const { isSubmitting, isDirty } = formState;
-
-  useEffect(() => {
-    reset(defaultValues);
-    if (data) {
-      const sequence = sequenceListToArray(data.childrenSequence);
-      const sorted = faultEventService.eventChildrenSorted(data.children, sequence);
-      setEventChildren(sorted);
-    }
-  }, [data]);
-
-  const [eventChildren, setEventChildren] = useState<FaultEvent[] | null>(null);
-  const handleChildrenReordered = (updatedSequence: FaultEvent[]) => {
-    faultEventService
-      .updateChildrenSequence(data?.iri, updatedSequence)
-      .then((value) => refreshTree())
-      .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
-  };
-
   return (
     <React.Fragment>
       {editorPane}
-      {isDirty && (
-        <Button disabled={isSubmitting || !eventSelected} color="primary" onClick={handleSubmit(updateEvent)}>
-          Save
-        </Button>
-      )}
-      {data?.gateType === GateType.PRIORITY_AND && eventChildren && (
+      {data?.gateType === GateType.PRIORITY_AND && (
         <React.Fragment>
           <Divider />
           <Typography variant="h5">Children Order:</Typography>
-          <FaultEventChildrenReorderList eventChildren={eventChildren} handleReorder={handleChildrenReordered} />
+          <FaultEventChildrenReorderList eventChildren={data.children} handleReorder={refreshTree} />
         </React.Fragment>
       )}
     </React.Fragment>
