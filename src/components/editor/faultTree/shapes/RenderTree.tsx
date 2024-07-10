@@ -57,27 +57,29 @@ const renderTree = async (container, node, parentShape = null, pathsToHighlight,
   nodeShape.attr(["label", "text"], node.name);
   const _status = node.references?.status || status;
   if (_status && _status !== Status.OK) nodeShape.attr(["probabilityLabel", "fill"], "red");
-  if (node.probability && node?.selectedEstimate) {
-    const iriOfSelectedValue = node.selectedEstimate.iri;
-    const { predictionIri, operationalIri } = node.supertypes.supertypes.reduce(
-      (acc, item) => {
-        if (item?.hasFailureRate?.prediction?.iri) acc.predictionIri = item.hasFailureRate.prediction.iri;
-        if (item?.hasFailureRate?.estimate?.iri) acc.operationalIri = item.hasFailureRate.estimate.iri;
-        return acc;
-      },
-      { predictionIri: "", operationalIri: "" },
-    );
+  if (node?.probability) {
+    if (node?.selectedEstimate) {
+      const iriOfSelectedValue = node.selectedEstimate.iri;
+      const { predictionIri, operationalIri } = node.supertypes.supertypes.reduce(
+        (acc, item) => {
+          if (item?.hasFailureRate?.prediction?.iri) acc.predictionIri = item.hasFailureRate.prediction.iri;
+          if (item?.hasFailureRate?.estimate?.iri) acc.operationalIri = item.hasFailureRate.estimate.iri;
+          return acc;
+        },
+        { predictionIri: "", operationalIri: "" },
+      );
 
-    if (iriOfSelectedValue === predictionIri) {
-      nodeShape.attr(["probabilityLabel", "text"], `(P) ${node.probability.toExponential(2)}`);
-    } else if (iriOfSelectedValue === operationalIri) {
-      nodeShape.attr(["probabilityLabel", "text"], `(O) ${node.probability.toExponential(2)}`);
-    }
-  } else {
-    if (isReferencedNode(node) || isRootOrIntermediateNode(node)) {
-      nodeShape.attr(["probabilityLabel", "text"], `(C) ${node.probability.toExponential(2)}`);
+      if (iriOfSelectedValue === predictionIri) {
+        nodeShape.attr(["probabilityLabel", "text"], `(P) ${node.probability.toExponential(2)}`);
+      } else if (iriOfSelectedValue === operationalIri) {
+        nodeShape.attr(["probabilityLabel", "text"], `(O) ${node.probability.toExponential(2)}`);
+      }
     } else {
-      nodeShape.attr(["probabilityLabel", "text"], `(M) ${node.probability.toExponential(2)}`);
+      if (isReferencedNode(node) || isRootOrIntermediateNode(node)) {
+        nodeShape.attr(["probabilityLabel", "text"], `(C) ${node.probability.toExponential(2)}`);
+      } else {
+        nodeShape.attr(["probabilityLabel", "text"], `(M) ${node.probability.toExponential(2)}`);
+      }
     }
   }
 
