@@ -1,5 +1,5 @@
 import { createShape } from "../../../../services/jointService";
-import { EventType } from "../../../../models/eventModel";
+import { EventType, isReferencedNode, isRootOrIntermediateNode } from "../../../../models/eventModel";
 import { sequenceListToArray } from "../../../../services/faultEventService";
 import * as faultEventService from "../../../../services/faultEventService";
 import { Link } from "./shapesDefinitions";
@@ -57,7 +57,7 @@ const renderTree = async (container, node, parentShape = null, pathsToHighlight,
   nodeShape.attr(["label", "text"], node.name);
   const _status = node.references?.status || status;
   if (_status && _status !== Status.OK) nodeShape.attr(["probabilityLabel", "fill"], "red");
-  if (node?.selectedEstimate) {
+  if (node.probability && node?.selectedEstimate) {
     const iriOfSelectedValue = node.selectedEstimate.iri;
     const { predictionIri, operationalIri } = node.supertypes.supertypes.reduce(
       (acc, item) => {
@@ -68,16 +68,16 @@ const renderTree = async (container, node, parentShape = null, pathsToHighlight,
       { predictionIri: "", operationalIri: "" },
     );
 
-    if (iriOfSelectedValue === predictionIri && node.probability) {
+    if (iriOfSelectedValue === predictionIri) {
       nodeShape.attr(["probabilityLabel", "text"], `(P) ${node.probability.toExponential(2)}`);
-    } else if (iriOfSelectedValue === operationalIri && node.probability) {
+    } else if (iriOfSelectedValue === operationalIri) {
       nodeShape.attr(["probabilityLabel", "text"], `(O) ${node.probability.toExponential(2)}`);
     }
   } else {
-    if (node.eventType !== EventType.INTERMEDIATE && node.probability) {
-      nodeShape.attr(["probabilityLabel", "text"], `(M) ${node.probability.toExponential(2)}`);
-    } else if (node.eventType === EventType.INTERMEDIATE && node.probability) {
+    if (isReferencedNode(node) || isRootOrIntermediateNode(node)) {
       nodeShape.attr(["probabilityLabel", "text"], `(C) ${node.probability.toExponential(2)}`);
+    } else {
+      nodeShape.attr(["probabilityLabel", "text"], `(M) ${node.probability.toExponential(2)}`);
     }
   }
 

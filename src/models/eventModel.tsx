@@ -2,6 +2,7 @@ import VocabularyUtils from "@utils/VocabularyUtils";
 import { AbstractModel, CONTEXT as ABSTRACT_CONTEXT } from "@models/abstractModel";
 import { FailureMode, CONTEXT as FAILURE_MODE_CONTEXT } from "@models/failureModeModel";
 import { Rectangle, CONTEXT as RECTANGLE_CONTEXT, PREFIX as DIAGRAM_PREFIX } from "@models/utils/Rectangle";
+import { asArray } from "@utils/utils";
 
 const XMLSchemaDateTime = "http://www.w3.org/2001/XMLSchema#dateTime";
 
@@ -156,3 +157,31 @@ export const gateTypeValues = (): [boolean, GateType][] =>
       return [true, value];
     }
   });
+
+export const isRootOrIntermediateNode = (node: FaultEvent): boolean => {
+  return node.eventType === EventType.INTERMEDIATE;
+};
+
+export const isExternalNode = (node: FaultEvent): boolean => {
+  return node.eventType === EventType.EXTERNAL;
+};
+
+export const isSimpleExternalNode = (node: any): boolean => {
+  return node.eventType === EventType.EXTERNAL && !node.isReference;
+};
+
+export const isReferencedNode = (node: FaultEvent): boolean => {
+  return node.eventType === EventType.EXTERNAL && node.isReference;
+};
+
+export const isBasicNode = (node: FaultEvent): boolean => {
+  return node.eventType === EventType.BASIC;
+};
+
+export const isSimpleBasicNode = (node: FaultEvent): boolean => {
+  return node.eventType === EventType.BASIC && asArray(node.supertypes).length === 0;
+};
+
+export const isSNSNode = (node: FaultEvent): boolean => {
+  return node.eventType === EventType.BASIC && asArray(node.supertypes).length === 0;
+};
