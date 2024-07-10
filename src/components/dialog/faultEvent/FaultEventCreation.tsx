@@ -149,7 +149,7 @@ const FaultEventCreation = ({
                     labelId="gate-type-select-label"
                     label={t("newFtaModal.gateType")}
                     error={!!errors.gateType}
-                    disabled={disabled}
+                    disabled={isEditMode && !(eventValue?.eventType === EventType.INTERMEDIATE)}
                   >
                     {gateTypeValues()
                       .filter((value) => value[0])
