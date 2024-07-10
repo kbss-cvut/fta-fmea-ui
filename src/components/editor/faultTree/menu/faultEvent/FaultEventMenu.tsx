@@ -93,9 +93,10 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
   const [snsPredictedIri, setSnsPredictedIri] = useState<string | undefined>(undefined);
 
   const handleOnSave = async () => {
+    setShowSaveAndRejectButton(false);
     const values = getValues();
-    const { description } = values;
-    const updateEvent = async (data) => await onEventUpdated({ ...shapeToolData, ...data, description });
+    const { description, gateType } = values;
+    const updateEvent = async (data) => await onEventUpdated({ ...shapeToolData, ...data, gateType, description });
 
     const eventTypeData = {
       [RadioButtonType.Predicted]: { iri: snsPredictedIri, value: snsPredictedFailureRate },
@@ -308,7 +309,7 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
       {/* ROOT NODE */}
       {shapeToolData && shapeToolData.iri === rootIri && (
         <>
-          <Typography className={classes.labelRow}>
+          <Typography className={classes.eventPropertyRow}>
             <span className={classes.label}>{`${t("faultEventMenu.eventName")}: `}</span>
             {shapeToolData.name}
           </Typography>
