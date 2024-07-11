@@ -1,7 +1,6 @@
-import { useState, useEffect, useContext, createContext } from "react";
+import { useState, useContext, createContext } from "react";
 import { FaultTree } from "@models/faultTreeModel";
 import * as faultTreeService from "@services/faultTreeService";
-import { axiosSource } from "@services/utils/axiosUtils";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 import { filter, findIndex } from "lodash";
 import { useUserAuth } from "@hooks/useUserAuth";
@@ -23,12 +22,11 @@ export const useFaultTrees = () => {
 
 export const FaultTreesProvider = ({ children }) => {
   const [_faultTrees, _setFaultTrees] = useState<FaultTree[]>([]);
-  const [shouldFetchTrees, setShouldFetchTrees] = useState(true);
   const [showSnackbar] = useSnackbar();
   const loggedUser = useUserAuth();
 
-  useEffect(() => {
-    const fetchFaultTrees = async (filters?: { label?: string; snsLabel?: string; sort?: string }) => {
+  const triggerFetch = (filters?: { label?: string; snsLabel?: string; sort?: string }) => {
+    if (loggedUser) {
       const params: { [key: string]: string } = {};
       if (filters?.label) params.label = filters.label;
       if (filters?.snsLabel) params.snsLabel = filters.snsLabel;
@@ -38,14 +36,10 @@ export const FaultTreesProvider = ({ children }) => {
         .findAllWithFilters(params)
         .then((value) => {
           _setFaultTrees(value);
-          setShouldFetchTrees(false);
         })
         .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
-    };
-
-    if (loggedUser && shouldFetchTrees) fetchFaultTrees();
-    return () => axiosSource.cancel("FaultTreesProvider - unmounting");
-  }, [loggedUser, shouldFetchTrees]);
+    }
+  };
 
   const addFaultTree = async (faultTree: FaultTree) => {
     faultTreeService
@@ -78,22 +72,6 @@ export const FaultTreesProvider = ({ children }) => {
         showSnackbar("Fault Tree removed", SnackbarType.SUCCESS);
         const updatedTrees = filter(_faultTrees, (el) => el.iri !== treeToRemove.iri);
         _setFaultTrees(updatedTrees);
-      })
-      .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
-  };
-
-  const triggerFetch = (filters?: { label?: string; snsLabel?: string; sort?: string }) => {
-    setShouldFetchTrees(true);
-    const params: { [key: string]: string } = {};
-    if (filters?.label) params.label = filters.label;
-    if (filters?.snsLabel) params.snsLabel = filters.snsLabel;
-    if (filters?.sort) params.sort = filters.sort;
-
-    faultTreeService
-      .findAllWithFilters(params)
-      .then((value) => {
-        _setFaultTrees(value);
-        setShouldFetchTrees(false);
       })
       .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
   };
