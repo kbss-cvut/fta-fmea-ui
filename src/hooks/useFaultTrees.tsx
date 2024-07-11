@@ -1,9 +1,7 @@
-import * as React from "react";
-import { createContext, useContext, useEffect, useState } from "react";
+import { useState, useEffect, useContext, createContext } from "react";
 import { FaultTree } from "@models/faultTreeModel";
 import * as faultTreeService from "@services/faultTreeService";
 import { axiosSource } from "@services/utils/axiosUtils";
-import { ChildrenProps } from "@utils/hookUtils";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 import { filter, findIndex } from "lodash";
 import { useUserAuth } from "@hooks/useUserAuth";
@@ -13,7 +11,7 @@ type faultTreeContextType = [
   (faultTree: FaultTree) => void,
   (faultTreeToUpdate: FaultTree) => void,
   (faultTreeToDelete: FaultTree) => void,
-  (filters?: { label?: string; snsLabel?: string }) => void,
+  (filters?: { label?: string; snsLabel?: string; sort?: string }) => void,
 ];
 
 export const faultTreesContext = createContext<faultTreeContextType>(null!);
@@ -23,16 +21,21 @@ export const useFaultTrees = () => {
   return [faultTrees, addFaultTree, updateTree, removeTree, triggerFetch] as const;
 };
 
-export const FaultTreesProvider = ({ children }: ChildrenProps) => {
+export const FaultTreesProvider = ({ children }) => {
   const [_faultTrees, _setFaultTrees] = useState<FaultTree[]>([]);
   const [shouldFetchTrees, setShouldFetchTrees] = useState(true);
   const [showSnackbar] = useSnackbar();
   const loggedUser = useUserAuth();
 
   useEffect(() => {
-    const fetchFaultTrees = async (filters?: { label?: string; snsLabel?: string }) => {
+    const fetchFaultTrees = async (filters?: { label?: string; snsLabel?: string; sort?: string }) => {
+      const params: { [key: string]: string } = {};
+      if (filters?.label) params.label = filters.label;
+      if (filters?.snsLabel) params.snsLabel = filters.snsLabel;
+      if (filters?.sort) params.sort = filters.sort;
+
       faultTreeService
-        .findAllWithFilters(filters || {})
+        .findAllWithFilters(params)
         .then((value) => {
           _setFaultTrees(value);
           setShouldFetchTrees(false);
@@ -79,17 +82,20 @@ export const FaultTreesProvider = ({ children }: ChildrenProps) => {
       .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
   };
 
-  const triggerFetch = (filters?: { label?: string; snsLabel?: string }) => {
+  const triggerFetch = (filters?: { label?: string; snsLabel?: string; sort?: string }) => {
     setShouldFetchTrees(true);
-    if (filters) {
-      faultTreeService
-        .findAllWithFilters(filters)
-        .then((value) => {
-          _setFaultTrees(value);
-          setShouldFetchTrees(false);
-        })
-        .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
-    }
+    const params: { [key: string]: string } = {};
+    if (filters?.label) params.label = filters.label;
+    if (filters?.snsLabel) params.snsLabel = filters.snsLabel;
+    if (filters?.sort) params.sort = filters.sort;
+
+    faultTreeService
+      .findAllWithFilters(params)
+      .then((value) => {
+        _setFaultTrees(value);
+        setShouldFetchTrees(false);
+      })
+      .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
   };
 
   return (

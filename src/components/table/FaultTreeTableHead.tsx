@@ -1,32 +1,25 @@
 import React, { FC } from "react";
 import { TableCell, TableRow } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import useStyles from "./FaultTreeOverviewTable.styles";
+import SortableTableHeader from "./SortableTableHeader";
 
-const faultTreeTableHeadCells = [
-  "faultTreeOverviewTable.name",
-  "faultTreeOverviewTable.aircraftType",
-  "faultTreeOverviewTable.sns",
-  "faultTreeOverviewTable.calculatedFailureRate",
-  "faultTreeOverviewTable.fhaBasedFailureRate",
-  "faultTreeOverviewTable.requiredFailureRate",
-  "faultTreeOverviewTable.lastModified",
-  "faultTreeOverviewTable.created",
-  "faultTreeOverviewTable.lastEditor",
-];
+interface FaultTreeTableHeadProps {
+  sortConfig: { key: string; direction: "asc" | "desc" };
+  onSortChange: (columnKey: string) => void;
+}
 
-const FaultTreeTableHead: FC = () => {
-  const { t } = useTranslation();
-  const { classes } = useStyles();
-
+const FaultTreeTableHead: FC<FaultTreeTableHeadProps> = ({ sortConfig, onSortChange }) => {
   return (
     <TableRow>
-      {faultTreeTableHeadCells.map((headCell, index) => (
-        <TableCell key={index} className={index === 0 ? classes.firstColumn : classes.tableHeaderCell}>
-          {t(headCell)}
-        </TableCell>
-      ))}
-      <TableCell></TableCell>
+      <SortableTableHeader columnKey="label" label="FHA Label" sortConfig={sortConfig} onSortChange={onSortChange} />
+      <SortableTableHeader columnKey="snsLabel" label="SNS Label" sortConfig={sortConfig} onSortChange={onSortChange} />
+
+      <TableCell>Aircraft Type</TableCell>
+      <TableCell>Calculated Failure Rate</TableCell>
+      <TableCell>FHA Based Failure Rate</TableCell>
+      <TableCell>Required Failure Rate</TableCell>
+      <TableCell>Last Modified</TableCell>
+      <SortableTableHeader columnKey="date" label="Created" sortConfig={sortConfig} onSortChange={onSortChange} />
+      <TableCell>Last Editor</TableCell>
     </TableRow>
   );
 };

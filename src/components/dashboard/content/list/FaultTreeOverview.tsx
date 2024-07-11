@@ -27,6 +27,11 @@ const FaultTreeOverview = () => {
   const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefaultAnchor);
   const [createFaultTreeDialogOpen, setCreateFaultTreeDialogOpen] = useState<boolean>(false);
   const [selectedSystem] = useSelectedSystemSummaries();
+  const [currentFilters, setCurrentFilters] = useState<{ label?: string; snsLabel?: string }>({});
+  const [sortConfig, setSortConfig] = useState<{ key: string; direction: "asc" | "desc" }>({
+    key: "label",
+    direction: "asc",
+  });
   const isTreeCreationDisabled = !selectedSystem;
 
   useEffect(() => {
@@ -41,7 +46,16 @@ const FaultTreeOverview = () => {
   }, []);
 
   const handleFilterChange = async (label: string, snsLabel: string) => {
-    await triggerFetch({ label, snsLabel });
+    const filters = { label, snsLabel };
+    setCurrentFilters(filters);
+    await triggerFetch({ ...filters, sort: `${sortConfig.direction === "asc" ? "+" : "-"}${sortConfig.key}` });
+  };
+
+  const handleSortChange = async (columnKey: string) => {
+    const isAsc = sortConfig.key === columnKey && sortConfig.direction === "asc";
+    const newSortConfig = { key: columnKey, direction: isAsc ? "desc" : "asc" };
+    setSortConfig(newSortConfig);
+    await triggerFetch({ ...currentFilters, sort: `${newSortConfig.direction === "asc" ? "+" : "-"}${columnKey}` });
   };
 
   const toggleView = (viewType: ViewType) => {
@@ -94,6 +108,8 @@ const FaultTreeOverview = () => {
           faultTrees={faultTrees}
           handleFaultTreeContextMenu={handleContextMenu}
           handleFilterChange={handleFilterChange}
+          sortConfig={sortConfig}
+          handleSortChange={handleSortChange}
         />
       ) : (
         <FaultTreeAndSystemOverviewCardsList
