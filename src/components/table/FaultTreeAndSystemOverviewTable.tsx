@@ -51,6 +51,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
   const [filterAnchorEl, setFilterAnchorEl] = useState<null | HTMLElement>(null);
   const [filterType, setFilterType] = useState<null | string>(null);
   const [filterValues, setFilterValues] = useState({ label: "", snsLabel: "" });
+  const initialSortConfig: { key: string; direction: "asc" | "desc" } = { key: "date", direction: "desc" };
 
   const modifiedSystemsList = getReorderedSystemsListbySystem(systems, selectedSystemState);
   const modifiedFaultTreesList = getFilteredFaultTreesBySystem(faultTrees, selectedSystem);
@@ -77,7 +78,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
           <TableHead>
             {faultTrees && (
               <FaultTreeTableHead
-                sortConfig={sortConfig}
+                sortConfig={sortConfig || initialSortConfig}
                 onSortChange={handleSortChange}
                 onFilterClick={handleFilterClick}
               />
@@ -125,7 +126,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
           horizontal: "center",
         }}
       >
-        <Box p={2} sx={{ display: "flex", alignItems: "center" }}>
+        <Box p={2}>
           {filterType === "label" && (
             <TextField
               label="FHA Label"

@@ -16,7 +16,7 @@ const FaultTreeTableHead: FC<FaultTreeTableHeadProps> = ({ sortConfig, onSortCha
             FHA Label
           </span>
           <TableSortLabel
-            active={true}
+            active={sortConfig.key === "label"}
             direction={sortConfig.key === "label" ? sortConfig.direction : "asc"}
             onClick={() => onSortChange("label")}
           />
@@ -29,7 +29,7 @@ const FaultTreeTableHead: FC<FaultTreeTableHeadProps> = ({ sortConfig, onSortCha
             SNS Label
           </span>
           <TableSortLabel
-            active={true}
+            active={sortConfig.key === "snsLabel"}
             direction={sortConfig.key === "snsLabel" ? sortConfig.direction : "asc"}
             onClick={() => onSortChange("snsLabel")}
           />
@@ -40,13 +40,14 @@ const FaultTreeTableHead: FC<FaultTreeTableHeadProps> = ({ sortConfig, onSortCha
       <TableCell>Required Failure Rate</TableCell>
       <TableCell>Last Modified</TableCell>
       <TableCell>
-        <TableSortLabel
-          active={true}
-          direction={sortConfig.key === "date" ? sortConfig.direction : "desc"}
-          onClick={() => onSortChange("date")}
-        >
+        <Box display="flex" alignItems="center">
           Created
-        </TableSortLabel>
+          <TableSortLabel
+            active={sortConfig.key === "date"}
+            direction={sortConfig.key === "date" ? sortConfig.direction : "desc"}
+            onClick={() => onSortChange("date")}
+          />
+        </Box>
       </TableCell>
       <TableCell>Last Editor</TableCell>
     </TableRow>
