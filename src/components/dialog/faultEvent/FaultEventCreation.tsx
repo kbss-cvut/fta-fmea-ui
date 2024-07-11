@@ -97,7 +97,7 @@ const FaultEventCreation = ({
           disabled={disabled}
         />
 
-        {!selectedEvent && !isRootEvent && eventTypeWatch !== EventType.EXTERNAL && (
+        {!selectedEvent && !isRootEvent && (
           <FormControl disabled={existingEventSelected} className={classes.formControl}>
             <InputLabel id="event-type-select-label">{t("newFtaModal.type")}</InputLabel>
             <Controller
