@@ -40,7 +40,7 @@ export const FaultTreesProvider = ({ children }: ChildrenProps) => {
         .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
     };
 
-    if (loggedUser) fetchFaultTrees();
+    if (loggedUser && shouldFetchTrees) fetchFaultTrees();
     return () => axiosSource.cancel("FaultTreesProvider - unmounting");
   }, [loggedUser, shouldFetchTrees]);
 
@@ -71,7 +71,7 @@ export const FaultTreesProvider = ({ children }: ChildrenProps) => {
   const removeTree = async (treeToRemove: FaultTree) => {
     faultTreeService
       .remove(treeToRemove.iri)
-      .then((value) => {
+      .then(() => {
         showSnackbar("Fault Tree removed", SnackbarType.SUCCESS);
         const updatedTrees = filter(_faultTrees, (el) => el.iri !== treeToRemove.iri);
         _setFaultTrees(updatedTrees);
