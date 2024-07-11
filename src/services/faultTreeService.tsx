@@ -214,3 +214,18 @@ export const calculateCutSets = async (faultTreeUri: string, operationalDataFilt
     return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
   }
 };
+
+export const findAllWithFilters = async (filters: { label?: string; snsLabel?: string }): Promise<FaultTree[]> => {
+  try {
+    const query = new URLSearchParams(filters).toString();
+    const response = await axiosClient.get<FaultTree[]>(`/faultTrees/summaries?${query}`, {
+      headers: authHeaders(),
+    });
+
+    return JsonLdUtils.compactAndResolveReferencesAsArray<FaultTree>(response.data, CONTEXT);
+  } catch (e) {
+    console.log("Fault Tree Service - Failed to call /findAllWithFilters");
+    const defaultMessage = "Failed to load fault trees with filters";
+    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+  }
+};

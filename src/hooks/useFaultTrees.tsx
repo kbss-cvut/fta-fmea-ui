@@ -1,6 +1,5 @@
 import * as React from "react";
 import { createContext, useContext, useEffect, useState } from "react";
-
 import { FaultTree } from "@models/faultTreeModel";
 import * as faultTreeService from "@services/faultTreeService";
 import { axiosSource } from "@services/utils/axiosUtils";
@@ -14,7 +13,7 @@ type faultTreeContextType = [
   (faultTree: FaultTree) => void,
   (faultTreeToUpdate: FaultTree) => void,
   (faultTreeToDelete: FaultTree) => void,
-  () => void,
+  (filters?: { label?: string; snsLabel?: string }) => void,
 ];
 
 export const faultTreesContext = createContext<faultTreeContextType>(null!);
@@ -31,9 +30,9 @@ export const FaultTreesProvider = ({ children }: ChildrenProps) => {
   const loggedUser = useUserAuth();
 
   useEffect(() => {
-    const fetchFaultTrees = async () => {
+    const fetchFaultTrees = async (filters?: { label?: string; snsLabel?: string }) => {
       faultTreeService
-        .findAll()
+        .findAllWithFilters(filters || {})
         .then((value) => {
           _setFaultTrees(value);
           setShouldFetchTrees(false);
@@ -64,7 +63,7 @@ export const FaultTreesProvider = ({ children }: ChildrenProps) => {
         const index = findIndex(_faultTrees, (el) => el.iri === treeToUpdate.iri);
         _faultTrees.splice(index, 1, treeToUpdate);
 
-        _setFaultTrees(_faultTrees);
+        _setFaultTrees([..._faultTrees]);
       })
       .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
   };
@@ -80,7 +79,18 @@ export const FaultTreesProvider = ({ children }: ChildrenProps) => {
       .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
   };
 
-  const triggerFetch = () => setShouldFetchTrees(true);
+  const triggerFetch = (filters?: { label?: string; snsLabel?: string }) => {
+    setShouldFetchTrees(true);
+    if (filters) {
+      faultTreeService
+        .findAllWithFilters(filters)
+        .then((value) => {
+          _setFaultTrees(value);
+          setShouldFetchTrees(false);
+        })
+        .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
+    }
+  };
 
   return (
     <faultTreesContext.Provider value={[_faultTrees, addFaultTree, updateTree, removeTree, triggerFetch]}>
