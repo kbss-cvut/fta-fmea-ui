@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ViewType } from "./types";
 import OverviewTypeToggler from "./OverviewTypeToggler";
-import FaultTreeAndSystemOverviewTable from "./FaultTreeAndSystemOverviewTable";
+import FaultTreeAndSystemOverviewTable from "../../../table/FaultTreeAndSystemOverviewTable";
 import FaultTreeAndSystemOverviewCardsList from "./FaultTreeAndSystemOverviewCardsList";
 import { FaultTree } from "@models/faultTreeModel";
 import { contextMenuDefaultAnchor, ElementContextMenuAnchor } from "@utils/contextMenu";
