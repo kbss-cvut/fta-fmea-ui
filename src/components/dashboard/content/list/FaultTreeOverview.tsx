@@ -40,6 +40,10 @@ const FaultTreeOverview = () => {
     triggerFetch();
   }, []);
 
+  const handleFilterChange = async (label: string, snsLabel: string) => {
+    await triggerFetch({ label, snsLabel });
+  };
+
   const toggleView = (viewType: ViewType) => {
     if (selectedView === viewType) return;
     setSelectedView(viewType);
@@ -89,6 +93,7 @@ const FaultTreeOverview = () => {
           selectedSystem={selectedSystem}
           faultTrees={faultTrees}
           handleFaultTreeContextMenu={handleContextMenu}
+          handleFilterChange={handleFilterChange}
         />
       ) : (
         <FaultTreeAndSystemOverviewCardsList
