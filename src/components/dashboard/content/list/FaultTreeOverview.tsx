@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ViewType } from "./types";
 import OverviewTypeToggler from "./OverviewTypeToggler";
-import FaultTreeAndSystemOverviewTable from "./FaultTreeAndSystemOverviewTable";
+import FaultTreeAndSystemOverviewTable from "../../../table/FaultTreeAndSystemOverviewTable";
 import FaultTreeAndSystemOverviewCardsList from "./FaultTreeAndSystemOverviewCardsList";
 import { FaultTree } from "@models/faultTreeModel";
 import { contextMenuDefaultAnchor, ElementContextMenuAnchor } from "@utils/contextMenu";
@@ -27,6 +27,11 @@ const FaultTreeOverview = () => {
   const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefaultAnchor);
   const [createFaultTreeDialogOpen, setCreateFaultTreeDialogOpen] = useState<boolean>(false);
   const [selectedSystem] = useSelectedSystemSummaries();
+  const [currentFilters, setCurrentFilters] = useState<{ label?: string; snsLabel?: string }>({});
+  const [sortConfig, setSortConfig] = useState<{ key: string; direction: "asc" | "desc" }>({
+    key: "date",
+    direction: "desc",
+  });
   const isTreeCreationDisabled = !selectedSystem;
 
   useEffect(() => {
@@ -39,6 +44,19 @@ const FaultTreeOverview = () => {
   useEffect(() => {
     triggerFetch();
   }, []);
+
+  const handleFilterChange = async (label: string, snsLabel: string) => {
+    const filters = { label, snsLabel };
+    setCurrentFilters(filters);
+    await triggerFetch({ ...filters, sort: `${sortConfig.direction === "asc" ? "+" : "-"}${sortConfig.key}` });
+  };
+
+  const handleSortChange = async (columnKey: string) => {
+    const isAsc = sortConfig.key === columnKey && sortConfig.direction === "asc";
+    const newSortConfig = { key: columnKey, direction: isAsc ? "desc" : "asc" };
+    setSortConfig(newSortConfig);
+    await triggerFetch({ ...currentFilters, sort: `${newSortConfig.direction === "asc" ? "+" : "-"}${columnKey}` });
+  };
 
   const toggleView = (viewType: ViewType) => {
     if (selectedView === viewType) return;
@@ -89,6 +107,9 @@ const FaultTreeOverview = () => {
           selectedSystem={selectedSystem}
           faultTrees={faultTrees}
           handleFaultTreeContextMenu={handleContextMenu}
+          handleFilterChange={handleFilterChange}
+          sortConfig={sortConfig}
+          handleSortChange={handleSortChange}
         />
       ) : (
         <FaultTreeAndSystemOverviewCardsList

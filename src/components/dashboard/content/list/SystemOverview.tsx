@@ -8,7 +8,7 @@ import { contextMenuDefaultAnchor, ElementContextMenuAnchor } from "@utils/conte
 import SystemContextMenu from "@components/editor/system/menu/SystemContextMenu";
 import OverviewTypeToggler from "./OverviewTypeToggler";
 import { ViewType } from "./types";
-import FaultTreeAndSystemOverviewTable from "./FaultTreeAndSystemOverviewTable";
+import FaultTreeAndSystemOverviewTable from "../../../table/FaultTreeAndSystemOverviewTable";
 import FaultTreeAndSystemOverviewCardsList from "./FaultTreeAndSystemOverviewCardsList";
 import { useTranslation } from "react-i18next";
 import { Button, Box } from "@mui/material";
