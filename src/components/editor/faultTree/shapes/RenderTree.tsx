@@ -55,8 +55,6 @@ const renderTree = async (container, node, parentShape = null, pathsToHighlight,
   if (width > DEFAULT_NODE_SHAPE_SIZE) nodeShape.prop("size", { width: width });
 
   nodeShape.attr(["label", "text"], node.name);
-  const _status = node.references?.status || status;
-  if (_status && _status !== Status.OK) nodeShape.attr(["probabilityLabel", "fill"], "red");
   if (node?.probability) {
     if (node?.selectedEstimate) {
       const iriOfSelectedValue = node.selectedEstimate.iri;
