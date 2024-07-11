@@ -19,7 +19,6 @@ import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 import { getFilteredFaultTreesBySystem, getReorderedSystemsListbySystem } from "@utils/utils";
 import FaultTreeTableBody from "./FaultTreeTableBody";
 import SystemTableBody from "./SystemTableBody";
-import FaultTreeFilters from "@components/filters/FaultTreeFilters";
 import FaultTreeTableHead from "./FaultTreeTableHead";
 import SystemTableHead from "./SystemTableHead";
 
@@ -51,6 +50,8 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
   const [filterAnchorEl, setFilterAnchorEl] = useState<null | HTMLElement>(null);
   const [filterType, setFilterType] = useState<null | string>(null);
   const [filterValues, setFilterValues] = useState({ label: "", snsLabel: "" });
+  const [appliedFilters, setAppliedFilters] = useState({ label: "", snsLabel: "" });
+
   const initialSortConfig: { key: string; direction: "asc" | "desc" } = { key: "date", direction: "desc" };
 
   const modifiedSystemsList = getReorderedSystemsListbySystem(systems, selectedSystemState);
@@ -67,6 +68,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
   };
 
   const applyFilters = () => {
+    setAppliedFilters(filterValues); // Apply the filters
     handleFilterChange(filterValues.label, filterValues.snsLabel);
     handleFilterClose();
   };
@@ -81,6 +83,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
                 sortConfig={sortConfig || initialSortConfig}
                 onSortChange={handleSortChange}
                 onFilterClick={handleFilterClick}
+                filterValues={appliedFilters} // Pass applied filters
               />
             )}
             {systems && <SystemTableHead />}
@@ -126,7 +129,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
           horizontal: "center",
         }}
       >
-        <Box p={2}>
+        <Box p={2} sx={{ display: "flex", alignItems: "center" }}>
           {filterType === "label" && (
             <TextField
               label="FHA Label"

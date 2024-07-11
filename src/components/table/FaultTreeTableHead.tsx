@@ -1,13 +1,15 @@
 import React, { FC } from "react";
 import { TableCell, TableRow, Box, TableSortLabel } from "@mui/material";
+import FilterListIcon from "@mui/icons-material/FilterList";
 
 interface FaultTreeTableHeadProps {
   sortConfig: { key: string; direction: "asc" | "desc" };
   onSortChange: (columnKey: string) => void;
   onFilterClick: (event: React.MouseEvent<HTMLElement>, type: string) => void;
+  filterValues: { label: string; snsLabel: string };
 }
 
-const FaultTreeTableHead: FC<FaultTreeTableHeadProps> = ({ sortConfig, onSortChange, onFilterClick }) => {
+const FaultTreeTableHead: FC<FaultTreeTableHeadProps> = ({ sortConfig, onSortChange, onFilterClick, filterValues }) => {
   return (
     <TableRow>
       <TableCell>
@@ -15,6 +17,7 @@ const FaultTreeTableHead: FC<FaultTreeTableHeadProps> = ({ sortConfig, onSortCha
           <span onClick={(e) => onFilterClick(e, "label")} style={{ cursor: "pointer", marginRight: "8px" }}>
             FHA Label
           </span>
+          {filterValues.label && <FilterListIcon />}
           <TableSortLabel
             active={sortConfig.key === "label"}
             direction={sortConfig.key === "label" ? sortConfig.direction : "asc"}
@@ -28,6 +31,7 @@ const FaultTreeTableHead: FC<FaultTreeTableHeadProps> = ({ sortConfig, onSortCha
           <span onClick={(e) => onFilterClick(e, "snsLabel")} style={{ cursor: "pointer", marginRight: "8px" }}>
             SNS Label
           </span>
+          {filterValues.snsLabel && <FilterListIcon />}
           <TableSortLabel
             active={sortConfig.key === "snsLabel"}
             direction={sortConfig.key === "snsLabel" ? sortConfig.direction : "asc"}
