@@ -30,7 +30,7 @@ const FaultTreeOverview = () => {
   const [currentFilters, setCurrentFilters] = useState<{ label?: string; snsLabel?: string }>({});
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: "asc" | "desc" }>({
     key: "label",
-    direction: "asc",
+    direction: "desc",
   });
   const isTreeCreationDisabled = !selectedSystem;
 

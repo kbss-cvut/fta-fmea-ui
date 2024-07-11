@@ -17,7 +17,7 @@ const SortableTableHeader: FC<SortableTableHeaderProps> = ({ columnKey, label, s
     <TableCell sortDirection={sortConfig.key === columnKey ? sortConfig.direction : false}>
       <TableSortLabel
         active={sortConfig.key === columnKey}
-        direction={sortConfig.key === columnKey ? sortConfig.direction : "asc"}
+        direction={sortConfig.key === columnKey ? sortConfig.direction : "desc"}
         onClick={handleSort}
       >
         {label}

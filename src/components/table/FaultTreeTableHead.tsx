@@ -11,9 +11,8 @@ const FaultTreeTableHead: FC<FaultTreeTableHeadProps> = ({ sortConfig, onSortCha
   return (
     <TableRow>
       <SortableTableHeader columnKey="label" label="FHA Label" sortConfig={sortConfig} onSortChange={onSortChange} />
-      <SortableTableHeader columnKey="snsLabel" label="SNS Label" sortConfig={sortConfig} onSortChange={onSortChange} />
-
       <TableCell>Aircraft Type</TableCell>
+      <SortableTableHeader columnKey="snsLabel" label="SNS Label" sortConfig={sortConfig} onSortChange={onSortChange} />
       <TableCell>Calculated Failure Rate</TableCell>
       <TableCell>FHA Based Failure Rate</TableCell>
       <TableCell>Required Failure Rate</TableCell>

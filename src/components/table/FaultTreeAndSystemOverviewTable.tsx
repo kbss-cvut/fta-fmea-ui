@@ -46,7 +46,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
       <TableContainer>
         <Table className={classes.table}>
           <TableHead>
-            <FaultTreeTableHead sortConfig={sortConfig} onSortChange={handleSortChange} />
+            {faultTrees && <FaultTreeTableHead sortConfig={sortConfig} onSortChange={handleSortChange} />}
             {systems && <SystemTableHead />}
           </TableHead>
           <TableBody>
