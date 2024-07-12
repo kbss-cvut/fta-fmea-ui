@@ -189,11 +189,20 @@ const EditorCanvas = ({
     if (isExportingImage) {
       const svgPaper = document.querySelector("#jointjs-container > svg");
       const padding = 20;
-      const bbox = container.getBBox().inflate(padding);
+
+      let graphBbox = null;
+      container.getCells().forEach((c) => {
+        graphBbox = !graphBbox ? new joint.g.Rect(c.getBBox()) : graphBbox.union(c.getBBox());
+      });
+      graphBbox = graphBbox.inflate(padding);
+      const bbox = graphBbox;
 
       saveSvgAsPng(svgPaper, treeName + ".png", {
-        width: bbox.width * currentZoom + padding,
-        height: bbox.height * currentZoom + padding,
+        scale: 2,
+        left: bbox.x,
+        top: bbox.y,
+        width: bbox.width,
+        height: bbox.height,
       });
 
       setIsExportingImage(false);
