@@ -68,7 +68,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
   };
 
   const applyFilters = () => {
-    setAppliedFilters(filterValues); // Apply the filters
+    setAppliedFilters(filterValues);
     handleFilterChange(filterValues.label, filterValues.snsLabel);
     handleFilterClose();
   };
@@ -83,7 +83,7 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
                 sortConfig={sortConfig || initialSortConfig}
                 onSortChange={handleSortChange}
                 onFilterClick={handleFilterClick}
-                filterValues={appliedFilters} // Pass applied filters
+                filterValues={appliedFilters}
               />
             )}
             {systems && <SystemTableHead />}
