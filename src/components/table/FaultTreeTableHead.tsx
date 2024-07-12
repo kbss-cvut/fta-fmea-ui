@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { TableCell, TableRow, Box, TableSortLabel } from "@mui/material";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import useStyles from "./FaultTreeOverviewTable.styles";
 
 interface FaultTreeTableHeadProps {
   sortConfig: { key: string; direction: "asc" | "desc" };
@@ -10,9 +11,11 @@ interface FaultTreeTableHeadProps {
 }
 
 const FaultTreeTableHead: FC<FaultTreeTableHeadProps> = ({ sortConfig, onSortChange, onFilterClick, filterValues }) => {
+  const { classes } = useStyles();
+
   return (
     <TableRow>
-      <TableCell>
+      <TableCell className={classes.tableHeaderCell}>
         <Box display="flex" alignItems="center">
           <span onClick={(e) => onFilterClick(e, "label")} style={{ cursor: "pointer", marginRight: "8px" }}>
             FHA Label
@@ -25,10 +28,10 @@ const FaultTreeTableHead: FC<FaultTreeTableHeadProps> = ({ sortConfig, onSortCha
           />
         </Box>
       </TableCell>
-      <TableCell>Aircraft Type</TableCell>
-      <TableCell>
+      <TableCell className={classes.tableHeaderCell}>Aircraft Type</TableCell>
+      <TableCell className={classes.tableHeaderCell}>
         <Box display="flex" alignItems="center">
-          <span onClick={(e) => onFilterClick(e, "snsLabel")} style={{ cursor: "pointer", marginRight: "8px" }}>
+          <span onClick={(e) => onFilterClick(e, "snsLabel")} style={{ cursor: "pointer" }}>
             SNS Label
           </span>
           {filterValues.snsLabel && <FilterListIcon />}
@@ -39,11 +42,11 @@ const FaultTreeTableHead: FC<FaultTreeTableHeadProps> = ({ sortConfig, onSortCha
           />
         </Box>
       </TableCell>
-      <TableCell>Calculated Failure Rate</TableCell>
-      <TableCell>FHA Based Failure Rate</TableCell>
-      <TableCell>Required Failure Rate</TableCell>
-      <TableCell>Last Modified</TableCell>
-      <TableCell>
+      <TableCell className={classes.tableHeaderCell}>Calculated Failure Rate</TableCell>
+      <TableCell className={classes.tableHeaderCell}>FHA Based Failure Rate</TableCell>
+      <TableCell className={classes.tableHeaderCell}>Required Failure Rate</TableCell>
+      <TableCell className={classes.tableHeaderCell}>Last Modified</TableCell>
+      <TableCell className={classes.tableHeaderCell}>
         <Box display="flex" alignItems="center">
           Created
           <TableSortLabel
@@ -53,7 +56,7 @@ const FaultTreeTableHead: FC<FaultTreeTableHeadProps> = ({ sortConfig, onSortCha
           />
         </Box>
       </TableCell>
-      <TableCell>Last Editor</TableCell>
+      <TableCell className={classes.tableHeaderCell}>Last Editor</TableCell>
     </TableRow>
   );
 };
