@@ -49,26 +49,20 @@ const FaultEventCreation = ({
   const gateTypeWatch = watch("gateType");
 
   useEffect(() => {
-    const updateValues = () => {
-      if (selectedEvent) {
-        setValue("name", selectedEvent.name);
-        setValue("existingEvent", selectedEvent.iri ? selectedEvent : null);
-
-        if (existingEventSelected) {
-          setValue("eventType", selectedEvent.eventType);
-        }
-
-        if (isRootEvent || isCreatedEvent) {
-          setValue("eventType", EventType.INTERMEDIATE);
-          setValue("gateType", GateType.OR);
-        }
-      } else {
-        reset();
+    if (selectedEvent) {
+      setValue("name", selectedEvent.name);
+      setValue("existingEvent", selectedEvent.iri ? selectedEvent : null);
+      if (existingEventSelected) {
+        setValue("eventType", selectedEvent.eventType);
       }
-    };
-
-    updateValues();
-  }, [isRootEvent, selectedEvent, setValue, existingEventSelected, isCreatedEvent]);
+      if (isRootEvent || isCreatedEvent) {
+        setValue("eventType", EventType.INTERMEDIATE);
+        setValue("gateType", GateType.OR);
+      }
+    } else {
+      reset();
+    }
+  }, [isRootEvent, selectedEvent, setValue, existingEventSelected, isCreatedEvent, reset]);
 
   const [filteredOptions, setFilteredOptions] = useState([{}]);
   const updatedFHAEventTypes = updateEventsType(faultEvents, "fha-fault-event", EventType.EXTERNAL);
@@ -83,6 +77,8 @@ const FaultEventCreation = ({
     setSelectedEvent({ name: newEvent } as FaultEvent);
     setShowCreateEvent(true);
     setIsCreatedEvent(true);
+    setValue("eventType", EventType.INTERMEDIATE);
+    setValue("gateType", GateType.OR);
   };
 
   const handleEventSelect = (data: any) => {
@@ -125,13 +121,15 @@ const FaultEventCreation = ({
                   if (e.target.value !== EventType.INTERMEDIATE && e.target.value !== EventType.CONDITIONING) {
                     lastGateTypeRef.current = gateTypeWatch;
                     setValue("gateType", null);
-                  } else setValue("gateType", lastGateTypeRef.current ? lastGateTypeRef.current : GateType.OR);
+                  } else {
+                    setValue("gateType", lastGateTypeRef.current ? lastGateTypeRef.current : GateType.OR);
+                  }
                   _onChange(e);
                 };
                 return (
                   <Select
                     {...field}
-                    disabled={!isCreatedEvent && (existingEventSelected || disabled || isRootEvent)}
+                    disabled={isRootEvent || (!isCreatedEvent && (existingEventSelected || disabled))}
                     labelId="event-type-select-label"
                     label={t("newFtaModal.type")}
                   >
@@ -156,7 +154,7 @@ const FaultEventCreation = ({
   function renderEventForm() {
     return (
       <>
-        {selectedEvent && eventTypeWatch === EventType.INTERMEDIATE && (
+        {eventTypeWatch === EventType.INTERMEDIATE && (
           <div className={classes.formControlDiv}>
             <FormControl className={classes.formControl}>
               <InputLabel id="gate-type-select-label">{t("newFtaModal.gateType")}</InputLabel>
