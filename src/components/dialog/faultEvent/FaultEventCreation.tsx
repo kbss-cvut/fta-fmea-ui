@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import { FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import useStyles from "@components/dialog/faultEvent/FaultEventCreation.styles";
 import { Controller } from "react-hook-form";
@@ -19,7 +18,6 @@ interface Props {
   isEditMode?: boolean;
 }
 
-// TODO: remove ts-ignores and migrate to higher version of react-hook-form
 const FaultEventCreation = ({
   useFormMethods,
   isRootEvent,
@@ -41,35 +39,55 @@ const FaultEventCreation = ({
   } = useFormMethods;
 
   const faultEvents = useReusableFaultEvents();
-  const [newEvent, setNewEvent] = useState<String | null>(null);
+  const [newEvent, setNewEvent] = useState<string | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<FaultEvent | null>(null);
   const [showCreateEvent, setShowCreateEvent] = useState(false);
+  const [isCreatedEvent, setIsCreatedEvent] = useState<boolean>(false);
   const existingEventSelected = Boolean(selectedEvent);
   const lastGateTypeRef = useRef(selectedEvent?.gateType);
   const eventTypeWatch = watch("eventType");
   const gateTypeWatch = watch("gateType");
 
   useEffect(() => {
-    if (selectedEvent) {
-      setValue("name", selectedEvent.name);
-      setValue("existingEvent", selectedEvent.iri ? selectedEvent : null);
-    } else {
-      reset();
-    }
-  }, [selectedEvent]);
+    const updateValues = () => {
+      if (selectedEvent) {
+        setValue("name", selectedEvent.name);
+        setValue("existingEvent", selectedEvent.iri ? selectedEvent : null);
+
+        if (existingEventSelected) {
+          setValue("eventType", selectedEvent.eventType);
+        }
+
+        if (isRootEvent || isCreatedEvent) {
+          setValue("eventType", EventType.INTERMEDIATE);
+          setValue("gateType", GateType.OR);
+        }
+      } else {
+        reset();
+      }
+    };
+
+    updateValues();
+  }, [isRootEvent, selectedEvent, setValue, existingEventSelected, isCreatedEvent]);
 
   const [filteredOptions, setFilteredOptions] = useState([{}]);
   const updatedFHAEventTypes = updateEventsType(faultEvents, "fha-fault-event", EventType.EXTERNAL);
 
-  const handleFilterOptions = (inputValue) => {
+  const handleFilterOptions = (inputValue: string) => {
     const filtered = faultEvents.filter((option) => option.name.toLowerCase().includes(inputValue.toLowerCase()));
     setNewEvent(inputValue);
     setFilteredOptions(filtered);
   };
 
   const handleOnCreateEventClick = (e: MouseEvent) => {
-    setSelectedEvent({ name: newEvent });
+    setSelectedEvent({ name: newEvent } as FaultEvent);
     setShowCreateEvent(true);
+    setIsCreatedEvent(true);
+  };
+
+  const handleEventSelect = (data: any) => {
+    setSelectedEvent(data);
+    setIsCreatedEvent(false);
   };
 
   function renderEventSelect() {
@@ -85,7 +103,7 @@ const FaultEventCreation = ({
           control={control}
           name="event"
           options={isRootEvent ? faultEvents : updatedFHAEventTypes}
-          onChangeCallback={(data: any) => setSelectedEvent(data)}
+          onChangeCallback={handleEventSelect}
           onInputChangeCallback={handleFilterOptions}
           onCreateEventClick={handleOnCreateEventClick}
           getOptionKey={(option) => option.iri}
@@ -97,8 +115,8 @@ const FaultEventCreation = ({
           disabled={disabled}
         />
 
-        {!selectedEvent && !isRootEvent && (
-          <FormControl disabled={existingEventSelected} className={classes.formControl}>
+        {selectedEvent && (
+          <FormControl className={classes.formControl}>
             <InputLabel id="event-type-select-label">{t("newFtaModal.type")}</InputLabel>
             <Controller
               render={({ field }) => {
@@ -113,7 +131,7 @@ const FaultEventCreation = ({
                 return (
                   <Select
                     {...field}
-                    disabled={existingEventSelected || disabled}
+                    disabled={!isCreatedEvent && (existingEventSelected || disabled || isRootEvent)}
                     labelId="event-type-select-label"
                     label={t("newFtaModal.type")}
                   >
@@ -138,7 +156,7 @@ const FaultEventCreation = ({
   function renderEventForm() {
     return (
       <>
-        {eventTypeWatch === EventType.INTERMEDIATE && (
+        {selectedEvent && eventTypeWatch === EventType.INTERMEDIATE && (
           <div className={classes.formControlDiv}>
             <FormControl className={classes.formControl}>
               <InputLabel id="gate-type-select-label">{t("newFtaModal.gateType")}</InputLabel>
@@ -171,12 +189,12 @@ const FaultEventCreation = ({
           </div>
         )}
 
-        {eventTypeWatch !== EventType.INTERMEDIATE &&
+        {selectedEvent &&
+          eventTypeWatch !== EventType.INTERMEDIATE &&
           eventTypeWatch !== EventType.EXTERNAL &&
           !isRootEvent &&
           isEditedEvent && (
             <>
-              {/*TODO: sort out default value UI bug*/}
               <TextField
                 margin="dense"
                 label={t("newFtaModal.description")}
@@ -188,7 +206,6 @@ const FaultEventCreation = ({
                 {...register("description")}
               />
 
-              {/* Probability field */}
               {!isEditMode && eventTypeWatch === EventType.BASIC && (
                 <TextField
                   label={t("newFtaModal.probability")}
