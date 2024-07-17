@@ -13,6 +13,7 @@ import {
 } from "@components/editor/faultTree/shapes/constants";
 import { getNodeWidthForText } from "@utils/treeUtils";
 import { Status } from "@utils/constants";
+import { asArray } from "@utils/utils";
 
 const referenceIcon =
   "M3.9 7c0-1.71 1.39-3.1 3.1-3.1h4V2H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 8h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V12h4c2.76 0 5-2.24 5-5s-2.24-5-5-5";
@@ -58,7 +59,7 @@ const renderTree = async (container, node, parentShape = null, pathsToHighlight,
   if (node?.probability) {
     if (node?.selectedEstimate) {
       const iriOfSelectedValue = node.selectedEstimate.iri;
-      const { predictionIri, operationalIri } = node.supertypes.supertypes.reduce(
+      const { predictionIri, operationalIri } = asArray(node.supertypes.supertypes).reduce(
         (acc, item) => {
           if (item?.hasFailureRate?.prediction?.iri) acc.predictionIri = item.hasFailureRate.prediction.iri;
           if (item?.hasFailureRate?.estimate?.iri) acc.operationalIri = item.hasFailureRate.estimate.iri;
