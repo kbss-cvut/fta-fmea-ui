@@ -183,6 +183,10 @@ export const ExternalEvent = Event.define(
         },
         refY2: -20,
       },
+      probabilityRequirementLabel: {
+        fontSize: 16,
+        refX: "120%",
+      },
       gate: {
         d: "M -15 -16 L 0 -30 L 15 -16 L 15 0 L -15 0 Z M 0 -30 L 0 -59",
         stroke: STROKE_COLOR,

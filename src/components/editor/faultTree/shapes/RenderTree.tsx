@@ -82,6 +82,11 @@ const renderTree = async (container, node, parentShape = null, pathsToHighlight,
     }
   }
 
+  if (isReferencedNode(node) && node.supertypes?.hasFailureRate?.requirement?.upperBound) {
+    const probReqValue = node.supertypes.hasFailureRate.requirement.upperBound.toExponential(2);
+    nodeShape.attr(["probabilityRequirementLabel", "text"], probReqValue);
+  }
+
   if (has(node, "probabilityRequirement")) {
     nodeShape.attr(["probabilityRequirementLabel", "text"], node.probabilityRequirement.toExponential(2));
   }
