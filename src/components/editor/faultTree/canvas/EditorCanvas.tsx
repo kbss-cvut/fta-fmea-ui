@@ -347,7 +347,7 @@ const EditorCanvas = ({
         </CurrentFaultTreeTableProvider>
         {!showTable && (
           <FaultEventMenu
-            shapeToolData={sidebarSelectedEvent}
+            newShapeToolData={sidebarSelectedEvent}
             onEventUpdated={onEventUpdated}
             refreshTree={refreshTree}
             rootIri={rootEvent?.iri}

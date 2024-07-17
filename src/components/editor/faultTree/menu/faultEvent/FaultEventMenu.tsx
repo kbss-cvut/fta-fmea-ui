@@ -26,9 +26,10 @@ import { asArray } from "@utils/utils";
 import { ReusableFaultEventsProvider } from "@hooks/useReusableFaultEvents";
 import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 import { useForm } from "react-hook-form";
+import UnsavedChangesDialog from "./UnsavedChangesDialog";
 
 interface Props {
-  shapeToolData?: FaultEvent;
+  newShapeToolData?: FaultEvent;
   onEventUpdated: (faultEvent: FaultEvent) => void;
   refreshTree: () => void;
   rootIri?: string;
@@ -57,7 +58,7 @@ const getFailureRateIris = (supertypes) => {
   );
 };
 
-const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }: Props) => {
+const FaultEventMenu = ({ newShapeToolData, onEventUpdated, refreshTree, rootIri }: Props) => {
   const { t } = useTranslation();
   const formMethods = useForm();
   const { formState, getValues } = formMethods;
@@ -67,6 +68,16 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
   const [failureModeDialogOpen, setFailureModeDialogOpen] = useState(false);
   const [resetMenu, setResetMenu] = useState<boolean>(false);
   const [showSaveAndRejectButton, setShowSaveAndRejectButton] = useState<boolean>(false);
+  const [showUnsavedChangesDialog, setShowUnsavedChangesDialog] = useState(false);
+  const [shapeToolData, setShapeToolData] = useState<FaultEvent | undefined>(undefined);
+
+  useEffect(() => {
+    if (showSaveAndRejectButton) {
+      setShowUnsavedChangesDialog(true);
+    } else {
+      setShapeToolData(newShapeToolData);
+    }
+  }, [newShapeToolData]);
 
   const [failureModeOverviewDialogOpen, setFailureModeOverviewDialogOpen] = useState(false);
   const [failureModeOverview, setFailureModeOverview] = useState<FailureMode | null>(null);
@@ -155,6 +166,12 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
   const handleFailureModeClicked = (failureMode: FailureMode) => {
     setFailureModeOverview(failureMode);
     setFailureModeOverviewDialogOpen(true);
+  };
+
+  const handleUnsavedChanges = (action) => {
+    action();
+    setShowUnsavedChangesDialog(false);
+    setShapeToolData(newShapeToolData);
   };
 
   useEffect(() => {
@@ -510,6 +527,11 @@ const FaultEventMenu = ({ shapeToolData, onEventUpdated, refreshTree, rootIri }:
           />
         </EventFailureModeProvider>
       )}
+      <UnsavedChangesDialog
+        isModalOpen={showUnsavedChangesDialog}
+        onDiscard={() => handleUnsavedChanges(handleOnDiscard)}
+        onSave={() => handleUnsavedChanges(handleOnSave)}
+      />
     </Box>
   );
 };
