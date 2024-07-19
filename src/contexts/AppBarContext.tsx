@@ -14,6 +14,10 @@ interface AppBarTitleContextType {
   systemsList: System[];
   setSystemsList: React.Dispatch<React.SetStateAction<System[]>>;
   addSystemToList: (system: System) => void;
+  isModified: boolean;
+  setIsModified: React.Dispatch<React.SetStateAction<boolean>>;
+  showUnsavedChangesDialog: boolean;
+  setShowUnsavedChangesDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface AppBarTitleProviderProps {
@@ -33,6 +37,10 @@ const AppBarMainContext = createContext<AppBarTitleContextType>({
   systemsList: [],
   setSystemsList: () => {},
   addSystemToList: (system: System) => {},
+  isModified: false,
+  setIsModified: () => {},
+  showUnsavedChangesDialog: false,
+  setShowUnsavedChangesDialog: () => {},
 });
 
 export const useAppBar = () => useContext(AppBarMainContext);
@@ -40,6 +48,8 @@ export const useAppBar = () => useContext(AppBarMainContext);
 export const AppBarProvider = ({ children }: AppBarTitleProviderProps) => {
   const [appBarTitle, setAppBarTitle] = useState<string>("");
   const [systemsList, setSystemsList] = useState<System[]>([]);
+  const [isModified, setIsModified] = useState<boolean>(false);
+  const [showUnsavedChangesDialog, setShowUnsavedChangesDialog] = useState<boolean>(false);
   const location = useLocation();
   const { t } = useTranslation();
   const [showSnackbar] = useSnackbar();
@@ -83,7 +93,19 @@ export const AppBarProvider = ({ children }: AppBarTitleProviderProps) => {
   };
 
   return (
-    <AppBarMainContext.Provider value={{ appBarTitle, setAppBarTitle, systemsList, setSystemsList, addSystemToList }}>
+    <AppBarMainContext.Provider
+      value={{
+        appBarTitle,
+        setAppBarTitle,
+        systemsList,
+        setSystemsList,
+        addSystemToList,
+        isModified,
+        setIsModified,
+        showUnsavedChangesDialog,
+        setShowUnsavedChangesDialog,
+      }}
+    >
       {children}
     </AppBarMainContext.Provider>
   );

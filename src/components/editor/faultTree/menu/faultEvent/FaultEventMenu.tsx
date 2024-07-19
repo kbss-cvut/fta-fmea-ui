@@ -27,9 +27,10 @@ import { ReusableFaultEventsProvider } from "@hooks/useReusableFaultEvents";
 import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 import { useForm } from "react-hook-form";
 import UnsavedChangesDialog from "./UnsavedChangesDialog";
+import { useAppBar } from "@contexts/AppBarContext";
 
 interface Props {
-  newShapeToolData?: FaultEvent;
+  selectedShapeToolData?: FaultEvent;
   onEventUpdated: (faultEvent: FaultEvent) => void;
   refreshTree: () => void;
   rootIri?: string;
@@ -58,26 +59,25 @@ const getFailureRateIris = (supertypes) => {
   );
 };
 
-const FaultEventMenu = ({ newShapeToolData, onEventUpdated, refreshTree, rootIri }: Props) => {
+const FaultEventMenu = ({ selectedShapeToolData, onEventUpdated, refreshTree, rootIri }: Props) => {
   const { t } = useTranslation();
   const formMethods = useForm();
   const { formState, getValues } = formMethods;
   const { isDirty } = formState;
   const { classes } = useStyles();
+  const { isModified, setIsModified, showUnsavedChangesDialog, setShowUnsavedChangesDialog } = useAppBar();
   const theme = useTheme();
   const [failureModeDialogOpen, setFailureModeDialogOpen] = useState(false);
   const [resetMenu, setResetMenu] = useState<boolean>(false);
-  const [showSaveAndRejectButton, setShowSaveAndRejectButton] = useState<boolean>(false);
-  const [showUnsavedChangesDialog, setShowUnsavedChangesDialog] = useState(false);
   const [shapeToolData, setShapeToolData] = useState<FaultEvent | undefined>(undefined);
 
   useEffect(() => {
-    if (showSaveAndRejectButton) {
+    if (isModified) {
       setShowUnsavedChangesDialog(true);
     } else {
-      setShapeToolData(newShapeToolData);
+      setShapeToolData(selectedShapeToolData);
     }
-  }, [newShapeToolData]);
+  }, [selectedShapeToolData]);
 
   const [failureModeOverviewDialogOpen, setFailureModeOverviewDialogOpen] = useState(false);
   const [failureModeOverview, setFailureModeOverview] = useState<FailureMode | null>(null);
@@ -104,7 +104,7 @@ const FaultEventMenu = ({ newShapeToolData, onEventUpdated, refreshTree, rootIri
   const [snsPredictedIri, setSnsPredictedIri] = useState<string | undefined>(undefined);
 
   const handleOnSave = async () => {
-    setShowSaveAndRejectButton(false);
+    setIsModified(false);
     const values = getValues();
     const { description, gateType } = values;
     const updateEvent = async (data) => await onEventUpdated({ ...shapeToolData, ...data, gateType, description });
@@ -136,7 +136,7 @@ const FaultEventMenu = ({ newShapeToolData, onEventUpdated, refreshTree, rootIri
   const handleOnDiscard = () => {
     formMethods.reset();
     setResetMenu(!resetMenu);
-    setShowSaveAndRejectButton(false);
+    setIsModified(false);
   };
 
   const handleManuallyDefinedFailureRateChange = (event, type: NodeTypeWithManualFailureRate) => {
@@ -149,17 +149,17 @@ const FaultEventMenu = ({ newShapeToolData, onEventUpdated, refreshTree, rootIri
       if (type === NodeTypeWithManualFailureRate.External) {
         setExternalManuallyDefinedFailureRate(inputValue);
       }
-      setShowSaveAndRejectButton(true);
+      setIsModified(true);
     }
   };
 
   const handleSnsBasicSelectedFailureRateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value === preselectedRadioButton) {
       setSelectedRadioButton(event.target.value as RadioButtonType);
-      setShowSaveAndRejectButton(false);
+      setIsModified(false);
     } else {
       setSelectedRadioButton(event.target.value as RadioButtonType);
-      setShowSaveAndRejectButton(true);
+      setIsModified(true);
     }
   };
 
@@ -171,7 +171,7 @@ const FaultEventMenu = ({ newShapeToolData, onEventUpdated, refreshTree, rootIri
   const handleUnsavedChanges = (action) => {
     action();
     setShowUnsavedChangesDialog(false);
-    setShapeToolData(newShapeToolData);
+    setShapeToolData(selectedShapeToolData);
   };
 
   useEffect(() => {
@@ -280,7 +280,7 @@ const FaultEventMenu = ({ newShapeToolData, onEventUpdated, refreshTree, rootIri
   }, [shapeToolData, resetMenu]);
 
   useEffect(() => {
-    setShowSaveAndRejectButton(isDirty);
+    setIsModified(isDirty);
   }, [isDirty]);
 
   const basedFailureRate = shapeToolData?.supertypes?.hasFailureRate?.estimate?.value;
@@ -460,7 +460,7 @@ const FaultEventMenu = ({ newShapeToolData, onEventUpdated, refreshTree, rootIri
         </Box>
       )}
 
-      {showSaveAndRejectButton && (
+      {isModified && (
         <Box display="flex" flexDirection="row">
           <Button onClick={handleOnSave}>{t("common.save")}</Button>
           <Button onClick={handleOnDiscard}>{t("common.discard")}</Button>
