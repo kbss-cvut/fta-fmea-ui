@@ -53,6 +53,7 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
   const { appBarTitle, systemsList } = useAppBar();
   const location = useLocation();
   const isGlobalSystemSwitchDisabled = shouldSystemSwitchBeDisabled(location.pathname);
+  const { isModified, setShowUnsavedChangesDialog } = useAppBar();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selectedSystem, setSelectedSystem] = useSelectedSystemSummaries();
@@ -84,7 +85,11 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
   };
 
   const goBack = () => {
-    history(-1);
+    if (isModified) {
+      setShowUnsavedChangesDialog(true);
+    } else {
+      history(-1);
+    }
   };
 
   const menuId = "user-account-menu";

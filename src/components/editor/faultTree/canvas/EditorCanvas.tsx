@@ -26,6 +26,7 @@ import { useFaultTrees } from "@hooks/useFaultTrees";
 import { calculateCutSets } from "@services/faultTreeService";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 import { useNavigate } from "react-router-dom";
+import { useAppBar } from "@contexts/AppBarContext";
 
 enum MOVE_NODE {
   DRAGGING = 0,
@@ -92,6 +93,7 @@ const EditorCanvas = ({
   const [updatedMinOperationalHours, setUpdatedMinOperationalHours] = useState(initialMinOperationalHours);
   const [inputColor, setInputColor] = useState("");
   const [showSnackbar] = useSnackbar();
+  const { isModified, setShowUnsavedChangesDialog } = useAppBar();
 
   let dragStartPosition = null;
 
@@ -300,6 +302,10 @@ const EditorCanvas = ({
   };
 
   const handleSetNewDefaultOperationalHours = () => {
+    if (isModified) {
+      setShowUnsavedChangesDialog(true);
+      return;
+    }
     const newOperationalDataFilter = Object.assign({}, faultTree.operationalDataFilter);
     newOperationalDataFilter.minOperationalHours =
       updatedMinOperationalHours || faultTree.operationalDataFilter.minOperationalHours;
@@ -347,7 +353,7 @@ const EditorCanvas = ({
         </CurrentFaultTreeTableProvider>
         {!showTable && (
           <FaultEventMenu
-            shapeToolData={sidebarSelectedEvent}
+            selectedShapeToolData={sidebarSelectedEvent}
             onEventUpdated={onEventUpdated}
             refreshTree={refreshTree}
             rootIri={rootEvent?.iri}

@@ -3,27 +3,45 @@ import DiagramOptions, { Props as DiagramOptionsProps } from "../../menu/Diagram
 import FaultTreeFailureModesTable from "./failureModesTable/FaultTreeFailureModesTable";
 import { useCurrentFaultTreeTable } from "@hooks/useCurrentFaultTreeTable";
 import { Box } from "@mui/material";
+import { useAppBar } from "@contexts/AppBarContext";
 
-const SidebarMenuHeader = ({
+type SidebarMenuHeaderProps = DiagramOptionsProps;
+
+const useActionCall = (isModified: boolean, setShowUnsavedChangesDialog: (show: boolean) => void) => {
+  return React.useCallback(
+    (action: () => void) => {
+      if (isModified) {
+        setShowUnsavedChangesDialog(true);
+      } else {
+        action();
+      }
+    },
+    [isModified, setShowUnsavedChangesDialog],
+  );
+};
+
+const SidebarMenuHeader: React.FC<SidebarMenuHeaderProps> = ({
   onConvertToTable,
   onExportDiagram,
   onRestoreLayout,
   onCutSetAnalysis,
   rendering,
-}: DiagramOptionsProps) => {
+}) => {
   const table = useCurrentFaultTreeTable();
+  const { isModified, setShowUnsavedChangesDialog } = useAppBar();
+
+  const actionCall = useActionCall(isModified, setShowUnsavedChangesDialog);
 
   return (
     <Box padding={2}>
       <DiagramOptions
-        onExportDiagram={onExportDiagram}
-        onConvertToTable={onConvertToTable}
-        onRestoreLayout={onRestoreLayout}
-        onCutSetAnalysis={onCutSetAnalysis}
+        onExportDiagram={() => actionCall(onExportDiagram)}
+        onConvertToTable={() => actionCall(onConvertToTable)}
+        onRestoreLayout={() => actionCall(onRestoreLayout)}
+        onCutSetAnalysis={() => actionCall(onCutSetAnalysis)}
         tableConversionAllowed={!table}
         rendering={rendering}
       />
-
       <FaultTreeFailureModesTable table={table} />
     </Box>
   );
