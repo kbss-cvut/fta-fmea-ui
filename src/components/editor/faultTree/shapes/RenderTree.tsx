@@ -53,7 +53,7 @@ const renderTree = async (container, node, parentShape = null, pathsToHighlight,
   }
 
   const width = getNodeWidthForText(node.name, LABEL_FONT_SIZE, DEFAULT_NODE_SHAPE_SIZE);
-  if (width > DEFAULT_NODE_SHAPE_SIZE) nodeShape.prop("size", { width: width });
+  if (width > DEFAULT_NODE_SHAPE_SIZE) nodeShape.prop("size", { width: Math.ceil(width) });
 
   nodeShape.attr(["label", "text"], node.name);
   if (node?.probability) {
