@@ -316,7 +316,7 @@ const FaultEventMenu = ({ selectedShapeToolData, onEventUpdated, refreshTree, ro
 
   return (
     <Box paddingLeft={2} marginRight={2}>
-      {shapeToolData && shapeToolData.iri !== rootIri && (
+      {shapeToolData && (
         <ReusableFaultEventsProvider systemUri={selectedSystem?.iri}>
           <FaultEventShapeToolPane data={shapeToolData} refreshTree={refreshTree} formMethods={formMethods} />
         </ReusableFaultEventsProvider>
