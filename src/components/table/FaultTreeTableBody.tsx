@@ -34,7 +34,7 @@ const FaultTreeTableBody: FC<FaultTreeTableBodyProps> = ({ faultTrees, handleFau
       {faultTrees.map((faultTree, rowIndex) => {
         const routePath = ROUTES.FTA + `/${extractFragment(faultTree.iri)}`;
         const statusColor = faultTree?.status !== Status.OK ? "red" : "white";
-
+        const editor = faultTree?.editor || faultTree?.creator;
         return (
           <TableRow key={rowIndex} className={classes.noBorder}>
             <TableCell className={classes.firstColumn}>{faultTree.name}</TableCell>
@@ -47,7 +47,7 @@ const FaultTreeTableBody: FC<FaultTreeTableBodyProps> = ({ faultTrees, handleFau
             <TableCell className={classes.tableCell}>{failureRate(faultTree?.requiredFailureRate)}</TableCell>
             <TableCell className={classes.tableCell}>{formatDate(faultTree?.modified)}</TableCell>
             <TableCell className={classes.tableCell}>{formatDate(faultTree?.created)}</TableCell>
-            <TableCell className={classes.tableCell}>{faultTree?.editor?.username}</TableCell>
+            <TableCell className={classes.tableCell}>{editor?.username}</TableCell>
             <TableCell className={classes.tableCell}>
               <Box className={classes.rowOptionsContainer}>
                 <Button
