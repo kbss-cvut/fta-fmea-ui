@@ -55,7 +55,7 @@ const ctx = {
   },
   fhaBasedFailureRate: VocabularyUtils.PREFIX + "fha-based-failure-rate",
   editor: VocabularyUtils.PREFIX + "editor",
-  username: VocabularyUtils.PREFIX + "username",
+  username: VocabularyUtils.USERNAME,
   estimate: VocabularyUtils.PREFIX + "has-estimate",
   schematicDesignation: VocabularyUtils.PREFIX + "schematic-designation",
   selectedEstimate: VocabularyUtils.PREFIX + "has-selected-estimation",
