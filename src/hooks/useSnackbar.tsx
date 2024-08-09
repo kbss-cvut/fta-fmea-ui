@@ -49,7 +49,7 @@ export const SnackbarProvider = ({ children }: ChildrenProps) => {
         key="fta-snackbar"
       >
         <Alert onClose={handleClose} severity={alertType}>
-          {message}
+          <pre>{message}</pre>
         </Alert>
       </Snackbar>
     </snackbarContext.Provider>
