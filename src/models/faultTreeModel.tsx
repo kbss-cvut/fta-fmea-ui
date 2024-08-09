@@ -23,6 +23,9 @@ export interface FaultTree extends AbstractModel {
   system?: System;
   calculatedFailureRate?: number;
   fhaBasedFailureRate?: number;
+  creator?: {
+    username?: string;
+  };
   editor?: {
     username?: string;
   };
