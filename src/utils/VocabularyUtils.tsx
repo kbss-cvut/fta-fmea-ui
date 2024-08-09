@@ -6,6 +6,7 @@ export default {
   PREFIX: _NS_FTA_FMEA,
   DC_TERMS: DC_TERMS,
   USER: _NS_FOAF + "Person",
+  USERNAME: _NS_FOAF + "accountName",
   COMPONENT: _NS_FTA_FMEA + "component",
   MITIGATION: _NS_FTA_FMEA + "mitigation",
   FUNCTION: _NS_FTA_FMEA + "function",

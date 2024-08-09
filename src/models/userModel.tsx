@@ -2,7 +2,7 @@ import VocabularyUtils from "@utils/VocabularyUtils";
 import { AbstractModel, CONTEXT as ABSTRACT_CONTEXT } from "@models/abstractModel";
 
 const ctx = {
-  username: VocabularyUtils.PREFIX + "username",
+  username: VocabularyUtils.USERNAME,
   password: VocabularyUtils.PREFIX + "password",
 };
 
