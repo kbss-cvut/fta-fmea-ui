@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import { SELECTED_VIEW } from "@utils/constants";
 import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 import Tooltip from "@mui/material/Tooltip";
+import { asArray } from "@utils/utils";
 
 const FaultTreeOverview = () => {
   const { t } = useTranslation();
@@ -83,7 +84,7 @@ const FaultTreeOverview = () => {
       },
     });
   };
-
+  const canRename = asArray(contextMenuSelectedTree?.manifestingEvent?.supertypes)?.[0]?.auxiliary;
   return (
     <Box flexDirection="column">
       <Box display="flex" flexDirection="row-reverse">
@@ -123,6 +124,7 @@ const FaultTreeOverview = () => {
         onEditClick={() => setEditDialogOpen(true)}
         onDelete={() => handleDelete(contextMenuSelectedTree)}
         onClose={() => setContextMenuAnchor(contextMenuDefaultAnchor)}
+        canRename={canRename}
       />
 
       <FaultTreeEditDialog

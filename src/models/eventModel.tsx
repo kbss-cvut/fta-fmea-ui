@@ -59,6 +59,7 @@ const ctx = {
   estimate: VocabularyUtils.PREFIX + "has-estimate",
   schematicDesignation: VocabularyUtils.PREFIX + "schematic-designation",
   selectedEstimate: VocabularyUtils.PREFIX + "has-selected-estimation",
+  auxiliary: VocabularyUtils.PREFIX + "auxiliary",
 };
 
 export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, FAILURE_MODE_CONTEXT, RECTANGLE_CONTEXT);
@@ -99,6 +100,7 @@ export interface FaultEvent extends AbstractModel {
     types?: string[];
     name?: string;
     criticality?: number;
+    auxiliary?: boolean;
     supertypes?: {
       iri?: string;
       hasFailureRate?: {

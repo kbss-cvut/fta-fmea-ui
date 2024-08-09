@@ -89,7 +89,6 @@ const EditorCanvas = ({
   const [rendering, setRendering] = useState<boolean>(false);
   const [faultTree] = useCurrentFaultTree();
   const initialMinOperationalHours = faultTree?.operationalDataFilter?.minOperationalHours || 0;
-  const [, , updateTree] = useFaultTrees();
   const [updatedMinOperationalHours, setUpdatedMinOperationalHours] = useState(initialMinOperationalHours);
   const [inputColor, setInputColor] = useState("");
   const [showSnackbar] = useSnackbar();
