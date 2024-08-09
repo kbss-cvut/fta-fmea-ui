@@ -37,6 +37,7 @@ export const SnackbarProvider = ({ children }: ChildrenProps) => {
     }
     _setOpen(false);
   };
+  const messageLines = message ? message.split("\n") : [""];
 
   return (
     <snackbarContext.Provider value={[showSnackbar]}>
@@ -49,7 +50,15 @@ export const SnackbarProvider = ({ children }: ChildrenProps) => {
         key="fta-snackbar"
       >
         <Alert onClose={handleClose} severity={alertType}>
-          {message}
+          {messageLines.length == 1
+            ? messageLines[0]
+            : messageLines.map((t) => {
+                return (
+                  <>
+                    {t} <br />
+                  </>
+                );
+              })}
         </Alert>
       </Snackbar>
     </snackbarContext.Provider>
