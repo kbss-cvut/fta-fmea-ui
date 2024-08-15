@@ -8,9 +8,19 @@ interface Props {
   onDelete: () => void;
   onClose: () => void;
   canRename: boolean;
+  renameTooltip: string;
+  deleteTooltip?: string;
 }
 
-const FaultTreeContextMenu = ({ anchorPosition, onClose, onEditClick, onDelete, canRename }: Props) => {
+const FaultTreeContextMenu = ({
+  anchorPosition,
+  onClose,
+  onEditClick,
+  onDelete,
+  canRename,
+  renameTooltip = "rename",
+  deleteTooltip = "delete",
+}: Props) => {
   const handleEditClick = () => {
     onClose();
     onEditClick();
@@ -36,12 +46,16 @@ const FaultTreeContextMenu = ({ anchorPosition, onClose, onEditClick, onDelete, 
           : undefined
       }
     >
-      <MenuItem disabled={!canRename} key="fault-tree-menu-rename" onClick={handleEditClick}>
-        Rename
-      </MenuItem>
-      <MenuItem key="fault-tree-delete" onClick={handleDeleteClick}>
-        Delete
-      </MenuItem>
+      <span title={renameTooltip}>
+        <MenuItem disabled={!canRename} key="fault-tree-menu-rename" onClick={handleEditClick}>
+          Rename
+        </MenuItem>
+      </span>
+      <span title={deleteTooltip}>
+        <MenuItem key="fault-tree-delete" onClick={handleDeleteClick}>
+          Delete
+        </MenuItem>
+      </span>
     </Menu>
   );
 };
