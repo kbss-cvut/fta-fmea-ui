@@ -33,7 +33,7 @@ const FaultTreeTableBody: FC<FaultTreeTableBodyProps> = ({ faultTrees, handleFau
     <>
       {faultTrees.map((faultTree, rowIndex) => {
         const routePath = ROUTES.FTA + `/${extractFragment(faultTree.iri)}`;
-        const statusColor = faultTree?.status !== Status.OK ? "red" : "white";
+        const statusColor = faultTree?.status !== Status.OK ? "red" : "black";
         const editor = faultTree?.editor || faultTree?.creator;
         return (
           <TableRow key={rowIndex} className={classes.noBorder}>
