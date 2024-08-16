@@ -85,6 +85,9 @@
     "lastEditor": "Poslední editor",
     "status": "Stav",
     "edit": "Upravit",
+    "renameHint": "Změnit jméno stromu poruch",
+    "renameDisabledHint": "Stromy poruch založené na FHA nelze přejmenovat.",
+    "deleteHint": "Smazat strom poruch",
     "created": "Vytvořeno",
     "operationalHours": "Doba provozu"
   },
@@ -110,6 +113,7 @@
   "common": {
     "defaultErrorMsg": "Došlo k neočekávané chybě",
     "delete": "Smazat",
+    "rename": "Přejmenovat",
     "save": "Uložit",
     "discard": "Zahodit"
   }
