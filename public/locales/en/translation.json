@@ -85,6 +85,9 @@
     "lastEditor": "Last editor",
     "status": "Status",
     "edit": "Edit",
+    "renameHint": "Change fault tree label",
+    "renameDisabledHint": "FHA-based fault trees cannot be renamed.",
+    "deleteHint": "Delete fault tree",
     "created": "Created",
     "operationalHours": "Operational Hours"
   },
@@ -110,6 +113,7 @@
   "common": {
     "defaultErrorMsg": "Unexpected error occurred",
     "delete": "Delete",
+    "rename": "Rename",
     "save": "Save",
     "discard": "Discard"
   }

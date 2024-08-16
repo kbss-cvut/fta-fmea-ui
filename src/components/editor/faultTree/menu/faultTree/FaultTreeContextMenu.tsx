@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Menu, MenuItem } from "@mui/material";
 import { ElementContextMenuAnchor } from "../../../../../utils/contextMenu";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   anchorPosition: ElementContextMenuAnchor;
@@ -18,9 +19,10 @@ const FaultTreeContextMenu = ({
   onEditClick,
   onDelete,
   canRename,
-  renameTooltip = "rename",
-  deleteTooltip = "delete",
+  renameTooltip,
+  deleteTooltip,
 }: Props) => {
+  const { t } = useTranslation();
   const handleEditClick = () => {
     onClose();
     onEditClick();
@@ -46,14 +48,14 @@ const FaultTreeContextMenu = ({
           : undefined
       }
     >
-      <span title={renameTooltip}>
+      <span title={renameTooltip ? renameTooltip : t("common.rename")}>
         <MenuItem disabled={!canRename} key="fault-tree-menu-rename" onClick={handleEditClick}>
-          Rename
+          {t("common.rename")}
         </MenuItem>
       </span>
-      <span title={deleteTooltip}>
+      <span title={deleteTooltip ? deleteTooltip : t("common.delete")}>
         <MenuItem key="fault-tree-delete" onClick={handleDeleteClick}>
-          Delete
+          {t("common.delete")}
         </MenuItem>
       </span>
     </Menu>

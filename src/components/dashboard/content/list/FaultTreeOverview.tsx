@@ -125,8 +125,10 @@ const FaultTreeOverview = () => {
         onDelete={() => handleDelete(contextMenuSelectedTree)}
         onClose={() => setContextMenuAnchor(contextMenuDefaultAnchor)}
         canRename={canRename}
-        renameTooltip={canRename ? "change fault tree title" : "FHA-based fault trees cannot be renamed."}
-        deleteTooltip={"delete fault tree"}
+        renameTooltip={
+          canRename ? t("faultTreeOverviewTable.renameHint") : t("faultTreeOverviewTable.renameDisabledHint")
+        }
+        deleteTooltip={t("faultTreeOverviewTable.deleteHint")}
       />
 
       <FaultTreeEditDialog
