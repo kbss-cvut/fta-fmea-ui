@@ -86,7 +86,7 @@
     "status": "Stav",
     "edit": "Upravit",
     "renameHint": "Změnit jméno stromu poruch",
-    "renameDisabledHint": "Stromy poruch založené na FHA nelze přejmenovat",
+    "renameDisabledHint": "Stromy poruch založené na FHA nelze přejmenovat.",
     "deleteHint": "Smazat strom poruch",
     "created": "Vytvořeno",
     "operationalHours": "Doba provozu"
