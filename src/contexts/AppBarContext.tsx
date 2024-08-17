@@ -1,19 +1,13 @@
 import { ROUTES } from "@utils/constants";
-import React, { createContext, useState, useContext, ReactNode, useEffect } from "react";
+import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { System } from "@models/systemModel";
-import * as systemService from "@services/systemService";
 import { useSnackbar } from "@hooks/useSnackbar";
-import { axiosSource } from "@services/utils/axiosUtils";
 import { useUserAuth } from "@hooks/useUserAuth";
 
 interface AppBarTitleContextType {
   appBarTitle: string;
   setAppBarTitle: React.Dispatch<React.SetStateAction<string>>;
-  systemsList: System[];
-  setSystemsList: React.Dispatch<React.SetStateAction<System[]>>;
-  addSystemToList: (system: System) => void;
   isModified: boolean;
   setIsModified: React.Dispatch<React.SetStateAction<boolean>>;
   showUnsavedChangesDialog: boolean;
@@ -34,9 +28,6 @@ const categoryTitles = {
 const AppBarMainContext = createContext<AppBarTitleContextType>({
   appBarTitle: "",
   setAppBarTitle: () => {},
-  systemsList: [],
-  setSystemsList: () => {},
-  addSystemToList: (system: System) => {},
   isModified: false,
   setIsModified: () => {},
   showUnsavedChangesDialog: false,
@@ -47,7 +38,6 @@ export const useAppBar = () => useContext(AppBarMainContext);
 
 export const AppBarProvider = ({ children }: AppBarTitleProviderProps) => {
   const [appBarTitle, setAppBarTitle] = useState<string>("");
-  const [systemsList, setSystemsList] = useState<System[]>([]);
   const [isModified, setIsModified] = useState<boolean>(false);
   const [showUnsavedChangesDialog, setShowUnsavedChangesDialog] = useState<boolean>(false);
   const location = useLocation();
@@ -65,21 +55,6 @@ export const AppBarProvider = ({ children }: AppBarTitleProviderProps) => {
     }
   }, [location.pathname, t]);
 
-  useEffect(() => {
-    const fetchSystems = async () => {
-      systemService
-        .findAll()
-        .then((value) => {
-          setSystemsList(value);
-        })
-        .catch((reason) => showSnackbar(reason, errorMessage));
-    };
-
-    if (loggedUser) fetchSystems();
-
-    return () => axiosSource.cancel("SystemsProvider - unmounting");
-  }, [loggedUser]);
-
   const getTitleFromPathname = (pathname: string): string => {
     const parts = pathname.split("/");
     const lastPart = parts.pop();
@@ -88,18 +63,11 @@ export const AppBarProvider = ({ children }: AppBarTitleProviderProps) => {
     return "";
   };
 
-  const addSystemToList = (system: System) => {
-    setSystemsList((state) => [...state, system]);
-  };
-
   return (
     <AppBarMainContext.Provider
       value={{
         appBarTitle,
         setAppBarTitle,
-        systemsList,
-        setSystemsList,
-        addSystemToList,
         isModified,
         setIsModified,
         showUnsavedChangesDialog,

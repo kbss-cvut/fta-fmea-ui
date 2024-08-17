@@ -28,6 +28,8 @@ import { useLocation } from "react-router-dom";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 import { isUsingOidcAuth } from "@utils/OidcUtils";
+import { findByIri } from "@utils/utils";
+import { useSystems } from "@hooks/useSystems";
 
 interface Props {
   title: string;
@@ -50,10 +52,10 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
   const { classes } = useStyles();
   const history = useNavigate();
   const { i18n, t } = useTranslation();
-  const { appBarTitle, systemsList } = useAppBar();
+  const [systems] = useSystems();
+  const { appBarTitle, isModified, setShowUnsavedChangesDialog } = useAppBar();
   const location = useLocation();
   const isGlobalSystemSwitchDisabled = shouldSystemSwitchBeDisabled(location.pathname);
-  const { isModified, setShowUnsavedChangesDialog } = useAppBar();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selectedSystem, setSelectedSystem] = useSelectedSystemSummaries();
@@ -124,7 +126,7 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
 
   const handleSystemChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     const value = event.target.value as string;
-    const selectedSystem = value ? systemsList.find((s) => s.iri == value) : null;
+    const selectedSystem = findByIri(value, systems);
     setSelectedSystem(selectedSystem);
   };
 
@@ -151,21 +153,19 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
               {!selectedSystem && (
                 <InputLabel className={classes.inputLabel}>{t("appBar.selectSystemPlaceholder")}</InputLabel>
               )}
-              {systemsList && (
+              {systems && (
                 <Box className={classes.dropdownContainer}>
                   <TextField
                     select
                     InputLabelProps={{ shrink: false }}
                     className={classes.textfieldSelect}
                     value={
-                      selectedSystem?.iri && systemsList.some((s) => s.iri === selectedSystem.iri)
-                        ? selectedSystem.iri
-                        : ""
+                      selectedSystem?.iri && systems.some((s) => s.iri === selectedSystem.iri) ? selectedSystem.iri : ""
                     }
                     onChange={handleSystemChange}
                     disabled={isGlobalSystemSwitchDisabled}
                   >
-                    {systemsList.map((s, i) => {
+                    {systems.map((s, i) => {
                       return (
                         <MenuItem key={`${s.iri}`} value={s.iri}>
                           {s.name}

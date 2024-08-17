@@ -118,6 +118,11 @@ export const formatDate = (dateString: string) => {
   return date.toLocaleString("en-US", options);
 };
 
+export const findByIri = <T extends AbstractModel>(iri: string, modelElements: T[]): T | null => {
+  const elementArray = asArray(modelElements);
+  return iri ? elementArray.find((s) => s.iri == iri) : null;
+};
+
 /**
  * Updates the eventType of events in an array if a specific substring is found in its IRI.
  *
