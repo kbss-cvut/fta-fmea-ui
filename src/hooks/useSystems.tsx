@@ -51,7 +51,7 @@ export const SystemsProvider = ({ children }: ChildrenProps) => {
       .create(system)
       .then((value) => {
         showSnackbar("System created", SnackbarType.SUCCESS);
-        _setSystems([..._systems, value]);
+        setShouldFetchSystems(true);
       })
       .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
   };

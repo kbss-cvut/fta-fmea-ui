@@ -46,7 +46,7 @@ export const FaultTreesProvider = ({ children }) => {
       .create(faultTree)
       .then((value) => {
         showSnackbar("Fault Tree created", SnackbarType.SUCCESS);
-        _setFaultTrees([..._faultTrees, value]);
+        faultTreeService.findAll().then((result) => _setFaultTrees(result));
       })
       .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
   };
