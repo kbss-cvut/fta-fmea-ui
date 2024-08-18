@@ -6,8 +6,10 @@ import { useTranslation } from "react-i18next";
 import useStyles from "./FaultTreeOverviewTable.styles";
 import { FaultTree } from "@models/faultTreeModel";
 import { extractFragment } from "@services/utils/uriIdentifierUtils";
-import { formatDate } from "@utils/utils";
+import { findByIri, formatDate } from "@utils/utils";
 import { ROUTES, Status } from "@utils/constants";
+import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
+import { useSystems } from "@hooks/useSystems";
 
 interface FaultTreeTableBodyProps {
   faultTrees: FaultTree[];
@@ -19,7 +21,11 @@ const FaultTreeTableBody: FC<FaultTreeTableBodyProps> = ({ faultTrees, handleFau
   const { t } = useTranslation();
   const { classes } = useStyles();
 
+  const [systems] = useSystems();
+  const [, setSelectedSystem] = useSelectedSystemSummaries();
   const redirectToPath = (routePath: string, faultTree: FaultTree) => {
+    const ftaSystem = findByIri(faultTree?.system?.iri, systems);
+    setSelectedSystem(ftaSystem);
     navigate(routePath);
   };
 
