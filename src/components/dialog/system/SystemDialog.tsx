@@ -11,13 +11,11 @@ import { useSystems } from "@hooks/useSystems";
 import { System } from "@models/systemModel";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
-import { useAppBar } from "../../../contexts/AppBarContext";
 
 const SystemDialog = ({ open, handleCloseDialog }) => {
   const { t } = useTranslation();
 
   const [, addSystem] = useSystems();
-  const { addSystemToList } = useAppBar();
   const [processing, setIsProcessing] = useState(false);
 
   const useFormMethods = useForm({ resolver: yupResolver(schema) });
@@ -35,7 +33,6 @@ const SystemDialog = ({ open, handleCloseDialog }) => {
     } as System;
     // TODO: Add correct error handling
     await addSystem(system);
-    addSystemToList(system);
 
     setIsProcessing(false);
     handleCloseDialog();
