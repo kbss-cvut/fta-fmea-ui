@@ -121,5 +121,29 @@
     "rename": "Přejmenovat",
     "save": "Uložit",
     "discard": "Zahodit"
+  },
+  "errors": {
+    "faultTree": {
+      "rootEvent": {
+        "deleteViolation": "Kořenová událost stromu nesmí být smazána!"
+      }
+    },
+    "user": {
+      "update": {
+        "uriMismatch": "URI pro aktualizaci uživatele se neshoduje s aktuálním uživatelem!",
+        "incorrectOldPassword": "Staré heslo je nesprávné!"
+      },
+      "impersonation": {
+        "adminImpersonation": "Nelze se vydávat za správce."
+      }
+    },
+    "faultTreeTraversal": {
+      "intermediateEventAsLeaf": "Mezilehlá událost nesmí být na konci cesty!"
+    },
+    "externalService": {
+      "configuration": {
+        "failureRateServiceNotSet": "Konfigurační parametr operationalFailureRateService není nastaven."
+      }
+    }
   }
 }

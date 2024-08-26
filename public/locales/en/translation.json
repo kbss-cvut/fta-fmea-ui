@@ -121,5 +121,29 @@
     "rename": "Rename",
     "save": "Save",
     "discard": "Discard"
+  },
+  "errors": {
+    "faultTree": {
+      "rootEvent": {
+        "deleteViolation": "Root event of tree mustn't be deleted!"
+      }
+    },
+    "user": {
+      "update": {
+        "uriMismatch": "User update uri does not match current user!",
+        "incorrectOldPassword": "Old password incorrect!"
+      },
+      "impersonation": {
+        "adminImpersonation": "Cannot impersonate admin."
+      }
+    },
+    "faultTreeTraversal": {
+      "intermediateEventAsLeaf": "Intermediate event must not be the end of the path!"
+    },
+    "externalService": {
+      "configuration": {
+        "failureRateServiceNotSet": "Configuration parameter operationalFailureRateService not set."
+      }
+    }
   }
 }
