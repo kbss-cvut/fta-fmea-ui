@@ -13,7 +13,7 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 
 
-<http://context-with-ata-sns-partonomy-of--acm1> {
+<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/system/acm1> {
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/fha-fault-event/instance360155541>
     a :fha-fault-event, :complex-event-type;
     :has-failure-rate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-147299840> .
@@ -133,7 +133,7 @@
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-658897705>
     a :sns-component .
   
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/system/instance510539860>
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/system/acm1>
     a :system .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-147299840>
@@ -1024,7 +1024,7 @@
     :has-estimate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance1071073619> .
 }
 
-<http://context-with-ata-sns-partonomy-of--acm2> {
+<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/system/acm2> {
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1384665236>
     a :function;
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1523035058> .
@@ -1178,7 +1178,7 @@
     a :failure-rate-requirement;
     :to 3.0E-3 .
   
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/system/instance1574699916>
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/system/acm2>
     a :system .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-259512338>
@@ -1733,7 +1733,7 @@
     :has-prediction <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance220236658> .
 }
 
-<http://context-with-ata-sns-partonomy-of--acm1> {
+<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/system/acm1> {
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-907552943>
     :has-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance559072742>;
     :behavior-type "AtomicBehavior";
@@ -1887,7 +1887,7 @@
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-969306560>
     :has-part-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1061356481>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-658897705>;
-    :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/system/instance510539860>;
+    :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/system/acm1>;
     :name "Environmental control"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-658897705>
@@ -1897,7 +1897,7 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-969306560>;
     :name "Compression"@cs .
   
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/system/instance510539860>
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/system/acm1>
     :has-part-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-969306560>;
     :name "acm1"@cs .
   
@@ -2725,7 +2725,7 @@
     :name "estimate"@cs .
 }
 
-<http://context-with-ata-sns-partonomy-of--acm2> {
+<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/system/acm2> {
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1523035058>
     :has-failure-mode <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1155927783>;
     :has-function <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance1384665236>;
@@ -2865,14 +2865,14 @@
     :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-259512338>;
     :name "Compression"@cs .
   
-  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/system/instance1574699916>
+  <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/system/acm2>
     :has-part-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-259512338>;
     :name "acm2"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-259512338>
     :has-part-component <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1311053700>,
       <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/sns-component/instance-1966820685>;
-    :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/system/instance1574699916>;
+    :is-part-of <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/system/acm2>;
     :name "Environmental control"@cs .
   
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1743395097>
@@ -3601,7 +3601,7 @@
     :failure-mode-type "FailureMode" .
 }
 
-<http://context-with-ata-sns-partonomy-of--acm2> {
+<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/system/acm2> {
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-1743395097>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance-1766233519>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance1929963169>;
@@ -4042,7 +4042,7 @@
 
 }
 
-<http://context-with-ata-sns-partonomy-of--acm1> {
+<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/system/acm1> {
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-289256347>
     :is-impairing <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/function/instance76103648>;
     :is-derived-from <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-mode/instance-651593535>,
@@ -4383,7 +4383,7 @@
 }
 
 
-<http://context-with-ata-sns-partonomy-of--acm1> {
+<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/system/acm1> {
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-147299840>
     :has-estimate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance-1382737527-1> .
 
@@ -4434,7 +4434,7 @@
 }
 
 
-<http://context-with-ata-sns-partonomy-of--acm2> {
+<http://onto.fel.cvut.cz/ontologies/fta-fmea-application/system/acm2> {
   <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate/instance-9691619>
     :has-estimate <http://onto.fel.cvut.cz/ontologies/fta-fmea-application/failure-rate-estimate/instance1071073619-1> .
 
