@@ -35,13 +35,15 @@ const SystemEditDialog = ({ open, handleCloseDialog, system }: Props) => {
 
   const handleUpdateSystem = async (values: any) => {
     setIsProcessing(true);
-
-    system.name = values.systemName;
-    await updateSystem(system);
-
-    reset({
-      systemName: values.systemName,
-    });
+    const updatedSystem = { ...system, name: values.systemName };
+    await updateSystem(
+      updatedSystem,
+      () => (system.name = values.systemName),
+      () =>
+        reset({
+          systemName: system.name,
+        }),
+    );
     setIsProcessing(false);
     handleCloseDialog();
   };
