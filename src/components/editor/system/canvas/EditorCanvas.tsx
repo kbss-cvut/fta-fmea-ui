@@ -15,13 +15,12 @@ import { SystemLink } from "@components/editor/system/shapes/shapesDefinitions";
 import svgPanZoom from "svg-pan-zoom";
 import { SVG_PAN_ZOOM_OPTIONS } from "@utils/constants";
 import { saveSvgAsPng } from "save-svg-as-png";
-import { Box, IconButton, Snackbar, TextField, Typography, useTheme } from "@mui/material";
+import { Box, IconButton, TextField, Typography, useTheme } from "@mui/material";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import CheckIcon from "@mui/icons-material/Check";
 import { useTranslation } from "react-i18next";
 import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 import { updateFilter } from "@services/systemService";
-import { useSystems } from "@hooks/useSystems";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 
 interface Props {
