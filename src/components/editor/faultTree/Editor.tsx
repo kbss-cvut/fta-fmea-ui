@@ -18,7 +18,6 @@ import { FTABoundary } from "@components/editor/faultTree/shapes/shapesDefinitio
 import * as joint from "jointjs";
 import { Rectangle } from "@models/utils/Rectangle";
 import { JOINTJS_NODE_MODEL } from "@components/editor/faultTree/shapes/constants";
-import { calculateCutSets } from "@services/faultTreeService";
 import { FaultEventScenario } from "@models/faultEventScenario";
 import { useAppBar } from "../../../contexts/AppBarContext";
 import { asArray } from "@utils/utils";
@@ -50,13 +49,8 @@ const Editor = () => {
 
   useEffect(() => {
     if (faultTree) {
-      const rootReqProb = faultTree.manifestingEvent.supertypes?.hasFailureRate?.requirement?.upperBound;
-      const updatedRootEvent = rootReqProb
-        ? { ...faultTree.manifestingEvent, probabilityRequirement: rootReqProb }
-        : faultTree.manifestingEvent;
-
       setAppBarTitle(faultTree.name);
-      setRootEvent(updatedRootEvent);
+      setRootEvent(faultTree.manifestingEvent);
 
       if (faultTree.faultEventScenarios) {
         setFaultEventScenarios([getScenarioWithHighestProbability(asArray(faultTree.faultEventScenarios))]);
