@@ -71,6 +71,8 @@ const FaultEventMenu = ({ selectedShapeToolData, onEventUpdated, refreshTree, ro
   const [resetMenu, setResetMenu] = useState<boolean>(false);
   const [shapeToolData, setShapeToolData] = useState<FaultEvent | undefined>(undefined);
 
+  const getRequiredFailureRate = () => shapeToolData.supertypes?.hasFailureRate?.requirement?.upperBound;
+
   useEffect(() => {
     if (isModified) {
       setShowUnsavedChangesDialog(true);
@@ -284,7 +286,6 @@ const FaultEventMenu = ({ selectedShapeToolData, onEventUpdated, refreshTree, ro
   }, [isDirty]);
 
   const basedFailureRate = shapeToolData?.supertypes?.hasFailureRate?.estimate?.value;
-  const requiredFailureRate = shapeToolData?.supertypes?.hasFailureRate?.requirement?.upperBound;
   const { predictionIri, operationalIri } = getFailureRateIris(shapeToolData?.supertypes?.supertypes);
 
   const FailureRateBox = ({ value, label, rate, selected, outdated }) => (
@@ -338,11 +339,11 @@ const FaultEventMenu = ({ selectedShapeToolData, onEventUpdated, refreshTree, ro
               </Typography>
             </Box>
           )}
-          {shapeToolData?.probabilityRequirement && (
+          {getRequiredFailureRate() && (
             <Box className={classes.eventPropertyRow}>
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.requiredFailureRate")}:</span>
-                {shapeToolData?.probabilityRequirement.toExponential(2)}
+                {getRequiredFailureRate().toExponential(2)}
               </Typography>
             </Box>
           )}
@@ -370,11 +371,11 @@ const FaultEventMenu = ({ selectedShapeToolData, onEventUpdated, refreshTree, ro
               </Typography>
             </Box>
           )}
-          {requiredFailureRate && (
+          {getRequiredFailureRate() && (
             <Box className={classes.eventPropertyRow}>
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.requiredFailureRate")}:</span>
-                {shapeToolData?.supertypes?.hasFailureRate?.requirement?.upperBound.toExponential(2)}
+                {getRequiredFailureRate().toExponential(2)}
               </Typography>
             </Box>
           )}

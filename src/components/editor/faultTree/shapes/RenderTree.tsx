@@ -4,7 +4,6 @@ import { sequenceListToArray } from "../../../../services/faultEventService";
 import * as faultEventService from "../../../../services/faultEventService";
 import { Link } from "./shapesDefinitions";
 import { flatten } from "lodash";
-import { has } from "lodash";
 import {
   ERROR_PATH_COLOR,
   JOINTJS_NODE_MODEL,
@@ -12,7 +11,6 @@ import {
   LABEL_FONT_SIZE,
 } from "@components/editor/faultTree/shapes/constants";
 import { getNodeWidthForText } from "@utils/treeUtils";
-import { Status } from "@utils/constants";
 import { asArray } from "@utils/utils";
 
 const referenceIcon =
@@ -82,9 +80,7 @@ const renderTree = async (container, node, parentShape = null, pathsToHighlight,
     }
   }
 
-  const probReqValue =
-    (isReferencedNode(node) && node.supertypes?.hasFailureRate?.requirement?.upperBound?.toExponential(2)) ||
-    (has(node, "probabilityRequirement") && node.probabilityRequirement.toExponential(2));
+  const probReqValue = node?.supertypes?.hasFailureRate?.requirement?.upperBound?.toExponential(2);
 
   if (probReqValue) {
     nodeShape.attr(["probabilityRequirementLabel", "text"], probReqValue);
