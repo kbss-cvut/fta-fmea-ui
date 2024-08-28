@@ -71,22 +71,19 @@ export const rename = async (system: System): Promise<System> => {
   }
 };
 
-export const updateFilter = async (
-  systemUri: string,
-  operationDataFilter: OperationalDataFilter,
-): Promise<OperationalDataFilter> => {
+export const updateFilter = async (systemUri: string, operationDataFilter: OperationalDataFilter): Promise<void> => {
   try {
     const systemFragment = extractFragment(systemUri);
     const updateRequest = Object.assign({}, operationDataFilter, { "@context": FILTER_CONTEXT });
 
-    const response = await axiosClient.put(`/operational-data-filter/system/${systemFragment}`, updateRequest, {
+    await axiosClient.put(`/operational-data-filter/system/${systemFragment}`, updateRequest, {
       headers: authHeaders(),
     });
 
-    return JsonLdUtils.compactAndResolveReferences<OperationalDataFilter>(response.data, FILTER_CONTEXT);
+    return new Promise((resolve) => resolve());
   } catch (e) {
     console.log("System Service - Failed to call /operational-data-filter/system/${systemFragment}");
-    const defaultMessage = "Failed to operational data filter";
+    const defaultMessage = "Failed to update minimum operational data filter";
     return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
   }
 };

@@ -7,6 +7,7 @@ import useStyles from "./FaultTreeOverviewTable.styles";
 import { System } from "@models/systemModel";
 import { extractFragment } from "@services/utils/uriIdentifierUtils";
 import { ROUTES } from "@utils/constants";
+import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 
 interface SystemTableBodyProps {
   systems: System[];
@@ -18,8 +19,10 @@ const SystemTableBody: FC<SystemTableBodyProps> = ({ systems, handleSystemContex
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { classes } = useStyles();
+  const [, setSelectedSystem] = useSelectedSystemSummaries();
 
   const redirectToPath = (routePath: string, system: System) => {
+    setSelectedSystem(system);
     navigate(routePath);
   };
 
