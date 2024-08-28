@@ -15,13 +15,14 @@ import { SystemLink } from "@components/editor/system/shapes/shapesDefinitions";
 import svgPanZoom from "svg-pan-zoom";
 import { SVG_PAN_ZOOM_OPTIONS } from "@utils/constants";
 import { saveSvgAsPng } from "save-svg-as-png";
-import { Box, IconButton, TextField, Typography, useTheme } from "@mui/material";
+import { Box, IconButton, Snackbar, TextField, Typography, useTheme } from "@mui/material";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import CheckIcon from "@mui/icons-material/Check";
 import { useTranslation } from "react-i18next";
 import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 import { updateFilter } from "@services/systemService";
 import { useSystems } from "@hooks/useSystems";
+import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 
 interface Props {
   system: System;
@@ -46,6 +47,7 @@ const EditorCanvas = ({
 }: Props) => {
   const { classes } = useStyles();
   const theme = useTheme();
+  const [showSnackbar] = useSnackbar();
   const { t } = useTranslation();
 
   const containerRef = useRef(null);
@@ -57,9 +59,10 @@ const EditorCanvas = ({
   const [currentZoom, setCurrentZoom] = useState(1);
   const [isExportingImage, setIsExportingImage] = useState(false);
   const [selectedSystem, setSelectedSystem] = useSelectedSystemSummaries();
-  const [, , , , triggerFetch] = useSystems();
   const globalOperationalHours = selectedSystem?.globalOperationalDataFilter?.minOperationalHours || 0;
-  const [updatedMinOperationalHours, setUpdatedMinOperationalHours] = useState(globalOperationalHours);
+  const getSystemOperationalHours = () =>
+    selectedSystem?.operationalDataFilter?.minOperationalHours || globalOperationalHours;
+  const [updatedMinOperationalHours, setUpdatedMinOperationalHours] = useState(getSystemOperationalHours());
   const [inputColor, setInputColor] = useState("");
 
   useEffect(() => {
@@ -119,17 +122,6 @@ const EditorCanvas = ({
       setIsExportingImage(false);
     }
   }, [isExportingImage]);
-
-  useEffect(() => {
-    setUpdatedMinOperationalHours((prevState) => {
-      const newMinOperationalHours = selectedSystem?.operationalDataFilter?.minOperationalHours;
-
-      if (prevState !== newMinOperationalHours) {
-        return newMinOperationalHours;
-      }
-      return prevState;
-    });
-  }, [selectedSystem]);
 
   const [componentShapesMap, setComponentShapesMap] = useState<Map<string, any>>(new Map());
   const [componentLinksMap, setComponentLinksMap] = useState<Map<string, string>>(new Map());
@@ -215,7 +207,7 @@ const EditorCanvas = ({
   const handleMinOperationalHoursChange = (event) => {
     const newValue = event.target.value;
     setUpdatedMinOperationalHours(newValue);
-    if (newValue !== globalOperationalHours) {
+    if (newValue !== getSystemOperationalHours()) {
       setInputColor(theme.notSynchronized.color);
     } else {
       setInputColor(theme.synchronized.color);
@@ -223,32 +215,29 @@ const EditorCanvas = ({
   };
 
   const handleSetNewDefaultOperationalHours = (resetGlobalValue = false) => {
+    const newValue = resetGlobalValue ? globalOperationalHours : updatedMinOperationalHours;
+    if (newValue != updatedMinOperationalHours) setUpdatedMinOperationalHours(newValue);
+
+    if (newValue == getSystemOperationalHours()) {
+      setInputColor(theme.synchronized.color);
+      return;
+    }
+
     updateFilter(system?.iri, {
       ...selectedSystem.operationalDataFilter,
-      minOperationalHours: resetGlobalValue ? globalOperationalHours : updatedMinOperationalHours,
+      minOperationalHours: newValue,
     })
       .then(() => {
-        triggerFetch();
         setSelectedSystem({
           ...selectedSystem,
           operationalDataFilter: {
             ...selectedSystem.operationalDataFilter,
-            minOperationalHours: resetGlobalValue ? globalOperationalHours : updatedMinOperationalHours,
+            minOperationalHours: newValue,
           },
         });
         setInputColor(theme.synchronized.color);
       })
-      .catch(() => {
-        triggerFetch();
-        setSelectedSystem({
-          ...selectedSystem,
-          operationalDataFilter: {
-            ...selectedSystem.operationalDataFilter,
-            minOperationalHours: resetGlobalValue ? globalOperationalHours : updatedMinOperationalHours,
-          },
-        });
-        setInputColor(theme.synchronized.color);
-      });
+      .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
   };
 
   return (
