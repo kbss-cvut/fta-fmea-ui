@@ -12,7 +12,7 @@ import { useUserAuth } from "@hooks/useUserAuth";
 type systemContextType = [
   System[],
   (systemToCreate: System) => void,
-  (systemToDelete: System) => void,
+  (systemToDelete: System, onSuccess: () => void, onFail: () => void) => void,
   (systemToUpdate: System) => void,
   () => void,
 ];
@@ -56,7 +56,7 @@ export const SystemsProvider = ({ children }: ChildrenProps) => {
       .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
   };
 
-  const updateSystem = async (systemToUpdate: System) => {
+  const updateSystem = async (systemToUpdate: System, onSuccess: () => void, onFail: () => void) => {
     systemService
       .rename(systemToUpdate)
       .then((value) => {
@@ -66,8 +66,12 @@ export const SystemsProvider = ({ children }: ChildrenProps) => {
         _systems.splice(index, 1, systemToUpdate);
 
         _setSystems(_systems);
+        if (onSuccess) onSuccess();
       })
-      .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
+      .catch((reason) => {
+        showSnackbar(reason, SnackbarType.ERROR);
+        if (onFail) onFail();
+      });
   };
 
   const removeSystem = async (systemToRemove: System) => {
