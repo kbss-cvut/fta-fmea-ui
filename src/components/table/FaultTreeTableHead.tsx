@@ -30,7 +30,7 @@ const FaultTreeTableHead: FC<FaultTreeTableHeadProps> = ({ sortConfig, onSortCha
       </TableCell>
       <TableCell className={classes.tableHeaderCell}>Aircraft Type</TableCell>
       <TableCell className={classes.tableHeaderCell}>
-        <Box display="flex" alignItems="center">
+        <Box>
           <span onClick={(e) => onFilterClick(e, "snsLabel")} style={{ cursor: "pointer" }}>
             SNS Label
           </span>
@@ -47,7 +47,7 @@ const FaultTreeTableHead: FC<FaultTreeTableHeadProps> = ({ sortConfig, onSortCha
       <TableCell className={classes.tableHeaderCell}>Required Failure Rate</TableCell>
       <TableCell className={classes.tableHeaderCell}>Last Modified</TableCell>
       <TableCell className={classes.tableHeaderCell}>
-        <Box display="flex" alignItems="center">
+        <Box>
           Created
           <TableSortLabel
             active={sortConfig.key === "date"}
