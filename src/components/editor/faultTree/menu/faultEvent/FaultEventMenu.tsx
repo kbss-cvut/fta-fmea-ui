@@ -28,6 +28,7 @@ import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 import { useForm } from "react-hook-form";
 import UnsavedChangesDialog from "./UnsavedChangesDialog";
 import { useAppBar } from "@contexts/AppBarContext";
+import { warnIcon } from "@components/Icons";
 
 interface Props {
   selectedShapeToolData?: FaultEvent;
@@ -315,6 +316,11 @@ const FaultEventMenu = ({ selectedShapeToolData, onEventUpdated, refreshTree, ro
     return <FailureRateBox value={rateType} label={t(labelKey)} rate={rate} selected={selected} outdated={outdated} />;
   };
 
+  const violatesRequirement =
+    shapeToolData?.probability && getRequiredFailureRate() && shapeToolData.probability > getRequiredFailureRate();
+
+  const requiredFailureRateStatusColor = violatesRequirement ? theme.main.red : theme.main.black;
+
   return (
     <Box paddingLeft={2} marginRight={2}>
       {shapeToolData && (
@@ -340,11 +346,12 @@ const FaultEventMenu = ({ selectedShapeToolData, onEventUpdated, refreshTree, ro
             </Box>
           )}
           {getRequiredFailureRate() && (
-            <Box className={classes.eventPropertyRow}>
+            <Box className={classes.eventPropertyRow} style={{ color: requiredFailureRateStatusColor }}>
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.requiredFailureRate")}:</span>
                 {getRequiredFailureRate().toExponential(2)}
               </Typography>
+              {violatesRequirement && warnIcon(t("faultEventMessage.requirementViolated"))}
             </Box>
           )}
           <Divider className={classes.divider} />
@@ -372,11 +379,12 @@ const FaultEventMenu = ({ selectedShapeToolData, onEventUpdated, refreshTree, ro
             </Box>
           )}
           {getRequiredFailureRate() && (
-            <Box className={classes.eventPropertyRow}>
+            <Box className={classes.eventPropertyRow} style={{ color: requiredFailureRateStatusColor }}>
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.requiredFailureRate")}:</span>
                 {getRequiredFailureRate().toExponential(2)}
               </Typography>
+              {violatesRequirement && warnIcon(t("faultEventMessage.requirementViolated"))}
             </Box>
           )}
           <Divider className={classes.divider} />

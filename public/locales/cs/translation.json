@@ -74,6 +74,10 @@
       "description": "Intenzita poruch nastavená manuálně týmem AVA na základě zkušeného inženýrského úsudku."
     }
   },
+  "faultEventMessage": {
+    "outOfSyncValue": "Hodnota je zastaralá!",
+    "requirementViolated": "Vypočtená intenzita poruch je větší, než je požadováno!"
+  },
   "faultTreeOverviewTable": {
     "name": "Jméno",
     "aircraftType": "Typ systému",

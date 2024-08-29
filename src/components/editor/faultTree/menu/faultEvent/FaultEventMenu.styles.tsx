@@ -33,9 +33,9 @@ const useStyles = makeStyles()((theme: Theme) => ({
     color: theme.main.grey,
   },
   outdated: {
-    color: "red",
+    color: theme.main.orange,
     "&.Mui-checked": {
-      color: theme.main.red,
+      color: theme.main.orange,
     },
   },
   divider: {
