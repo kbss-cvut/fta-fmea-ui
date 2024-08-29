@@ -38,11 +38,12 @@ export const appTheme = createCustomMuiTheme({
     black: "#000000",
     grey: "#808080",
     red: "#FF0000",
+    orange: "#FF9F00",
   },
   notSynchronized: {
-    color: "red",
+    color: "#FF9F00",
   },
   synchronized: {
-    color: "black",
+    color: "#000000",
   },
 });

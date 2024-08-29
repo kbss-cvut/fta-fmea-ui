@@ -74,6 +74,10 @@
       "description": "Failure rate manually set by AVA team based on experienced engineering judgment."
     }
   },
+  "faultEventMessage": {
+    "outOfSyncValue": "The value is outdated!",
+    "requirementViolated": "Calculated failure rate is bigger than required!"
+  },
   "faultTreeOverviewTable": {
     "name": "Name",
     "aircraftType": "System type",
