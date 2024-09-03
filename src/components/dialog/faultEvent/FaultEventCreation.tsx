@@ -38,7 +38,7 @@ const FaultEventCreation = ({
     register,
   } = useFormMethods;
 
-  const faultEvents = useReusableFaultEvents();
+  const faultEvents = disabled ? [] : useReusableFaultEvents();
   const [newEvent, setNewEvent] = useState<string | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<FaultEvent | null>(null);
   const [showCreateEvent, setShowCreateEvent] = useState(false);
@@ -94,7 +94,11 @@ const FaultEventCreation = ({
 
   function renderEventSelect() {
     const eventVal = asArray(eventValue?.supertypes)?.[0] || eventValue;
-    const defaultValue = eventVal ? { name: eventVal.name, iri: eventVal.iri } : null;
+    const _eventVal = eventVal ? { name: eventVal.name, iri: eventVal.iri } : null;
+    if (_eventVal && !faultEvents.some((evt) => evt.iri === _eventVal.iri)) {
+      faultEvents.push(_eventVal);
+      updatedFHAEventTypes.push(_eventVal);
+    }
     return (
       <>
         <Typography variant="subtitle1" gutterBottom>
