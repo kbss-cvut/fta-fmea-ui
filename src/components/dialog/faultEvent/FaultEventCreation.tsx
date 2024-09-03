@@ -49,9 +49,13 @@ const FaultEventCreation = ({
   const gateTypeWatch = watch("gateType");
 
   useEffect(() => {
+    reset();
     if (selectedEvent) {
       setValue("name", selectedEvent.name);
-      setValue("existingEvent", selectedEvent.iri ? selectedEvent : null);
+      setValue(
+        "existingEvent",
+        selectedEvent?.supertypes ? selectedEvent?.supertypes[0] : selectedEvent.iri ? selectedEvent : null,
+      );
       if (existingEventSelected) {
         setValue("eventType", selectedEvent.eventType);
       }
@@ -59,8 +63,6 @@ const FaultEventCreation = ({
         setValue("eventType", EventType.INTERMEDIATE);
         setValue("gateType", GateType.OR);
       }
-    } else {
-      reset();
     }
   }, [isRootEvent, selectedEvent, setValue, existingEventSelected, isCreatedEvent, reset]);
 
