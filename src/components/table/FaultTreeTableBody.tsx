@@ -50,7 +50,9 @@ const FaultTreeTableBody: FC<FaultTreeTableBodyProps> = ({ faultTrees, handleFau
           faultTree?.requiredFailureRate &&
           faultTree?.calculatedFailureRate &&
           faultTree?.calculatedFailureRate > faultTree?.requiredFailureRate;
-        const violatedRequirementStatusColor = violatedRequirement ? theme.main.red : theme.main.black;
+        const violatedRequirementStatusColor = violatedRequirement
+          ? theme.requirementViolation.color
+          : theme.main.black;
 
         const editor = faultTree?.editor || faultTree?.creator;
         return (
