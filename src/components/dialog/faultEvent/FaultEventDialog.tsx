@@ -28,8 +28,13 @@ const FaultEventDialog = ({ open, eventIri, treeUri, onCreated, onClose }: Props
 
   const [selectedSystem] = useSelectedSystemSummaries();
   const useFormMethods = useForm({ resolver: yupResolver(faultEventSchema) });
-  const { handleSubmit, formState } = useFormMethods;
+  const { handleSubmit, formState, reset } = useFormMethods;
   const { isSubmitting } = formState;
+
+  const handleClose = () => {
+    onClose();
+    reset();
+  };
 
   const handleCreateEvent = async (values: any) => {
     const requestEvent = eventFromHookFormValues(values);
@@ -37,7 +42,7 @@ const FaultEventDialog = ({ open, eventIri, treeUri, onCreated, onClose }: Props
     faultEventService
       .addEvent(eventIri, requestEvent)
       .then((value) => {
-        onClose();
+        handleClose();
         onCreated(value);
       })
       .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
@@ -45,10 +50,8 @@ const FaultEventDialog = ({ open, eventIri, treeUri, onCreated, onClose }: Props
 
   return (
     <div>
-      <Dialog open={open} onClose={onClose} aria-labelledby="form-dialog-title" maxWidth="md" fullWidth>
-        <DialogTitle id="form-dialog-title" onClose={onClose}>
-          Create Event
-        </DialogTitle>
+      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" maxWidth="md" fullWidth>
+        <DialogTitle id="form-dialog-title">Create Event</DialogTitle>
         <DialogContent dividers>
           <ReusableFaultEventsProvider treeUri={treeUri} systemUri={selectedSystem?.iri}>
             <FaultEventCreation useFormMethods={useFormMethods} isRootEvent={false} />
