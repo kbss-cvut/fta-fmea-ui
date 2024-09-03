@@ -8,6 +8,7 @@ import useStyles from "@components/editor/faultTree/menu/faultEvent/FaultEventSh
 import { ReusableFaultEventsProvider } from "@hooks/useReusableFaultEvents";
 import { useCurrentFaultTree } from "@hooks/useCurrentFaultTree";
 import { asArray } from "@utils/utils";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   data?: FaultEvent;
@@ -18,55 +19,55 @@ interface Props {
 const FaultEventShapeToolPane = ({ data, refreshTree, formMethods }: Props) => {
   const { classes } = useStyles();
   const [faultTree] = useCurrentFaultTree();
+  const { t } = useTranslation();
 
-  let editorPane;
-  let defaultValues;
+  const getFormValues = (data) => {
+    if (data) {
+      const safeSupertype = asArray(data.supertypes).map((t) => ({ name: t.name, iri: t.iri, types: t.types }))?.[0];
+      return {
+        eventType: data.eventType,
+        name: data.name,
+        description: data.description,
+        probability: data.probability ? data.probability : 0.01,
+        gateType: data.gateType ? data.gateType : null,
+        sequenceProbability: data.sequenceProbability,
+        existingEvent: safeSupertype,
+      };
+    } else {
+      return {};
+    }
+  };
 
-  if (data) {
-    const safeSupertype = asArray(data.supertypes).map((t) => ({ name: t.name, iri: t.iri, types: t.types }))?.[0];
-    defaultValues = {
-      eventType: data.eventType,
-      name: data.name,
-      description: data.description,
-      probability: data.probability ? data.probability : 0.01,
-      gateType: data.gateType ? data.gateType : null,
-      sequenceProbability: data.sequenceProbability,
-      existingEvent: safeSupertype,
-    };
+  useEffect(() => {
+    formMethods.reset(getFormValues(data));
+  }, [data]);
 
-    useEffect(() => {
-      formMethods.reset(defaultValues);
-    }, [data]);
+  const isDisabled =
+    data &&
+    ([EventType.INTERMEDIATE, EventType.BASIC, EventType.EXTERNAL].includes(data.eventType) || data.isReference);
 
-    const isDisabled =
-      data &&
-      ([EventType.INTERMEDIATE, EventType.BASIC, EventType.EXTERNAL].includes(data.eventType) || data.isReference);
+  const editorPane = (isDisabled) => (
+    <ReusableFaultEventsProvider treeUri={faultTree?.iri}>
+      <FaultEventCreation
+        useFormMethods={formMethods}
+        isRootEvent={false}
+        eventValue={data}
+        isEditedEvent={true}
+        isEditMode={true}
+        disabled={isDisabled}
+      />
+    </ReusableFaultEventsProvider>
+  );
 
-    editorPane = (
-      <ReusableFaultEventsProvider treeUri={faultTree?.iri}>
-        <FaultEventCreation
-          useFormMethods={formMethods}
-          isRootEvent={false}
-          eventValue={data}
-          isEditedEvent={true}
-          isEditMode={true}
-          disabled={isDisabled}
-        />
-      </ReusableFaultEventsProvider>
-    );
-  } else {
-    defaultValues = {};
-    formMethods.reset(defaultValues);
-    editorPane = (
-      <Typography className={classes.emptyTitle} variant="subtitle1" align="left">
-        No Event selected
-      </Typography>
-    );
-  }
+  const editorPaneNoSelection = () => (
+    <Typography className={classes.emptyTitle} variant="subtitle1" align="left">
+      {t("faultEventMenu.notSelected")}
+    </Typography>
+  );
 
   return (
     <React.Fragment>
-      {editorPane}
+      {data ? editorPane(isDisabled) : editorPaneNoSelection()}
       {data?.gateType === GateType.PRIORITY_AND && (
         <React.Fragment>
           <Divider />

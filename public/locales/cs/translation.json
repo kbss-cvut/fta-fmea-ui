@@ -109,7 +109,8 @@
     "calculatedFailureRate": "Vypočtená intenzita poruch",
     "operationalFailureRate": "Provozní intenzita poruch",
     "manuallyDefinedFailureRate": "Manuálně definovaná intenzita poruch",
-    "unsavedChanges": "Máte neuložené změny. Chcete před pokračováním uložit změny?"
+    "unsavedChanges": "Máte neuložené změny. Chcete před pokračováním uložit změny?",
+    "notSelected": "Není vybrána žádná událost"
   },
   "appBar": {
     "selectSystemPlaceholder": "Vyberte systém"
