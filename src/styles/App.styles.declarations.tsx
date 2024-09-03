@@ -47,6 +47,9 @@ declare module "@mui/material/styles" {
         color: COLOR;
       };
     };
+    requirementViolation?: {
+      color: COLOR;
+    };
   }
   // allow configuration using `createMuiTheme`
   interface DeprecatedThemeOptions {

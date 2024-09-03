@@ -46,4 +46,7 @@ export const appTheme = createCustomMuiTheme({
   synchronized: {
     color: "#000000",
   },
+  requirementViolation: {
+    color: "#FF0000",
+  },
 });

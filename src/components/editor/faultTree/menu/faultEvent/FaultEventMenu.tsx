@@ -319,7 +319,7 @@ const FaultEventMenu = ({ selectedShapeToolData, onEventUpdated, refreshTree, ro
   const violatesRequirement =
     shapeToolData?.probability && getRequiredFailureRate() && shapeToolData.probability > getRequiredFailureRate();
 
-  const requiredFailureRateStatusColor = violatesRequirement ? theme.main.red : theme.main.black;
+  const requiredFailureRateStatusColor = violatesRequirement ? theme.requirementViolation.color : theme.main.black;
 
   return (
     <Box paddingLeft={2} marginRight={2}>
