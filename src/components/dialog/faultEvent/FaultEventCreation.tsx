@@ -83,7 +83,11 @@ const FaultEventCreation = ({
 
   const handleEventSelect = (data: any) => {
     setSelectedEvent(data);
-    setIsCreatedEvent(false);
+    if (!data) {
+      reset();
+      return;
+    }
+    setIsCreatedEvent(!data.iri);
   };
 
   function renderEventSelect() {
@@ -97,8 +101,15 @@ const FaultEventCreation = ({
 
         <ControlledAutocomplete
           control={control}
-          name="event"
+          name="existingEvent"
           options={isRootEvent ? faultEvents : updatedFHAEventTypes}
+          clearOnBlur={true}
+          newOption={(name) => {
+            return {
+              iri: null,
+              name: name,
+            };
+          }}
           onChangeCallback={handleEventSelect}
           onInputChangeCallback={handleFilterOptions}
           onCreateEventClick={handleOnCreateEventClick}
@@ -107,7 +118,6 @@ const FaultEventCreation = ({
           renderInput={(params) => (
             <TextField {...params} label={t("newFtaModal.eventPlaceholder")} variant="outlined" {...register("name")} />
           )}
-          defaultValue={defaultValue}
           disabled={disabled}
         />
 
