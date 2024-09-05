@@ -38,7 +38,7 @@ const FaultEventCreation = ({
     register,
   } = useFormMethods;
 
-  const faultEvents = useReusableFaultEvents();
+  const faultEvents = disabled ? [] : useReusableFaultEvents();
   const [newEvent, setNewEvent] = useState<string | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<FaultEvent | null>(null);
   const [showCreateEvent, setShowCreateEvent] = useState(false);
@@ -49,9 +49,13 @@ const FaultEventCreation = ({
   const gateTypeWatch = watch("gateType");
 
   useEffect(() => {
+    reset();
     if (selectedEvent) {
       setValue("name", selectedEvent.name);
-      setValue("existingEvent", selectedEvent.iri ? selectedEvent : null);
+      setValue(
+        "existingEvent",
+        selectedEvent?.supertypes ? selectedEvent?.supertypes[0] : selectedEvent.iri ? selectedEvent : null,
+      );
       if (existingEventSelected) {
         setValue("eventType", selectedEvent.eventType);
       }
@@ -59,8 +63,6 @@ const FaultEventCreation = ({
         setValue("eventType", EventType.INTERMEDIATE);
         setValue("gateType", GateType.OR);
       }
-    } else {
-      reset();
     }
   }, [isRootEvent, selectedEvent, setValue, existingEventSelected, isCreatedEvent, reset]);
 
@@ -83,12 +85,20 @@ const FaultEventCreation = ({
 
   const handleEventSelect = (data: any) => {
     setSelectedEvent(data);
-    setIsCreatedEvent(false);
+    if (!data) {
+      reset();
+      return;
+    }
+    setIsCreatedEvent(!data.iri);
   };
 
   function renderEventSelect() {
     const eventVal = asArray(eventValue?.supertypes)?.[0] || eventValue;
-    const defaultValue = eventVal ? { name: eventVal.name, iri: eventVal.iri } : null;
+    const _eventVal = eventVal ? { name: eventVal.name, iri: eventVal.iri } : null;
+    if (_eventVal && !faultEvents.some((evt) => evt.iri === _eventVal.iri)) {
+      faultEvents.push(_eventVal);
+      updatedFHAEventTypes.push(_eventVal);
+    }
     return (
       <>
         <Typography variant="subtitle1" gutterBottom>
@@ -97,8 +107,15 @@ const FaultEventCreation = ({
 
         <ControlledAutocomplete
           control={control}
-          name="event"
+          name="existingEvent"
           options={isRootEvent ? faultEvents : updatedFHAEventTypes}
+          clearOnBlur={true}
+          newOption={(name) => {
+            return {
+              iri: null,
+              name: name,
+            };
+          }}
           onChangeCallback={handleEventSelect}
           onInputChangeCallback={handleFilterOptions}
           onCreateEventClick={handleOnCreateEventClick}
@@ -107,7 +124,6 @@ const FaultEventCreation = ({
           renderInput={(params) => (
             <TextField {...params} label={t("newFtaModal.eventPlaceholder")} variant="outlined" {...register("name")} />
           )}
-          defaultValue={defaultValue}
           disabled={disabled}
         />
 
