@@ -61,7 +61,9 @@ export const create = async (faultTree: FaultTree): Promise<FaultTree> => {
 export const update = async (faultTree: FaultTree): Promise<FaultTree> => {
   try {
     const updateRequest = Object.assign({}, faultTree, { "@context": CONTEXT });
-
+    updateRequest.calculatedFailureRate = null;
+    updateRequest.fhaBasedFailureRate = null;
+    updateRequest.requiredFailureRate = null;
     const response = await axiosClient.put("/faultTrees", updateRequest, {
       headers: authHeaders(),
     });
