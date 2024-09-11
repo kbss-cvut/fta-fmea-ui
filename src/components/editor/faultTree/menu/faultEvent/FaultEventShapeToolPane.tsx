@@ -23,7 +23,12 @@ const FaultEventShapeToolPane = ({ data, refreshTree, formMethods }: Props) => {
 
   const getFormValues = (data) => {
     if (data) {
-      const safeSupertype = asArray(data.supertypes).map((t) => ({ name: t.name, iri: t.iri, types: t.types }))?.[0];
+      const supertypes = asArray(data.supertypes);
+      const safeExistingEvent = (supertypes.length ? supertypes : [data]).map((t) => ({
+        name: t.name,
+        iri: t.iri,
+        types: t.types,
+      }))?.[0];
       return {
         eventType: data.eventType,
         name: data.name,
@@ -31,7 +36,7 @@ const FaultEventShapeToolPane = ({ data, refreshTree, formMethods }: Props) => {
         probability: data.probability ? data.probability : 0.01,
         gateType: data.gateType ? data.gateType : null,
         sequenceProbability: data.sequenceProbability,
-        existingEvent: safeSupertype,
+        existingEvent: safeExistingEvent,
       };
     } else {
       return {};
