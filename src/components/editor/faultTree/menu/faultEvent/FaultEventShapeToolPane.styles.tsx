@@ -3,7 +3,11 @@ import { makeStyles } from "tss-react/mui";
 
 const useStyles = makeStyles()((theme: Theme) => ({
   emptyTitle: {
-    padding: theme.spacing(0, 2),
+    textAlign: "center",
+    fontStyle: "italic",
+    fontWeight: "bold",
+    color: theme.main.grey,
+    padding: theme.spacing(10, 2),
   },
 }));
 

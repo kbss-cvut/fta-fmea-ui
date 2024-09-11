@@ -109,7 +109,8 @@
     "calculatedFailureRate": "Calculated failure rate",
     "operationalFailureRate": "Operational failure rate",
     "manuallyDefinedFailureRate": "Manually defined failure rate",
-    "unsavedChanges": "You have unsaved changes. Do you want to save your changes before proceeding?"
+    "unsavedChanges": "You have unsaved changes. Do you want to save your changes before proceeding?",
+    "notSelected": "No Event selected"
   },
   "appBar": {
     "selectSystemPlaceholder": "Select system"

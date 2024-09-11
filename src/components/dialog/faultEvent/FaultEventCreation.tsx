@@ -116,6 +116,7 @@ const FaultEventCreation = ({
               name: name,
             };
           }}
+          defaultValue={_eventVal ? _eventVal : selectedEvent}
           onChangeCallback={handleEventSelect}
           onInputChangeCallback={handleFilterOptions}
           onCreateEventClick={handleOnCreateEventClick}
