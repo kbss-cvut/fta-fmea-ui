@@ -23,8 +23,7 @@ export const register = async (loginRequest: UserRegisterRequest): Promise<UserR
     return response.data;
   } catch (e) {
     console.log("Failed to call /register");
-    const defaultMessage = "Registration failed";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.user.register")));
   }
 };
 
@@ -39,8 +38,7 @@ export const login = async (loginRequest: UserLoginRequest): Promise<UserLoginRe
     return Promise.reject(response.data.errorMessage);
   } catch (e) {
     console.log("Failed to call /login");
-    const defaultMessage = "Login failed";
-    return Promise.reject(handleServerError(e, defaultMessage));
+    return Promise.reject(handleServerError(e, "error.user.login"));
   }
 };
 
@@ -53,7 +51,6 @@ export const changePassword = async (changePasswordRequest: ChangePasswordReques
     new Promise<void>((resolve) => resolve());
   } catch (e) {
     console.log("Failed to call /current");
-    const defaultMessage = "Password change failed.";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.user.passwordChange")));
   }
 };

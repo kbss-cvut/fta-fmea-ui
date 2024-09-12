@@ -22,8 +22,7 @@ export const findAll = async (): Promise<FaultTree[]> => {
     return JsonLdUtils.compactAndResolveReferencesAsArray<FaultTree>(response.data, CONTEXT);
   } catch (e) {
     console.log("Fault Tree Service - Failed to call /findAll");
-    const defaultMessage = "Failed to load fault trees";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.faultTree.findAll")));
   }
 };
 
@@ -37,8 +36,7 @@ export const find = async (faultTreeUri: string): Promise<FaultTree> => {
     return JsonLdUtils.compactAndResolveReferences<FaultTree>(response.data, CONTEXT);
   } catch (e) {
     console.log("Fault Tree Service - Failed to call /find");
-    const defaultMessage = "Failed to find fault tree";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.faultTree.find")));
   }
 };
 
@@ -53,8 +51,7 @@ export const create = async (faultTree: FaultTree): Promise<FaultTree> => {
     return JsonLdUtils.compactAndResolveReferences<FaultTree>(response.data, CONTEXT);
   } catch (e) {
     console.log("Fault Tree Service - Failed to call /create");
-    const defaultMessage = "Failed to create fault tree";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.faultTree.create")));
   }
 };
 
@@ -71,8 +68,7 @@ export const update = async (faultTree: FaultTree): Promise<FaultTree> => {
     return JsonLdUtils.compactAndResolveReferences<FaultTree>(response.data, CONTEXT);
   } catch (e) {
     console.log("Fault Tree Service - Failed to call /update");
-    const defaultMessage = "Failed to update fault tree";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.faultTree.update")));
   }
 };
 
@@ -86,8 +82,7 @@ export const remove = async (faultTreeIri: string): Promise<void> => {
     return new Promise((resolve) => resolve());
   } catch (e) {
     console.log("Fault Tree Service - Failed to call /remove");
-    const defaultMessage = "Failed to remove fault tree";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.faultTree.remove")));
   }
 };
 
@@ -101,8 +96,7 @@ export const getRootReusableEvents = async (systemIri: string): Promise<FaultEve
     return JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(response.data, EVENT_CONTEXT);
   } catch (e) {
     console.log("Fault Tree Service - Failed to call /getRootReusableEvents");
-    const defaultMessage = "Failed to find reusable fault events";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.faultEvent.getRootReusable")));
   }
 };
 
@@ -116,8 +110,7 @@ export const getAllReusableEvents = async (faultTreeIri: string): Promise<FaultE
     return JsonLdUtils.compactAndResolveReferencesAsArray<FaultEvent>(response.data, EVENT_CONTEXT);
   } catch (e) {
     console.log("Fault Tree Service - Failed to call /getAllReusableEvents");
-    const defaultMessage = "Failed to find reusable fault events";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.faultEvent.getRootReusable")));
   }
 };
 
@@ -138,8 +131,7 @@ export const getTreePaths = async (faultTreeIri: string): Promise<[FaultEvent[]]
     return await parseData(response.data);
   } catch (e) {
     console.log("Fault Tree Service - Failed to call /getTreePaths");
-    const defaultMessage = "Failed to load tree paths";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.faultTree.getTreePaths")));
   }
 };
 
@@ -160,8 +152,7 @@ export const createFailureModesTable = async (
     return JsonLdUtils.compactAndResolveReferences<FailureModesTable>(response.data, FAILURE_MODES_TABLE_CONTEXT);
   } catch (e) {
     console.log("Fault Tree Service - Failed to call /createFailureModesTable");
-    const defaultMessage = "Failed to create failure modes table";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.failureModesTable.create")));
   }
 };
 
@@ -175,8 +166,7 @@ export const findFailureModesTable = async (faultTreeIri: string): Promise<Failu
     return JsonLdUtils.compactAndResolveReferences<FailureModesTable>(response.data, FAILURE_MODES_TABLE_CONTEXT);
   } catch (e) {
     console.log("Fault Tree Service - Failed to call /findFailureModesTable");
-    const defaultMessage = "Failed to load failure modes table";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.failureModesTable.findAll")));
   }
 };
 
@@ -196,8 +186,7 @@ export const getTreePathsAggregate = async (): Promise<[FaultEvent[]]> => {
     return await parseData(response.data);
   } catch (e) {
     console.log("Fault Tree Service - Failed to call /getTreePathsAggregate");
-    const defaultMessage = "Failed to load all tree paths";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.faultTree.getTreePathsAggregate")));
   }
 };
 
@@ -212,8 +201,7 @@ export const calculateCutSets = async (faultTreeUri: string, operationalDataFilt
     return response;
   } catch (e) {
     console.log("Fault Tree Service - Failed to call /cutsets");
-    const defaultMessage = "Failed to calculate cutsets of fault tree";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.faultTree.calculateCutSets")));
   }
 };
 
@@ -227,7 +215,6 @@ export const findAllWithFilters = async (filters: { label?: string; snsLabel?: s
     return JsonLdUtils.compactAndResolveReferencesAsArray<FaultTree>(response.data, CONTEXT);
   } catch (e) {
     console.log("Fault Tree Service - Failed to call /findAllWithFilters");
-    const defaultMessage = "Failed to load fault trees with filters";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.faultTree.findAllWithFilters")));
   }
 };

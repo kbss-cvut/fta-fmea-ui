@@ -14,6 +14,6 @@ export const update = async (mitigation: Mitigation): Promise<Mitigation> => {
   } catch (e) {
     console.log("Mitigation service - Failed to call /update");
     const defaultMessage = "Failed to update mitigation";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.mitigation.update")));
   }
 };

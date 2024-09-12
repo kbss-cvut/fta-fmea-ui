@@ -122,11 +122,91 @@
     "save": "Save",
     "discard": "Discard"
   },
-  "errors": {
+  "error": {
+    "default": "An error occurred",
+    "faultEvent": {
+      "findAll": "Failed to find fault events. {{error}}",
+      "update": "Failed to update fault event. {{error}}",
+      "remove": "Failed to remove fault event. {{error}}",
+      "create": "Failed to create event. {{error}}",
+      "updateRectangle": "Failed to update rectangle. {{error}}",
+      "getFailureMode": "Failed to load event failure mode. {{error}}",
+      "deleteFailureMode": "Failed to delete event failure mode. {{error}}",
+      "updateChildrenSequence": "Failed to update children sequence. {{error}}",
+      "getRootReusable": "Failed to find reusable fault events. {{error}}",
+      "getAllReusable": "Failed to find all reusable fault events. {{error}}"
+    },
     "faultTree": {
       "rootEvent": {
         "deleteViolation": "Root event of tree mustn't be deleted!"
-      }
+      },
+      "intermediateEventAsLeaf": "Intermediate event must not be the end of the path!",
+      "findAll": "Failed to load fault trees. {{error}}",
+      "findAllWithFilters": "Failed to load fault trees with filters. {{error}}",
+      "find": "Failed to find fault tree. {{error}}",
+      "create": "Failed to create fault tree. {{error}}",
+      "update": "Failed to update fault tree. {{error}}",
+      "remove": "Failed to remove fault tree. {{error}}",
+      "getTreePaths": "Failed to load tree paths. {{error}}",
+      "getTreePathsAggregate": "Failed to load all tree paths. {{error}}",
+      "calculateCutSets": "Failed to calculate cutsets of fault tree. {{error}}"
+    },
+    "function": {
+      "findAll": "Failed to load functions. {{error}}",
+      "addRequiredFunction": "Failed to add required Function. {{error}}",
+      "update": "Failed to update function. {{error}}",
+      "getImpairedBehaviour": "Failed to get impaired behaviors. {{error}}",
+      "create": "Failed to create function. {{error}}",
+      "add": "Failed to add existing function. {{error}}",
+      "remove": "Failed to remove function. {{error}}"
+    },
+    "mitigation": {
+      "update": "Failed to update mitigation. {{error}}"
+    },
+    "system": {
+      "findAll": "Failed to load systems. {{error}}",
+      "find": "Failed to find system. {{error}}",
+      "create": "Failed to create system. {{error}}",
+      "update": "Failed to update system. {{error}}",
+      "remove": "Failed to remove system. {{error}}",
+      "updateFilter": "Failed to operational data filter. {{error}}",
+      "removeWithFaultTrees": "Cannot remove system \"{{systemName}}\" ({{instanceUri}}), the system has {{faultTreeCount}} fault trees.",
+      "nameExists": "System with name \"{{systemName}}\" already exists"
+    },
+    "component": {
+      "mergeComponent": "Failed to merge components. {{error}}",
+      "findAll": "Failed to load components. {{error}}",
+      "find": "Failed to load component. {{error}}",
+      "create": "Failed to create component. {{error}}",
+      "update": "Failed to update component. {{error}}",
+      "linkComponent": "Failed to link components. {{error}}",
+      "unlinkComponent": "Failed to unlink components. {{error}}",
+      "remove": "Failed to remove component. {{error}}",
+      "add": "Failed to add component. {{error}}"
+    },
+    "failureMode": {
+      "findAll": "Failed to load failure modes. {{error}}",
+      "find": "Failed to load failure mode. {{error}}",
+      "create": "Failed to create failure mode. {{error}}",
+      "update": "Failed to update failure mode. {{error}}",
+      "add": "Failed to add failure mode. {{error}}",
+      "remove": "Failed to remove failure mode. {{error}}"
+    },
+    "failureModesRow": {
+      "update": "Failed to update failure modes row rpn. {{error}}"
+    },
+    "failureModesTable": {
+      "findAll": "Failed to load failure modes tables. {{error}}",
+      "update": "Failed to update failure modes tables. {{error}}",
+      "create": "Failed to create failure modes table. {{error}}",
+      "remove": "Failed to remove failure modes tables. {{error}}",
+      "computeTableData": "Failed to load failure modes table data. {{error}}",
+      "export": "Failed to export table data. {{error}}",
+      "createAggregate": "Failed to create failure modes aggregate table. {{error}}"
+    },
+    "document": {
+      "import": "Failed to import document. {{error}}",
+      "findAll": "Failed to load documents. {{error}}"
     },
     "user": {
       "update": {
@@ -135,15 +215,10 @@
       },
       "impersonation": {
         "adminImpersonation": "Cannot impersonate admin."
-      }
-    },
-    "faultTreeTraversal": {
-      "intermediateEventAsLeaf": "Intermediate event must not be the end of the path!"
-    },
-    "externalService": {
-      "configuration": {
-        "failureRateServiceNotSet": "Configuration parameter operationalFailureRateService not set."
-      }
+      },
+      "register": "Registration failed. {{error}}",
+      "login": "Login failed. {{error}}",
+      "passwordChange": "Password change failed. {{error}}"
     }
   }
 }

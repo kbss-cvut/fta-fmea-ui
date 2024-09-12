@@ -12,7 +12,6 @@ export const update = async (rowRpnUpdate: EditRowRpn): Promise<void> => {
     return new Promise((resolve) => resolve());
   } catch (e) {
     console.log("Failure Modes Row Service - Failed to call /update");
-    const defaultMessage = "Failed to update failure modes row rpn";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.failureModesRow.update")));
   }
 };
