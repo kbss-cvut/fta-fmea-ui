@@ -14,7 +14,7 @@
     "@mui/x-data-grid": "^6.10.2",
     "@types/react-beautiful-dnd": "^13.1.4",
     "array-move": "^4.0.0",
-    "axios": "^1.4.0",
+    "axios": "^1.7.4",
     "backbone": "^1.5.0",
     "dagre": "^0.8.5",
     "file-loader": "^6.2.0",
