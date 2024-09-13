@@ -36,9 +36,9 @@ const FaultTreeEditDialog = ({ open, handleCloseDialog, faultTree }: Props) => {
   const handleCreateFaultTree = async (values: any) => {
     setIsProcessing(true);
 
-    faultTree.name = values.faultTreeName;
-    await updateTree(faultTree);
+    await updateTree(Object.assign({}, faultTree, { name: values.faultTreeName }));
 
+    faultTree.name = values.faultTreeName;
     setIsProcessing(false);
     handleCloseDialog();
   };
