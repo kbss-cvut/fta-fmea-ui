@@ -19,7 +19,7 @@ import * as joint from "jointjs";
 import { Rectangle } from "@models/utils/Rectangle";
 import { JOINTJS_NODE_MODEL } from "@components/editor/faultTree/shapes/constants";
 import { FaultEventScenario } from "@models/faultEventScenario";
-import { useAppBar } from "../../../contexts/AppBarContext";
+import { useAppBar } from "@contexts/AppBarContext";
 import { asArray } from "@utils/utils";
 
 const Editor = () => {
@@ -135,6 +135,7 @@ const Editor = () => {
   const handleEventCreate = (newEvent: FaultEvent) => {
     setSidebarSelectedEvent(newEvent);
     refreshTree();
+    showSnackbar("Event created", SnackbarType.SUCCESS);
   };
 
   const handleEventUpdate = (eventToUpdate: FaultEvent) => {
@@ -146,7 +147,10 @@ const Editor = () => {
 
     faultEventService
       .update(eventToUpdate)
-      .then((value) => refreshTree())
+      .then((value) => {
+        refreshTree();
+        showSnackbar("Event updated", SnackbarType.SUCCESS);
+      })
       .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
   };
 
@@ -156,7 +160,10 @@ const Editor = () => {
       hideHighlightedBorders();
       faultEventService
         .remove(eventToDelete.iri)
-        .then((value) => refreshTree())
+        .then((value) => {
+          refreshTree();
+          showSnackbar("Event deleted", SnackbarType.SUCCESS);
+        })
         .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
     };
 
