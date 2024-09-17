@@ -135,7 +135,9 @@
       "deleteFailureMode": "Nepodařilo se smazat režim selhání události. {{error}}",
       "updateChildrenSequence": "Nepodařilo se aktualizovat pořadí dětí. {{error}}",
       "getRootReusable": "Nepodařilo se najít znovu použitelné události závady. {{error}}",
-      "getAllReusable": "Nepodařilo se najít všechny znovu použitelné události závady. {{error}}"
+      "getAllReusable": "Nepodařilo se najít všechny znovu použitelné události závady. {{error}}",
+      "probabilityNotSet": "Výpočet pravděpodobnosti FTA - Událost \"{{event}}\"<{{uri}}>, nemá určenou pravděpodobnost a je použita pro výpočet pravděpodobnosti nadřazené události.",
+      "childProbabilityNotSet": "Výpočet pravděpodobnosti FTA - Nelze vypočítat pravděpodobnost události \"{{event}}\"<{{uri}}>, některé podřízené události nemají určenou pravděpodobnost."
     },
     "faultTree": {
       "rootEvent": {
@@ -150,7 +152,10 @@
       "remove": "Nepodařilo se odstranit strom závad. {{error}}",
       "getTreePaths": "Nepodařilo se načíst cesty stromu. {{error}}",
       "getTreePathsAggregate": "Nepodařilo se načíst všechny cesty stromu. {{error}}",
-      "calculateCutSets": "Nepodařilo se vypočítat řezové množiny stromu závad. {{error}}"
+      "calculateCutSets": "Nepodařilo se vypočítat řezové množiny stromu závad. {{error}}",
+      "leafEvents": {
+        "noProbability": "Následující základní události nemají určenou pravděpodobnost: [{{leafEvents}}]"
+      }
     },
     "function": {
       "findAll": "Nepodařilo se načíst funkce. {{error}}",
@@ -219,7 +224,10 @@
       },
       "register": "Registrace se nezdařila. {{error}}",
       "login": "Přihlášení se nezdařilo. {{error}}",
-      "password": "Změna hesla se nezdařila. {{error}}"
-    }
+      "password": "Změna hesla se nezdařila. {{error}}",
+      "passwordMismatch": "Zadané heslo pro uživatelské jméno \"{{username}}\" neodpovídá.",
+      "usernameNotAvailable": "Uživatelské jméno \"{{username}}\" již bylo použito."
+    },
+    "entityNotFound": "\"{{resourceName}}\" identifikovaný pomocí \"{{identifier}}\" nebyl nalezen."
   }
 }

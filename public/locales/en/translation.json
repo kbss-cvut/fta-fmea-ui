@@ -134,7 +134,9 @@
       "deleteFailureMode": "Failed to delete event failure mode. {{error}}",
       "updateChildrenSequence": "Failed to update children sequence. {{error}}",
       "getRootReusable": "Failed to find reusable fault events. {{error}}",
-      "getAllReusable": "Failed to find all reusable fault events. {{error}}"
+      "getAllReusable": "Failed to find all reusable fault events. {{error}}",
+      "probabilityNotSet": "FTA probability calculation - Event, \"{{event}}\"{{uri}}, has no specified probability and is used to calculate probability of parent event.\",",
+      "childProbabilityNotSet": "FTA probability calculation - Cannot calculate probability of \"{{event}}\"{{uri}}, some child events have no specified probability."
     },
     "faultTree": {
       "rootEvent": {
@@ -149,7 +151,10 @@
       "remove": "Failed to remove fault tree. {{error}}",
       "getTreePaths": "Failed to load tree paths. {{error}}",
       "getTreePathsAggregate": "Failed to load all tree paths. {{error}}",
-      "calculateCutSets": "Failed to calculate cutsets of fault tree. {{error}}"
+      "calculateCutSets": "Failed to calculate cutsets of fault tree. {{error}}",
+      "leafEvents": {
+        "noProbability": "The following leaf events do not have specified probability: [{{leafEvents}}]"
+      }
     },
     "function": {
       "findAll": "Failed to load functions. {{error}}",
@@ -218,7 +223,10 @@
       },
       "register": "Registration failed. {{error}}",
       "login": "Login failed. {{error}}",
-      "passwordChange": "Password change failed. {{error}}"
-    }
+      "passwordChange": "Password change failed. {{error}}",
+      "passwordMismatch": "Provided password for username \"{{username}}\" doesn't match.",
+      "usernameNotAvailable": "Username \"{{username}}\" has already been used."
+    },
+    "entityNotFound": "\"{{resourceName}}\"  identified by  \"{{identifier}}\" + not found."
   }
 }
