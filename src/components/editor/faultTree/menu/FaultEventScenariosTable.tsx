@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useState, FC } from "react";
 import { Box, Typography, useTheme } from "@mui/material";
-import { FaultEventScenario } from "../../../../models/faultEventScenario";
+import { FaultEventScenario } from "@models/faultEventScenario";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
 import useStyles from "./FaultEventScenariosTable.styles";
 import { asArray } from "@utils/utils";
@@ -59,8 +59,12 @@ const FaultEventScenariosTable: FC<FaultEventScenariosTableProps> = ({ scenarios
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>{`${t("faultEventScenariosTable.cutset")}`}</TableCell>
-              <TableCell>{`${t("faultEventScenariosTable.probability")}`}</TableCell>
+              <TableCell align="left">
+                <Typography>{`${t("faultEventScenariosTable.cutset")}`}</Typography>
+              </TableCell>
+              <TableCell align="right">
+                <Typography>{`${t("faultEventScenariosTable.probability")}`}</Typography>
+              </TableCell>
             </TableRow>
           </TableHead>
         </Table>
@@ -83,12 +87,17 @@ const FaultEventScenariosTable: FC<FaultEventScenariosTableProps> = ({ scenarios
                     onClick={() => handleRowClick(scenario, index)}
                     style={{ backgroundColor: bgColor }}
                   >
-                    <TableCell className={classes.tableCell}>
-                      {sortedTableRow.cutsets.map((cutset) => {
-                        return <Typography style={{ fontSize: 14 }}>{cutset}</Typography>;
-                      })}
+                    {/* Cutset Column */}
+                    <TableCell className={classes.tableCell} align="left">
+                      {sortedTableRow.cutsets.map((cutset, i) => (
+                        <Typography key={i}>{cutset}</Typography>
+                      ))}
                     </TableCell>
-                    <TableCell>{sortedTableRow.probability.toExponential(2)}</TableCell>
+
+                    {/* Probability Column */}
+                    <TableCell align="right">
+                      <Typography>{sortedTableRow.probability.toExponential(2)}</Typography>
+                    </TableCell>
                   </TableRow>
                 );
               })}
