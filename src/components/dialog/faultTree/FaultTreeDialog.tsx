@@ -26,7 +26,7 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
   const [selectedSystem] = useSelectedSystemSummaries();
 
   const useFormMethods = useForm({ resolver: yupResolver(schema.concat(faultEventSchema)) });
-  const { handleSubmit, register } = useFormMethods;
+  const { handleSubmit, register, reset } = useFormMethods;
 
   const handleCreateFaultTree = async (values: any) => {
     setIsProcessing(true);
@@ -44,6 +44,7 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
 
     setIsProcessing(false);
     handleCloseDialog();
+    reset();
   };
 
   return (
