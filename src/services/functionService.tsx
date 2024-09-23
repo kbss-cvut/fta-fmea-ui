@@ -21,8 +21,7 @@ export const addFailureMode = async (functionIri: string, failureModeIri: string
     });
   } catch (e) {
     console.log("Function Service - Failed to call /addFailureMode");
-    const defaultMessage = "Failed to add failure mode";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.failureMode.add")));
   }
 };
 
@@ -34,8 +33,7 @@ export const findAllFunctions = async (): Promise<Function[]> => {
     return JsonLdUtils.compactAndResolveReferencesAsArray<Function>(response.data, FUNCTION_CONTEXT);
   } catch (e) {
     console.log("Function Service - Failed to call /functions");
-    const defaultMessage = "Failed to load functions";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.function.findAll")));
   }
 };
 
@@ -56,8 +54,7 @@ export const addRequiredFunction = async (functionUri: string, requiredFunctionU
     return JsonLdUtils.compactAndResolveReferences<Function>(response.data, FUNCTION_CONTEXT);
   } catch (e) {
     console.log("Function Service - Failed to call addRequiredFunctions");
-    const defaultMessage = "Failed to add required Function";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.function.addRequiredFunction")));
   }
 };
 
@@ -70,8 +67,7 @@ export const editFunction = async (f: Function): Promise<Function> => {
     return JsonLdUtils.compactAndResolveReferences<Function>(response.data, FUNCTION_CONTEXT);
   } catch (e) {
     console.log("Function Service - Failed to call /update");
-    const defaultMessage = "Failed to update function";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.function.update")));
   }
 };
 export const getComponent = async (functionUri: string): Promise<Component> => {
@@ -83,8 +79,7 @@ export const getComponent = async (functionUri: string): Promise<Component> => {
     return JsonLdUtils.compactAndResolveReferences<Component>(response.data, FUNCTION_CONTEXT);
   } catch (e) {
     console.log("Function Service - Failed to call /functions");
-    const defaultMessage = "Failed to load component";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.component.find")));
   }
 };
 
@@ -102,8 +97,7 @@ export const generateFDTree = async (functionUri: string, faultTreeName: string)
     return JsonLdUtils.compactAndResolveReferences<FaultTree>(response.data, CONTEXT);
   } catch (e) {
     console.log("Fault Tree Service - Failed to call /generateRequiredFunctionsTree");
-    const defaultMessage = "Failed to create fault tree";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.faultTree.create")));
   }
 };
 
@@ -117,8 +111,7 @@ export const getImpairedBehavior = async (functionUri: string): Promise<FailureM
     return JsonLdUtils.compactAndResolveReferencesAsArray<FailureMode>(response.data, FAILURE_MODE_CONTEXT);
   } catch (e) {
     console.log("Function Service - Failed to call /getImpairedBehavior");
-    const defaultMessage = "Failed to get impaired behaviors";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.function.getImpairedBehaviour")));
   }
 };
 
@@ -131,7 +124,6 @@ export const getTransitiveClosure = async (functionUri: string, type: string): P
     return response.data;
   } catch (e) {
     console.log("Function Service - Failed to call getTransitiveClosure");
-    const defaultMessage = "Failed to load component";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.component.find")));
   }
 };

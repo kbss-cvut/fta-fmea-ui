@@ -1,21 +1,27 @@
 import { has } from "lodash";
+import i18n from "i18next";
 
-export const handleServerError = (e, defaultMessage): string => {
-  if (has(e, "response")) {
-    const response = e.response;
-    const responseStatus = response.status;
+function getResponseMessage(data: any): string {
+  if (has(data, "messageId")) {
+    return i18n.t(data.messageId, { ...data.messageArguments });
+  }
 
-    switch (responseStatus) {
-      case 400:
-        if (has(response, "data") && has(response?.data, "message")) {
-          return response.data.message;
-        }
-        break;
-      default:
-        console.log(`Response status - ${responseStatus}`);
-        return defaultMessage;
-    }
-  } else {
-    return defaultMessage;
+  return has(data, "message") ? data.message : "";
+}
+
+export const handleServerError = (error: any, messageId: string): string => {
+  if (!has(error, "response") && !has(error.response, "data")) {
+    return i18n.exists(messageId) ? i18n.t(messageId, { error: "" }) : i18n.t("error.default");
+  }
+
+  const response = error.response;
+  const responseStatus = response.status;
+  const responseMessage = getResponseMessage(response.data);
+  switch (responseStatus) {
+    case 400:
+      return i18n.exists(messageId) ? i18n.t(messageId, { error: responseMessage }) : responseMessage;
+    default:
+      console.log(`Response status - ${responseStatus}`);
+      return i18n.t("error.default");
   }
 };

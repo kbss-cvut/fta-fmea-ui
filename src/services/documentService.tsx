@@ -24,8 +24,7 @@ export const importDocument = async (systemUri: string, documentId: string): Pro
     return new Promise((resolve) => resolve());
   } catch (e) {
     console.log("Document Service - Failed to call /import");
-    const defaultMessage = "Failed to import document";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.document.import")));
   }
 };
 
@@ -38,7 +37,6 @@ export const findAll = async (): Promise<DocumentModel[]> => {
     return JsonLdUtils.compactAndResolveReferencesAsArray<DocumentModel>(response.data, CONTEXT);
   } catch (e) {
     console.log("Document Service - Failed to call /findAll");
-    const defaultMessage = "Failed to load documents";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.document.findAll")));
   }
 };

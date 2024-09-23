@@ -16,8 +16,7 @@ export const findAll = async (): Promise<FailureMode[]> => {
     return JsonLdUtils.compactAndResolveReferencesAsArray<FailureMode>(response.data, CONTEXT);
   } catch (e) {
     console.log("Failure Mode Service - Failed to call /findAll");
-    const defaultMessage = "Failed to load failure modes";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.failureMode.findAll")));
   }
 };
 
@@ -32,8 +31,7 @@ export const find = async (failureModeIri: string): Promise<FailureMode> => {
     return JsonLdUtils.compactAndResolveReferences<FailureMode>(response.data, CONTEXT);
   } catch (e) {
     console.log("Failure Mode Service - Failed to call /find");
-    const defaultMessage = "Failed to load failure mode";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.failureMode.find")));
   }
 };
 
@@ -49,8 +47,7 @@ export const update = async (failureMode: FailureMode): Promise<FailureMode> => 
     return JsonLdUtils.compactAndResolveReferences<FailureMode>(response.data, CONTEXT);
   } catch (e) {
     console.log("Failure Mode Service - Failed to call /update");
-    const defaultMessage = "Failed to update failure mode";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.failureMode.update")));
   }
 };
 
@@ -64,8 +61,7 @@ export const remove = async (failureModeIri: string): Promise<void> => {
     return new Promise((resolve) => resolve());
   } catch (e) {
     console.log("Failure Mode Service - Failed to call /remove");
-    const defaultMessage = "Failed to remove failure mode";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.failureMode.remove")));
   }
 };
 
@@ -85,8 +81,7 @@ export const addFailureModeToFunction = async (failureModeIri: string, functionI
     return new Promise((resolve) => resolve());
   } catch (e) {
     console.log("Failure Mode Service - Failed to call /addFailureModeToFunction");
-    const defaultMessage = "Failed to add failure mode";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.failureMode.add")));
   }
 };
 export const removeFailureModeToFunction = async (functionIri: string, failureModeIri: string): Promise<void> => {
@@ -101,8 +96,7 @@ export const removeFailureModeToFunction = async (functionIri: string, failureMo
     return new Promise((resolve) => resolve());
   } catch (e) {
     console.log("Failure Mode Service - Failed to call /removeFailureModeToFunction");
-    const defaultMessage = "Failed to remove failure mode";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.failureMode.remove")));
   }
 };
 
@@ -125,8 +119,7 @@ export const addDependantFailureMode = async (
     return new Promise((resolve) => resolve());
   } catch (e) {
     console.log("Failure Mode Service - Failed to call /addDependantFailureMode");
-    const defaultMessage = "Failed to add failure mode";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.failureMode.add")));
   }
 };
 export const removeDependantFailureMode = async (
@@ -145,8 +138,7 @@ export const removeDependantFailureMode = async (
     return new Promise((resolve) => resolve());
   } catch (e) {
     console.log("Failure Mode Service - Failed to call /removeDependantFailureMode");
-    const defaultMessage = "Failed to remove failure mode";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.failureMode.remove")));
   }
 };
 
@@ -162,8 +154,7 @@ export const editFailureMode = async (failureMode: FailureMode): Promise<Failure
   } catch (e) {
     console.log(e);
     console.log("Failure mode service - Failed to call /update");
-    const defaultMessage = "Failed to update failure mode";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.failureMode.update")));
   }
 };
 
@@ -176,7 +167,6 @@ export const getTransitiveClosure = async (failureModeUri: string, type: string)
     return response.data;
   } catch (e) {
     console.log("FailureMode Service - Failed to call getTransitiveClosure");
-    const defaultMessage = "Failed to load component";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.component.find")));
   }
 };

@@ -121,5 +121,113 @@
     "rename": "Přejmenovat",
     "save": "Uložit",
     "discard": "Zahodit"
+  },
+
+  "error": {
+    "default": "Došlo k chybě",
+    "faultEvent": {
+      "findAll": "Nepodařilo se najít události závad. {{error}}",
+      "update": "Nepodařilo se aktualizovat událost závady. {{error}}",
+      "remove": "Nepodařilo se odstranit událost závady. {{error}}",
+      "create": "Nepodařilo se vytvořit událost. {{error}}",
+      "updateRectangle": "Nepodařilo se aktualizovat obdélník. {{error}}",
+      "getFailureMode": "Nepodařilo se načíst režim selhání události. {{error}}",
+      "deleteFailureMode": "Nepodařilo se smazat režim selhání události. {{error}}",
+      "updateChildrenSequence": "Nepodařilo se aktualizovat pořadí dětí. {{error}}",
+      "getRootReusable": "Nepodařilo se najít znovu použitelné události závady. {{error}}",
+      "getAllReusable": "Nepodařilo se najít všechny znovu použitelné události závady. {{error}}",
+      "probabilityNotSet": "Výpočet pravděpodobnosti FTA - Událost \"{{event}}\"<{{uri}}>, nemá určenou pravděpodobnost a je použita pro výpočet pravděpodobnosti nadřazené události.",
+      "childProbabilityNotSet": "Výpočet pravděpodobnosti FTA - Nelze vypočítat pravděpodobnost události \"{{event}}\"<{{uri}}>, některé podřízené události nemají určenou pravděpodobnost."
+    },
+    "faultTree": {
+      "rootEvent": {
+        "deleteViolation": "Kořenová událost stromu nemůže být smazána!"
+      },
+      "intermediateEventAsLeaf": "Mezilehlá událost nemůže být na konci cesty!",
+      "findAll": "Nepodařilo se načíst stromy závad. {{error}}",
+      "findAllWithFilters": "Nepodařilo se načíst stromy závad s filtry. {{error}}",
+      "find": "Nepodařilo se najít strom závad. {{error}}",
+      "create": "Nepodařilo se vytvořit strom závad. {{error}}",
+      "update": "Nepodařilo se aktualizovat strom závad. {{error}}",
+      "remove": "Nepodařilo se odstranit strom závad. {{error}}",
+      "getTreePaths": "Nepodařilo se načíst cesty stromu. {{error}}",
+      "getTreePathsAggregate": "Nepodařilo se načíst všechny cesty stromu. {{error}}",
+      "calculateCutSets": "Nepodařilo se vypočítat řezové množiny stromu závad. {{error}}",
+      "leafEvents": {
+        "noProbability": "Následující základní události nemají určenou pravděpodobnost: [{{leafEvents}}]"
+      }
+    },
+    "function": {
+      "findAll": "Nepodařilo se načíst funkce. {{error}}",
+      "addRequiredFunction": "Nepodařilo se přidat požadovanou funkci. {{error}}",
+      "update": "Nepodařilo se aktualizovat funkci. {{error}}",
+      "getImpairedBehaviour": "Nepodařilo se získat narušené chování. {{error}}",
+      "create": "Nepodařilo se vytvořit funkci. {{error}}",
+      "add": "Nepodařilo se přidat existující funkci. {{error}}",
+      "remove": "Nepodařilo se odstranit funkci. {{error}}"
+    },
+    "mitigation": {
+      "update": "Nepodařilo se aktualizovat zmírnění. {{error}}"
+    },
+    "system": {
+      "findAll": "Nepodařilo se načíst systémy. {{error}}",
+      "find": "Nepodařilo se najít systém. {{error}}",
+      "create": "Nepodařilo se vytvořit systém. {{error}}",
+      "update": "Nepodařilo se aktualizovat systém. {{error}}",
+      "remove": "Nepodařilo se odstranit systém. {{error}}",
+      "updateFilter": "Nepodařilo se aktualizovat filtr provozních dat. {{error}}",
+      "removeWithFaultTrees": "Nelze odstranit systém \"{{systemName}}\" ({{instanceUri}}), systém má {{faultTreeCount}} stromů závad.",
+      "nameExists": "Systém se jménem \"{{systemName}}\" již existuje"
+    },
+    "component": {
+      "mergeComponent": "Nepodařilo se sloučit komponenty. {{error}}",
+      "findAll": "Nepodařilo se načíst komponenty. {{error}}",
+      "find": "Nepodařilo se načíst komponentu. {{error}}",
+      "create": "Nepodařilo se vytvořit komponentu. {{error}}",
+      "update": "Nepodařilo se aktualizovat komponentu. {{error}}",
+      "linkComponent": "Nepodařilo se propojit komponenty. {{error}}",
+      "unlinkComponent": "Nepodařilo se odpojit komponenty. {{error}}",
+      "remove": "Nepodařilo se odstranit komponentu. {{error}}",
+      "add": "Nepodařilo se přidat komponentu. {{error}}"
+    },
+    "failureMode": {
+      "findAll": "Nepodařilo se načíst režimy selhání. {{error}}",
+      "find": "Nepodařilo se načíst režim selhání. {{error}}",
+      "create": "Nepodařilo se vytvořit režim selhání. {{error}}",
+      "update": "Nepodařilo se aktualizovat režim selhání. {{error}}",
+      "add": "Nepodařilo se přidat režim selhání. {{error}}",
+      "remove": "Nepodařilo se odstranit režim selhání. {{error}}"
+    },
+    "failureModesRow": {
+      "update": "Nepodařilo se aktualizovat řádek režimů selhání rpn. {{error}}"
+    },
+    "failureModesTable": {
+      "findAll": "Nepodařilo se načíst tabulky režimů selhání. {{error}}",
+      "update": "Nepodařilo se aktualizovat tabulky režimů selhání. {{error}}",
+      "create": "Nepodařilo se vytvořit tabulku režimů selhání. {{error}}",
+      "remove": "Nepodařilo se odstranit tabulky režimů selhání. {{error}}",
+      "computeTableData": "Nepodařilo se načíst data tabulky režimů selhání. {{error}}",
+      "export": "Nepodařilo se exportovat tabulku režimů selhání. {{error}}",
+      "createAggregate": "Nepodařilo se vytvořit agregátní tabulku režimů selhání. {{error}}"
+    },
+    "document": {
+      "import": "Nepodařilo se importovat dokument. {{error}}",
+      "findAll": "Nepodařilo se načíst dokumenty. {{error}}"
+    },
+    "user": {
+      "update": {
+        "uriMismatch": "URI pro aktualizaci uživatele se neshoduje s aktuálním uživatelem!",
+        "incorrectOldPassword": "Stará heslo je nesprávné!"
+      },
+      "impersonation": {
+        "adminImpersonation": "Nelze se vydávat za administrátora."
+      },
+      "register": "Registrace se nezdařila. {{error}}",
+      "login": "Přihlášení se nezdařilo. {{error}}",
+      "password": "Změna hesla se nezdařila. {{error}}",
+      "passwordMismatch": "Zadané heslo pro uživatelské jméno \"{{username}}\" neodpovídá.",
+      "usernameNotAvailable": "Uživatelské jméno \"{{username}}\" již bylo použito."
+    },
+    "entityNotFound": "\"{{resourceName}}\" identifikovaný pomocí \"{{identifier}}\" nebyl nalezen."
   }
 }

@@ -18,8 +18,7 @@ export const findAll = async (): Promise<System[]> => {
     return JsonLdUtils.compactAndResolveReferencesAsArray<System>(response.data, CONTEXT);
   } catch (e) {
     console.log("System Service - Failed to call /findAll");
-    const defaultMessage = "Failed to load systems";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.system.findAll")));
   }
 };
 
@@ -33,8 +32,7 @@ export const find = async (systemIri: string): Promise<System> => {
     return JsonLdUtils.compactAndResolveReferences<System>(response.data, CONTEXT);
   } catch (e) {
     console.log("System Service - Failed to call /find");
-    const defaultMessage = "Failed to find system";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.system.find")));
   }
 };
 
@@ -49,8 +47,7 @@ export const create = async (system: System): Promise<System> => {
     return JsonLdUtils.compactAndResolveReferences<System>(response.data, CONTEXT);
   } catch (e) {
     console.log("System Service - Failed to call /create");
-    const defaultMessage = "Failed to create system";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.system.create")));
   }
 };
 
@@ -66,25 +63,26 @@ export const rename = async (system: System): Promise<System> => {
     return JsonLdUtils.compactAndResolveReferences<System>(response.data, CONTEXT);
   } catch (e) {
     console.log("System Service - Failed to call /update");
-    const defaultMessage = "Failed to update system";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.system.update")));
   }
 };
 
-export const updateFilter = async (systemUri: string, operationDataFilter: OperationalDataFilter): Promise<void> => {
+export const updateFilter = async (
+  systemUri: string,
+  operationDataFilter: OperationalDataFilter,
+): Promise<OperationalDataFilter> => {
   try {
     const systemFragment = extractFragment(systemUri);
     const updateRequest = Object.assign({}, operationDataFilter, { "@context": FILTER_CONTEXT });
 
-    await axiosClient.put(`/operational-data-filter/system/${systemFragment}`, updateRequest, {
+    const response = await axiosClient.put(`/operational-data-filter/system/${systemFragment}`, updateRequest, {
       headers: authHeaders(),
     });
 
-    return new Promise((resolve) => resolve());
+    return JsonLdUtils.compactAndResolveReferences<OperationalDataFilter>(response.data, FILTER_CONTEXT);
   } catch (e) {
     console.log("System Service - Failed to call /operational-data-filter/system/${systemFragment}");
-    const defaultMessage = "Failed to update minimum operational data filter";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.system.updateFilter")));
   }
 };
 
@@ -98,8 +96,7 @@ export const remove = async (systemIri: string): Promise<void> => {
     return new Promise((resolve) => resolve());
   } catch (e) {
     console.log("System Service - Failed to call /remove");
-    const defaultMessage = "Failed to remove system";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.system.remove")));
   }
 };
 
@@ -115,8 +112,7 @@ export const addComponent = async (systemIri: string, componentUri: string): Pro
     return new Promise((resolve) => resolve());
   } catch (e) {
     console.log("System Service - Failed to call /addComponent");
-    const defaultMessage = "Failed to add component";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.component.add")));
   }
 };
 
@@ -132,8 +128,7 @@ export const removeComponent = async (systemIri: string, componentUri: string): 
     return new Promise((resolve) => resolve());
   } catch (e) {
     console.log("System Service - Failed to call /removeComponent");
-    const defaultMessage = "Failed to remove component";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.component.remove")));
   }
 };
 
@@ -148,7 +143,6 @@ export const failureModes = async (systemIri: string): Promise<FailureMode[]> =>
     return JsonLdUtils.compactAndResolveReferencesAsArray<FailureMode>(response.data, CONTEXT);
   } catch (e) {
     console.log("System Service - Failed to call /findAll");
-    const defaultMessage = "Failed to load systems";
-    return new Promise((resolve, reject) => reject(handleServerError(e, defaultMessage)));
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.system.findAll")));
   }
 };
