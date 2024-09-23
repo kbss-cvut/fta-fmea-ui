@@ -23,16 +23,12 @@ const useStyles = makeStyles()((theme: Theme) => ({
     flex: 1,
     padding: 4,
     overflow: "hidden",
-    textAlign: "center",
-    verticalAlign: "middle",
     maxWidth: 72,
     fontWeight: "bold",
   },
   tableCell: {
     flex: 1,
     overflow: "hidden",
-    textAlign: "center",
-    verticalAlign: "middle",
     padding: 8,
   },
   rowOptionsContainer: {
