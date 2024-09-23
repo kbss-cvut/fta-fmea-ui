@@ -58,11 +58,14 @@ const FaultEventScenariosTable: FC<FaultEventScenariosTableProps> = ({ scenarios
       <TableContainer>
         <Table>
           <TableHead>
-            <TableRow>
-              <TableCell align="left">
+            <TableRow className={classes.tableRow}>
+              {/* Cutset Column*/}
+              <TableCell className={classes.cutsetColumnHeader} align="left">
                 <Typography>{`${t("faultEventScenariosTable.cutset")}`}</Typography>
               </TableCell>
-              <TableCell align="right">
+
+              {/* Probability Column*/}
+              <TableCell className={classes.probabilityColumnHeader} align="right">
                 <Typography>{`${t("faultEventScenariosTable.probability")}`}</Typography>
               </TableCell>
             </TableRow>
@@ -87,15 +90,19 @@ const FaultEventScenariosTable: FC<FaultEventScenariosTableProps> = ({ scenarios
                     onClick={() => handleRowClick(scenario, index)}
                     style={{ backgroundColor: bgColor }}
                   >
-                    {/* Cutset Column */}
-                    <TableCell className={classes.tableCell} align="left">
-                      {sortedTableRow.cutsets.map((cutset, i) => (
-                        <Typography key={i}>{cutset}</Typography>
-                      ))}
+                    {/* Cutset Column*/}
+                    <TableCell className={classes.cutsetColumn} align="left">
+                      <Box className={classes.cutsetItemsContainer}>
+                        {sortedTableRow.cutsets.map((cutset, i) => (
+                          <Typography key={i} className={classes.cutsetItem}>
+                            {cutset}
+                          </Typography>
+                        ))}
+                      </Box>
                     </TableCell>
 
-                    {/* Probability Column */}
-                    <TableCell align="right">
+                    {/* Probability Column*/}
+                    <TableCell className={classes.probabilityColumn} align="right">
                       <Typography>{sortedTableRow.probability.toExponential(2)}</Typography>
                     </TableCell>
                   </TableRow>
