@@ -42,7 +42,7 @@
   },
   "faultEventScenariosTable": {
     "cutset": "Řez",
-    "probability": "Pravděpodobnost"
+    "probability": "Intenzita Poruch"
   },
   "eventDescription": {
     "fhaBasedFailureRate": {

@@ -42,7 +42,7 @@
   },
   "faultEventScenariosTable": {
     "cutset": "Cutset",
-    "probability": "Probability"
+    "probability": "Failure Rate"
   },
   "eventDescription": {
     "fhaBasedFailureRate": {
