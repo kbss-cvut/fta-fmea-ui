@@ -241,6 +241,7 @@ const EditorCanvas = ({
       rankSep: 100, // Vertical separation between ranks
       marginX: 20,
       marginY: 20,
+      preserveNodeGeometry: true,
     });
     // Manual Layout
     manualLayoutElements.forEach((el) => {
