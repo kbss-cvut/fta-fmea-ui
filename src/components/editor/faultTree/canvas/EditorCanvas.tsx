@@ -235,7 +235,10 @@ const EditorCanvas = ({
     joint.layout.DirectedGraph.layout(graph.getSubgraph(autoLayoutElements), {
       dagre: dagre,
       graphlib: graphlib,
-      setVertices: true,
+      setLinkVertices: false, // Avoid weird behavior of links (described in https://github.com/kbss-cvut/fta-fmea-ui/issues/527)
+      rankDir: "TB", // Direction top-to-bottom
+      nodeSep: 50, // Horizontal separation between nodes
+      rankSep: 100, // Vertical separation between ranks
       marginX: 20,
       marginY: 20,
     });
