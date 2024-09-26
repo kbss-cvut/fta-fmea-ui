@@ -51,6 +51,7 @@ interface Props {
   showTable: boolean;
   possibleFaultEventScenarios: FaultEventScenario[];
   onScenarioSelect: (scenario: FaultEventScenario) => void;
+  onApplyAutomaticLayout: (container: joint.dia.Graph, jointPaper: joint.dia.Paper) => void;
 }
 
 const EditorCanvas = ({
@@ -71,6 +72,7 @@ const EditorCanvas = ({
   showTable,
   possibleFaultEventScenarios,
   onScenarioSelect,
+  onApplyAutomaticLayout,
 }: Props) => {
   const { classes } = useStyles();
   const theme = useTheme();
@@ -210,14 +212,10 @@ const EditorCanvas = ({
     }
   }, [isExportingImage]);
 
-  const addSelf = (shape: any) => {
-    shape.addTo(container);
-    layout(container);
-  };
-
   const layout = (graph) => {
     const autoLayoutElements = [];
-    const manualLayoutElements = [];
+    const conditionalEventLayoutElements = [];
+
     graph.getElements().forEach((el) => {
       const faultEventIri = el.get(JOINTJS_NODE_MODEL.faultEventIri);
       if (faultEventIri && faultEventIri === sidebarSelectedEvent?.iri) {
@@ -226,12 +224,13 @@ const EditorCanvas = ({
       }
 
       if (el.get("type") === "fta.ConditioningEvent") {
-        manualLayoutElements.push(el);
-      } else if (!el.get(JOINTJS_NODE_MODEL.hasPersistentPosition)) {
+        conditionalEventLayoutElements.push(el);
+      } else {
         autoLayoutElements.push(el);
       }
     });
-    // Automatic Layout
+
+    // Apply the automatic layout
     joint.layout.DirectedGraph.layout(graph.getSubgraph(autoLayoutElements), {
       dagre: dagre,
       graphlib: graphlib,
@@ -241,15 +240,17 @@ const EditorCanvas = ({
       rankSep: 100, // Vertical separation between ranks
       marginX: 20,
       marginY: 20,
-      preserveNodeGeometry: true,
     });
-    // Manual Layout
-    manualLayoutElements.forEach((el) => {
+
+    // Conditioning Events Manual Layout
+    conditionalEventLayoutElements.forEach((el) => {
       const neighbor = graph.getNeighbors(el, { inbound: true })[0];
       if (!neighbor) return;
       const neighborPosition = neighbor.getBBox().bottomRight();
       el.position(neighborPosition.x + 20, neighborPosition.y - el.size().height / 2 - 20);
     });
+
+    onApplyAutomaticLayout(graph, jointPaper);
   };
 
   const handleDiagramExport = () => {
@@ -258,7 +259,7 @@ const EditorCanvas = ({
   };
 
   useEffect(() => {
-    const renderAndLayout = async () => {
+    const render = async () => {
       if (container && rootEvent) {
         setRendering(true);
         container.removeCells(container.getCells());
@@ -270,12 +271,11 @@ const EditorCanvas = ({
         }
 
         await renderTree(container, rootEvent, null, listOfPaths, faultTree?.status);
-        layout(container);
         setRendering(false);
       }
     };
 
-    renderAndLayout();
+    render();
   }, [container, rootEvent, faultEventScenarios]);
 
   useEffect(() => {
@@ -331,7 +331,7 @@ const EditorCanvas = ({
           <SidebarMenuHeader
             onExportDiagram={handleDiagramExport}
             onConvertToTable={onConvertToTable}
-            onRestoreLayout={() => layout(container)}
+            onApplyAutomaticLayout={() => layout(container)}
             onCutSetAnalysis={onCutSetAnalysis}
             rendering={rendering}
           />

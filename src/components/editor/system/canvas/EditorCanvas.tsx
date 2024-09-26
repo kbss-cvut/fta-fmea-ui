@@ -255,7 +255,7 @@ const EditorCanvas = ({
           ))}
       </div>
       <SidebarMenu className={classes.sidebar}>
-        <DiagramOptions onRestoreLayout={() => layout(container)} onExportDiagram={handleDiagramExport} />
+        <DiagramOptions onApplyAutomaticLayout={() => layout(container)} onExportDiagram={handleDiagramExport} />
         <Box padding={2} display="flex" alignItems="center">
           <Typography noWrap sx={{ flex: 3 }}>
             {t("diagramSidePanel.minimumOperationalHours")}

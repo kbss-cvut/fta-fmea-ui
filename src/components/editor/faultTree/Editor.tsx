@@ -119,6 +119,33 @@ const Editor = () => {
     }
   };
 
+  const handleAutomaticLayout = async (graph, jointPaper) => {
+    for (const el of graph.getElements()) {
+      const faultEventIri = el.get(JOINTJS_NODE_MODEL.faultEventIri);
+      const movedEvent = findEventByIri(faultEventIri, getRootEvent());
+
+      if (movedEvent) {
+        const elementView = el.findView(jointPaper);
+        const size = elementView.model.attributes.size;
+        const position = elementView.model.attributes.position;
+        const rect: Rectangle = movedEvent.rectangle;
+
+        if (rect.x != position.x || rect.y != position.y || rect.width != size.width || rect.height != size.height) {
+          rect.x = position.x;
+          rect.y = position.y;
+          rect.width = size.width;
+          rect.height = size.height;
+
+          try {
+            await faultEventService.updateEventRectangle(faultEventIri, rect.iri, rect);
+          } catch (err) {
+            console.error("Failed to persist node position", err);
+          }
+        }
+      }
+    }
+  };
+
   const highlightBorders = (elementView) => {
     const tools = new joint.dia.ToolsView({
       tools: [FTABoundary.factory()],
@@ -219,6 +246,7 @@ const Editor = () => {
           onCutSetAnalysis={handleCutSetAnalysis}
           onConvertToTable={() => setFailureModesTableOpen(true)}
           onNodeMove={handleMoveEvent}
+          onApplyAutomaticLayout={handleAutomaticLayout}
           setHighlightedElement={setHighlightedElementView}
           refreshTree={refreshTree}
           faultEventScenarios={faultEventScenarios}
