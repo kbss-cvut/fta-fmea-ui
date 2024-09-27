@@ -131,8 +131,8 @@ const Editor = () => {
         const rect: Rectangle = movedEvent.rectangle;
 
         if (rect.x != position.x || rect.y != position.y || rect.width != size.width || rect.height != size.height) {
-          rect.x = position.x;
-          rect.y = position.y;
+          rect.x = Math.round(position.x);
+          rect.y = Math.round(position.y); // The server only supports integers
           rect.width = size.width;
           rect.height = size.height;
 
