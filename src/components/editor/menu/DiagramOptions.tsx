@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export interface Props {
-  onRestoreLayout: () => void;
+  onApplyAutomaticLayout: () => void;
   onExportDiagram: () => void;
   onConvertToTable?: () => void;
   onCutSetAnalysis?: () => void;
@@ -18,7 +18,7 @@ export interface Props {
 }
 
 const DiagramOptions = ({
-  onRestoreLayout,
+  onApplyAutomaticLayout,
   onExportDiagram,
   onConvertToTable,
   onCutSetAnalysis,
@@ -33,7 +33,7 @@ const DiagramOptions = ({
         Diagram Options
       </Typography>
       <div>
-        <IconButton color="primary" onClick={onRestoreLayout} aria-label="restore layout" size="large">
+        <IconButton color="primary" onClick={onApplyAutomaticLayout} aria-label="restore layout" size="large">
           <AccountTreeIcon />
         </IconButton>
         <IconButton color="primary" onClick={onExportDiagram} aria-label="save" size="large">

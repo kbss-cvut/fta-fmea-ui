@@ -23,7 +23,7 @@ const useActionCall = (isModified: boolean, setShowUnsavedChangesDialog: (show: 
 const SidebarMenuHeader: React.FC<SidebarMenuHeaderProps> = ({
   onConvertToTable,
   onExportDiagram,
-  onRestoreLayout,
+  onApplyAutomaticLayout,
   onCutSetAnalysis,
   rendering,
 }) => {
@@ -37,7 +37,7 @@ const SidebarMenuHeader: React.FC<SidebarMenuHeaderProps> = ({
       <DiagramOptions
         onExportDiagram={() => actionCall(onExportDiagram)}
         onConvertToTable={() => actionCall(onConvertToTable)}
-        onRestoreLayout={() => actionCall(onRestoreLayout)}
+        onApplyAutomaticLayout={() => actionCall(onApplyAutomaticLayout)}
         onCutSetAnalysis={() => actionCall(onCutSetAnalysis)}
         tableConversionAllowed={!table}
         rendering={rendering}
