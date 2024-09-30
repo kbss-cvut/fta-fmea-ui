@@ -42,7 +42,8 @@
   },
   "diagramSidePanel": {
     "cutsetToggleToolTip": "Přepnout do pohledu řezu",
-    "minimumOperationalHours": "Min. provozní doba"
+    "minimumOperationalHours": "Min. provozní doba",
+    "diagramOptions": "Možnosti diagramu"
   },
   "faultEventScenariosTable": {
     "cutset": "Řez",
@@ -98,6 +99,12 @@
     "deleteHint": "Smazat strom poruch",
     "created": "Vytvořeno",
     "operationalHours": "Doba provozu"
+  },
+  "systemComponentMenu": {
+    "editComponent": "Upravit komponentu",
+    "notSelected": "Není vybrána žádná komponenta",
+    "functions": "Funkce",
+    "linkedComponent": "Propojená komponenta"
   },
   "faultEventMenu": {
     "eventName": "Název události",

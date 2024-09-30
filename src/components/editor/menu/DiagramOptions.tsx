@@ -30,7 +30,7 @@ const DiagramOptions = ({
   return (
     <React.Fragment>
       <Typography variant="h5" gutterBottom>
-        Diagram Options
+        {t("diagramSidePanel.diagramOptions")}
       </Typography>
       <div>
         <IconButton color="primary" onClick={onApplyAutomaticLayout} aria-label="restore layout" size="large">
