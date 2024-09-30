@@ -1,4 +1,8 @@
 {
+  "user": {
+    "logout": "Odhlásit se",
+    "changePassword": "Změnit heslo"
+  },
   "categories": {
     "systems": "Systémy",
     "trees": "Poruchové stromy",

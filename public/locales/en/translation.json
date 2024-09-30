@@ -1,4 +1,8 @@
 {
+  "user": {
+    "logout": "Logout",
+    "changePassword": "Change password"
+  },
   "categories": {
     "systems": "Systems",
     "trees": "Fault trees",
