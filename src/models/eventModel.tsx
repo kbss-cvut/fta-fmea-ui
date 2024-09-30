@@ -67,8 +67,8 @@ export const CONTEXT = Object.assign({}, ctx, ABSTRACT_CONTEXT, FAILURE_MODE_CON
 export enum EventType {
   BASIC = "BASIC",
   EXTERNAL = "EXTERNAL",
-  UNDEVELOPED = "UNDEVELOPED",
-  CONDITIONING = "CONDITIONING",
+  // UNDEVELOPED = "UNDEVELOPED", // TODO to enable requires to allow setting manual failure rate
+  // CONDITIONING = "CONDITIONING",
   INTERMEDIATE = "INTERMEDIATE",
 }
 
@@ -153,8 +153,13 @@ export enum GateType {
 // returns true as first argument of array if option should be enabled in select
 export const gateTypeValues = (): [boolean, GateType][] =>
   Object.values(GateType).map((value) => {
-    if (value === GateType.UNUSED) {
-      return [false, GateType.UNUSED];
+    if (
+      value === GateType.UNUSED ||
+      value === GateType.PRIORITY_AND ||
+      value === GateType.INHIBIT ||
+      value === GateType.XOR
+    ) {
+      return [false, value];
     } else {
       return [true, value];
     }
