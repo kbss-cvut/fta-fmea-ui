@@ -35,6 +35,7 @@ enum MOVE_NODE {
 
 interface Props {
   treeName: string;
+  outOfSync?: boolean;
   rootEvent: FaultEvent;
   sidebarSelectedEvent: FaultEvent;
   onElementContextMenu: (element: any, evt: any) => void;
@@ -56,6 +57,7 @@ interface Props {
 
 const EditorCanvas = ({
   treeName,
+  outOfSync = false,
   rootEvent,
   sidebarSelectedEvent,
   onElementContextMenu,
@@ -357,6 +359,7 @@ const EditorCanvas = ({
         {!showTable && (
           <FaultEventMenu
             selectedShapeToolData={sidebarSelectedEvent}
+            outOfSync={outOfSync}
             onEventUpdated={onEventUpdated}
             refreshTree={refreshTree}
             rootIri={rootEvent?.iri}

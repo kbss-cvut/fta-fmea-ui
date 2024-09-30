@@ -237,6 +237,7 @@ const Editor = () => {
       {faultTree && (
         <EditorCanvas
           treeName={faultTree?.name}
+          outOfSync={faultTree?.status !== "ok"}
           rootEvent={rootEvent}
           onEventUpdated={handleEventUpdate}
           sidebarSelectedEvent={sidebarSelectedEvent}

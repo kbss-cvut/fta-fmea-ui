@@ -2,14 +2,14 @@ import { SyncProblem, Warning } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
 import React from "react";
 
-export const warnIcon = (message: string) => {
-  return iconWithMessage(<Warning transform={"scale(0.9)"} />, message);
+export const warnIcon = (message: any) => {
+  return iconWithMessage(<Warning transform={"scale(0.88)"} />, message);
 };
 
-export const syncProblemIcon = (message: string) => {
-  return iconWithMessage(<SyncProblem transform={"scale(0.9)"} />, message);
+export const syncProblemIcon = (message: any) => {
+  return iconWithMessage(<SyncProblem transform={"scale(0.88)"} />, message);
 };
 
-export const iconWithMessage = (icon, message: string) => {
+export const iconWithMessage = (icon, message: any) => {
   return <Tooltip title={message}>{icon}</Tooltip>;
 };

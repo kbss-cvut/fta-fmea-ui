@@ -47,6 +47,12 @@ declare module "@mui/material/styles" {
         color: COLOR;
       };
     };
+    notSynchronized?: {
+      color: COLOR;
+    };
+    synchronized?: {
+      color: COLOR;
+    };
     requirementViolation?: {
       color: COLOR;
     };
