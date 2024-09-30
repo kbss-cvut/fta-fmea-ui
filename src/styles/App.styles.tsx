@@ -49,4 +49,7 @@ export const appTheme = createCustomMuiTheme({
   requirementViolation: {
     color: "#FF0000",
   },
+  hint: {
+    fontSize: 16,
+  },
 });
