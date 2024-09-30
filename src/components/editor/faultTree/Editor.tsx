@@ -12,7 +12,7 @@ import FaultEventDialog from "../../dialog/faultEvent/FaultEventDialog";
 import { FaultEvent } from "@models/eventModel";
 import { contextMenuDefaultAnchor, ElementContextMenuAnchor } from "@utils/contextMenu";
 import FailureModesTableDialog from "@components/dialog/failureModesTable/FailureModesTableDialog";
-import { ROUTES } from "@utils/constants";
+import { ENVVariable, ROUTES } from "@utils/constants";
 import { extractFragment } from "@services/utils/uriIdentifierUtils";
 import { FTABoundary } from "@components/editor/faultTree/shapes/shapesDefinitions";
 import * as joint from "jointjs";
@@ -274,12 +274,14 @@ const Editor = () => {
         onClose={() => setEventDialogOpen(false)}
       />
 
-      <FailureModesTableDialog
-        open={failureModesTableOpen}
-        faultTreeIri={faultTree?.iri}
-        onCreated={handleFailureModesTableCreated}
-        onClose={() => setFailureModesTableOpen(false)}
-      />
+      {!ENVVariable.DISABLE_FMEA && (
+        <FailureModesTableDialog
+          open={failureModesTableOpen}
+          faultTreeIri={faultTree?.iri}
+          onCreated={handleFailureModesTableCreated}
+          onClose={() => setFailureModesTableOpen(false)}
+        />
+      )}
     </div>
   );
 };

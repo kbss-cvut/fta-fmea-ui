@@ -1,4 +1,4 @@
-import { ROUTES } from "@utils/constants";
+import { ENVVariable, ROUTES } from "@utils/constants";
 import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -21,9 +21,9 @@ interface AppBarTitleProviderProps {
 const categoryTitles = {
   [ROUTES.SYSTEMS]: "categories.systems",
   [ROUTES.FTA]: "categories.trees",
-  [ROUTES.FMEA]: "categories.worksheets",
   [ROUTES.FHA]: "categories.tables",
 };
+if (!ENVVariable.DISABLE_FMEA) categoryTitles[ROUTES.FMEA] = "categories.worksheets";
 
 const AppBarMainContext = createContext<AppBarTitleContextType>({
   appBarTitle: "",
