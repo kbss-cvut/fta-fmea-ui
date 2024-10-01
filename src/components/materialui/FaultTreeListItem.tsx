@@ -12,6 +12,7 @@ import { FaultTree } from "@models/faultTreeModel";
 import { useConfirmDialog } from "@hooks/useConfirmDialog";
 import { useFaultTrees } from "@hooks/useFaultTrees";
 import FaultTreeEditDialog from "@components/dialog/faultTree/FaultTreeEditDialog";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   faultTree: FaultTree;
@@ -19,6 +20,7 @@ interface Props {
 }
 
 const FaultTreeListItem = ({ faultTree, onClick }: Props) => {
+  const { t } = useTranslation();
   const [contextMenuSelectedTree, setContextMenuSelectedTree] = useState<FaultTree>(null);
   const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefaultAnchor);
 
@@ -32,9 +34,8 @@ const FaultTreeListItem = ({ faultTree, onClick }: Props) => {
 
   const handleDelete = (treeToDelete: FaultTree) => {
     showConfirmDialog({
-      title: "Delete Fault Tree",
-      explanation:
-        "Deleting fault tree will delete the whole tree structure. Events will remain. Proceed to delete the tree?",
+      title: t("deleteFtaModal.title"),
+      explanation: t("deleteFtaModal.explanation"),
       onConfirm: () => {
         removeTree(treeToDelete);
       },

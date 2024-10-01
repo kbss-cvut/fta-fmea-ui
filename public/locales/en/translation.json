@@ -34,6 +34,10 @@
     "gateType": "Gate type",
     "noSystemError": "Select the System from the Navbar"
   },
+  "deleteFtaModal": {
+    "title": "Delete Fault Tree",
+    "explanation": "Deleting fault tree will delete the whole tree structure. Proceed to delete the tree?"
+  },
   "newFmeaModal": {
     "title": "FMEA Aggregates",
     "namePlaceholder": "FMEA Name",

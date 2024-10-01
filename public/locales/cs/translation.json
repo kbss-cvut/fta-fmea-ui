@@ -34,6 +34,10 @@
     "gateType": "Typ hradla",
     "noSystemError": "Na panelu Navigační panel vyberte možnost Systém"
   },
+  "deleteFtaModal": {
+    "title": "Smazat strom poruch",
+    "explanation": "Smazáním stromu chyb se smaže celá stromová struktura. Pokračovat ve smazání stromu?"
+  },
   "newFmeaModal": {
     "title": "FMEA agregáty",
     "namePlaceholder": "Název FMEA",
