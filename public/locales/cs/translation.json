@@ -1,4 +1,8 @@
 {
+  "user": {
+    "logout": "Odhlásit se",
+    "changePassword": "Změnit heslo"
+  },
   "categories": {
     "systems": "Systémy",
     "trees": "Poruchové stromy",
@@ -30,6 +34,10 @@
     "gateType": "Typ hradla",
     "noSystemError": "Na panelu Navigační panel vyberte možnost Systém"
   },
+  "deleteFtaModal": {
+    "title": "Smazat strom poruch",
+    "explanation": "Smazáním stromu chyb se smaže celá stromová struktura. Pokračovat ve smazání stromu?"
+  },
   "newFmeaModal": {
     "title": "FMEA agregáty",
     "namePlaceholder": "Název FMEA",
@@ -38,7 +46,8 @@
   },
   "diagramSidePanel": {
     "cutsetToggleToolTip": "Přepnout do pohledu řezu",
-    "minimumOperationalHours": "Min. provozní doba"
+    "minimumOperationalHours": "Min. provozní doba",
+    "diagramOptions": "Možnosti diagramu"
   },
   "faultEventScenariosTable": {
     "cutset": "Řez",
@@ -94,6 +103,12 @@
     "deleteHint": "Smazat strom poruch",
     "created": "Vytvořeno",
     "operationalHours": "Doba provozu"
+  },
+  "systemComponentMenu": {
+    "editComponent": "Upravit komponentu",
+    "notSelected": "Není vybrána žádná komponenta",
+    "functions": "Funkce",
+    "linkedComponent": "Propojená komponenta"
   },
   "faultEventMenu": {
     "eventName": "Název události",

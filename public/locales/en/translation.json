@@ -1,4 +1,8 @@
 {
+  "user": {
+    "logout": "Logout",
+    "changePassword": "Change password"
+  },
   "categories": {
     "systems": "Systems",
     "trees": "Fault trees",
@@ -30,6 +34,10 @@
     "gateType": "Gate type",
     "noSystemError": "Select the System from the Navbar"
   },
+  "deleteFtaModal": {
+    "title": "Delete Fault Tree",
+    "explanation": "Deleting fault tree will delete the whole tree structure. Proceed to delete the tree?"
+  },
   "newFmeaModal": {
     "title": "FMEA Aggregates",
     "namePlaceholder": "FMEA Name",
@@ -38,7 +46,8 @@
   },
   "diagramSidePanel": {
     "cutsetToggleToolTip": "Switch to cutsets view",
-    "minimumOperationalHours": "Min. operational hours"
+    "minimumOperationalHours": "Min. operational hours",
+    "diagramOptions": "Diagram Options"
   },
   "faultEventScenariosTable": {
     "cutset": "Cutset",
@@ -94,6 +103,12 @@
     "deleteHint": "Delete fault tree",
     "created": "Created",
     "operationalHours": "Operational Hours"
+  },
+  "systemComponentMenu": {
+    "editComponent": "Edit Component",
+    "notSelected": "No component selected",
+    "functions": "Functions",
+    "linkedComponent": "Linked Component"
   },
   "faultEventMenu": {
     "eventName": "Event name",

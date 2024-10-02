@@ -108,9 +108,9 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
       {loggedUser.roles && loggedUser.roles.indexOf("ROLE_ADMIN") >= 0 && (
         <MenuItem onClick={navigateToAdmin}>Administration</MenuItem>
       )}
-      {!isUsingOidcAuth() && <MenuItem onClick={handleChangePasswordDialogOpen}>Change Password</MenuItem>}
+      {!isUsingOidcAuth() && <MenuItem onClick={handleChangePasswordDialogOpen}>{t("user.changePassword")}</MenuItem>}
 
-      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+      <MenuItem onClick={handleLogout}>{t("user.logout")}</MenuItem>
     </Menu>
   );
 

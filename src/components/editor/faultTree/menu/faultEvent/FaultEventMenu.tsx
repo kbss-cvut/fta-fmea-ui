@@ -518,10 +518,6 @@ const FaultEventMenu = ({ selectedShapeToolData, onEventUpdated, refreshTree, ro
 
           <EventFailureModeList onFailureModeClick={handleFailureModeClicked} />
 
-          <Button color="primary" onClick={() => setFailureModeDialogOpen(true)}>
-            Set Failure Mode
-          </Button>
-
           <FailureModeDialog
             open={failureModeDialogOpen && Boolean(shapeToolData)}
             onClose={() => setFailureModeDialogOpen(false)}

@@ -76,9 +76,8 @@ const FaultTreeOverview = () => {
 
   const handleDelete = (treeToDelete: FaultTree) => {
     showConfirmDialog({
-      title: "Delete Fault Tree",
-      explanation:
-        "Deleting fault tree will delete the whole tree structure. Events will remain. Proceed to delete the tree?",
+      title: t("deleteFtaModal.title"),
+      explanation: t("deleteFtaModal.explanation"),
       onConfirm: () => {
         removeTree(treeToDelete);
       },

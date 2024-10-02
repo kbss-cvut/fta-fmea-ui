@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Menu, MenuItem } from "@mui/material";
 import { ElementContextMenuAnchor } from "@utils/contextMenu";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   anchorPosition: ElementContextMenuAnchor;
@@ -10,6 +11,7 @@ interface Props {
 }
 
 const SystemContextMenu = ({ anchorPosition, onClose, onEditClick, onDelete }: Props) => {
+  const { t } = useTranslation();
   const handleEditClick = () => {
     onClose();
     onEditClick();
@@ -36,10 +38,10 @@ const SystemContextMenu = ({ anchorPosition, onClose, onEditClick, onDelete }: P
       }
     >
       <MenuItem key="system-menu-rename" onClick={handleEditClick}>
-        Rename
+        {t("common.rename")}
       </MenuItem>
       <MenuItem key="system-delete" onClick={handleDeleteClick}>
-        Delete
+        {t("common.delete")}
       </MenuItem>
     </Menu>
   );

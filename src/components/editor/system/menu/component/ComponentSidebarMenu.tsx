@@ -13,6 +13,7 @@ import ControlledAutocomplete from "@components/materialui/ControlledAutocomplet
 import { useForm } from "react-hook-form";
 import { FailureModeProvider } from "@hooks/useFailureModes";
 import { simplifyReferences } from "@utils/utils";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   component: Component;
@@ -22,6 +23,7 @@ interface Props {
 
 const ComponentSidebarMenu = ({ component, onComponentUpdated, systemComponents }: Props) => {
   const [showSnackbar] = useSnackbar();
+  const { t } = useTranslation();
 
   const allowedComponents = filter(flatten([systemComponents]), (o) => o.iri !== component?.iri);
 
@@ -61,13 +63,13 @@ const ComponentSidebarMenu = ({ component, onComponentUpdated, systemComponents 
   return (
     <React.Fragment>
       <Typography variant="h5" gutterBottom>
-        Edit Component
+        {t("systemComponentMenu.editComponent")}
       </Typography>
       {component ? (
         <ComponentEditMenu component={component} onComponentUpdated={onComponentUpdated} />
       ) : (
         <Typography variant="subtitle1" gutterBottom>
-          No component selected
+          {t("systemComponentMenu.notSelected")}
         </Typography>
       )}
       <Divider />
@@ -75,7 +77,7 @@ const ComponentSidebarMenu = ({ component, onComponentUpdated, systemComponents 
       {component && (
         <React.Fragment>
           <Typography variant="h6" gutterBottom>
-            Functions
+            {t("systemComponentMenu.functions")}
           </Typography>
           <FunctionsProvider componentUri={component?.iri}>
             <FailureModeProvider component={component}>
@@ -90,7 +92,7 @@ const ComponentSidebarMenu = ({ component, onComponentUpdated, systemComponents 
       {component && (
         <React.Fragment>
           <Typography variant="h6" gutterBottom>
-            Linked Component
+            {t("systemComponentMenu.linkedComponent")}
           </Typography>
           <ControlledAutocomplete
             control={control}
