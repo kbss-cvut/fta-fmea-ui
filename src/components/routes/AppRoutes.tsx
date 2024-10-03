@@ -56,11 +56,12 @@ const AppRoutes = () => {
       path: ROUTES.FTA + ROUTE_PARAMS.FTA_FRAGMENT,
       element: <FaultTreeDashboard />,
     },
-    {
+
+    !ENVVariable.DISABLE_FMEA && {
       path: ROUTES.FMEA,
       element: <FmeaOverview />,
     },
-    {
+    !ENVVariable.DISABLE_FMEA && {
       path: ROUTES.FMEA + ROUTE_PARAMS.FMEA_FRAGMENT,
       element: <FailureModesTableDashboard />,
     },

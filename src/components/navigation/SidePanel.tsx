@@ -5,7 +5,7 @@ import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import ArticleIcon from "@mui/icons-material/Article";
 import BackupTableIcon from "@mui/icons-material/BackupTable";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ROUTES } from "@utils/constants";
+import { ENVVariable, ROUTES } from "@utils/constants";
 import useStyles from "./SidePanel.styles";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -55,7 +55,7 @@ const SidePanel: FC<SidePanelProps> = ({
       icon: <AccountTreeIcon />,
       route: ROUTES.FTA,
     },
-    {
+    !ENVVariable.DISABLE_FMEA && {
       title: `${t("categories.worksheets")}`,
       icon: <ArticleIcon />,
       route: ROUTES.FMEA,
@@ -74,31 +74,33 @@ const SidePanel: FC<SidePanelProps> = ({
       style={{ transition: showAnimation ? "width 0.3s" : "none" }}
     >
       <Box style={{ marginTop: topPanelHeight }}>
-        {menuItems.map((item, index) => {
-          const isHighLighted = index === hoveredItemIndex || location.pathname.includes(item.route);
-          const bgColor = isHighLighted ? theme.sidePanel.colors.hover : "transparent";
-          const iconColor = isHighLighted ? theme.sidePanel.colors.iconActive : theme.sidePanel.colors.icon;
-          const titleColor = isHighLighted ? theme.sidePanel.colors.textActive : theme.sidePanel.colors.text;
-          return (
-            <Box
-              key={`${item.title}-${index}`}
-              className={classes.menuItem}
-              onMouseEnter={() => setHoveredItemIndex(index)}
-              onMouseLeave={() => setHoveredItemIndex(undefined)}
-              onClick={() => handleMenuItemClick(item.route)}
-              style={{ backgroundColor: bgColor }}
-            >
-              <Box className={classes.iconContainer} style={{ color: iconColor }}>
-                {item.icon}
+        {menuItems
+          .filter((item) => !!item)
+          .map((item, index) => {
+            const isHighLighted = index === hoveredItemIndex || location.pathname.includes(item.route);
+            const bgColor = isHighLighted ? theme.sidePanel.colors.hover : "transparent";
+            const iconColor = isHighLighted ? theme.sidePanel.colors.iconActive : theme.sidePanel.colors.icon;
+            const titleColor = isHighLighted ? theme.sidePanel.colors.textActive : theme.sidePanel.colors.text;
+            return (
+              <Box
+                key={`${item.title}-${index}`}
+                className={classes.menuItem}
+                onMouseEnter={() => setHoveredItemIndex(index)}
+                onMouseLeave={() => setHoveredItemIndex(undefined)}
+                onClick={() => handleMenuItemClick(item.route)}
+                style={{ backgroundColor: bgColor }}
+              >
+                <Box className={classes.iconContainer} style={{ color: iconColor }}>
+                  {item.icon}
+                </Box>
+                <Box className={classes.titleContainer}>
+                  <Typography className={classes.title} style={{ color: titleColor }}>
+                    {item.title}
+                  </Typography>
+                </Box>
               </Box>
-              <Box className={classes.titleContainer}>
-                <Typography className={classes.title} style={{ color: titleColor }}>
-                  {item.title}
-                </Typography>
-              </Box>
-            </Box>
-          );
-        })}
+            );
+          })}
         <Box className={classes.toggleContainer} onClick={toggleSidePanel}>
           <Box className={classes.toggleIconBox}>{isCollapsed ? <MenuIcon /> : <MenuOpenIcon />}</Box>
         </Box>

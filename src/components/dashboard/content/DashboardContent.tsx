@@ -8,6 +8,7 @@ import NatureIcon from "@mui/icons-material/Nature";
 import SystemDialog from "@components/dialog/system/SystemDialog";
 import TableChartIcon from "@mui/icons-material/TableChart";
 import FailureModesTableAggregateDialog from "@components/dialog/failureModesTable/aggregate/FailureModesTableAggregateDialog";
+import { ENVVariable } from "../../../utils/constants";
 
 const DashboardContent = () => {
   const { classes } = useStyles();
@@ -43,14 +44,16 @@ const DashboardContent = () => {
         onOpen={() => setSpeedDialOpen(true)}
         open={speedDialOpen}
       >
-        <SpeedDialAction
-          key="speed-dial-action-new-table-aggregate"
-          icon={<TableChartIcon />}
-          tooltipOpen
-          tooltipTitle={"Aggregated FMEA"}
-          title={"Aggregated FMEA"}
-          onClick={handleNewFmeaAggregate}
-        />
+        {!ENVVariable.DISABLE_FMEA && (
+          <SpeedDialAction
+            key="speed-dial-action-new-table-aggregate"
+            icon={<TableChartIcon />}
+            tooltipOpen
+            tooltipTitle={"Aggregated FMEA"}
+            title={"Aggregated FMEA"}
+            onClick={handleNewFmeaAggregate}
+          />
+        )}
         <SpeedDialAction
           key="speed-dial-action-new-tree"
           icon={<NatureIcon />}
@@ -71,10 +74,12 @@ const DashboardContent = () => {
 
       <FaultTreeDialog open={createFaultTreeDialogOpen} handleCloseDialog={() => setCreateFaultTreeDialogOpen(false)} />
       <SystemDialog open={createSystemDialogOpen} handleCloseDialog={() => setCreateSystemDialogOpen(false)} />
-      <FailureModesTableAggregateDialog
-        open={createFmeaAggregateDialogOpen}
-        onClose={() => setCreateFmeaAggregateDialogOpen(false)}
-      />
+      {!ENVVariable.DISABLE_FMEA && (
+        <FailureModesTableAggregateDialog
+          open={createFmeaAggregateDialogOpen}
+          onClose={() => setCreateFmeaAggregateDialogOpen(false)}
+        />
+      )}
     </React.Fragment>
   );
 };

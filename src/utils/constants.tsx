@@ -26,6 +26,7 @@ export const ENVVariable = {
   AUTHENTICATION: getEnv("FTA_FMEA_AUTHENTICATION", "internal"),
   AUTH_SERVER_URL: getEnv("FTA_FMEA_AUTH_SERVER_URL", ""),
   AUTH_CLIENT_ID: getEnv("FTA_FMEA_AUTH_CLIENT_ID", ""),
+  DISABLE_FMEA: getEnv("FTA_FMEA_DISABLE_FMEA", ""),
 };
 
 export const JSONLD = "application/ld+json";

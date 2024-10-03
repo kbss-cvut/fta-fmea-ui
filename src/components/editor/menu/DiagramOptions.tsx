@@ -7,6 +7,7 @@ import Tooltip from "@mui/material/Tooltip";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
 import CircularProgress from "@mui/material/CircularProgress";
+import { ENVVariable } from "@utils/constants";
 
 export interface Props {
   onApplyAutomaticLayout: () => void;
@@ -39,7 +40,7 @@ const DiagramOptions = ({
         <IconButton color="primary" onClick={onExportDiagram} aria-label="save" size="large">
           <SaveAltIcon />
         </IconButton>
-        {tableConversionAllowed && (
+        {!ENVVariable && tableConversionAllowed && (
           <IconButton color="primary" onClick={onConvertToTable} aria-label="convert" size="large">
             <TableChartIcon />
           </IconButton>
