@@ -1,28 +1,19 @@
 import React from "react";
-import { Typography, IconButton, Tooltip } from "@mui/material";
-import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
+import { Tooltip } from "@mui/material";
 import useStyles from "./HintText.styles";
+import { HelpOutline } from "@mui/icons-material";
 
 interface HintTextProps {
   text: string;
   hint: string;
 }
 
-const HintText: React.FC<HintTextProps> = ({ text, hint }) => {
+const HintText: React.FC<HintTextProps> = ({ hint }) => {
   const { classes } = useStyles();
   return (
-    <div className={classes.container}>
-      <div className={classes.innerContainer}>
-        <Typography variant="body1">{text}</Typography>
-        <div className={classes.toolTip}>
-          <Tooltip title={hint} arrow placement="bottom">
-            <IconButton size="small" aria-label="hint">
-              <QuestionMarkIcon className={classes.hintFont} />
-            </IconButton>
-          </Tooltip>
-        </div>
-      </div>
-    </div>
+    <Tooltip title={<span className={classes.hintFont}>{hint}</span>} arrow placement="bottom">
+      <HelpOutline className={classes.helpIcon} />
+    </Tooltip>
   );
 };
 

@@ -50,6 +50,9 @@ declare module "@mui/material/styles" {
     requirementViolation?: {
       color: COLOR;
     };
+    hint?: {
+      fontSize: number;
+    };
   }
   // allow configuration using `createMuiTheme`
   interface DeprecatedThemeOptions {
