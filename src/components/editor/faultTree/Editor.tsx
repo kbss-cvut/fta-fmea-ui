@@ -21,6 +21,7 @@ import { JOINTJS_NODE_MODEL } from "@components/editor/faultTree/shapes/constant
 import { FaultEventScenario } from "@models/faultEventScenario";
 import { useAppBar } from "@contexts/AppBarContext";
 import { asArray } from "@utils/utils";
+import { getFaultTreeCalculationStatus } from "@models/faultTreeModel";
 
 const Editor = () => {
   const history = useNavigate();
@@ -237,7 +238,7 @@ const Editor = () => {
       {faultTree && (
         <EditorCanvas
           treeName={faultTree?.name}
-          outOfSync={faultTree?.status !== "ok"}
+          faultTreeStatus={getFaultTreeCalculationStatus(faultTree)}
           rootEvent={rootEvent}
           onEventUpdated={handleEventUpdate}
           sidebarSelectedEvent={sidebarSelectedEvent}
