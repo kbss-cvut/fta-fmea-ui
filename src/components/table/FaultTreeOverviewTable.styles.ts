@@ -60,6 +60,9 @@ const useStyles = makeStyles()((theme: Theme) => ({
   systemFirstColumn: {
     ...commonCellStyle,
   },
+  hint: {
+    fontSize: 16,
+  },
 }));
 
 export default useStyles;
