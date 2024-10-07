@@ -131,7 +131,7 @@ const FaultEventMenu = ({
 
     if (selectedRadioButton === RadioButtonType.Manual) {
       await updateEvent({
-        probability: manualFailureRates[shapeToolData.eventType] || manualFailureRates.default,
+        probability: manualFailureRates[shapeToolData.eventType],
         selectedEstimate: undefined,
       });
     } else {
@@ -153,11 +153,12 @@ const FaultEventMenu = ({
     const inputValue = event.target.value;
     const regex = /^[0-9]*\.?[0-9]*$/;
     if (regex.test(inputValue)) {
+      const inputNumber = inputValue === "" ? undefined : inputValue;
       if (type === NodeTypeWithManualFailureRate.Sns) {
-        setBasicManuallyDefinedFailureRate(inputValue);
+        setBasicManuallyDefinedFailureRate(inputNumber);
       }
       if (type === NodeTypeWithManualFailureRate.External) {
-        setExternalManuallyDefinedFailureRate(inputValue);
+        setExternalManuallyDefinedFailureRate(inputNumber);
       }
       setIsModified(true);
     }
