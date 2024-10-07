@@ -17,7 +17,7 @@ import { JOINTJS_NODE_MODEL } from "@components/editor/faultTree/shapes/constant
 import { FaultEventScenario } from "@models/faultEventScenario";
 import { findNodeByIri } from "@utils/treeUtils";
 import FaultEventScenariosTable from "../menu/FaultEventScenariosTable";
-import { Box, TextField, Typography, IconButton, useTheme } from "@mui/material";
+import { Box, TextField, Typography, IconButton, useTheme, Divider } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import PlayArrow from "@mui/icons-material/PlayArrow";
@@ -370,6 +370,8 @@ const EditorCanvas = ({
             </IconButton>
           </Box>
         </CurrentFaultTreeTableProvider>
+        <Divider className={classes.divider} />
+
         {!showTable && (
           <FaultEventMenu
             selectedShapeToolData={sidebarSelectedEvent}
