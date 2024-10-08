@@ -10,6 +10,7 @@ import { DialogActions } from "@components/materialui/dialog/DialogActions";
 import { useFaultTrees } from "@hooks/useFaultTrees";
 import { FaultTree } from "@models/faultTreeModel";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   open: boolean;
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const FaultTreeEditDialog = ({ open, handleCloseDialog, faultTree }: Props) => {
+  const { t } = useTranslation();
   const [, , updateTree] = useFaultTrees();
   const [processing, setIsProcessing] = useState(false);
 
@@ -46,13 +48,13 @@ const FaultTreeEditDialog = ({ open, handleCloseDialog, faultTree }: Props) => {
   return (
     <Dialog open={open} onClose={handleCloseDialog} aria-labelledby="tree-edit-dialog-title" maxWidth="md" fullWidth>
       <DialogTitle id="tree-edit-dialog-title" onClose={handleCloseDialog}>
-        Edit Fault Tree
+        {t("renameFtaModal.title")}
       </DialogTitle>
       <DialogContent dividers>
         <TextField
           autoFocus
           margin="dense"
-          label="Fault Tree Name"
+          label={t("renameFtaModal.nameFieldLabel")}
           name="faultTreeName"
           type="text"
           fullWidth
@@ -62,7 +64,7 @@ const FaultTreeEditDialog = ({ open, handleCloseDialog, faultTree }: Props) => {
       </DialogContent>
       <DialogActions>
         <Button disabled={processing} color="primary" onClick={handleSubmit(handleCreateFaultTree)}>
-          Save Fault Tree
+          {t("common.rename")}
         </Button>
       </DialogActions>
     </Dialog>

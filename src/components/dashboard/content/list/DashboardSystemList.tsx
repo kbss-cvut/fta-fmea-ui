@@ -22,8 +22,10 @@ import { System } from "@models/systemModel";
 import SystemEditDialog from "@components/dialog/system/SystemEditDialog";
 import { contextMenuDefaultAnchor, ElementContextMenuAnchor } from "@utils/contextMenu";
 import SystemContextMenu from "@components/editor/system/menu/SystemContextMenu";
+import { useTranslation } from "react-i18next";
 
 const DashboardSystemList = () => {
+  const { t } = useTranslation();
   const { classes } = useStyles();
   const [systems, , , removeSystem] = useSystems();
 
@@ -39,9 +41,8 @@ const DashboardSystemList = () => {
 
   const handleDelete = (systemToDelete: System) => {
     showConfirmDialog({
-      title: "Delete System",
-      explanation:
-        "By deleting the system, all components, functions and failure modes will be deleted as well. Proceed to delete the system?",
+      title: t("deleteSystemModal.title"),
+      explanation: t("deleteSystemModal.explanation"),
       onConfirm: () => {
         removeSystem(systemToDelete);
       },
