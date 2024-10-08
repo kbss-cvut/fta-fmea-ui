@@ -22,7 +22,6 @@ import { useTranslation } from "react-i18next";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import PlayArrow from "@mui/icons-material/PlayArrow";
 import { useCurrentFaultTree } from "@hooks/useCurrentFaultTree";
-import { useFaultTrees } from "@hooks/useFaultTrees";
 import { calculateCutSets } from "@services/faultTreeService";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 import { useNavigate } from "react-router-dom";
@@ -94,8 +93,8 @@ const EditorCanvas = ({
   const [rendering, setRendering] = useState<boolean>(false);
   const [faultTree] = useCurrentFaultTree();
   const initialMinOperationalHours = faultTree?.operationalDataFilter?.minOperationalHours || 0;
+  const systemMinOperationalHours = faultTree?.system?.operationalDataFilter?.minOperationalHours || 0;
   const [updatedMinOperationalHours, setUpdatedMinOperationalHours] = useState(initialMinOperationalHours);
-  const [inputColor, setInputColor] = useState("");
   const [showSnackbar] = useSnackbar();
   const { isModified, setShowUnsavedChangesDialog } = useAppBar();
 
@@ -295,16 +294,13 @@ const EditorCanvas = ({
   const handleMinOperationalHoursChange = (event) => {
     const newValue = event.target.value;
     setUpdatedMinOperationalHours(newValue);
-    if (newValue !== faultTree?.operationalDataFilter?.minOperationalHours) {
-      setInputColor(theme.notSynchronized.color);
-    } else {
-      setInputColor(theme.synchronized.color);
-    }
   };
 
   const handleReset = () => {
-    setUpdatedMinOperationalHours(initialMinOperationalHours);
-    setInputColor(theme.synchronized.color);
+    if (initialMinOperationalHours != updatedMinOperationalHours)
+      setUpdatedMinOperationalHours(initialMinOperationalHours);
+    else if (initialMinOperationalHours != systemMinOperationalHours)
+      setUpdatedMinOperationalHours(systemMinOperationalHours);
   };
 
   const handleSetNewDefaultOperationalHours = () => {
@@ -322,9 +318,25 @@ const EditorCanvas = ({
       .catch((reason) => {
         showSnackbar(reason, SnackbarType.ERROR);
       });
-
-    setInputColor(theme.synchronized.color);
   };
+
+  const dirty = initialMinOperationalHours != updatedMinOperationalHours;
+  const experimental = systemMinOperationalHours != updatedMinOperationalHours;
+  const inputColor = experimental ? theme.notSynchronized.color : theme.synchronized.color;
+  const inputProps =
+    updatedMinOperationalHours !== initialMinOperationalHours
+      ? { style: { borderStyle: "dashed", borderWidth: "4px", borderColor: theme.notSynchronized.color } }
+      : null;
+  const props = {};
+  if (inputProps) props.inputProps = inputProps;
+
+  if (dirty || experimental) {
+    const messages = [
+      dirty ? t("diagramSidePanel.messages.mohNewValue") : null,
+      experimental ? t("diagramSidePanel.messages.mohExperimental") : null,
+    ].filter((m) => m != null);
+    props.title = messages.length > 1 ? messages.map((m, i) => i + 1 + ") " + m).join("\n") : messages[0];
+  }
 
   return (
     <div className={classes.root}>
@@ -348,6 +360,7 @@ const EditorCanvas = ({
               sx={{ flex: 2, input: { color: inputColor } }}
               value={updatedMinOperationalHours}
               onChange={handleMinOperationalHoursChange}
+              {...props}
             />
             <IconButton aria-label="restore layout" size="large" onClick={handleReset}>
               <RestartAltIcon />
