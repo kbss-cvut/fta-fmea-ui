@@ -88,7 +88,6 @@ const FaultEventMenu = ({ selectedShapeToolData, outOfSync = null, onEventUpdate
   const [failureModeOverview, setFailureModeOverview] = useState<FailureMode | null>(null);
 
   const [criticality, setCriticality] = useState<number | undefined>(0);
-  const [predictedFailureRate, setPredictedFailureRate] = useState<number | undefined>(0);
   const [ataSystem, setAtaSystem] = useState<string | undefined>("");
   const [partNumber, setPartNumber] = useState<string | undefined>("");
   const [stock, setStock] = useState<string | undefined>("");
@@ -198,9 +197,9 @@ const FaultEventMenu = ({ selectedShapeToolData, outOfSync = null, onEventUpdate
       const filteredFailureRate = types.filter((type) => type.hasFailureRate);
 
       if (filteredFailureRate.length === 1 && filteredFailureRate[0].hasFailureRate?.prediction?.value) {
-        setPredictedFailureRate(filteredFailureRate[0].hasFailureRate?.prediction?.value);
+        setSnsPredictedFailureRate(filteredFailureRate[0].hasFailureRate?.prediction?.value);
       } else {
-        setPredictedFailureRate(undefined);
+        setSnsPredictedFailureRate(undefined);
       }
 
       const superTypes = asArray(shapeToolData?.supertypes?.behavior?.item?.supertypes);
