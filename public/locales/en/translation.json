@@ -47,7 +47,11 @@
   "diagramSidePanel": {
     "cutsetToggleToolTip": "Switch to cutsets view",
     "minimumOperationalHours": "Min. operational hours",
-    "diagramOptions": "Diagram Options"
+    "diagramOptions": "Diagram Options",
+    "messages": {
+      "mohNewValue": "New value, not used in fault tree evaluation.",
+      "mohExperimental": "Value is different from the system's min. operational hour value."
+    }
   },
   "faultEventScenariosTable": {
     "cutset": "Cutset",
