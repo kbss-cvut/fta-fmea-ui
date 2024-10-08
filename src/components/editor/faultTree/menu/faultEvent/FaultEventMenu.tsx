@@ -131,7 +131,7 @@ const FaultEventMenu = ({
 
     if (selectedRadioButton === RadioButtonType.Manual) {
       await updateEvent({
-        probability: manualFailureRates[shapeToolData.eventType] || manualFailureRates.default,
+        probability: manualFailureRates[shapeToolData.eventType],
         selectedEstimate: undefined,
       });
     } else {
@@ -153,11 +153,12 @@ const FaultEventMenu = ({
     const inputValue = event.target.value;
     const regex = /^[0-9]*\.?[0-9]*$/;
     if (regex.test(inputValue)) {
+      const inputNumber = inputValue === "" ? undefined : inputValue;
       if (type === NodeTypeWithManualFailureRate.Sns) {
-        setBasicManuallyDefinedFailureRate(inputValue);
+        setBasicManuallyDefinedFailureRate(inputNumber);
       }
       if (type === NodeTypeWithManualFailureRate.External) {
-        setExternalManuallyDefinedFailureRate(inputValue);
+        setExternalManuallyDefinedFailureRate(inputNumber);
       }
       setIsModified(true);
     }
@@ -419,11 +420,6 @@ const FaultEventMenu = ({
       {/* ROOT NODE */}
       {shapeToolData && shapeToolData.iri === rootIri && (
         <>
-          {basedFailureRate && (
-            <Box className={classes.eventPropertyRow}>{fhaFailureRateComponent(basedFailureRate, null, null)}</Box>
-          )}
-          {getRequiredFailureRate() &&
-            requiredFailureRateComponent(getRequiredFailureRate(), requiredFailureRateStatusColor, violatesRequirement)}
           {shapeToolData?.probability && (
             <Box className={classes.eventPropertyRow}>
               {calculatedFailureRateComponent(
@@ -433,6 +429,11 @@ const FaultEventMenu = ({
               )}
             </Box>
           )}
+          {getRequiredFailureRate() &&
+            requiredFailureRateComponent(getRequiredFailureRate(), requiredFailureRateStatusColor, violatesRequirement)}
+          {basedFailureRate && (
+            <Box className={classes.eventPropertyRow}>{fhaFailureRateComponent(basedFailureRate, null, null)}</Box>
+          )}
           <Divider className={classes.divider} />
         </>
       )}
@@ -440,11 +441,6 @@ const FaultEventMenu = ({
       {/* EXTERNAL NODE  */}
       {shapeToolData && shapeToolData.eventType === EventType.EXTERNAL && shapeToolData.isReference && (
         <>
-          {basedFailureRate && (
-            <Box className={classes.eventPropertyRow}>{fhaFailureRateComponent(basedFailureRate, null, null)}</Box>
-          )}
-          {getRequiredFailureRate() &&
-            requiredFailureRateComponent(getRequiredFailureRate(), requiredFailureRateStatusColor, violatesRequirement)}
           {shapeToolData?.probability && (
             <Box className={classes.eventPropertyRow}>
               {calculatedFailureRateComponent(
@@ -453,6 +449,11 @@ const FaultEventMenu = ({
                 isReferenceProbabilityOutdated(shapeToolData) ? ["faultEventMessage.referencedValueOutdated"] : [],
               )}
             </Box>
+          )}
+          {getRequiredFailureRate() &&
+            requiredFailureRateComponent(getRequiredFailureRate(), requiredFailureRateStatusColor, violatesRequirement)}
+          {basedFailureRate && (
+            <Box className={classes.eventPropertyRow}>{fhaFailureRateComponent(basedFailureRate, null, null)}</Box>
           )}
           <Divider className={classes.divider} />
         </>
@@ -463,7 +464,7 @@ const FaultEventMenu = ({
         <>
           {shapeToolData?.probability && (
             <Box className={classes.eventPropertyRow}>
-              {failureRateComponent(shapeToolData.probability, theme.main.black, [])}
+              {failureRateComponent(shapeToolData.probability, "eventDescription.manuallyDefinedFailureRate", [])}
             </Box>
           )}
         </>
