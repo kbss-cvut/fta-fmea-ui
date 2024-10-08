@@ -72,7 +72,7 @@ const FaultEventMenu = ({ selectedShapeToolData, outOfSync = null, onEventUpdate
   const theme = useTheme();
   const [failureModeDialogOpen, setFailureModeDialogOpen] = useState(false);
   const [resetMenu, setResetMenu] = useState<boolean>(false);
-  const [shapeToolData, setShapeToolData] = useState<FaultEvent | undefined>(undefined);
+  const [shapeToolData, setShapeToolData] = useState<FaultEvent | undefined>();
 
   const getRequiredFailureRate = () => shapeToolData.supertypes?.hasFailureRate?.requirement?.upperBound;
 
@@ -87,26 +87,23 @@ const FaultEventMenu = ({ selectedShapeToolData, outOfSync = null, onEventUpdate
   const [failureModeOverviewDialogOpen, setFailureModeOverviewDialogOpen] = useState(false);
   const [failureModeOverview, setFailureModeOverview] = useState<FailureMode | null>(null);
 
-  const [criticality, setCriticality] = useState<number | undefined>(undefined);
-  const [predictedFailureRate, setPredictedFailureRate] = useState<number | undefined>(undefined);
-  const [ataSystem, setAtaSystem] = useState<string | undefined>(undefined);
-  const [partNumber, setPartNumber] = useState<string | undefined>(undefined);
-  const [stock, setStock] = useState<string | undefined>(undefined);
-  const [quantity, setQuantity] = useState<number | undefined>(undefined);
-  const [schematicDesignation, setSchematicDesignation] = useState<string | undefined>(undefined);
+  const [criticality, setCriticality] = useState<number | undefined>(0);
+  const [ataSystem, setAtaSystem] = useState<string | undefined>("");
+  const [partNumber, setPartNumber] = useState<string | undefined>("");
+  const [stock, setStock] = useState<string | undefined>("");
+  const [quantity, setQuantity] = useState<number | undefined>(0);
+  const [schematicDesignation, setSchematicDesignation] = useState<string | undefined>("");
   const [selectedSystem] = useSelectedSystemSummaries();
 
-  const [snsOperationalFailureRate, setSnsOperationalFailureRate] = useState<number | undefined>(undefined);
-  const [snsPredictedFailureRate, setSnsPredictedFailureRate] = useState<number | undefined>(undefined);
-  const [basicManuallyDefinedFailureRate, setBasicManuallyDefinedFailureRate] = useState<number | undefined>(undefined);
-  const [externalManuallyDefinedFailureRate, setExternalManuallyDefinedFailureRate] = useState<number | undefined>(
-    undefined,
-  );
+  const [snsOperationalFailureRate, setSnsOperationalFailureRate] = useState<number | undefined>(0);
+  const [snsPredictedFailureRate, setSnsPredictedFailureRate] = useState<number | undefined>(0);
+  const [basicManuallyDefinedFailureRate, setBasicManuallyDefinedFailureRate] = useState<number | undefined>(0);
+  const [externalManuallyDefinedFailureRate, setExternalManuallyDefinedFailureRate] = useState<number | undefined>(0);
   const [selectedRadioButton, setSelectedRadioButton] = useState<string>(RadioButtonType.Predicted);
-  const [preselectedRadioButton, setPreselectedSelectedRadioButton] = useState<string | undefined>();
+  const [preselectedRadioButton, setPreselectedSelectedRadioButton] = useState<string | undefined>("");
 
-  const [snsOperationalIri, setSnsOperationalIri] = useState<string | undefined>(undefined);
-  const [snsPredictedIri, setSnsPredictedIri] = useState<string | undefined>(undefined);
+  const [snsOperationalIri, setSnsOperationalIri] = useState<string | undefined>("");
+  const [snsPredictedIri, setSnsPredictedIri] = useState<string | undefined>("");
 
   const handleOnSave = async () => {
     setIsModified(false);
@@ -200,9 +197,9 @@ const FaultEventMenu = ({ selectedShapeToolData, outOfSync = null, onEventUpdate
       const filteredFailureRate = types.filter((type) => type.hasFailureRate);
 
       if (filteredFailureRate.length === 1 && filteredFailureRate[0].hasFailureRate?.prediction?.value) {
-        setPredictedFailureRate(filteredFailureRate[0].hasFailureRate?.prediction?.value);
+        setSnsPredictedFailureRate(filteredFailureRate[0].hasFailureRate?.prediction?.value);
       } else {
-        setPredictedFailureRate(undefined);
+        setSnsPredictedFailureRate(undefined);
       }
 
       const superTypes = asArray(shapeToolData?.supertypes?.behavior?.item?.supertypes);
