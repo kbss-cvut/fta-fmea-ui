@@ -47,7 +47,11 @@
   "diagramSidePanel": {
     "cutsetToggleToolTip": "Přepnout do pohledu řezu",
     "minimumOperationalHours": "Min. provozní doba",
-    "diagramOptions": "Možnosti diagramu"
+    "diagramOptions": "Možnosti diagramu",
+    "messages": {
+      "mohNewValue": "Nová hodnota, která se není použíta při vyhodnocování stromu chyb.",
+      "mohExperimental": "Hodnota se liší od min. hodnota provozní hodiny systému."
+    }
   },
   "faultEventScenariosTable": {
     "cutset": "Řez",
