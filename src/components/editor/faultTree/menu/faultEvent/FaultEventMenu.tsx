@@ -95,7 +95,7 @@ const FaultEventMenu = ({
   const [failureModeOverviewDialogOpen, setFailureModeOverviewDialogOpen] = useState(false);
   const [failureModeOverview, setFailureModeOverview] = useState<FailureMode | null>(null);
 
-  const [criticality, setCriticality] = useState<number | undefined>(0);
+  const [criticality, setCriticality] = useState<string | undefined>(undefined);
   const [ataSystem, setAtaSystem] = useState<string | undefined>("");
   const [partNumber, setPartNumber] = useState<string | undefined>("");
   const [stock, setStock] = useState<string | undefined>("");
@@ -195,8 +195,9 @@ const FaultEventMenu = ({
       setBasicManuallyDefinedFailureRate(undefined);
       setSelectedRadioButton(RadioButtonType.Predicted);
 
-      if (shapeToolData?.supertypes?.criticality) {
-        setCriticality(shapeToolData.supertypes.criticality);
+      const _criticalityArray = asArray(shapeToolData?.supertypes?.criticality);
+      if (_criticalityArray.length > 0) {
+        setCriticality(_criticalityArray.sort().join(", "));
       } else {
         setCriticality(undefined);
       }
