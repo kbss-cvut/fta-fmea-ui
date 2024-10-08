@@ -85,6 +85,8 @@
   },
   "faultEventMessage": {
     "outOfSyncValue": "The value is outdated!",
+    "referencedValueOutdated": "The referenced value has changed. The value will be updated on tree evaluation.",
+    "experimental": "Fault tree's min. operational hours (MOH) is different from its system's MOH",
     "requirementViolated": "Calculated failure rate is bigger than required!"
   },
   "faultTreeOverviewTable": {

@@ -30,10 +30,12 @@ import UnsavedChangesDialog from "./UnsavedChangesDialog";
 import { useAppBar } from "@contexts/AppBarContext";
 import { syncProblemIcon, warnIcon } from "@components/Icons";
 import HintText from "@components/hintText/HintText";
+import { calculationStatusMessages } from "@components/fta/FTAStatus";
+import { FaultTreeStatus } from "@models/faultTreeModel";
 
 interface Props {
   selectedShapeToolData?: FaultEvent;
-  outOfSync?: string;
+  faultTreeStatus?: FaultTreeStatus;
   onEventUpdated: (faultEvent: FaultEvent) => void;
   refreshTree: () => void;
   rootIri?: string;
@@ -62,7 +64,13 @@ const getFailureRateIris = (supertypes) => {
   );
 };
 
-const FaultEventMenu = ({ selectedShapeToolData, outOfSync = null, onEventUpdated, refreshTree, rootIri }: Props) => {
+const FaultEventMenu = ({
+  selectedShapeToolData,
+  faultTreeStatus = null,
+  onEventUpdated,
+  refreshTree,
+  rootIri,
+}: Props) => {
   const { t } = useTranslation();
   const formMethods = useForm();
   const { formState, getValues } = formMethods;
@@ -288,12 +296,19 @@ const FaultEventMenu = ({ selectedShapeToolData, outOfSync = null, onEventUpdate
   const basedFailureRate = shapeToolData?.supertypes?.hasFailureRate?.estimate?.value;
   const { predictionIri, operationalIri } = getFailureRateIris(shapeToolData?.supertypes?.supertypes);
 
+  const isReferenceProbabilityOutdated = (shapeToolData: FaultEvent) => {
+    return (
+      (shapeToolData?.references?.probability || shapeToolData?.references?.probability === 0) &&
+      shapeToolData?.probability !== shapeToolData?.references?.probability
+    );
+  };
+
   const propertyLabelWithHint = (propertyKey: string) => {
     return (
-      <Typography className={classes.label}>
+      <span className={classes.label}>
         {t(propertyKey + ".title")}
         <HintText hint={t(propertyKey + ".description")} />:
-      </Typography>
+      </span>
     );
   };
 
@@ -301,47 +316,54 @@ const FaultEventMenu = ({ selectedShapeToolData, outOfSync = null, onEventUpdate
     return (
       <>
         {propertyLabelWithHint(propertyKey)}
-        <span style={{ marginLeft: "8px" }} className={classes.notEditableValue}>
-          {value}
-        </span>
+        <span className={classes.notEditableValue}>{value}</span>
       </>
     );
   };
 
+  const numberValue = (value, cls = classes.notEditableValue) => {
+    return <Tooltip title={<span className={classes.hint}>{value}</span>}>{value.toExponential(2)}</Tooltip>;
+  };
+
   const requiredFailureRateComponent = (failureRate, requirementStatusColor, violates) => {
+    const cls = violates ? classes.violated : classes.notEditableValue;
     return (
-      <Box className={classes.eventPropertyRow}>
+      <Typography className={classes.eventPropertyRow}>
         {propertyLabelWithHint("eventDescription.requiredFailureRate")}
-        <Box className={[classes.eventPropertyRow, violates ? classes.violated : classes.notEditableValue]}>
-          <Tooltip title={<span className={classes.hint}>{failureRate}</span>}>
-            <Typography>{failureRate.toExponential(2)}</Typography>
-          </Tooltip>
+        <Box className={[classes.eventPropertyRow, cls]}>
+          {numberValue(failureRate)}
           {violates &&
-            warnIcon(
-              <span className={classes.hint}>{t("faultEventMessage.requirementViolated")}</span>,
-              requirementStatusColor,
-            )}
+            warnIcon(calculationStatusMessages("faultEventMessage.requirementViolated", t), requirementStatusColor)}
         </Box>
-      </Box>
+      </Typography>
     );
   };
 
-  const calculatedFailureRateComponent = (failureRate, failureRateStatusColor, outOfSync) => {
+  const failureRateComponent = (failureRate, failureRateCode, statusCodes: string[] = []) => {
+    const isOutOfSync = statusCodes && statusCodes.length > 0;
+    const cls = isOutOfSync ? classes.outdated : classes.notEditableValue;
     return (
-      <Box className={classes.eventPropertyRow}>
-        {propertyLabelWithHint("eventDescription.calculatedFailureRate")}
-        <Box className={[classes.eventPropertyRow, outOfSync ? classes.outdated : classes.notEditableValue]}>
-          <Tooltip title={<span className={classes.hint}>{failureRate}</span>}>
-            <Typography>{failureRate.toExponential(2)}</Typography>
-          </Tooltip>
-          {outOfSync &&
-            syncProblemIcon(
-              <span className={classes.hint}>{t("faultEventMessage.outOfSyncValue")}</span>,
-              failureRateStatusColor,
-            )}
+      <Typography className={classes.eventPropertyRow}>
+        {propertyLabelWithHint(failureRateCode)}
+        <Box className={[classes.eventPropertyRow, cls]}>
+          {numberValue(failureRate)}
+          {isOutOfSync && syncProblemIcon(calculationStatusMessages(statusCodes, t), statusCodes.length)}
         </Box>
-      </Box>
+      </Typography>
     );
+  };
+
+  const fhaFailureRateComponent = (failureRate, failureRateStatusColor, faultTreeStatus: FaultTreeStatus) => {
+    return failureRateComponent(
+      failureRate,
+      "eventDescription.fhaBasedFailureRate",
+      failureRateStatusColor,
+      faultTreeStatus,
+    );
+  };
+
+  const calculatedFailureRateComponent = (failureRate, failureRateStatusColor, statusCodes: string[]) => {
+    return failureRateComponent(failureRate, "eventDescription.calculatedFailureRate", statusCodes);
   };
 
   const FailureRateBox = ({ value, failureRateKey, rate, selected, outdated }) => (
@@ -352,7 +374,7 @@ const FaultEventMenu = ({ selectedShapeToolData, outOfSync = null, onEventUpdate
         label={propertyLabelWithHint(failureRateKey)}
         className={selected ? classes.selected : classes.notSelected}
       />
-      <Tooltip title={rate}>
+      <Tooltip title={<span className={classes.hint}>{rate}</span>}>
         <Typography className={outdated ? classes.outdated : classes.notEditableValue}>
           {rate.toExponential(2)}
         </Typography>
@@ -367,8 +389,6 @@ const FaultEventMenu = ({ selectedShapeToolData, outOfSync = null, onEventUpdate
         : rateValue;
     const selected = selectedRadioButton === rateType;
     const outdated = selected && shapeToolData.probability !== rateValue;
-
-    const calculatedFailureRateStatusColor = outOfSync ? theme.notSynchronized.color : theme.main.black;
 
     return (
       <FailureRateBox
@@ -386,7 +406,7 @@ const FaultEventMenu = ({ selectedShapeToolData, outOfSync = null, onEventUpdate
 
   const requiredFailureRateStatusColor = violatesRequirement ? theme.requirementViolation.color : theme.main.black;
 
-  const calculatedFailureRateStatusColor = outOfSync ? theme.notSynchronized.color : theme.main.black;
+  const calculatedFailureRateStatusColor = faultTreeStatus.isOk ? theme.main.black : theme.notSynchronized.color;
 
   return (
     <Box paddingLeft={2} marginRight={2}>
@@ -399,19 +419,20 @@ const FaultEventMenu = ({ selectedShapeToolData, outOfSync = null, onEventUpdate
       {/* ROOT NODE */}
       {shapeToolData && shapeToolData.iri === rootIri && (
         <>
-          <Typography className={classes.eventPropertyRow}>
-            <span className={classes.label}>{`${t("faultEventMenu.eventName")}: `}</span>
-            {shapeToolData.name}
-          </Typography>
           {basedFailureRate && (
-            <Box className={classes.eventPropertyRow}>
-              <Typography>
-                {propertyWithValue("eventDescription.fhaBasedFailureRate", basedFailureRate.toExponential(2))}
-              </Typography>
-            </Box>
+            <Box className={classes.eventPropertyRow}>{fhaFailureRateComponent(basedFailureRate, null, null)}</Box>
           )}
           {getRequiredFailureRate() &&
             requiredFailureRateComponent(getRequiredFailureRate(), requiredFailureRateStatusColor, violatesRequirement)}
+          {shapeToolData?.probability && (
+            <Box className={classes.eventPropertyRow}>
+              {calculatedFailureRateComponent(
+                shapeToolData.probability,
+                calculatedFailureRateStatusColor,
+                faultTreeStatus.statusCodes,
+              )}
+            </Box>
+          )}
           <Divider className={classes.divider} />
         </>
       )}
@@ -419,28 +440,18 @@ const FaultEventMenu = ({ selectedShapeToolData, outOfSync = null, onEventUpdate
       {/* EXTERNAL NODE  */}
       {shapeToolData && shapeToolData.eventType === EventType.EXTERNAL && shapeToolData.isReference && (
         <>
+          {basedFailureRate && (
+            <Box className={classes.eventPropertyRow}>{fhaFailureRateComponent(basedFailureRate, null, null)}</Box>
+          )}
+          {getRequiredFailureRate() &&
+            requiredFailureRateComponent(getRequiredFailureRate(), requiredFailureRateStatusColor, violatesRequirement)}
           {shapeToolData?.probability && (
             <Box className={classes.eventPropertyRow}>
-              {calculatedFailureRateComponent(shapeToolData.probability, calculatedFailureRateStatusColor, outOfSync)}
-            </Box>
-          )}
-
-          {basedFailureRate && (
-            <Box className={classes.eventPropertyRow}>
-              <Typography>
-                {propertyWithValue(
-                  "eventDescription.fhaBasedFailureRate",
-                  shapeToolData?.supertypes?.supertypes?.hasFailureRate?.estimate?.value.toExponential(2),
-                )}
-              </Typography>
-            </Box>
-          )}
-          {getRequiredFailureRate() && (
-            <Box className={classes.eventPropertyRow} style={{ color: requiredFailureRateStatusColor }}>
-              <Typography>
-                {propertyWithValue("eventDescription.requiredFailureRate", getRequiredFailureRate().toExponential(2))}
-              </Typography>
-              {violatesRequirement && warnIcon(t("faultEventMessage.requirementViolated"))}
+              {calculatedFailureRateComponent(
+                shapeToolData.probability,
+                null,
+                isReferenceProbabilityOutdated(shapeToolData) ? ["faultEventMessage.referencedValueOutdated"] : [],
+              )}
             </Box>
           )}
           <Divider className={classes.divider} />
@@ -448,11 +459,11 @@ const FaultEventMenu = ({ selectedShapeToolData, outOfSync = null, onEventUpdate
       )}
 
       {/* INTERMEDIATE NODE */}
-      {shapeToolData && shapeToolData.eventType === EventType.INTERMEDIATE && (
+      {shapeToolData && shapeToolData.eventType === EventType.INTERMEDIATE && shapeToolData.iri !== rootIri && (
         <>
           {shapeToolData?.probability && (
             <Box className={classes.eventPropertyRow}>
-              {calculatedFailureRateComponent(shapeToolData.probability, calculatedFailureRateStatusColor, outOfSync)}
+              {failureRateComponent(shapeToolData.probability, theme.main.black, [])}
             </Box>
           )}
         </>

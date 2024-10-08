@@ -27,6 +27,7 @@ import { calculateCutSets } from "@services/faultTreeService";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 import { useNavigate } from "react-router-dom";
 import { useAppBar } from "@contexts/AppBarContext";
+import { FaultTreeStatus } from "@models/faultTreeModel";
 
 enum MOVE_NODE {
   DRAGGING = 0,
@@ -35,6 +36,7 @@ enum MOVE_NODE {
 
 interface Props {
   treeName: string;
+  faultTreeStatus?: FaultTreeStatus;
   rootEvent: FaultEvent;
   sidebarSelectedEvent: FaultEvent;
   onElementContextMenu: (element: any, evt: any) => void;
@@ -56,6 +58,7 @@ interface Props {
 
 const EditorCanvas = ({
   treeName,
+  faultTreeStatus = false,
   rootEvent,
   sidebarSelectedEvent,
   onElementContextMenu,
@@ -357,6 +360,7 @@ const EditorCanvas = ({
         {!showTable && (
           <FaultEventMenu
             selectedShapeToolData={sidebarSelectedEvent}
+            faultTreeStatus={faultTreeStatus}
             onEventUpdated={onEventUpdated}
             refreshTree={refreshTree}
             rootIri={rootEvent?.iri}

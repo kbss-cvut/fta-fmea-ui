@@ -33,9 +33,17 @@ const useStyles = makeStyles()((theme: Theme) => ({
     color: theme.main.grey,
   },
   outdated: {
-    color: theme.main.orange,
+    color: theme.notSynchronized.color,
+    alignItems: "baseline",
     "&.Mui-checked": {
-      color: theme.main.orange,
+      color: theme.notSynchronized.color,
+    },
+  },
+  violated: {
+    color: theme.requirementViolation.color,
+    alignItems: "baseline",
+    "&.Mui-checked": {
+      color: theme.requirementViolation.color,
     },
   },
   divider: {
@@ -47,6 +55,9 @@ const useStyles = makeStyles()((theme: Theme) => ({
       color: theme.main.black,
       padding: "8px 12px",
     },
+  },
+  hint: {
+    fontSize: 16,
   },
 }));
 
