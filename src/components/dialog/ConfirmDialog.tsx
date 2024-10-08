@@ -4,6 +4,7 @@ import Dialog from "@mui/material/Dialog";
 import { DialogTitle } from "@components/materialui/dialog/DialogTitle";
 import { DialogContent } from "@components/materialui/dialog/DialogContent";
 import { DialogActions } from "@components/materialui/dialog/DialogActions";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   title: string;
@@ -14,6 +15,7 @@ interface Props {
 }
 
 const ConfirmDialog = ({ title, explanation, open, onClose, onConfirm }: Props) => {
+  const { t } = useTranslation();
   return (
     <Dialog open={open} onClose={onClose} aria-labelledby="confirm-dialog">
       <DialogTitle id="confirm-dialog" onClose={onClose}>
@@ -22,7 +24,7 @@ const ConfirmDialog = ({ title, explanation, open, onClose, onConfirm }: Props) 
       <DialogContent>{explanation}</DialogContent>
       <DialogActions>
         <Button color="primary" onClick={onClose}>
-          Cancel
+          {t("common.cancel")}
         </Button>
         <Button
           color="primary"
@@ -31,7 +33,7 @@ const ConfirmDialog = ({ title, explanation, open, onClose, onConfirm }: Props) 
             onConfirm();
           }}
         >
-          Confirm
+          {t("common.confirm")}
         </Button>
       </DialogActions>
     </Dialog>

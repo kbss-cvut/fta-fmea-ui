@@ -55,9 +55,8 @@ const SystemOverview = () => {
 
   const handleDelete = (systemToDelete: System) => {
     showConfirmDialog({
-      title: "Delete System",
-      explanation:
-        "By deleting the system, all components, functions and failure modes will be deleted as well. Proceed to delete the system?",
+      title: t("deleteSystemModal.title"),
+      explanation: t("deleteSystemModal.explanation"),
       onConfirm: () => {
         removeSystem(systemToDelete);
       },

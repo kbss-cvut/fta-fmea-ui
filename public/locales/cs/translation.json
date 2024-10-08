@@ -20,6 +20,14 @@
     "namePlaceholder": "Název systému",
     "create": "Vytvořit"
   },
+  "deleteSystemModal": {
+    "title": "Smazat systém",
+    "explanation": "Smazáním systému budou smazány i všechny komponenty, funkce a režimy poruch. Pokračovat ve smazání systému?"
+  },
+  "renameSystemModal": {
+    "title": "Přejmenovat systém",
+    "nameFieldLabel": "Název systému"
+  },
   "newFtaModal": {
     "title": "Vytvořit strom poruch",
     "namePlaceholder": "Systém",
@@ -33,6 +41,10 @@
     "probability": "Intenzita poruch",
     "gateType": "Typ hradla",
     "noSystemError": "Na panelu Navigační panel vyberte možnost Systém"
+  },
+  "renameFtaModal": {
+    "title": "Přejmenujte strom poruch",
+    "nameFieldLabel": "Název stromu poruch"
   },
   "deleteFtaModal": {
     "title": "Smazat strom poruch",
@@ -88,7 +100,7 @@
     }
   },
   "faultEventMessage": {
-    "outOfSyncValue": "Hodnota je zastaralá!",
+    "outOfSyncValue": "Hodnota je zastaralá, intenzita poruch u některých listových uzlů byla aktualizována!",
     "referencedValueOutdated": "Referenční hodnota byla změněna. Hodnota bude aktualizována při vyhodnocení stromu",
     "experimental": "Min. provozní hodiny (MOH) poruchoveho stromu se liší od MOH jeho systému",
     "requirementViolated": "Vypočtená intenzita poruch je větší, než je požadováno!"
@@ -141,7 +153,9 @@
     "delete": "Smazat",
     "rename": "Přejmenovat",
     "save": "Uložit",
-    "discard": "Zahodit"
+    "discard": "Zahodit",
+    "cancel": "Zrušit",
+    "confirm": "Potvrdit"
   },
 
   "error": {

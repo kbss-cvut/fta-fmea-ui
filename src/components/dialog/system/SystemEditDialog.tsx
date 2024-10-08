@@ -10,6 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { System } from "@models/systemModel";
 import { useSystems } from "@hooks/useSystems";
 import { schema } from "./SystemDialog.schema";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   open: boolean;
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const SystemEditDialog = ({ open, handleCloseDialog, system }: Props) => {
+  const { t } = useTranslation();
   const [, , updateSystem] = useSystems();
   const [processing, setIsProcessing] = useState(false);
 
@@ -51,13 +53,13 @@ const SystemEditDialog = ({ open, handleCloseDialog, system }: Props) => {
   return (
     <Dialog open={open} onClose={handleCloseDialog} aria-labelledby="system-edit-dialog-title" maxWidth="md" fullWidth>
       <DialogTitle id="system-edit-dialog-title" onClose={handleCloseDialog}>
-        Edit System
+        {t("renameSystemModal.title")}
       </DialogTitle>
       <DialogContent dividers>
         <TextField
           autoFocus
           margin="dense"
-          label="System Name"
+          label={t("renameSystemModal.nameFieldLabel")}
           name="systemName"
           type="text"
           fullWidth
@@ -67,7 +69,7 @@ const SystemEditDialog = ({ open, handleCloseDialog, system }: Props) => {
       </DialogContent>
       <DialogActions>
         <Button disabled={processing} color="primary" onClick={handleSubmit(handleUpdateSystem)}>
-          Save System
+          {t("common.rename")}
         </Button>
       </DialogActions>
     </Dialog>

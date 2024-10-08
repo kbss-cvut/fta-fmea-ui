@@ -20,6 +20,14 @@
     "namePlaceholder": "System name",
     "create": "Create"
   },
+  "deleteSystemModal": {
+    "title": "Delete System",
+    "explanation": "By deleting the system, all components, functions and failure modes will be deleted as well. Proceed to delete the system?"
+  },
+  "renameSystemModal": {
+    "title": "Rename System",
+    "nameFieldLabel": "System Name"
+  },
   "newFtaModal": {
     "title": "Create Fault Tree",
     "namePlaceholder": "System",
@@ -33,6 +41,10 @@
     "probability": "Failure rate",
     "gateType": "Gate type",
     "noSystemError": "Select the System from the Navbar"
+  },
+  "renameFtaModal": {
+    "title": "Rename Fault Tree",
+    "nameFieldLabel": "Fault Tree Name"
   },
   "deleteFtaModal": {
     "title": "Delete Fault Tree",
@@ -88,7 +100,7 @@
     }
   },
   "faultEventMessage": {
-    "outOfSyncValue": "The value is outdated!",
+    "outOfSyncValue": "The value is outdated, some of the leaf node failure rates were updated!",
     "referencedValueOutdated": "The referenced value has changed. The value will be updated on tree evaluation.",
     "experimental": "Fault tree's min. operational hours (MOH) is different from its system's MOH",
     "requirementViolated": "Calculated failure rate is bigger than required!"
@@ -141,7 +153,9 @@
     "delete": "Delete",
     "rename": "Rename",
     "save": "Save",
-    "discard": "Discard"
+    "discard": "Discard",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
   },
   "error": {
     "default": "An error occurred",
