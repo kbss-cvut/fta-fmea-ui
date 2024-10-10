@@ -101,10 +101,10 @@ const FaultEventCreation = ({
     }
     return (
       <>
-        <Typography variant="subtitle1" gutterBottom>
-          {`${t("newFtaModal.eventPlaceholder")}:`}
+        <Typography variant="h6" className={classes.menuTitle} gutterBottom>
+          {`${t("faultEventMenu.detailSectionTitle")}`}
         </Typography>
-
+        <br />
         <ControlledAutocomplete
           control={control}
           name="existingEvent"

@@ -435,7 +435,6 @@ const FaultEventMenu = ({
           {basedFailureRate && (
             <Box className={classes.eventPropertyRow}>{fhaFailureRateComponent(basedFailureRate, null, null)}</Box>
           )}
-          <Divider className={classes.divider} />
         </>
       )}
 
@@ -456,7 +455,6 @@ const FaultEventMenu = ({
           {basedFailureRate && (
             <Box className={classes.eventPropertyRow}>{fhaFailureRateComponent(basedFailureRate, null, null)}</Box>
           )}
-          <Divider className={classes.divider} />
         </>
       )}
 
@@ -533,7 +531,6 @@ const FaultEventMenu = ({
             onChange={(event) => handleManuallyDefinedFailureRateChange(event, NodeTypeWithManualFailureRate.External)}
             inputProps={{ inputMode: "decimal" }}
           />
-          <Divider className={classes.divider} />
         </Box>
       )}
 
@@ -547,6 +544,9 @@ const FaultEventMenu = ({
       {shapeToolData && (
         <EventFailureModeProvider eventIri={shapeToolData?.iri}>
           <Box>
+            {(criticality || ataSystem || partNumber || stock || quantity || schematicDesignation) && (
+              <Divider className={classes.divider} />
+            )}
             {criticality && <Typography>{propertyWithValue("eventDescription.severity", criticality)}</Typography>}
             {ataSystem && (
               <Typography>

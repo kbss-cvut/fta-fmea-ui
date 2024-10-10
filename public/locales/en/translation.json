@@ -61,7 +61,7 @@
     "autoLayoutToolTip": "Automatic arrangement of the fault tree",
     "exportToolTip": "Export current view",
     "minimumOperationalHours": "Min. operational hours",
-    "diagramOptions": "Diagram Options",
+    "diagramOptions": "Diagram Actions",
     "messages": {
       "mohNewValue": "New value, not used in fault tree evaluation.",
       "mohExperimental": "Value is different from the system's min. operational hour value.",
@@ -140,6 +140,7 @@
     "linkedComponent": "Linked Component"
   },
   "faultEventMenu": {
+    "detailSectionTitle": "Event Details",
     "eventName": "Event name",
     "criticality": "Criticality",
     "fhaBasedFailureRate": "FHA based failure rate",

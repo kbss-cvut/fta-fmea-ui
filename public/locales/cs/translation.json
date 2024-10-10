@@ -61,7 +61,7 @@
     "autoLayoutToolTip": "Automatické uspořádání stromu poruch",
     "exportToolTip": "Exportovat aktuální zobrazení",
     "minimumOperationalHours": "Min. provozní doba",
-    "diagramOptions": "Možnosti diagramu",
+    "diagramOptions": "Akce diagramu",
     "messages": {
       "mohNewValue": "Nová hodnota, která se není použíta při vyhodnocování stromu chyb.",
       "mohExperimental": "Hodnota se liší od min. hodnota provozní hodiny systému.",
@@ -140,6 +140,7 @@
     "linkedComponent": "Propojená komponenta"
   },
   "faultEventMenu": {
+    "detailSectionTitle": "Podrobnosti o události",
     "eventName": "Název události",
     "criticality": "Kritičnost",
     "fhaBasedFailureRate": "Intenzita poruch založená na FHA",

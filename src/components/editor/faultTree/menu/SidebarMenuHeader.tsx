@@ -33,7 +33,7 @@ const SidebarMenuHeader: React.FC<SidebarMenuHeaderProps> = ({
   const actionCall = useActionCall(isModified, setShowUnsavedChangesDialog);
 
   return (
-    <Box padding={2}>
+    <Box padding={2} style={{ padding: "0px" }}>
       <DiagramOptions
         onExportDiagram={() => actionCall(onExportDiagram)}
         onConvertToTable={() => actionCall(onConvertToTable)}

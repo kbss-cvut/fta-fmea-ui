@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { FailureModeProvider } from "@hooks/useFailureModes";
 import { simplifyReferences } from "@utils/utils";
 import { useTranslation } from "react-i18next";
+import useStyles from "@components/editor/system/menu/component/ComponentSidebarMenu.styles";
 
 interface Props {
   component: Component;
@@ -24,6 +25,7 @@ interface Props {
 const ComponentSidebarMenu = ({ component, onComponentUpdated, systemComponents }: Props) => {
   const [showSnackbar] = useSnackbar();
   const { t } = useTranslation();
+  const { classes } = useStyles();
 
   const allowedComponents = filter(flatten([systemComponents]), (o) => o.iri !== component?.iri);
 
@@ -62,17 +64,19 @@ const ComponentSidebarMenu = ({ component, onComponentUpdated, systemComponents 
 
   return (
     <React.Fragment>
-      <Typography variant="h5" gutterBottom>
-        {t("systemComponentMenu.editComponent")}
-      </Typography>
+      <Divider />
       {component ? (
-        <ComponentEditMenu component={component} onComponentUpdated={onComponentUpdated} />
+        <>
+          <Typography variant="h6" className={classes.menuTitle} gutterBottom>
+            {t("systemComponentMenu.editComponent")}
+          </Typography>
+          <ComponentEditMenu component={component} onComponentUpdated={onComponentUpdated} />
+        </>
       ) : (
-        <Typography variant="subtitle1" gutterBottom>
+        <Typography className={classes.emptyTitle} variant="subtitle1" gutterBottom>
           {t("systemComponentMenu.notSelected")}
         </Typography>
       )}
-      <Divider />
 
       {component && (
         <React.Fragment>
