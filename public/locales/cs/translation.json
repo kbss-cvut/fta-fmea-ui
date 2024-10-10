@@ -58,11 +58,22 @@
   },
   "diagramSidePanel": {
     "cutsetToggleToolTip": "Přepnout do pohledu řezu",
+    "autoLayoutToolTip": "Automatické uspořádání stromu poruch",
+    "exportToolTip": "Exportovat aktuální zobrazení",
     "minimumOperationalHours": "Min. provozní doba",
     "diagramOptions": "Možnosti diagramu",
     "messages": {
       "mohNewValue": "Nová hodnota, která se není použíta při vyhodnocování stromu chyb.",
-      "mohExperimental": "Hodnota se liší od min. hodnota provozní hodiny systému."
+      "mohExperimental": "Hodnota se liší od min. hodnota provozní hodiny systému.",
+      "failureRateCalculationSuccess": "Intenzita poruch byla úspěšně vypočtena."
+    },
+    "faultTree": {
+      "playButtonToolTip": "Přepočítat intenzitu poruch po změně hodnoty min. provozních hodin nebo intenzit poruch ve stromu poruch",
+      "refreshButtonToolTip": "Resetovat hodnotu min. provozních hodin"
+    },
+    "system": {
+      "checkButtonToolTip": "Změnit hodnotu min. provozních hodin systému",
+      "refreshButtonToolTip": "Resetovat hodnotu min. provozních hodin systému na 200"
     }
   },
   "faultEventScenariosTable": {

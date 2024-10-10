@@ -17,7 +17,7 @@ import { JOINTJS_NODE_MODEL } from "@components/editor/faultTree/shapes/constant
 import { FaultEventScenario } from "@models/faultEventScenario";
 import { findNodeByIri } from "@utils/treeUtils";
 import FaultEventScenariosTable from "../menu/FaultEventScenariosTable";
-import { Box, TextField, Typography, IconButton, useTheme, Divider } from "@mui/material";
+import { Box, TextField, Typography, IconButton, useTheme, Divider, Tooltip } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import PlayArrow from "@mui/icons-material/PlayArrow";
@@ -314,6 +314,7 @@ const EditorCanvas = ({
     calculateCutSets(faultTree.iri, newOperationalDataFilter)
       .then((d) => {
         refreshTree();
+        showSnackbar(t("diagramSidePanel.messages.failureRateCalculationSuccess"), SnackbarType.SUCCESS);
       })
       .catch((reason) => {
         showSnackbar(reason, SnackbarType.ERROR);
@@ -362,12 +363,16 @@ const EditorCanvas = ({
               onChange={handleMinOperationalHoursChange}
               {...props}
             />
-            <IconButton aria-label="restore layout" size="large" onClick={handleReset}>
-              <RestartAltIcon />
-            </IconButton>
-            <IconButton aria-label="restore layout" size="large" onClick={handleSetNewDefaultOperationalHours}>
-              <PlayArrow />
-            </IconButton>
+            <Tooltip title={t("diagramSidePanel.faultTree.refreshButtonToolTip")}>
+              <IconButton aria-label="restore layout" size="large" onClick={handleReset}>
+                <RestartAltIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title={t("diagramSidePanel.faultTree.playButtonToolTip")}>
+              <IconButton aria-label="restore layout" size="large" onClick={handleSetNewDefaultOperationalHours}>
+                <PlayArrow />
+              </IconButton>
+            </Tooltip>
           </Box>
         </CurrentFaultTreeTableProvider>
         <Divider className={classes.divider} />

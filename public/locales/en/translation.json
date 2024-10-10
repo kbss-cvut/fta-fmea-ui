@@ -58,11 +58,22 @@
   },
   "diagramSidePanel": {
     "cutsetToggleToolTip": "Switch to cutsets view",
+    "autoLayoutToolTip": "Automatic arrangement of the fault tree",
+    "exportToolTip": "Export current view",
     "minimumOperationalHours": "Min. operational hours",
     "diagramOptions": "Diagram Options",
     "messages": {
       "mohNewValue": "New value, not used in fault tree evaluation.",
-      "mohExperimental": "Value is different from the system's min. operational hour value."
+      "mohExperimental": "Value is different from the system's min. operational hour value.",
+      "failureRateCalculationSuccess": "The failure rate was successfully calculated."
+    },
+    "faultTree": {
+      "playButtonToolTip": "Recalculate the failure rate after changing the value of the min. operational hours failure rates in the fault tree",
+      "refreshButtonToolTip": "Reset the min. operational hours value"
+    },
+    "system": {
+      "checkButtonToolTip": "Change the system min. operational hours value",
+      "refreshButtonToolTip": "Reset the system min. operational hours value to 200"
     }
   },
   "faultEventScenariosTable": {
