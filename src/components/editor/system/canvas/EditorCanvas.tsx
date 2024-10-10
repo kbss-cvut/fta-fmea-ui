@@ -15,7 +15,7 @@ import { SystemLink } from "@components/editor/system/shapes/shapesDefinitions";
 import svgPanZoom from "svg-pan-zoom";
 import { SVG_PAN_ZOOM_OPTIONS } from "@utils/constants";
 import { saveSvgAsPng } from "save-svg-as-png";
-import { Box, IconButton, TextField, Typography, useTheme } from "@mui/material";
+import { Box, IconButton, TextField, Tooltip, Typography, useTheme } from "@mui/material";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import CheckIcon from "@mui/icons-material/Check";
 import { useTranslation } from "react-i18next";
@@ -267,20 +267,24 @@ const EditorCanvas = ({
             value={updatedMinOperationalHours}
             onChange={handleMinOperationalHoursChange}
           />
-          <IconButton
-            aria-label="restore layout"
-            size="large"
-            onClick={() => handleSetNewDefaultOperationalHours(true)}
-          >
-            <RestartAltIcon />
-          </IconButton>
-          <IconButton
-            aria-label="restore layout"
-            size="large"
-            onClick={() => handleSetNewDefaultOperationalHours(false)}
-          >
-            <CheckIcon />
-          </IconButton>
+          <Tooltip title={t("diagramSidePanel.system.refreshButtonToolTip")}>
+            <IconButton
+              aria-label="restore layout"
+              size="large"
+              onClick={() => handleSetNewDefaultOperationalHours(true)}
+            >
+              <RestartAltIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title={t("diagramSidePanel.system.checkButtonToolTip")}>
+            <IconButton
+              aria-label="restore layout"
+              size="large"
+              onClick={() => handleSetNewDefaultOperationalHours(false)}
+            >
+              <CheckIcon />
+            </IconButton>
+          </Tooltip>
         </Box>
         {system && (
           <ComponentSidebarMenu

@@ -34,12 +34,16 @@ const DiagramOptions = ({
         {t("diagramSidePanel.diagramOptions")}
       </Typography>
       <div>
-        <IconButton color="primary" onClick={onApplyAutomaticLayout} aria-label="restore layout" size="large">
-          <AccountTreeIcon />
-        </IconButton>
-        <IconButton color="primary" onClick={onExportDiagram} aria-label="save" size="large">
-          <SaveAltIcon />
-        </IconButton>
+        <Tooltip title={t("diagramSidePanel.autoLayoutToolTip")}>
+          <IconButton color="primary" onClick={onApplyAutomaticLayout} aria-label="restore layout" size="large">
+            <AccountTreeIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title={t("diagramSidePanel.exportToolTip")}>
+          <IconButton color="primary" onClick={onExportDiagram} aria-label="save" size="large">
+            <SaveAltIcon />
+          </IconButton>
+        </Tooltip>
         {!ENVVariable && tableConversionAllowed && (
           <IconButton color="primary" onClick={onConvertToTable} aria-label="convert" size="large">
             <TableChartIcon />
