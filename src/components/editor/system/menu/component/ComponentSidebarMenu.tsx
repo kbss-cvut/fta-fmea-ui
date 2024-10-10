@@ -64,6 +64,7 @@ const ComponentSidebarMenu = ({ component, onComponentUpdated, systemComponents 
 
   return (
     <React.Fragment>
+      <Divider />
       {component ? (
         <>
           <Typography variant="h6" className={classes.menuTitle} gutterBottom>
@@ -76,7 +77,6 @@ const ComponentSidebarMenu = ({ component, onComponentUpdated, systemComponents 
           {t("systemComponentMenu.notSelected")}
         </Typography>
       )}
-      <Divider />
 
       {component && (
         <React.Fragment>
