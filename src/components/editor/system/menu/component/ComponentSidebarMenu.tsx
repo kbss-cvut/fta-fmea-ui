@@ -72,7 +72,7 @@ const ComponentSidebarMenu = ({ component, onComponentUpdated, systemComponents 
           <ComponentEditMenu component={component} onComponentUpdated={onComponentUpdated} />
         </>
       ) : (
-        <Typography variant="subtitle1" gutterBottom>
+        <Typography className={classes.emptyTitle} variant="subtitle1" gutterBottom>
           {t("systemComponentMenu.notSelected")}
         </Typography>
       )}

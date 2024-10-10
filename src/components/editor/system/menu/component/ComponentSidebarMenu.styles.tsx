@@ -9,6 +9,13 @@ const useStyles = makeStyles()((theme: Theme) => ({
     paddingLeft: "8px",
     borderBottom: "inset",
   },
+  emptyTitle: {
+    textAlign: "center",
+    fontStyle: "italic",
+    fontWeight: "bold",
+    color: theme.main.grey,
+    padding: theme.spacing(10, 2),
+  },
 }));
 
 // TODO jss-to-tss-react codemod: usages of this hook outside of this file will not be converted.
