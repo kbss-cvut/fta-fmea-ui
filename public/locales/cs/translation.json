@@ -22,7 +22,7 @@
   },
   "deleteSystemModal": {
     "title": "Smazat systém",
-    "explanation": "Smazáním systému budou smazány i všechny komponenty, funkce a režimy poruch. Pokračovat ve smazání systému?"
+    "explanation": "Smazáním systému budou smazány i všechny komponenty, funkce a způsoby selhání. Pokračovat ve smazání systému?"
   },
   "renameSystemModal": {
     "title": "Přejmenovat systém",
