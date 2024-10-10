@@ -8,6 +8,7 @@ import * as React from "react";
 import { useTranslation } from "react-i18next";
 import CircularProgress from "@mui/material/CircularProgress";
 import { ENVVariable } from "@utils/constants";
+import useStyles from "@components/editor/menu/DiagramOptions.styles";
 
 export interface Props {
   onApplyAutomaticLayout: () => void;
@@ -27,10 +28,11 @@ const DiagramOptions = ({
   rendering,
 }: Props) => {
   const { t } = useTranslation();
+  const { classes } = useStyles();
 
   return (
-    <React.Fragment>
-      <Typography variant="h5" gutterBottom>
+    <>
+      <Typography variant="h6" className={classes.menuTitle} gutterBottom>
         {t("diagramSidePanel.diagramOptions")}
       </Typography>
       <div>
@@ -58,7 +60,7 @@ const DiagramOptions = ({
         )}
       </div>
       <Divider />
-    </React.Fragment>
+    </>
   );
 };
 
