@@ -314,6 +314,7 @@ const EditorCanvas = ({
     calculateCutSets(faultTree.iri, newOperationalDataFilter)
       .then((d) => {
         refreshTree();
+        showSnackbar(t("diagramSidePanel.messages.failureRateCalculationSuccess"), SnackbarType.SUCCESS);
       })
       .catch((reason) => {
         showSnackbar(reason, SnackbarType.ERROR);

@@ -62,7 +62,8 @@
     "diagramOptions": "Možnosti diagramu",
     "messages": {
       "mohNewValue": "Nová hodnota, která se není použíta při vyhodnocování stromu chyb.",
-      "mohExperimental": "Hodnota se liší od min. hodnota provozní hodiny systému."
+      "mohExperimental": "Hodnota se liší od min. hodnota provozní hodiny systému.",
+      "failureRateCalculationSuccess": "Intenzita poruch byla úspěšně vypočtena."
     }
   },
   "faultEventScenariosTable": {

@@ -62,7 +62,8 @@
     "diagramOptions": "Diagram Options",
     "messages": {
       "mohNewValue": "New value, not used in fault tree evaluation.",
-      "mohExperimental": "Value is different from the system's min. operational hour value."
+      "mohExperimental": "Value is different from the system's min. operational hour value.",
+      "failureRateCalculationSuccess": "The failure rate was successfully calculated."
     }
   },
   "faultEventScenariosTable": {
