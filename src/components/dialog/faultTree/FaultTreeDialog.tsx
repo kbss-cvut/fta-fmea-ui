@@ -66,6 +66,8 @@ const FaultTreeDialog = ({ open, handleCloseDialog }) => {
           {...register("faultTreeName")}
           helperText={!!useFormMethods.formState.errors.faultTreeName && t("newFtaModal.noSystemError")}
         />
+        <br />
+        <br />
         <ReusableFaultEventsProvider systemUri={selectedSystem?.iri}>
           <FaultEventCreation useFormMethods={useFormMethods} isRootEvent={true} />
         </ReusableFaultEventsProvider>

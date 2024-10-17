@@ -1,5 +1,5 @@
 import * as React from "react";
-import { FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import useStyles from "@components/dialog/faultEvent/FaultEventCreation.styles";
 import { Controller } from "react-hook-form";
 import { EventType, FaultEvent, GateType, gateTypeValues } from "@models/eventModel";
@@ -101,10 +101,6 @@ const FaultEventCreation = ({
     }
     return (
       <>
-        <Typography variant="h6" className={classes.menuTitle} gutterBottom>
-          {`${t("faultEventMenu.detailSectionTitle")}`}
-        </Typography>
-        <br />
         <ControlledAutocomplete
           control={control}
           name="existingEvent"
@@ -130,6 +126,7 @@ const FaultEventCreation = ({
 
         {selectedEvent && (
           <FormControl className={classes.formControl}>
+            <br />
             <InputLabel id="event-type-select-label">{t("newFtaModal.type")}</InputLabel>
             <Controller
               render={({ field }) => {
@@ -173,6 +170,7 @@ const FaultEventCreation = ({
       <>
         {eventTypeWatch === EventType.INTERMEDIATE && (
           <div className={classes.formControlDiv}>
+            <br />
             <FormControl className={classes.formControl}>
               <InputLabel id="gate-type-select-label">{t("newFtaModal.gateType")}</InputLabel>
               <Controller
@@ -210,6 +208,7 @@ const FaultEventCreation = ({
           !isRootEvent &&
           isEditedEvent && (
             <>
+              <br />
               <TextField
                 margin="dense"
                 label={t("newFtaModal.description")}

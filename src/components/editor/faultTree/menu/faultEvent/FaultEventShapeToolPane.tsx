@@ -53,6 +53,10 @@ const FaultEventShapeToolPane = ({ data, refreshTree, formMethods }: Props) => {
 
   const editorPane = (isDisabled) => (
     <ReusableFaultEventsProvider treeUri={faultTree?.iri}>
+      <Typography variant="h6" className={classes.menuTitle} gutterBottom>
+        {`${t("faultEventMenu.detailSectionTitle")}`}
+      </Typography>
+      <br />
       <FaultEventCreation
         useFormMethods={formMethods}
         isRootEvent={false}
