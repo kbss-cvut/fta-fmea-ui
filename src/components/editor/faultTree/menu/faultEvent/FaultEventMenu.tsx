@@ -463,7 +463,7 @@ const FaultEventMenu = ({
         <>
           {shapeToolData?.probability && (
             <Box className={classes.eventPropertyRow}>
-              {failureRateComponent(shapeToolData.probability, "eventDescription.manuallyDefinedFailureRate", [])}
+              {failureRateComponent(shapeToolData.probability, "eventDescription.calculatedFailureRate", [])}
             </Box>
           )}
         </>
