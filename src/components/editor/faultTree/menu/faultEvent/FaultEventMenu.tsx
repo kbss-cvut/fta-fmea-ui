@@ -202,7 +202,9 @@ const FaultEventMenu = ({
         setCriticality(undefined);
       }
 
-      const types = asArray(shapeToolData?.supertypes?.supertypes);
+      const _types = asArray(shapeToolData?.supertypes);
+      const __types = asArray(_types?.[0]?.supertypes);
+      const types = _types.length == 1 && __types.length > 0 ? __types : _types;
 
       const filteredFailureRate = types.filter((type) => type.hasFailureRate);
 
