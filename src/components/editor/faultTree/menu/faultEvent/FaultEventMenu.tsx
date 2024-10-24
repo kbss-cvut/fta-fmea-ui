@@ -126,6 +126,7 @@ const FaultEventMenu = ({
 
     const manualFailureRates = {
       [EventType.BASIC]: basicManuallyDefinedFailureRate,
+      [EventType.EXTERNAL]: externalManuallyDefinedFailureRate,
       default: externalManuallyDefinedFailureRate,
     };
 
