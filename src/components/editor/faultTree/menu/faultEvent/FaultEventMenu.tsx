@@ -284,7 +284,7 @@ const FaultEventMenu = ({
     setIsModified(isDirty);
   }, [isDirty]);
 
-  const { frPrediction, frEstimate } = getFailureRastes(shapeToolData);
+  const { frPrediction, frEstimate } = getFailureRates(shapeToolData);
 
   const isReferenceProbabilityOutdated = (shapeToolData: FaultEvent) => {
     return (
