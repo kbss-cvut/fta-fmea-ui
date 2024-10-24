@@ -52,18 +52,6 @@ enum NodeTypeWithManualFailureRate {
   External = "External",
 }
 
-const getFailureRateIris = (supertypes) => {
-  const value = asArray(supertypes);
-  return value.reduce(
-    (acc, item) => {
-      if (item?.hasFailureRate?.prediction?.iri) acc.predictionIri = item.hasFailureRate.prediction.iri;
-      if (item?.hasFailureRate?.estimate?.iri) acc.operationalIri = item.hasFailureRate.estimate.iri;
-      return acc;
-    },
-    { predictionIri: "", operationalIri: "" },
-  );
-};
-
 const FaultEventMenu = ({
   selectedShapeToolData,
   faultTreeStatus = null,
@@ -83,6 +71,18 @@ const FaultEventMenu = ({
   const [shapeToolData, setShapeToolData] = useState<FaultEvent | undefined>();
 
   const getRequiredFailureRate = () => shapeToolData.supertypes?.hasFailureRate?.requirement?.upperBound;
+
+  const getFailureRates = (shapeToolData) => {
+    const _types = asArray(shapeToolData?.supertypes);
+    if (_types.length === 0) return { undefined, undefined };
+    const __types = asArray(_types?.[0]?.supertypes);
+
+    const frPrediction =
+      _types[0].hasFailureRate?.prediction || __types.map((t) => t.hasFailureRate?.prediction).filter((p) => p)?.[0];
+    const frEstimate =
+      __types.map((t) => t.hasFailureRate?.estimate).filter((e) => e)?.[0] || _types?.[0].hasFailureRate?.estimate;
+    return { frPrediction, frEstimate };
+  };
 
   useEffect(() => {
     if (isModified) {
@@ -203,17 +203,9 @@ const FaultEventMenu = ({
         setCriticality(undefined);
       }
 
-      const _types = asArray(shapeToolData?.supertypes);
-      const __types = asArray(_types?.[0]?.supertypes);
-      const types = _types.length == 1 && __types.length > 0 ? __types : _types;
+      const { frPrediction, frEstimate } = getFailureRates(shapeToolData);
 
-      const filteredFailureRate = types.filter((type) => type.hasFailureRate);
-
-      if (filteredFailureRate.length === 1 && filteredFailureRate[0].hasFailureRate?.prediction?.value) {
-        setSnsPredictedFailureRate(filteredFailureRate[0].hasFailureRate?.prediction?.value);
-      } else {
-        setSnsPredictedFailureRate(undefined);
-      }
+      setSnsPredictedFailureRate(frPrediction?.value);
 
       const superTypes = asArray(shapeToolData?.supertypes?.behavior?.item?.supertypes);
 
@@ -255,12 +247,11 @@ const FaultEventMenu = ({
       if (shapeToolData?.selectedEstimate) {
         // SELECTED ESTIMATE => PREDICTED OR OPERATIONAL IS SELECTED
         const iriOfSelectedValue = shapeToolData.selectedEstimate.iri;
-        const { predictionIri, operationalIri } = getFailureRateIris(types);
 
-        if (iriOfSelectedValue === predictionIri) {
+        if (iriOfSelectedValue === frPrediction?.iri) {
           setSelectedRadioButton(RadioButtonType.Predicted);
           setPreselectedSelectedRadioButton(RadioButtonType.Predicted);
-        } else if (iriOfSelectedValue === operationalIri) {
+        } else if (iriOfSelectedValue === frEstimate?.iri) {
           setSelectedRadioButton(RadioButtonType.Operational);
           setPreselectedSelectedRadioButton(RadioButtonType.Operational);
         }
@@ -276,18 +267,13 @@ const FaultEventMenu = ({
         }
       }
 
-      if (types) {
-        for (let i = 0; i < types.length; i++) {
-          const item = types[i];
-          if (item?.hasFailureRate?.estimate?.value) {
-            setSnsOperationalFailureRate(item?.hasFailureRate?.estimate?.value);
-            setSnsOperationalIri(item?.hasFailureRate?.estimate?.iri);
-          }
-          if (item?.hasFailureRate?.prediction?.value) {
-            setSnsPredictedFailureRate(item?.hasFailureRate?.prediction?.value);
-            setSnsPredictedIri(item?.hasFailureRate?.prediction?.iri);
-          }
-        }
+      if (frPrediction?.value || frPrediction?.value === 0) {
+        setSnsPredictedFailureRate(frPrediction.value);
+        setSnsPredictedIri(frPrediction.iri);
+      }
+      if (frEstimate?.value || frEstimate?.value === 0) {
+        setSnsOperationalFailureRate(frEstimate.value);
+        setSnsOperationalIri(frEstimate.iri);
       }
     };
 
@@ -298,8 +284,7 @@ const FaultEventMenu = ({
     setIsModified(isDirty);
   }, [isDirty]);
 
-  const basedFailureRate = shapeToolData?.supertypes?.hasFailureRate?.estimate?.value;
-  const { predictionIri, operationalIri } = getFailureRateIris(shapeToolData?.supertypes?.supertypes);
+  const { frPrediction, frEstimate } = getFailureRastes(shapeToolData);
 
   const isReferenceProbabilityOutdated = (shapeToolData: FaultEvent) => {
     return (
@@ -435,8 +420,8 @@ const FaultEventMenu = ({
           )}
           {getRequiredFailureRate() &&
             requiredFailureRateComponent(getRequiredFailureRate(), requiredFailureRateStatusColor, violatesRequirement)}
-          {basedFailureRate && (
-            <Box className={classes.eventPropertyRow}>{fhaFailureRateComponent(basedFailureRate, null, null)}</Box>
+          {(frEstimate?.value || frEstimate?.value === 0) && (
+            <Box className={classes.eventPropertyRow}>{fhaFailureRateComponent(frEstimate.value, null, null)}</Box>
           )}
         </>
       )}
@@ -455,8 +440,8 @@ const FaultEventMenu = ({
           )}
           {getRequiredFailureRate() &&
             requiredFailureRateComponent(getRequiredFailureRate(), requiredFailureRateStatusColor, violatesRequirement)}
-          {basedFailureRate && (
-            <Box className={classes.eventPropertyRow}>{fhaFailureRateComponent(basedFailureRate, null, null)}</Box>
+          {(frEstimate?.value || frEstimate?.value) && (
+            <Box className={classes.eventPropertyRow}>{fhaFailureRateComponent(frEstimate.value, null, null)}</Box>
           )}
         </>
       )}
@@ -481,7 +466,7 @@ const FaultEventMenu = ({
                   renderFailureRateBox(
                     RadioButtonType.Predicted,
                     snsPredictedFailureRate,
-                    predictionIri,
+                    frPrediction?.iri,
                     selectedRadioButton,
                     "eventDescription.predictedFailureRate",
                   )}
@@ -489,7 +474,7 @@ const FaultEventMenu = ({
                   renderFailureRateBox(
                     RadioButtonType.Operational,
                     snsOperationalFailureRate,
-                    operationalIri,
+                    frEstimate?.iri,
                     selectedRadioButton,
                     "eventDescription.operationalFailureRate",
                   )}
