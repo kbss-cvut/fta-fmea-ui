@@ -9,8 +9,7 @@ const useStyles = makeStyles()((theme: Theme) => ({
     overflow: "hidden",
   },
   childrenContainer: {
-    display: "flex",
-    flexDirection: "column",
+    display: "block",
     overflow: "hidden",
     flex: "1",
     zIndex: 1,
