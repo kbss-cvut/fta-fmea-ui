@@ -63,8 +63,8 @@
     "minimumOperationalHours": "Min. provozní doba",
     "diagramOptions": "Akce diagramu",
     "messages": {
-      "mohNewValue": "Nová hodnota, která se není použíta při vyhodnocování stromu chyb.",
-      "mohExperimental": "Hodnota se liší od min. hodnota provozní hodiny systému.",
+      "mohNewValue": "Nová hodnota, která není použita při vyhodnocování stromu poruch.",
+      "mohExperimental": "Hodnota se liší od min. hodnoty provozní doby systému.",
       "failureRateCalculationSuccess": "Intenzita poruch byla úspěšně vypočtena."
     },
     "faultTree": {
@@ -78,7 +78,7 @@
   },
   "faultEventScenariosTable": {
     "cutset": "Řez",
-    "probability": "Intenzita Poruch"
+    "probability": "Intenzita poruch"
   },
   "eventDescription": {
     "fhaBasedFailureRate": {
