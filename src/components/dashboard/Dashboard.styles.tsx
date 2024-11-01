@@ -3,11 +3,7 @@ import { Theme } from "@mui/material";
 
 const useStyles = makeStyles()((theme: Theme) => {
   return {
-    root: {
-      display: "flex",
-      flexFlow: "column",
-      height: "100vh",
-    },
+    root: {},
     fab: {
       zIndex: 5,
       position: "absolute",

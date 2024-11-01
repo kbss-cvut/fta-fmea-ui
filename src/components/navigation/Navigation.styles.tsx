@@ -3,15 +3,13 @@ import { Theme } from "@mui/material";
 
 const useStyles = makeStyles()((theme: Theme) => ({
   container: {
-    display: "flex",
-    flexDirection: "column",
+    display: "block",
     alignItems: "stretch",
     height: "100vh",
     overflow: "hidden",
   },
   childrenContainer: {
-    display: "flex",
-    flexDirection: "column",
+    display: "block",
     overflow: "hidden",
     flex: "1",
     zIndex: 1,
