@@ -10,18 +10,20 @@ type faultTreeContextType = [
   (faultTree: FaultTree) => void,
   (faultTreeToUpdate: FaultTree) => void,
   (faultTreeToDelete: FaultTree) => void,
+  boolean,
   (filters?: { label?: string; snsLabel?: string; sort?: string }) => void,
 ];
 
 export const faultTreesContext = createContext<faultTreeContextType>(null!);
 
 export const useFaultTrees = () => {
-  const [faultTrees, addFaultTree, updateTree, removeTree, triggerFetch] = useContext(faultTreesContext);
-  return [faultTrees, addFaultTree, updateTree, removeTree, triggerFetch] as const;
+  const [faultTrees, addFaultTree, updateTree, removeTree, loading, triggerFetch] = useContext(faultTreesContext);
+  return [faultTrees, addFaultTree, updateTree, removeTree, loading, triggerFetch] as const;
 };
 
 export const FaultTreesProvider = ({ children }) => {
   const [_faultTrees, _setFaultTrees] = useState<FaultTree[]>([]);
+  const [_loading, _setLoading] = useState(false);
   const [showSnackbar] = useSnackbar();
   const loggedUser = useUserAuth();
 
@@ -31,10 +33,11 @@ export const FaultTreesProvider = ({ children }) => {
       if (filters?.label) params.label = filters.label;
       if (filters?.snsLabel) params.snsLabel = filters.snsLabel;
       if (filters?.sort) params.sort = filters.sort;
-
+      _setLoading(true);
       faultTreeService
         .findAllWithFilters(params)
         .then((value) => {
+          _setLoading(false);
           _setFaultTrees(value);
         })
         .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
@@ -77,7 +80,7 @@ export const FaultTreesProvider = ({ children }) => {
   };
 
   return (
-    <faultTreesContext.Provider value={[_faultTrees, addFaultTree, updateTree, removeTree, triggerFetch]}>
+    <faultTreesContext.Provider value={[_faultTrees, addFaultTree, updateTree, removeTree, _loading, triggerFetch]}>
       {children}
     </faultTreesContext.Provider>
   );
