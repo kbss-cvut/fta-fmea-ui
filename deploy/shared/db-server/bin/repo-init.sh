@@ -9,11 +9,39 @@ GRAPHDB_HOME=$2
 
 SCRIPT_DIR="`dirname $0`"
 
+wait_for_graphdb() {
+    # Set the GraphDB URL and max retry attempts
+    local GRAPHDB_URL="http://localhost:7200/rest/repositories"
+    local MAX_RETRIES=30
+    local RETRY_INTERVAL=1 # seconds
+
+    # Loop to check if GraphDB is ready
+    local attempt=1
+    while ! curl -s --head --fail "$GRAPHDB_URL" > /dev/null; do
+        if [ $attempt -ge $MAX_RETRIES ]; then
+            echo "ERROR: GraphDB did not start within the expected time."
+            return 1
+        fi
+        echo "INFO: Waiting for GraphDB to be ready (Attempt $attempt/$MAX_RETRIES)..."
+        sleep $RETRY_INTERVAL
+        attempt=$((attempt + 1))
+    done
+
+    echo "INFO: GraphDB is up and running."
+    return 0
+}
+
+############
+### MAIN ###
+############
+
 echo "INFO: Running initializer for GraphDB repositories ..."
 
-# Wait for GraphDB to start up
 echo "INFO: Waiting for GraphDB to start up..."
-sleep 15s
+if ! wait_for_graphdb; then
+    echo "ERROR: Could not establish connection to GraphDB. Exiting."
+    exit 1
+fi
 
 ls ${SOURCE_DIR}/*-config.ttl | while read REPO_CONFIG_FILE; do
 
