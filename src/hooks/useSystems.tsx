@@ -14,31 +14,38 @@ type systemContextType = [
   (systemToCreate: System) => void,
   (systemToDelete: System, onSuccess: () => void, onFail: () => void) => void,
   (systemToUpdate: System) => void,
+  boolean,
   () => void,
 ];
 
 export const systemContext = createContext<systemContextType>(null!);
 
 export const useSystems = () => {
-  const [systems, addSystem, updateSystem, removeSystem, triggerFetch] = useContext(systemContext);
-  return [systems, addSystem, updateSystem, removeSystem, triggerFetch] as const;
+  const [systems, addSystem, updateSystem, removeSystem, loading, triggerFetch] = useContext(systemContext);
+  return [systems, addSystem, updateSystem, removeSystem, loading, triggerFetch] as const;
 };
 
 export const SystemsProvider = ({ children }: ChildrenProps) => {
   const [_systems, _setSystems] = useState<System[]>([]);
+  const [_loading, _setLoading] = useState<boolean>(false);
   const [showSnackbar] = useSnackbar();
   const loggedUser = useUserAuth();
   const [shouldFetchSystems, setShouldFetchSystems] = useState(true);
 
   useEffect(() => {
     const fetchSystems = async () => {
+      _setLoading(true);
       systemService
         .findAll()
         .then((value) => {
+          _setLoading(false);
           _setSystems(value);
           setShouldFetchSystems(false);
         })
-        .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
+        .catch((reason) => {
+          _setLoading(false);
+          showSnackbar(reason, SnackbarType.ERROR);
+        });
     };
 
     if (loggedUser && shouldFetchSystems) fetchSystems();
@@ -88,7 +95,7 @@ export const SystemsProvider = ({ children }: ChildrenProps) => {
   const triggerFetch = () => setShouldFetchSystems(true);
 
   return (
-    <systemContext.Provider value={[_systems, addSystem, updateSystem, removeSystem, triggerFetch]}>
+    <systemContext.Provider value={[_systems, addSystem, updateSystem, removeSystem, _loading, triggerFetch]}>
       {children}
     </systemContext.Provider>
   );

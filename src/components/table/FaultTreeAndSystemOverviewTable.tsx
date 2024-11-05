@@ -25,6 +25,7 @@ import SystemTableHead from "./SystemTableHead";
 interface FaultTreeOverviewTableProps {
   faultTrees?: FaultTree[];
   systems?: System[];
+  loading: boolean;
   handleFaultTreeContextMenu?: (evt: any, faultTree: FaultTree) => void;
   handleSystemContextMenu?: (evt: any, system: System) => void;
   handleFilterChange?: (label: string, snsLabel: string) => Promise<void>;
@@ -36,6 +37,7 @@ interface FaultTreeOverviewTableProps {
 const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
   faultTrees,
   systems,
+  loading,
   handleFaultTreeContextMenu,
   handleSystemContextMenu,
   handleFilterChange,
@@ -45,7 +47,6 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
 }) => {
   const { classes } = useStyles();
   const [selectedSystemState, setSelectedSystem] = useSelectedSystemSummaries();
-  const [loading, setLoading] = useState(false);
 
   const [filterAnchorEl, setFilterAnchorEl] = useState<null | HTMLElement>(null);
   const [filterType, setFilterType] = useState<null | string>(null);
@@ -91,8 +92,12 @@ const FaultTreeAndSystemOverviewTable: FC<FaultTreeOverviewTableProps> = ({
           <TableBody>
             {loading ? (
               <TableRow>
-                <TableCell colSpan={10}>
-                  <CircularProgress />
+                <TableCell
+                  style={{ borderBottom: "none", verticalAlign: "middle", height: "50vh" }}
+                  colSpan={10}
+                  align={"center"}
+                >
+                  <CircularProgress size={100} />
                 </TableCell>
               </TableRow>
             ) : (
