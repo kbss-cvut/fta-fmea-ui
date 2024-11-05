@@ -121,6 +121,7 @@ export interface FaultEvent extends AbstractModel {
           ataCode?: string;
           partNumber?: string;
           name?: string;
+          altNames?: string;
         };
         stock?: string;
         schematicDesignation?: string;

@@ -50,7 +50,9 @@ const Editor = () => {
 
   useEffect(() => {
     if (faultTree) {
-      setAppBarTitle(faultTree.name);
+      setAppBarTitle(
+        faultTree?.subSystem?.ataCode ? `${faultTree.name} (${faultTree?.subSystem?.ataCode})` : faultTree.name,
+      );
       setRootEvent(faultTree.manifestingEvent);
 
       if (faultTree.faultEventScenarios) {
