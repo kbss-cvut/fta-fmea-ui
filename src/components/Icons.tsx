@@ -19,7 +19,7 @@ export const syncProblemIcon = (message: any, messageCount = 1) => {
 export const iconWithMessage = (icon, message: any, label: string | number = "") => {
   return (
     <Tooltip title={message}>
-      {icon} {<span style={{ verticalAlign: "top", position: "fixed" }}>{label}</span>}
+      {icon} {<span style={{ verticalAlign: "top", marginLeft: "-5px" }}>{label}</span>}
     </Tooltip>
   );
 };
