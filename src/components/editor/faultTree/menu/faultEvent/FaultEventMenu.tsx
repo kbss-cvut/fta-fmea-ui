@@ -96,7 +96,8 @@ const FaultEventMenu = ({
   const [failureModeOverview, setFailureModeOverview] = useState<FailureMode | null>(null);
 
   const [criticality, setCriticality] = useState<string | undefined>(undefined);
-  const [ataSystem, setAtaSystem] = useState<string | undefined>("");
+  const [ataCode, setAtaCode] = useState<string | undefined>("");
+  const [ataNames, setAtaNames] = useState<string[] | undefined>(undefined);
   const [partNumber, setPartNumber] = useState<string | undefined>("");
   const [stock, setStock] = useState<string | undefined>("");
   const [quantity, setQuantity] = useState<number | undefined>(0);
@@ -213,10 +214,15 @@ const FaultEventMenu = ({
       const filteredPartNumber = superTypes.filter((sType) => sType?.partNumber);
 
       if (filteredAtaCode.length === 1 && filteredAtaCode[0].ataCode && filteredAtaCode[0].name) {
-        const ataSystemString = `${filteredAtaCode[0].ataCode} ${filteredAtaCode[0].name}`;
-        setAtaSystem(ataSystemString);
+        setAtaCode(filteredAtaCode[0].ataCode);
+        const altNames = asArray(filteredAtaCode[0]?.altNames);
+        if (filteredAtaCode[0].ataCode === filteredAtaCode[0].name) {
+          if (altNames.length > 0) setAtaNames(altNames);
+        } else {
+          setAtaNames([filteredAtaCode[0].name]);
+        }
       } else {
-        setAtaSystem(undefined);
+        setAtaCode(undefined);
       }
 
       if (filteredPartNumber.length === 1 && filteredPartNumber[0].partNumber) {
@@ -532,14 +538,24 @@ const FaultEventMenu = ({
       {shapeToolData && (
         <EventFailureModeProvider eventIri={shapeToolData?.iri}>
           <Box>
-            {(criticality || ataSystem || partNumber || stock || quantity || schematicDesignation) && (
+            {(criticality || ataCode || partNumber || stock || quantity || schematicDesignation) && (
               <Divider className={classes.divider} />
             )}
             {criticality && <Typography>{propertyWithValue("eventDescription.severity", criticality)}</Typography>}
-            {ataSystem && (
+            {ataCode && (
               <Typography>
                 <span className={classes.label}>{t("faultEventMenu.ataSystem")}:</span>
-                <span className={classes.notEditableValue}>{ataSystem}</span>
+                <Tooltip
+                  title={
+                    <Typography>
+                      {ataNames.map((n) => {
+                        return <div>{n}</div>;
+                      })}
+                    </Typography>
+                  }
+                >
+                  <span className={classes.notEditableValue}>{ataCode}</span>
+                </Tooltip>
               </Typography>
             )}
             {partNumber && (
