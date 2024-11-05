@@ -45,6 +45,8 @@ export interface FaultTree extends AbstractModel {
   status?: string;
   subSystem?: {
     name?: string;
+    ataCode?: string;
+    altNames?: string;
   };
   operationalDataFilter: OperationalDataFilter;
 }

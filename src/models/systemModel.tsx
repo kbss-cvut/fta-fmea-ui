@@ -5,6 +5,7 @@ import { OperationalDataFilter, CONTEXT as FILTER_CONTEXT } from "@models/operat
 
 const ctx = {
   name: VocabularyUtils.PREFIX + "name",
+  altNames: VocabularyUtils.PREFIX + "alt-name",
   globalOperationalDataFilter: VocabularyUtils.PREFIX + "has-global-operational-data-filter",
   operationalDataFilter: VocabularyUtils.PREFIX + "has-operational-data-filter",
   components: VocabularyUtils.PREFIX + "has-part-component",
@@ -14,6 +15,7 @@ export const CONTEXT = Object.assign({}, ctx, COMPONENT_CONTEXT, ABSTRACT_CONTEX
 
 export interface System extends AbstractModel {
   name: string;
+  altNames: string;
   iri?: string;
   components?: Component[];
   globalOperationalDataFilter: OperationalDataFilter;
