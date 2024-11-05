@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import useStyles from "./FaultTreeOverviewTable.styles";
 import { FaultTree, getFaultTreeCalculationStatus } from "@models/faultTreeModel";
 import { extractFragment } from "@services/utils/uriIdentifierUtils";
-import { findByIri, formatDate } from "@utils/utils";
+import { asArray, findByIri, formatDate } from "@utils/utils";
 import { ROUTES, Status } from "@utils/constants";
 import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 import { useSystems } from "@hooks/useSystems";
@@ -57,11 +57,29 @@ const FaultTreeTableBody: FC<FaultTreeTableBodyProps> = ({ faultTrees, handleFau
           : theme.main.black;
 
         const editor = faultTree?.editor || faultTree?.creator;
+
+        const ataNames = asArray(
+          faultTree?.subSystem?.name === faultTree?.subSystem?.ataCode
+            ? faultTree?.subSystem?.altNames
+            : faultTree?.subSystem?.name,
+        ).filter((n) => n);
         return (
           <TableRow key={rowIndex} className={classes.noBorder}>
             <TableCell className={classes.firstColumn}>{faultTree.name}</TableCell>
             <TableCell className={classes.tableCell}>{faultTree?.system?.name}</TableCell>
-            <TableCell className={classes.tableCell}>{faultTree?.subSystem?.name}</TableCell>
+            <TableCell className={classes.tableCell}>
+              <Tooltip
+                title={
+                  <Typography>
+                    {ataNames.map((n) => {
+                      return <div>{n}</div>;
+                    })}
+                  </Typography>
+                }
+              >
+                <Typography>{faultTree?.subSystem?.ataCode}</Typography>
+              </Tooltip>
+            </TableCell>
             <TableCell style={{ color: syncStatusColor }} className={classes.tableCell}>
               {failureRate(
                 faultTree?.calculatedFailureRate,
