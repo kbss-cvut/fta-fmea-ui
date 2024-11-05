@@ -193,3 +193,15 @@ export const isSimpleBasicNode = (node: FaultEvent): boolean => {
 export const isSNSNode = (node: FaultEvent): boolean => {
   return node.eventType === EventType.BASIC && asArray(node.supertypes).length === 0;
 };
+
+export const getFailureRates = (event) => {
+  const _types = asArray(event?.supertypes);
+  if (_types.length === 0) return { undefined, undefined };
+  const __types = asArray(_types?.[0]?.supertypes);
+
+  const frPrediction =
+    _types[0].hasFailureRate?.prediction || __types.map((t) => t.hasFailureRate?.prediction).filter((p) => p)?.[0];
+  const frEstimate =
+    __types.map((t) => t.hasFailureRate?.estimate).filter((e) => e)?.[0] || _types?.[0].hasFailureRate?.estimate;
+  return { frPrediction, frEstimate };
+};

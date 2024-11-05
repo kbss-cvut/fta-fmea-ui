@@ -12,7 +12,7 @@ import {
   TextField,
 } from "@mui/material";
 import FaultEventShapeToolPane from "./FaultEventShapeToolPane";
-import { EventType, FaultEvent } from "@models/eventModel";
+import { EventType, FaultEvent, getFailureRates } from "@models/eventModel";
 import * as React from "react";
 import FailureModeDialog from "../../../../dialog/failureMode/create/FailureModeDialog";
 import { useState, useEffect } from "react";
@@ -71,18 +71,6 @@ const FaultEventMenu = ({
   const [shapeToolData, setShapeToolData] = useState<FaultEvent | undefined>();
 
   const getRequiredFailureRate = () => shapeToolData.supertypes?.hasFailureRate?.requirement?.upperBound;
-
-  const getFailureRates = (shapeToolData) => {
-    const _types = asArray(shapeToolData?.supertypes);
-    if (_types.length === 0) return { undefined, undefined };
-    const __types = asArray(_types?.[0]?.supertypes);
-
-    const frPrediction =
-      _types[0].hasFailureRate?.prediction || __types.map((t) => t.hasFailureRate?.prediction).filter((p) => p)?.[0];
-    const frEstimate =
-      __types.map((t) => t.hasFailureRate?.estimate).filter((e) => e)?.[0] || _types?.[0].hasFailureRate?.estimate;
-    return { frPrediction, frEstimate };
-  };
 
   useEffect(() => {
     if (isModified) {

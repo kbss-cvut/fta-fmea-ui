@@ -1,5 +1,5 @@
 import { createShape } from "../../../../services/jointService";
-import { EventType, isReferencedNode, isRootOrIntermediateNode } from "../../../../models/eventModel";
+import { EventType, getFailureRates, isReferencedNode, isRootOrIntermediateNode } from "../../../../models/eventModel";
 import { sequenceListToArray } from "../../../../services/faultEventService";
 import * as faultEventService from "../../../../services/faultEventService";
 import { Link } from "./shapesDefinitions";
@@ -57,18 +57,11 @@ const renderTree = async (container, node, parentShape = null, pathsToHighlight,
   if (node?.probability) {
     if (node?.selectedEstimate) {
       const iriOfSelectedValue = node.selectedEstimate.iri;
-      const { predictionIri, operationalIri } = asArray(node.supertypes.supertypes).reduce(
-        (acc, item) => {
-          if (item?.hasFailureRate?.prediction?.iri) acc.predictionIri = item.hasFailureRate.prediction.iri;
-          if (item?.hasFailureRate?.estimate?.iri) acc.operationalIri = item.hasFailureRate.estimate.iri;
-          return acc;
-        },
-        { predictionIri: "", operationalIri: "" },
-      );
+      const { frPrediction, frEstimate } = getFailureRates(node);
 
-      if (iriOfSelectedValue === predictionIri) {
+      if (iriOfSelectedValue === frPrediction.iri) {
         nodeShape.attr(["probabilityLabel", "text"], `(P) ${node.probability.toExponential(2)}`);
-      } else if (iriOfSelectedValue === operationalIri) {
+      } else if (iriOfSelectedValue === frEstimate.iri) {
         nodeShape.attr(["probabilityLabel", "text"], `(O) ${node.probability.toExponential(2)}`);
       }
     } else {
