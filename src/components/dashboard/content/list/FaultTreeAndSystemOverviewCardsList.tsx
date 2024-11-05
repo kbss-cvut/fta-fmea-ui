@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { Box, Grid, Typography, Button, useTheme } from "@mui/material";
+import { Box, Grid, Typography, Button, useTheme, CircularProgress } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import useStyles from "./FaultTreeOverviewCardsList.styles";
 import { useTranslation } from "react-i18next";
@@ -16,6 +16,7 @@ const borderHover = "1px solid #60A3D9";
 interface FaultTreeOverviewCardsListProps {
   faultTrees?: FaultTree[];
   systems?: System[];
+  loading: boolean;
   handleFaultTreeContextMenu?: (evt: any, faultTree: FaultTree) => void;
   handleSystemContextMenu?: (evt: any, system: System) => void;
   selectedSystem: System | null;
@@ -33,6 +34,7 @@ interface CardProps {
 const FaultTreeAndSystemOverviewCardsList: FC<FaultTreeOverviewCardsListProps> = ({
   faultTrees,
   systems,
+  loading,
   handleFaultTreeContextMenu,
   handleSystemContextMenu,
   selectedSystem,
@@ -69,7 +71,12 @@ const FaultTreeAndSystemOverviewCardsList: FC<FaultTreeOverviewCardsListProps> =
       </Grid>
     );
   };
-
+  if (loading)
+    return (
+      <div style={{ display: "flex", height: "50vh", alignItems: "center", justifyContent: "center" }}>
+        <CircularProgress style={{ alignContent: "center" }} size={100} />
+      </div>
+    );
   return (
     <Box style={{ flex: 1 }}>
       <Grid container spacing={2} className={classes.grid}>

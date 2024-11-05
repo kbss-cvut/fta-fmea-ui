@@ -20,7 +20,7 @@ import { asArray } from "@utils/utils";
 const FaultTreeOverview = () => {
   const { t } = useTranslation();
   const [showConfirmDialog] = useConfirmDialog();
-  const [faultTrees, , , removeTree, triggerFetch] = useFaultTrees();
+  const [faultTrees, , , removeTree, loading, triggerFetch] = useFaultTrees();
 
   const [selectedView, setSelectedView] = useState<ViewType>("table");
   const [editDialogOpen, setEditDialogOpen] = useState<boolean>(false);
@@ -106,6 +106,7 @@ const FaultTreeOverview = () => {
         <FaultTreeAndSystemOverviewTable
           selectedSystem={selectedSystem}
           faultTrees={faultTrees}
+          loading={loading}
           handleFaultTreeContextMenu={handleContextMenu}
           handleFilterChange={handleFilterChange}
           sortConfig={sortConfig}
@@ -115,6 +116,7 @@ const FaultTreeOverview = () => {
         <FaultTreeAndSystemOverviewCardsList
           selectedSystem={selectedSystem}
           faultTrees={faultTrees}
+          loading={loading}
           handleFaultTreeContextMenu={handleContextMenu}
         />
       )}

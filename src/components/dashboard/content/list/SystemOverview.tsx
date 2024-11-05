@@ -18,7 +18,7 @@ import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 const SystemOverview = () => {
   const { t } = useTranslation();
   const [showConfirmDialog] = useConfirmDialog();
-  const [systems, , , removeSystem, triggerFetch] = useSystems();
+  const [systems, , , removeSystem, loading, triggerFetch] = useSystems();
 
   const [selectedView, setSelectedView] = useState<ViewType>("table");
   const [contextMenuSelectedSystem, setContextMenuSelectedSystem] = useState<System>(null);
@@ -73,11 +73,16 @@ const SystemOverview = () => {
       </Box>
 
       {selectedView === "table" ? (
-        <FaultTreeAndSystemOverviewTable systems={systems} handleSystemContextMenu={handleContextMenu} />
+        <FaultTreeAndSystemOverviewTable
+          loading={loading}
+          systems={systems}
+          handleSystemContextMenu={handleContextMenu}
+        />
       ) : (
         <FaultTreeAndSystemOverviewCardsList
           selectedSystem={selectedSystem}
           systems={systems}
+          loading={loading}
           handleSystemContextMenu={handleContextMenu}
         />
       )}
