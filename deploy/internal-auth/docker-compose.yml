@@ -2,7 +2,7 @@ version: "3.9"
 
 # Provide access to fta-fmea-ui that runs locally in dev mode
 x-access-for-local-development: &local-dev-env
-  cors.allowedOrigins: "http://localhost:4173,http://localhost:5173"
+  security.cors.allowedOrigins: "http://localhost:4173,http://localhost:5173"
 
 # Provide logging to Java application (e.g. fta-fmea-server)
 x-logging-java-application: &logging-java
