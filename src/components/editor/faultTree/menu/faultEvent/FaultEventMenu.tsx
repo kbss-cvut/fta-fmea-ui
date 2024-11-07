@@ -345,23 +345,26 @@ const FaultEventMenu = ({
     return failureRateComponent(failureRate, "eventDescription.calculatedFailureRate", statusMessages);
   };
 
-  const FailureRateBox = ({ value, failureRateKey, rate, selected, outdated }) => (
-    <Box display="flex" flexDirection="row" alignItems="center">
-      <FormControlLabel
-        value={value}
-        control={<Radio style={{ color: theme.main.black }} />}
-        label={propertyLabelWithHint(failureRateKey)}
-        className={selected ? classes.selected : classes.notSelected}
-      />
-      <Tooltip title={<span className={classes.hint}>{rate}</span>}>
-        <Typography className={outdated ? classes.outdated : classes.notEditableValue}>
-          {rate.toExponential(2)}
-        </Typography>
-      </Tooltip>
-    </Box>
-  );
+  const FailureRateBox = ({ value, failureRateKey, rate, selected, outdated, messageCode, newValue }) => {
+    const cls = outdated ? classes.outdated : classes.notEditableValue;
 
-  const renderFailureRateBox = (rateType, rateValue, iri, selectedRadioButton, failureRateKey) => {
+    return (
+      <Box display="flex" flexDirection="row" alignItems="center">
+        <FormControlLabel
+          value={value}
+          control={<Radio style={{ color: theme.main.black }} />}
+          label={propertyLabelWithHint(failureRateKey)}
+          className={selected ? classes.selected : classes.notSelected}
+        />
+        <Box className={[classes.eventPropertyRow, cls]}>
+          {numberValue(rate)}
+          {outdated && syncProblemIcon(statusMessages(t(messageCode, { newValue: newValue })), 1)}
+        </Box>
+      </Box>
+    );
+  };
+
+  const renderFailureRateBox = (rateType, rateValue, iri, selectedRadioButton, failureRateKey, messageCode) => {
     const selected = selectedRadioButton === rateType;
     const outdated = shapeToolData.probability !== rateValue && shapeToolData?.selectedEstimate?.iri === iri;
     const rate = outdated ? shapeToolData.probability : rateValue;
@@ -373,14 +376,14 @@ const FaultEventMenu = ({
         rate={rate}
         selected={selected}
         outdated={outdated}
+        messageCode={messageCode}
+        newValue={outdated ? rateValue : undefined}
       />
     );
   };
 
   const violatesRequirement =
     shapeToolData?.probability && getRequiredFailureRate() && shapeToolData.probability > getRequiredFailureRate();
-
-  const requiredFailureRateStatusColor = violatesRequirement ? theme.requirementViolation.color : theme.main.black;
 
   const calculatedFailureRateStatusColor = faultTreeStatus.isOk ? theme.main.black : theme.notSynchronized.color;
 
@@ -459,6 +462,7 @@ const FaultEventMenu = ({
                     frPrediction?.iri,
                     selectedRadioButton,
                     "eventDescription.predictedFailureRate",
+                    "faultEventMessage.referencedValueOutdated",
                   )}
                 {snsOperationalFailureRate &&
                   renderFailureRateBox(
@@ -467,6 +471,7 @@ const FaultEventMenu = ({
                     frEstimate?.iri,
                     selectedRadioButton,
                     "eventDescription.operationalFailureRate",
+                    "faultEventMessage.predictedFailureRateOutdated",
                   )}
                 <Box display={"flex"} flexDirection={"row"} alignItems="center">
                   <FormControlLabel
