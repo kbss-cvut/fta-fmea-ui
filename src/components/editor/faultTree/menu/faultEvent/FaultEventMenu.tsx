@@ -535,7 +535,7 @@ const FaultEventMenu = ({
                 <Tooltip
                   title={
                     <Typography>
-                      {ataNames.map((n) => {
+                      {ataNames?.map((n) => {
                         return <div>{n}</div>;
                       })}
                     </Typography>
