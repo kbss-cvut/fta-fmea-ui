@@ -277,6 +277,8 @@ const EditorCanvas = ({
         }
 
         await renderTree(container, rootEvent, null, listOfPaths, faultTree?.status);
+        if (sidebarSelectedEvent?.iri) updateHighlightedNodeView(container);
+
         setRendering(false);
       }
     };
