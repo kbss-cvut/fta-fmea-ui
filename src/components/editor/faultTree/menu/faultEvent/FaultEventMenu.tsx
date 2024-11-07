@@ -305,7 +305,7 @@ const FaultEventMenu = ({
     );
   };
 
-  const numberValue = (value, cls = classes.notEditableValue) => {
+  const numberValue = (value) => {
     return <Tooltip title={<span className={classes.hint}>{value}</span>}>{value.toExponential(2)}</Tooltip>;
   };
 

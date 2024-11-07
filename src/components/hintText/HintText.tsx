@@ -4,7 +4,6 @@ import useStyles from "./HintText.styles";
 import { HelpOutline } from "@mui/icons-material";
 
 interface HintTextProps {
-  text: string;
   hint: string;
 }
 
