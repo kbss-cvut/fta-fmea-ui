@@ -362,12 +362,9 @@ const FaultEventMenu = ({
   );
 
   const renderFailureRateBox = (rateType, rateValue, iri, selectedRadioButton, failureRateKey) => {
-    const rate =
-      shapeToolData.probability !== rateValue && shapeToolData?.selectedEstimate?.iri === iri
-        ? shapeToolData.probability
-        : rateValue;
     const selected = selectedRadioButton === rateType;
-    const outdated = selected && shapeToolData.probability !== rateValue;
+    const outdated = shapeToolData.probability !== rateValue && shapeToolData?.selectedEstimate?.iri === iri;
+    const rate = outdated ? shapeToolData.probability : rateValue;
 
     return (
       <FailureRateBox
