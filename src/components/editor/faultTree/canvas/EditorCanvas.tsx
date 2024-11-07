@@ -214,17 +214,21 @@ const EditorCanvas = ({
     }
   }, [isExportingImage]);
 
-  const layout = (graph) => {
-    const autoLayoutElements = [];
-    const conditionalEventLayoutElements = [];
-
+  const updateHighlightedNodeView = (graph) => {
     graph.getElements().forEach((el) => {
       const faultEventIri = el.get(JOINTJS_NODE_MODEL.faultEventIri);
       if (faultEventIri && faultEventIri === sidebarSelectedEvent?.iri) {
         const elementView = el.findView(jointPaper);
         setHighlightedElement(elementView);
       }
+    });
+  };
 
+  const layout = (graph) => {
+    const autoLayoutElements = [];
+    const conditionalEventLayoutElements = [];
+    updateHighlightedNodeView(graph);
+    graph.getElements().forEach((el) => {
       if (el.get("type") === "fta.ConditioningEvent") {
         conditionalEventLayoutElements.push(el);
       } else {
@@ -273,6 +277,8 @@ const EditorCanvas = ({
         }
 
         await renderTree(container, rootEvent, null, listOfPaths, faultTree?.status);
+        if (sidebarSelectedEvent?.iri) updateHighlightedNodeView(container);
+
         setRendering(false);
       }
     };
