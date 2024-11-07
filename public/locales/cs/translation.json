@@ -112,7 +112,8 @@
   },
   "faultEventMessage": {
     "outOfSyncValue": "Hodnota je zastaralá, intenzita poruch u některých listových uzlů byla aktualizována!",
-    "referencedValueOutdated": "Referenční hodnota byla změněna. Hodnota bude aktualizována při vyhodnocení stromu",
+    "referencedValueOutdated": "Referenční hodnota byla změněna. Nová hodnota je {{newValue}}. Hodnota bude aktualizována při vyhodnocení stromu",
+    "predictedFailureRateOutdated": "Referenční hodnota byla změněna. Nová hodnota je {{newValue}}.",
     "experimental": "Min. provozní hodiny (MOH) poruchoveho stromu se liší od MOH jeho systému",
     "requirementViolated": "Vypočtená intenzita poruch je větší, než je požadováno!"
   },
