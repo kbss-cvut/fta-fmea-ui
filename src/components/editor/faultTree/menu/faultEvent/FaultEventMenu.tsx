@@ -30,7 +30,7 @@ import UnsavedChangesDialog from "./UnsavedChangesDialog";
 import { useAppBar } from "@contexts/AppBarContext";
 import { syncProblemIcon, warnIcon } from "@components/Icons";
 import HintText from "@components/hintText/HintText";
-import { calculationStatusMessages } from "@components/fta/FTAStatus";
+import { statusMessages } from "@components/fta/FTAStatus";
 import { FaultTreeStatus } from "@models/faultTreeModel";
 
 interface Props {
@@ -309,45 +309,40 @@ const FaultEventMenu = ({
     return <Tooltip title={<span className={classes.hint}>{value}</span>}>{value.toExponential(2)}</Tooltip>;
   };
 
-  const requiredFailureRateComponent = (failureRate, requirementStatusColor, violates) => {
+  const requiredFailureRateComponent = (failureRate, violates) => {
     const cls = violates ? classes.violated : classes.notEditableValue;
     return (
       <Typography className={classes.eventPropertyRow}>
         {propertyLabelWithHint("eventDescription.requiredFailureRate")}
         <Box className={[classes.eventPropertyRow, cls]}>
           {numberValue(failureRate)}
-          {violates &&
-            warnIcon(calculationStatusMessages("faultEventMessage.requirementViolated", t), requirementStatusColor)}
+          {violates && warnIcon(statusMessages(t("faultEventMessage.requirementViolated")))}
         </Box>
       </Typography>
     );
   };
 
-  const failureRateComponent = (failureRate, failureRateCode, statusCodes: string[] = []) => {
-    const isOutOfSync = statusCodes && statusCodes.length > 0;
+  const failureRateComponent = (failureRate, failureRateCode, statusMessages: string[] = []) => {
+    const _statusMessages = asArray(statusMessages);
+    const isOutOfSync = _statusMessages && _statusMessages.length > 0;
     const cls = isOutOfSync ? classes.outdated : classes.notEditableValue;
     return (
       <Typography className={classes.eventPropertyRow}>
         {propertyLabelWithHint(failureRateCode)}
         <Box className={[classes.eventPropertyRow, cls]}>
           {numberValue(failureRate)}
-          {isOutOfSync && syncProblemIcon(calculationStatusMessages(statusCodes, t), statusCodes.length)}
+          {isOutOfSync && syncProblemIcon(statusMessages(_statusMessages), _statusMessages.length)}
         </Box>
       </Typography>
     );
   };
 
-  const fhaFailureRateComponent = (failureRate, failureRateStatusColor, faultTreeStatus: FaultTreeStatus) => {
-    return failureRateComponent(
-      failureRate,
-      "eventDescription.fhaBasedFailureRate",
-      failureRateStatusColor,
-      faultTreeStatus,
-    );
+  const fhaFailureRateComponent = (failureRate) => {
+    return failureRateComponent(failureRate, "eventDescription.fhaBasedFailureRate", null);
   };
 
-  const calculatedFailureRateComponent = (failureRate, failureRateStatusColor, statusCodes: string[]) => {
-    return failureRateComponent(failureRate, "eventDescription.calculatedFailureRate", statusCodes);
+  const calculatedFailureRateComponent = (failureRate, failureRateStatusColor, statusMessages: string[]) => {
+    return failureRateComponent(failureRate, "eventDescription.calculatedFailureRate", statusMessages);
   };
 
   const FailureRateBox = ({ value, failureRateKey, rate, selected, outdated }) => (
@@ -408,14 +403,13 @@ const FaultEventMenu = ({
               {calculatedFailureRateComponent(
                 shapeToolData.probability,
                 calculatedFailureRateStatusColor,
-                faultTreeStatus.statusCodes,
+                asArray(faultTreeStatus.statusCodes).map((c) => t(c)),
               )}
             </Box>
           )}
-          {getRequiredFailureRate() &&
-            requiredFailureRateComponent(getRequiredFailureRate(), requiredFailureRateStatusColor, violatesRequirement)}
+          {getRequiredFailureRate() && requiredFailureRateComponent(getRequiredFailureRate(), violatesRequirement)}
           {(frEstimate?.value || frEstimate?.value === 0) && (
-            <Box className={classes.eventPropertyRow}>{fhaFailureRateComponent(frEstimate.value, null, null)}</Box>
+            <Box className={classes.eventPropertyRow}>{fhaFailureRateComponent(frEstimate.value)}</Box>
           )}
         </>
       )}
@@ -428,12 +422,17 @@ const FaultEventMenu = ({
               {calculatedFailureRateComponent(
                 shapeToolData.probability,
                 null,
-                isReferenceProbabilityOutdated(shapeToolData) ? ["faultEventMessage.referencedValueOutdated"] : [],
+                isReferenceProbabilityOutdated(shapeToolData)
+                  ? [
+                      t("faultEventMessage.referencedValueOutdated", {
+                        newValue: shapeToolData?.references?.probability,
+                      }),
+                    ]
+                  : [],
               )}
             </Box>
           )}
-          {getRequiredFailureRate() &&
-            requiredFailureRateComponent(getRequiredFailureRate(), requiredFailureRateStatusColor, violatesRequirement)}
+          {getRequiredFailureRate() && requiredFailureRateComponent(getRequiredFailureRate(), violatesRequirement)}
           {(frEstimate?.value || frEstimate?.value) && (
             <Box className={classes.eventPropertyRow}>{fhaFailureRateComponent(frEstimate.value, null, null)}</Box>
           )}

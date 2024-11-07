@@ -7,11 +7,11 @@ import useStyles from "./FaultTreeOverviewTable.styles";
 import { FaultTree, getFaultTreeCalculationStatus } from "@models/faultTreeModel";
 import { extractFragment } from "@services/utils/uriIdentifierUtils";
 import { asArray, findByIri, formatDate } from "@utils/utils";
-import { ROUTES, Status } from "@utils/constants";
+import { ROUTES } from "@utils/constants";
 import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
 import { useSystems } from "@hooks/useSystems";
 import { syncProblemIcon, warnIcon } from "@components/Icons";
-import { calculationStatusMessages } from "@components/fta/FTAStatus";
+import { statusMessages } from "@components/fta/FTAStatus";
 
 interface FaultTreeTableBodyProps {
   faultTrees: FaultTree[];
@@ -86,7 +86,7 @@ const FaultTreeTableBody: FC<FaultTreeTableBodyProps> = ({ faultTrees, handleFau
                 !calculationStatus.isOk &&
                   faultTree?.calculatedFailureRate &&
                   syncProblemIcon(
-                    calculationStatusMessages(calculationStatus.statusCodes, t),
+                    statusMessages(calculationStatus.statusCodes?.map((c) => t(c))),
                     calculationStatus.statusCodes?.length,
                   ),
               )}
@@ -95,8 +95,7 @@ const FaultTreeTableBody: FC<FaultTreeTableBodyProps> = ({ faultTrees, handleFau
             <TableCell className={classes.tableCell} style={{ color: violatedRequirementStatusColor }}>
               {failureRate(
                 faultTree?.requiredFailureRate,
-                violatedRequirement &&
-                  warnIcon(calculationStatusMessages(["faultEventMessage.requirementViolated"], t)),
+                violatedRequirement && warnIcon(statusMessages(t("faultEventMessage.requirementViolated"))),
               )}
             </TableCell>
             <TableCell className={classes.tableCell}>{formatDate(faultTree?.modified)}</TableCell>
