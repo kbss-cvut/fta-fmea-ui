@@ -112,7 +112,8 @@
   },
   "faultEventMessage": {
     "outOfSyncValue": "The value is outdated, some of the leaf node failure rates were updated!",
-    "referencedValueOutdated": "The referenced value has changed. The value will be updated on tree evaluation.",
+    "referencedValueOutdated": "The referenced value has changed to {{newValue}}. The value can be updated with action to recalculate failure rate.",
+    "predictedFailureRateOutdated": "The referenced value has changed to {{newValue}}. The value can be updated with action to recalculate failure rate.",
     "experimental": "Fault tree's min. operational hours (MOH) is different from its system's MOH",
     "requirementViolated": "Calculated failure rate is bigger than required!"
   },
