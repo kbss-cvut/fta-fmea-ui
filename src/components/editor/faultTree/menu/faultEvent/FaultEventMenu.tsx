@@ -322,16 +322,16 @@ const FaultEventMenu = ({
     );
   };
 
-  const failureRateComponent = (failureRate, failureRateCode, statusMessages: string[] = []) => {
-    const _statusMessages = asArray(statusMessages);
-    const isOutOfSync = _statusMessages && _statusMessages.length > 0;
+  const failureRateComponent = (failureRate, failureRateCode, messages: string[] = []) => {
+    const _messages = asArray(messages);
+    const isOutOfSync = _messages && _messages.length > 0;
     const cls = isOutOfSync ? classes.outdated : classes.notEditableValue;
     return (
       <Typography className={classes.eventPropertyRow}>
         {propertyLabelWithHint(failureRateCode)}
         <Box className={[classes.eventPropertyRow, cls]}>
           {numberValue(failureRate)}
-          {isOutOfSync && syncProblemIcon(statusMessages(_statusMessages), _statusMessages.length)}
+          {isOutOfSync && syncProblemIcon(statusMessages(_messages), _messages.length)}
         </Box>
       </Typography>
     );
