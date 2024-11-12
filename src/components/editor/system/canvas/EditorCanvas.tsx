@@ -64,6 +64,8 @@ const EditorCanvas = ({
   const [updatedMinOperationalHours, setUpdatedMinOperationalHours] = useState(getSystemOperationalHours());
   const [inputColor, setInputColor] = useState("");
 
+  const tooltipText = (messageCode) => <Typography>{t(messageCode)}</Typography>;
+
   useEffect(() => {
     const canvasWidth = containerRef.current.clientWidth;
     const canvasHeight = containerRef.current.clientHeight;
@@ -267,7 +269,7 @@ const EditorCanvas = ({
             value={updatedMinOperationalHours}
             onChange={handleMinOperationalHoursChange}
           />
-          <Tooltip title={t("diagramSidePanel.system.refreshButtonToolTip")}>
+          <Tooltip title={tooltipText("diagramSidePanel.system.refreshButtonToolTip")}>
             <IconButton
               aria-label="restore layout"
               size="large"
@@ -276,7 +278,7 @@ const EditorCanvas = ({
               <RestartAltIcon />
             </IconButton>
           </Tooltip>
-          <Tooltip title={t("diagramSidePanel.system.checkButtonToolTip")}>
+          <Tooltip title={tooltipText("diagramSidePanel.system.checkButtonToolTip")}>
             <IconButton
               aria-label="restore layout"
               size="large"
