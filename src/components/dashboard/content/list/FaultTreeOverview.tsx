@@ -10,7 +10,7 @@ import { useFaultTrees } from "@hooks/useFaultTrees";
 import FaultTreeContextMenu from "@components/editor/faultTree/menu/faultTree/FaultTreeContextMenu";
 import FaultTreeEditDialog from "@components/dialog/faultTree/FaultTreeEditDialog";
 import FaultTreeDialog from "@components/dialog/faultTree/FaultTreeDialog";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { SELECTED_VIEW } from "@utils/constants";
 import { useSelectedSystemSummaries } from "@hooks/useSelectedSystemSummaries";
@@ -33,6 +33,9 @@ const FaultTreeOverview = () => {
     key: "date",
     direction: "desc",
   });
+
+  const tooltipText = (messageCode) => <Typography>{t(messageCode)}</Typography>;
+
   const isTreeCreationDisabled = !selectedSystem;
 
   useEffect(() => {
@@ -88,7 +91,7 @@ const FaultTreeOverview = () => {
     <Box flexDirection="column">
       <Box display="flex" flexDirection="row-reverse">
         <OverviewTypeToggler selectedView={selectedView} toggleView={toggleView} />
-        <Tooltip title={isTreeCreationDisabled ? t("create.systemRequired") : ""}>
+        <Tooltip title={isTreeCreationDisabled ? tooltipText("create.systemRequired") : ""}>
           <span>
             <Button
               variant="contained"

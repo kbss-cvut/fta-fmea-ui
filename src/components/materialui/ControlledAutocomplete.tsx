@@ -70,6 +70,8 @@ const ControlledAutocomplete = ({
   const [newOptionValue, setNewOptionValue] = useState(null);
   const { t } = useTranslation();
 
+  const tooltipText = (messageCode) => <Typography>{t(messageCode)}</Typography>;
+
   const handleOnClick = (e) => {
     onCreateEventClick(e);
     setMenuOpen(false);
@@ -112,7 +114,7 @@ const ControlledAutocomplete = ({
           <Grid item>{getOptionLabel(option)}</Grid>
           <Grid item>
             {option?.newOption && (
-              <Tooltip title={t("newFtaModal.createEvent")}>
+              <Tooltip title={tooltipText("newFtaModal.createEvent")}>
                 <AddCircle style={{ color: "green" }} />
               </Tooltip>
             )}

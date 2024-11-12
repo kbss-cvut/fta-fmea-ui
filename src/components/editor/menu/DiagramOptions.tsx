@@ -30,18 +30,20 @@ const DiagramOptions = ({
   const { t } = useTranslation();
   const { classes } = useStyles();
 
+  const tooltipText = (messageCode) => <Typography>{t(messageCode)}</Typography>;
+
   return (
     <>
       <Typography variant="h6" className={classes.menuTitle} gutterBottom>
         {t("diagramSidePanel.diagramOptions")}
       </Typography>
       <div>
-        <Tooltip title={t("diagramSidePanel.autoLayoutToolTip")}>
+        <Tooltip title={tooltipText("diagramSidePanel.autoLayoutToolTip")}>
           <IconButton color="primary" onClick={onApplyAutomaticLayout} aria-label="restore layout" size="large">
             <AccountTreeIcon />
           </IconButton>
         </Tooltip>
-        <Tooltip title={t("diagramSidePanel.exportToolTip")}>
+        <Tooltip title={tooltipText("diagramSidePanel.exportToolTip")}>
           <IconButton color="primary" onClick={onExportDiagram} aria-label="save" size="large">
             <SaveAltIcon />
           </IconButton>
@@ -52,7 +54,7 @@ const DiagramOptions = ({
           </IconButton>
         )}
         {onCutSetAnalysis && (
-          <Tooltip title={t("diagramSidePanel.cutsetToggleToolTip")}>
+          <Tooltip title={tooltipText("diagramSidePanel.cutsetToggleToolTip")}>
             <IconButton color="primary" onClick={onCutSetAnalysis} size="large">
               {rendering ? <CircularProgress size={24} /> : <RouteIcon />}
             </IconButton>

@@ -61,6 +61,8 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
   const [selectedSystem, setSelectedSystem] = useSelectedSystemSummaries();
   const [changePasswordDialogOpen, setChangePasswordDialogOpen] = useState(false);
 
+  const tooltipText = (messageCode) => <Typography>{t(messageCode)}</Typography>;
+
   const isMenuOpen = Boolean(anchorEl);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -175,7 +177,11 @@ const AppBar = ({ title, showBackButton = false, topPanelHeight }: Props) => {
                   </TextField>
                   <Box className={classes.tooltipContainer}>
                     {selectedSystem && !isGlobalSystemSwitchDisabled && (
-                      <Tooltip title={t("common.delete")} className={classes.tooltip} onClick={handleSystemDelete}>
+                      <Tooltip
+                        title={tooltipText("common.delete")}
+                        className={classes.tooltip}
+                        onClick={handleSystemDelete}
+                      >
                         <CancelIcon />
                       </Tooltip>
                     )}

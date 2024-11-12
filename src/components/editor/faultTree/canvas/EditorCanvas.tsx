@@ -98,6 +98,8 @@ const EditorCanvas = ({
   const [showSnackbar] = useSnackbar();
   const { isModified, setShowUnsavedChangesDialog } = useAppBar();
 
+  const tooltipText = (messageCode) => <Typography>{t(messageCode)}</Typography>;
+
   let dragStartPosition = null;
 
   useEffect(() => {
@@ -369,12 +371,12 @@ const EditorCanvas = ({
               onChange={handleMinOperationalHoursChange}
               {...props}
             />
-            <Tooltip title={t("diagramSidePanel.faultTree.refreshButtonToolTip")}>
+            <Tooltip title={tooltipText("diagramSidePanel.faultTree.refreshButtonToolTip")}>
               <IconButton aria-label="restore layout" size="large" onClick={handleReset}>
                 <RestartAltIcon />
               </IconButton>
             </Tooltip>
-            <Tooltip title={t("diagramSidePanel.faultTree.playButtonToolTip")}>
+            <Tooltip title={tooltipText("diagramSidePanel.faultTree.playButtonToolTip")}>
               <IconButton aria-label="restore layout" size="large" onClick={handleSetNewDefaultOperationalHours}>
                 <PlayArrow />
               </IconButton>
