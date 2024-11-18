@@ -103,7 +103,7 @@
     },
     "operationalFailureRate": {
       "title": "Operational failure rate",
-      "description": "Failure rate calculated based on the quantity of occurrences of component failures during the aircraft operation across all aircraft types. Each specific component has a defined unique SNS number."
+      "description": "Failure rate calculated based on the quantity of occurrences of component failures during the aircraft operation across all aircraft types. Each specific component has a defined unique SNS number. Note that the presented value might be outdated, even if there is no visual indication. If so it can be updated with user's action to recalculate fault tree. The value could become outdated without visual indication due to updated system's Min. operational hours (MOH) for fault trees which do not have own MOH or due to new failure records. If the value is outdated due to other reasons there will be a visual indication."
     },
     "manuallyDefinedFailureRate": {
       "title": "Manually defined failure rate",
