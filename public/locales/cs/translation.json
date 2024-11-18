@@ -103,7 +103,7 @@
     },
     "operationalFailureRate": {
       "title": "Provozní intenzita poruch",
-      "description": "Intenzita poruch vypočtená na základě počtu výskytů selhání komponenty během provozu letadla napříč všemi typy letadel. Každá specifická komponenta má definované jedinečné číslo SNS. Všimněte si, že uvedená hodnota může být zastaralá, i když neexistuje žádná vizuální indikace. Pokud ano, bude aktualizována při vyhodnocení stromu poruch. Hodnota by mohla být zastaralá bez vizuální indikace kvůli aktualizovaných Min. provozních hodiny (MOH) systému u stromů poruch které nemají vlastní MOH a nebo z důvodu nových záznamů poruch. Pokud je hodnota zastaralá z jiných důvodů, zobrazí se vizuální indikace."
+      "description": "Intenzita poruch vypočtená na základě počtu výskytů selhání komponenty během provozu letadla napříč všemi typy letadel. Každá specifická komponenta má definované jedinečné číslo SNS. Všimněte si, že uvedená hodnota může být zastaralá, i když neexistuje žádná vizuální indikace. Pokud tomu tak je, hodnota může být aktualizována uživatelem pomocí přepočtu stromu poruch. Hodnota by mohla být zastaralá bez vizuální indikace kvůli aktualizované Min. provozní době (MOH) systému u stromů poruch, které nemají vlastní MOH a nebo z důvodu nových záznamů poruch. Pokud je hodnota zastaralá z jiných důvodů, zobrazí se vizuální indikace."
     },
     "manuallyDefinedFailureRate": {
       "title": "Manuálně definovaná intenzita poruch",
