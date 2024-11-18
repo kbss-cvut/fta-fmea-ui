@@ -68,7 +68,7 @@
       "failureRateCalculationSuccess": "The failure rate was successfully calculated."
     },
     "faultTree": {
-      "playButtonToolTip": "Recalculate the failure rate after changing the value of the min. operational hours failure rates in the fault tree",
+      "playButtonToolTip": "Recalculate the failure rate after changing the value of the min. operational hours or failure rates in the fault tree",
       "refreshButtonToolTip": "Reset the min. operational hours value"
     },
     "system": {
