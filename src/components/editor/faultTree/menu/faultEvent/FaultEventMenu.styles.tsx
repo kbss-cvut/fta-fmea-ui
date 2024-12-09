@@ -7,12 +7,15 @@ const useStyles = makeStyles()((theme: Theme) => ({
     marginRight: 8,
     fontSize: 16,
     color: theme.main.black,
+    whiteSpace: "nowrap",
   },
   eventPropertyRow: {
     color: theme.main.grey,
     display: "flex",
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-end",
+    gap: "1rem",
+    width: "100%",
   },
   selected: {
     color: theme.main.black,
