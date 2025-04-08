@@ -15,6 +15,7 @@ services:
       APP_ORIGIN: "${PUBLIC_ORIGIN:-http://localhost:${INTERNAL_HOST_PORT:-1235}}"
       APP_ROOT_PATH: "${APP_ROOT_PATH:-}"
       FTA_FMEA_PATH: "${FTA_FMEA_PATH:-/fta-fmea}"
+      INTERNAL_FTA_FMEA_SERVER_SERVICE: "${INTERNAL_FTA_FMEA_SERVER_SERVICE:-http://fta-fmea-server:9999}"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/templates/nginx.conf.template:ro
       - ../shared/nginx/error.html:/usr/share/nginx/html/error.html:ro
