@@ -1,0 +1,5 @@
+# Provide access to fta-fmea-ui that runs locally in dev mode
+services:
+  fta-fmea-server:
+    environment:
+      security.cors.allowedOrigins: "http://localhost:4173,http://localhost:5173"

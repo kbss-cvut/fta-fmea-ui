@@ -1,0 +1,6 @@
+services:
+  fta-fmea-server:
+    ports:
+      - "127.0.0.1:${JAVA_DEBUG_FTA_FMEA_SERVER_PORT:-5005}:5005"
+    environment:
+      JAVA_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"

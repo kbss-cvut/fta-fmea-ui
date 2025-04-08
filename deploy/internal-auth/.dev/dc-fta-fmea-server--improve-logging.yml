@@ -1,0 +1,5 @@
+# Provide logging to Java application - fta-fmea-server
+services:
+  fta-fmea-server:
+    environment:
+      LOGGING_LEVEL_ROOT: "debug"

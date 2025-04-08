@@ -1,16 +1,4 @@
-# Provide access to fta-fmea-ui that runs locally in dev mode
-x-access-for-local-development: &local-dev-env
-  security.cors.allowedOrigins: "http://localhost:4173,http://localhost:5173"
-
-# Provide logging to Java application (e.g. fta-fmea-server)
-x-logging-java-application: &logging-java
-  LOGGING_LEVEL_ROOT: "debug"
-
 # Expose port to access db-server directly, bypassing nginx
-x-access-db-server-development-port: &db-server-dev-port
-  ports:
-    - "127.0.0.1:${DB_SERVER_DEV_PORT:-7205}:7200"
-
 services:
   nginx:
     image: nginx:latest
@@ -54,15 +42,14 @@ services:
       - db-server
     restart: always
     environment:
-      <<: *local-dev-env
       appContext: "${PUBLIC_ORIGIN:-http://localhost:${INTERNAL_HOST_PORT:-1235}}${APP_ROOT_PATH:-}${FTA_FMEA_PATH:-/fta-fmea}"
       REPOSITORY_URL: ${REPOSITORY_URL:-http://db-server:7200/repositories/fta-fmea}
       REPOSITORY_USERNAME: ${REPOSITORY_USERNAME:-}
       REPOSITORY_PASSWORD: ${REPOSITORY_PASSWORD:-}
       server.servlet.context-path: "/fta-fmea"
 
+
   db-server:
-    <<: *db-server-dev-port
     build:
       context: ../shared/db-server
     image: ${RECORD_SET_NAME:-ff}-db-server

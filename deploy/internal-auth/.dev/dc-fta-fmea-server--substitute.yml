@@ -1,0 +1,6 @@
+services:
+  nginx:
+    environment:
+      INTERNAL_FTA_FMEA_SERVER_SERVICE: "${INTERNAL_FTA_FMEA_SERVER_SERVICE:-http://host.docker.internal:8080}"
+    extra_hosts:
+      - "host.docker.internal:host-gateway" # support "http://host.docker.internal" for Linux (Windows/Mac works without it)
