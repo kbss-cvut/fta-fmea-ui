@@ -1,5 +1,3 @@
-version: "3.9"
-
 # Provide access to fta-fmea-ui that runs locally in dev mode
 x-access-for-local-development: &local-dev-env
   security.cors.allowedOrigins: "http://localhost:4173,http://localhost:5173"
