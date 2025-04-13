@@ -12,8 +12,8 @@ import { useUserAuth } from "@hooks/useUserAuth";
 type systemContextType = [
   System[],
   (systemToCreate: System) => void,
-  (systemToDelete: System, onSuccess: () => void, onFail: () => void) => void,
-  (systemToUpdate: System) => void,
+  (systemToUpdate: System, onSuccess: () => void, onFail: () => void) => void,
+  (systemToDelete: System) => void,
   boolean,
   () => void,
 ];
