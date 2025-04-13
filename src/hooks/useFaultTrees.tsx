@@ -4,11 +4,12 @@ import * as faultTreeService from "@services/faultTreeService";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 import { filter, findIndex } from "lodash";
 import { useUserAuth } from "@hooks/useUserAuth";
+import { ChildrenProps } from "@utils/hookUtils";
 
 type faultTreeContextType = [
   FaultTree[],
   (faultTree: FaultTree) => void,
-  (faultTreeToUpdate: FaultTree) => void,
+  (faultTreeToUpdate: FaultTree, onSuccess: () => void, onFail: () => void) => void,
   (faultTreeToDelete: FaultTree) => void,
   boolean,
   (filters?: { label?: string; snsLabel?: string; sort?: string }) => void,
@@ -21,7 +22,7 @@ export const useFaultTrees = () => {
   return [faultTrees, addFaultTree, updateTree, removeTree, loading, triggerFetch] as const;
 };
 
-export const FaultTreesProvider = ({ children }) => {
+export const FaultTreesProvider = ({ children }: ChildrenProps) => {
   const [_faultTrees, _setFaultTrees] = useState<FaultTree[]>([]);
   const [_loading, _setLoading] = useState(false);
   const [showSnackbar] = useSnackbar();
@@ -54,7 +55,7 @@ export const FaultTreesProvider = ({ children }) => {
       .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
   };
 
-  const updateTree = async (treeToUpdate: FaultTree) => {
+  const updateTree = async (treeToUpdate: FaultTree, onSuccess: () => void, onFail: () => void) => {
     faultTreeService
       .update(treeToUpdate)
       .then((value) => {
@@ -64,8 +65,12 @@ export const FaultTreesProvider = ({ children }) => {
         _faultTrees.splice(index, 1, treeToUpdate);
 
         _setFaultTrees([..._faultTrees]);
+        if (onSuccess) onSuccess();
       })
-      .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
+      .catch((reason) => {
+        showSnackbar(reason, SnackbarType.ERROR);
+        if (onFail) onFail();
+      });
   };
 
   const removeTree = async (treeToRemove: FaultTree) => {
