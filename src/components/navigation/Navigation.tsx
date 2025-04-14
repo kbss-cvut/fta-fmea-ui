@@ -14,7 +14,7 @@ interface SideNavigationProps {
   children?: React.ReactNode;
 }
 
-export const SIDE_PANEL_WIDTH = 240;
+export const SIDE_PANEL_WIDTH = 180;
 export const SIDE_PANEL_COLLAPSED_WIDTH = 56;
 export const TOP_PANEL_HEIGHT = 64;
 

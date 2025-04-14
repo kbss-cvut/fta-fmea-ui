@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Tooltip, Typography, useTheme } from "@mui/material";
 import React, { FC, useEffect, useState } from "react";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
@@ -10,6 +10,8 @@ import useStyles from "./SidePanel.styles";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useTranslation } from "react-i18next";
+import { statusMessages } from "@components/fta/FTAStatus";
+import { alignProperty } from "@mui/material/styles/cssUtils";
 
 interface SidePanelProps {
   topPanelHeight: number;
@@ -67,6 +69,41 @@ const SidePanel: FC<SidePanelProps> = ({
     },
   ];
 
+  const menuItemIcon = (item, iconColor) => {
+    return (
+      <Box className={classes.iconContainer} style={{ color: iconColor }}>
+        {item.icon}
+      </Box>
+    );
+  };
+
+  const menuItemTitle = (item, titleColor) => {
+    return (
+      <Box className={classes.titleContainer}>
+        <Typography className={classes.title} style={{ color: titleColor }}>
+          {item.title}
+        </Typography>
+      </Box>
+    );
+  };
+
+  const menuItemWithExpanded = (item, titleColor, iconColor) => {
+    return (
+      <>
+        {menuItemIcon(item, iconColor)}
+        {menuItemTitle(item, titleColor)}
+      </>
+    );
+  };
+
+  const menuItemCollapsed = (item, iconColor) => {
+    return (
+      <Tooltip title={item.title} placement={"top"}>
+        {menuItemIcon(item, iconColor)}
+      </Tooltip>
+    );
+  };
+
   return (
     <Box
       className={classes.container}
@@ -90,14 +127,7 @@ const SidePanel: FC<SidePanelProps> = ({
                 onClick={() => handleMenuItemClick(item.route)}
                 style={{ backgroundColor: bgColor }}
               >
-                <Box className={classes.iconContainer} style={{ color: iconColor }}>
-                  {item.icon}
-                </Box>
-                <Box className={classes.titleContainer}>
-                  <Typography className={classes.title} style={{ color: titleColor }}>
-                    {item.title}
-                  </Typography>
-                </Box>
+                {isCollapsed ? menuItemCollapsed(item, iconColor) : menuItemWithExpanded(item, titleColor, iconColor)}
               </Box>
             );
           })}
