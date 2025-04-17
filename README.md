@@ -19,10 +19,21 @@ npm run preview
 
 ## Running complete tool in Docker
 
+It is possible to run the tool using internal authorization or [Keycloak-based](https://www.keycloak.org/) authorization. 
+
+### Using internal authorization
+
 1. Change the working directory using `cd ./deploy/internal-auth`
 2. Run `docker-compose up -d` to start the application.
 3. The application should be accessible at `http:/localhost:1235/`
 
+### Using Keycloak-based authorization
+
+1. Change the working directory using `cd ./deploy/keycloak-auth`
+2. Configure variables `KC_ADMIN_USER`, `KC_ADMIN_PASSWORD` within `.env` to access admin account of keycloak service
+4. Run `docker-compose up -d` to start the application.
+6. The application should be accessible at `http:/localhost:1235/`
+7. Configure users of the tool within keycloak admin interface `http:/localhost:1235/services/auth` using values of `KC_ADMIN_USER`, `KC_ADMIN_PASSWORD`
 
 ## Configuration
 
