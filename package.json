@@ -41,7 +41,7 @@
     "svg-pan-zoom": "^3.6.1",
     "tss-react": "^4.8.8",
     "typescript": "^5.1.6",
-    "vite": "^6.2.6",
+    "vite": "^6.3.4",
     "yup": "^1.2.0"
   },
   "scripts": {
