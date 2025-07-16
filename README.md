@@ -38,7 +38,7 @@ It is possible to run the tool using internal authorization or [Keycloak-based](
 ## Configuration
 
 The tool also supports configuration to disable registration of new users within security, but by default, everybody can register.
-There are two flags which need to be set:
+There are two flags that need to be set:
 
 - Backend - Run application with `-Dspring.profiles.active=admin-registration-only` profile
 - Frontend - Set `FTA_FMEA_APP_ADMIN_REGISTRATION_ONLY` in [.env.production](.env.production) to true
@@ -47,7 +47,10 @@ There are two flags which need to be set:
 
 To develop the tool, the easiest way to run it is as follows:
 1. Run the complete tool as described in [Running complete tool in Docker](#running-complete-tool-in-docker)
-2. Run frontend of the tool that connects to just-started docker services:
+2. Depending on the deployment chosen in the previous step, copy the appropriate configuration to `.env.development`, i.e.:
+    - if [deploy/internal-auth](./deploy/internal-auth) was chosen, execute: `cp .env.deveploment.internal-auth .env.development`
+    - else if [deploy/keycloak-auth](./deploy/keycloak-auth) was chosen, execute: `cp .env.deveploment.keycloak-auth .env.development`
+4. Run the frontend of the tool that connects to just-started docker services:
 ```shell script
 npm install
 npm run dev
