@@ -35,7 +35,7 @@
     "react-hook-form": "^7.45.2",
     "react-i18next": "^14.0.5",
     "react-icons": "^4.10.1",
-    "react-router-dom": "^6.14.2",
+    "react-router-dom": "^6.30.4",
     "react-select": "^5.7.4",
     "save-svg-as-png": "^1.4.17",
     "svg-pan-zoom": "^3.6.1",
