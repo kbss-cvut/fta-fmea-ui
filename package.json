@@ -41,7 +41,7 @@
     "svg-pan-zoom": "^3.6.1",
     "tss-react": "^4.8.8",
     "typescript": "^5.1.6",
-    "vite": "^6.4.2",
+    "vite": "^8.0.16",
     "yup": "^1.2.0"
   },
   "scripts": {
@@ -63,7 +63,7 @@
     "@types/react-dom": "^18.2.7",
     "@types/react-router-dom": "^5.3.3",
     "@types/yup": "^0.29.14",
-    "@vitejs/plugin-react": "^4.3.4",
+    "@vitejs/plugin-react": "^6.0.2",
     "dotenv-webpack": "^8.0.1",
     "eslint-config-prettier": "^9.1.0",
     "husky": "^9.0.11",
@@ -72,7 +72,7 @@
     "prettier": "3.2.5",
     "ts-loader": "^9.4.4",
     "vite-tsconfig-paths": "^4.3.1",
-    "vitest": "^3.0.5"
+    "vitest": "^4.1.8"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
