@@ -185,7 +185,8 @@
       "getRootReusable": "Nepodařilo se najít znovu použitelné události závady. {{error}}",
       "getAllReusable": "Nepodařilo se najít všechny znovu použitelné události závady. {{error}}",
       "probabilityNotSet": "Výpočet pravděpodobnosti FTA - Událost \"{{event}}\"<{{uri}}>, nemá určenou pravděpodobnost a je použita pro výpočet pravděpodobnosti nadřazené události.",
-      "childProbabilityNotSet": "Výpočet pravděpodobnosti FTA - Nelze vypočítat pravděpodobnost události \"{{event}}\"<{{uri}}>, některé podřízené události nemají určenou pravděpodobnost."
+      "childProbabilityNotSet": "Výpočet pravděpodobnosti FTA - Nelze vypočítat pravděpodobnost události \"{{event}}\"<{{uri}}>, některé podřízené události nemají určenou pravděpodobnost.",
+      "paste": "Vložení ze schránky (clipboardu) se nezdařilo. {{error}}"
     },
     "faultTree": {
       "rootEvent": {
