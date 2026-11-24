@@ -53,6 +53,8 @@ interface Props {
   possibleFaultEventScenarios: FaultEventScenario[];
   onScenarioSelect: (scenario: FaultEventScenario) => void;
   onApplyAutomaticLayout: (container: joint.dia.Graph, jointPaper: joint.dia.Paper) => void;
+  needsLayout: boolean;
+  setNeedsLayout: (boolean) => void;
 }
 
 const EditorCanvas = ({
@@ -75,6 +77,8 @@ const EditorCanvas = ({
   possibleFaultEventScenarios,
   onScenarioSelect,
   onApplyAutomaticLayout,
+  needsLayout,
+  setNeedsLayout,
 }: Props) => {
   const { classes } = useStyles();
   const theme = useTheme();
@@ -282,6 +286,10 @@ const EditorCanvas = ({
         if (sidebarSelectedEvent?.iri) updateHighlightedNodeView(container);
 
         setRendering(false);
+        if (needsLayout) {
+          layout(container);
+          setNeedsLayout(false);
+        }
       }
     };
 

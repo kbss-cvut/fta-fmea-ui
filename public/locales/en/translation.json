@@ -184,7 +184,8 @@
       "getRootReusable": "Failed to find reusable fault events. {{error}}",
       "getAllReusable": "Failed to find all reusable fault events. {{error}}",
       "probabilityNotSet": "FTA probability calculation - Event, \"{{event}}\"{{uri}}, has no specified probability and is used to calculate probability of parent event.\",",
-      "childProbabilityNotSet": "FTA probability calculation - Cannot calculate probability of \"{{event}}\"{{uri}}, some child events have no specified probability."
+      "childProbabilityNotSet": "FTA probability calculation - Cannot calculate probability of \"{{event}}\"{{uri}}, some child events have no specified probability.",
+      "paste": "Failed to paste from clipboard. {{error}}"
     },
     "faultTree": {
       "rootEvent": {

@@ -6,7 +6,7 @@ import { axiosSource } from "@services/utils/axiosUtils";
 import { ChildrenProps } from "@utils/hookUtils";
 import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 
-type faultTreeContextType = [FaultTree, () => void];
+type faultTreeContextType = [FaultTree, () => Promise<void>];
 
 export const faultTreeContext = createContext<faultTreeContextType>(null!);
 

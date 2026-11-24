@@ -184,6 +184,20 @@ export const updateChildrenSequence = async (faultEventIri: string, childrenSequ
   }
 };
 
+export const paste = async (targetNodeIri: string, iris: string[]): Promise<void> => {
+  try {
+    const fragment = extractFragment(targetNodeIri);
+    await axiosClient.post(`/faultEvents/${fragment}/paste`, iris, {
+      headers: authHeaders(),
+    });
+    return new Promise((resolve) => resolve());
+  } catch (e) {
+    console.log("Event Service - Failed to call /paste");
+    // const defaultMessage = "Failed to paste from clipboard";
+    return new Promise((resolve, reject) => reject(handleServerError(e, "error.faultEvent.paste")));
+  }
+};
+
 export const sequenceListToArray = (sequenceList: any): string[] => {
   return sequenceList ? flatten([sequenceList["@list"]]).map((value) => value.iri) : [];
 };

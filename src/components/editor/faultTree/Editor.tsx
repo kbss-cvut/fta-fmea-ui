@@ -9,7 +9,7 @@ import { SnackbarType, useSnackbar } from "@hooks/useSnackbar";
 import { useCurrentFaultTree } from "@hooks/useCurrentFaultTree";
 import { useConfirmDialog } from "@hooks/useConfirmDialog";
 import FaultEventDialog from "../../dialog/faultEvent/FaultEventDialog";
-import { FaultEvent } from "@models/eventModel";
+import { EventType, FaultEvent } from "@models/eventModel";
 import { contextMenuDefaultAnchor, ElementContextMenuAnchor } from "@utils/contextMenu";
 import FailureModesTableDialog from "@components/dialog/failureModesTable/FailureModesTableDialog";
 import { ENVVariable, ROUTES } from "@utils/constants";
@@ -35,6 +35,7 @@ const Editor = () => {
   const [showPath, setShowPath] = useState<boolean>(false);
   const [showTable, setShowTable] = useState<boolean>(false);
   const [highlightedElementView, setHighlightedElementView] = useState(null);
+  const [needsLayout, setNeedsLayout] = useState(false);
 
   const _localContext = useLocalContext({ rootEvent: rootEvent, highlightedElementView: highlightedElementView });
 
@@ -82,10 +83,12 @@ const Editor = () => {
   }, [location.pathname]);
 
   const [contextMenuSelectedEvent, setContextMenuSelectedEvent] = useState<FaultEvent>(null);
+  const [copiedNodes, setCopiedNodes] = useState<string[]>();
   const [sidebarSelectedEvent, setSidebarSelectedEvent] = useState<FaultEvent>(null);
 
   const [contextMenuAnchor, setContextMenuAnchor] = useState<ElementContextMenuAnchor>(contextMenuDefaultAnchor);
   const handleContextMenu = (elementView, evt) => {
+    navigator.clipboard.readText().then((v) => setCopiedNodes(v ? [v] : []));
     const elementIri = elementView.model.get(JOINTJS_NODE_MODEL.faultEventIri);
 
     const foundEvent = findEventByIri(elementIri, getRootEvent());
@@ -210,6 +213,22 @@ const Editor = () => {
     refreshTree();
   };
 
+  const handleCopy = (fe: FaultEvent) => {
+    navigator.clipboard.writeText(fe.iri).then(() => showSnackbar("Copied to clipboard", SnackbarType.SUCCESS));
+  };
+
+  const handlePaste = (iris: string[]) => {
+    faultEventService
+      .paste(contextMenuSelectedEvent.iri, iris)
+      .then((value) => {
+        refreshTree().then(() => {
+          setNeedsLayout(true);
+        });
+        showSnackbar("Pasted from clipboard", SnackbarType.SUCCESS);
+      })
+      .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
+  };
+
   const [failureModesTableOpen, setFailureModesTableOpen] = useState(false);
   const handleFailureModesTableCreated = (tableIri: string) => {
     console.log(`handleFailureModesTableCreated - ${tableIri}`);
@@ -258,6 +277,8 @@ const Editor = () => {
           showPath={showPath}
           showTable={showTable}
           onScenarioSelect={(scenario: FaultEventScenario) => handleOnScenarioSelect(scenario)}
+          needsLayout={needsLayout}
+          setNeedsLayout={setNeedsLayout}
         />
       )}
 
@@ -265,6 +286,10 @@ const Editor = () => {
         eventType={contextMenuSelectedEvent?.eventType}
         isRootEvent={contextMenuSelectedEvent?.iri === faultTree?.manifestingEvent?.iri}
         anchorPosition={contextMenuAnchor}
+        onCopyEventClick={() => handleCopy(contextMenuSelectedEvent)}
+        pasteAllowed={contextMenuSelectedEvent && contextMenuSelectedEvent.eventType == EventType.INTERMEDIATE}
+        copiedNodes={copiedNodes}
+        onPasteEventClick={handlePaste}
         onNewEventClick={() => setEventDialogOpen(true)}
         onEventDelete={() => handleEventDelete(contextMenuSelectedEvent)}
         onClose={() => setContextMenuAnchor(contextMenuDefaultAnchor)}
