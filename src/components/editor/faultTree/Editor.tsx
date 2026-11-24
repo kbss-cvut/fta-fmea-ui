@@ -35,6 +35,7 @@ const Editor = () => {
   const [showPath, setShowPath] = useState<boolean>(false);
   const [showTable, setShowTable] = useState<boolean>(false);
   const [highlightedElementView, setHighlightedElementView] = useState(null);
+  const [needsLayout, setNeedsLayout] = useState(false);
 
   const _localContext = useLocalContext({ rootEvent: rootEvent, highlightedElementView: highlightedElementView });
 
@@ -220,7 +221,9 @@ const Editor = () => {
     faultEventService
       .paste(contextMenuSelectedEvent.iri, iris)
       .then((value) => {
-        refreshTree();
+        refreshTree().then(() => {
+          setNeedsLayout(true);
+        });
         showSnackbar("Pasted from clipboard", SnackbarType.SUCCESS);
       })
       .catch((reason) => showSnackbar(reason, SnackbarType.ERROR));
@@ -274,6 +277,8 @@ const Editor = () => {
           showPath={showPath}
           showTable={showTable}
           onScenarioSelect={(scenario: FaultEventScenario) => handleOnScenarioSelect(scenario)}
+          needsLayout={needsLayout}
+          setNeedsLayout={setNeedsLayout}
         />
       )}
 
