@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 
 interface FaultEventScenariosTableProps {
   scenarios: FaultEventScenario[];
+  selectedScenario: FaultEventScenario;
   onScenarioSelect: (scenario: FaultEventScenario) => void;
 }
 interface TableRow {
@@ -30,27 +31,27 @@ const getScenarioTableRow = (item: FaultEventScenario) => {
 
   return row;
 };
-const FaultEventScenariosTable: FC<FaultEventScenariosTableProps> = ({ scenarios, onScenarioSelect }) => {
+
+const FaultEventScenariosTable: FC<FaultEventScenariosTableProps> = ({
+  scenarios,
+  selectedScenario,
+  onScenarioSelect,
+}) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const { classes } = useStyles();
-  const sortedList = scenarios.sort((a, b) => b.probability - a.probability);
-
-  const [selectedScenarioIndex, setSelectedScenarioIndex] = useState<number | undefined>(undefined);
-
-  useEffect(() => {
-    if (selectedScenarioIndex === undefined && scenarios && scenarios.length > 0) {
-      setSelectedScenarioIndex(0);
-    }
-  }, [scenarios]);
 
   const handleRowClick = (scenario: FaultEventScenario, index: number) => {
-    if (index === selectedScenarioIndex) return;
+    if (scenario?.iri === selectedScenario?.iri) return;
     else {
       onScenarioSelect(scenario);
-      setSelectedScenarioIndex(index);
     }
   };
+  const sortedList = scenarios.sort((a, b) => b.probability - a.probability);
+  const selectedScenarioIndex =
+    sortedList && sortedList.length > 0 && selectedScenario
+      ? sortedList.findIndex((el) => el.iri === selectedScenario.iri)
+      : undefined;
 
   return (
     <Box className={classes.tableContainer}>
