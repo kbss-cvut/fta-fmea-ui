@@ -31,7 +31,7 @@ const Editor = () => {
 
   const [faultTree, refreshTree] = useCurrentFaultTree();
   const [rootEvent, setRootEvent] = useState<FaultEvent>();
-  const [faultEventScenarios, setFaultEventScenarios] = useState<FaultEventScenario[]>([]);
+  const [faultEventScenario, setFaultEventScenario] = useState<FaultEventScenario>(undefined);
   const [showPath, setShowPath] = useState<boolean>(false);
   const [showTable, setShowTable] = useState<boolean>(false);
   const [highlightedElementView, setHighlightedElementView] = useState(null);
@@ -49,6 +49,10 @@ const Editor = () => {
     return _localContext.highlightedElementView;
   };
 
+  const areScenariosCompatible = (selected: FaultEventScenario, possible: FaultEventScenario[]) => {
+    return selected && possible && possible.find((el) => el.iri == selected.iri);
+  };
+
   useEffect(() => {
     if (faultTree) {
       setAppBarTitle(
@@ -56,8 +60,8 @@ const Editor = () => {
       );
       setRootEvent(faultTree.manifestingEvent);
 
-      if (faultTree.faultEventScenarios) {
-        setFaultEventScenarios([getScenarioWithHighestProbability(asArray(faultTree.faultEventScenarios))]);
+      if (faultTree.faultEventScenarios && !areScenariosCompatible(faultEventScenario, faultTree.faultEventScenarios)) {
+        setFaultEventScenario(getScenarioWithHighestProbability(asArray(faultTree.faultEventScenarios)));
       }
 
       if (contextMenuSelectedEvent) {
@@ -210,7 +214,6 @@ const Editor = () => {
   const handleCutSetAnalysis = () => {
     setShowPath(!showPath);
     setShowTable(!showTable);
-    refreshTree();
   };
 
   const handleCopy = (fe: FaultEvent) => {
@@ -250,8 +253,7 @@ const Editor = () => {
   };
 
   const handleOnScenarioSelect = (scenario: FaultEventScenario) => {
-    setFaultEventScenarios([scenario]);
-    refreshTree();
+    setFaultEventScenario(scenario);
   };
 
   return (
@@ -272,7 +274,7 @@ const Editor = () => {
           onApplyAutomaticLayout={handleAutomaticLayout}
           setHighlightedElement={setHighlightedElementView}
           refreshTree={refreshTree}
-          faultEventScenarios={faultEventScenarios}
+          faultEventScenario={faultEventScenario}
           possibleFaultEventScenarios={asArray(faultTree?.faultEventScenarios)}
           showPath={showPath}
           showTable={showTable}

@@ -47,7 +47,7 @@ interface Props {
   onNodeMove: (element: any, evt: any) => void;
   refreshTree: () => void;
   setHighlightedElement: (element: any) => void;
-  faultEventScenarios: FaultEventScenario[];
+  faultEventScenario: FaultEventScenario;
   showPath: boolean;
   showTable: boolean;
   possibleFaultEventScenarios: FaultEventScenario[];
@@ -71,7 +71,7 @@ const EditorCanvas = ({
   onNodeMove,
   refreshTree,
   setHighlightedElement,
-  faultEventScenarios,
+  faultEventScenario,
   showPath,
   showTable,
   possibleFaultEventScenarios,
@@ -93,7 +93,6 @@ const EditorCanvas = ({
   const [svgZoom, setSvgZoom] = useState(null);
   const [currentZoom, setCurrentZoom] = useState(1);
   const [isExportingImage, setIsExportingImage] = useState(false);
-  const [targets, setTargets] = useState<undefined | string[]>();
   const [rendering, setRendering] = useState<boolean>(false);
   const [faultTree] = useCurrentFaultTree();
   const initialMinOperationalHours = faultTree?.operationalDataFilter?.minOperationalHours || 0;
@@ -106,19 +105,16 @@ const EditorCanvas = ({
 
   let dragStartPosition = null;
 
-  useEffect(() => {
+  const getTargetIris = (faultEventScenario: FaultEventScenario) => {
     const targetsIri = [];
-
-    faultEventScenarios.forEach((scenario) => {
-      if (Array.isArray(scenario?.scenarioParts)) {
-        scenario.scenarioParts.forEach((scenarioPart) => targetsIri.push(scenarioPart.iri));
-      } else {
-        targetsIri.push(scenario?.scenarioParts?.iri);
-      }
-    });
-
-    setTargets(targetsIri);
-  }, [faultEventScenarios]);
+    if (!faultEventScenario) return targetsIri;
+    if (Array.isArray(faultEventScenario?.scenarioParts)) {
+      faultEventScenario.scenarioParts.forEach((scenarioPart) => targetsIri.push(scenarioPart.iri));
+    } else {
+      targetsIri.push(faultEventScenario?.scenarioParts?.iri);
+    }
+    return targetsIri;
+  };
 
   useEffect(() => {
     const canvasWidth = containerRef.current.clientWidth;
@@ -277,7 +273,7 @@ const EditorCanvas = ({
         container.removeCells(container.getCells());
 
         const listOfPaths = [];
-
+        const targets: string[] = getTargetIris(faultEventScenario);
         if (targets.length > 0 && showPath) {
           targets.forEach((target) => listOfPaths.push(findNodeByIri(rootEvent, target)));
         }
@@ -294,7 +290,7 @@ const EditorCanvas = ({
     };
 
     render();
-  }, [container, rootEvent, faultEventScenarios]);
+  }, [container, rootEvent, faultEventScenario, showPath]);
 
   useEffect(() => {
     setUpdatedMinOperationalHours((prevState) => {
@@ -403,7 +399,11 @@ const EditorCanvas = ({
           />
         )}
         {showTable && (
-          <FaultEventScenariosTable scenarios={possibleFaultEventScenarios} onScenarioSelect={onScenarioSelect} />
+          <FaultEventScenariosTable
+            scenarios={possibleFaultEventScenarios}
+            selectedScenario={faultEventScenario}
+            onScenarioSelect={onScenarioSelect}
+          />
         )}
       </SidebarMenu>
     </div>
