@@ -306,7 +306,7 @@ const FaultEventMenu = ({
   };
 
   const numberValue = (value) => {
-    return <Tooltip title={<span className={classes.hint}>{value}</span>}>{value.toExponential(2)}</Tooltip>;
+    return <Tooltip title={<span className={classes.hint}>{value}</span>}>{value && value.toExponential(2)}</Tooltip>;
   };
 
   const requiredFailureRateComponent = (failureRate, violates) => {
